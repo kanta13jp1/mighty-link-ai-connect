@@ -6,14 +6,24 @@ Mighty-Link AI Connect: WBS Google Sheets Sync Script
 Author: Antigravity 2.0 (AI Agent)
 
 This script parses WBS.tsv and pushes the tasks directly to a specified Google Spreadsheet.
-If no spreadsheet ID is provided, it AUTOMATICALLY creates a new Google Spreadsheet and
-shares it with 'kanta13jp@gmail.com' as an Editor.
+To bypass Google Cloud Service Account quota limitations, this script supports both:
+1. OAuth 2.0 Desktop Authentication (via client_secret.json) -> Uses kanta13jp@gmail.com's own drive (No Quota Limits!)
+2. Service Account Authentication (via credentials.json) -> Traditional fallback.
 """
 
 import os
 import sys
 import csv
 import json
+
+# Force stdout/stderr to use utf-8 if possible
+if sys.platform.startswith('win'):
+    try:
+        import io
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+    except Exception:
+        pass
 
 def install_and_import(package):
     """Dynamically checks and instructs how to install dependencies if missing."""
@@ -32,9 +42,10 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 # Configuration
-CREDENTIALS_FILE = "credentials.json"
+CREDENTIALS_FILE = "credentials.json"     # Service Account
+CLIENT_SECRET_FILE = "client_secret.json" # OAuth 2.0 Desktop client
 TSV_FILE = "WBS.tsv"
-USER_EMAIL = "kanta13jp@gmail.com" # Target account to share automatically
+USER_EMAIL = "kanta13jp@gmail.com"
 
 # Mighty-Link Color Palette (Normalized to 0.0 - 1.0 for Sheets API)
 COLORS = {
@@ -61,35 +72,57 @@ def load_wbs_data(filepath):
 
 def main():
     print("="*60)
-    print("🚀 Mighty-Link AI Connect: WBS Google Sheets Sync Tool")
+    print("[*] Mighty-Link AI Connect: WBS Google Sheets Sync Tool")
     print("="*60)
 
-    # 1. Check for API Credentials
-    if not os.path.exists(CREDENTIALS_FILE):
-        print(f"[-] ERROR: Google API credentials file '{CREDENTIALS_FILE}' not found.")
-        print(f"\n[💡 Setup Instructions]")
-        print("1. Go to Google Cloud Console (https://console.cloud.google.com/)")
-        print("2. Create a project and enable both 'Google Sheets API' and 'Google Drive API'.")
-        print("3. Go to Credentials -> Create Credentials -> Service Account.")
-        print("4. Under Actions for that service account, select Keys -> Add Key -> Create New Key (JSON).")
-        print("5. Save that downloaded JSON file as 'credentials.json' in this project folder.")
-        sys.exit(1)
+    client = None
+    auth_mode = None
 
-    # 2. Authenticate with Google API
-    print("[*] Authenticating with Google Cloud Platform...")
-    scopes = [
-        "https://www.googleapis.com/auth/spreadsheets",
-        "https://www.googleapis.com/auth/drive"
-    ]
-    try:
-        creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=scopes)
-        client = gspread.authorize(creds)
-        print("[+] Authentication Successful!")
-    except Exception as e:
-        print(f"[-] Authentication Failed: {e}")
-        sys.exit(1)
+    # 1. Determine Authentication Mode (OAuth 2.0 has priority to bypass storage quotas)
+    if os.path.exists(CLIENT_SECRET_FILE):
+        print("[*] Found OAuth 2.0 client credentials. Launching Browser Authentication...")
+        try:
+            # Performs local OAuth authentication. Spawns browser on first run, saves authorized_user.json
+            client = gspread.oauth(
+                credentials_filename=CLIENT_SECRET_FILE,
+                authorized_user_filename="authorized_user.json"
+            )
+            auth_mode = "OAuth 2.0 (User Drive)"
+            print("[+] OAuth 2.0 Authentication Successful!")
+        except Exception as e:
+            print(f"[-] OAuth 2.0 Authentication Failed: {e}")
+            print("[*] Falling back to Service Account check...")
 
-    # 3. Check for spreadsheet ID, if empty -> AUTO CREATE
+    if not client:
+        # Fallback to Service Account
+        if os.path.exists(CREDENTIALS_FILE):
+            print("[*] Authenticating via Google Cloud Service Account...")
+            scopes = [
+                "https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/drive"
+            ]
+            try:
+                creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=scopes)
+                client = gspread.authorize(creds)
+                auth_mode = "Service Account (Robot)"
+                print("[+] Service Account Authentication Successful!")
+            except Exception as e:
+                print(f"[-] Service Account Authentication Failed: {e}")
+                sys.exit(1)
+        else:
+            print(f"[-] ERROR: Neither '{CLIENT_SECRET_FILE}' nor '{CREDENTIALS_FILE}' found.")
+            print("\n[💡 Bypass & Setup Instructions (OAuth 2.0 Mode - Recommended)]")
+            print("To completely bypass Drive storage quota limitations, use your personal Google Drive account:")
+            print("1. Go to Google Cloud Console (https://console.cloud.google.com/) -> API & Services -> Credentials.")
+            print("2. Click '+ Create Credentials' -> 'OAuth client ID'.")
+            print("3. (If prompted) Click 'Configure Consent Screen', select 'External', input App Name ('Mighty WBS'), and save.")
+            print("   * Under 'Test users', add 'kanta13jp@gmail.com'.")
+            print("4. Go back to Credentials -> Create Credentials -> OAuth client ID.")
+            print("5. Choose Application Type: 'Desktop App', name it, and click Create.")
+            print("6. Download the JSON file and rename it to 'client_secret.json' in this folder.")
+            sys.exit(1)
+
+    # 2. Check for spreadsheet ID, if empty -> AUTO CREATE
     spreadsheet_id = None
     if len(sys.argv) > 1:
         spreadsheet_id = sys.argv[1]
@@ -101,18 +134,26 @@ def main():
         # AUTO CREATION MODE
         sheet_title = "Mighty-Link AI Connect WBS"
         print(f"\n[*] SPREADSHEET_ID not provided. Entering [AUTO CREATE MODE]...")
-        print(f"[*] Creating a brand new Google Spreadsheet: '{sheet_title}'...")
+        print(f"[*] Creating a brand new Google Spreadsheet: '{sheet_title}' under {auth_mode}...")
         try:
             sh = client.create(sheet_title)
             spreadsheet_id = sh.id
             print(f"[+] Spreadsheet created successfully! ID: {spreadsheet_id}")
             
-            # Automatically share with the user's Gmail
-            print(f"[*] Sharing spreadsheet with '{USER_EMAIL}' as Editor...")
-            sh.share(USER_EMAIL, perm_type="user", role="writer")
-            print(f"[+] Successfully shared! It will appear in your 'Shared with me' Google Drive folder.")
+            # If authenticated via Service account, we must share it with the user's Gmail
+            if auth_mode == "Service Account (Robot)":
+                print(f"[*] Sharing spreadsheet with '{USER_EMAIL}' as Editor...")
+                sh.share(USER_EMAIL, perm_type="user", role="writer")
+                print(f"[+] Successfully shared! It will appear in your 'Shared with me' Google Drive folder.")
+            else:
+                print(f"[+] The spreadsheet is directly owned by your account ({USER_EMAIL})!")
+                print("[+] No manual sharing needed! It is located directly in your Google Drive.")
         except Exception as e:
-            print(f"[-] Auto creation or sharing failed: {e}")
+            print(f"[-] Auto creation failed: {e}")
+            if auth_mode == "Service Account (Robot)":
+                print("\n[⚠️ Storage Quota Alert]")
+                print("Your Service Account Drive quota is exceeded. To fix this automatically:")
+                print(f"Please setup OAuth 2.0 by downloading 'client_secret.json' as detailed in the instructions above.")
             sys.exit(1)
     else:
         # Open existing sheet if ID is provided
@@ -129,10 +170,10 @@ def main():
             sh = client.open_by_key(spreadsheet_id)
             print(f"[+] Connected! Spreadsheet Title: '{sh.title}'")
         except Exception as e:
-            print(f"[-] Failed to open sheet. Ensure your service account email is shared with the spreadsheet. Error: {e}")
+            print(f"[-] Failed to open sheet. Ensure the sheet is shared if using Service Account. Error: {e}")
             sys.exit(1)
 
-    # 4. Load data and setup Worksheet
+    # 3. Load data and setup Worksheet
     print("[*] Parsing local WBS.tsv...")
     wbs_data = load_wbs_data(TSV_FILE)
     if not wbs_data:
@@ -156,12 +197,12 @@ def main():
         except Exception:
             pass
 
-    # 5. Upload Data
+    # 4. Upload Data
     print("[*] Uploading WBS data rows...")
     worksheet.update(values=wbs_data, range_name="A1")
     print(f"[+] Successfully wrote {len(wbs_data)} rows to the sheet!")
 
-    # 6. Apply Professional Styles (Workspace AI Design Theme)
+    # 5. Apply Professional Styles (Workspace AI Design Theme)
     print("[*] Applying Mighty-Link professional branding & styles...")
     num_rows = len(wbs_data)
     num_cols = len(wbs_data[0]) if num_rows > 0 else 0
@@ -236,8 +277,8 @@ def main():
             pass
 
     print("="*60)
-    print("🎉 Sync Completed Successfully!")
-    print(f"👉 Spreadsheet URL: {sh.url}")
+    print("[+] Sync Completed Successfully!")
+    print(f"[*] Spreadsheet URL: {sh.url}")
     print("="*60)
 
 if __name__ == "__main__":
