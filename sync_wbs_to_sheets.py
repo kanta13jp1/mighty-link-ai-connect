@@ -5,9 +5,9 @@
 Mighty-Link AI Connect: WBS Google Sheets Sync Script
 Author: Antigravity 2.0 (AI Agent)
 
-This script parses WBS.tsv and pushes the tasks directly to a specified Google Spreadsheet
-via the Google Sheets API. It automatically applies professional visual styling using the
-Mighty-Link brand colors (deep blue header, centered columns, and status color highlights).
+This script parses WBS.tsv and pushes the tasks directly to a specified Google Spreadsheet.
+If no spreadsheet ID is provided, it AUTOMATICALLY creates a new Google Spreadsheet and
+shares it with 'kanta13jp@gmail.com' as an Editor.
 """
 
 import os
@@ -34,6 +34,7 @@ from google.oauth2.service_account import Credentials
 # Configuration
 CREDENTIALS_FILE = "credentials.json"
 TSV_FILE = "WBS.tsv"
+USER_EMAIL = "kanta13jp@gmail.com" # Target account to share automatically
 
 # Mighty-Link Color Palette (Normalized to 0.0 - 1.0 for Sheets API)
 COLORS = {
@@ -72,34 +73,9 @@ def main():
         print("3. Go to Credentials -> Create Credentials -> Service Account.")
         print("4. Under Actions for that service account, select Keys -> Add Key -> Create New Key (JSON).")
         print("5. Save that downloaded JSON file as 'credentials.json' in this project folder.")
-        print("6. IMPORTANT: Share your Google Sheet with the client_email address inside the JSON!")
         sys.exit(1)
 
-    # 2. Get Spreadsheet ID from args or env
-    spreadsheet_id = None
-    if len(sys.argv) > 1:
-        spreadsheet_id = sys.argv[1]
-    else:
-        spreadsheet_id = os.environ.get("SPREADSHEET_ID")
-
-    if not spreadsheet_id:
-        print("\n[*] SPREADSHEET_ID not provided via command line argument or environment variable.")
-        spreadsheet_id = input("👉 Please enter your Google Spreadsheet ID (or full URL): ").strip()
-        
-    if not spreadsheet_id:
-        print("[-] Spreadsheet ID is required to continue. Exiting.")
-        sys.exit(1)
-
-    # Extract ID if URL is provided
-    if "docs.google.com/spreadsheets" in spreadsheet_id:
-        try:
-            parts = spreadsheet_id.split("/d/")
-            if len(parts) > 1:
-                spreadsheet_id = parts[1].split("/")[0]
-        except Exception:
-            pass
-
-    # 3. Authenticate with Google API
+    # 2. Authenticate with Google API
     print("[*] Authenticating with Google Cloud Platform...")
     scopes = [
         "https://www.googleapis.com/auth/spreadsheets",
@@ -113,16 +89,50 @@ def main():
         print(f"[-] Authentication Failed: {e}")
         sys.exit(1)
 
-    # 4. Open Spreadsheet
-    print(f"[*] Connecting to Spreadsheet ID: {spreadsheet_id}...")
-    try:
-        sh = client.open_by_key(spreadsheet_id)
-        print(f"[+] Connected! Spreadsheet Title: '{sh.title}'")
-    except Exception as e:
-        print(f"[-] Failed to open sheet. Ensure your service account email is shared with the spreadsheet. Error: {e}")
-        sys.exit(1)
+    # 3. Check for spreadsheet ID, if empty -> AUTO CREATE
+    spreadsheet_id = None
+    if len(sys.argv) > 1:
+        spreadsheet_id = sys.argv[1]
+    else:
+        spreadsheet_id = os.environ.get("SPREADSHEET_ID")
 
-    # 5. Load data and setup Worksheet
+    sh = None
+    if not spreadsheet_id:
+        # AUTO CREATION MODE
+        sheet_title = "Mighty-Link AI Connect WBS"
+        print(f"\n[*] SPREADSHEET_ID not provided. Entering [AUTO CREATE MODE]...")
+        print(f"[*] Creating a brand new Google Spreadsheet: '{sheet_title}'...")
+        try:
+            sh = client.create(sheet_title)
+            spreadsheet_id = sh.id
+            print(f"[+] Spreadsheet created successfully! ID: {spreadsheet_id}")
+            
+            # Automatically share with the user's Gmail
+            print(f"[*] Sharing spreadsheet with '{USER_EMAIL}' as Editor...")
+            sh.share(USER_EMAIL, perm_type="user", role="writer")
+            print(f"[+] Successfully shared! It will appear in your 'Shared with me' Google Drive folder.")
+        except Exception as e:
+            print(f"[-] Auto creation or sharing failed: {e}")
+            sys.exit(1)
+    else:
+        # Open existing sheet if ID is provided
+        if "docs.google.com/spreadsheets" in spreadsheet_id:
+            try:
+                parts = spreadsheet_id.split("/d/")
+                if len(parts) > 1:
+                    spreadsheet_id = parts[1].split("/")[0]
+            except Exception:
+                pass
+                
+        print(f"[*] Connecting to existing Spreadsheet ID: {spreadsheet_id}...")
+        try:
+            sh = client.open_by_key(spreadsheet_id)
+            print(f"[+] Connected! Spreadsheet Title: '{sh.title}'")
+        except Exception as e:
+            print(f"[-] Failed to open sheet. Ensure your service account email is shared with the spreadsheet. Error: {e}")
+            sys.exit(1)
+
+    # 4. Load data and setup Worksheet
     print("[*] Parsing local WBS.tsv...")
     wbs_data = load_wbs_data(TSV_FILE)
     if not wbs_data:
@@ -138,13 +148,20 @@ def main():
         print(f"[*] Worksheet '{sheet_name}' not found. Creating a new one...")
         worksheet = sh.add_worksheet(title=sheet_name, rows=100, cols=20)
         print(f"[+] Worksheet '{sheet_name}' created successfully.")
+        
+        # Remove default Sheet1 if we created a new one to keep it clean
+        try:
+            default_sheet = sh.worksheet("Sheet1")
+            sh.del_worksheet(default_sheet)
+        except Exception:
+            pass
 
-    # 6. Upload Data
+    # 5. Upload Data
     print("[*] Uploading WBS data rows...")
     worksheet.update(values=wbs_data, range_name="A1")
     print(f"[+] Successfully wrote {len(wbs_data)} rows to the sheet!")
 
-    # 7. Apply Professional Styles (Workspace AI Design Theme)
+    # 6. Apply Professional Styles (Workspace AI Design Theme)
     print("[*] Applying Mighty-Link professional branding & styles...")
     num_rows = len(wbs_data)
     num_cols = len(wbs_data[0]) if num_rows > 0 else 0
@@ -165,9 +182,7 @@ def main():
 
     # B. Set Row Heights (Header: 40px, Data Rows: 28px)
     try:
-        # Header row height
         worksheet.set_row_height(1, 40)
-        # Data rows heights
         for r in range(2, num_rows + 1):
             worksheet.set_row_height(r, 28)
     except Exception as e:
@@ -183,8 +198,6 @@ def main():
         })
 
     # D. Colorize Status Column dynamically (Typically Column H / Index 8 in TSV)
-    # Header: タスクID, 大フェーズ, 小フェーズ, タスク名, 担当, 実行エンジン, Sheets Live 連携アクション, ステータス, 開始日, 終了予定日
-    # Status is column 8 (H)
     print("[*] Coloring WBS status cells dynamically...")
     status_col_index = 8
     for r in range(2, num_rows + 1):
@@ -204,7 +217,6 @@ def main():
         })
 
     # E. Adjust Column Widths to fit content perfectly
-    # Establishes default readable widths
     col_widths = {
         'A': 80,   # ID
         'B': 130,  # Big Phase
@@ -225,7 +237,7 @@ def main():
 
     print("="*60)
     print("🎉 Sync Completed Successfully!")
-    print("👉 View your live WBS sheet now!")
+    print(f"👉 Spreadsheet URL: {sh.url}")
     print("="*60)
 
 if __name__ == "__main__":
