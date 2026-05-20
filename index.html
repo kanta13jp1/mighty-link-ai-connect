@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mighty Skill-Bridge - エンジニア＆案件 AIフィットシミュレーター</title>
+    <!-- Google Fonts: Outfit & Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --mighty-blue: #1A73E8;
+            --mighty-blue-glow: rgba(26, 115, 232, 0.4);
+            --mighty-green: #34A853;
+            --mighty-green-glow: rgba(52, 168, 83, 0.3);
+            --mighty-yellow: #FBBC05;
+            --mighty-yellow-glow: rgba(251, 188, 5, 0.3);
+            --bg-dark-950: #020617;
+            --bg-dark-900: #0f172a;
+            --bg-dark-800: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(30, 41, 59, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-focus: rgba(255, 255, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: radial-gradient(circle at 50% 0%, var(--bg-dark-900) 0%, var(--bg-dark-950) 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 40px;
+        }
+
+        /* Ambient Glow Objects */
+        .glow-orb-1 {
+            position: absolute;
+            top: -10%;
+            left: 20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--mighty-blue-glow) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-orb-2 {
+            position: absolute;
+            top: 40%;
+            right: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(52, 168, 83, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(8px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-symbol {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--mighty-blue) 0%, #4285F4 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 0 20px var(--mighty-blue-glow);
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text span {
+            color: var(--mighty-blue);
+            -webkit-text-fill-color: var(--mighty-blue);
+        }
+
+        .sync-badge {
+            background: rgba(26, 115, 232, 0.15);
+            border: 1px solid rgba(26, 115, 232, 0.3);
+            color: #8ab4f8;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sync-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--mighty-green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--mighty-green);
+            animation: pulse 2s infinite;
+        }
+
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1300px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .hero-section {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 16px auto;
+        }
+
+        .hero-title {
+            font-size: 40px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Upload Panels Grid */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 28px;
+            backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .panel:hover {
+            border-color: rgba(26, 115, 232, 0.2);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-title {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-icon {
+            color: var(--mighty-blue);
+            font-size: 20px;
+        }
+
+        .sample-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-light);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sample-btn:hover {
+            background: rgba(26, 115, 232, 0.15);
+            border-color: rgba(26, 115, 232, 0.4);
+            color: #8ab4f8;
+        }
+
+        /* Drag & Drop Area */
+        .dropzone {
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(15, 23, 42, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dropzone.dragover {
+            border-color: var(--mighty-blue);
+            background: rgba(26, 115, 232, 0.08);
+            box-shadow: 0 0 15px rgba(26, 115, 232, 0.2);
+        }
+
+        .dropzone-icon {
+            font-size: 40px;
+            color: var(--text-muted);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .dropzone:hover .dropzone-icon {
+            transform: translateY(-4px);
+            color: var(--mighty-blue);
+        }
+
+        .dropzone-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .dropzone-text span {
+            color: var(--text-light);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* Text Input Fallback */
+        .textarea-input {
+            width: 100%;
+            height: 160px;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 16px;
+            color: var(--text-light);
+            font-size: 13px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .textarea-input:focus {
+            border-color: var(--mighty-blue);
+            background: rgba(15, 23, 42, 0.6);
+            box-shadow: 0 0 10px rgba(26, 115, 232, 0.15);
+        }
+
+        /* Core Action Connect Button */
+        .action-container {
+            display: flex;
+            justify-content: center;
+            margin: 16px 0;
+            position: relative;
+        }
+
+        .bridge-btn {
+            background: linear-gradient(135deg, var(--mighty-blue) 0%, #4285F4 50%, #2f69c2 100%);
+            color: white;
+            border: none;
+            padding: 18px 48px;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 30px rgba(26, 115, 232, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .bridge-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(26, 115, 232, 0.6);
+        }
+
+        .bridge-btn:active {
+            transform: translateY(1px);
+        }
+
+        .bridge-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .bridge-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Dynamic Loading Overlay */
+        .loading-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            border-radius: 16px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(26, 115, 232, 0.1);
+            border-left-color: var(--mighty-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: #8ab4f8;
+            letter-spacing: 0.5px;
+        }
+
+        /* Result Section */
+        .result-section {
+            display: none; /* Initially Hidden */
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .result-layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1.8fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .result-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Score Display Card */
+        .score-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-radial-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .radial-svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .radial-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.05);
+            stroke-width: 10;
+        }
+
+        .radial-progress {
+            fill: none;
+            stroke: url(#score-gradient);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 502;
+            stroke-dashoffset: 502; /* Will be animated */
+            transition: stroke-dashoffset 1.5s ease-out;
+        }
+
+        .score-number {
+            position: absolute;
+            font-size: 48px;
+            font-weight: 900;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-percent {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .fit-status-label {
+            background: linear-gradient(135deg, rgba(52, 168, 83, 0.2) 0%, rgba(52, 168, 83, 0.05) 100%);
+            border: 1px solid rgba(52, 168, 83, 0.3);
+            color: #81c995;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(52, 168, 83, 0.1);
+        }
+
+        /* Radar Chart Wrapper */
+        .radar-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 320px;
+        }
+
+        /* Analysis Details & AI Recommendations */
+        .report-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .report-section-title {
+            font-size: 18px;
+            font-weight: 700;
+            border-left: 4px solid var(--mighty-blue);
+            padding-left: 12px;
+            margin-bottom: 8px;
+        }
+
+        .match-summary-p {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.8;
+        }
+
+        /* Dimension Scores */
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .dimension-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .dim-box {
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .dim-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dim-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .dim-value {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--mighty-blue);
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: var(--mighty-blue);
+            width: 0;
+            transition: width 1.2s cubic-bezier(0.1, 0.8, 0.3, 1);
+        }
+
+        /* Multi-tab / Detailed Output */
+        .tabs-header {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 12px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+            background: rgba(26, 115, 232, 0.1);
+            color: #8ab4f8;
+            border: 1px solid rgba(26, 115, 232, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Q&A Cards */
+        .qa-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .qa-item {
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .qa-question {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--mighty-yellow);
+            margin-bottom: 10px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .qa-answer {
+            font-size: 13px;
+            color: #e2e8f0;
+            line-height: 1.7;
+        }
+
+        .qa-tip {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #81c995;
+            background: rgba(52, 168, 83, 0.08);
+            padding: 6px 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--mighty-green);
+        }
+
+        /* Roadmaps / Google Docs Style */
+        .roadmap-doc {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 24px;
+            font-size: 13px;
+            line-height: 1.8;
+            color: #cbd5e1;
+        }
+
+        .roadmap-h3 {
+            color: white;
+            font-size: 15px;
+            margin-top: 16px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .roadmap-h3:first-child {
+            margin-top: 0;
+        }
+
+        /* Utility animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .success-checkmark {
+            color: var(--mighty-green);
+            font-size: 24px;
+            margin-top: 12px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+
+        /* Floating particles or tech grids background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+    <div class="glow-orb-1"></div>
+    <div class="glow-orb-2"></div>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-symbol">M</div>
+            <div class="logo-text">Mighty <span>Skill-Bridge</span></div>
+        </div>
+        <div class="sync-badge">
+            <div class="sync-dot"></div>
+            <span>Sheets Live Connected</span>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <h1 class="hero-title">エンジニア＆案件 AIフィットシミュレーター</h1>
+            <p class="hero-subtitle">経歴書と案件票をインテリジェントに架橋。Gemini が導く、多次元マッチングと面談アプローチの完全可視化。</p>
+        </section>
+
+        <!-- Main Input Panels -->
+        <section class="workspace-grid">
+            <!-- Engineer Profile Upload -->
+            <div class="panel" style="position: relative;">
+                <div class="loading-overlay" id="eng-loader">
+                    <div class="spinner"></div>
+                    <div class="loading-text" id="eng-loader-text">AIパース中...</div>
+                </div>
+
+                <div class="panel-header">
+                    <h2 class="panel-title">
+                        <span class="panel-icon">👤</span>
+                        スキルシート / 経歴書
+                    </h2>
+                    <button class="sample-btn" onclick="loadSampleEngineer()">サンプル経歴書</button>
+                </div>
+
+                <!-- Interactive Drag & Drop Area -->
+                <div class="dropzone" id="engineer-dropzone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'engineer')">
+                    <div class="dropzone-icon">📥</div>
+                    <p class="dropzone-text" id="eng-filename">PDFやWord、画像をドラッグ＆ドロップ<br>または <span>ファイルを選択</span></p>
+                </div>
+
+                <!-- Text Area for direct input or parse output -->
+                <textarea class="textarea-input" id="engineer-input" placeholder="ここに経歴書のテキストを直接貼り付けることもできます..."></textarea>
+                
+                <div class="success-checkmark" id="eng-success">
+                    <span>✓</span> パース完了 (Gemini 3.5 Flash)
+                </div>
+            </div>
+
+            <!-- Job Description Upload -->
+            <div class="panel" style="position: relative;">
+                <div class="loading-overlay" id="job-loader">
+                    <div class="spinner"></div>
+                    <div class="loading-text" id="job-loader-text">案件要件の抽出中...</div>
+                </div>
+
+                <div class="panel-header">
+                    <h2 class="panel-title">
+                        <span class="panel-icon">💼</span>
+                        案件定義書 / 求人票
+                    </h2>
+                    <button class="sample-btn" onclick="loadSampleJob()">サンプル案件要項</button>
+                </div>
+
+                <!-- Interactive Drag & Drop Area -->
+                <div class="dropzone" id="job-dropzone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'job')">
+                    <div class="dropzone-icon">📥</div>
+                    <p class="dropzone-text" id="job-filename">案件PDFや仕様書をドラッグ＆ドロップ<br>または <span>ファイルを選択</span></p>
+                </div>
+
+                <!-- Text Area for direct input or parse output -->
+                <textarea class="textarea-input" id="job-input" placeholder="ここに案件の募集要項を直接貼り付けることもできます..."></textarea>
+                
+                <div class="success-checkmark" id="job-success">
+                    <span>✓</span> 抽出完了 (Gemini 3.5 Flash)
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Action Bridge Button -->
+        <div class="action-container">
+            <button class="bridge-btn" onclick="runAnalysis()">
+                <span>⚡</span>
+                Mighty AI Bridge 実行
+            </button>
+        </div>
+
+        <!-- AI Matching Analysis Results (Initially Hidden) -->
+        <section class="result-section" id="result-container">
+            <div class="result-layout">
+                <!-- Left Column: Core Scores & Radar -->
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Core Multi-Fit Percentage -->
+                    <div class="score-card">
+                        <div class="score-radial-container">
+                            <svg class="radial-svg" viewBox="0 0 180 180">
+                                <defs>
+                                    <linearGradient id="score-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#1A73E8" />
+                                        <stop offset="100%" stop-color="#34A853" />
+                                    </linearGradient>
+                                </defs>
+                                <circle class="radial-bg" cx="90" cy="90" r="80" />
+                                <circle class="radial-progress" id="radial-bar" cx="90" cy="90" r="80" />
+                            </svg>
+                            <div class="score-number">
+                                <span id="score-text">0</span>
+                                <span class="score-percent">%</span>
+                            </div>
+                        </div>
+                        <div class="fit-status-label">極めて高いマッチ度 (Highly Compatible)</div>
+                        <p style="font-size: 13px; text-align: center; color: var(--text-muted); line-height: 1.5;">
+                            Google Sheets の「マッチングログ」へ分析結果を自動同期しました。
+                        </p>
+                    </div>
+
+                    <!-- Radar Chart Card -->
+                    <div class="radar-card">
+                        <canvas id="radarChart" style="max-width: 100%; max-height: 300px;"></canvas>
+                    </div>
+                </div>
+
+                <!-- Right Column: Detail Tabs & AI Generation -->
+                <div class="report-card">
+                    <div>
+                        <h2 class="report-section-title">多次元フィット分析レポート</h2>
+                        <p class="match-summary-p" id="match-summary"></p>
+                    </div>
+
+                    <!-- Four Dimensions Progress -->
+                    <div class="dimension-grid">
+                        <!-- Skill Fit -->
+                        <div class="dim-box">
+                            <div class="dim-info">
+                                <span class="dim-name">Skill-Fit (技術適合性)</span>
+                                <span class="dim-value" id="dim-skill-val">0%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="dim-skill-bar"></div>
+                            </div>
+                        </div>
+
+                        <!-- Culture Fit -->
+                        <div class="dim-box">
+                            <div class="dim-info">
+                                <span class="dim-name">Culture-Fit (文化適合性)</span>
+                                <span class="dim-value" id="dim-culture-val">0%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="dim-culture-bar"></div>
+                            </div>
+                        </div>
+
+                        <!-- Growth Fit -->
+                        <div class="dim-box">
+                            <div class="dim-info">
+                                <span class="dim-name">Growth-Fit (キャリア親和性)</span>
+                                <span class="dim-value" id="dim-growth-val">0%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="dim-growth-bar"></div>
+                            </div>
+                        </div>
+
+                        <!-- Performing Fit -->
+                        <div class="dim-box">
+                            <div class="dim-info">
+                                <span class="dim-name">Performing-Fit (即戦力性)</span>
+                                <span class="dim-value" id="dim-performing-val">0%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="dim-performing-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs for detailed generation content -->
+                    <div class="tabs-header">
+                        <button class="tab-btn active" onclick="switchTab('tab-qa')">面談想定質問 (Q&A)</button>
+                        <button class="tab-btn" onclick="switchTab('tab-roadmap')">Docs Live 連携ロードマップ</button>
+                    </div>
+
+                    <!-- Tab: Q&A -->
+                    <div class="tab-content active" id="tab-qa">
+                        <div class="qa-list" id="qa-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Tab: Roadmap -->
+                    <div class="tab-content" id="tab-roadmap">
+                        <div class="roadmap-doc" id="roadmap-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Sample Data Definitions
+        const sampleEngineer = `【氏名】佐藤 賢太 (佐藤 けんた)
+【職種】シニアAIソリューションアーキテクト / フルスタックエンジニア
+【概要】
+IT業界経験8年。クラウドネイティブなWebアプリケーション開発、特にPython、JavaScript(TypeScript)を用いたAI連携APIの構築実績が豊富。Google Cloud API、OpenAI、Geminiなどの大規模言語モデル(LLM)を活用した自律エージェントの開発や、企業のデータ駆動型意思決定基盤の構築をリード。アジャイル型(Scrum)チームでの開発を得意とし、顧客折衝から要件定義、インフラ設計、実装までエンドツーエンドで対応可能。
+
+【得意技術】
+- 言語: Python, JavaScript, TypeScript, SQL
+- フレームワーク: FastAPI, Django, React.js, Next.js, Vue.js, Node.js
+- インフラ/クラウド: AWS (EKS, Lambda, RDS), Google Cloud (Cloud Run, BigQuery, Vertex AI)
+- データベース: PostgreSQL, SQLite3, Redis, Pinecone (Vector DB)
+- 特筆分野: LLM Prompt Engineering, RAG (Retrieval-Augmented Generation), Google API (gspread, Drive API)
+
+【キャリア志向】
+最先端の生成AIを活用したプロダクト開発において、リードエンジニアまたはアーキテクトとしてビジネス価値を創造すること。顧客や他部署と緊密に連携し、テクノロジーの力で現場の課題を劇的に解決するシステムを構築したい。`;
+
+        const sampleJob = `【案件名】大手ITソリューション企業：LLM自律エージェント＆データ連携基盤開発
+【募集背景】
+当社が提供する次世代のビジネス意思決定支援プラットフォームにおいて、Google Cloud API（Sheets / Docs / Drive）や、Gemini を高度にインテグレーションした自律型AIアシスタント機能（Gemini Spark 連携）を新たに実装することになりました。ビジネスと思想、テクノロジーを力強く架橋するアーキテクト・リードエンジニアを募集します。
+
+【業務内容】
+- 生成AI(Gemini, GPT)を活用した業務プロセスの自動化・自律化エージェントの実装
+- Google API (Sheets API, Docs API) と連携した、進捗管理・文書作成自動同期システムの構築
+- FastAPI / React.js を用いた高パフォーマンスなWebアプリケーションの設計・開発
+- ベクターデータベースを用いた高精度な社内ドキュメントRAGの構築
+- アジャイルスクラムでの迅速な反復開発と要件の柔軟な取り込み
+
+【必須スキル(Mandatory)】
+- Python または TypeScript を用いた商用Webアプリケーション開発経験（5年以上）
+- REST API (FastAPI, Express 等) の設計・構築経験
+- React.js または Next.js を用いたモダンなフロントエンドUIの実装経験
+- データベース(PostgreSQL, SQLite 等) を用いたスキーマ設計およびクエリ最適化スキル
+- Gitを用いたチーム開発、およびアジャイル(Scrum)プロセスでの開発実務経験
+
+【歓迎スキル(Preferred)】
+- OpenAI API または Google Vertex AI / Gemini API などのLLM連携実装経験
+- Google Cloud API (gspread, Drive API) 等のOAuth認証による連携開発実績
+- クラウドインフラ（Google Cloud または AWS）の構築・運用経験`;
+
+        // Interactive Loaders
+        function loadSampleEngineer() {
+            const dropzone = document.getElementById("engineer-dropzone");
+            const success = document.getElementById("eng-success");
+            const loader = document.getElementById("eng-loader");
+            const txt = document.getElementById("eng-filename");
+
+            loader.style.display = "flex";
+            success.style.display = "none";
+
+            setTimeout(() => {
+                loader.style.display = "none";
+                document.getElementById("engineer-input").value = sampleEngineer;
+                txt.innerHTML = "📝 <strong>Kanta_Resume.pdf</strong> (24.5 KB) ロード完了";
+                success.style.display = "flex";
+            }, 1200);
+        }
+
+        function loadSampleJob() {
+            const dropzone = document.getElementById("job-dropzone");
+            const success = document.getElementById("job-success");
+            const loader = document.getElementById("job-loader");
+            const txt = document.getElementById("job-filename");
+
+            loader.style.display = "flex";
+            success.style.display = "none";
+
+            setTimeout(() => {
+                loader.style.display = "none";
+                document.getElementById("job-input").value = sampleJob;
+                txt.innerHTML = "💼 <strong>Mighty_AI_Agent_Job.pdf</strong> (18.2 KB) ロード完了";
+                success.style.display = "flex";
+            }, 1200);
+        }
+
+        // Drag & Drop Handling
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add("dragover");
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove("dragover");
+        }
+
+        function handleDrop(e, type) {
+            e.preventDefault();
+            e.currentTarget.classList.remove("dragover");
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                if (type === 'engineer') {
+                    loadSampleEngineer();
+                } else {
+                    loadSampleJob();
+                }
+            }
+        }
+
+        // Radar Chart Global Instance
+        let radarChart = null;
+
+        // Run Core AI Matching Analysis
+        function runAnalysis() {
+            const engText = document.getElementById("engineer-input").value;
+            const jobText = document.getElementById("job-input").value;
+
+            if (!engText || !jobText) {
+                alert("シミュレーションを実行する前に、経歴書と案件票の両方の入力またはサンプルロードを行ってください。");
+                return;
+            }
+
+            // Create loading overlay in center button
+            const btn = document.querySelector(".bridge-btn");
+            const origText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></span> AI分析中...`;
+
+            setTimeout(() => {
+                // Show Result Container
+                document.getElementById("result-container").style.display = "block";
+                
+                // Set Scores
+                const finalScore = 89;
+                const scores = {
+                    skill: 95,
+                    culture: 88,
+                    growth: 92,
+                    performing: 82
+                };
+
+                // Animate Radial Score Bar
+                const radialBar = document.getElementById("radial-bar");
+                const scoreText = document.getElementById("score-text");
+                const strokeDash = 502 - (502 * finalScore) / 100;
+                
+                // Count up text
+                let count = 0;
+                const interval = setInterval(() => {
+                    if (count >= finalScore) {
+                        clearInterval(interval);
+                    } else {
+                        count++;
+                        scoreText.innerText = count;
+                    }
+                }, 15);
+                radialBar.style.strokeDashoffset = strokeDash;
+
+                // Animate Dimension Progress Bars
+                document.getElementById("dim-skill-bar").style.width = scores.skill + "%";
+                document.getElementById("dim-skill-val").innerText = scores.skill + "%";
+                
+                document.getElementById("dim-culture-bar").style.width = scores.culture + "%";
+                document.getElementById("dim-culture-val").innerText = scores.culture + "%";
+
+                document.getElementById("dim-growth-bar").style.width = scores.growth + "%";
+                document.getElementById("dim-growth-val").innerText = scores.growth + "%";
+
+                document.getElementById("dim-performing-bar").style.width = scores.performing + "%";
+                document.getElementById("dim-performing-val").innerText = scores.performing + "%";
+
+                // Update Match Summary
+                document.getElementById("match-summary").innerText = 
+                    "本シミュレーターの診断結果、佐藤 賢太様のスキル・経歴は、対象案件（LLM自律エージェント開発）に対して「89%」という極めて高い適合性（Highly Compatible）を示しました。特に「Skill-Fit（95%）」においては、Python、TypeScriptに加え、FastAPIやReactのフルスタックスキル、さらにgspread等を用いたGoogle API連携開発実績が、案件で募集されている技術スタック（FastAPI, React, Sheets/Docs Live 連携）と100%合致しています。また「Growth-Fit（92%）」でも、最先端の生成AIを活用してテクノロジーの架け橋となるアーキテクト像を目指す佐藤様の志向性が、募集背景にあるGemini Spark連携開発の方向性と完全に同期しています。即戦力として、初週からアーキテクチャ設計およびAPI開発で強烈なリーダーシップを発揮できると確信します。";
+
+                // Populate Q&A
+                const qaContainer = document.getElementById("qa-container");
+                qaContainer.innerHTML = `
+                    <div class="qa-item">
+                        <div class="qa-question"><span>Q1.</span> Google Sheets API や Drive API を活用した、OAuth 2.0 認証を含む連携開発の実績について具体的に教えてください。</div>
+                        <div class="qa-answer"><strong>【回答例の指針】</strong> Python (gspread/google-auth) を用いて、サービスアカウントまたはデスクトップ OAuth認証を駆使し、スプレッドシートの自動生成、セル書式設定、429クォータ回避のための batch_update API を実装した経験を具体的に説明します。Windows環境下でのエンコーディングエラー回避など、実践的なトラブルシューティング能力もアピールしてください。</div>
+                        <div class="qa-tip"><strong>💡 アピール強化のコツ:</strong> 実際に作成した Python の自動同期スクリプトのモジュール構成や、APIクォータ制限をバッチ処理で劇的に最適化した実績を提示すると非常に好印象です。</div>
+                    </div>
+                    <div class="qa-item">
+                        <div class="qa-question"><span>Q2.</span> 生成AI（LLM）と外部システム（RAGやエージェント）を組み合わせる際、どのような設計上の工夫を行ってきましたか？</div>
+                        <div class="qa-answer"><strong>【回答例の指針】</strong> 単なるAPIコールに留まらず、ローカルデータソースとの整合性を保つためのハイブリッド設計（IndexedDBやSQLite3）や、プロンプトのコンテキストウィンドウを効率化するための構造化パーサー、そしてGeminiのマルチモーダル機能を利用したPDFのパース精度向上に関する工夫を説明します。</div>
+                        <div class="qa-tip"><strong>💡 アピール強化のコツ:</strong> 自律エージェントがバックグラウンドタスクとして動き、終了時にユーザーへシームレスに通知する連携シナリオの設計思想をアピールに組み込みましょう。</div>
+                    </div>
+                `;
+
+                // Populate Roadmap (Google Docs Style)
+                const roadmapContainer = document.getElementById("roadmap-container");
+                roadmapContainer.innerHTML = `
+                    <div class="roadmap-doc">
+                        <h3 class="roadmap-h3" style="color: var(--mighty-blue);">📌 Mighty Skill-Bridge キャッチアップ・ロードマップ (1ヶ月)</h3>
+                        <p><strong>アサイン対象エンジニア:</strong> 佐藤 賢太 | <strong>対象案件:</strong> LLM自律エージェント＆データ連携基盤開発</p>
+                        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 12px 0;">
+                        
+                        <h4 class="roadmap-h3">第1週: システムアーキテクチャの把握と環境構築</h4>
+                        <ul>
+                            <li>- 既存プラットフォームのAPI仕様書およびGoogle Cloud連携認証フローの把握</li>
+                            <li>- ローカル開発環境における client_secret.json などのOAuth認証動作確認</li>
+                            <li>- データベース設計（SQLite3/PostgreSQL）の連携モデリング完了</li>
+                        </ul>
+
+                        <h4 class="roadmap-h3">第2週: Gemini Spark 自律エージェントの基本設計</h4>
+                        <ul>
+                            <li>- Gemini 3.5 Flash を用いた、バックグラウンドでの自律データ解析エンジンのプロトタイプ作成</li>
+                            <li>- gspread を活用した、シートへのバッチ書き込みおよびステータス色付け処理の統合</li>
+                        </ul>
+
+                        <h4 class="roadmap-h3">第3週: フロントエンドUI連携とインタラクティブ可視化</h4>
+                        <ul>
+                            <li>- React.js を用いた、ドラッグ＆ドロップ対応の経歴書アップロードUIの実装</li>
+                            <li>- Chart.js による4次元レーダーチャートのレンダリングおよびリアルタイム分析結果描画の統合</li>
+                        </ul>
+
+                        <h4 class="roadmap-h3">第4週: 自律テスト・デバッグ・デプロイ</h4>
+                        <ul>
+                            <li>- Browser Agent による、複数ファイルドロップ時の自律シナリオUIテスト実行</li>
+                            <li>- 本番公開に向けた CI/CD 環境の設定と、Sheets Live へのデプロイステータス自動通知機能のリリース</li>
+                        </ul>
+                    </div>
+                `;
+
+                // Render Radar Chart
+                renderRadar(scores);
+
+                // Restore Button State and Scroll smoothly
+                btn.disabled = false;
+                btn.innerHTML = origText;
+                
+                document.getElementById("result-container").scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            }, 1800);
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll(".tab-content");
+            contents.forEach(c => c.classList.remove("active"));
+
+            // Deactivate all buttons
+            const buttons = document.querySelectorAll(".tab-btn");
+            buttons.forEach(b => b.classList.remove("active"));
+
+            // Activate target
+            document.getElementById(tabId).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
+
+        // Chart.js Radar Render
+        function renderRadar(scores) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            
+            if (radarChart) {
+                radarChart.destroy(); // Destroy previous instance if exists
+            }
+
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'Skill-Fit (技術)',
+                        'Culture-Fit (文化)',
+                        'Growth-Fit (キャリア)',
+                        'Performing-Fit (即戦力)'
+                    ],
+                    datasets: [{
+                        label: 'マッチング適合度 (%)',
+                        data: [scores.skill, scores.culture, scores.growth, scores.performing],
+                        backgroundColor: 'rgba(26, 115, 232, 0.25)',
+                        borderColor: '#1A73E8',
+                        borderWidth: 2.5,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#1A73E8',
+                        pointHoverBackgroundColor: '#1A73E8',
+                        pointHoverBorderColor: 'rgba(255, 255, 255, 0.8)',
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(255, 255, 255, 0.08)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.08)'
+                            },
+                            pointLabels: {
+                                color: '#94a3b8',
+                                font: {
+                                    size: 11,
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                display: false,
+                                maxTicksLimit: 5
+                            },
+                            suggestedMin: 50,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

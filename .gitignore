@@ -1,0 +1,12 @@
+# Google Cloud Credentials (SECURITY CRITICAL - NEVER UPLOAD TO GITHUB)
+client_secret.json
+credentials.json
+authorized_user.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local system files
+.DS_Store
+Thumbs.db

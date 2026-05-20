@@ -16,14 +16,8 @@ import sys
 import csv
 import json
 
-# Force stdout/stderr to use utf-8 if possible
-if sys.platform.startswith('win'):
-    try:
-        import io
-        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
-    except Exception:
-        pass
+# sys.stdout/stderr override removed to avoid logging capture interference
+
 
 def install_and_import(package):
     """Dynamically checks and instructs how to install dependencies if missing."""
@@ -206,75 +200,155 @@ def main():
     print("[*] Applying Mighty-Link professional branding & styles...")
     num_rows = len(wbs_data)
     num_cols = len(wbs_data[0]) if num_rows > 0 else 0
-    last_col_letter = chr(64 + num_cols) # 'J' if 10 columns
 
-    # A. Format Header Row (Mighty Blue Background + White Bold Text)
-    header_range = f"A1:{last_col_letter}1"
-    worksheet.format(header_range, {
-        "backgroundColor": COLORS["header_bg"],
-        "textFormat": {
-            "foregroundColor": COLORS["header_text"],
-            "bold": True,
-            "fontSize": 11
-        },
-        "horizontalAlignment": "CENTER",
-        "verticalAlignment": "MIDDLE"
+    requests_list = []
+
+    # A. Header Row Format (Mighty Blue Background + White Bold Text)
+    requests_list.append({
+        "repeatCell": {
+            "range": {
+                "sheetId": worksheet.id,
+                "startRowIndex": 0,
+                "endRowIndex": 1,
+                "startColumnIndex": 0,
+                "endColumnIndex": num_cols
+            },
+            "cell": {
+                "userEnteredFormat": {
+                    "backgroundColor": COLORS["header_bg"],
+                    "textFormat": {
+                        "foregroundColor": COLORS["header_text"],
+                        "bold": True,
+                        "fontSize": 11
+                    },
+                    "horizontalAlignment": "CENTER",
+                    "verticalAlignment": "MIDDLE"
+                }
+            },
+            "fields": "userEnteredFormat(backgroundColor,textFormat,horizontalAlignment,verticalAlignment)"
+        }
     })
 
-    # B. Set Row Heights (Header: 40px, Data Rows: 28px)
-    try:
-        worksheet.set_row_height(1, 40)
-        for r in range(2, num_rows + 1):
-            worksheet.set_row_height(r, 28)
-    except Exception as e:
-        print(f"[!] Warning while setting row heights: {e}")
+    # B. Row Heights (Header: 40px, Data Rows: 28px)
+    requests_list.append({
+        "updateDimensionProperties": {
+            "range": {
+                "sheetId": worksheet.id,
+                "dimension": "ROWS",
+                "startIndex": 0,
+                "endIndex": 1
+            },
+            "properties": {
+                "pixelSize": 40
+            },
+            "fields": "pixelSize"
+        }
+    })
+    requests_list.append({
+        "updateDimensionProperties": {
+            "range": {
+                "sheetId": worksheet.id,
+                "dimension": "ROWS",
+                "startIndex": 1,
+                "endIndex": num_rows
+            },
+            "properties": {
+                "pixelSize": 28
+            },
+            "fields": "pixelSize"
+        }
+    })
 
-    # C. Apply Borders and Center Alignments to Task IDs, Dates and Engine columns
-    center_cols = ["A", "E", "F", "H", "I", "J"]  # IDs, Owner, Engine, Status, Dates
-    for col in center_cols:
-        col_range = f"{col}2:{col}{num_rows}"
-        worksheet.format(col_range, {
-            "horizontalAlignment": "CENTER",
-            "verticalAlignment": "MIDDLE"
+    # C. Column Widths
+    col_widths = {
+        0: 80,   # A (ID)
+        1: 130,  # B (Big Phase)
+        2: 130,  # C (Small Phase)
+        3: 300,  # D (Task Name)
+        4: 100,  # E (Owner)
+        5: 130,  # F (Engine)
+        6: 350,  # G (Sheets Live Sync)
+        7: 120,  # H (Status)
+        8: 110,  # I (Start Date)
+        9: 110   # J (End Date)
+    }
+    for col_idx, width in col_widths.items():
+        requests_list.append({
+            "updateDimensionProperties": {
+                "range": {
+                    "sheetId": worksheet.id,
+                    "dimension": "COLUMNS",
+                    "startIndex": col_idx,
+                    "endIndex": col_idx + 1
+                },
+                "properties": {
+                    "pixelSize": width
+                },
+                "fields": "pixelSize"
+            }
         })
 
-    # D. Colorize Status Column dynamically (Typically Column H / Index 8 in TSV)
-    print("[*] Coloring WBS status cells dynamically...")
-    status_col_index = 8
+    # D. Center Alignment for Specific Columns (A, E, F, H, I, J -> Indices 0, 4, 5, 7, 8, 9)
+    center_col_indices = [0, 4, 5, 7, 8, 9]
+    for col_idx in center_col_indices:
+        requests_list.append({
+            "repeatCell": {
+                "range": {
+                    "sheetId": worksheet.id,
+                    "startRowIndex": 1,
+                    "endRowIndex": num_rows,
+                    "startColumnIndex": col_idx,
+                    "endColumnIndex": col_idx + 1
+                },
+                "cell": {
+                    "userEnteredFormat": {
+                        "horizontalAlignment": "CENTER",
+                        "verticalAlignment": "MIDDLE"
+                    }
+                },
+                "fields": "userEnteredFormat(horizontalAlignment,verticalAlignment)"
+            }
+        })
+
+    # E. Colorize Status Column dynamically (Typically Column H / Index 8 in TSV, 0-based Index 7)
+    print("[*] Preparing dynamic status cell formats...")
+    status_col_idx = 7
     for r in range(2, num_rows + 1):
-        status_value = worksheet.cell(r, status_col_index).value
-        cell_ref = f"H{r}"
+        status_value = wbs_data[r - 1][status_col_idx]
         
         bg_color = COLORS["status_todo"]
-        if status_value == "完了" or status_value == "Done" or status_value == "[Done]":
+        if status_value in ["完了", "Done", "[Done]"]:
             bg_color = COLORS["status_done"]
-        elif status_value == "実行中" or status_value == "Agent Working" or status_value == "Reviewing":
+        elif status_value in ["実行中", "Agent Working", "Reviewing"]:
             bg_color = COLORS["status_working"]
             
-        worksheet.format(cell_ref, {
-            "backgroundColor": bg_color,
-            "textFormat": {"bold": True},
-            "horizontalAlignment": "CENTER"
+        requests_list.append({
+            "repeatCell": {
+                "range": {
+                    "sheetId": worksheet.id,
+                    "startRowIndex": r - 1,
+                    "endRowIndex": r,
+                    "startColumnIndex": status_col_idx,
+                    "endColumnIndex": status_col_idx + 1
+                },
+                "cell": {
+                    "userEnteredFormat": {
+                        "backgroundColor": bg_color,
+                        "textFormat": {"bold": True},
+                        "horizontalAlignment": "CENTER",
+                        "verticalAlignment": "MIDDLE"
+                    }
+                },
+                "fields": "userEnteredFormat(backgroundColor,textFormat,horizontalAlignment,verticalAlignment)"
+            }
         })
 
-    # E. Adjust Column Widths to fit content perfectly
-    col_widths = {
-        'A': 80,   # ID
-        'B': 130,  # Big Phase
-        'C': 130,  # Small Phase
-        'D': 300,  # Task Name
-        'E': 100,  # Owner
-        'F': 130,  # Engine
-        'G': 350,  # Sheets Live Sync
-        'H': 120,  # Status
-        'I': 110,  # Start Date
-        'J': 110   # End Date
-    }
-    for col_letter, width in col_widths.items():
-        try:
-            worksheet.set_column_width(col_letter, width)
-        except Exception:
-            pass
+    print("[*] Executing unified Batch Update for all styles & dimensions...")
+    try:
+        sh.batch_update({"requests": requests_list})
+        print("[+] Mighty-Link professional branding & dimensions applied perfectly in a single call!")
+    except Exception as e:
+        print(f"[!] Warning while setting styles/dimensions: {e}")
 
     print("="*60)
     print("[+] Sync Completed Successfully!")
