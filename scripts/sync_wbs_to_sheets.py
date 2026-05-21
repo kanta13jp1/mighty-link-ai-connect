@@ -15,6 +15,9 @@ import os
 import sys
 import csv
 import json
+import re
+import datetime
+from collections import OrderedDict
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
@@ -45,16 +48,48 @@ CLIENT_SECRET_FILE = os.path.join(PROJECT_ROOT, "client_secret.json")   # OAuth 
 AUTHORIZED_USER_FILE = os.path.join(PROJECT_ROOT, "authorized_user.json")
 TSV_FILE = os.path.join(DATA_DIR, "WBS.tsv")
 USER_EMAIL = "k-umezawa@ml-mightylink.com"
+WBS_SHEET_NAME = "Mighty-Link WBS"
+SUMMARY_SHEET_NAME = "WBS Summary"
+TIMELINE_SHEET_NAME = "WBS Timeline"
+DATA_START_ROW = 8
 
 # Mighty-Link Color Palette (Normalized to 0.0 - 1.0 for Sheets API)
 COLORS = {
     "header_bg": {"red": 26/255, "green": 115/255, "blue": 232/255}, # #1A73E8 (Mighty Blue)
     "header_text": {"red": 1.0, "green": 1.0, "blue": 1.0},          # White
+    "title_bg": {"red": 11/255, "green": 57/255, "blue": 84/255},
+    "group_bg": {"red": 34/255, "green": 84/255, "blue": 130/255},
+    "subheader_bg": {"red": 217/255, "green": 226/255, "blue": 243/255}, # CATS-like light blue
+    "phase_bg": {"red": 226/255, "green": 239/255, "blue": 251/255},
+    "summary_bg": {"red": 239/255, "green": 246/255, "blue": 255/255},
     "status_todo": {"red": 241/255, "green": 243/255, "blue": 244/255}, # Light Gray
     "status_working": {"red": 254/255, "green": 247/255, "blue": 224/255}, # Light Yellow
     "status_done": {"red": 230/255, "green": 244/255, "blue": 234/255}, # Light Green
+    "status_alert": {"red": 252/255, "green": 228/255, "blue": 214/255},
+    "warning_bg": {"red": 255/255, "green": 242/255, "blue": 204/255},
+    "white": {"red": 1.0, "green": 1.0, "blue": 1.0},
+    "black": {"red": 0.0, "green": 0.0, "blue": 0.0},
     "border_gray": {"red": 218/255, "green": 220/255, "blue": 224/255}
 }
+
+ENHANCED_HEADERS = [
+    "WBS#",
+    "Lv",
+    "WP",
+    "大フェーズ",
+    "小フェーズ",
+    "タスク名",
+    "タスク内容・コメント",
+    "状態",
+    "主管/担当",
+    "実行エンジン",
+    "予定開始日",
+    "予定終了日",
+    "予定工数(日)",
+    "進捗率",
+    "アラート",
+    "備考",
+]
 
 def load_wbs_data(filepath):
     """Loads TSV data into a 2D list."""
@@ -68,6 +103,541 @@ def load_wbs_data(filepath):
         for row in reader:
             data.append(row)
     return data
+
+
+def normalize_status(status):
+    status = (status or "").strip()
+    if status in ["完了", "Done", "[Done]"]:
+        return "完了"
+    if status in ["実行中", "対応中", "Agent Working", "Reviewing"]:
+        return "実行中"
+    return "未着手"
+
+
+def status_progress(status):
+    status = normalize_status(status)
+    if status == "完了":
+        return "100%"
+    if status == "実行中":
+        return "50%"
+    return "0%"
+
+
+def extract_phase_no(phase, fallback):
+    match = re.match(r"\s*(\d+)", phase or "")
+    return match.group(1) if match else str(fallback)
+
+
+def safe_cell(row, index, default=""):
+    return row[index] if index < len(row) else default
+
+
+def formula_quote(sheet_name):
+    return f"'{sheet_name}'"
+
+
+def ensure_worksheet(sh, title, rows=120, cols=20):
+    try:
+        worksheet = sh.worksheet(title)
+        print(f"[*] Found existing worksheet: '{title}'. Clearing content...")
+        worksheet.clear()
+    except gspread.exceptions.WorksheetNotFound:
+        print(f"[*] Worksheet '{title}' not found. Creating a new one...")
+        worksheet = sh.add_worksheet(title=title, rows=rows, cols=cols)
+        print(f"[+] Worksheet '{title}' created successfully.")
+    worksheet.resize(rows=rows, cols=cols)
+    return worksheet
+
+
+def parse_date_value(value):
+    value = (value or "").strip()
+    if not value:
+        return ""
+    try:
+        return datetime.datetime.strptime(value, "%Y-%m-%d").date().isoformat()
+    except ValueError:
+        return value
+
+
+def build_enhanced_wbs(wbs_data):
+    """Expands the simple TSV into a CATS-like hierarchical WBS grid."""
+    phase_groups = OrderedDict()
+    for row in wbs_data[1:]:
+        if not row or not safe_cell(row, 0):
+            continue
+        phase_groups.setdefault(safe_cell(row, 1), []).append(row)
+
+    data_rows = []
+    task_rows = []
+
+    for phase_idx, (phase, tasks) in enumerate(phase_groups.items(), start=1):
+        phase_no = extract_phase_no(phase, phase_idx)
+        starts = [parse_date_value(safe_cell(task, 8)) for task in tasks if safe_cell(task, 8)]
+        ends = [parse_date_value(safe_cell(task, 9)) for task in tasks if safe_cell(task, 9)]
+        phase_start = min(starts) if starts else ""
+        phase_end = max(ends) if ends else ""
+        task_start_row = DATA_START_ROW + len(data_rows) + 1
+        task_end_row = task_start_row + len(tasks) - 1
+        phase_sheet_row = DATA_START_ROW + len(data_rows)
+        statuses = [normalize_status(safe_cell(task, 7)) for task in tasks]
+        if all(status == "完了" for status in statuses):
+            phase_status = "完了"
+        elif all(status == "未着手" for status in statuses):
+            phase_status = "未着手"
+        else:
+            phase_status = "実行中"
+
+        data_rows.append([
+            phase_no,
+            1,
+            "Phase",
+            phase,
+            "",
+            phase,
+            f"{len(tasks)} tasks / {phase_start} - {phase_end}",
+            phase_status,
+            "",
+            "",
+            phase_start,
+            phase_end,
+            f"=SUM(M{task_start_row}:M{task_end_row})",
+            f"=IFERROR(AVERAGE(N{task_start_row}:N{task_end_row}),0%)",
+            f'=IF(N{phase_sheet_row}=1,"完了",IF(N{phase_sheet_row}=0,"未着手","進行中"))',
+            "",
+        ])
+
+        for seq, task in enumerate(tasks, start=1):
+            sheet_row = DATA_START_ROW + len(data_rows)
+            status = normalize_status(safe_cell(task, 7))
+            row = [
+                f"{phase_no}.{seq}",
+                2,
+                safe_cell(task, 0),
+                phase,
+                safe_cell(task, 2),
+                safe_cell(task, 3),
+                safe_cell(task, 6),
+                status,
+                safe_cell(task, 4),
+                safe_cell(task, 5),
+                parse_date_value(safe_cell(task, 8)),
+                parse_date_value(safe_cell(task, 9)),
+                f'=IF(AND(K{sheet_row}<>"",L{sheet_row}<>""),L{sheet_row}-K{sheet_row}+1,"")',
+                status_progress(status),
+                f'=IFS(H{sheet_row}="完了","完了",AND(K{sheet_row}<>"",TODAY()>K{sheet_row},N{sheet_row}=0),"着手遅れ",AND(L{sheet_row}<>"",TODAY()>L{sheet_row},N{sheet_row}<1),"終了遅れ",N{sheet_row}>0,"着手済",TRUE,"未着手")',
+                "",
+            ]
+            data_rows.append(row)
+            task_rows.append(row)
+
+    last_data_row = DATA_START_ROW + len(data_rows) - 1
+    report_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    sheet_values = [
+        ["Mighty-Link AI Connect WBS 管理表"] + [""] * (len(ENHANCED_HEADERS) - 1),
+        [f"参照テンプレート: 【次期CATS】WBS_分析計画工程(後半).xlsx / Last Sync: {report_time}"] + [""] * (len(ENHANCED_HEADERS) - 1),
+        [""] * len(ENHANCED_HEADERS),
+        [
+            "総タスク", f"=COUNTIF(B{DATA_START_ROW}:B{last_data_row},2)",
+            "完了", f'=COUNTIFS(B{DATA_START_ROW}:B{last_data_row},2,H{DATA_START_ROW}:H{last_data_row},"完了")',
+            "実行中", f'=COUNTIFS(B{DATA_START_ROW}:B{last_data_row},2,H{DATA_START_ROW}:H{last_data_row},"実行中")',
+            "未着手", f'=COUNTIFS(B{DATA_START_ROW}:B{last_data_row},2,H{DATA_START_ROW}:H{last_data_row},"未着手")',
+            "完了率", f"=IFERROR(D4/B4,0%)",
+            "対象期間", f'=TEXT(MIN(K{DATA_START_ROW}:K{last_data_row}),"yyyy/mm/dd")&" - "&TEXT(MAX(L{DATA_START_ROW}:L{last_data_row}),"yyyy/mm/dd")',
+            "", "", "", ""
+        ],
+        [""] * len(ENHANCED_HEADERS),
+        ["WBS階層"] + [""] * 5 + ["タスク管理"] + [""] * 3 + ["予定・進捗"] + [""] * 4 + ["メモ"],
+        ENHANCED_HEADERS,
+    ] + data_rows
+    return sheet_values, data_rows, task_rows, last_data_row
+
+
+def build_summary_sheet(phase_names, last_data_row):
+    q_sheet = formula_quote(WBS_SHEET_NAME)
+    values = [
+        ["Mighty-Link AI Connect WBS 集計"] + [""] * 8,
+        ["フェーズ別のタスク状態・完了率・期間を自動集計"] + [""] * 8,
+        [""] * 9,
+        ["大フェーズ", "総数", "完了", "実行中", "未着手", "完了率", "開始日", "終了日", "ステータス"],
+    ]
+    for idx, phase in enumerate(phase_names, start=5):
+        phase_cell = f"A{idx}"
+        values.append([
+            phase,
+            f'=COUNTIFS({q_sheet}!$D${DATA_START_ROW}:$D${last_data_row},{phase_cell},{q_sheet}!$B${DATA_START_ROW}:$B${last_data_row},2)',
+            f'=COUNTIFS({q_sheet}!$D${DATA_START_ROW}:$D${last_data_row},{phase_cell},{q_sheet}!$B${DATA_START_ROW}:$B${last_data_row},2,{q_sheet}!$H${DATA_START_ROW}:$H${last_data_row},"完了")',
+            f'=COUNTIFS({q_sheet}!$D${DATA_START_ROW}:$D${last_data_row},{phase_cell},{q_sheet}!$B${DATA_START_ROW}:$B${last_data_row},2,{q_sheet}!$H${DATA_START_ROW}:$H${last_data_row},"実行中")',
+            f'=COUNTIFS({q_sheet}!$D${DATA_START_ROW}:$D${last_data_row},{phase_cell},{q_sheet}!$B${DATA_START_ROW}:$B${last_data_row},2,{q_sheet}!$H${DATA_START_ROW}:$H${last_data_row},"未着手")',
+            f"=IFERROR(C{idx}/B{idx},0%)",
+            f'=IFERROR(MINIFS({q_sheet}!$K${DATA_START_ROW}:$K${last_data_row},{q_sheet}!$D${DATA_START_ROW}:$D${last_data_row},{phase_cell},{q_sheet}!$B${DATA_START_ROW}:$B${last_data_row},2),"")',
+            f'=IFERROR(MAXIFS({q_sheet}!$L${DATA_START_ROW}:$L${last_data_row},{q_sheet}!$D${DATA_START_ROW}:$D${last_data_row},{phase_cell},{q_sheet}!$B${DATA_START_ROW}:$B${last_data_row},2),"")',
+            f'=IF(F{idx}=1,"完了",IF(F{idx}=0,"未着手","進行中"))',
+        ])
+    total_row = len(values) + 1
+    values.append([""] * 9)
+    values.append([
+        "合計",
+        f"=SUM(B5:B{total_row-2})",
+        f"=SUM(C5:C{total_row-2})",
+        f"=SUM(D5:D{total_row-2})",
+        f"=SUM(E5:E{total_row-2})",
+        f"=IFERROR(C{total_row}/B{total_row},0%)",
+        f'=IFERROR(MIN(G5:G{total_row-2}),"")',
+        f'=IFERROR(MAX(H5:H{total_row-2}),"")',
+        f'=IF(F{total_row}=1,"完了",IF(F{total_row}=0,"未着手","進行中"))',
+    ])
+    return values
+
+
+def build_timeline_sheet(task_rows):
+    values = [
+        ["Mighty-Link AI Connect WBS Timeline"] + [""] * 8,
+        ["予定開始日・終了日・進捗率を横断確認するための軽量タイムライン"] + [""] * 8,
+        [""] * 9,
+        ["WBS#", "タスクID", "大フェーズ", "タスク名", "状態", "予定開始日", "予定終了日", "予定工数(日)", "進捗率"],
+    ]
+    for row in task_rows:
+        timeline_row = len(values) + 1
+        values.append([
+            row[0],
+            row[2],
+            row[3],
+            row[5],
+            row[7],
+            row[10],
+            row[11],
+            f'=IF(AND(F{timeline_row}<>"",G{timeline_row}<>""),G{timeline_row}-F{timeline_row}+1,"")',
+            row[13],
+        ])
+    return values
+
+
+def get_sheet_metadata(sh, sheet_id):
+    metadata = sh.fetch_sheet_metadata(params={"includeGridData": False})
+    for sheet in metadata.get("sheets", []):
+        if sheet.get("properties", {}).get("sheetId") == sheet_id:
+            return sheet
+    return {}
+
+
+def cleanup_sheet_requests(sh, worksheet, row_count, col_count):
+    sheet_meta = get_sheet_metadata(sh, worksheet.id)
+    requests = []
+    if sheet_meta.get("basicFilter"):
+        requests.append({"clearBasicFilter": {"sheetId": worksheet.id}})
+    for _ in range(len(sheet_meta.get("conditionalFormats", []))):
+        requests.append({"deleteConditionalFormatRule": {"sheetId": worksheet.id, "index": 0}})
+    requests.append({
+        "unmergeCells": {
+            "range": {
+                "sheetId": worksheet.id,
+                "startRowIndex": 0,
+                "endRowIndex": row_count,
+                "startColumnIndex": 0,
+                "endColumnIndex": col_count,
+            }
+        }
+    })
+    requests.append({
+        "repeatCell": {
+            "range": {
+                "sheetId": worksheet.id,
+                "startRowIndex": 0,
+                "endRowIndex": row_count,
+                "startColumnIndex": 0,
+                "endColumnIndex": col_count,
+            },
+            "cell": {"userEnteredFormat": {}},
+            "fields": "userEnteredFormat",
+        }
+    })
+    return requests
+
+
+def grid_range(sheet_id, start_row, end_row, start_col, end_col):
+    return {
+        "sheetId": sheet_id,
+        "startRowIndex": start_row,
+        "endRowIndex": end_row,
+        "startColumnIndex": start_col,
+        "endColumnIndex": end_col,
+    }
+
+
+def repeat_format(sheet_id, start_row, end_row, start_col, end_col, fmt, fields=None):
+    return {
+        "repeatCell": {
+            "range": grid_range(sheet_id, start_row, end_row, start_col, end_col),
+            "cell": {"userEnteredFormat": fmt},
+            "fields": fields or "userEnteredFormat(backgroundColor,textFormat,horizontalAlignment,verticalAlignment,wrapStrategy,numberFormat,borders)",
+        }
+    }
+
+
+def border_format():
+    border = {"style": "SOLID", "width": 1, "color": COLORS["border_gray"]}
+    return {"top": border, "bottom": border, "left": border, "right": border}
+
+
+def set_column_width_request(sheet_id, col_idx, width):
+    return {
+        "updateDimensionProperties": {
+            "range": {
+                "sheetId": sheet_id,
+                "dimension": "COLUMNS",
+                "startIndex": col_idx,
+                "endIndex": col_idx + 1,
+            },
+            "properties": {"pixelSize": width},
+            "fields": "pixelSize",
+        }
+    }
+
+
+def add_text_conditional(sheet_id, start_row, end_row, col_idx, text, bg_color, font_color=None):
+    fmt = {"backgroundColor": bg_color, "textFormat": {"bold": True}}
+    if font_color:
+        fmt["textFormat"]["foregroundColor"] = font_color
+    return {
+        "addConditionalFormatRule": {
+            "rule": {
+                "ranges": [grid_range(sheet_id, start_row, end_row, col_idx, col_idx + 1)],
+                "booleanRule": {
+                    "condition": {
+                        "type": "TEXT_EQ",
+                        "values": [{"userEnteredValue": text}],
+                    },
+                    "format": fmt,
+                },
+            },
+            "index": 0,
+        }
+    }
+
+
+def apply_wbs_styles(sh, worksheet, num_rows, num_cols, last_data_row):
+    print("[*] Applying CATS-like hierarchical WBS styles...")
+    requests = cleanup_sheet_requests(sh, worksheet, max(num_rows, 80), max(num_cols, 16))
+
+    sheet_id = worksheet.id
+    requests.extend([
+        {
+            "updateSheetProperties": {
+                "properties": {
+                    "sheetId": sheet_id,
+                    "gridProperties": {
+                        "frozenRowCount": 7,
+                        "hideGridlines": True,
+                    },
+                },
+                "fields": "gridProperties(frozenRowCount,hideGridlines)",
+            }
+        },
+        {"mergeCells": {"range": grid_range(sheet_id, 0, 1, 0, num_cols), "mergeType": "MERGE_ALL"}},
+        {"mergeCells": {"range": grid_range(sheet_id, 1, 2, 0, num_cols), "mergeType": "MERGE_ALL"}},
+        {"mergeCells": {"range": grid_range(sheet_id, 5, 6, 0, 6), "mergeType": "MERGE_ALL"}},
+        {"mergeCells": {"range": grid_range(sheet_id, 5, 6, 6, 10), "mergeType": "MERGE_ALL"}},
+        {"mergeCells": {"range": grid_range(sheet_id, 5, 6, 10, 15), "mergeType": "MERGE_ALL"}},
+        repeat_format(sheet_id, 0, 1, 0, num_cols, {
+            "backgroundColor": COLORS["title_bg"],
+            "textFormat": {"foregroundColor": COLORS["header_text"], "bold": True, "fontSize": 16},
+            "horizontalAlignment": "LEFT",
+            "verticalAlignment": "MIDDLE",
+        }),
+        repeat_format(sheet_id, 1, 2, 0, num_cols, {
+            "backgroundColor": COLORS["summary_bg"],
+            "textFormat": {"foregroundColor": COLORS["black"], "fontSize": 9},
+            "horizontalAlignment": "LEFT",
+            "verticalAlignment": "MIDDLE",
+        }),
+        repeat_format(sheet_id, 3, 4, 0, num_cols, {
+            "backgroundColor": COLORS["warning_bg"],
+            "textFormat": {"bold": True, "fontSize": 10},
+            "verticalAlignment": "MIDDLE",
+            "wrapStrategy": "WRAP",
+            "borders": border_format(),
+        }),
+        repeat_format(sheet_id, 5, 6, 0, num_cols, {
+            "backgroundColor": COLORS["group_bg"],
+            "textFormat": {"foregroundColor": COLORS["header_text"], "bold": True, "fontSize": 10},
+            "horizontalAlignment": "CENTER",
+            "verticalAlignment": "MIDDLE",
+            "borders": border_format(),
+        }),
+        repeat_format(sheet_id, 6, 7, 0, num_cols, {
+            "backgroundColor": COLORS["subheader_bg"],
+            "textFormat": {"bold": True, "fontSize": 10},
+            "horizontalAlignment": "CENTER",
+            "verticalAlignment": "MIDDLE",
+            "wrapStrategy": "WRAP",
+            "borders": border_format(),
+        }),
+        repeat_format(sheet_id, DATA_START_ROW - 1, last_data_row, 0, num_cols, {
+            "verticalAlignment": "MIDDLE",
+            "wrapStrategy": "WRAP",
+            "borders": border_format(),
+        }),
+        repeat_format(sheet_id, DATA_START_ROW - 1, last_data_row, 0, 3, {
+            "horizontalAlignment": "CENTER",
+            "verticalAlignment": "MIDDLE",
+        }, "userEnteredFormat(horizontalAlignment,verticalAlignment)"),
+        repeat_format(sheet_id, DATA_START_ROW - 1, last_data_row, 7, 15, {
+            "horizontalAlignment": "CENTER",
+            "verticalAlignment": "MIDDLE",
+        }, "userEnteredFormat(horizontalAlignment,verticalAlignment)"),
+        repeat_format(sheet_id, DATA_START_ROW - 1, last_data_row, 10, 12, {
+            "numberFormat": {"type": "DATE", "pattern": "yyyy-mm-dd"},
+            "horizontalAlignment": "CENTER",
+        }, "userEnteredFormat(numberFormat,horizontalAlignment)"),
+        repeat_format(sheet_id, DATA_START_ROW - 1, last_data_row, 12, 13, {
+            "numberFormat": {"type": "NUMBER", "pattern": "0"},
+            "horizontalAlignment": "RIGHT",
+        }, "userEnteredFormat(numberFormat,horizontalAlignment)"),
+        repeat_format(sheet_id, DATA_START_ROW - 1, last_data_row, 13, 14, {
+            "numberFormat": {"type": "PERCENT", "pattern": "0%"},
+            "horizontalAlignment": "CENTER",
+        }, "userEnteredFormat(numberFormat,horizontalAlignment)"),
+        repeat_format(sheet_id, 3, 4, 9, 10, {
+            "numberFormat": {"type": "PERCENT", "pattern": "0%"},
+            "horizontalAlignment": "CENTER",
+        }, "userEnteredFormat(numberFormat,horizontalAlignment)"),
+        {
+            "setBasicFilter": {
+                "filter": {
+                    "range": grid_range(sheet_id, 6, last_data_row, 0, num_cols),
+                }
+            }
+        },
+        {
+            "setDataValidation": {
+                "range": grid_range(sheet_id, DATA_START_ROW - 1, last_data_row, 7, 8),
+                "rule": {
+                    "condition": {
+                        "type": "ONE_OF_LIST",
+                        "values": [
+                            {"userEnteredValue": "完了"},
+                            {"userEnteredValue": "実行中"},
+                            {"userEnteredValue": "未着手"},
+                        ],
+                    },
+                    "showCustomUi": True,
+                    "strict": False,
+                },
+            }
+        },
+    ])
+
+    col_widths = [78, 42, 86, 150, 125, 280, 360, 90, 110, 140, 105, 105, 85, 78, 110, 180]
+    for col_idx, width in enumerate(col_widths):
+        requests.append(set_column_width_request(sheet_id, col_idx, width))
+
+    row_heights = {0: 38, 1: 28, 3: 34, 5: 30, 6: 38}
+    for row_idx, height in row_heights.items():
+        requests.append({
+            "updateDimensionProperties": {
+                "range": {"sheetId": sheet_id, "dimension": "ROWS", "startIndex": row_idx, "endIndex": row_idx + 1},
+                "properties": {"pixelSize": height},
+                "fields": "pixelSize",
+            }
+        })
+    requests.append({
+        "updateDimensionProperties": {
+            "range": {"sheetId": sheet_id, "dimension": "ROWS", "startIndex": DATA_START_ROW - 1, "endIndex": last_data_row},
+            "properties": {"pixelSize": 32},
+            "fields": "pixelSize",
+        }
+    })
+
+    # Phase rows and status/alert colors.
+    requests.append({
+        "addConditionalFormatRule": {
+            "rule": {
+                "ranges": [grid_range(sheet_id, DATA_START_ROW - 1, last_data_row, 0, num_cols)],
+                "booleanRule": {
+                    "condition": {"type": "CUSTOM_FORMULA", "values": [{"userEnteredValue": f"=$B{DATA_START_ROW}=1"}]},
+                    "format": {"backgroundColor": COLORS["phase_bg"], "textFormat": {"bold": True}},
+                },
+            },
+            "index": 0,
+        }
+    })
+    requests.extend([
+        add_text_conditional(sheet_id, DATA_START_ROW - 1, last_data_row, 7, "完了", COLORS["status_done"]),
+        add_text_conditional(sheet_id, DATA_START_ROW - 1, last_data_row, 7, "実行中", COLORS["status_working"]),
+        add_text_conditional(sheet_id, DATA_START_ROW - 1, last_data_row, 7, "未着手", COLORS["status_todo"]),
+        add_text_conditional(sheet_id, DATA_START_ROW - 1, last_data_row, 14, "完了", COLORS["status_done"]),
+        add_text_conditional(sheet_id, DATA_START_ROW - 1, last_data_row, 14, "着手済", COLORS["status_working"]),
+        add_text_conditional(sheet_id, DATA_START_ROW - 1, last_data_row, 14, "着手遅れ", COLORS["status_alert"]),
+        add_text_conditional(sheet_id, DATA_START_ROW - 1, last_data_row, 14, "終了遅れ", COLORS["status_alert"]),
+    ])
+
+    sh.batch_update({"requests": requests})
+
+
+def apply_simple_table_styles(sh, worksheet, num_rows, num_cols, freeze_rows=4, percent_cols=None, date_cols=None):
+    percent_cols = percent_cols if percent_cols is not None else [5]
+    date_cols = date_cols if date_cols is not None else [(6, 8)]
+    sheet_id = worksheet.id
+    requests = cleanup_sheet_requests(sh, worksheet, max(num_rows, 60), max(num_cols, 12))
+    requests.extend([
+        {
+            "updateSheetProperties": {
+                "properties": {
+                    "sheetId": sheet_id,
+                    "gridProperties": {"frozenRowCount": freeze_rows, "hideGridlines": True},
+                },
+                "fields": "gridProperties(frozenRowCount,hideGridlines)",
+            }
+        },
+        {"mergeCells": {"range": grid_range(sheet_id, 0, 1, 0, num_cols), "mergeType": "MERGE_ALL"}},
+        {"mergeCells": {"range": grid_range(sheet_id, 1, 2, 0, num_cols), "mergeType": "MERGE_ALL"}},
+        repeat_format(sheet_id, 0, 1, 0, num_cols, {
+            "backgroundColor": COLORS["title_bg"],
+            "textFormat": {"foregroundColor": COLORS["header_text"], "bold": True, "fontSize": 14},
+            "verticalAlignment": "MIDDLE",
+        }),
+        repeat_format(sheet_id, 1, 2, 0, num_cols, {
+            "backgroundColor": COLORS["summary_bg"],
+            "textFormat": {"fontSize": 9},
+            "verticalAlignment": "MIDDLE",
+        }),
+        repeat_format(sheet_id, freeze_rows - 1, freeze_rows, 0, num_cols, {
+            "backgroundColor": COLORS["subheader_bg"],
+            "textFormat": {"bold": True},
+            "horizontalAlignment": "CENTER",
+            "verticalAlignment": "MIDDLE",
+            "wrapStrategy": "WRAP",
+            "borders": border_format(),
+        }),
+        repeat_format(sheet_id, freeze_rows, num_rows, 0, num_cols, {
+            "verticalAlignment": "MIDDLE",
+            "wrapStrategy": "WRAP",
+            "borders": border_format(),
+        }),
+        {
+            "setBasicFilter": {
+                "filter": {"range": grid_range(sheet_id, freeze_rows - 1, num_rows, 0, num_cols)}
+            }
+        },
+    ])
+    for col_idx, width in enumerate([220, 72, 72, 72, 72, 82, 110, 110, 90, 140, 140, 140]):
+        if col_idx < num_cols:
+            requests.append(set_column_width_request(sheet_id, col_idx, width))
+    for col_idx in percent_cols:
+        if col_idx >= num_cols:
+            continue
+        requests.append(repeat_format(sheet_id, freeze_rows, num_rows, col_idx, col_idx + 1, {
+            "numberFormat": {"type": "PERCENT", "pattern": "0%"},
+            "horizontalAlignment": "CENTER",
+        }, "userEnteredFormat(numberFormat,horizontalAlignment)"))
+    for start_col, end_col in date_cols:
+        if start_col >= num_cols:
+            continue
+        requests.append(repeat_format(sheet_id, freeze_rows, num_rows, start_col, min(end_col, num_cols), {
+            "numberFormat": {"type": "DATE", "pattern": "yyyy-mm-dd"},
+            "horizontalAlignment": "CENTER",
+        }, "userEnteredFormat(numberFormat,horizontalAlignment)"))
+    sh.batch_update({"requests": requests})
 
 def main():
     print("="*60)
@@ -172,186 +742,45 @@ def main():
             print(f"[-] Failed to open sheet. Ensure the sheet is shared if using Service Account. Error: {e}")
             sys.exit(1)
 
-    # 3. Load data and setup Worksheet
+    # 3. Load data and setup Worksheets
     print(f"[*] Parsing local {os.path.relpath(TSV_FILE, PROJECT_ROOT)}...")
     wbs_data = load_wbs_data(TSV_FILE)
     if not wbs_data:
         print("[-] No WBS data found in TSV file. Exiting.")
         sys.exit(1)
 
-    sheet_name = "Mighty-Link WBS"
+    enhanced_values, enhanced_rows, task_rows, last_data_row = build_enhanced_wbs(wbs_data)
+    phase_names = [row[3] for row in enhanced_rows if row[1] == 1]
+    summary_values = build_summary_sheet(phase_names, last_data_row)
+    timeline_values = build_timeline_sheet(task_rows)
+
+    wbs_rows = max(len(enhanced_values) + 20, 120)
+    wbs_cols = len(ENHANCED_HEADERS)
+    worksheet = ensure_worksheet(sh, WBS_SHEET_NAME, rows=wbs_rows, cols=wbs_cols)
+    summary_sheet = ensure_worksheet(sh, SUMMARY_SHEET_NAME, rows=max(len(summary_values) + 20, 60), cols=9)
+    timeline_sheet = ensure_worksheet(sh, TIMELINE_SHEET_NAME, rows=max(len(timeline_values) + 20, 80), cols=9)
+
+    # Remove default Sheet1 if present to keep the workbook clean.
     try:
-        worksheet = sh.worksheet(sheet_name)
-        print(f"[*] Found existing worksheet: '{sheet_name}'. Clearing content...")
-        worksheet.clear()
-    except gspread.exceptions.WorksheetNotFound:
-        print(f"[*] Worksheet '{sheet_name}' not found. Creating a new one...")
-        worksheet = sh.add_worksheet(title=sheet_name, rows=100, cols=20)
-        print(f"[+] Worksheet '{sheet_name}' created successfully.")
-        
-        # Remove default Sheet1 if we created a new one to keep it clean
-        try:
-            default_sheet = sh.worksheet("Sheet1")
+        default_sheet = sh.worksheet("Sheet1")
+        if default_sheet.id not in [worksheet.id, summary_sheet.id, timeline_sheet.id]:
             sh.del_worksheet(default_sheet)
-        except Exception:
-            pass
+    except Exception:
+        pass
 
     # 4. Upload Data
-    print("[*] Uploading WBS data rows...")
-    worksheet.update(values=wbs_data, range_name="A1")
-    print(f"[+] Successfully wrote {len(wbs_data)} rows to the sheet!")
+    print("[*] Uploading enhanced CATS-like WBS views...")
+    worksheet.update(values=enhanced_values, range_name="A1", value_input_option="USER_ENTERED")
+    summary_sheet.update(values=summary_values, range_name="A1", value_input_option="USER_ENTERED")
+    timeline_sheet.update(values=timeline_values, range_name="A1", value_input_option="USER_ENTERED")
+    print(f"[+] Successfully wrote {len(wbs_data)} source rows into {len(enhanced_values)} hierarchical WBS display rows.")
 
-    # 5. Apply Professional Styles (Workspace AI Design Theme)
-    print("[*] Applying Mighty-Link professional branding & styles...")
-    num_rows = len(wbs_data)
-    num_cols = len(wbs_data[0]) if num_rows > 0 else 0
-
-    requests_list = []
-
-    # A. Header Row Format (Mighty Blue Background + White Bold Text)
-    requests_list.append({
-        "repeatCell": {
-            "range": {
-                "sheetId": worksheet.id,
-                "startRowIndex": 0,
-                "endRowIndex": 1,
-                "startColumnIndex": 0,
-                "endColumnIndex": num_cols
-            },
-            "cell": {
-                "userEnteredFormat": {
-                    "backgroundColor": COLORS["header_bg"],
-                    "textFormat": {
-                        "foregroundColor": COLORS["header_text"],
-                        "bold": True,
-                        "fontSize": 11
-                    },
-                    "horizontalAlignment": "CENTER",
-                    "verticalAlignment": "MIDDLE"
-                }
-            },
-            "fields": "userEnteredFormat(backgroundColor,textFormat,horizontalAlignment,verticalAlignment)"
-        }
-    })
-
-    # B. Row Heights (Header: 40px, Data Rows: 28px)
-    requests_list.append({
-        "updateDimensionProperties": {
-            "range": {
-                "sheetId": worksheet.id,
-                "dimension": "ROWS",
-                "startIndex": 0,
-                "endIndex": 1
-            },
-            "properties": {
-                "pixelSize": 40
-            },
-            "fields": "pixelSize"
-        }
-    })
-    requests_list.append({
-        "updateDimensionProperties": {
-            "range": {
-                "sheetId": worksheet.id,
-                "dimension": "ROWS",
-                "startIndex": 1,
-                "endIndex": num_rows
-            },
-            "properties": {
-                "pixelSize": 28
-            },
-            "fields": "pixelSize"
-        }
-    })
-
-    # C. Column Widths
-    col_widths = {
-        0: 80,   # A (ID)
-        1: 130,  # B (Big Phase)
-        2: 130,  # C (Small Phase)
-        3: 300,  # D (Task Name)
-        4: 100,  # E (Owner)
-        5: 130,  # F (Engine)
-        6: 350,  # G (Sheets Live Sync)
-        7: 120,  # H (Status)
-        8: 110,  # I (Start Date)
-        9: 110   # J (End Date)
-    }
-    for col_idx, width in col_widths.items():
-        requests_list.append({
-            "updateDimensionProperties": {
-                "range": {
-                    "sheetId": worksheet.id,
-                    "dimension": "COLUMNS",
-                    "startIndex": col_idx,
-                    "endIndex": col_idx + 1
-                },
-                "properties": {
-                    "pixelSize": width
-                },
-                "fields": "pixelSize"
-            }
-        })
-
-    # D. Center Alignment for Specific Columns (A, E, F, H, I, J -> Indices 0, 4, 5, 7, 8, 9)
-    center_col_indices = [0, 4, 5, 7, 8, 9]
-    for col_idx in center_col_indices:
-        requests_list.append({
-            "repeatCell": {
-                "range": {
-                    "sheetId": worksheet.id,
-                    "startRowIndex": 1,
-                    "endRowIndex": num_rows,
-                    "startColumnIndex": col_idx,
-                    "endColumnIndex": col_idx + 1
-                },
-                "cell": {
-                    "userEnteredFormat": {
-                        "horizontalAlignment": "CENTER",
-                        "verticalAlignment": "MIDDLE"
-                    }
-                },
-                "fields": "userEnteredFormat(horizontalAlignment,verticalAlignment)"
-            }
-        })
-
-    # E. Colorize Status Column dynamically (Typically Column H / Index 8 in TSV, 0-based Index 7)
-    print("[*] Preparing dynamic status cell formats...")
-    status_col_idx = 7
-    for r in range(2, num_rows + 1):
-        status_value = wbs_data[r - 1][status_col_idx]
-        
-        bg_color = COLORS["status_todo"]
-        if status_value in ["完了", "Done", "[Done]"]:
-            bg_color = COLORS["status_done"]
-        elif status_value in ["実行中", "Agent Working", "Reviewing"]:
-            bg_color = COLORS["status_working"]
-            
-        requests_list.append({
-            "repeatCell": {
-                "range": {
-                    "sheetId": worksheet.id,
-                    "startRowIndex": r - 1,
-                    "endRowIndex": r,
-                    "startColumnIndex": status_col_idx,
-                    "endColumnIndex": status_col_idx + 1
-                },
-                "cell": {
-                    "userEnteredFormat": {
-                        "backgroundColor": bg_color,
-                        "textFormat": {"bold": True},
-                        "horizontalAlignment": "CENTER",
-                        "verticalAlignment": "MIDDLE"
-                    }
-                },
-                "fields": "userEnteredFormat(backgroundColor,textFormat,horizontalAlignment,verticalAlignment)"
-            }
-        })
-
-    print("[*] Executing unified Batch Update for all styles & dimensions...")
+    # 5. Apply Professional Styles (CATS-inspired WBS Design)
     try:
-        sh.batch_update({"requests": requests_list})
-        print("[+] Mighty-Link professional branding & dimensions applied perfectly in a single call!")
+        apply_wbs_styles(sh, worksheet, len(enhanced_values), len(ENHANCED_HEADERS), last_data_row)
+        apply_simple_table_styles(sh, summary_sheet, len(summary_values), 9, freeze_rows=4, percent_cols=[5], date_cols=[(6, 8)])
+        apply_simple_table_styles(sh, timeline_sheet, len(timeline_values), 9, freeze_rows=4, percent_cols=[8], date_cols=[(5, 7)])
+        print("[+] CATS-like hierarchy, summary, timeline, filters, freeze panes, and status colors applied.")
     except Exception as e:
         print(f"[!] Warning while setting styles/dimensions: {e}")
 

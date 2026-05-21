@@ -109,6 +109,12 @@ python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB
 
 同期元データは [data/WBS.tsv](../data/WBS.tsv) です。
 
+現在の同期スクリプトは、参考ファイル `【次期CATS】WBS_分析計画工程(後半).xlsx` の構成を踏まえ、以下の 3 タブを自動生成します。
+
+- `Mighty-Link WBS`: 階層WBS、フェーズ行、予定/進捗、アラート、固定ヘッダー、フィルタ付きの管理表
+- `WBS Summary`: フェーズ別の総数、完了数、未着手数、完了率、期間の集計
+- `WBS Timeline`: タスク別の開始日、終了日、予定工数、進捗率の横断確認表
+
 ## 7. 小林社長へカレンダーと Sheets を共有
 
 ```powershell

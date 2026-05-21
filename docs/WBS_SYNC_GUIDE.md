@@ -9,6 +9,12 @@
 
 本プロジェクトでは、プロジェクト管理の円滑化と **Google Workspace AI (Sheets/Docs Live) ＆ Gemini Spark 連携** の体現のため、ローカルの `data/WBS.tsv` の変更を自動で Google スプレッドシートに反映し、マイティ・リンク様のブランドカラー（Mighty Blue）で美しく自動装飾する Python 同期システムを構築しました。
 
+2026-05-21 時点では、参考ファイル `【次期CATS】WBS_分析計画工程(後半).xlsx` の思想に寄せ、単純な TSV 一覧ではなく、以下の 3 タブを自動生成します。
+
+- `Mighty-Link WBS`: 階層WBS、フェーズ行、予定開始/終了、工数、進捗率、アラート、フィルタ、固定ヘッダーを含む管理表。
+- `WBS Summary`: フェーズ別の総数、完了、実行中、未着手、完了率、対象期間の自動集計表。
+- `WBS Timeline`: タスクごとの開始/終了/期間/進捗を横断確認する軽量タイムライン表。
+
 その過程で直面する Google API の主要なセキュリティ・クォータ制約を完全に克服した手順を、今後の再現性のために記録します。
 
 ---
@@ -75,6 +81,13 @@ pip install -r requirements.txt
    python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 ```
 
+同期後は以下を確認します。
+
+- `Mighty-Link WBS` の 1 行目に `Mighty-Link AI Connect WBS 管理表` が表示される。
+- 7 行目に `WBS#`, `Lv`, `WP`, `状態`, `予定開始日`, `進捗率`, `アラート` などの CATS 型ヘッダーが表示される。
+- `WBS Summary` にフェーズ別完了率が表示される。
+- `WBS Timeline` にタスク別の予定開始日・終了日・進捗率が表示される。
+
 ---
 
 ## 4. 技術的なエラーとその回避ロジック
@@ -85,7 +98,7 @@ pip install -r requirements.txt
 
 ### ② 書き込み制限 (API 429 Quota Exceeded for Write Requests) の回避
 - **現象**: `gspread` のセルごとの書式設定（`worksheet.format`）や、値の1セルずつの読み取りをループで何度も繰り返すと、Google Sheets API の「1分あたりの書き込み制限」に達し、APIエラー (429) が発生します。
-- **回避策**: スタイリング処理（ヘッダー背景色、太字、フォントサイズ、各列幅、各行高、ステータス列の条件付き色分け）をすべて **`requests_list`** という単一の JSON 配列に格納し、**`sh.batch_update()`** を用いてたった1回の API 呼び出しに統合（Single Batch Update化）しました。これにより、同期速度が 0.5 秒以下に短縮され、APIエラーは一切発生しなくなりました。
+- **回避策**: スタイリング処理（タイトル帯、結合セル、固定ヘッダー、列幅、行高、フィルタ、ステータス列の条件付き色分け、集計/タイムラインタブの装飾）を **`sh.batch_update()`** に統合しています。値更新もタブ単位でまとめ、Google Sheets API への呼び出し回数を抑えています。
 
 ### ③ Windows PowerShell での文字化け・絵文字エラーの回避
 - **現象**: ターミナルで実行する際、標準出力に絵文字（`📊`, `🟢` など）が含まれていると、Windows の標準エンコーディング（cp932/Shift-JIS）と競合し、`UnicodeEncodeError` でプログラムが強制終了します。

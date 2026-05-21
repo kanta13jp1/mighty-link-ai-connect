@@ -65,7 +65,7 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】フェーズ3: バックエンド & AI（Gemini 3.5 & Omni 連携API）",
-        "description": "FastAPIを用いたマルチモーダルパースAPI、4次元分析API、Google Sheets同期エンジン、構造化プロファイル抽出・4軸スコアリングfallback基盤、AI判定監査ログ(JSONL)・recent audit API、GitHub Pages公開デモ保護ガードの開発。",
+        "description": "FastAPIを用いたマルチモーダルパースAPI、4次元分析API、Google Sheets同期エンジン、構造化プロファイル抽出・4軸スコアリングfallback基盤、AI判定監査ログ(JSONL)・recent audit API、GitHub Pages公開デモ保護ガード、CATS型WBSスプレッドシートUIの開発。",
         "start_date": "2026-05-25",
         "end_date": "2026-05-28", # 3 days
         "is_all_day": True

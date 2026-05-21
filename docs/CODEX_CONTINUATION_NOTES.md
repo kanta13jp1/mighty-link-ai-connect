@@ -129,3 +129,24 @@ deterministic pipeline の判定根拠を後から確認・改善できるよう
 python scripts/verify_public_demo.py
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
 ```
+
+## 2026-05-21 作業ログ: CATS型WBSスプレッドシート改善
+
+添付参考ファイル `【次期CATS】WBS_分析計画工程(後半).xlsx` を確認し、Google Sheets の WBS 表示を単純一覧から CATS 型の管理表へ改善した。
+
+実施内容:
+
+- `scripts/sync_wbs_to_sheets.py` を拡張し、`data/WBS.tsv` から階層WBS表示を自動生成するようにした。
+- `Mighty-Link WBS` タブにタイトル帯、サマリーKPI、フェーズ行、`WBS#` / `Lv` / `WP` / 予定開始日 / 予定終了日 / 予定工数 / 進捗率 / アラート列を追加。
+- `WBS Summary` タブを追加し、フェーズ別の総数・完了数・未着手数・完了率・期間を自動集計。
+- `WBS Timeline` タブを追加し、タスク別の予定期間・進捗率を横断確認できるようにした。
+- 固定ヘッダー、フィルタ、結合セル、列幅、行高、ステータス/アラートの条件付き色分けを Google Sheets API の batch update で適用。
+- WBS に `T307` を追加し、CATS型WBSスプレッドシート改善を完了タスクとして記録。
+
+同期・検証:
+
+- Google Sheets へ `16 source rows` / `27 hierarchical WBS display rows` を同期済み。
+- `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` の 3 タブ作成・更新を確認済み。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 6, Updated: 6, Failed: 0`。
+- `python -m compileall src scripts` 成功。
+- 公開デモガード `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
