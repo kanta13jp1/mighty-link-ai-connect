@@ -19,3 +19,5 @@ Expected local outputs:
 
 - `exports/knowledge_flow/notebooklm_agent_brief.md`
 - `exports/knowledge_flow/notebooklm_agent_brief.json`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`

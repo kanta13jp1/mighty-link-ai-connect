@@ -27,7 +27,7 @@
 | 決定後の受け皿 | 議事録、WBS差し替え、Calendar更新、Git反映、決定後ロードマップ枠 | T609, T612, T615 |
 | 開発ナレッジ連携 | NotebookLM、Slack、Notion、Obsidian を使った資料要約・通知・議事録・ローカル知識管理の候補整理 | T616, T617, T618, T619, T620, T621, T622, T623 |
 | 連携デモ成果物 | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vault、UI/API生成導線 | T624, T625, T626, T627, T628, T629, T630, T631 |
-| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641, T642, T643, T644, T645, T646, T647, T648, T649, T650, T651, T652, T653, T654, T655 |
+| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641, T642, T643, T644, T645, T646, T647, T648, T649, T650, T651, T652, T653, T654, T655, T656, T657 |
 
 ## 関連ドキュメント
 
@@ -165,8 +165,20 @@ python scripts/sync_wbs_to_calendar.py
 
 - `scripts/sync_docs_to_notebooklm.py` を追加し、`docs/*.md` 14件を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ同期した。
 - 同期manifestは `exports/knowledge_flow/notebooklm_docs_manifest.json` に保存した。
-- NotebookLM CLIは `0.3.4` がインストール済みだが、認証切れのため `notebooklm login` が必要。
-- 再認証後に同スクリプトを再実行すると、NotebookLMへsourceを追加し、AIエージェント用の `exports/knowledge_flow/notebooklm_agent_brief.md` を生成する。
+- NotebookLM CLIは `0.3.4` がインストール済み。`scripts/notebooklm_login_workspace.py` で `k-umezawa@ml-mightylink.com` の認証状態を保存した。
+- 再実行によりNotebookLMへ14件のsourceを追加し、AIエージェント用の `exports/knowledge_flow/notebooklm_agent_brief.md` と社長説明用の `exports/knowledge_flow/notebooklm_ceo_slide_outline.md` を生成した。
 - GitHub Issuesに `#9` と `#10` を追加し、Issue #8へGitHub Projectの `read:project` 不足を再追記した。
 - Notion証跡ページ配下に `NotebookLM Docs Sync Evidence 2026-05-22` を作成した: `https://www.notion.so/3671d736b9db8164b46dc143befa29eb`
 - WBSに `T649` から `T655` を追加した。
+
+## 2026-05-22 NotebookLM認証完了と社長向け草案取得
+
+- NotebookLM notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
+- title: `Mighty Skill-Bridge Development Knowledge 2026-06-02`
+- source: `docs/*.md` 14件すべて `ready`
+- AIエージェント向け要約: `exports/knowledge_flow/notebooklm_agent_brief.md`
+- 社長向け8枚以内スライド草案: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
+- Google Docs化したAgent Brief: `https://docs.google.com/document/d/1W46XIEOj97A-Lp9wfwiDw79RWqB8BGcM04qQjtuJVc4/edit`
+- Google Docs化したCEO Slide Outline: `https://docs.google.com/document/d/1xPYZ7ihUklZSm-b3X_LHbxeGvXt6oQXvREgnEX5d0CM/edit`
+- JSON証跡: `exports/knowledge_flow/notebooklm_agent_brief.json`, `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
+- WBSは `T643`, `T650`, `T651` を完了に更新し、`T656`, `T657` を追加した。

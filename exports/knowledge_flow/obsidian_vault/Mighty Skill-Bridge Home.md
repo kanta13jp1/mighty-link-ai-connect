@@ -2,10 +2,10 @@
 
 ## Current Status
 
-- WBS total: 70
-- Done: 40
-- In progress: 5
-- Completion: 57%
+- WBS total: 72
+- Done: 45
+- In progress: 4
+- Completion: 62%
 
 ## Key Notes
 
@@ -22,4 +22,5 @@ Keep private thoughts here. Promote only approved notes back to `docs/` and WBS.
 
 - Manifest: `exports/knowledge_flow/notebooklm_docs_manifest.json`
 - Next steps: `exports/knowledge_flow/notebooklm_cli_next_steps.md`
-- Agent brief after CLI re-auth: `exports/knowledge_flow/notebooklm_agent_brief.md`
+- Agent brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
+- CEO slide outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`

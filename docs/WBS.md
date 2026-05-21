@@ -92,19 +92,21 @@ gantt
 | **T640** | 6. 社長プレゼン準備 | 連携デモリハーサル | NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認 | 人間 + Codex | VSCode + Codex | 6/2に見せる順番、開くURL、確認してもらう判断事項をリハーサルする |
 | **T641** | 6. 社長プレゼン準備 | Project正式ボード化 | GitHub Project権限復旧後にCEO Demo IssuesをProjectへ配置 | 人間 + Codex | gh CLI + GitHub Project | `gh auth refresh -s read:project` 後、Project boardを作成/取得してIssue #1-#6を配置する |
 | **T642** | 6. 社長プレゼン準備 | NotebookLMプレゼン資料化 | NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化 | Codex | Local OAuth Drive API + VSCode + Codex | Presentation Briefを生成し、k-umezawa@ml-mightylink.com所有のGoogle Docs URLとIssue #7を証跡化する |
-| **T643** | 6. 社長プレゼン準備 | NotebookLMスライド草案 | NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る | 人間 + Codex | NotebookLM | 社長説明のスライド構成・話す要点・想定QAをNotebookLMで生成しdocsへ反映する |
+| **T643** | 6. 社長プレゼン準備 | NotebookLMスライド草案 | NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る | 人間 + Codex | NotebookLM | NotebookLMで8枚以内のCEO向けスライド構成・話す要点・想定QAを生成し、`notebooklm_ceo_slide_outline.md/json`へ保存する |
 | **T644** | 6. 社長プレゼン準備 | Project OAuth復旧 | GitHub Project用のread:project/projectスコープをブラウザ認証で復旧 | 人間 + Codex | gh CLI + GitHub OAuth | `gh auth refresh` がタイムアウトしたため、Issue #8で手動認証完了まで追跡する |
 | **T645** | 6. 社長プレゼン準備 | Project Issue配置 | GitHub Project取得後にCEO Demo IssuesをProject boardへ配置 | 人間 + Codex | gh CLI + GitHub Project | Issue #1-#10をProject boardへ登録し、WBS/Issue/Projectの三点連携を完成させる |
 | **T646** | 6. 社長プレゼン準備 | Slack送信権限確認 | Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする | 人間 + Codex | Slack MCP/CLI | Slack CLI未検出・送信MCP未露出のため、投稿先とconnector権限を6/2前に確認する |
 | **T647** | 6. 社長プレゼン準備 | Google Workspaceアカウント固定 | Google OAuth連携をk-umezawa@ml-mightylink.comへ固定し、誤アカウント同期を防止 | Codex | VSCode + Codex | Drive APIでauthorized_user.jsonの実行アカウントを検証し、Sheets/Calendar/API同期前に不一致なら停止する |
 | **T648** | 6. 社長プレゼン準備 | Workspace Google Docs再作成 | NotebookLM用Google Docsをk-umezawa@ml-mightylink.com所有で再作成 | Codex | Local OAuth Drive API + VSCode + Codex | Google Drive MCP作成Docではなくauthorized_user.json経由でDocsを作成し、Google Docsホームに表示される状態へ修正する |
 | **T649** | 6. 社長プレゼン準備 | docs NotebookLM同期 | docs配下の手順書・設計書をWorkspace Google Docsへ同期 | Codex | Local OAuth Drive API + NotebookLM CLI | 14件のdocs/*.mdをGoogle Docs化し、NotebookLM source add-drive用manifestを生成する |
-| **T650** | 6. 社長プレゼン準備 | NotebookLM CLI認証復旧 | NotebookLM CLIをk-umezawa@ml-mightylink.comで再認証 | Codex + 人間 | NotebookLM CLI | notebooklm login後にsync_docs_to_notebooklm.pyを再実行し、NotebookLMへsource追加する |
+| **T650** | 6. 社長プレゼン準備 | NotebookLM CLI認証復旧 | NotebookLM CLIをk-umezawa@ml-mightylink.comで再認証 | Codex + 人間 | NotebookLM CLI | `notebooklm_login_workspace.py`でCLIログイン状態を保存し、WorkspaceアカウントでNotebookLM CLI認証を復旧する |
 | **T651** | 6. 社長プレゼン準備 | NotebookLM Agent Brief取得 | NotebookLMの要約をAIエージェント開発入力として保存 | Codex | NotebookLM CLI | notebooklm ask/summaryの結果をnotebooklm_agent_brief.md/jsonへ出力し、次回開発の参照情報にする |
 | **T652** | 6. 社長プレゼン準備 | GitHub Project再確認 | GitHub Projectのread:project/projectスコープ不足を再確認し復旧手順をIssueへ追記 | Codex | gh CLI | GitHub Projectは引き続きread:project不足。Issue #8へ最新コメントを追記し、復旧後の配置対象を明確化する |
 | **T653** | 6. 社長プレゼン準備 | Slack連携実送信準備 | Slack送信ツール・投稿先チャンネル・社長共有範囲の確定 | Codex + 人間 | Slack MCP/CLI | 現セッションでは送信ツール未露出のため、投稿案と権限確認を6/2前の残課題として維持する |
 | **T654** | 6. 社長プレゼン準備 | Notion証跡更新 | NotebookLM docs同期結果をNotion証跡ページ配下に追加 | Codex | Notion MCP | NotebookLM Docs Sync Evidence 2026-05-22をNotionへ作成し、Issue #9/#10と再実行手順を記録する |
 | **T655** | 6. 社長プレゼン準備 | Obsidian Agent Brief導線 | Obsidian vaultにNotebookLM Agent Brief参照導線を追加 | Codex | VSCode + Codex | NotebookLM要約取得後にObsidianから参照できるよう、プロンプトとホーム導線を更新する |
+| **T656** | 6. 社長プレゼン準備 | NotebookLM補助ログイン導線 | NotebookLM CLIのログイン保存を補助するWorkspace専用スクリプト作成 | Codex | VSCode + Codex + Playwright | upstream `notebooklm login` の遷移中断に備え、永続profileとstorage_stateを保存できる導線を追加する |
+| **T657** | 6. 社長プレゼン準備 | NotebookLM社長スライド草案取得 | NotebookLMからCEO向け8枚以内のプレゼン草案を取得して保存 | Codex | NotebookLM CLI + Local OAuth Drive API | NotebookLM notebook `75521ea6-6b9b-47b2-9508-50050d8ab2d5` の14 source ready状態からCEO Slide Outlineを取得し、Google Docs化対象に追加する |
 
 ---
 

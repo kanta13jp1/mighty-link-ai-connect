@@ -285,6 +285,17 @@ python src/app.py
 
 Google Cloud Console の対象プロジェクトで、OAuth 同意画面のテストユーザーに `k-umezawa@ml-mightylink.com` を追加します。
 
+### NotebookLM CLI のログインが途中で落ちる
+
+`notebooklm login` がGoogle Accountsの画面遷移中断で失敗する場合は、Workspace専用の補助ログインを使います。
+
+```powershell
+python scripts/notebooklm_login_workspace.py
+python scripts/sync_docs_to_notebooklm.py
+```
+
+ブラウザでは `k-umezawa@ml-mightylink.com` を選択します。認証後、NotebookLMのホームが表示されたらターミナルでEnterを押すと、CLI用のstorage stateが保存されます。
+
 ### スプレッドシート共有時に 404 File not found が出る
 
 スプレッドシートのオーナー権限を持つアカウントから、`k-umezawa@ml-mightylink.com` を編集者として共有します。その後、`python scripts/share_resources.py` を再実行します。

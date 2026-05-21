@@ -6,6 +6,8 @@ Generated/updated: 2026-05-22
 
 - Google Drive / Docs NotebookLM source pack: https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit
 - Google Drive / Docs NotebookLM presentation brief: https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit
+- Google Drive / Docs NotebookLM agent brief: https://docs.google.com/document/d/1W46XIEOj97A-Lp9wfwiDw79RWqB8BGcM04qQjtuJVc4/edit
+- Google Drive / Docs NotebookLM CEO slide outline: https://docs.google.com/document/d/1xPYZ7ihUklZSm-b3X_LHbxeGvXt6oQXvREgnEX5d0CM/edit
 - Google Drive owner account: k-umezawa@ml-mightylink.com
 - Google Drive / Docs docs source manifest: exports/knowledge_flow/notebooklm_docs_manifest.json
 - NotebookLM CLI next steps: exports/knowledge_flow/notebooklm_cli_next_steps.md
@@ -30,12 +32,24 @@ Generated/updated: 2026-05-22
 - `notebooklm_source_pack.txt`
 - `notebooklm_presentation_brief.md`
 - `notebooklm_presentation_brief.txt`
+- `notebooklm_agent_brief.md`
+- `notebooklm_agent_brief.json`
+- `notebooklm_ceo_slide_outline.md`
+- `notebooklm_ceo_slide_outline.json`
 - `slack_ceo_update.md`
 - `notion_decision_log.csv`
 - `notion_backlog_import.csv`
 - `obsidian_vault/Mighty Skill-Bridge Home.md`
 - `obsidian_vault/.obsidian/app.json`
 - `obsidian_vault/.obsidian/appearance.json`
+
+## NotebookLM CLI Evidence
+
+- Workspace account: `k-umezawa@ml-mightylink.com`
+- Notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
+- Notebook title: `Mighty Skill-Bridge Development Knowledge 2026-06-02`
+- Source status: `docs/*.md` 14 sources ready
+- Login helper: `scripts/notebooklm_login_workspace.py`
 
 ## Known Gaps
 

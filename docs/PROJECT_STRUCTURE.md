@@ -22,7 +22,7 @@ mighty-link-ai-connect/
 | 種別 | 配置先 | 例 |
 | --- | --- | --- |
 | アプリ本体 | `src/` | `app.py`, `index.html` |
-| 運用スクリプト | `scripts/` | `sync_wbs_to_calendar.py`, `generate_knowledge_flow_demo.py`, `upload_notebooklm_docs_to_drive.py`, `sync_docs_to_notebooklm.py`, `share_resources.py`, `verify_public_demo.py` |
+| 運用スクリプト | `scripts/` | `sync_wbs_to_calendar.py`, `generate_knowledge_flow_demo.py`, `upload_notebooklm_docs_to_drive.py`, `sync_docs_to_notebooklm.py`, `notebooklm_login_workspace.py`, `share_resources.py`, `verify_public_demo.py` |
 | CI ガード | `.github/workflows/` | `public-demo-guard.yml` |
 | 仕様・手順 | `docs/` | `SETUP_GUIDE.md`, `BACKEND_AI_PIPELINE.md`, `CEO_PRESENTATION_PREP_2026-06-02.md`, `CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`, `DEVELOPMENT_KNOWLEDGE_FLOW.md`, `INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`, `requirements.md`, `database.md` |
 | 同期元データ | `data/` | `WBS.tsv` |
@@ -60,6 +60,7 @@ python scripts/verify_public_demo.py
 python scripts/sync_wbs_to_calendar.py
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/generate_knowledge_flow_demo.py
+python scripts/notebooklm_login_workspace.py
 python scripts/upload_notebooklm_docs_to_drive.py
 python scripts/sync_docs_to_notebooklm.py
 python scripts/share_resources.py

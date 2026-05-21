@@ -15,7 +15,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:24:43.067Z",
-      "modifiedTime": "2026-05-21T15:54:59.811Z",
+      "modifiedTime": "2026-05-21T17:05:56.739Z",
       "source": "exports/knowledge_flow/notebooklm_source_pack.txt"
     },
     "notebooklm_presentation_brief": {
@@ -31,8 +31,40 @@
         }
       ],
       "createdTime": "2026-05-21T15:24:46.489Z",
-      "modifiedTime": "2026-05-21T15:55:02.315Z",
+      "modifiedTime": "2026-05-21T17:05:58.958Z",
       "source": "exports/knowledge_flow/notebooklm_presentation_brief.txt"
+    },
+    "notebooklm_agent_brief": {
+      "id": "1W46XIEOj97A-Lp9wfwiDw79RWqB8BGcM04qQjtuJVc4",
+      "name": "Mighty Skill-Bridge NotebookLM Agent Brief 2026-06-02 (Workspace)",
+      "url": "https://docs.google.com/document/d/1W46XIEOj97A-Lp9wfwiDw79RWqB8BGcM04qQjtuJVc4/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-05-21T16:35:24.795Z",
+      "modifiedTime": "2026-05-21T17:06:01.278Z",
+      "source": "exports/knowledge_flow/notebooklm_agent_brief.md"
+    },
+    "notebooklm_ceo_slide_outline": {
+      "id": "1xPYZ7ihUklZSm-b3X_LHbxeGvXt6oQXvREgnEX5d0CM",
+      "name": "Mighty Skill-Bridge NotebookLM CEO Slide Outline 2026-06-02 (Workspace)",
+      "url": "https://docs.google.com/document/d/1xPYZ7ihUklZSm-b3X_LHbxeGvXt6oQXvREgnEX5d0CM/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-05-21T16:35:27.388Z",
+      "modifiedTime": "2026-05-21T17:06:03.706Z",
+      "source": "exports/knowledge_flow/notebooklm_ceo_slide_outline.md"
     }
   }
 }

@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import time
 import uuid
 from pathlib import Path
 from typing import Any
@@ -56,6 +57,16 @@ DOC_SOURCES = [
         "key": "notebooklm_presentation_brief",
         "title": "Mighty Skill-Bridge CEO Presentation Brief 2026-06-02 (Workspace)",
         "source": EXPORT_DIR / "notebooklm_presentation_brief.txt",
+    },
+    {
+        "key": "notebooklm_agent_brief",
+        "title": "Mighty Skill-Bridge NotebookLM Agent Brief 2026-06-02 (Workspace)",
+        "source": EXPORT_DIR / "notebooklm_agent_brief.md",
+    },
+    {
+        "key": "notebooklm_ceo_slide_outline",
+        "title": "Mighty Skill-Bridge NotebookLM CEO Slide Outline 2026-06-02 (Workspace)",
+        "source": EXPORT_DIR / "notebooklm_ceo_slide_outline.md",
     },
 ]
 
@@ -107,14 +118,22 @@ def request_json(
     if headers:
         request_headers.update(headers)
 
-    response = requests.request(
-        method,
-        url,
-        params=params,
-        headers=request_headers,
-        data=data,
-        timeout=90,
-    )
+    response = None
+    for attempt in range(3):
+        response = requests.request(
+            method,
+            url,
+            params=params,
+            headers=request_headers,
+            data=data,
+            timeout=90,
+        )
+        if response.status_code not in {429, 500, 502, 503, 504}:
+            break
+        if attempt < 2:
+            time.sleep(2 ** attempt)
+
+    assert response is not None
     if response.status_code >= 400:
         raise RuntimeError(f"Drive API {method} failed: {response.status_code} {response.text[:500]}")
     return response.json()

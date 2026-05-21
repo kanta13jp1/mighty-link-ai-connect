@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-05-22 00:54:22 UTC+09:00
+Generated: 2026-05-22 01:47:26 UTC+09:00
 
 ## How to use this in NotebookLM
 
@@ -25,8 +25,9 @@ and which development knowledge-flow tools should become official.
 
 - Public demo remains guarded by Public Demo Guard and GitHub Pages deployment.
 - WBS is synced to Google Sheets and Google Calendar.
-- GitHub Issues #1-#6 track the CEO demo integration backlog.
+- GitHub Issues #1-#10 track the CEO demo integration backlog.
 - NotebookLM source pack was uploaded to Google Docs for source ingestion.
+- NotebookLM CLI is authenticated as the Workspace account and generated an agent brief plus CEO slide outline.
 - Notion MCP created an integration evidence page.
 - Obsidian vault starter exists locally with `.obsidian` settings.
 - Slack post draft exists, while channel and write permission remain pending.
@@ -34,18 +35,16 @@ and which development knowledge-flow tools should become official.
 
 ## WBS Snapshot
 
-- Total tasks: 70
-- Done: 40
-- In progress: 5
-- Not started: 25
-- Completion rate: 57%
-- CEO presentation phase tasks: 55
-- CEO presentation phase done: 29
+- Total tasks: 72
+- Done: 45
+- In progress: 4
+- Not started: 23
+- Completion rate: 62%
+- CEO presentation phase tasks: 57
+- CEO presentation phase done: 34
 
 ## Latest Knowledge-flow / CEO-demo Tasks
 
-- T625: NotebookLM実体化 / NotebookLM投入用Source Pack生成と想定質問セット作成 / 完了
-- T626: Slack実体化 / 社長レビュー向けSlack進捗投稿案の生成 / 完了
 - T627: Notion実体化 / Notion用意思決定DB・バックログCSVの生成 / 完了
 - T628: Obsidian実体化 / Obsidian vault雛形・ADR・議事録・プロンプトノート生成 / 完了
 - T629: 連携UIデモ / 公開デモ/ローカルUIへ開発ナレッジ連携デモセクション追加 / 完了
@@ -60,14 +59,16 @@ and which development knowledge-flow tools should become official.
 - T638: 連携証跡台帳 / CLI/MCP連携の実行結果を社長説明用ドキュメントへ集約 / 完了
 - T640: 連携デモリハーサル / NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認 / 未着手
 - T642: NotebookLMプレゼン資料化 / NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化 / 完了
-- T643: NotebookLMスライド草案 / NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る / 未着手
+- T643: NotebookLMスライド草案 / NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る / 完了
 - T646: Slack送信権限確認 / Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする / 未着手
 - T648: Workspace Google Docs再作成 / NotebookLM用Google Docsをk-umezawa@ml-mightylink.com所有で再作成 / 完了
-- T650: NotebookLM CLI認証復旧 / NotebookLM CLIをk-umezawa@ml-mightylink.comで再認証 / 実行中
-- T651: NotebookLM Agent Brief取得 / NotebookLMの要約をAIエージェント開発入力として保存 / 未着手
+- T650: NotebookLM CLI認証復旧 / NotebookLM CLIをk-umezawa@ml-mightylink.comで再認証 / 完了
+- T651: NotebookLM Agent Brief取得 / NotebookLMの要約をAIエージェント開発入力として保存 / 完了
 - T653: Slack連携実送信準備 / Slack送信ツール・投稿先チャンネル・社長共有範囲の確定 / 未着手
 - T654: Notion証跡更新 / NotebookLM docs同期結果をNotion証跡ページ配下に追加 / 完了
 - T655: Obsidian Agent Brief導線 / Obsidian vaultにNotebookLM Agent Brief参照導線を追加 / 完了
+- T656: NotebookLM補助ログイン導線 / NotebookLM CLIのログイン保存を補助するWorkspace専用スクリプト作成 / 完了
+- T657: NotebookLM社長スライド草案取得 / NotebookLMからCEO向け8枚以内のプレゼン草案を取得して保存 / 完了
 
 ## Recommended Slide Story
 

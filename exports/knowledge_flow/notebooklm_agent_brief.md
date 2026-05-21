@@ -1,35 +1,69 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-05-22T00:56:13+09:00
-Status: `auth_required`
+Generated: 2026-05-22T02:05:49+09:00
+Notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
 
-NotebookLM CLI is not ready yet, so this file is a placeholder.
+## Question
 
-## Required Action
+このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、
+Codex/AIエージェントが次に開発を進めるための要約を作ってください。
 
-```powershell
-notebooklm login
-python scripts/sync_docs_to_notebooklm.py
-```
+必ず以下を含めてください。
+1. 現在のプロダクト方向性で確定していること
+2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク
+3. 6/2で社長に決めてもらうべき事項
+4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提
+5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題
+6. WBSへ追加すべき次アクション
 
-During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
 
-## Synced Google Docs
+## NotebookLM Answer
 
-- `docs/ANTIGRAVITY_GUIDE.md`: https://docs.google.com/document/d/1d0SMuvOQXnGLxmNj7d1ktfWczSmxlWL0wblxlYDMH4E/edit?usp=drivesdk
-- `docs/BACKEND_AI_PIPELINE.md`: https://docs.google.com/document/d/1duxDhC6yjS-XlyWxse_XdaiRjq88cZz8aBCt0GRxUWg/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`: https://docs.google.com/document/d/1XJeHY18JEEeaz4Dc28UHrOYbA7hhZ7ENfyI3TEGPnqc/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_PREP_2026-06-02.md`: https://docs.google.com/document/d/1hIcqCfKtRPPVtXrKizMesGpI7j9VACrXgQicHy4XD6o/edit?usp=drivesdk
-- `docs/CODEX_CONTINUATION_NOTES.md`: https://docs.google.com/document/d/1akLsJ_85jkqcH3aTaae8h5u1xmHGooJn5UlklHvQyfE/edit?usp=drivesdk
-- `docs/database.md`: https://docs.google.com/document/d/1WVp_vmYeiCZfFWbCpHNfmwGoUeBADuMjyLySBHrh9bI/edit?usp=drivesdk
-- `docs/DEVELOPMENT_KNOWLEDGE_FLOW.md`: https://docs.google.com/document/d/1SS44DK0H57KFdX4jHDucbYe6PRN2ofUllaaLr5zioYU/edit?usp=drivesdk
-- `docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1xb9e3AQt7uGSvQvu-D12CGqchlh5Z01FFn44Dkhza8I/edit?usp=drivesdk
-- `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
-- `docs/PROJECT_STRUCTURE.md`: https://docs.google.com/document/d/1ACZgUCWCCSM6o7oNh9qsAIk5wfyq7mKsHCiyQxNsrcg/edit?usp=drivesdk
-- `docs/requirements.md`: https://docs.google.com/document/d/1G6XmZoa-LhnKuq4At6PVPJrr7IaT5XrP7IYYnwPKAPA/edit?usp=drivesdk
-- `docs/SETUP_GUIDE.md`: https://docs.google.com/document/d/16DonChND2WzQFWDZ8aubajlZdVB1aVnMsXnYLXE7xUI/edit?usp=drivesdk
-- `docs/WBS.md`: https://docs.google.com/document/d/16s5eoPSBLInfS6Kr9Hj4Qgc3y4QXjyjNSbojvZNxBuQ/edit?usp=drivesdk
-- `docs/WBS_SYNC_GUIDE.md`: https://docs.google.com/document/d/1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY/edit?usp=drivesdk
+提供されたNotebookの設計情報、作業手順、WBS、ロードマップに基づき、Codex/AIエージェントが次に開発を進めるための要約を作成しました。
 
-After re-authentication, this file will be replaced by a NotebookLM-generated
-agent brief with design, roadmap, and next-action guidance.
+### 1. 現在のプロダクト方向性で確定していること
+*   **コンセプト**: 「人と人、ビジネスとビジネス、そしてテクノロジーを“力強く繋ぐ”」というビジョンがコアバリューとして確定しています [1]。
+*   **プロトタイプの立ち位置**: 実際の企画やサービス内容は6/2の社長打ち合わせまで決め打ちせず、現在のプロトタイプは意思決定のための「判断材料」として扱います [2, 3]。
+*   **実装済みの機能**: エンジニアの経歴書と案件票をGemini 3.5 Flash/Omniで解析し、4軸（スキル、カルチャー、グロース、パフォーミング）で評価するAIフィットシミュレーターが実装されています [4, 5]。
+*   **UIと連携基盤**: UIはMighty Blueを基調としたガラスモフィズムを採用し、進捗やマッチング結果がGoogle Workspace（Sheets/Docs/Calendar）と自律的に連携する基盤を備えています [6, 7]。
+
+### 2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク
+*   **安定稼働の確認**: 公開URLデモ、ローカルAPI、Google Sheets / Calendarの同期状況の本番前ヘルスチェックを行います [8, 9]。
+*   **デグレ防止（Public Demo Guard）**: 公開URLのroot `index.html`がREADME表示にフォールバックするのを防ぐため、CI検証（GitHub Actions）による保護を徹底します [10, 11]。
+*   **判断材料の整備**: サービス方向性の選択肢、判断マトリクス、想定QA、1枚絵サマリーなど、意思決定を助けるプレゼン骨子と資料を準備します [8, 9, 12]。
+*   **ナレッジ連携のデモ準備**: 機密情報を外部に出さない範囲で、NotebookLM投入用資料、Slack投稿案、Notion向けCSV、Obsidianのvault雛形をローカル生成し、「実際に連携した状態」として提示できるようにします [13-15]。
+
+### 3. 6/2で社長に決めてもらうべき事項
+*   **サービス内容と対象ユーザー**: 最初の適用業務（営業支援、人材管理、PM支援、顧客提案など）と、最初に見せる相手（社内、既存顧客、見込み顧客）[16, 17]。
+*   **今後の優先開発機能**: デモ品質、AI精度、運用基盤、資料化のうち、6/2以降の2週間でどこにリソースを集中するか [17]。
+*   **Workspace連携と公開URL**: Google Workspace連携を社内運用前提とするか顧客への提供価値の一部とするか、および公開URLの共有許容範囲（社長のみ、社内、外部共有）[17]。
+*   **ナレッジ連携ツールの採用方針**: NotebookLM、Slack、Notion、Obsidianのうち、優先して正式導入するツールと、社長への確認事項を流す際の共有範囲 [17, 18]。
+
+### 4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提
+*   **API制限時のフォールバック**: Gemini APIのクォータ制限時は `AI_FORCE_MOCK=1` を設定してFastAPIを起動し、VSCode + Codexで開発を継続してAPIの追加消費を防ぎます [19, 20]。
+*   **AI復帰時のパイプライン**: バックエンドの deterministic fallback による事前解析・事前スコアの結果は、live AI復帰時に `structured context` としてGeminiのプロンプトへ渡し、精度向上に利用します [21]。
+*   **監査ログの管理**: `/api/parse` と `/api/match` の判定結果は原文全文を保存せず、要約・スコア・抽出スキルのみをローカルの `data/audit/ai_audit.jsonl` に保存します [22]。このファイル自体はGitの管理対象外とし、ディレクトリ維持用の `.gitkeep` のみを管理します [23]。
+*   **認証の固定化**: Google Workspace連携処理は必ず `authorized_user.json` を使用し、Drive APIで実行アカウントが `k-umezawa@ml-mightylink.com` であることを事前検証してから実行します [24, 25]。
+*   **データ構造設計**: クライアントサイド（IndexedDB）とサーバーサイド（SQLite3）両対応のハイブリッド構成を想定し、`engineers`、`jobs`、`match_results` のテーブル定義に従います [26, 27]。
+
+### 5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題
+*   **NotebookLM**: CLIの補助スクリプトによる再認証が完了し、AIエージェント開発入力用の要約（Agent Brief）と社長向けプレゼン草案（CEO Slide Outline）の取得には成功しています [28, 29]。
+*   **GitHub Project**: CLIの `gh` トークンに `read:project` および `project` スコープが不足しておりタイムアウトが発生しているため、手動のブラウザ認証で権限を復旧し、起票済みIssueをProject boardへ配置する必要があります [30, 31]。
+*   **Slack**: ローカルCLIおよび送信MCPツールが未検出のため、現状は投稿案の生成に留めています [31]。6/2に投稿先チャンネルと共有範囲の確認を行い、その後正式な送信権限を整えます [31]。
+*   **Notion / Obsidian**: 証跡ページやvault雛形は生成済みですが、公式管理台帳としての自動投稿や外部API連携の本実装を行うかは社長の判断待ちです [18, 32]。
+*   **GitHub Issues**: WBSは「日程・報告用」、Issuesは「実装タスク用」として相互参照する運用ルールを徹底します [33, 34]。
+
+### 6. WBSへ追加すべき次アクション
+現在の完了状況（T657まで登録済み）を踏まえ、直近のアクションとしてWBSに以下の対応が必要です [35, 36]。
+*   **GitHub Project連携の完成（T641, T644, T645, T652）**: OAuthスコープの不足を手動で復旧し、Issue #1〜#10をProject boardに配置して三点連携（WBS/Issue/Project）を完了させます [35, 36]。
+*   **Slack送信権限の確認と準備（T646, T653）**: 投稿先チャンネルと送信ツール権限を確認し、投稿案を実送信できる状態を整えます [35, 36]。
+*   **決定事項の即時反映（T609, T612, T615）**: 6/2の打ち合わせで決定したサービス方針やナレッジ連携ツールの採用結果を、直ちにWBS、Calendar、Git、議事録へ反映します [37, 38]。
+*   **正式運用のWBS昇格**: 社長判断で採用されたツール（Slack自動通知やNotion DB連携など）を、正式実装するためのタスクとして次期WBSへ昇格させます [13, 39]。
+
+---
+💡 **ご提案**:
+こちらの要約を、後からでも参照しやすいようにドキュメント形式の「開発要約レポート（Tailored Report）」として生成することも可能ですが、作成いたしましょうか？ ご希望でしたらお知らせください。
+
+## Notebook Summary
+
+NotebookLM summary command return code: `0`

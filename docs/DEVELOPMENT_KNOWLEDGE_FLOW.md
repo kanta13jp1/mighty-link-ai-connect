@@ -162,3 +162,22 @@ python scripts/sync_docs_to_notebooklm.py
 - 個人情報を含む経歴書・案件票は、社長確認前に外部ナレッジツールへ投入しない。
 - Slack / Notion に投稿する場合は、要約・タスクID・公開URL・同期結果に絞る。
 - Obsidian はローカル保管を前提にし、Git 管理する場合は秘密情報が含まれていないか確認する。
+
+## 2026-05-22 NotebookLM CLI認証完了と要約取得
+
+- NotebookLM CLIは `k-umezawa@ml-mightylink.com` で認証済み。
+- NotebookLM notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
+- Notebook title: `Mighty Skill-Bridge Development Knowledge 2026-06-02`
+- Source status: `docs/*.md` 14件すべて `ready`
+- Agent Brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
+- CEO Slide Outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
+- CLI補助ログイン: `scripts/notebooklm_login_workspace.py`
+
+認証が切れた場合は、通常の `notebooklm login` で遷移中断が起きることがあるため、補助スクリプトを使う。
+
+```powershell
+python scripts/notebooklm_login_workspace.py
+python scripts/sync_docs_to_notebooklm.py
+```
+
+この状態により、AIエージェントはNotebookLMから要約された設計情報・ロードマップ・残課題をローカル成果物として読み込み、次回以降の開発判断に使える。

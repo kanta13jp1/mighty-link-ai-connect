@@ -7,7 +7,7 @@ X-WR-CALNAME:Mighty Skill-Bridge 開発計画
 X-WR-TIMEZONE:Asia/Tokyo
 BEGIN:VEVENT
 UID:9d0ac97e-1a7c-5ebf-885a-cc7191bfbb81@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】フェーズ1: 企画・設計（要件定義 & DB設計）
 DESCRIPTION:開発の土台となる要件定義(requirements.md)およびDB設計(database.md)の策定・合意。
 DTSTART;VALUE=DATE:20260520
@@ -15,7 +15,7 @@ DTEND;VALUE=DATE:20260522
 END:VEVENT
 BEGIN:VEVENT
 UID:b82b6ddb-6b0d-5ae7-b887-c83fa3c6397b@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】フェーズ2: フロント開発（UI/UX実装）
 DESCRIPTION:プレミアムなガラスモフィズム調UI、ドラッグ＆ドロップパネル、Chart.js連携の実装。
 DTSTART;VALUE=DATE:20260522
@@ -23,7 +23,7 @@ DTEND;VALUE=DATE:20260525
 END:VEVENT
 BEGIN:VEVENT
 UID:8cb1ae87-4dba-5f42-a8ac-15c00fe64451@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】フェーズ3: バックエンド & AI（Gemini 3.5 & Omni 連携API）
 DESCRIPTION:FastAPIを用いたマルチモーダルパースAPI、4次元分析API、Google Sheets同期エンジン、構造化プロファイル抽出・4軸スコアリングfallback基盤、AI判定監査ログ(JSONL)・recent audit API、GitHub Pages公開デモ保護ガード、CATS型WBSスプレッドシートUIの開発。
 DTSTART;VALUE=DATE:20260525
@@ -31,7 +31,7 @@ DTEND;VALUE=DATE:20260528
 END:VEVENT
 BEGIN:VEVENT
 UID:c95eb04c-79b0-52e9-a860-be2e3eecb8dd@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】フェーズ4: テスト & デバッグ（Browser Agent & Code Mender）
 DESCRIPTION:Browser Agentによる自律UIテスト、Code Menderによるセキュリティ診断・デバッグ。
 DTSTART;VALUE=DATE:20260528
@@ -39,7 +39,7 @@ DTEND;VALUE=DATE:20260530
 END:VEVENT
 BEGIN:VEVENT
 UID:3d900585-70ee-50e1-8763-2b8406f0a896@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】フェーズ5: 本番公開（CI/CDデプロイ & プレスリリース）
 DESCRIPTION:GitHub ActionsによるCI/CD環境構築、リリース、およびプレスリリース告知文の自動生成・公開。
 DTSTART;VALUE=DATE:20260530
@@ -47,7 +47,7 @@ DTEND;VALUE=DATE:20260601
 END:VEVENT
 BEGIN:VEVENT
 UID:7ae81dc2-82d5-5543-a89c-42c2635aeaf5@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】フェーズ6: 社長プレゼン準備（6/2判断材料・デモ・想定QA）
 DESCRIPTION:6/2の社長打ち合わせに向け、サービス内容を決め打ちせず、公開デモ、WBS、Google Workspace連携、論点、選択肢、判断マトリクス、議事録テンプレート、想定QA、決定後の反映手順を準備します。
 DTSTART;VALUE=DATE:20260521
@@ -55,7 +55,7 @@ DTEND;VALUE=DATE:20260602
 END:VEVENT
 BEGIN:VEVENT
 UID:6f2f44b4-a862-51bf-b84f-eac47262b6b0@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】社長プレゼン判断材料レビュー
 DESCRIPTION:スライド構成、判断マトリクス、想定質問、デモバックアップ導線を確認し、6/2で決める事項と保留事項を分離します。
 DTSTART;TZID=Asia/Tokyo:20260530T100000
@@ -63,7 +63,7 @@ DTEND;TZID=Asia/Tokyo:20260530T110000
 END:VEVENT
 BEGIN:VEVENT
 UID:87e10e89-f5c0-56fd-aca9-cbfcd45c0664@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】社長向け事前共有メモ作成
 DESCRIPTION:社長へ事前共有する確認ポイント、当日アジェンダ、公開デモURL、WBS/Calendar確認導線の短文ドラフトを作成します。
 DTSTART;VALUE=DATE:20260530
@@ -71,7 +71,7 @@ DTEND;VALUE=DATE:20260601
 END:VEVENT
 BEGIN:VEVENT
 UID:a735c5f7-e3ed-5a62-9627-903b9fded7fa@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】開発ナレッジ連携フロー整理
 DESCRIPTION:NotebookLM、Slack、Notion、Obsidianを6/2の社長判断材料として整理し、正式実装前に役割・情報管理・導入優先順位を確認します。
 DTSTART;VALUE=DATE:20260524
@@ -79,7 +79,7 @@ DTEND;VALUE=DATE:20260529
 END:VEVENT
 BEGIN:VEVENT
 UID:cacede81-c5ca-5e98-8467-f572d04e0624@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】連携ツール採用判断レビュー
 DESCRIPTION:NotebookLM/Slack/Notion/Obsidianの採用・保留・後回し、共有範囲、権限ルール、6/2以降の実装候補をレビューします。
 DTSTART;TZID=Asia/Tokyo:20260528T140000
@@ -87,7 +87,7 @@ DTEND;TZID=Asia/Tokyo:20260528T150000
 END:VEVENT
 BEGIN:VEVENT
 UID:2fe5f68b-cecf-51ca-bafe-7619d48e2c65@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】開発ナレッジ連携デモ確認
 DESCRIPTION:NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vault、公開デモUI、FastAPI生成APIを確認し、社長に見せる順番を固めます。
 DTSTART;TZID=Asia/Tokyo:20260529T150000
@@ -95,7 +95,7 @@ DTEND;TZID=Asia/Tokyo:20260529T160000
 END:VEVENT
 BEGIN:VEVENT
 UID:b01c903b-cbb2-573e-874b-f272f24b22dd@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】CLI/MCP連携証跡レビュー
 DESCRIPTION:GitHub Issues、Google Docs化したNotebookLM source pack、Notion証跡ページ、Obsidian vault、Slack投稿案、GitHub Project権限課題を確認し、6/2で見せる順番を決めます。
 DTSTART;TZID=Asia/Tokyo:20260523T110000
@@ -103,7 +103,7 @@ DTEND;TZID=Asia/Tokyo:20260523T120000
 END:VEVENT
 BEGIN:VEVENT
 UID:1f344223-6433-5e2e-a5ad-ae80e641df62@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】GitHub Project権限復旧チェック
 DESCRIPTION:gh auth refresh -s read:project 実行後にProject board取得/作成とIssue #1-#6の配置可否を確認します。
 DTSTART;TZID=Asia/Tokyo:20260524T100000
@@ -111,7 +111,7 @@ DTEND;TZID=Asia/Tokyo:20260524T110000
 END:VEVENT
 BEGIN:VEVENT
 UID:fae162ae-d112-5ef1-9747-6672b04ecadf@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】NotebookLMプレゼン草案作成
 DESCRIPTION:NotebookLMへSource PackとPresentation Briefを投入し、6/2社長説明用の8枚以内スライド構成、話す要点、想定QAを生成します。
 DTSTART;TZID=Asia/Tokyo:20260522T150000
@@ -119,7 +119,7 @@ DTEND;TZID=Asia/Tokyo:20260522T160000
 END:VEVENT
 BEGIN:VEVENT
 UID:6a56d543-ffd7-55d4-bc93-37c4fb106aa1@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】Slack投稿先・送信権限確認
 DESCRIPTION:Slack投稿案を実送信するため、投稿先チャンネル、社長共有範囲、Slack connector/CLIの利用可否を確認します。
 DTSTART;TZID=Asia/Tokyo:20260524T110000
@@ -127,7 +127,7 @@ DTEND;TZID=Asia/Tokyo:20260524T113000
 END:VEVENT
 BEGIN:VEVENT
 UID:c35e175d-2c46-5620-bc69-d83c723f3c73@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】Google Workspace OAuthアカウント固定確認
 DESCRIPTION:authorized_user.jsonがk-umezawa@ml-mightylink.comに紐づいていることをDrive APIで確認し、Sheets/Calendar/API同期前の誤アカウント防止ガードを追加します。
 DTSTART;VALUE=DATE:20260521
@@ -135,7 +135,7 @@ DTEND;VALUE=DATE:20260522
 END:VEVENT
 BEGIN:VEVENT
 UID:5280701e-c9a3-5140-99d6-78c988ac0d95@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】Workspace Google Docs再作成確認
 DESCRIPTION:NotebookLM用Source PackとPresentation BriefをLocal OAuth Drive APIでk-umezawa@ml-mightylink.com所有のGoogle Docsとして再作成し、Google Docsホームに表示される状態を確認します。
 DTSTART;VALUE=DATE:20260522
@@ -143,7 +143,7 @@ DTEND;VALUE=DATE:20260523
 END:VEVENT
 BEGIN:VEVENT
 UID:78b65837-6968-5367-a40d-6d87b8f475b6@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】docs NotebookLM同期・Google Docs化
 DESCRIPTION:docs/*.md 14件をLocal OAuth Drive APIでk-umezawa@ml-mightylink.com所有のGoogle Docsへ同期し、NotebookLM CLI source add-drive用manifestを作成します。
 DTSTART;VALUE=DATE:20260522
@@ -151,23 +151,39 @@ DTEND;VALUE=DATE:20260523
 END:VEVENT
 BEGIN:VEVENT
 UID:51043292-1d5f-5ce8-89ce-61982a6126da@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】NotebookLM CLI再認証・Source追加
-DESCRIPTION:notebooklm loginでk-umezawa@ml-mightylink.comを選択し、sync_docs_to_notebooklm.pyを再実行してNotebookLMへdocs sourceを追加します。
-DTSTART;TZID=Asia/Tokyo:20260523T100000
-DTEND;TZID=Asia/Tokyo:20260523T103000
+DESCRIPTION:notebooklm_login_workspace.pyでk-umezawa@ml-mightylink.comのCLI認証状態を保存し、sync_docs_to_notebooklm.pyでNotebookLMへdocs sourceを追加します。
+DTSTART;TZID=Asia/Tokyo:20260522T130000
+DTEND;TZID=Asia/Tokyo:20260522T133000
 END:VEVENT
 BEGIN:VEVENT
 UID:ad4e54c3-19f3-5319-9cb0-297c55b853f3@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】NotebookLM Agent Brief取得
 DESCRIPTION:NotebookLM ask/summaryで設計情報・ロードマップ・6/2前タスクを要約し、AIエージェントの次回開発入力としてnotebooklm_agent_brief.mdへ保存します。
-DTSTART;TZID=Asia/Tokyo:20260523T103000
-DTEND;TZID=Asia/Tokyo:20260523T110000
+DTSTART;TZID=Asia/Tokyo:20260522T133000
+DTEND;TZID=Asia/Tokyo:20260522T140000
+END:VEVENT
+BEGIN:VEVENT
+UID:711b1edb-ce1e-5123-8407-a9bd67177368@mighty-link.ai
+DTSTAMP:20260521T164611Z
+SUMMARY:【Mighty Skill-Bridge】NotebookLM補助ログイン導線作成
+DESCRIPTION:upstream notebooklm loginのGoogle Accounts遷移中断に備え、Workspace専用の補助ログインスクリプトを作成し、storage_stateを保存できる状態にします。
+DTSTART;TZID=Asia/Tokyo:20260522T123000
+DTEND;TZID=Asia/Tokyo:20260522T130000
+END:VEVENT
+BEGIN:VEVENT
+UID:2e22682d-bd36-56c3-938c-74200d905d05@mighty-link.ai
+DTSTAMP:20260521T164611Z
+SUMMARY:【Mighty Skill-Bridge】NotebookLM CEO Slide Outline取得
+DESCRIPTION:NotebookLMの14 source ready状態から、6/2社長説明用の8枚以内スライド草案、話す要点、想定質問を取得し、Google Docs化対象に追加します。
+DTSTART;TZID=Asia/Tokyo:20260522T140000
+DTEND;TZID=Asia/Tokyo:20260522T143000
 END:VEVENT
 BEGIN:VEVENT
 UID:e69ccfa4-9807-5e7d-93ac-f0f8bab209da@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】社長プレゼン最終リハーサル
 DESCRIPTION:公開URL、ローカルAPI、Google Sheets WBS、Calendar同期、説明資料、想定QA、バックアップ手順を最終確認します。
 DTSTART;TZID=Asia/Tokyo:20260601T160000
@@ -175,7 +191,7 @@ DTEND;TZID=Asia/Tokyo:20260601T170000
 END:VEVENT
 BEGIN:VEVENT
 UID:076a537f-a59b-5aba-9104-266321419219@mighty-link.ai
-DTSTAMP:20260521T155228Z
+DTSTAMP:20260521T164611Z
 SUMMARY:【Mighty Skill-Bridge】第1回 社長報告会（プロジェクト方針決定）
 DESCRIPTION:「Mighty Skill-Bridge」の公開デモ、WBS、Google Workspace連携、6/2以降の企画・サービス内容・優先機能・開発方針を確認し、決定します。
 DTSTART;TZID=Asia/Tokyo:20260602T130000

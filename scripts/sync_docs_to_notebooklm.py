@@ -36,6 +36,8 @@ DOCS_DIR = PROJECT_ROOT / "docs"
 MANIFEST_PATH = EXPORT_DIR / "notebooklm_docs_manifest.json"
 AGENT_BRIEF_PATH = EXPORT_DIR / "notebooklm_agent_brief.md"
 AGENT_BRIEF_JSON_PATH = EXPORT_DIR / "notebooklm_agent_brief.json"
+CEO_SLIDE_OUTLINE_PATH = EXPORT_DIR / "notebooklm_ceo_slide_outline.md"
+CEO_SLIDE_OUTLINE_JSON_PATH = EXPORT_DIR / "notebooklm_ceo_slide_outline.json"
 NEXT_STEPS_PATH = EXPORT_DIR / "notebooklm_cli_next_steps.md"
 
 if str(SCRIPT_DIR) not in sys.path:
@@ -64,6 +66,22 @@ Codex/AIエージェントが次に開発を進めるための要約を作って
 4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提
 5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題
 6. WBSへ追加すべき次アクション
+"""
+
+CEO_SLIDE_QUESTION = """\
+6/2の社長打ち合わせで使う、8枚以内のプレゼン草案を作ってください。
+
+前提:
+- 実際の企画・サービス内容は6/2の打ち合わせで決定する
+- それまではプロトタイプ、WBS、Google Workspace同期、NotebookLM/Slack/Notion/Obsidian/GitHub連携の「実際にやった状態」を見せる
+- 社長に決めてもらう事項と、6/2後すぐにWBSへ反映する事項を明確にする
+
+出力形式:
+1. スライド番号とタイトル
+2. 各スライドの要点3つ以内
+3. 話すメモ
+4. 見せる証跡URL/ファイル
+5. 社長への質問
 """
 
 
@@ -97,7 +115,8 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
 
 def write_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content.rstrip() + "\n", encoding="utf-8")
+    clean = "\n".join(line.rstrip() for line in content.rstrip().splitlines())
+    path.write_text(clean + "\n", encoding="utf-8")
 
 
 def discover_docs() -> list[Path]:
@@ -204,6 +223,18 @@ def parse_json_output(completed: subprocess.CompletedProcess[str]) -> Any:
     return json.loads(text)
 
 
+def notebook_answer_text(completed: subprocess.CompletedProcess[str]) -> str:
+    if completed.returncode != 0:
+        return completed.stderr or completed.stdout
+    try:
+        payload = parse_json_output(completed)
+        if isinstance(payload, dict):
+            return payload.get("answer") or payload.get("text") or completed.stdout
+    except json.JSONDecodeError:
+        pass
+    return completed.stdout
+
+
 def resolve_notebook(previous: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     previous_notebook = previous.get("notebooklm", {}) if isinstance(previous, dict) else {}
     previous_id = previous_notebook.get("notebook_id")
@@ -224,6 +255,7 @@ def resolve_notebook(previous: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     if not notebook_id:
         raise RuntimeError(f"NotebookLM create did not return an id: {created.stdout}")
 
+    run_notebooklm(["use", notebook_id])
     return notebook_id, {"action": "created", "payload": payload}
 
 
@@ -301,6 +333,7 @@ def sync_notebooklm_sources(
 
     summary = run_notebooklm(["summary", "-n", notebook_id, "--topics"])
     answer = run_notebooklm(["ask", "-n", notebook_id, AGENT_QUESTION, "--json"])
+    slide_answer = run_notebooklm(["ask", "-n", notebook_id, CEO_SLIDE_QUESTION, "--json"])
 
     brief_payload: dict[str, Any] = {
         "notebook_id": notebook_id,
@@ -314,14 +347,17 @@ def sync_notebooklm_sources(
     }
     write_json(AGENT_BRIEF_JSON_PATH, brief_payload)
 
-    if answer.returncode == 0:
-        try:
-            answer_payload = parse_json_output(answer)
-            answer_text = answer_payload.get("answer") if isinstance(answer_payload, dict) else answer.stdout
-        except json.JSONDecodeError:
-            answer_text = answer.stdout
-    else:
-        answer_text = answer.stderr or answer.stdout
+    slide_payload: dict[str, Any] = {
+        "notebook_id": notebook_id,
+        "question": CEO_SLIDE_QUESTION,
+        "answer_returncode": slide_answer.returncode,
+        "answer_stdout": slide_answer.stdout.strip(),
+        "answer_stderr": slide_answer.stderr.strip(),
+    }
+    write_json(CEO_SLIDE_OUTLINE_JSON_PATH, slide_payload)
+
+    answer_text = notebook_answer_text(answer)
+    slide_text = notebook_answer_text(slide_answer)
 
     write_text(
         AGENT_BRIEF_PATH,
@@ -340,7 +376,23 @@ Notebook: `{notebook_id}`
 
 ## Notebook Summary
 
-{summary.stdout if summary.stdout else summary.stderr}
+NotebookLM summary command return code: `{summary.returncode}`
+""",
+    )
+    write_text(
+        CEO_SLIDE_OUTLINE_PATH,
+        f"""# NotebookLM CEO Slide Outline
+
+Generated: {jst_now().isoformat(timespec='seconds')}
+Notebook: `{notebook_id}`
+
+## Question
+
+{CEO_SLIDE_QUESTION}
+
+## NotebookLM Answer
+
+{slide_text}
 """,
     )
 
@@ -352,8 +404,11 @@ Notebook: `{notebook_id}`
         "source_results": source_results,
         "summary_returncode": summary.returncode,
         "answer_returncode": answer.returncode,
+        "slide_outline_returncode": slide_answer.returncode,
         "agent_brief": relative(AGENT_BRIEF_PATH),
         "agent_brief_json": relative(AGENT_BRIEF_JSON_PATH),
+        "ceo_slide_outline": relative(CEO_SLIDE_OUTLINE_PATH),
+        "ceo_slide_outline_json": relative(CEO_SLIDE_OUTLINE_JSON_PATH),
     }
 
 
@@ -366,6 +421,57 @@ def write_next_steps(manifest: dict[str, Any]) -> None:
     )
     auth_status = notebooklm.get("status", "unknown")
     error = notebooklm.get("error", "")
+    if auth_status == "ready":
+        reauth_section = f"""## NotebookLM Sync Result
+
+NotebookLM CLI is authenticated and the docs source set has been synced.
+
+- Notebook: `{notebooklm.get("notebook_id", "")}`
+- Agent brief: `{notebooklm.get("agent_brief", relative(AGENT_BRIEF_PATH))}`
+- Agent brief JSON: `{notebooklm.get("agent_brief_json", relative(AGENT_BRIEF_JSON_PATH))}`
+- CEO slide outline: `{notebooklm.get("ceo_slide_outline", relative(CEO_SLIDE_OUTLINE_PATH))}`
+- CEO slide outline JSON: `{notebooklm.get("ceo_slide_outline_json", relative(CEO_SLIDE_OUTLINE_JSON_PATH))}`
+
+## Re-authentication
+
+If NotebookLM authentication expires later, run:
+
+```powershell
+python scripts/notebooklm_login_workspace.py
+python scripts/sync_docs_to_notebooklm.py
+```
+
+During browser login, select `k-umezawa@ml-mightylink.com`.
+"""
+    else:
+        reauth_section = f"""## Re-authentication
+
+NotebookLM CLI currently needs browser re-authentication before sources can be added to NotebookLM.
+
+```powershell
+python scripts/notebooklm_login_workspace.py
+python scripts/sync_docs_to_notebooklm.py
+```
+
+During browser login, select `k-umezawa@ml-mightylink.com`.
+
+## Last CLI Error
+
+```text
+{error}
+```
+
+## Agent Retrieval Command
+
+After authentication, the script will add the Drive docs as NotebookLM sources and write:
+
+- `exports/knowledge_flow/notebooklm_agent_brief.md`
+- `exports/knowledge_flow/notebooklm_agent_brief.json`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
+
+These files are the agent-facing design and roadmap summary for subsequent Codex work.
+"""
 
     write_text(
         NEXT_STEPS_PATH,
@@ -383,31 +489,7 @@ Generated: {jst_now().isoformat(timespec='seconds')}
 
 {source_rows}
 
-## Re-authentication
-
-NotebookLM CLI currently needs browser re-authentication before sources can be added to NotebookLM.
-
-```powershell
-notebooklm login
-python scripts/sync_docs_to_notebooklm.py
-```
-
-During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
-
-## Last CLI Error
-
-```text
-{error}
-```
-
-## Agent Retrieval Command
-
-After authentication, the script will add the Drive docs as NotebookLM sources and write:
-
-- `exports/knowledge_flow/notebooklm_agent_brief.md`
-- `exports/knowledge_flow/notebooklm_agent_brief.json`
-
-These files are the agent-facing design and roadmap summary for subsequent Codex work.
+{reauth_section}
 """,
     )
 
@@ -440,6 +522,35 @@ agent brief with design, roadmap, and next-action guidance.
         )
         write_json(
             AGENT_BRIEF_JSON_PATH,
+            {
+                "generated_at_jst": jst_now().isoformat(timespec="seconds"),
+                "status": auth_status,
+                "error": error,
+                "next_steps": relative(NEXT_STEPS_PATH),
+            },
+        )
+        write_text(
+            CEO_SLIDE_OUTLINE_PATH,
+            f"""# NotebookLM CEO Slide Outline
+
+Generated: {jst_now().isoformat(timespec='seconds')}
+Status: `{auth_status}`
+
+NotebookLM CLI is not ready yet, so this file is a placeholder.
+
+## Required Action
+
+```powershell
+notebooklm login
+python scripts/sync_docs_to_notebooklm.py
+```
+
+After re-authentication, this file will be replaced by a NotebookLM-generated
+8-slide-or-less CEO presentation outline.
+""",
+        )
+        write_json(
+            CEO_SLIDE_OUTLINE_JSON_PATH,
             {
                 "generated_at_jst": jst_now().isoformat(timespec="seconds"),
                 "status": auth_status,
@@ -482,6 +593,8 @@ def main() -> None:
     print(f"[*] Next steps: {relative(NEXT_STEPS_PATH)}")
     if notebooklm.get("agent_brief"):
         print(f"[*] Agent brief: {notebooklm['agent_brief']}")
+    if notebooklm.get("ceo_slide_outline"):
+        print(f"[*] CEO slide outline: {notebooklm['ceo_slide_outline']}")
 
 
 if __name__ == "__main__":

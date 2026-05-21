@@ -192,17 +192,33 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】NotebookLM CLI再認証・Source追加",
-        "description": "notebooklm loginでk-umezawa@ml-mightylink.comを選択し、sync_docs_to_notebooklm.pyを再実行してNotebookLMへdocs sourceを追加します。",
-        "start_time": "2026-05-23T10:00:00",
-        "end_time": "2026-05-23T10:30:00",
+        "description": "notebooklm_login_workspace.pyでk-umezawa@ml-mightylink.comのCLI認証状態を保存し、sync_docs_to_notebooklm.pyでNotebookLMへdocs sourceを追加します。",
+        "start_time": "2026-05-22T13:00:00",
+        "end_time": "2026-05-22T13:30:00",
         "time_zone": "Asia/Tokyo",
         "is_all_day": False
     },
     {
         "summary": "【Mighty Skill-Bridge】NotebookLM Agent Brief取得",
         "description": "NotebookLM ask/summaryで設計情報・ロードマップ・6/2前タスクを要約し、AIエージェントの次回開発入力としてnotebooklm_agent_brief.mdへ保存します。",
-        "start_time": "2026-05-23T10:30:00",
-        "end_time": "2026-05-23T11:00:00",
+        "start_time": "2026-05-22T13:30:00",
+        "end_time": "2026-05-22T14:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】NotebookLM補助ログイン導線作成",
+        "description": "upstream notebooklm loginのGoogle Accounts遷移中断に備え、Workspace専用の補助ログインスクリプトを作成し、storage_stateを保存できる状態にします。",
+        "start_time": "2026-05-22T12:30:00",
+        "end_time": "2026-05-22T13:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】NotebookLM CEO Slide Outline取得",
+        "description": "NotebookLMの14 source ready状態から、6/2社長説明用の8枚以内スライド草案、話す要点、想定質問を取得し、Google Docs化対象に追加します。",
+        "start_time": "2026-05-22T14:00:00",
+        "end_time": "2026-05-22T14:30:00",
         "time_zone": "Asia/Tokyo",
         "is_all_day": False
     },
@@ -361,20 +377,31 @@ def find_existing_event(headers, calendar_id, ev, desired_event):
         "q": ev["summary"],
         "singleEvents": "true",
         "orderBy": "startTime",
-        **event_window_params(ev)
+        "timeMin": "2026-05-19T00:00:00+09:00",
+        "timeMax": "2026-06-04T23:59:59+09:00"
     }
     res = requests.get(list_url, headers=headers, params=params)
     if res.status_code != 200:
         print(f"  [!] Could not check existing events for {ev['summary']}: {res.text}")
         return None
 
+    desired_key = desired_event.get("extendedProperties", {}).get("private", {}).get("syncKey")
     matches = []
     for item in res.json().get("items", []):
-        if event_matches(item, desired_event):
+        private_props = item.get("extendedProperties", {}).get("private", {})
+        same_summary = item.get("summary") == desired_event.get("summary")
+        same_key = desired_key and private_props.get("syncKey") == desired_key
+        if same_summary or same_key:
             matches.append(item)
 
-    if len(matches) > 1:
-        for duplicate in matches[1:]:
+    if not matches:
+        return None
+
+    exact_matches = [item for item in matches if event_matches(item, desired_event)]
+    selected = exact_matches[0] if exact_matches else matches[0]
+
+    for duplicate in matches:
+        if duplicate.get("id") != selected.get("id"):
             delete_url = f"https://www.googleapis.com/calendar/v3/calendars/{calendar_id}/events/{duplicate['id']}"
             delete_res = requests.delete(delete_url, headers=headers)
             if delete_res.status_code in [200, 204]:
@@ -382,7 +409,7 @@ def find_existing_event(headers, calendar_id, ev, desired_event):
             else:
                 print(f"  [!] Failed to remove duplicate event {duplicate['id']}: {delete_res.text}")
 
-    return matches[0] if matches else None
+    return selected
 
 def sync_to_google_calendar(access_token, auth_mode):
     """Creates events in Google Calendar via HTTP REST API."""

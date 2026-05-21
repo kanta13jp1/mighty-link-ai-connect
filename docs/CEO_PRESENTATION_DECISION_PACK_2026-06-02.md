@@ -127,6 +127,15 @@
 2. Google Sheets が開けない場合は、`data/WBS.tsv` と `docs/WBS.md` で構成を説明する。
 3. Calendar同期が見えない場合は、`exports/mighty_development_plan.ics` と同期ログで補足する。
 4. Gemini quota が残っていない場合は、deterministic fallback の構造化結果を見せ、Gemini復帰後の差し替え方針を説明する。
+5. NotebookLM画面が不安定な場合は、取得済みの `exports/knowledge_flow/notebooklm_agent_brief.md` と `exports/knowledge_flow/notebooklm_ceo_slide_outline.md` を見せる。
+
+## NotebookLM取得済み成果物
+
+| 成果物 | 用途 | パス |
+| --- | --- | --- |
+| Agent Brief | AIエージェントが次回開発時に読む設計・ロードマップ要約 | `exports/knowledge_flow/notebooklm_agent_brief.md` |
+| CEO Slide Outline | 6/2社長説明で使う8枚以内のプレゼン草案、話す要点、想定質問 | `exports/knowledge_flow/notebooklm_ceo_slide_outline.md` |
+| Source Manifest | `docs/*.md` 14件のGoogle Docs化とNotebookLM source ready証跡 | `exports/knowledge_flow/notebooklm_docs_manifest.json` |
 
 ## 当日前チェックコマンド
 
