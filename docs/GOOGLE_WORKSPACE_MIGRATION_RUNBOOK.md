@@ -98,6 +98,8 @@ python src/app.py
 - `http://localhost:8000` で画面が表示される。
 - `src/index.html` が UTF-8 として読み込まれる。
 - Sheets 連携はプロジェクトルートの `client_secret.json` / `authorized_user.json` を利用する。
+- `python scripts/verify_google_workspace_account.py` で、OAuth実行アカウントが `k-umezawa@ml-mightylink.com` としてDrive APIに認識されていることを確認する。
+- Sheets / Calendar / FastAPI の同期処理は、OAuthアカウントが `k-umezawa@ml-mightylink.com` ではない場合に停止する。
 
 ## 再実行チェックリスト
 

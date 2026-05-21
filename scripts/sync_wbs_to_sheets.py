@@ -22,6 +22,9 @@ from collections import OrderedDict
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
+SRC_DIR = os.path.join(PROJECT_ROOT, "src")
+if SRC_DIR not in sys.path:
+    sys.path.insert(0, SRC_DIR)
 
 # sys.stdout/stderr override removed to avoid logging capture interference
 
@@ -41,6 +44,11 @@ install_and_import("google.oauth2")
 
 import gspread
 from google.oauth2.service_account import Credentials
+from google_workspace_account import (
+    GoogleWorkspaceAccountError,
+    assert_expected_google_account,
+    credentials_from_gspread_client,
+)
 
 # Configuration
 CREDENTIALS_FILE = os.path.join(PROJECT_ROOT, "credentials.json")       # Service Account
@@ -658,8 +666,12 @@ def main():
                 credentials_filename=CLIENT_SECRET_FILE,
                 authorized_user_filename=AUTHORIZED_USER_FILE
             )
+            assert_expected_google_account(credentials_from_gspread_client(client), USER_EMAIL)
             auth_mode = "OAuth 2.0 (User Drive)"
             print("[+] OAuth 2.0 Authentication Successful!")
+        except GoogleWorkspaceAccountError as e:
+            print(f"[-] OAuth 2.0 Workspace Account Verification Failed: {e}")
+            sys.exit(1)
         except Exception as e:
             print(f"[-] OAuth 2.0 Authentication Failed: {e}")
             print("[*] Falling back to Service Account check...")

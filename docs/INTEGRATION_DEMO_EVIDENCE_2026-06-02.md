@@ -18,6 +18,7 @@
 | Notion | Notion MCPで連携証跡ページを作成 | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 |
 | Obsidian | `exports/knowledge_flow/obsidian_vault/` にvault雛形と `.obsidian` 設定を追加 | `exports/knowledge_flow/obsidian_vault/Mighty Skill-Bridge Home.md` |
 | Slack | 投稿案を生成し、CLI/MCP利用可否を確認 | `exports/knowledge_flow/slack_ceo_update.md` |
+| Google Workspace OAuth | `authorized_user.json` の実行アカウントをDrive APIで検証 | `k-umezawa@ml-mightylink.com` |
 
 ## CLI / MCP 実行結果
 
@@ -30,6 +31,7 @@
 | Google Drive連携 | Google Drive MCP `_import_document` | TXT source pack をGoogle Docsへ変換 |
 | Notion連携 | Notion MCP `_notion_create_pages` | GitHub配下のNotionページとして証跡を作成 |
 | Slack CLI確認 | `Get-Command slack` | ローカルCLIは未検出 |
+| Google Workspaceアカウント確認 | `python scripts/verify_google_workspace_account.py` | `authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づいていることを確認 |
 
 ## GitHub Project の現状
 
@@ -73,12 +75,13 @@ gh project list --owner kanta13jp1 --format json
 - `T644`: Project OAuth復旧
 - `T645`: Project Issue配置
 - `T646`: Slack送信権限確認
+- `T647`: Google Workspaceアカウント固定
 
 同期結果:
 
-- Google Sheets: `62 source rows` / `74 hierarchical WBS display rows`
-- Google Calendar: `Success: 17, Updated: 15, Failed: 0`
-- 新規Calendarイベント: `CLI/MCP連携証跡レビュー`, `GitHub Project権限復旧チェック`, `NotebookLMプレゼン草案作成`, `Slack投稿先・送信権限確認`
+- Google Sheets: `63 source rows` / `75 hierarchical WBS display rows`
+- Google Calendar: `Success: 18, Updated: 17, Failed: 0`
+- 新規Calendarイベント: `CLI/MCP連携証跡レビュー`, `GitHub Project権限復旧チェック`, `NotebookLMプレゼン草案作成`, `Slack投稿先・送信権限確認`, `Google Workspace OAuthアカウント固定確認`
 
 ## 社長への見せ方
 

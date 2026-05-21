@@ -337,3 +337,25 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 - `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
 - Google Sheets へ `62 source rows` / `74 hierarchical WBS display rows` を同期済み。
 - Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 17, Updated: 15, Failed: 0`。
+
+## 2026-05-21 作業ログ: Google Workspaceアカウント固定ガード追加
+
+Google連携が必ず `k-umezawa@ml-mightylink.com` で実行されるよう、OAuthアカウント検証を追加した。
+
+実施内容:
+
+- Drive API `about.user.emailAddress` で `authorized_user.json` の実行アカウントを確認し、`k-umezawa@ml-mightylink.com` と一致することを確認。
+- `src/google_workspace_account.py` を追加し、OAuth認証情報のアカウント検証を共通化。
+- `scripts/verify_google_workspace_account.py` を追加。
+- `scripts/sync_wbs_to_sheets.py`, `scripts/sync_wbs_to_calendar.py`, `scripts/share_resources.py`, `src/app.py` に、同期前のWorkspaceアカウント検証を追加。
+- 誤って別Googleアカウントの `authorized_user.json` に差し替わった場合は、Sheets / Calendar / FastAPI同期が停止する。
+- WBSに `T647` を追加した。
+
+確認結果:
+
+- `python scripts/verify_google_workspace_account.py` 成功。
+- Drive API上の実行アカウント: `k-umezawa@ml-mightylink.com`
+- `data/WBS.tsv` は `62` タスク、全行 `10` 列であることを確認。
+- Google Sheets へ `63 source rows` / `75 hierarchical WBS display rows` を同期済み。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 18, Updated: 17, Failed: 0`。
+- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。

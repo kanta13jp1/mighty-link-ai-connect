@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-05-21 22:12:11 UTC+09:00
+Generated: 2026-05-21 22:23:35 UTC+09:00
 
 ## Purpose
 
@@ -10,13 +10,13 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 
 ## Current WBS Snapshot
 
-- Total tasks: 61
-- Done: 35
+- Total tasks: 62
+- Done: 36
 - In progress: 3
 - Not started: 23
-- Completion rate: 57%
-- CEO presentation phase tasks: 46
-- CEO presentation phase done: 24
+- Completion rate: 58%
+- CEO presentation phase tasks: 47
+- CEO presentation phase done: 25
 
 ## Knowledge Flow Tasks
 
@@ -85,6 +85,12 @@ python scripts/generate_knowledge_flow_demo.py
 
 CLI/MCPで実施した連携証跡は `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md` にまとめています。
 NotebookLMでプレゼン資料のたたき台を作るための入力資料は `exports/knowledge_flow/notebooklm_presentation_brief.md` に生成されます。
+
+Google Workspace 連携アカウントを確認する場合:
+
+```powershell
+python scripts/verify_google_workspace_account.py
+```
 
 ## Documents
 
@@ -518,6 +524,7 @@ GET  /api/knowledge-flow/status
 | Notion | Notion MCPで連携証跡ページを作成 | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 |
 | Obsidian | `exports/knowledge_flow/obsidian_vault/` にvault雛形と `.obsidian` 設定を追加 | `exports/knowledge_flow/obsidian_vault/Mighty Skill-Bridge Home.md` |
 | Slack | 投稿案を生成し、CLI/MCP利用可否を確認 | `exports/knowledge_flow/slack_ceo_update.md` |
+| Google Workspace OAuth | `authorized_user.json` の実行アカウントをDrive APIで検証 | `k-umezawa@ml-mightylink.com` |
 
 ## CLI / MCP 実行結果
 
@@ -530,6 +537,7 @@ GET  /api/knowledge-flow/status
 | Google Drive連携 | Google Drive MCP `_import_document` | TXT source pack をGoogle Docsへ変換 |
 | Notion連携 | Notion MCP `_notion_create_pages` | GitHub配下のNotionページとして証跡を作成 |
 | Slack CLI確認 | `Get-Command slack` | ローカルCLIは未検出 |
+| Google Workspaceアカウント確認 | `python scripts/verify_google_workspace_account.py` | `authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づいていることを確認 |
 
 ## GitHub Project の現状
 
@@ -573,12 +581,13 @@ gh project list --owner kanta13jp1 --format json
 - `T644`: Project OAuth復旧
 - `T645`: Project Issue配置
 - `T646`: Slack送信権限確認
+- `T647`: Google Workspaceアカウント固定
 
 同期結果:
 
-- Google Sheets: `62 source rows` / `74 hierarchical WBS display rows`
-- Google Calendar: `Success: 17, Updated: 15, Failed: 0`
-- 新規Calendarイベント: `CLI/MCP連携証跡レビュー`, `GitHub Project権限復旧チェック`, `NotebookLMプレゼン草案作成`, `Slack投稿先・送信権限確認`
+- Google Sheets: `63 source rows` / `75 hierarchical WBS display rows`
+- Google Calendar: `Success: 18, Updated: 17, Failed: 0`
+- 新規Calendarイベント: `CLI/MCP連携証跡レビュー`, `GitHub Project権限復旧チェック`, `NotebookLMプレゼン草案作成`, `Slack投稿先・送信権限確認`, `Google Workspace OAuthアカウント固定確認`
 
 ## 社長への見せ方
 
@@ -884,6 +893,8 @@ python scripts/sync_wbs_to_calendar.py
 - WBS 開発スケジュールと 6/2 社長プレゼン準備イベントが同期されます。
 - `exports/mighty_development_plan.ics` が生成されます。
 - `authorized_user.json` がプロジェクトルートに保存され、次回以降は認証が自動化されます。
+- `python scripts/verify_google_workspace_account.py` で、`authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づいていることを確認できます。
+- Sheets / Calendar / FastAPI 同期は、実行前にDrive APIでアカウントを検証し、別アカウントの場合は停止します。
 
 ## 6. WBS を Google Sheets へ同期
 
@@ -946,8 +957,4 @@ python scripts/generate_knowledge_flow_demo.py
 - `exports/knowledge_flow/notebooklm_source_pack.txt`
 - `exports/knowledge_flow/notebooklm_presentation_brief.md`
 - `exports/knowledge_flow/notebooklm_presentation_brief.txt`
-- `exports/knowledge_flow/slack_ceo_update.md`
-- `exports/knowledge_flow/notion_decision_log.csv`
-- `exports/knowledge_flow/notion_backlog_import.csv`
-- `exports/knowledge_flow/integration_evidence.md`
-- `exports/knowledge_flow/obsidi
+- `exports/knowledge_flow/slac

@@ -23,6 +23,9 @@ import requests
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
 EXPORTS_DIR = os.path.join(PROJECT_ROOT, "exports")
+SRC_DIR = os.path.join(PROJECT_ROOT, "src")
+if SRC_DIR not in sys.path:
+    sys.path.insert(0, SRC_DIR)
 
 def install_and_import(package):
     """Dynamically checks and instructs how to install dependencies if missing."""
@@ -40,6 +43,11 @@ install_and_import("google.oauth2")
 import gspread
 from google.oauth2.service_account import Credentials
 import google.auth.transport.requests
+from google_workspace_account import (
+    GoogleWorkspaceAccountError,
+    assert_expected_google_account,
+    credentials_from_gspread_client,
+)
 
 # Configuration
 CREDENTIALS_FILE = os.path.join(PROJECT_ROOT, "credentials.json")       # Service Account
@@ -160,6 +168,13 @@ SCHEDULE_EVENTS = [
         "end_time": "2026-05-24T11:30:00",
         "time_zone": "Asia/Tokyo",
         "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】Google Workspace OAuthアカウント固定確認",
+        "description": "authorized_user.jsonがk-umezawa@ml-mightylink.comに紐づいていることをDrive APIで確認し、Sheets/Calendar/API同期前の誤アカウント防止ガードを追加します。",
+        "start_date": "2026-05-21",
+        "end_date": "2026-05-22",
+        "is_all_day": True
     },
     {
         "summary": "【Mighty Skill-Bridge】社長プレゼン最終リハーサル",
@@ -452,8 +467,12 @@ def main():
                 credentials_filename=CLIENT_SECRET_FILE,
                 authorized_user_filename=AUTHORIZED_USER_FILE
             )
+            assert_expected_google_account(credentials_from_gspread_client(client), USER_EMAIL)
             auth_mode = "OAuth 2.0 (User Drive)"
             print("[+] OAuth 2.0 Authentication Successful!")
+        except GoogleWorkspaceAccountError as e:
+            print(f"[-] OAuth 2.0 Workspace Account Verification Failed: {e}")
+            sys.exit(1)
         except Exception as e:
             print(f"[-] OAuth 2.0 Authentication Failed: {e}")
             print("[*] Falling back to Service Account check...")

@@ -96,6 +96,7 @@ gantt
 | **T644** | 6. 社長プレゼン準備 | Project OAuth復旧 | GitHub Project用のread:project/projectスコープをブラウザ認証で復旧 | 人間 + Codex | gh CLI + GitHub OAuth | `gh auth refresh` がタイムアウトしたため、Issue #8で手動認証完了まで追跡する |
 | **T645** | 6. 社長プレゼン準備 | Project Issue配置 | GitHub Project取得後にCEO Demo IssuesをProject boardへ配置 | 人間 + Codex | gh CLI + GitHub Project | Issue #1-#8をProject boardへ登録し、WBS/Issue/Projectの三点連携を完成させる |
 | **T646** | 6. 社長プレゼン準備 | Slack送信権限確認 | Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする | 人間 + Codex | Slack MCP/CLI | Slack CLI未検出・送信MCP未露出のため、投稿先とconnector権限を6/2前に確認する |
+| **T647** | 6. 社長プレゼン準備 | Google Workspaceアカウント固定 | Google OAuth連携をk-umezawa@ml-mightylink.comへ固定し、誤アカウント同期を防止 | Codex | VSCode + Codex | Drive APIでauthorized_user.jsonの実行アカウントを検証し、Sheets/Calendar/API同期前に不一致なら停止する |
 
 ---
 

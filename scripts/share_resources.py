@@ -20,11 +20,23 @@ import google.auth.transport.requests
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+SRC_DIR = os.path.join(PROJECT_ROOT, "src")
+if SRC_DIR not in sys.path:
+    sys.path.insert(0, SRC_DIR)
 
 # Configuration
 AUTHORIZED_USER_FILE = os.path.join(PROJECT_ROOT, "authorized_user.json")
+USER_EMAIL = "k-umezawa@ml-mightylink.com"
 CEO_EMAIL = "kobayashi-masami@ml-mightylink.com"
 SPREADSHEET_ID = "1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8"
+SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/calendar",
+    "https://www.googleapis.com/auth/calendar.events",
+]
+
+from google_workspace_account import assert_expected_google_account
 
 def get_access_token():
     """Retrieves standard Access Token from authorized_user.json."""
@@ -34,7 +46,8 @@ def get_access_token():
     with open(AUTHORIZED_USER_FILE, "r", encoding="utf-8") as f:
         info = json.load(f)
         
-    creds = UserCredentials.from_authorized_user_info(info)
+    creds = UserCredentials.from_authorized_user_info(info, scopes=SCOPES)
+    assert_expected_google_account(creds, USER_EMAIL)
     auth_req = google.auth.transport.requests.Request()
     creds.refresh(auth_req)
     return creds.token

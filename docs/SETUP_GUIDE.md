@@ -103,6 +103,8 @@ python scripts/sync_wbs_to_calendar.py
 - WBS 開発スケジュールと 6/2 社長プレゼン準備イベントが同期されます。
 - `exports/mighty_development_plan.ics` が生成されます。
 - `authorized_user.json` がプロジェクトルートに保存され、次回以降は認証が自動化されます。
+- `python scripts/verify_google_workspace_account.py` で、`authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づいていることを確認できます。
+- Sheets / Calendar / FastAPI 同期は、実行前にDrive APIでアカウントを検証し、別アカウントの場合は停止します。
 
 ## 6. WBS を Google Sheets へ同期
 
@@ -191,6 +193,7 @@ GET  /api/knowledge-flow/status
 
 ```powershell
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_google_workspace_account.py
 python scripts/generate_knowledge_flow_demo.py
 gh issue list --state all --label ceo-demo
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8

@@ -26,6 +26,12 @@ python scripts/generate_knowledge_flow_demo.py
 CLI/MCPで実施した連携証跡は `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md` にまとめています。
 NotebookLMでプレゼン資料のたたき台を作るための入力資料は `exports/knowledge_flow/notebooklm_presentation_brief.md` に生成されます。
 
+Google Workspace 連携アカウントを確認する場合:
+
+```powershell
+python scripts/verify_google_workspace_account.py
+```
+
 ## Documents
 
 - [セットアップ・運用手順書](docs/SETUP_GUIDE.md)

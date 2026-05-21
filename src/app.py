@@ -42,6 +42,11 @@ try:
     from google.oauth2.service_account import Credentials as ServiceCredentials
     from google.oauth2.credentials import Credentials as UserCredentials
     import google.auth.transport.requests
+    from google_workspace_account import (
+        GoogleWorkspaceAccountError,
+        assert_expected_google_account,
+        credentials_from_gspread_client,
+    )
     SHEETS_LIB_AVAILABLE = True
 except ImportError:
     SHEETS_LIB_AVAILABLE = False
@@ -823,7 +828,11 @@ async def sync_to_sheets(req: SyncRequest):
                 credentials_filename=CLIENT_SECRET_FILE,
                 authorized_user_filename=AUTHORIZED_USER_FILE
             )
+            assert_expected_google_account(credentials_from_gspread_client(client), USER_EMAIL)
             auth_mode = "OAuth 2.0"
+        except GoogleWorkspaceAccountError as e:
+            print(f"[-] OAuth 2.0 Workspace account verification failed in API: {e}")
+            return {"status": "error", "message": str(e)}
         except Exception as e:
             print(f"[-] OAuth 2.0 authentication failed in API: {e}")
 
