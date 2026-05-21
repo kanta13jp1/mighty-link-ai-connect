@@ -150,3 +150,23 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 - Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 6, Updated: 6, Failed: 0`。
 - `python -m compileall src scripts` 成功。
 - 公開デモガード `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
+
+## 2026-05-21 作業ログ: 6/2社長プレゼン準備WBS追加
+
+6/2 の社長打ち合わせまでは、実際の企画・サービス内容を決め打ちせず、社長が判断しやすい材料を準備する方針に切り替えた。
+
+実施内容:
+
+- WBS に `6. 社長プレゼン準備` フェーズを追加。
+- `T601` から `T609` まで、目的整理、デモ構成、安定稼働確認、資料骨子、選択肢整理、運用論点、想定QA、最終リハーサル、決定事項反映準備を追加。
+- `docs/CEO_PRESENTATION_PREP_2026-06-02.md` を作成し、6/2の目的、当日までに用意するもの、推奨プレゼン構成、デモ導線、決める事項/決めない事項、想定QA、当日後の反映テンプレートを整理。
+- Google Calendar 同期対象に `フェーズ6: 社長プレゼン準備` と `社長プレゼン最終リハーサル` を追加。
+- `SETUP_GUIDE.md`, `PROJECT_STRUCTURE.md`, `README.md`, `WBS.md` を更新。
+- Google Sheets へ `25 source rows` / `37 hierarchical WBS display rows` を同期済み。
+- `WBS Summary` の合計行がフェーズ6を含むことを確認済み。合計は `24 tasks / 完了12 / 実行中1 / 未着手11 / 完了率50%`。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。フェーズ6と最終リハーサルを新規作成し、最終結果は `Success: 8, Updated: 6, Failed: 0`。
+
+運用方針:
+
+- 6/2までは「確定サービス資料」ではなく、「決定のための資料」に留める。
+- 社長決定後、`T609` の枠でWBS、Calendar、Git、作業ログへ即反映する。

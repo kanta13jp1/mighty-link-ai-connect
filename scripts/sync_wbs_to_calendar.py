@@ -85,8 +85,23 @@ SCHEDULE_EVENTS = [
         "is_all_day": True
     },
     {
+        "summary": "【Mighty Skill-Bridge】フェーズ6: 社長プレゼン準備（6/2判断材料・デモ・想定QA）",
+        "description": "6/2の社長打ち合わせに向け、サービス内容を決め打ちせず、公開デモ、WBS、Google Workspace連携、論点、選択肢、想定QA、決定後の反映手順を準備します。",
+        "start_date": "2026-05-21",
+        "end_date": "2026-06-02",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】社長プレゼン最終リハーサル",
+        "description": "公開URL、ローカルAPI、Google Sheets WBS、Calendar同期、説明資料、想定QA、バックアップ手順を最終確認します。",
+        "start_time": "2026-06-01T16:00:00",
+        "end_time": "2026-06-01T17:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
         "summary": "【Mighty Skill-Bridge】第1回 社長報告会（プロジェクト方針決定）",
-        "description": "「Mighty Skill-Bridge (エンジニア＆案件 AIフィットシミュレーター)」の開発計画(WBS)、仕様・要件、およびAIフィットシミュレータープロトタイプの最終確認・方針決定を行います。",
+        "description": "「Mighty Skill-Bridge」の公開デモ、WBS、Google Workspace連携、6/2以降の企画・サービス内容・優先機能・開発方針を確認し、決定します。",
         "start_time": "2026-06-02T13:00:00",
         "end_time": "2026-06-02T14:00:00",
         "time_zone": "Asia/Tokyo",

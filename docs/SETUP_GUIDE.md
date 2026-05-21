@@ -31,6 +31,7 @@ mighty-link-ai-connect/
 │   ├── GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md
 │   ├── CODEX_CONTINUATION_NOTES.md
 │   ├── BACKEND_AI_PIPELINE.md
+│   ├── CEO_PRESENTATION_PREP_2026-06-02.md
 │   ├── PROJECT_STRUCTURE.md
 │   ├── WBS.md
 │   ├── WBS_SYNC_GUIDE.md
@@ -128,7 +129,23 @@ python scripts/share_resources.py
 
 `File not found` が出る場合は、スプレッドシートのオーナー側から `k-umezawa@ml-mightylink.com` を編集者として共有してから再実行してください。
 
-## 8. FastAPI サーバー起動
+## 8. 6/2 社長プレゼン準備
+
+6/2 の社長打ち合わせまでは、実際の企画・サービス内容を決め打ちせず、判断材料・デモ・論点整理・決定後の反映準備を進めます。
+
+準備ブリーフ:
+
+- [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md)
+
+当日前後の必須確認:
+
+```powershell
+python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
+python scripts/sync_wbs_to_calendar.py
+```
+
+## 9. FastAPI サーバー起動
 
 通常起動:
 
@@ -144,7 +161,7 @@ Start-Process -WindowStyle Hidden -FilePath python -ArgumentList "src/app.py" -W
 
 ブラウザで `http://localhost:8000` を開き、画面の接続状態が `Live Connected` になることを確認します。
 
-## 9. 公開デモURLのデグレ防止
+## 10. 公開デモURLのデグレ防止
 
 社長共有済みの公開URL `https://kanta13jp1.github.io/mighty-link-ai-connect/` は GitHub Pages の本番デモ面として扱います。
 
@@ -167,7 +184,7 @@ python scripts/verify_public_demo.py
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
 ```
 
-## 10. AI 監査ログの確認
+## 11. AI 監査ログの確認
 
 `/api/parse` と `/api/match` の実行結果は、後から判定根拠を確認できるように `data/audit/ai_audit.jsonl` へ保存されます。ログ本体は `.gitignore` 対象で、Git には含めません。
 
@@ -179,7 +196,7 @@ Invoke-RestMethod "http://127.0.0.1:8000/api/audit/recent?limit=10"
 
 レスポンスには `audit_event_id`、AI mode、スコア、matched/missing skills、短い excerpt が含まれます。原文全文は保存しません。
 
-## 11. よくあるトラブル
+## 12. よくあるトラブル
 
 ### Gemini の quota 制限が出ている
 

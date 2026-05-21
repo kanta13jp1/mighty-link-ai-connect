@@ -273,17 +273,19 @@ def build_summary_sheet(phase_names, last_data_row):
             f'=IFERROR(MAXIFS({q_sheet}!$L${DATA_START_ROW}:$L${last_data_row},{q_sheet}!$D${DATA_START_ROW}:$D${last_data_row},{phase_cell},{q_sheet}!$B${DATA_START_ROW}:$B${last_data_row},2),"")',
             f'=IF(F{idx}=1,"完了",IF(F{idx}=0,"未着手","進行中"))',
         ])
-    total_row = len(values) + 1
+    summary_start_row = 5
+    summary_end_row = summary_start_row + len(phase_names) - 1
     values.append([""] * 9)
+    total_row = summary_end_row + 2
     values.append([
         "合計",
-        f"=SUM(B5:B{total_row-2})",
-        f"=SUM(C5:C{total_row-2})",
-        f"=SUM(D5:D{total_row-2})",
-        f"=SUM(E5:E{total_row-2})",
+        f"=SUM(B{summary_start_row}:B{summary_end_row})",
+        f"=SUM(C{summary_start_row}:C{summary_end_row})",
+        f"=SUM(D{summary_start_row}:D{summary_end_row})",
+        f"=SUM(E{summary_start_row}:E{summary_end_row})",
         f"=IFERROR(C{total_row}/B{total_row},0%)",
-        f'=IFERROR(MIN(G5:G{total_row-2}),"")',
-        f'=IFERROR(MAX(H5:H{total_row-2}),"")',
+        f'=IFERROR(MIN(G{summary_start_row}:G{summary_end_row}),"")',
+        f'=IFERROR(MAX(H{summary_start_row}:H{summary_end_row}),"")',
         f'=IF(F{total_row}=1,"完了",IF(F{total_row}=0,"未着手","進行中"))',
     ])
     return values

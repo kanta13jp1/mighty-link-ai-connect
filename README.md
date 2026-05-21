@@ -23,5 +23,6 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 - [Google Workspace 移行・共有作業手順書](docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md)
 - [Codex 継続作業メモ](docs/CODEX_CONTINUATION_NOTES.md)
 - [Backend AI Pipeline 設計メモ](docs/BACKEND_AI_PIPELINE.md) - deterministic fallback と AI 監査ログ
+- [6/2 社長打ち合わせ プレゼン準備ブリーフ](docs/CEO_PRESENTATION_PREP_2026-06-02.md)
 - [プロジェクト構成方針](docs/PROJECT_STRUCTURE.md)
 - [WBS 同期ガイド](docs/WBS_SYNC_GUIDE.md)
