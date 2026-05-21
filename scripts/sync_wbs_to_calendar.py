@@ -17,6 +17,7 @@ import sys
 import datetime
 import uuid
 import json
+import hashlib
 import requests
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -64,7 +65,7 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】フェーズ3: バックエンド & AI（Gemini 3.5 & Omni 連携API）",
-        "description": "FastAPIを用いたマルチモーダルパースAPI、4次元分析API、Google Sheets同期エンジンの開発。",
+        "description": "FastAPIを用いたマルチモーダルパースAPI、4次元分析API、Google Sheets同期エンジン、構造化プロファイル抽出・4軸スコアリングfallback基盤、AI判定監査ログ(JSONL)・recent audit API、GitHub Pages公開デモ保護ガードの開発。",
         "start_date": "2026-05-25",
         "end_date": "2026-05-28", # 3 days
         "is_all_day": True
@@ -107,11 +108,12 @@ def generate_ics_file():
         "X-WR-TIMEZONE:Asia/Tokyo"
     ]
     
-    now_str = datetime.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
+    now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     
     for ev in SCHEDULE_EVENTS:
         ics_lines.append("BEGIN:VEVENT")
-        ics_lines.append(f"UID:{uuid.uuid4()}@mighty-link.ai")
+        stable_uid = uuid.uuid5(uuid.NAMESPACE_URL, ev["summary"])
+        ics_lines.append(f"UID:{stable_uid}@mighty-link.ai")
         ics_lines.append(f"DTSTAMP:{now_str}")
         ics_lines.append(f"SUMMARY:{ev['summary']}")
         ics_lines.append(f"DESCRIPTION:{ev['description']}")
@@ -167,6 +169,91 @@ def get_google_auth_token(auth_mode):
             return creds.token
     raise Exception("No valid credentials found to extract access token.")
 
+def build_event_body(ev):
+    """Builds a deterministic Calendar API event payload."""
+    event_body = {
+        "summary": ev["summary"],
+        "description": ev["description"],
+        "extendedProperties": {
+            "private": {
+                "syncSource": "mighty-link-ai-connect",
+                "syncKey": hashlib.sha1(ev["summary"].encode("utf-8")).hexdigest()
+            }
+        }
+    }
+
+    if ev["is_all_day"]:
+        event_body["start"] = {"date": ev["start_date"]}
+        event_body["end"] = {"date": ev["end_date"]}
+    else:
+        event_body["start"] = {"dateTime": ev["start_time"], "timeZone": ev["time_zone"]}
+        event_body["end"] = {"dateTime": ev["end_time"], "timeZone": ev["time_zone"]}
+
+    return event_body
+
+def event_window_params(ev):
+    """Returns a small search window for finding existing calendar events."""
+    if ev["is_all_day"]:
+        start = datetime.date.fromisoformat(ev["start_date"]) - datetime.timedelta(days=1)
+        end = datetime.date.fromisoformat(ev["end_date"]) + datetime.timedelta(days=1)
+        return {
+            "timeMin": f"{start.isoformat()}T00:00:00+09:00",
+            "timeMax": f"{end.isoformat()}T23:59:59+09:00"
+        }
+
+    start_dt = datetime.datetime.fromisoformat(ev["start_time"]) - datetime.timedelta(hours=6)
+    end_dt = datetime.datetime.fromisoformat(ev["end_time"]) + datetime.timedelta(hours=6)
+    return {
+        "timeMin": f"{start_dt.isoformat()}+09:00",
+        "timeMax": f"{end_dt.isoformat()}+09:00"
+    }
+
+def event_matches(existing_event, desired_event):
+    """Checks summary and start/end values so re-sync updates instead of duplicating."""
+    if existing_event.get("summary") != desired_event.get("summary"):
+        return False
+    existing_start = existing_event.get("start", {})
+    existing_end = existing_event.get("end", {})
+    desired_start = desired_event.get("start", {})
+    desired_end = desired_event.get("end", {})
+    return event_time_value(existing_start) == event_time_value(desired_start) and event_time_value(existing_end) == event_time_value(desired_end)
+
+def event_time_value(event_time):
+    if "date" in event_time:
+        return event_time["date"]
+    # Google may return 2026-06-02T13:00:00+09:00 while the request uses
+    # dateTime plus a timeZone field. Compare the local timestamp portion.
+    return event_time.get("dateTime", "")[:19]
+
+def find_existing_event(headers, calendar_id, ev, desired_event):
+    list_url = f"https://www.googleapis.com/calendar/v3/calendars/{calendar_id}/events"
+    params = {
+        "q": ev["summary"],
+        "singleEvents": "true",
+        "orderBy": "startTime",
+        **event_window_params(ev)
+    }
+    res = requests.get(list_url, headers=headers, params=params)
+    if res.status_code != 200:
+        print(f"  [!] Could not check existing events for {ev['summary']}: {res.text}")
+        return None
+
+    matches = []
+    for item in res.json().get("items", []):
+        if event_matches(item, desired_event):
+            matches.append(item)
+
+    if len(matches) > 1:
+        for duplicate in matches[1:]:
+            delete_url = f"https://www.googleapis.com/calendar/v3/calendars/{calendar_id}/events/{duplicate['id']}"
+            delete_res = requests.delete(delete_url, headers=headers)
+            if delete_res.status_code in [200, 204]:
+                print(f"  [*] Removed duplicate event: {ev['summary']}")
+            else:
+                print(f"  [!] Failed to remove duplicate event {duplicate['id']}: {delete_res.text}")
+
+    return matches[0] if matches else None
+
 def sync_to_google_calendar(access_token, auth_mode):
     """Creates events in Google Calendar via HTTP REST API."""
     print(f"[*] Starting API Sync (Auth Mode: {auth_mode})...")
@@ -215,32 +302,32 @@ def sync_to_google_calendar(access_token, auth_mode):
     # 3. Create Events
     success_count = 0
     fail_count = 0
+    update_count = 0
     
     for ev in SCHEDULE_EVENTS:
-        event_body = {
-            "summary": ev["summary"],
-            "description": ev["description"],
-        }
-        
-        if ev["is_all_day"]:
-            event_body["start"] = {"date": ev["start_date"]}
-            event_body["end"] = {"date": ev["end_date"]}
+        event_body = build_event_body(ev)
+        existing_event = find_existing_event(headers, target_calendar_id, ev, event_body)
+
+        if existing_event:
+            event_url = f"https://www.googleapis.com/calendar/v3/calendars/{target_calendar_id}/events/{existing_event['id']}"
+            res = requests.patch(event_url, headers=headers, json=event_body)
+            action_label = "Updated"
         else:
-            event_body["start"] = {"dateTime": ev["start_time"], "timeZone": ev["time_zone"]}
-            event_body["end"] = {"dateTime": ev["end_time"], "timeZone": ev["time_zone"]}
-            
-        insert_url = f"https://www.googleapis.com/calendar/v3/calendars/{target_calendar_id}/events"
-        res = requests.post(insert_url, headers=headers, json=event_body)
+            insert_url = f"https://www.googleapis.com/calendar/v3/calendars/{target_calendar_id}/events"
+            res = requests.post(insert_url, headers=headers, json=event_body)
+            action_label = "Created"
         
         if res.status_code in [200, 201]:
-            print(f"  [+] Synced event: {ev['summary']}")
+            print(f"  [+] {action_label} event: {ev['summary']}")
             success_count += 1
+            if existing_event:
+                update_count += 1
         else:
             print(f"  [-] Failed to sync event: {ev['summary']} | Error: {res.text}")
             fail_count += 1
             
     print("="*60)
-    print(f"[+] API Sync Complete! Success: {success_count}, Failed: {fail_count}")
+    print(f"[+] API Sync Complete! Success: {success_count}, Updated: {update_count}, Failed: {fail_count}")
     
     if fail_count > 0 and "Service Account" in auth_mode:
         print("[!] Note: Google Service Accounts cannot write to your calendar by default.")

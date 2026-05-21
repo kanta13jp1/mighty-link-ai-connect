@@ -24,11 +24,13 @@ mighty-link-ai-connect/
 ├── scripts/
 │   ├── sync_wbs_to_calendar.py
 │   ├── sync_wbs_to_sheets.py
-│   └── share_resources.py
+│   ├── share_resources.py
+│   └── verify_public_demo.py
 ├── docs/
 │   ├── SETUP_GUIDE.md
 │   ├── GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md
 │   ├── CODEX_CONTINUATION_NOTES.md
+│   ├── BACKEND_AI_PIPELINE.md
 │   ├── PROJECT_STRUCTURE.md
 │   ├── WBS.md
 │   ├── WBS_SYNC_GUIDE.md
@@ -36,7 +38,8 @@ mighty-link-ai-connect/
 │   ├── database.md
 │   └── requirements.md
 ├── data/
-│   └── WBS.tsv
+│   ├── WBS.tsv
+│   └── audit/
 ├── exports/
 │   └── mighty_development_plan.ics
 ├── credentials.json
@@ -135,7 +138,42 @@ Start-Process -WindowStyle Hidden -FilePath python -ArgumentList "src/app.py" -W
 
 ブラウザで `http://localhost:8000` を開き、画面の接続状態が `Live Connected` になることを確認します。
 
-## 9. よくあるトラブル
+## 9. 公開デモURLのデグレ防止
+
+社長共有済みの公開URL `https://kanta13jp1.github.io/mighty-link-ai-connect/` は GitHub Pages の本番デモ面として扱います。
+
+重要ルール:
+
+- ルート直下の `index.html` は削除・移動しない。
+- FastAPI 用の `src/index.html` を変更する場合でも、公開URL用の `index.html` への影響を必ず確認する。
+- push 前に `scripts/verify_public_demo.py` を実行し、README fallback や UI マーカー欠落がないことを確認する。
+- `main` / `master` への push 時は GitHub Actions `Public Demo Guard` が root `index.html` を検証する。
+
+ローカル検証:
+
+```powershell
+python scripts/verify_public_demo.py
+```
+
+公開URL反映後の検証:
+
+```powershell
+python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+```
+
+## 10. AI 監査ログの確認
+
+`/api/parse` と `/api/match` の実行結果は、後から判定根拠を確認できるように `data/audit/ai_audit.jsonl` へ保存されます。ログ本体は `.gitignore` 対象で、Git には含めません。
+
+直近ログを確認する場合:
+
+```powershell
+Invoke-RestMethod "http://127.0.0.1:8000/api/audit/recent?limit=10"
+```
+
+レスポンスには `audit_event_id`、AI mode、スコア、matched/missing skills、短い excerpt が含まれます。原文全文は保存しません。
+
+## 11. よくあるトラブル
 
 ### Gemini の quota 制限が出ている
 
@@ -147,6 +185,7 @@ python src/app.py
 ```
 
 この状態でも Sheets 連携と画面デモは継続できます。実装・検証作業は Codex 側で進めます。
+バックエンドの deterministic fallback と Gemini 復帰時の接続方針は [BACKEND_AI_PIPELINE.md](BACKEND_AI_PIPELINE.md) を参照してください。
 
 ### OAuth で「このアプリはブロックされています」と表示される
 

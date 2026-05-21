@@ -57,7 +57,7 @@ Invoke-WebRequest -UseBasicParsing http://127.0.0.1:8000/api/health
   "status": "healthy",
   "sheets_live": true,
   "gemini_live": false,
-  "ai_mode": "mock_fallback",
+  "ai_mode": "deterministic_fallback",
   "ai_force_mock": true
 }
 ```
@@ -65,3 +65,67 @@ Invoke-WebRequest -UseBasicParsing http://127.0.0.1:8000/api/health
 ## Gemini 復帰時
 
 quota refresh 後に live Gemini を使う場合は、`AI_FORCE_MOCK` を未設定に戻し、`GEMINI_API_KEY` を設定してから `python src/app.py` を起動する。
+
+## 2026-05-21 作業ログ: バックエンド AI 基盤肉付け
+
+Gemini quota 復帰待ちの間に、VSCode + Codex で `src/app.py` の AI fallback を固定 mock から deterministic pipeline へ拡張した。
+
+実施内容:
+
+- `ParsedProfile` データ構造を追加。
+- スキル分類辞書 `SKILL_TAXONOMY` を追加。
+- `/api/parse` で structured profile を返すようにした。
+- `/api/match` で matched skills / missing skills / 4軸スコア根拠を含む structured payload を返すようにした。
+- Gemini live 復帰時に deterministic pre-parse / pre-score を prompt context として渡す準備を入れた。
+- カレンダー同期スクリプトを冪等化し、既存イベントを更新して重複作成しにくい動きにした。
+- WBS に `T304` を追加し、Google Sheets の `Mighty-Link WBS` タブへ同期した。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ同期した。時間指定イベントの比較を正規化し、重複していた社長報告会イベントを整理したうえで、最終結果は `Success: 6, Updated: 6, Failed: 0`。
+
+関連ドキュメント:
+
+- [BACKEND_AI_PIPELINE.md](BACKEND_AI_PIPELINE.md)
+- [WBS.md](WBS.md)
+
+## 2026-05-21 作業ログ: AI監査ログと再同期
+
+deterministic pipeline の判定根拠を後から確認・改善できるよう、`src/app.py` にローカル監査ログ基盤を追加した。
+
+実施内容:
+
+- `/api/parse` と `/api/match` のレスポンスに `audit_event_id` を追加。
+- `data/audit/ai_audit.jsonl` へ、AI mode、スコア、matched/missing skills、短い excerpt、digest を保存するようにした。
+- 原文全文は保存せず、監査ログ本体 `data/audit/*.jsonl` は `.gitignore` 対象にした。
+- `data/audit/.gitkeep` を追加し、ログ保存先ディレクトリのみ Git 管理できるようにした。
+- `/api/audit/recent?limit=10` を追加し、直近の AI 判定イベントを確認できるようにした。
+- 英語入力の `8 years experience` も経験年数として抽出できるよう、経験年数パーサーを拡張した。
+- WBS に `T305` を追加し、AI監査基盤の実装完了を反映した。
+
+検証結果:
+
+- `python -m compileall src scripts` 成功。
+- `AI_FORCE_MOCK=1` で FastAPI を起動し、`/api/health` が `ai_mode: deterministic_fallback` を返すことを確認。
+- `/api/parse` が `structured_profile.experience_years: 8` と `audit_event_id` を返すことを確認。
+- `/api/match` が `final_score: 97`、`matched_skills`、`missing_skills`、`audit_event_id` を返すことを確認。
+- `/api/audit/recent?limit=3` が直近監査イベントを返すことを確認。
+- Google Sheets の `Mighty-Link WBS` タブへ WBS 14 行を同期済み。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 6, Updated: 6, Failed: 0`。
+
+## 2026-05-21 作業ログ: 公開デモURL保護
+
+社長共有済みの公開URL `https://kanta13jp1.github.io/mighty-link-ai-connect/` が README fallback になるデグレを防ぐため、GitHub Pages root 配信を明示的に保護した。
+
+実施内容:
+
+- root `index.html` が GitHub Pages の公開デモ本体であることを手順書へ明記。
+- `scripts/verify_public_demo.py` を追加し、root `index.html` と公開URLの UI 必須マーカーを検証できるようにした。
+- `.github/workflows/public-demo-guard.yml` を追加し、`main` / `master` への push と PR で root `index.html` の存在・UIマーカーを検証するようにした。
+- WBS に `T306` を追加し、公開デモ保護を完了タスクとして記録した。
+- Google Sheets の `Mighty-Link WBS` タブへ WBS 15 行を同期済み。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 6, Updated: 6, Failed: 0`。
+
+公開URLを触る前後の必須コマンド:
+
+```powershell
+python scripts/verify_public_demo.py
+python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+```

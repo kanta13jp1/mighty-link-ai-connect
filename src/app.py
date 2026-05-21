@@ -10,7 +10,7 @@ This FastAPI application provides:
 2. Dynamic Multimodal AI parsing of resumes & jobs (Gemini 1.5/2.5 Flash).
 3. 4-Dimension AI Fit Evaluation.
 4. Auto-syncing of matching results to Google Sheets (Mighty Match Logs) with visual decoration.
-5. High-quality mock data fallbacks when GEMINI_API_KEY is not configured, ensuring robust demo delivery.
+5. Quota-safe deterministic fallbacks when GEMINI_API_KEY is not configured, ensuring robust demo delivery.
 """
 
 import os
@@ -18,7 +18,11 @@ import sys
 import datetime
 import json
 import io
+import re
+import hashlib
 import requests
+from dataclasses import dataclass, field, asdict
+from typing import Dict, List, Optional, Set, Tuple
 
 # Set console encoding to UTF-8 to prevent encoding errors on Windows terminal
 if hasattr(sys.stdout, "reconfigure"):
@@ -53,6 +57,9 @@ app = FastAPI(title="Mighty Skill-Bridge API Server")
 # Dynamic Path Resolution (ensures app.py works robustly inside src/)
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is src/
 PROJECT_ROOT = os.path.dirname(ROOT_DIR)             # Project root
+DATA_DIR = os.path.join(PROJECT_ROOT, "data")
+AUDIT_DIR = os.path.join(DATA_DIR, "audit")
+AUDIT_LOG_FILE = os.path.join(AUDIT_DIR, "ai_audit.jsonl")
 
 CREDENTIALS_FILE = os.path.join(PROJECT_ROOT, "credentials.json")
 CLIENT_SECRET_FILE = os.path.join(PROJECT_ROOT, "client_secret.json")
@@ -68,6 +75,405 @@ COLORS = {
     "row_even": {"red": 248/255, "green": 250/255, "blue": 252/255},    # Slate 50
     "border_gray": {"red": 226/255, "green": 232/255, "blue": 240/255}  # Slate 200
 }
+
+SKILL_TAXONOMY = {
+    "backend": [
+        "python", "fastapi", "django", "flask", "node.js", "node", "express",
+        "rest api", "api", "graphql", "java", "spring", "go", "golang"
+    ],
+    "frontend": [
+        "javascript", "typescript", "react", "react.js", "next.js", "vue",
+        "html", "css", "tailwind", "chart.js", "ui", "ux"
+    ],
+    "ai": [
+        "gemini", "openai", "llm", "rag", "prompt", "vertex ai", "生成ai",
+        "ai", "マルチモーダル", "エージェント", "自律"
+    ],
+    "google_workspace": [
+        "google sheets", "sheets api", "google drive", "drive api",
+        "google calendar", "calendar api", "gspread", "oauth", "docs api",
+        "workspace", "スプレッドシート", "カレンダー"
+    ],
+    "cloud": [
+        "google cloud", "gcp", "aws", "azure", "cloud run", "docker",
+        "github actions", "ci/cd", "vertex ai"
+    ],
+    "database": [
+        "postgresql", "sqlite", "mysql", "sql", "pinecone", "vector db",
+        "redis", "bigquery"
+    ],
+    "delivery": [
+        "agile", "scrum", "アジャイル", "スクラム", "要件定義", "設計",
+        "顧客折衝", "リード", "レビュー", "テスト", "運用"
+    ],
+}
+
+ROLE_PATTERNS = [
+    r"シニア[^\n、。]*",
+    r"リード[^\n、。]*",
+    r"フルスタック[^\n、。]*",
+    r"ソリューションアーキテクト",
+    r"バックエンド[^\n、。]*",
+    r"フロントエンド[^\n、。]*",
+    r"AI[^\n、。]*エンジニア",
+]
+
+SAMPLE_ENGINEER_TEXT = (
+    "【氏名】佐藤 賢太 (さとう けんた)\n"
+    "【職種】シニアAIソリューションアーキテクト / フルスタックエンジニア\n"
+    "【概要】IT業界経験8年。クラウドネイティブなWebアプリケーション開発、"
+    "Python、JavaScript(TypeScript)、FastAPI、React、Google Cloud API、"
+    "OpenAI、Gemini、gspread を用いた自律エージェント開発をリード。\n"
+    "【主要スキル】Python, JavaScript, TypeScript, FastAPI, Django, React.js, Next.js, "
+    "Vertex AI, Gemini API, gspread, SQL\n"
+    "【インフラ/データベース】AWS, Google Cloud, PostgreSQL, Pinecone (Vector DB)\n"
+    "【キャリア志向】生成AIを活用したプロダクト開発でビジネス価値を創造すること。"
+)
+
+SAMPLE_JOB_TEXT = (
+    "【案件名】大手ITソリューション企業：LLM自律エージェント＆データ連携基盤開発\n"
+    "【業務内容】生成AI(Gemini, GPT)を活用した業務プロセスの自動化・自律化エージェントの実装、"
+    "Google API (Sheets API, Docs API) と連携した文書作成自動同期システムの構築、"
+    "FastAPI / React.js を用いたWebアプリケーションの設計・開発。\n"
+    "【必須スキル】Python/TypeScript実務開発、REST API(FastAPI等)設計構築、React.js実装実績。\n"
+    "【歓迎スキル】Gemini/OpenAI API等のLLM連携実績、Google Cloud API (gspread, Drive API) 等のOAuth認証による連携実績。"
+)
+
+
+@dataclass
+class ParsedProfile:
+    doc_type: str
+    title: str
+    role: str
+    summary: str
+    experience_years: int = 0
+    skills_by_category: Dict[str, List[str]] = field(default_factory=dict)
+    all_skills: List[str] = field(default_factory=list)
+    strengths: List[str] = field(default_factory=list)
+    risk_flags: List[str] = field(default_factory=list)
+    raw_excerpt: str = ""
+
+
+def clamp(value: float, min_value: int = 50, max_value: int = 100) -> int:
+    return max(min_value, min(max_value, round(value)))
+
+
+def normalize_text(text: str) -> str:
+    return re.sub(r"\s+", " ", (text or "").strip())
+
+
+def now_utc_iso() -> str:
+    return datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+
+
+def stable_digest(value: str) -> str:
+    return hashlib.sha256((value or "").encode("utf-8")).hexdigest()[:16]
+
+
+def safe_excerpt(value: str, limit: int = 220) -> str:
+    normalized = normalize_text(value)
+    return normalized[:limit]
+
+
+def ensure_audit_dir():
+    os.makedirs(AUDIT_DIR, exist_ok=True)
+
+
+def write_audit_event(event_type: str, payload: dict) -> dict:
+    """Append a privacy-conscious local audit event for later AI tuning."""
+    ensure_audit_dir()
+    timestamp = now_utc_iso()
+    event = {
+        "event_id": stable_digest(f"{event_type}:{timestamp}:{json.dumps(payload, ensure_ascii=False, sort_keys=True)}"),
+        "timestamp_utc": timestamp,
+        "event_type": event_type,
+        "payload": payload,
+    }
+    with open(AUDIT_LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(json.dumps(event, ensure_ascii=False) + "\n")
+    return event
+
+
+def read_recent_audit_events(limit: int = 20) -> List[dict]:
+    if not os.path.exists(AUDIT_LOG_FILE):
+        return []
+    limit = max(1, min(limit, 100))
+    with open(AUDIT_LOG_FILE, "r", encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip()]
+    events = []
+    for line in lines[-limit:]:
+        try:
+            events.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue
+    return list(reversed(events))
+
+
+def profile_audit_payload(profile: ParsedProfile, ai_mode: str, fallback_reason: str, source_text: str, file_name: Optional[str] = None) -> dict:
+    return {
+        "ai_mode": ai_mode,
+        "fallback_reason": fallback_reason,
+        "doc_type": profile.doc_type,
+        "title": profile.title,
+        "role": profile.role,
+        "experience_years": profile.experience_years,
+        "all_skills": profile.all_skills,
+        "strengths": profile.strengths,
+        "risk_flags": profile.risk_flags,
+        "source_digest": stable_digest(source_text),
+        "source_length": len(source_text or ""),
+        "source_excerpt": safe_excerpt(source_text),
+        "file_name": file_name,
+    }
+
+
+def match_audit_payload(match_data: dict) -> dict:
+    structured = match_data.get("structured", {})
+    candidate = structured.get("candidate", {})
+    job = structured.get("job", {})
+    return {
+        "ai_mode": match_data.get("ai_mode"),
+        "fallback_reason": match_data.get("fallback_reason"),
+        "final_score": match_data.get("final_score"),
+        "scores": match_data.get("scores", {}),
+        "candidate_title": candidate.get("title"),
+        "job_title": job.get("title"),
+        "candidate_role": candidate.get("role"),
+        "job_role": job.get("role"),
+        "matched_skills": structured.get("matched_skills", []),
+        "missing_skills": structured.get("missing_skills", []),
+        "summary_excerpt": safe_excerpt(match_data.get("summary", "")),
+    }
+
+
+def decode_uploaded_text(file_bytes: bytes) -> str:
+    if not file_bytes:
+        return ""
+    for encoding in ("utf-8", "cp932", "shift_jis"):
+        try:
+            decoded = file_bytes.decode(encoding)
+            if decoded.strip():
+                return decoded
+        except UnicodeDecodeError:
+            continue
+    return file_bytes.decode("utf-8", errors="ignore")
+
+
+def extract_labeled_value(text: str, labels: List[str]) -> str:
+    for label in labels:
+        pattern = rf"【{re.escape(label)}】\s*([^\n]+)"
+        match = re.search(pattern, text)
+        if match:
+            return match.group(1).strip()
+    return ""
+
+
+def extract_experience_years(text: str) -> int:
+    candidates = []
+    patterns = [
+        r"([0-9]{1,2})\s*年以上",
+        r"([0-9]{1,2})\s*年",
+        r"([0-9]{1,2})\s*(?:years?|yrs?)\b",
+    ]
+    for pattern in patterns:
+        for match in re.finditer(pattern, text, re.IGNORECASE):
+            candidates.append(int(match.group(1)))
+    return max(candidates) if candidates else 0
+
+
+def detect_skills(text: str) -> Tuple[Dict[str, List[str]], List[str]]:
+    lower_text = text.lower()
+    skills_by_category = {}
+    all_skills: Set[str] = set()
+    for category, keywords in SKILL_TAXONOMY.items():
+        detected = []
+        for keyword in keywords:
+            if keyword_matches(keyword, lower_text):
+                detected.append(keyword)
+                all_skills.add(keyword)
+        skills_by_category[category] = sorted(set(detected), key=str.lower)
+    return skills_by_category, sorted(all_skills, key=str.lower)
+
+
+def keyword_matches(keyword: str, lower_text: str) -> bool:
+    key = keyword.lower()
+    if re.fullmatch(r"[a-z0-9.+#/-]+", key):
+        return re.search(rf"(?<![a-z0-9]){re.escape(key)}(?![a-z0-9])", lower_text) is not None
+    return key in lower_text
+
+
+def detect_role(text: str, doc_type: str) -> str:
+    labeled = extract_labeled_value(text, ["職種", "役割", "ポジション", "案件名"])
+    if labeled:
+        return labeled
+    for pattern in ROLE_PATTERNS:
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            return match.group(0).strip()
+    return "AIソリューションエンジニア" if doc_type == "engineer" else "AI / Google Workspace 連携案件"
+
+
+def detect_title(text: str, doc_type: str) -> str:
+    labels = ["氏名", "名前"] if doc_type == "engineer" else ["案件名", "求人名", "タイトル"]
+    labeled = extract_labeled_value(text, labels)
+    if labeled:
+        return labeled
+    return "候補者プロフィール" if doc_type == "engineer" else "対象案件"
+
+
+def build_profile(text: str, doc_type: str) -> ParsedProfile:
+    source = text.strip() or (SAMPLE_ENGINEER_TEXT if doc_type == "engineer" else SAMPLE_JOB_TEXT)
+    skills_by_category, all_skills = detect_skills(source)
+    role = detect_role(source, doc_type)
+    title = detect_title(source, doc_type)
+    years = extract_experience_years(source)
+    normalized = normalize_text(source)
+
+    category_strengths = [
+        category for category, skills in skills_by_category.items() if len(skills) >= 2
+    ]
+    strengths = []
+    if years:
+        strengths.append(f"実務経験 {years} 年相当")
+    strengths.extend([f"{category} 領域の実装経験" for category in category_strengths[:4]])
+    if not strengths and all_skills:
+        strengths.append(f"{', '.join(all_skills[:3])} を中心とした技術経験")
+
+    risk_flags = []
+    if doc_type == "engineer" and "google_workspace" not in category_strengths:
+        risk_flags.append("Google Workspace API 連携経験の深掘り確認")
+    if doc_type == "engineer" and "ai" not in category_strengths:
+        risk_flags.append("LLM / 生成AI 連携経験の具体性確認")
+    if doc_type == "job" and not all_skills:
+        risk_flags.append("必須スキル要件が未構造化")
+
+    return ParsedProfile(
+        doc_type=doc_type,
+        title=title,
+        role=role,
+        summary=normalized[:260],
+        experience_years=years,
+        skills_by_category=skills_by_category,
+        all_skills=all_skills,
+        strengths=strengths[:5],
+        risk_flags=risk_flags[:4],
+        raw_excerpt=normalized[:600],
+    )
+
+
+def format_profile(profile: ParsedProfile) -> str:
+    label = "氏名" if profile.doc_type == "engineer" else "案件名"
+    skill_lines = []
+    for category, skills in profile.skills_by_category.items():
+        if skills:
+            skill_lines.append(f"- {category}: {', '.join(skills)}")
+    strengths = "\n".join(f"- {item}" for item in profile.strengths) or "- 入力内容から詳細確認が必要"
+    risks = "\n".join(f"- {item}" for item in profile.risk_flags) or "- 重大な未確認リスクなし"
+    return (
+        f"【{label}】{profile.title}\n"
+        f"【役割】{profile.role}\n"
+        f"【経験年数】{profile.experience_years or '未記載'}\n"
+        f"【抽出スキル】\n{chr(10).join(skill_lines) if skill_lines else '- 未抽出'}\n"
+        f"【強み】\n{strengths}\n"
+        f"【確認ポイント】\n{risks}\n"
+        f"【要約】{profile.summary}"
+    )
+
+
+def overlap_ratio(candidate_skills: List[str], job_skills: List[str]) -> float:
+    if not job_skills:
+        return 0.55
+    candidate_set = {item.lower() for item in candidate_skills}
+    job_set = {item.lower() for item in job_skills}
+    return len(candidate_set & job_set) / max(len(job_set), 1)
+
+
+def category_overlap(candidate: ParsedProfile, job: ParsedProfile, category: str) -> float:
+    return overlap_ratio(
+        candidate.skills_by_category.get(category, []),
+        job.skills_by_category.get(category, []),
+    )
+
+
+def build_fallback_match(engineer_text: str, job_text: str, fallback_reason: str) -> dict:
+    candidate = build_profile(engineer_text, "engineer")
+    job = build_profile(job_text, "job")
+
+    skill_ratio = overlap_ratio(candidate.all_skills, job.all_skills)
+    ai_ratio = category_overlap(candidate, job, "ai")
+    workspace_ratio = category_overlap(candidate, job, "google_workspace")
+    backend_ratio = category_overlap(candidate, job, "backend")
+    frontend_ratio = category_overlap(candidate, job, "frontend")
+    delivery_ratio = category_overlap(candidate, job, "delivery")
+
+    breadth_bonus = min(len(candidate.all_skills), 12) * 0.9
+    skill_score = clamp(58 + (skill_ratio * 36) + breadth_bonus)
+    culture_score = clamp(64 + (delivery_ratio * 22) + (8 if candidate.experience_years >= 5 else 0))
+    growth_score = clamp(62 + (ai_ratio * 18) + (workspace_ratio * 12) + (backend_ratio * 5))
+    performing_score = clamp(56 + (backend_ratio * 16) + (frontend_ratio * 10) + (workspace_ratio * 12) + min(candidate.experience_years, 10))
+    final_score = clamp((skill_score * 0.36) + (culture_score * 0.18) + (growth_score * 0.24) + (performing_score * 0.22))
+
+    matched_skills = sorted(
+        {item for item in candidate.all_skills if item.lower() in {skill.lower() for skill in job.all_skills}},
+        key=str.lower,
+    )
+    missing_skills = sorted(
+        {item for item in job.all_skills if item.lower() not in {skill.lower() for skill in candidate.all_skills}},
+        key=str.lower,
+    )
+    top_matches = ", ".join(matched_skills[:8]) or "要件に対する明示的な一致スキルは限定的"
+    top_gaps = ", ".join(missing_skills[:6]) or "大きな未充足スキルは検出されていません"
+
+    summary = (
+        f"{candidate.title} と {job.title} の適合度は {final_score}% です。"
+        f"主要一致スキルは {top_matches}。"
+        f"特に backend / AI / Google Workspace 連携の重なりを中心に評価しました。"
+        f"確認すべきギャップは {top_gaps}。"
+        "Gemini live 復帰後は、この構造化プロファイルをそのままプロンプトへ渡すことで、"
+        "より深い文脈評価に即時移行できます。"
+    )
+
+    qa = [
+        {
+            "question": f"{top_matches} を使った実装経験を、担当範囲・設計判断・成果指標に分けて説明してください。",
+            "answer": "単なる利用経験ではなく、要件定義、API設計、認証、例外処理、運用時の監視までを一連の流れとして説明します。",
+            "tip": "Google API や OAuth、バッチ更新、クォータ回避など、本プロジェクトで求められる実務上の判断を具体例に落とし込むと強いです。"
+        },
+        {
+            "question": f"現時点で不足候補として見えている {top_gaps} を、着任後どの順番でキャッチアップしますか？",
+            "answer": "初週で既存仕様と認証フローを把握し、2週目で小さな検証実装、3週目で本番相当のエラーハンドリングとログ設計へ広げる計画を示します。",
+            "tip": "不足を隠さず、検証単位・成果物・レビュー方法まで言語化すると信頼感が増します。"
+        },
+        {
+            "question": "生成AIを外部業務システムへ組み込む際、どのように品質と安全性を担保しますか？",
+            "answer": "構造化入出力、fallback、監査ログ、権限分離、手動確認ポイントを設計に含め、AI応答をそのまま業務データへ反映しない方針を説明します。",
+            "tip": "AI live と deterministic fallback の二層構造を説明できると、今回の開発方針とよく噛み合います。"
+        }
+    ]
+
+    return {
+        "final_score": final_score,
+        "scores": {
+            "skill": skill_score,
+            "culture": culture_score,
+            "growth": growth_score,
+            "performing": performing_score,
+        },
+        "summary": summary,
+        "qa": qa,
+        "roadmap_week1": f"{job.role} の業務範囲、OAuth / Google API 認証、既存 FastAPI 構成を把握し、{top_gaps} の検証観点を洗い出す",
+        "roadmap_week2": "構造化パーサー、スキル分類、4軸スコアリングの小さな改善を行い、Sheets への診断ログ保存までを通す",
+        "roadmap_week3": "Gemini live 復帰を想定し、プロンプト入力に渡す structured_profile / gap_analysis / scoring_context を安定化する",
+        "roadmap_week4": "Browser Agent による主要シナリオ確認、エラー時 fallback、監査ログ、共有手順を整備して社長報告用デモ品質まで高める",
+        "ai_mode": "deterministic_fallback",
+        "fallback_reason": fallback_reason,
+        "structured": {
+            "candidate": asdict(candidate),
+            "job": asdict(job),
+            "matched_skills": matched_skills,
+            "missing_skills": missing_skills,
+        }
+    }
 
 # Dynamic Environment Diagnostics
 API_KEY = os.environ.get("GEMINI_API_KEY")
@@ -122,8 +528,18 @@ async def health_check():
         "status": "healthy",
         "sheets_live": SHEETS_LIB_AVAILABLE and (os.path.exists(CREDENTIALS_FILE) or os.path.exists(CLIENT_SECRET_FILE)),
         "gemini_live": GEMINI_READY,
-        "ai_mode": "gemini_live" if GEMINI_READY else "mock_fallback",
+        "ai_mode": "gemini_live" if GEMINI_READY else "deterministic_fallback",
         "ai_force_mock": AI_FORCE_MOCK
+    }
+
+
+@app.get("/api/audit/recent")
+async def recent_audit_events(limit: int = 20):
+    """Returns recent local AI audit events without raw document bodies."""
+    return {
+        "status": "success",
+        "audit_log": os.path.relpath(AUDIT_LOG_FILE, PROJECT_ROOT),
+        "events": read_recent_audit_events(limit)
     }
 
 # 1. API: Multi-modal Resume/Job Parser
@@ -149,19 +565,23 @@ async def parse_document(
         print(f"  - Direct text input received ({len(text)} characters)")
     else:
         raise HTTPException(status_code=400, detail="Either file or text must be provided.")
-        
+
+    source_text = text or decode_uploaded_text(file_bytes or b"")
     fallback_reason = "Gemini live mode is not configured."
 
     # --- Live Gemini Parsing Logic ---
     if GEMINI_READY:
         try:
+            local_profile = build_profile(source_text, doc_type)
             model = genai.GenerativeModel("gemini-1.5-flash")
             
             prompt = (
                 f"You are a professional HR data extraction engine.\n"
                 f"Parse the following {doc_type} document and extract a clean structured text summary in Japanese.\n"
                 f"Focus on extracting: Name (if engineer), Job Title / Role Name, Core Skills, Cloud / Infra, Databases, and Career Goals.\n"
-                f"Make sure to output clean Japanese, keeping important technical details."
+                f"Make sure to output clean Japanese, keeping important technical details.\n"
+                f"Use this local deterministic pre-parse as hints, but correct it when the document says otherwise:\n"
+                f"{json.dumps(asdict(local_profile), ensure_ascii=False)}"
             )
             
             response = None
@@ -177,42 +597,43 @@ async def parse_document(
                 
             parsed_text = response.text.strip()
             print(f"[+] Gemini Parser Sync completed successfully.")
-            return {"status": "success", "ai_mode": "gemini_live", "parsed_content": parsed_text}
+            audit_event = write_audit_event(
+                "parse",
+                profile_audit_payload(local_profile, "gemini_live", "", source_text, file_name)
+            )
+            return {
+                "status": "success",
+                "ai_mode": "gemini_live",
+                "parsed_content": parsed_text,
+                "structured_profile": asdict(local_profile),
+                "audit_event_id": audit_event["event_id"]
+            }
             
         except Exception as e:
             fallback_reason = str(e)
-            print(f"[-] Gemini live parser failed: {e}. Falling back to high-quality mock parser.")
+            print(f"[-] Gemini live parser failed: {e}. Falling back to deterministic parser.")
     elif AI_FORCE_MOCK:
         fallback_reason = "AI_FORCE_MOCK is enabled to avoid Gemini quota usage."
 
-    # --- High-quality Mock Parser Fallback ---
-    # To keep the application working beautifully even without an API Key
+    # --- Quota-safe deterministic parser fallback ---
     import time
     time.sleep(1.0) # Simulating AI processing time
-    
-    if doc_type == "engineer":
-        mock_content = (
-            "【氏名】佐藤 賢太 (さとう けんた)\n"
-            "【職種】シニアAIソリューションアーキテクト / フルスタックエンジニア\n"
-            "【概要】IT業界経験8年。クラウドネイティブなWebアプリケーション開発、特にPython、JavaScript(TypeScript)を用いたAI連携APIの構築実績が豊富。Google Cloud API、OpenAI、Geminiなどの大規模言語モデル(LLM)を活用した自律エージェントの開発や、企業のデータ駆動型意思決定基盤の構築をリード。アジャイル型(Scrum)チームでの開発を得意とし、顧客折衝から要件定義、インフラ設計、実装までエンドエンドで対応可能。\n"
-            "【主要スキル】Python, JavaScript, TypeScript, FastAPI, Django, React.js, Next.js, Vertex AI, Gemini API, gspread, SQL\n"
-            "【インフラ/データベース】AWS, Google Cloud, PostgreSQL, Pinecone (Vector DB)\n"
-            "【キャリア志向】最先端の生成AIを活用したプロダクト開発において、リードエンジニアとしてビジネス価値を創造すること。"
-        )
-    else:
-        mock_content = (
-            "【案件名】大手ITソリューション企業：LLM自律エージェント＆データ連携基盤開発\n"
-            "【業務内容】生成AI(Gemini, GPT)を活用した業務プロセスの自動化・自律化エージェントの実装、Google API (Sheets API, Docs API) と連携した文書作成自動同期システムの構築、FastAPI / React.js を用いた高パフォーマンスなWebアプリケーションの設計・開発。\n"
-            "【必須スキル】Python/TypeScript実務開発（5年以上）、REST API(FastAPI等)設計構築、React.jsまたはNext.js実装実績。\n"
-            "【歓迎スキル】Gemini/OpenAI API等のLLM連携実績、Google Cloud API (gspread, Drive API) 等のOAuth認証による連携実績。"
-        )
+
+    profile = build_profile(source_text, doc_type)
+    parsed_content = format_profile(profile)
+    audit_event = write_audit_event(
+        "parse",
+        profile_audit_payload(profile, "deterministic_fallback", fallback_reason, source_text, file_name)
+    )
         
-    print(f"[+] Mock Parser triggered successfully.")
+    print(f"[+] Deterministic parser fallback completed successfully.")
     return {
         "status": "success",
-        "ai_mode": "mock_fallback",
+        "ai_mode": "deterministic_fallback",
         "fallback_reason": fallback_reason,
-        "parsed_content": mock_content
+        "parsed_content": parsed_content,
+        "structured_profile": asdict(profile),
+        "audit_event_id": audit_event["event_id"]
     }
 
 
@@ -231,6 +652,11 @@ async def evaluate_matching(req: EvaluationRequest):
     # --- Live Gemini Evaluation Logic ---
     if GEMINI_READY:
         try:
+            fallback_context = build_fallback_match(
+                req.engineer_content,
+                req.job_content,
+                "local deterministic pre-score for Gemini prompt context"
+            )
             model = genai.GenerativeModel("gemini-1.5-flash")
             
             prompt = (
@@ -263,6 +689,8 @@ async def evaluate_matching(req: EvaluationRequest):
                 "  \"roadmap_week4\": \"<Detailed week 4 roadmap actions in Japanese>\"\n"
                 "}\n"
                 "Do NOT include any markdown code blocks (like ```json) or explanation text outside the JSON.\n\n"
+                "Use this deterministic local analysis as structured context. Correct it when the source text provides better evidence:\n"
+                f"{json.dumps(fallback_context.get('structured', {}), ensure_ascii=False)}\n\n"
                 f"Candidate Resume Data:\n{req.engineer_content}\n\n"
                 f"Job Description Data:\n{req.job_content}"
             )
@@ -281,50 +709,27 @@ async def evaluate_matching(req: EvaluationRequest):
             
             match_data = json.loads(res_text.strip())
             match_data["ai_mode"] = "gemini_live"
+            match_data.setdefault("structured", fallback_context.get("structured", {}))
+            audit_event = write_audit_event("match", match_audit_payload(match_data))
+            match_data["audit_event_id"] = audit_event["event_id"]
             print("[+] Gemini Evaluator completed successfully.")
             return match_data
             
         except Exception as e:
             fallback_reason = str(e)
-            print(f"[-] Gemini live evaluation failed: {e}. Falling back to high-quality mock evaluator.")
+            print(f"[-] Gemini live evaluation failed: {e}. Falling back to deterministic evaluator.")
     elif AI_FORCE_MOCK:
         fallback_reason = "AI_FORCE_MOCK is enabled to avoid Gemini quota usage."
 
-    # --- High-quality Mock Evaluation Fallback ---
+    # --- Quota-safe deterministic evaluator fallback ---
     import time
     time.sleep(1.5) # Simulating AI processing time
-    
-    mock_response = {
-        "final_score": 89,
-        "scores": {
-            "skill": 95,
-            "culture": 88,
-            "growth": 92,
-            "performing": 82
-        },
-        "summary": "本シミュレーターの診断結果、候補者のスキル・経歴は、対象案件（LLM自律エージェント開発）に対して「89%」という極めて高い適合性（Highly Compatible）を示しました。特に「Skill-Fit（95%）」においては、Python、TypeScriptに加え、FastAPIやReactのフルスタックスキル、さらにgspread等を用いたGoogle API連携開発実績が、案件で募集されている技術スタック（FastAPI, React, Sheets/Docs Live 連携）と100%合致しています。また「Growth-Fit（92%）」でも、最先端の生成AIを活用してテクノロジーの架け橋となるアーキテクト像を目指す志向性が、募集背景にあるGemini Spark連携開発の方向性と完全に同期しています。即戦力として、初週からアーキテクチャ設計およびAPI開発で強烈なリーダーシップを発揮できると確信します。",
-        "qa": [
-            {
-                "question": "Google Sheets API や Drive API を活用した、OAuth 2.0 認証を含む連携開発の実績について具体的に教えてください。",
-                "answer": "Python (gspread/google-auth) を用いて、サービスアカウントまたはデスクトップ OAuth認証を駆使し、スプレッドシートの自動生成、セル書式設定、429クォータ回避のための batch_update API を実装した経験を具体的に説明します。Windows環境下でのエンコーディングエラー回避など、実践的なトラブルシューティング能力もアピールしてください。",
-                "tip": "実際に作成した Python の自動同期スクリプトのモジュール構成や、APIクォータ制限をバッチ処理で劇的に最適化した実績を提示すると非常に好印象です。"
-            },
-            {
-                "question": "生成AI（LLM）と外部システム（RAGやエージェント）を組み合わせる際、どのような設計上の工夫を行ってきましたか？",
-                "answer": "単なるAPIコールに留まらず、ローカルデータソースとの整合性を保つためのハイブリッド設計（IndexedDBやSQLite3）や、プロンプトのコンテキストウィンドウを効率化するための構造化パーサー、そしてGeminiのマルチモーダル機能を利用したPDFのパース精度向上に関する工夫を説明します。",
-                "tip": "自律エージェントがバックグラウンドタスクとして動き、終了時にユーザーへシームレスに通知する連携シナリオの設計思想をアピールに組み込みましょう。"
-            }
-        ],
-        "roadmap_week1": "既存プラットフォームのAPI仕様書およびGoogle Cloud連携認証フローの把握、ローカル開発環境における client_secret.json などのOAuth認証動作確認、データベース設計（SQLite3/PostgreSQL）の連携モデリング完了",
-        "roadmap_week2": "Gemini 3.5 Flash を用いた、バックグラウンドでの自律データ解析エンジンのプロトタイプ作成、gspread を活用した、シートへのバッチ書き込みおよびステータス色付け処理の統合",
-        "roadmap_week3": "React.js を用いた、ドラッグ＆ドロップ対応の経歴書アップロードUIの実装、Chart.js による4次元レーダーチャートのレンダリングおよびリアルタイム分析結果描画の統合",
-        "roadmap_week4": "Browser Agent による、複数ファイルドロップ時の自律シナリオUIテスト実行、本番公開に向けた CI/CD 環境の設定と、Sheets Live へのデプロイステータス自動通知機能のリリース",
-        "ai_mode": "mock_fallback",
-        "fallback_reason": fallback_reason
-    }
-    
-    print("[+] Mock Evaluator triggered successfully.")
-    return mock_response
+
+    fallback_response = build_fallback_match(req.engineer_content, req.job_content, fallback_reason)
+    audit_event = write_audit_event("match", match_audit_payload(fallback_response))
+    fallback_response["audit_event_id"] = audit_event["event_id"]
+    print("[+] Deterministic evaluator fallback completed successfully.")
+    return fallback_response
 
 
 class SyncRequest(BaseModel):
@@ -406,7 +811,8 @@ async def sync_to_sheets(req: SyncRequest):
             row_index = len(existing_values) + 1
             
         # Append data row
-        jst_now = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y-%m-%d %H:%M:%S")
+        jst = datetime.timezone(datetime.timedelta(hours=9))
+        jst_now = datetime.datetime.now(jst).strftime("%Y-%m-%d %H:%M:%S")
         data_row = [
             jst_now,
             req.candidate_name,
