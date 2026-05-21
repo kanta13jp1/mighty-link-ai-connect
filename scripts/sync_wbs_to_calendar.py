@@ -107,6 +107,21 @@ SCHEDULE_EVENTS = [
         "is_all_day": True
     },
     {
+        "summary": "【Mighty Skill-Bridge】開発ナレッジ連携フロー整理",
+        "description": "NotebookLM、Slack、Notion、Obsidianを6/2の社長判断材料として整理し、正式実装前に役割・情報管理・導入優先順位を確認します。",
+        "start_date": "2026-05-24",
+        "end_date": "2026-05-29",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】連携ツール採用判断レビュー",
+        "description": "NotebookLM/Slack/Notion/Obsidianの採用・保留・後回し、共有範囲、権限ルール、6/2以降の実装候補をレビューします。",
+        "start_time": "2026-05-28T14:00:00",
+        "end_time": "2026-05-28T15:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
         "summary": "【Mighty Skill-Bridge】社長プレゼン最終リハーサル",
         "description": "公開URL、ローカルAPI、Google Sheets WBS、Calendar同期、説明資料、想定QA、バックアップ手順を最終確認します。",
         "start_time": "2026-06-01T16:00:00",

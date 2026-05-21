@@ -25,5 +25,6 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 - [Backend AI Pipeline 設計メモ](docs/BACKEND_AI_PIPELINE.md) - deterministic fallback と AI 監査ログ
 - [6/2 社長打ち合わせ プレゼン準備ブリーフ](docs/CEO_PRESENTATION_PREP_2026-06-02.md)
 - [6/2 社長打ち合わせ 判断材料パック](docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md)
+- [開発ナレッジ連携フロー手順書](docs/DEVELOPMENT_KNOWLEDGE_FLOW.md)
 - [プロジェクト構成方針](docs/PROJECT_STRUCTURE.md)
 - [WBS 同期ガイド](docs/WBS_SYNC_GUIDE.md)

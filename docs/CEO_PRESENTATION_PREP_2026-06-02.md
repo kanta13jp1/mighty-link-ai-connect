@@ -25,10 +25,12 @@
 | 代替導線 | 公開URL障害時のローカル実行、スクリーンショット、ICS説明 | T613 |
 | 事前共有 | 社長へ送る確認ポイント、当日アジェンダの短文ドラフト | T614 |
 | 決定後の受け皿 | 議事録、WBS差し替え、Calendar更新、Git反映、決定後ロードマップ枠 | T609, T612, T615 |
+| 開発ナレッジ連携 | NotebookLM、Slack、Notion、Obsidian を使った資料要約・通知・議事録・ローカル知識管理の候補整理 | T616, T617, T618, T619, T620, T621, T622, T623 |
 
 ## 関連ドキュメント
 
 - [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md): スライド構成、判断マトリクス、議事録テンプレート、デモ代替導線。
+- [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md): NotebookLM / Slack / Notion / Obsidian 連携の開発フロー候補。
 - [WBS.md](WBS.md): WBS詳細とフェーズ別スケジュール。
 
 ## 推奨プレゼン構成
@@ -41,7 +43,8 @@
 6. サービス内容の選択肢と論点
 7. リスク・運用・費用感の確認
 8. デモ障害時のバックアップ導線
-9. 決定後の次アクション
+9. NotebookLM / Slack / Notion / Obsidian の開発フロー候補
+10. 決定後の次アクション
 
 ## デモ導線
 
@@ -58,6 +61,7 @@
 - 最初に見せるべき顧客・社内利用者・利用シーン。
 - 次に作るべき機能の優先順位。
 - Google Workspace連携をどこまで正式運用に寄せるか。
+- NotebookLM / Slack / Notion / Obsidian を、6/2以降の開発フローへどの優先順位で組み込むか。
 - 社長レビュー後の開発スケジュールと責任分担。
 
 ## 6/2までは決め打ちしない事項
@@ -68,6 +72,8 @@
 - 外部公開範囲
 - 最終的な機能セット
 - 営業資料・告知文の確定版
+- Slack / Notion への自動投稿や外部連携APIの本実装
+- NotebookLM / Obsidian への正式な投入範囲
 
 ## 想定質問と回答方針
 
@@ -78,6 +84,7 @@
 | 公開URLは安全か | root `index.html` の消失を防ぐ Public Demo Guard と GitHub Actions を追加済み。push後も公開URL検証を行う。 |
 | WBSは管理しやすいか | CATS型を参考に、階層WBS・集計・タイムラインの3タブ構成へ改善済み。 |
 | 打ち合わせ後すぐ何ができるか | 決定事項を `data/WBS.tsv`、Google Sheets、Google Calendar、作業ログへ即反映できる。 |
+| NotebookLMやNotionは必須なのか | 必須ではない。6/2時点では、資料要約・議事録・通知・知識管理を速くする候補として比較し、採用/保留/後回しを社長判断に委ねる。 |
 
 ## 本番前チェック
 
@@ -102,3 +109,9 @@ python scripts/sync_wbs_to_calendar.py
 - WBS に `T610` から `T615` を追加し、スライド化素材、判断マトリクス、議事録テンプレート、デモバックアップ、事前送付メモ、決定後ロードマップ枠を管理対象にした。
 - `CEO_PRESENTATION_DECISION_PACK_2026-06-02.md` を追加し、6/2当日にサービス内容を決めるための比較表と記録テンプレートを用意した。
 - 6/2までは、確定サービス資料ではなく「社長が判断するための資料」として扱う。
+
+## 2026-05-21 開発ナレッジ連携の追加整備
+
+- WBS に `T616` から `T623` を追加し、NotebookLM、Slack、Notion、Obsidian を開発フロー候補として整理した。
+- `DEVELOPMENT_KNOWLEDGE_FLOW.md` を追加し、ツール別の役割、入れる情報/入れない情報、6/2で確認すること、セキュリティルールを記録した。
+- 6/2まではAPI連携や自動投稿を確定実装せず、社長判断のための資料導線として扱う。

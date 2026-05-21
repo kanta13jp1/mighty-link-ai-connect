@@ -198,3 +198,33 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 
 - 6/2 までは判断材料パックを確定資料ではなく比較・確認用のドラフトとして扱う。
 - 6/2 の決定後、`T609`, `T612`, `T615` を使って WBS、Calendar、Git、作業ログへ即時反映する。
+
+## 2026-05-21 作業ログ: NotebookLM / Slack / Notion / Obsidian 開発フロー追加
+
+6/2 の社長打ち合わせに向け、NotebookLM、Slack、Notion、Obsidian を正式実装ではなく「開発フロー候補・判断材料」として整理した。
+
+実施内容:
+
+- WBS に `T616` から `T623` を追加。
+- 追加タスクは、開発フロー設計、NotebookLM連携、Slack連携、Notion連携、Obsidian連携、連携デモ導線、権限・情報管理、連携採用判断。
+- `docs/DEVELOPMENT_KNOWLEDGE_FLOW.md` を追加し、ツール別の役割、投入する情報/投入しない情報、推奨フロー、6/2で決める確認事項、セキュリティルールを整理。
+- `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md` に、NotebookLM / Slack / Notion / Obsidian の比較表と社長確認事項を追加。
+- `docs/CEO_PRESENTATION_PREP_2026-06-02.md`, `docs/SETUP_GUIDE.md`, `docs/PROJECT_STRUCTURE.md`, `docs/WBS.md`, `README.md` を更新し、開発ナレッジ連携フローを作業手順に反映。
+- Google Calendar 同期対象に `開発ナレッジ連携フロー整理` と `連携ツール採用判断レビュー` を追加。
+
+同期・検証:
+
+- `data/WBS.tsv` は `38` タスク、全行 `10` 列であることを確認。
+- `python -m compileall src scripts` 成功。
+- `python scripts/verify_public_demo.py` 成功。
+- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
+- Google Sheets へ `39 source rows` / `51 hierarchical WBS display rows` を同期済み。
+- `WBS Summary` の合計は `38 tasks / 完了19 / 実行中1 / 未着手18 / 完了率50%`。
+- フェーズ6は `23 tasks / 完了8 / 実行中1 / 未着手14 / 完了率35%`。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 12, Updated: 10, Failed: 0`。
+
+運用方針:
+
+- 6/2 までは Slack / Notion への自動投稿や外部API連携を確定実装しない。
+- NotebookLM は資料要約・想定QA生成の候補、Slack は通知候補、Notion は議事録/意思決定DB候補、Obsidian はローカル思考メモ候補として提示する。
+- 社長決定後、採用するツールだけを実装WBSへ昇格する。

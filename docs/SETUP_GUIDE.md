@@ -33,6 +33,7 @@ mighty-link-ai-connect/
 │   ├── BACKEND_AI_PIPELINE.md
 │   ├── CEO_PRESENTATION_PREP_2026-06-02.md
 │   ├── CEO_PRESENTATION_DECISION_PACK_2026-06-02.md
+│   ├── DEVELOPMENT_KNOWLEDGE_FLOW.md
 │   ├── PROJECT_STRUCTURE.md
 │   ├── WBS.md
 │   ├── WBS_SYNC_GUIDE.md
@@ -138,6 +139,16 @@ python scripts/share_resources.py
 
 - [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md)
 - [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md)
+- [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md)
+
+開発ナレッジ連携の位置づけ:
+
+- NotebookLM: `docs/` とWBSを読み込み、社長説明前の要約・想定QA作成に使う候補。
+- Slack: WBS同期、GitHub Actions、公開URL検証、レビュー依頼を短文で共有する候補。
+- Notion: 6/2議事録、意思決定DB、バックログ、社長レビュー用ページの候補。
+- Obsidian: ローカルの設計メモ、ADR、プロンプト改善案を蓄積する候補。
+
+6/2 までは、これらを正式実装せず、導入優先順位と情報管理ルールを社長に確認する判断材料として扱います。
 
 当日前後の必須確認:
 

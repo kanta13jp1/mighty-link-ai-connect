@@ -24,7 +24,7 @@ mighty-link-ai-connect/
 | アプリ本体 | `src/` | `app.py`, `index.html` |
 | 運用スクリプト | `scripts/` | `sync_wbs_to_calendar.py`, `share_resources.py`, `verify_public_demo.py` |
 | CI ガード | `.github/workflows/` | `public-demo-guard.yml` |
-| 仕様・手順 | `docs/` | `SETUP_GUIDE.md`, `BACKEND_AI_PIPELINE.md`, `CEO_PRESENTATION_PREP_2026-06-02.md`, `CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`, `requirements.md`, `database.md` |
+| 仕様・手順 | `docs/` | `SETUP_GUIDE.md`, `BACKEND_AI_PIPELINE.md`, `CEO_PRESENTATION_PREP_2026-06-02.md`, `CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`, `DEVELOPMENT_KNOWLEDGE_FLOW.md`, `requirements.md`, `database.md` |
 | 同期元データ | `data/` | `WBS.tsv` |
 | 実行時監査ログ | `data/audit/` | `.gitkeep`, `ai_audit.jsonl` (Git 管理対象外) |
 | 生成物 | `exports/` | `mighty_development_plan.ics` |
@@ -47,6 +47,8 @@ mighty-link-ai-connect/
 - `config/`: 共有先メール、スプレッドシート ID、カレンダー名を外部設定化する場合。
 - `logs/`: 手動実行ログを保存したい場合。ただし Git 管理対象にはしない。
 - `data/audit/`: API 判定ログの置き場。`.jsonl` は Git 管理せず、`.gitkeep` だけでディレクトリを維持する。
+- Obsidian vault を置く場合は、原則として本リポジトリ外に配置する。リポジトリ内へ置く場合は `docs/` に昇格した公式メモだけを Git 管理し、未整理メモや秘密情報は含めない。
+- Notion / Slack / NotebookLM 連携は、6/2 の社長判断後に `config/` または環境変数で外部設定化する。
 
 ## 実行コマンド
 
