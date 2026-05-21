@@ -28,7 +28,8 @@
 | 8 | リスクと対策 | 公開URL、認証、Google API、デモ障害時のバックアップ | T607, T613 |
 | 9 | 決定後の反映方法 | 議事録から WBS / Calendar / Git へ即時反映する流れ | T609, T612 |
 | 10 | 開発ナレッジ連携 | NotebookLM / Slack / Notion / Obsidian をどう使うか | T616, T617, T621, T623 |
-| 11 | 社長への確認事項 | 決定してほしい項目、保留してよい項目、次回までの宿題 | T614, T615, T622 |
+| 11 | 連携成果物デモ | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vaultを見せる | T624, T625, T626, T627, T628, T629, T630 |
+| 12 | 社長への確認事項 | 決定してほしい項目、保留してよい項目、次回までの宿題 | T614, T615, T622, T631 |
 
 ## 判断マトリクス
 
@@ -52,6 +53,19 @@
 | Obsidian | ローカル思考メモ・ADR・プロンプト資産管理の候補 | 未整理の設計判断を溜め、公式化する内容だけ `docs/` へ昇格できる | 個人メモ運用に限定するか |
 
 詳細は [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md) にまとめる。
+
+## 実装済み連携デモ成果物
+
+| 対象 | 生成物 | 説明 |
+| --- | --- | --- |
+| NotebookLM | `exports/knowledge_flow/notebooklm_source_pack.md` | `docs/` とWBSをまとめた投入用資料。想定質問生成に使える。 |
+| Slack | `exports/knowledge_flow/slack_ceo_update.md` | 社長レビュー前に投稿できる進捗共有文案。 |
+| Notion | `exports/knowledge_flow/notion_decision_log.csv` | 意思決定DBとして取り込めるCSV。 |
+| Notion | `exports/knowledge_flow/notion_backlog_import.csv` | WBS連携バックログとして取り込めるCSV。 |
+| Obsidian | `exports/knowledge_flow/obsidian_vault/` | ADR、議事録、プロンプトを含むローカルvault雛形。 |
+| UI/API | 公開デモの「開発ナレッジ連携デモ」 / `/api/knowledge-flow/generate` | 画面から成果物の存在を説明し、ローカルでは再生成できる。 |
+
+このデモは、外部サービスへ投稿・保存する前段階として、秘密情報を含まない成果物を見せるための実装である。
 
 ## 当日質問リスト
 

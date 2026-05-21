@@ -679,6 +679,108 @@
             margin-top: 0;
         }
 
+        .knowledge-flow-section {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 28px;
+            backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .knowledge-flow-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .knowledge-flow-title {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .knowledge-flow-title h2 {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .knowledge-flow-title p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .knowledge-flow-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .knowledge-flow-header {
+                flex-direction: column;
+            }
+
+            .knowledge-flow-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 560px) {
+            .knowledge-flow-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .knowledge-tool {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 16px;
+            background: rgba(15, 23, 42, 0.34);
+            min-height: 142px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .knowledge-tool span {
+            color: #8ab4f8;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .knowledge-tool strong {
+            color: #ffffff;
+            font-size: 15px;
+        }
+
+        .knowledge-tool p {
+            color: #cbd5e1;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .knowledge-output {
+            border: 1px solid rgba(52, 168, 83, 0.22);
+            background: rgba(52, 168, 83, 0.06);
+            border-radius: 12px;
+            padding: 16px;
+            color: #d7f7df;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .knowledge-output a {
+            color: #8ab4f8;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
         /* Utility animations */
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -826,6 +928,41 @@
             </button>
         </div>
 
+        <section class="knowledge-flow-section" id="knowledge-flow-demo">
+            <div class="knowledge-flow-header">
+                <div class="knowledge-flow-title">
+                    <h2>開発ナレッジ連携デモ</h2>
+                    <p>NotebookLM投入資料、Slack投稿案、NotionインポートCSV、Obsidian vaultを生成し、6/2の社長判断材料としてその場で見せられる状態にします。</p>
+                </div>
+                <button class="sample-btn" onclick="generateKnowledgeFlowArtifacts()">連携成果物を生成</button>
+            </div>
+            <div class="knowledge-flow-grid">
+                <div class="knowledge-tool">
+                    <span>NotebookLM</span>
+                    <strong>Source Pack</strong>
+                    <p>WBS、判断材料、手順書をまとめた投入用Markdownを生成します。</p>
+                </div>
+                <div class="knowledge-tool">
+                    <span>Slack</span>
+                    <strong>CEO Update Draft</strong>
+                    <p>進捗・同期結果・確認事項を短く共有する投稿案を生成します。</p>
+                </div>
+                <div class="knowledge-tool">
+                    <span>Notion</span>
+                    <strong>Decision DB CSV</strong>
+                    <p>決定事項、保留事項、バックログをNotionへ取り込めるCSVにします。</p>
+                </div>
+                <div class="knowledge-tool">
+                    <span>Obsidian</span>
+                    <strong>Local Vault</strong>
+                    <p>ADR、議事録、プロンプトをローカル知識ベースとして開ける雛形を作ります。</p>
+                </div>
+            </div>
+            <div class="knowledge-output" id="knowledge-flow-output">
+                生成前: `exports/knowledge_flow/` に社長説明用の連携成果物を作成できます。
+            </div>
+        </section>
+
         <!-- AI Matching Analysis Results (Initially Hidden) -->
         <section class="result-section" id="result-container">
             <div class="result-layout">
@@ -919,7 +1056,27 @@
                     <div class="tabs-header">
                         <button class="tab-btn active" onclick="switchTab('tab-qa')">面談想定質問 (Q&A)</button>
                         <button class="tab-btn" onclick="switchTab('tab-roadmap')">Docs Live 連携ロードマップ</button>
-                      <script>
+                    </div>
+
+                    <!-- Tab: Q&A -->
+                    <div class="tab-content active" id="tab-qa">
+                        <div class="qa-list" id="qa-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Tab: Roadmap -->
+                    <div class="tab-content" id="tab-roadmap">
+                        <div class="roadmap-doc" id="roadmap-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
         // Sample Data Definitions
         const sampleEngineer = `【氏名】佐藤 賢太 (佐藤 けんた)
 【職種】シニアAIソリューションアーキテクト / フルスタックエンジニア
@@ -963,6 +1120,42 @@ IT業界経験8年。クラウドネイティブなWebアプリケーション�
         let isApiMode = false;
         let sheetsLive = false;
         let geminiLive = false;
+
+        const knowledgeFlowArtifacts = [
+            "exports/knowledge_flow/notebooklm_source_pack.md",
+            "exports/knowledge_flow/slack_ceo_update.md",
+            "exports/knowledge_flow/notion_decision_log.csv",
+            "exports/knowledge_flow/notion_backlog_import.csv",
+            "exports/knowledge_flow/CEO_KNOWLEDGE_FLOW_DEMO_GUIDE.md",
+            "exports/knowledge_flow/obsidian_vault/Mighty Skill-Bridge Home.md"
+        ];
+
+        function renderKnowledgeFlowArtifacts(manifest = null) {
+            const output = document.getElementById("knowledge-flow-output");
+            const artifacts = manifest?.artifacts || knowledgeFlowArtifacts;
+            const summary = manifest?.summary;
+            const summaryText = summary
+                ? `WBS ${summary.total}件 / 完了${summary.done} / 実行中${summary.active} / 未着手${summary.todo} / 完了率${summary.completion_rate}%`
+                : "NotebookLM / Slack / Notion / Obsidian の社長説明用成果物";
+            output.innerHTML = `
+                <strong>生成済み:</strong> ${summaryText}<br>
+                ${artifacts.map(path => `<a href="/${path}" target="_blank" rel="noopener">${path}</a>`).join("<br>")}
+            `;
+        }
+
+        async function generateKnowledgeFlowArtifacts() {
+            const output = document.getElementById("knowledge-flow-output");
+            output.innerHTML = "生成中: WBSとdocsから連携成果物を作成しています...";
+            try {
+                const response = await fetch("/api/knowledge-flow/generate", { method: "POST" });
+                if (!response.ok) throw new Error("knowledge flow API failed");
+                const data = await response.json();
+                renderKnowledgeFlowArtifacts(data.manifest);
+            } catch (error) {
+                console.error("Knowledge flow generation failed:", error);
+                renderKnowledgeFlowArtifacts();
+            }
+        }
 
         // Health Check on Load
         async function checkApiConnection() {

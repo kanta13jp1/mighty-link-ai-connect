@@ -228,3 +228,44 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 - 6/2 までは Slack / Notion への自動投稿や外部API連携を確定実装しない。
 - NotebookLM は資料要約・想定QA生成の候補、Slack は通知候補、Notion は議事録/意思決定DB候補、Obsidian はローカル思考メモ候補として提示する。
 - 社長決定後、採用するツールだけを実装WBSへ昇格する。
+
+## 2026-05-21 作業ログ: 開発ナレッジ連携デモ実装
+
+社長に「実際にやった状態」を見せられるよう、NotebookLM、Slack、Notion、Obsidian の連携を安全なローカル成果物生成として実装した。
+
+実施内容:
+
+- `scripts/generate_knowledge_flow_demo.py` を追加。
+- FastAPI に `/api/knowledge-flow/generate` と `/api/knowledge-flow/status` を追加。
+- `exports/` を `/exports` として配信し、ローカルUIから生成成果物へアクセスできるようにした。
+- 公開デモ/ローカルUIに `開発ナレッジ連携デモ` セクションを追加。
+- `exports/knowledge_flow/` に以下を生成。
+  - `notebooklm_source_pack.md`
+  - `slack_ceo_update.md`
+  - `notion_decision_log.csv`
+  - `notion_backlog_import.csv`
+  - `CEO_KNOWLEDGE_FLOW_DEMO_GUIDE.md`
+  - `obsidian_vault/`
+- WBS に `T624` から `T631` を追加し、生成スクリプト、NotebookLM/Slack/Notion/Obsidian実体化、UI/APIデモ、成果物検証を管理対象にした。
+- `docs/DEVELOPMENT_KNOWLEDGE_FLOW.md`, `docs/CEO_PRESENTATION_PREP_2026-06-02.md`, `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`, `docs/SETUP_GUIDE.md`, `docs/PROJECT_STRUCTURE.md`, `docs/WBS.md`, `README.md` を更新した。
+
+検証:
+
+- `python scripts/generate_knowledge_flow_demo.py` 成功。
+- `python -m compileall src scripts` 成功。
+- FastAPI TestClient で `/api/knowledge-flow/status` と `/api/knowledge-flow/generate` が `200` を返すことを確認。
+- ローカル `http://127.0.0.1:8000/` が `knowledge-flow-demo`, `generateKnowledgeFlowArtifacts`, `NotebookLM` を含むことを確認。
+- 既存のローカルサーバーを再起動し、`/api/knowledge-flow/generate` が成功することを確認。
+- `python scripts/verify_public_demo.py` 成功。
+
+同期結果:
+
+- Google Sheets へ `47 source rows` / `59 hierarchical WBS display rows` を同期済み。
+- `WBS Summary` の合計は `46 tasks / 完了27 / 実行中1 / 未着手18 / 完了率59%`。
+- フェーズ6は `31 tasks / 完了16 / 実行中1 / 未着手14 / 完了率52%`。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 13, Updated: 12, Failed: 0`。
+
+運用方針:
+
+- 6/2 までは、Slack投稿やNotionページ作成は自動実行せず、投稿案・CSV・vaultとして見せる。
+- 社長決定後、採用するツールだけ外部API連携や正式運用WBSへ昇格する。

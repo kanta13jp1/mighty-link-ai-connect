@@ -122,6 +122,14 @@ SCHEDULE_EVENTS = [
         "is_all_day": False
     },
     {
+        "summary": "【Mighty Skill-Bridge】開発ナレッジ連携デモ確認",
+        "description": "NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vault、公開デモUI、FastAPI生成APIを確認し、社長に見せる順番を固めます。",
+        "start_time": "2026-05-29T15:00:00",
+        "end_time": "2026-05-29T16:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
         "summary": "【Mighty Skill-Bridge】社長プレゼン最終リハーサル",
         "description": "公開URL、ローカルAPI、Google Sheets WBS、Calendar同期、説明資料、想定QA、バックアップ手順を最終確認します。",
         "start_time": "2026-06-01T16:00:00",

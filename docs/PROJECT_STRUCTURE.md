@@ -22,12 +22,12 @@ mighty-link-ai-connect/
 | 種別 | 配置先 | 例 |
 | --- | --- | --- |
 | アプリ本体 | `src/` | `app.py`, `index.html` |
-| 運用スクリプト | `scripts/` | `sync_wbs_to_calendar.py`, `share_resources.py`, `verify_public_demo.py` |
+| 運用スクリプト | `scripts/` | `sync_wbs_to_calendar.py`, `generate_knowledge_flow_demo.py`, `share_resources.py`, `verify_public_demo.py` |
 | CI ガード | `.github/workflows/` | `public-demo-guard.yml` |
 | 仕様・手順 | `docs/` | `SETUP_GUIDE.md`, `BACKEND_AI_PIPELINE.md`, `CEO_PRESENTATION_PREP_2026-06-02.md`, `CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`, `DEVELOPMENT_KNOWLEDGE_FLOW.md`, `requirements.md`, `database.md` |
 | 同期元データ | `data/` | `WBS.tsv` |
 | 実行時監査ログ | `data/audit/` | `.gitkeep`, `ai_audit.jsonl` (Git 管理対象外) |
-| 生成物 | `exports/` | `mighty_development_plan.ics` |
+| 生成物 | `exports/` | `mighty_development_plan.ics`, `knowledge_flow/` |
 | 認証情報 | ルート直下 | `client_secret.json`, `authorized_user.json` |
 
 ## 認証ファイルの扱い
@@ -49,6 +49,7 @@ mighty-link-ai-connect/
 - `data/audit/`: API 判定ログの置き場。`.jsonl` は Git 管理せず、`.gitkeep` だけでディレクトリを維持する。
 - Obsidian vault を置く場合は、原則として本リポジトリ外に配置する。リポジトリ内へ置く場合は `docs/` に昇格した公式メモだけを Git 管理し、未整理メモや秘密情報は含めない。
 - Notion / Slack / NotebookLM 連携は、6/2 の社長判断後に `config/` または環境変数で外部設定化する。
+- `exports/knowledge_flow/` は社長説明用の安全なデモ成果物として Git 管理する。認証情報や個人情報は含めない。
 
 ## 実行コマンド
 
@@ -57,5 +58,6 @@ python src/app.py
 python scripts/verify_public_demo.py
 python scripts/sync_wbs_to_calendar.py
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
+python scripts/generate_knowledge_flow_demo.py
 python scripts/share_resources.py
 ```

@@ -1,0 +1,5 @@
+﻿Name,Type,Status,Owner,Related WBS,Decision Needed,Due Date,Notes
+NotebookLMを社長説明前の資料要約に使うか,Decision,Needs CEO Decision,Human + Codex,T617,Use / Hold / Later,2026-06-02,docsとWBSを投入し、想定QA生成に使う候補。
+Slack通知を社長共有まで含めるか,Decision,Needs CEO Decision,Human + Codex,T618,Team only / CEO included / Hold,2026-06-02,WBS同期、GitHub Actions、公開URL検証結果を短文で共有する候補。
+Notionを議事録・意思決定DBの公式台帳にするか,Decision,Needs CEO Decision,Human + Codex,T619,Official / Reference / Hold,2026-06-02,6/2決定事項と次アクションをNotion DB化する候補。
+Obsidianをローカル開発メモとして採用するか,Decision,Needs CEO Decision,Codex,T620,Local memo / Not use / Later,2026-06-02,ADR、プロンプト、未整理アイデアをローカルで蓄積する候補。

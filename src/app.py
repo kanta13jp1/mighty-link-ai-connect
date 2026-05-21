@@ -21,6 +21,7 @@ import io
 import re
 import hashlib
 import requests
+import subprocess
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -58,14 +59,21 @@ app = FastAPI(title="Mighty Skill-Bridge API Server")
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is src/
 PROJECT_ROOT = os.path.dirname(ROOT_DIR)             # Project root
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
+EXPORTS_DIR = os.path.join(PROJECT_ROOT, "exports")
 AUDIT_DIR = os.path.join(DATA_DIR, "audit")
 AUDIT_LOG_FILE = os.path.join(AUDIT_DIR, "ai_audit.jsonl")
+KNOWLEDGE_FLOW_DIR = os.path.join(EXPORTS_DIR, "knowledge_flow")
+KNOWLEDGE_FLOW_MANIFEST = os.path.join(KNOWLEDGE_FLOW_DIR, "manifest.json")
+KNOWLEDGE_FLOW_SCRIPT = os.path.join(PROJECT_ROOT, "scripts", "generate_knowledge_flow_demo.py")
 
 CREDENTIALS_FILE = os.path.join(PROJECT_ROOT, "credentials.json")
 CLIENT_SECRET_FILE = os.path.join(PROJECT_ROOT, "client_secret.json")
 AUTHORIZED_USER_FILE = os.path.join(PROJECT_ROOT, "authorized_user.json")
 SPREADSHEET_ID = "1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8"
 USER_EMAIL = "k-umezawa@ml-mightylink.com"
+
+os.makedirs(EXPORTS_DIR, exist_ok=True)
+app.mount("/exports", StaticFiles(directory=EXPORTS_DIR), name="exports")
 
 # Mighty-Link Color Palette (Normalized for Sheets API)
 COLORS = {
@@ -540,6 +548,59 @@ async def recent_audit_events(limit: int = 20):
         "status": "success",
         "audit_log": os.path.relpath(AUDIT_LOG_FILE, PROJECT_ROOT),
         "events": read_recent_audit_events(limit)
+    }
+
+
+def read_knowledge_flow_manifest() -> Optional[dict]:
+    if not os.path.exists(KNOWLEDGE_FLOW_MANIFEST):
+        return None
+    with open(KNOWLEDGE_FLOW_MANIFEST, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+@app.get("/api/knowledge-flow/status")
+async def knowledge_flow_status():
+    """Returns current generated NotebookLM/Slack/Notion/Obsidian demo artifacts."""
+    manifest = read_knowledge_flow_manifest()
+    return {
+        "status": "ready" if manifest else "not_generated",
+        "output_dir": os.path.relpath(KNOWLEDGE_FLOW_DIR, PROJECT_ROOT),
+        "manifest": manifest,
+    }
+
+
+@app.post("/api/knowledge-flow/generate")
+async def generate_knowledge_flow_artifacts():
+    """Generates safe, CEO-facing knowledge-flow demo artifacts locally."""
+    if not os.path.exists(KNOWLEDGE_FLOW_SCRIPT):
+        raise HTTPException(status_code=404, detail="Knowledge flow generator script not found.")
+
+    result = subprocess.run(
+        [sys.executable, KNOWLEDGE_FLOW_SCRIPT],
+        cwd=PROJECT_ROOT,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=60,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "message": "Knowledge flow artifact generation failed.",
+                "stdout": result.stdout,
+                "stderr": result.stderr,
+            },
+        )
+
+    manifest = read_knowledge_flow_manifest()
+    return {
+        "status": "success",
+        "message": "NotebookLM / Slack / Notion / Obsidian demo artifacts generated.",
+        "stdout": result.stdout,
+        "manifest": manifest,
     }
 
 # 1. API: Multi-modal Resume/Job Parser

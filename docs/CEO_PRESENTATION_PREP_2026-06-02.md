@@ -26,6 +26,7 @@
 | 事前共有 | 社長へ送る確認ポイント、当日アジェンダの短文ドラフト | T614 |
 | 決定後の受け皿 | 議事録、WBS差し替え、Calendar更新、Git反映、決定後ロードマップ枠 | T609, T612, T615 |
 | 開発ナレッジ連携 | NotebookLM、Slack、Notion、Obsidian を使った資料要約・通知・議事録・ローカル知識管理の候補整理 | T616, T617, T618, T619, T620, T621, T622, T623 |
+| 連携デモ成果物 | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vault、UI/API生成導線 | T624, T625, T626, T627, T628, T629, T630, T631 |
 
 ## 関連ドキュメント
 
@@ -53,7 +54,8 @@
 3. サンプル経歴書と案件票を読み込み、フィット分析の流れを説明する。
 4. Google Sheets の `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` を見せる。
 5. Google Calendar の `Mighty Skill-Bridge 開発計画` を見せる。
-6. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
+6. 画面の「開発ナレッジ連携デモ」で、NotebookLM/Slack/Notion/Obsidian成果物を見せる。
+7. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
 
 ## 6/2で決める事項
 
@@ -90,6 +92,7 @@
 
 ```powershell
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/generate_knowledge_flow_demo.py
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
 ```
@@ -115,3 +118,11 @@ python scripts/sync_wbs_to_calendar.py
 - WBS に `T616` から `T623` を追加し、NotebookLM、Slack、Notion、Obsidian を開発フロー候補として整理した。
 - `DEVELOPMENT_KNOWLEDGE_FLOW.md` を追加し、ツール別の役割、入れる情報/入れない情報、6/2で確認すること、セキュリティルールを記録した。
 - 6/2まではAPI連携や自動投稿を確定実装せず、社長判断のための資料導線として扱う。
+
+## 2026-05-21 連携デモ実装
+
+- `scripts/generate_knowledge_flow_demo.py` を追加し、NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vaultを `exports/knowledge_flow/` へ生成できるようにした。
+- FastAPIに `/api/knowledge-flow/generate` と `/api/knowledge-flow/status` を追加した。
+- 公開デモ/ローカルUIに「開発ナレッジ連携デモ」セクションを追加した。
+- WBSに `T624` から `T631` を追加し、実装済みの連携成果物と検証タスクを管理対象にした。
+- 自動投稿や外部API作成は行わず、6/2までは安全な生成物として社長に提示する。

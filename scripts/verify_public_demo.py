@@ -23,6 +23,8 @@ REQUIRED_MARKERS = [
     "エンジニア＆案件 AIフィットシミュレーター",
     "bridge-btn",
     "runAnalysis()",
+    "knowledge-flow-demo",
+    "generateKnowledgeFlowArtifacts",
     "sampleEngineer",
     "radarChart",
 ]

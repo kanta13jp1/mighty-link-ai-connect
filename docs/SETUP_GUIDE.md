@@ -24,6 +24,7 @@ mighty-link-ai-connect/
 ├── scripts/
 │   ├── sync_wbs_to_calendar.py
 │   ├── sync_wbs_to_sheets.py
+│   ├── generate_knowledge_flow_demo.py
 │   ├── share_resources.py
 │   └── verify_public_demo.py
 ├── docs/
@@ -44,7 +45,8 @@ mighty-link-ai-connect/
 │   ├── WBS.tsv
 │   └── audit/
 ├── exports/
-│   └── mighty_development_plan.ics
+│   ├── mighty_development_plan.ics
+│   └── knowledge_flow/
 ├── credentials.json
 ├── client_secret.json
 ├── authorized_user.json
@@ -150,10 +152,32 @@ python scripts/share_resources.py
 
 6/2 までは、これらを正式実装せず、導入優先順位と情報管理ルールを社長に確認する判断材料として扱います。
 
+実際に見せるための成果物生成:
+
+```powershell
+python scripts/generate_knowledge_flow_demo.py
+```
+
+生成される主なファイル:
+
+- `exports/knowledge_flow/notebooklm_source_pack.md`
+- `exports/knowledge_flow/slack_ceo_update.md`
+- `exports/knowledge_flow/notion_decision_log.csv`
+- `exports/knowledge_flow/notion_backlog_import.csv`
+- `exports/knowledge_flow/obsidian_vault/`
+
+FastAPI 起動中は、画面の「開発ナレッジ連携デモ」からも生成できます。
+
+```text
+POST /api/knowledge-flow/generate
+GET  /api/knowledge-flow/status
+```
+
 当日前後の必須確認:
 
 ```powershell
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/generate_knowledge_flow_demo.py
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
 ```

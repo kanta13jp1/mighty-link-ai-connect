@@ -17,6 +17,12 @@ python src/app.py
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
 ```
 
+NotebookLM / Slack / Notion / Obsidian の社長説明用デモ成果物を生成する場合:
+
+```powershell
+python scripts/generate_knowledge_flow_demo.py
+```
+
 ## Documents
 
 - [セットアップ・運用手順書](docs/SETUP_GUIDE.md)
