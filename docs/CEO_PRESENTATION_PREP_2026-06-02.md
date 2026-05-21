@@ -27,11 +27,17 @@
 | 決定後の受け皿 | 議事録、WBS差し替え、Calendar更新、Git反映、決定後ロードマップ枠 | T609, T612, T615 |
 | 開発ナレッジ連携 | NotebookLM、Slack、Notion、Obsidian を使った資料要約・通知・議事録・ローカル知識管理の候補整理 | T616, T617, T618, T619, T620, T621, T622, T623 |
 | 連携デモ成果物 | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vault、UI/API生成導線 | T624, T625, T626, T627, T628, T629, T630, T631 |
-| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641, T642, T643, T644, T645, T646, T647, T648, T649, T650, T651, T652, T653, T654, T655, T656, T657 |
+| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題、PowerPoint成果物 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641, T642, T643, T644, T645, T646, T647, T648, T649, T650, T651, T652, T653, T654, T655, T656, T657, T658, T659, T660, T661, T662, T663 |
 
 ## 関連ドキュメント
 
 - [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md): スライド構成、判断マトリクス、議事録テンプレート、デモ代替導線。
+- [CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md): 17 論点 (D 系 / C 系 / O 系 / X 系) と当日 CEO への確認質問 (T605 deliverable)。
+- [CEO_PRESENTATION_QA_PACK_2026-06-02.md](CEO_PRESENTATION_QA_PACK_2026-06-02.md): 22 想定 QA + 保留フロー + 機材チェックリスト (T607 deliverable)。
+- [CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md): 開発体制・運用責任分担・リスク R9-R13・費用感 12 Q-OPS (T606 deliverable)。
+- [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md): 6/1 21:00 JST Final Review 用 35 項目 checklist (T663 deliverable)。
+- [SHEETS_TRACKERS_SCHEMA.md](SHEETS_TRACKERS_SCHEMA.md): 課題管理表 + QA 表の Sheets スキーマと運用フロー。
+- [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md): 3-tool 体制 (Antigravity+Gemini / Codex / Claude Code) と handoff 規約。
 - [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md): NotebookLM / Slack / Notion / Obsidian 連携の開発フロー候補。
 - [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md): CLI/MCPで実施した連携証跡、GitHub Issues、Project権限課題。
 - [WBS.md](WBS.md): WBS詳細とフェーズ別スケジュール。
@@ -57,7 +63,7 @@
 4. Google Sheets の `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` を見せる。
 5. Google Calendar の `Mighty Skill-Bridge 開発計画` を見せる。
 6. 画面の「開発ナレッジ連携デモ」で、NotebookLM/Slack/Notion/Obsidian成果物を見せる。
-7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#10 を開く。
+7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#11 を開く。
 8. NotebookLM Presentation Brief を開き、プレゼン資料のたたき台作成はNotebookLMで進める方針を説明する。
 9. GitHub Projectは `read:project` / `project` スコープ復旧後に配置することを説明する。
 10. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
@@ -92,6 +98,25 @@
 | WBSは管理しやすいか | CATS型を参考に、階層WBS・集計・タイムラインの3タブ構成へ改善済み。 |
 | 打ち合わせ後すぐ何ができるか | 決定事項を `data/WBS.tsv`、Google Sheets、Google Calendar、作業ログへ即反映できる。 |
 | NotebookLMやNotionは必須なのか | 必須ではない。6/2時点では、資料要約・議事録・通知・知識管理を速くする候補として比較し、採用/保留/後回しを社長判断に委ねる。 |
+
+**フル版**: 想定 QA 22 件 + 保留フロー + 機材チェックリストは [CEO_PRESENTATION_QA_PACK_2026-06-02.md](CEO_PRESENTATION_QA_PACK_2026-06-02.md) (T607 deliverable) を参照。本表は導入用 simplified 版。
+
+## Risks & Blockers (2026-05-22 時点)
+
+3-tool 体制 ([MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md)) で 6/2 へ向かう過程で識別したリスクと、当日影響を出さないための緩和策を以下にまとめる。詳細チェックは [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) を参照。
+
+| # | 重要度 | リスク / Blocker | 影響 | 緩和策 | オーナー | 期限 |
+| --- | --- | --- | --- | --- | --- | --- |
+| R1 | HIGH | Gemini 3.5 Pro 一般公開が「来月」想定 ([ANTIGRAVITY_GUIDE.md:47](ANTIGRAVITY_GUIDE.md#L47)) で 6/2 までに来ない可能性 | サービス方向性 pack の品質が Flash 相当に留まる可能性 | Claude Code が決定マトリクスを起草 (E-1/E-4)、Pro 到着なら Antigravity が精緻化、無ければ Claude 版で出荷 | Claude / Antigravity | 5/29 |
+| R2 | HIGH | GitHub `read:project` scope 不足 (Issue #5, #8) | gh CLI で Project ボード操作不可、6/2 デモで Project ボードを見せられない | `gh auth refresh -s project` をブラウザ承認 (人間タスク)。5/27 までに未解決なら **Project ボードを 6/2 デモから除外**、Issues 一覧表示で代替 | 人間 + Codex | 5/27 |
+| R3 | MED | Slack CLI / MCP 未露出 ([CODEX_CONTINUATION_NOTES.md:453](CODEX_CONTINUATION_NOTES.md#L453)) | Slack live 送信不可 (T636/T646/T653/T662) | [exports/knowledge_flow/slack_ceo_update.md](../exports/knowledge_flow/slack_ceo_update.md) の草稿表示で代替。live send は約束しない | Codex (草稿維持) / Claude (代替説明準備) | 5/29 |
+| R4 | MED | 3 tools 並走で `data/WBS.tsv` の merge 競合 | WBS 行重複・並び順崩壊 | **`data/WBS.tsv` への書き込みは Codex のみ**。Antigravity / Claude は PR コメントで提案 | Codex | 通年 |
+| R5 | MED | 5/27 18:48 quota refresh が遅延・失敗 | デモ動画・radar polish が Antigravity で間に合わない | Codex が frontend タスクの静止画 fallback を準備、Antigravity 完成版が無くてもデモ可能な状態を維持 | Codex | 5/27-5/30 |
+| R6 | LOW | `requirements.txt` 依存ドリフト | デモ前に dependency 競合で起動失敗 | **5/30 EOD で freeze**、以降 upgrade 禁止。`requirements.txt` を編集する PR は Claude review 必須 | Claude (gate) | 5/30 |
+| R7 | LOW | NotebookLM CLI 認証切れ ([notebooklm_cli_next_steps.md](../exports/knowledge_flow/notebooklm_cli_next_steps.md)) | 14 sources の再 sync 不可 | `python scripts/notebooklm_login_workspace.py` を 6/1 dry-run で再確認 | Codex | 6/1 |
+| R8 | LOW | サービス方向性 3 選択肢のいずれにも社長が首肯しない | 6/2 結論が出ず、ロードマップ更新不可 | 「保留」を 4th option として明示。決定後の WBS 差し替えフロー (T612) を準備済 | Claude | 6/2 |
+
+**Hard gate**: R1 / R2 / R5 は EOD 5/30 までに緩和策が動いていることを Final Review (6/1 21:00 JST) で確認する。それ以外は劣化シナリオ込みで 6/2 を実施可能。
 
 ## 本番前チェック
 
@@ -182,3 +207,14 @@ python scripts/sync_wbs_to_calendar.py
 - Google Docs化したCEO Slide Outline: `https://docs.google.com/document/d/1xPYZ7ihUklZSm-b3X_LHbxeGvXt6oQXvREgnEX5d0CM/edit`
 - JSON証跡: `exports/knowledge_flow/notebooklm_agent_brief.json`, `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
 - WBSは `T643`, `T650`, `T651` を完了に更新し、`T656`, `T657` を追加した。
+
+## 2026-05-22 社長説明用PPTX生成
+
+- NotebookLM CLIで取得したCEO Slide Outlineを元に、`scripts/generate_ceo_presentation_deck.py` でPowerPointを生成した。
+- PPTX: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx`
+- Google Drive/Slides URL: `https://docs.google.com/presentation/d/1XGHnQHBpJyyhh_Y3I2lq2UThPRC-2dcL/edit?usp=drivesdk&ouid=117190324786156797159&rtpof=true&sd=true`
+- サマリー: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.md`
+- 生成manifest: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.json`
+- 8枚構成: 本日決めたいこと、現在の到達点、Google Workspace基盤、ナレッジ連携実績、NotebookLMからPPTXへ、サービス方向性、運用・リスク、次アクション。
+- PPTXは `upload_notebooklm_docs_to_drive.py` のDriveアップロード対象に追加し、`k-umezawa@ml-mightylink.com` 所有ファイルとして扱う。
+- WBSは `T658` から `T663` を追加し、PPTX生成、Drive共有、Notion証跡、Issues/Project再追跡、Slack到達性確認、最終パックレビューを管理する。
