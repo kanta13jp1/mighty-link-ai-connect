@@ -142,6 +142,7 @@ python scripts/share_resources.py
 - [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md)
 - [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md)
 - [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md)
+- [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md)
 
 開発ナレッジ連携の位置づけ:
 
@@ -150,7 +151,7 @@ python scripts/share_resources.py
 - Notion: 6/2議事録、意思決定DB、バックログ、社長レビュー用ページの候補。
 - Obsidian: ローカルの設計メモ、ADR、プロンプト改善案を蓄積する候補。
 
-6/2 までは、これらを正式実装せず、導入優先順位と情報管理ルールを社長に確認する判断材料として扱います。
+6/2 までは、これらを正式サービス機能として固定せず、導入優先順位と情報管理ルールを社長に確認する判断材料として扱います。秘密情報を含まない範囲では、Google Drive、Notion、GitHub Issues への実体連携証跡を残します。
 
 実際に見せるための成果物生成:
 
@@ -161,10 +162,20 @@ python scripts/generate_knowledge_flow_demo.py
 生成される主なファイル:
 
 - `exports/knowledge_flow/notebooklm_source_pack.md`
+- `exports/knowledge_flow/notebooklm_source_pack.txt`
 - `exports/knowledge_flow/slack_ceo_update.md`
 - `exports/knowledge_flow/notion_decision_log.csv`
 - `exports/knowledge_flow/notion_backlog_import.csv`
+- `exports/knowledge_flow/integration_evidence.md`
 - `exports/knowledge_flow/obsidian_vault/`
+
+CLI/MCPで実施した連携証跡:
+
+- Google Docs化したNotebookLM source pack: `https://docs.google.com/document/d/1J3spIzQTq5eZ2RGx6K_knt6I3c0GtPDMPhKfBGwnMvI`
+- Notion証跡ページ: `https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951`
+- GitHub Issues: `https://github.com/kanta13jp1/mighty-link-ai-connect/issues`
+- GitHub Projectは `gh auth refresh -s read:project` 後に正式連携する。
+- Slackは投稿先チャンネルと共有範囲を確認してから送信連携する。
 
 FastAPI 起動中は、画面の「開発ナレッジ連携デモ」からも生成できます。
 
@@ -178,6 +189,7 @@ GET  /api/knowledge-flow/status
 ```powershell
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
 python scripts/generate_knowledge_flow_demo.py
+gh issue list --state all --label ceo-demo
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
 ```

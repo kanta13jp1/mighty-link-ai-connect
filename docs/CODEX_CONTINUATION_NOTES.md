@@ -269,3 +269,40 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 
 - 6/2 までは、Slack投稿やNotionページ作成は自動実行せず、投稿案・CSV・vaultとして見せる。
 - 社長決定後、採用するツールだけ外部API連携や正式運用WBSへ昇格する。
+
+## 2026-05-21 作業ログ: CLI/MCP連携証跡とGitHub Issues追加
+
+社長に「実際に連携した状態」を説明できるよう、外部サービスへ秘密情報を出さない範囲でCLI/MCP連携を実施した。
+
+実施内容:
+
+- GitHub CLIで `ceo-demo`, `knowledge-flow`, `wbs`, `github-project`, `integration` ラベルを作成/更新。
+- GitHub Issuesに `#1` から `#6` を起票し、NotebookLM、Slack、Notion、Obsidian、GitHub Project、WBS連携のタスクを追加。
+- `gh project list --owner kanta13jp1 --format json` を実行し、`read:project` スコープ不足でProject連携が止まることを確認。
+- Google Drive MCPで `exports/knowledge_flow/notebooklm_source_pack.txt` をGoogle Docsへ変換。
+- Notion MCPで `Mighty Skill-Bridge CEO Demo Integration Evidence 2026-06-02` を作成。
+- Slack CLIは未検出、送信MCPツールも本セッションで露出しなかったため、投稿案と投稿先確認をIssue #2 / WBS `T636` に分離。
+- Obsidian vaultに `.obsidian/app.json` と `.obsidian/appearance.json` を追加し、ローカルvaultとして開きやすい状態にした。
+- WBSに `T632` から `T641` を追加した。
+- `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md` と `exports/knowledge_flow/integration_evidence.md` を追加した。
+
+連携URL:
+
+- Google Docs: https://docs.google.com/document/d/1J3spIzQTq5eZ2RGx6K_knt6I3c0GtPDMPhKfBGwnMvI
+- Notion: https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951
+- GitHub Issues: https://github.com/kanta13jp1/mighty-link-ai-connect/issues
+
+残タスク:
+
+- GitHub Projectは `gh auth refresh -s read:project` 後にProject取得/作成とIssue配置を行う。
+- Slackは投稿先チャンネルと社長共有範囲の確認後、connectorまたはWebhookで正式連携する。
+
+同期・検証:
+
+- `data/WBS.tsv` は `56` タスク、全行 `10` 列であることを確認。
+- `python -m compileall src scripts` 成功。
+- FastAPI TestClient で `/api/health`, `/api/knowledge-flow/status`, `/api/knowledge-flow/generate` が `200` を返すことを確認。
+- `python scripts/verify_public_demo.py` 成功。
+- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
+- Google Sheets へ `57 source rows` / `69 hierarchical WBS display rows` を同期済み。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 15, Updated: 13, Failed: 0`。

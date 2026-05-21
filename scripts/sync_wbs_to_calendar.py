@@ -130,6 +130,22 @@ SCHEDULE_EVENTS = [
         "is_all_day": False
     },
     {
+        "summary": "【Mighty Skill-Bridge】CLI/MCP連携証跡レビュー",
+        "description": "GitHub Issues、Google Docs化したNotebookLM source pack、Notion証跡ページ、Obsidian vault、Slack投稿案、GitHub Project権限課題を確認し、6/2で見せる順番を決めます。",
+        "start_time": "2026-05-23T11:00:00",
+        "end_time": "2026-05-23T12:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】GitHub Project権限復旧チェック",
+        "description": "gh auth refresh -s read:project 実行後にProject board取得/作成とIssue #1-#6の配置可否を確認します。",
+        "start_time": "2026-05-24T10:00:00",
+        "end_time": "2026-05-24T11:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
         "summary": "【Mighty Skill-Bridge】社長プレゼン最終リハーサル",
         "description": "公開URL、ローカルAPI、Google Sheets WBS、Calendar同期、説明資料、想定QA、バックアップ手順を最終確認します。",
         "start_time": "2026-06-01T16:00:00",

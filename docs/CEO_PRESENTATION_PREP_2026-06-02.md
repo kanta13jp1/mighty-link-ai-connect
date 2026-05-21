@@ -27,11 +27,13 @@
 | 決定後の受け皿 | 議事録、WBS差し替え、Calendar更新、Git反映、決定後ロードマップ枠 | T609, T612, T615 |
 | 開発ナレッジ連携 | NotebookLM、Slack、Notion、Obsidian を使った資料要約・通知・議事録・ローカル知識管理の候補整理 | T616, T617, T618, T619, T620, T621, T622, T623 |
 | 連携デモ成果物 | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vault、UI/API生成導線 | T624, T625, T626, T627, T628, T629, T630, T631 |
+| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641 |
 
 ## 関連ドキュメント
 
 - [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md): スライド構成、判断マトリクス、議事録テンプレート、デモ代替導線。
 - [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md): NotebookLM / Slack / Notion / Obsidian 連携の開発フロー候補。
+- [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md): CLI/MCPで実施した連携証跡、GitHub Issues、Project権限課題。
 - [WBS.md](WBS.md): WBS詳細とフェーズ別スケジュール。
 
 ## 推奨プレゼン構成
@@ -55,7 +57,9 @@
 4. Google Sheets の `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` を見せる。
 5. Google Calendar の `Mighty Skill-Bridge 開発計画` を見せる。
 6. 画面の「開発ナレッジ連携デモ」で、NotebookLM/Slack/Notion/Obsidian成果物を見せる。
-7. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
+7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#6 を開く。
+8. GitHub Projectは `read:project` スコープ復旧後に配置することを説明する。
+9. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
 
 ## 6/2で決める事項
 
@@ -93,6 +97,7 @@
 ```powershell
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
 python scripts/generate_knowledge_flow_demo.py
+gh issue list --state all --label ceo-demo
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
 ```
@@ -126,3 +131,13 @@ python scripts/sync_wbs_to_calendar.py
 - 公開デモ/ローカルUIに「開発ナレッジ連携デモ」セクションを追加した。
 - WBSに `T624` から `T631` を追加し、実装済みの連携成果物と検証タスクを管理対象にした。
 - 自動投稿や外部API作成は行わず、6/2までは安全な生成物として社長に提示する。
+
+## 2026-05-21 CLI/MCP連携証跡の追加
+
+- GitHub Issuesに `#1` から `#6` を起票し、NotebookLM、Slack、Notion、Obsidian、GitHub Project、WBS連携のタスクを見える化した。
+- Google Drive MCPで `exports/knowledge_flow/notebooklm_source_pack.txt` をGoogle Docsへ変換した。
+- Notion MCPで `Mighty Skill-Bridge CEO Demo Integration Evidence 2026-06-02` を作成した。
+- Obsidian vaultに `.obsidian` 設定を追加し、ローカルvaultとして開ける状態に寄せた。
+- GitHub Projectは `gh project list` 実行時に `read:project` スコープ不足が判明したため、`T633`, `T641`, Issue #5 で権限復旧タスクとして管理する。
+- SlackはローカルCLI未検出かつ送信MCP未露出のため、投稿案と投稿先確認を `T636`, Issue #2 で管理する。
+- WBSに `T632` から `T641` を追加し、Sheets/Calendar同期対象にした。

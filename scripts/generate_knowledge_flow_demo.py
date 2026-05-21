@@ -326,6 +326,26 @@ Use the NotebookLM source pack to answer:
 4. Which items should become WBS tasks after the meeting?
 """,
     )
+    write_text(
+        OBSIDIAN_DIR / ".obsidian" / "app.json",
+        """{
+  "alwaysUpdateLinks": true,
+  "promptDelete": false,
+  "newFileLocation": "current",
+  "attachmentFolderPath": "Attachments"
+}
+""",
+    )
+    write_text(
+        OBSIDIAN_DIR / ".obsidian" / "appearance.json",
+        """{
+  "accentColor": "#1a73e8",
+  "cssTheme": "",
+  "baseFontSize": 16,
+  "enabledCssSnippets": []
+}
+""",
+    )
 
 
 def build_demo_guide() -> str:
@@ -333,7 +353,7 @@ def build_demo_guide() -> str:
 
 ## Demo Order
 
-1. Open `notebooklm_source_pack.md` and show it can be uploaded to NotebookLM.
+1. Open `notebooklm_source_pack.md` and `notebooklm_source_pack.txt`; the TXT version can be uploaded to Google Drive as a native Google Doc and then used as a NotebookLM source.
 2. Open `slack_ceo_update.md` and show the ready-to-post progress update.
 3. Open `notion_decision_log.csv` and `notion_backlog_import.csv` as Notion import sources.
 4. Open `obsidian_vault/Mighty Skill-Bridge Home.md` as a local Obsidian vault entry point.
@@ -357,21 +377,27 @@ def generate() -> dict:
 
     artifacts = [
         EXPORT_DIR / "notebooklm_source_pack.md",
+        EXPORT_DIR / "notebooklm_source_pack.txt",
         EXPORT_DIR / "slack_ceo_update.md",
         EXPORT_DIR / "notion_decision_log.csv",
         EXPORT_DIR / "notion_backlog_import.csv",
         EXPORT_DIR / "CEO_KNOWLEDGE_FLOW_DEMO_GUIDE.md",
+        EXPORT_DIR / "integration_evidence.md",
         OBSIDIAN_DIR / "Mighty Skill-Bridge Home.md",
         OBSIDIAN_DIR / "ADR" / "ADR-0001-knowledge-flow.md",
         OBSIDIAN_DIR / "Meetings" / "2026-06-02 CEO Meeting.md",
         OBSIDIAN_DIR / "Prompts" / "NotebookLM Source Prompt.md",
+        OBSIDIAN_DIR / ".obsidian" / "app.json",
+        OBSIDIAN_DIR / ".obsidian" / "appearance.json",
     ]
 
-    write_text(artifacts[0], build_notebooklm_pack(rows, summary))
-    write_text(artifacts[1], build_slack_update(summary))
+    notebooklm_pack = build_notebooklm_pack(rows, summary)
+    write_text(artifacts[0], notebooklm_pack)
+    write_text(artifacts[1], notebooklm_pack)
+    write_text(artifacts[2], build_slack_update(summary))
     write_notion_csvs(rows)
     build_obsidian_vault(summary)
-    write_text(artifacts[4], build_demo_guide())
+    write_text(artifacts[5], build_demo_guide())
 
     manifest = {
         "generated_at_jst": jst_now().isoformat(timespec="seconds"),

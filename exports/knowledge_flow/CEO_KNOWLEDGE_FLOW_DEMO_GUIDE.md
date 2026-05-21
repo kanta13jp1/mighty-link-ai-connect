@@ -2,7 +2,7 @@
 
 ## Demo Order
 
-1. Open `notebooklm_source_pack.md` and show it can be uploaded to NotebookLM.
+1. Open `notebooklm_source_pack.md` and `notebooklm_source_pack.txt`; the TXT version can be uploaded to Google Drive as a native Google Doc and then used as a NotebookLM source.
 2. Open `slack_ceo_update.md` and show the ready-to-post progress update.
 3. Open `notion_decision_log.csv` and `notion_backlog_import.csv` as Notion import sources.
 4. Open `obsidian_vault/Mighty Skill-Bridge Home.md` as a local Obsidian vault entry point.

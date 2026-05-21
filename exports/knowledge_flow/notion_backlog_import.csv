@@ -15,3 +15,11 @@ Obsidian vault雛形・ADR・議事録・プロンプトノート生成,T628,Obs
 公開デモ/ローカルUIへ開発ナレッジ連携デモセクション追加,T629,連携UIデモ,完了,Codex,2026-05-21,2026-05-21,社長に画面上で4ツール連携の成果物リンクを見せられる状態にする
 FastAPIにKnowledge Flow生成・状態確認APIを追加,T630,連携APIデモ,完了,Codex,2026-05-21,2026-05-21,/api/knowledge-flow/generateで成果物を再生成できるようにする
 生成成果物・公開URL・API・Sheets/Calendar同期の総合確認,T631,連携成果物検証,完了,Codex,2026-05-21,2026-05-21,社長提示前にデモ導線と生成ファイルの存在を確認する
+GitHub Issuesに6/2社長デモ向け連携タスクを起票,T632,GitHub Issues連携,完了,Codex,2026-05-21,2026-05-21,Issue #1-#6を作成し、NotebookLM/Slack/Notion/Obsidian/GitHub Project/WBS連携を追跡可能にする
+GitHub Project board取得・配置のCLI権限確認,T633,GitHub Project連携,実行中,Codex,2026-05-21,2026-05-23,gh project listでread:projectスコープ不足を確認し、Project復旧タスクをIssue #5として管理する
+NotebookLM投入用Source PackをGoogle Drive/Docsへアップロード,T634,NotebookLM実連携,完了,Codex,2026-05-21,2026-05-21,MarkdownではなくTXTをGoogle Docs化し、NotebookLM source候補としてURLを証跡化する
+Notion MCPで社長デモ用の連携証跡ページを作成,T635,Notion実連携,完了,Codex,2026-05-21,2026-05-21,Google Doc URL、GitHub Issues、Slack/Projectの到達点、6/2決定事項をNotionページへ記録する
+Slack CLI/MCPの利用可否と投稿先確認フローを整理,T636,Slack連携確認,完了,Codex,2026-05-21,2026-05-21,Slack CLI未検出・送信ツール未露出のため、投稿案とIssue #2で投稿先確認を管理する
+Obsidian vaultとして開ける設定ファイルを追加,T637,Obsidian実連携,完了,Codex,2026-05-21,2026-05-21,.obsidian/app.jsonとappearance.jsonを生成対象へ追加し、ローカルvaultの入口を明確化する
+CLI/MCP連携の実行結果を社長説明用ドキュメントへ集約,T638,連携証跡台帳,完了,Codex,2026-05-21,2026-05-21,Drive Doc、Notionページ、GitHub Issues、Project権限課題、Slack到達点を作業手順書へ反映する
+NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認,T640,連携デモリハーサル,未着手,人間 + Codex,2026-05-22,2026-05-23,6/2に見せる順番、開くURL、確認してもらう判断事項をリハーサルする
