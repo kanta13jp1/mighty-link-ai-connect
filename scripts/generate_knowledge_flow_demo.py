@@ -28,6 +28,7 @@ SOURCE_DOCS = [
     "docs/CEO_PRESENTATION_PREP_2026-06-02.md",
     "docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md",
     "docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
+    "docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md",
     "docs/BACKEND_AI_PIPELINE.md",
     "docs/WBS.md",
     "docs/SETUP_GUIDE.md",
@@ -135,6 +136,89 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 5. このプロトタイプをサービス化する場合に、決めるべき事項と決めなくてよい事項を分けてください。
 
 {sources}
+"""
+
+
+def build_notebooklm_presentation_brief(rows: list[dict], summary: dict) -> str:
+    tasks = knowledge_tasks(rows)
+    task_lines = "\n".join(
+        f"- {row['タスクID']}: {row['小フェーズ']} / {row['タスク名']} / {row['ステータス']}"
+        for row in tasks[-24:]
+    )
+    return f"""# NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
+
+Generated: {jst_now().strftime('%Y-%m-%d %H:%M:%S %Z')}
+
+## How to use this in NotebookLM
+
+Upload this document together with:
+
+- `notebooklm_source_pack.txt`
+- `docs/CEO_PRESENTATION_PREP_2026-06-02.md`
+- `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`
+- `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`
+- `data/WBS.tsv`
+
+Then ask NotebookLM to generate a CEO-ready presentation outline, speaker notes,
+and likely executive questions. Do not upload credentials or personal data.
+
+## Presentation Objective
+
+The 2026-06-02 meeting should not finalize the service content before discussion.
+It should help the CEO decide the service direction, first user, priority feature,
+and which development knowledge-flow tools should become official.
+
+## Current Evidence to Show
+
+- Public demo remains guarded by Public Demo Guard and GitHub Pages deployment.
+- WBS is synced to Google Sheets and Google Calendar.
+- GitHub Issues #1-#6 track the CEO demo integration backlog.
+- NotebookLM source pack was uploaded to Google Docs for source ingestion.
+- Notion MCP created an integration evidence page.
+- Obsidian vault starter exists locally with `.obsidian` settings.
+- Slack post draft exists, while channel and write permission remain pending.
+- GitHub Project requires `read:project` / `project` OAuth scope refresh.
+
+## WBS Snapshot
+
+- Total tasks: {summary['total']}
+- Done: {summary['done']}
+- In progress: {summary['active']}
+- Not started: {summary['todo']}
+- Completion rate: {summary['completion_rate']}%
+- CEO presentation phase tasks: {summary['phase6_total']}
+- CEO presentation phase done: {summary['phase6_done']}
+
+## Latest Knowledge-flow / CEO-demo Tasks
+
+{task_lines}
+
+## Recommended Slide Story
+
+1. Why we are meeting on 2026-06-02: decide direction, not lock details early.
+2. What is already working: public demo, WBS, Google Workspace sync, guardrails.
+3. What changed this week: NotebookLM / Slack / Notion / Obsidian workflow proof.
+4. How NotebookLM helps: source reading, Q&A generation, presentation drafting.
+5. How GitHub Issues/Project should help: task visibility and implementation trace.
+6. What is still pending: GitHub Project OAuth scope and Slack destination/channel.
+7. Decisions needed from CEO: service direction, first audience, workflow tools.
+8. Immediate next actions after the meeting: update WBS, Calendar, Issues, docs.
+
+## NotebookLM Prompts for Presentation Creation
+
+1. この資料群をもとに、社長向け10分プレゼンの構成を8枚以内で作ってください。
+2. 各スライドについて、見出し、話す要点、見せる証跡URL、社長に聞く質問を作ってください。
+3. 6/2時点で決めるべきことと、まだ決めない方がよいことを分けてください。
+4. GitHub ProjectとSlackが未完了である点を、ネガティブではなく次の実行タスクとして説明してください。
+5. プレゼン後にWBSへ追加すべきタスク候補を、優先順位つきで出してください。
+
+## Speaker Notes Draft
+
+The core message is: the product direction is intentionally undecided until the
+CEO meeting, but the development operating system is already becoming visible.
+Codex, Google Workspace, GitHub Issues, Notion, Obsidian, and NotebookLM can
+work together so that decisions made on 2026-06-02 become WBS, Calendar, Issues,
+and documentation updates immediately.
 """
 
 
@@ -378,6 +462,8 @@ def generate() -> dict:
     artifacts = [
         EXPORT_DIR / "notebooklm_source_pack.md",
         EXPORT_DIR / "notebooklm_source_pack.txt",
+        EXPORT_DIR / "notebooklm_presentation_brief.md",
+        EXPORT_DIR / "notebooklm_presentation_brief.txt",
         EXPORT_DIR / "slack_ceo_update.md",
         EXPORT_DIR / "notion_decision_log.csv",
         EXPORT_DIR / "notion_backlog_import.csv",
@@ -392,12 +478,15 @@ def generate() -> dict:
     ]
 
     notebooklm_pack = build_notebooklm_pack(rows, summary)
+    presentation_brief = build_notebooklm_presentation_brief(rows, summary)
     write_text(artifacts[0], notebooklm_pack)
     write_text(artifacts[1], notebooklm_pack)
-    write_text(artifacts[2], build_slack_update(summary))
+    write_text(artifacts[2], presentation_brief)
+    write_text(artifacts[3], presentation_brief)
+    write_text(artifacts[4], build_slack_update(summary))
     write_notion_csvs(rows)
     build_obsidian_vault(summary)
-    write_text(artifacts[5], build_demo_guide())
+    write_text(artifacts[7], build_demo_guide())
 
     manifest = {
         "generated_at_jst": jst_now().isoformat(timespec="seconds"),

@@ -12,8 +12,9 @@
 
 | 項目 | 実施内容 | 証跡 |
 | --- | --- | --- |
-| GitHub Issues | CEOデモ向け連携タスクを6件起票 | [#1](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/1), [#2](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/2), [#3](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/3), [#4](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/4), [#5](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/5), [#6](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/6) |
-| NotebookLM / Google Drive | `notebooklm_source_pack.txt` をGoogle Driveへアップロードし、Google Docsへ変換 | https://docs.google.com/document/d/1J3spIzQTq5eZ2RGx6K_knt6I3c0GtPDMPhKfBGwnMvI |
+| GitHub Issues | CEOデモ向け連携タスクを8件起票 | [#1](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/1), [#2](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/2), [#3](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/3), [#4](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/4), [#5](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/5), [#6](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/6), [#7](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/7), [#8](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/8) |
+| NotebookLM / Google Drive | `notebooklm_source_pack.txt` をGoogle Driveへアップロードし、Google Docsへ変換 | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU |
+| NotebookLM / プレゼン作成 | `notebooklm_presentation_brief.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ |
 | Notion | Notion MCPで連携証跡ページを作成 | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 |
 | Obsidian | `exports/knowledge_flow/obsidian_vault/` にvault雛形と `.obsidian` 設定を追加 | `exports/knowledge_flow/obsidian_vault/Mighty Skill-Bridge Home.md` |
 | Slack | 投稿案を生成し、CLI/MCP利用可否を確認 | `exports/knowledge_flow/slack_ceo_update.md` |
@@ -22,8 +23,10 @@
 
 | 操作 | コマンド/ツール | 結果 |
 | --- | --- | --- |
-| GitHub Issue起票 | `gh issue create` | Issue #1 から #6 を作成 |
+| GitHub Issue起票 | `gh issue create` | Issue #1 から #8 を作成 |
+| NotebookLMプレゼン導線 | Google Drive MCP `_import_document` | Presentation Brief をGoogle Docsへ変換し、Issue #7を起票 |
 | GitHub Project確認 | `gh project list --owner kanta13jp1 --format json` | `read:project` スコープ不足で停止 |
+| GitHub Project認証再試行 | `gh auth refresh -h github.com -s read:project -s project` | 2分でタイムアウト。Issue #8として手動認証待ちに分離 |
 | Google Drive連携 | Google Drive MCP `_import_document` | TXT source pack をGoogle Docsへ変換 |
 | Notion連携 | Notion MCP `_notion_create_pages` | GitHub配下のNotionページとして証跡を作成 |
 | Slack CLI確認 | `Get-Command slack` | ローカルCLIは未検出 |
@@ -39,7 +42,7 @@ gh auth refresh -s read:project
 gh project list --owner kanta13jp1 --format json
 ```
 
-復旧後は Issue #1 から #6 を CEO Demo 用Projectへ配置する。正式対応は WBS `T641` と GitHub Issue #5 で管理する。
+復旧後は Issue #1 から #8 を CEO Demo 用Projectへ配置する。正式対応は WBS `T641`, `T644`, `T645` と GitHub Issue #5 / #8 で管理する。
 
 ## Slack の現状
 
@@ -65,12 +68,17 @@ gh project list --owner kanta13jp1 --format json
 - `T639`: Issue-WBS運用
 - `T640`: 連携デモリハーサル
 - `T641`: Project正式ボード化
+- `T642`: NotebookLMプレゼン資料化
+- `T643`: NotebookLMスライド草案
+- `T644`: Project OAuth復旧
+- `T645`: Project Issue配置
+- `T646`: Slack送信権限確認
 
 同期結果:
 
-- Google Sheets: `57 source rows` / `69 hierarchical WBS display rows`
-- Google Calendar: `Success: 15, Updated: 13, Failed: 0`
-- 新規Calendarイベント: `CLI/MCP連携証跡レビュー`, `GitHub Project権限復旧チェック`
+- Google Sheets: `62 source rows` / `74 hierarchical WBS display rows`
+- Google Calendar: `Success: 17, Updated: 15, Failed: 0`
+- 新規Calendarイベント: `CLI/MCP連携証跡レビュー`, `GitHub Project権限復旧チェック`, `NotebookLMプレゼン草案作成`, `Slack投稿先・送信権限確認`
 
 ## 社長への見せ方
 

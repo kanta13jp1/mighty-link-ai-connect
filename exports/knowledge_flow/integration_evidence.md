@@ -4,7 +4,8 @@ Generated/updated: 2026-05-21
 
 ## External Evidence
 
-- Google Drive / Docs NotebookLM source pack: https://docs.google.com/document/d/1J3spIzQTq5eZ2RGx6K_knt6I3c0GtPDMPhKfBGwnMvI
+- Google Drive / Docs NotebookLM source pack: https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU
+- Google Drive / Docs NotebookLM presentation brief: https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ
 - Notion integration evidence page: https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951
 - GitHub Issues:
   - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/1
@@ -13,11 +14,15 @@ Generated/updated: 2026-05-21
   - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/4
   - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/5
   - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/6
+  - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/7
+  - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/8
 
 ## Local Evidence
 
 - `notebooklm_source_pack.md`
 - `notebooklm_source_pack.txt`
+- `notebooklm_presentation_brief.md`
+- `notebooklm_presentation_brief.txt`
 - `slack_ceo_update.md`
 - `notion_decision_log.csv`
 - `notion_backlog_import.csv`
@@ -27,5 +32,5 @@ Generated/updated: 2026-05-21
 
 ## Known Gaps
 
-- GitHub Project board access requires `gh auth refresh -s read:project`.
+- GitHub Project board access requires `gh auth refresh -h github.com -s read:project -s project`; the first refresh attempt timed out.
 - Slack write integration requires a destination channel and an available Slack connector/CLI.

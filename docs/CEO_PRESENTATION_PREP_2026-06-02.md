@@ -27,7 +27,7 @@
 | 決定後の受け皿 | 議事録、WBS差し替え、Calendar更新、Git反映、決定後ロードマップ枠 | T609, T612, T615 |
 | 開発ナレッジ連携 | NotebookLM、Slack、Notion、Obsidian を使った資料要約・通知・議事録・ローカル知識管理の候補整理 | T616, T617, T618, T619, T620, T621, T622, T623 |
 | 連携デモ成果物 | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vault、UI/API生成導線 | T624, T625, T626, T627, T628, T629, T630, T631 |
-| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641 |
+| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641, T642, T643, T644, T645, T646 |
 
 ## 関連ドキュメント
 
@@ -57,9 +57,10 @@
 4. Google Sheets の `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` を見せる。
 5. Google Calendar の `Mighty Skill-Bridge 開発計画` を見せる。
 6. 画面の「開発ナレッジ連携デモ」で、NotebookLM/Slack/Notion/Obsidian成果物を見せる。
-7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#6 を開く。
-8. GitHub Projectは `read:project` スコープ復旧後に配置することを説明する。
-9. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
+7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#8 を開く。
+8. NotebookLM Presentation Brief を開き、プレゼン資料のたたき台作成はNotebookLMで進める方針を説明する。
+9. GitHub Projectは `read:project` / `project` スコープ復旧後に配置することを説明する。
+10. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
 
 ## 6/2で決める事項
 
@@ -134,10 +135,19 @@ python scripts/sync_wbs_to_calendar.py
 
 ## 2026-05-21 CLI/MCP連携証跡の追加
 
-- GitHub Issuesに `#1` から `#6` を起票し、NotebookLM、Slack、Notion、Obsidian、GitHub Project、WBS連携のタスクを見える化した。
+- GitHub Issuesに `#1` から `#8` を起票し、NotebookLM、Slack、Notion、Obsidian、GitHub Project、WBS連携、プレゼン資料化のタスクを見える化した。
 - Google Drive MCPで `exports/knowledge_flow/notebooklm_source_pack.txt` をGoogle Docsへ変換した。
+- Google Drive MCPで `exports/knowledge_flow/notebooklm_presentation_brief.txt` をGoogle Docsへ変換し、NotebookLMでプレゼン資料を作る入力資料を追加した。
 - Notion MCPで `Mighty Skill-Bridge CEO Demo Integration Evidence 2026-06-02` を作成した。
 - Obsidian vaultに `.obsidian` 設定を追加し、ローカルvaultとして開ける状態に寄せた。
 - GitHub Projectは `gh project list` 実行時に `read:project` スコープ不足が判明したため、`T633`, `T641`, Issue #5 で権限復旧タスクとして管理する。
 - SlackはローカルCLI未検出かつ送信MCP未露出のため、投稿案と投稿先確認を `T636`, Issue #2 で管理する。
 - WBSに `T632` から `T641` を追加し、Sheets/Calendar同期対象にした。
+
+## 2026-05-21 NotebookLMプレゼン資料化の追加
+
+- `exports/knowledge_flow/notebooklm_presentation_brief.md` と `.txt` を生成対象に追加した。
+- Google Docs化したNotebookLM Presentation Brief: `https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ`
+- GitHub Issue #7 を起票し、NotebookLMで8枚以内のプレゼン構成・話す要点・想定QAを作るタスクにした。
+- GitHub Project OAuth再試行は2分でタイムアウトしたため、Issue #8 と WBS `T644`, `T645` に分離した。
+- WBSに `T642` から `T646` を追加した。

@@ -30,7 +30,8 @@
 | 10 | 開発ナレッジ連携 | NotebookLM / Slack / Notion / Obsidian をどう使うか | T616, T617, T621, T623 |
 | 11 | 連携成果物デモ | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vaultを見せる | T624, T625, T626, T627, T628, T629, T630 |
 | 12 | CLI/MCP実連携証跡 | Google Drive、Notion、GitHub Issues、Project権限課題、Slack到達点を見せる | T632, T633, T634, T635, T636, T637, T638, T639 |
-| 13 | 社長への確認事項 | 決定してほしい項目、保留してよい項目、次回までの宿題 | T614, T615, T622, T631, T640, T641 |
+| 13 | NotebookLMプレゼン資料化 | NotebookLMでプレゼン草案を作る入力資料とプロンプトを見せる | T642, T643 |
+| 14 | 社長への確認事項 | 決定してほしい項目、保留してよい項目、次回までの宿題 | T614, T615, T622, T631, T640, T641, T644, T645, T646 |
 
 ## 判断マトリクス
 
@@ -60,6 +61,7 @@
 | 対象 | 生成物 | 説明 |
 | --- | --- | --- |
 | NotebookLM | `exports/knowledge_flow/notebooklm_source_pack.md` / `exports/knowledge_flow/notebooklm_source_pack.txt` | `docs/` とWBSをまとめた投入用資料。TXT版はGoogle Docs化済み。 |
+| NotebookLM | `exports/knowledge_flow/notebooklm_presentation_brief.md` / `exports/knowledge_flow/notebooklm_presentation_brief.txt` | プレゼン資料のたたき台をNotebookLMで作るための入力資料。 |
 | Slack | `exports/knowledge_flow/slack_ceo_update.md` | 社長レビュー前に投稿できる進捗共有文案。 |
 | Notion | `exports/knowledge_flow/notion_decision_log.csv` | 意思決定DBとして取り込めるCSV。 |
 | Notion | `exports/knowledge_flow/notion_backlog_import.csv` | WBS連携バックログとして取り込めるCSV。 |
@@ -73,10 +75,11 @@
 
 | 連携先 | 見せるもの | 補足 |
 | --- | --- | --- |
-| Google Drive / NotebookLM | https://docs.google.com/document/d/1J3spIzQTq5eZ2RGx6K_knt6I3c0GtPDMPhKfBGwnMvI | MarkdownはDrive変換対象外だったため、TXT版を生成してGoogle Docs化した。 |
+| Google Drive / NotebookLM | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU | MarkdownはDrive変換対象外だったため、TXT版を生成してGoogle Docs化した。 |
+| Google Drive / NotebookLM Presentation | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ | プレゼン構成・話す要点・想定QAをNotebookLMで作るためのブリーフ。 |
 | Notion | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 | 6/2社長デモ用の連携証跡ページ。 |
-| GitHub Issues | https://github.com/kanta13jp1/mighty-link-ai-connect/issues | Issue #1-#6で連携タスクを管理。 |
-| GitHub Project | Issue #5 / WBS `T633`, `T641` | `gh` tokenの `read:project` スコープ復旧後にProjectへ配置。 |
+| GitHub Issues | https://github.com/kanta13jp1/mighty-link-ai-connect/issues | Issue #1-#8で連携タスクを管理。 |
+| GitHub Project | Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` | `gh` tokenの `read:project` / `project` スコープ復旧後にProjectへ配置。 |
 | Slack | `exports/knowledge_flow/slack_ceo_update.md` | 送信先チャンネルと共有範囲を6/2に確認。 |
 
 ## 当日質問リスト

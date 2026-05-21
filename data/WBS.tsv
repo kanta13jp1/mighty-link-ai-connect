@@ -55,3 +55,8 @@ T638	6. 社長プレゼン準備	連携証跡台帳	CLI/MCP連携の実行結果
 T639	6. 社長プレゼン準備	Issue-WBS運用	GitHub IssuesとWBSの相互参照ルールを整備	Codex	VSCode + Codex	Issue #6を起点に、WBSは日程、Issuesは実装タスクとして役割分担を明文化する	完了	2026-05-21	2026-05-21
 T640	6. 社長プレゼン準備	連携デモリハーサル	NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認	人間 + Codex	VSCode + Codex	6/2に見せる順番、開くURL、確認してもらう判断事項をリハーサルする	未着手	2026-05-22	2026-05-23
 T641	6. 社長プレゼン準備	Project正式ボード化	GitHub Project権限復旧後にCEO Demo IssuesをProjectへ配置	人間 + Codex	gh CLI + GitHub Project	gh auth refresh -s read:project後、Project boardを作成/取得してIssue #1-#6を配置する	未着手	2026-05-23	2026-05-24
+T642	6. 社長プレゼン準備	NotebookLMプレゼン資料化	NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化	Codex	Google Drive MCP + VSCode + Codex	Presentation Briefを生成し、Google Docs URLとIssue #7を証跡化する	完了	2026-05-21	2026-05-21
+T643	6. 社長プレゼン準備	NotebookLMスライド草案	NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る	人間 + Codex	NotebookLM	社長説明のスライド構成・話す要点・想定QAをNotebookLMで生成しdocsへ反映する	未着手	2026-05-22	2026-05-23
+T644	6. 社長プレゼン準備	Project OAuth復旧	GitHub Project用のread:project/projectスコープをブラウザ認証で復旧	人間 + Codex	gh CLI + GitHub OAuth	gh auth refreshがタイムアウトしたため、Issue #8で手動認証完了まで追跡する	実行中	2026-05-21	2026-05-22
+T645	6. 社長プレゼン準備	Project Issue配置	GitHub Project取得後にCEO Demo IssuesをProject boardへ配置	人間 + Codex	gh CLI + GitHub Project	Issue #1-#8をProject boardへ登録し、WBS/Issue/Projectの三点連携を完成させる	未着手	2026-05-24	2026-05-24
+T646	6. 社長プレゼン準備	Slack送信権限確認	Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする	人間 + Codex	Slack MCP/CLI	Slack CLI未検出・送信MCP未露出のため、投稿先とconnector権限を6/2前に確認する	未着手	2026-05-24	2026-05-25

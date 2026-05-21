@@ -86,6 +86,7 @@ GET  /api/knowledge-flow/status
 | 成果物 | パス | 見せ方 |
 | --- | --- | --- |
 | NotebookLM投入資料 | `exports/knowledge_flow/notebooklm_source_pack.md` / `exports/knowledge_flow/notebooklm_source_pack.txt` | TXT版をGoogle Docsへ変換し、NotebookLM source候補として見せる |
+| NotebookLMプレゼンブリーフ | `exports/knowledge_flow/notebooklm_presentation_brief.md` / `exports/knowledge_flow/notebooklm_presentation_brief.txt` | NotebookLMで8枚以内の社長向けプレゼン構成・話す要点・想定QAを作る入力資料として使う |
 | Slack投稿案 | `exports/knowledge_flow/slack_ceo_update.md` | 投稿前レビュー用の進捗共有文として見せる |
 | Notion意思決定DB | `exports/knowledge_flow/notion_decision_log.csv` | Notion DBへCSV importする候補として見せる |
 | Notionバックログ | `exports/knowledge_flow/notion_backlog_import.csv` | WBS連携バックログのimport候補として見せる |
@@ -99,10 +100,11 @@ GET  /api/knowledge-flow/status
 
 | 対象 | 実施内容 | URL/結果 |
 | --- | --- | --- |
-| Google Drive / NotebookLM | `notebooklm_source_pack.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/1J3spIzQTq5eZ2RGx6K_knt6I3c0GtPDMPhKfBGwnMvI |
+| Google Drive / NotebookLM | `notebooklm_source_pack.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU |
+| Google Drive / NotebookLM Presentation | `notebooklm_presentation_brief.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ |
 | Notion | 連携証跡ページをNotion MCPで作成 | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 |
-| GitHub Issues | CEOデモ向け連携タスクを6件起票 | https://github.com/kanta13jp1/mighty-link-ai-connect/issues |
-| GitHub Project | `gh project list` でスコープ不足を確認 | `read:project` が不足。Issue #5 / WBS `T633`, `T641` で管理 |
+| GitHub Issues | CEOデモ向け連携タスクを8件起票 | https://github.com/kanta13jp1/mighty-link-ai-connect/issues |
+| GitHub Project | `gh project list` と `gh auth refresh` を再試行 | `read:project` / `project` スコープ復旧が必要。Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` で管理 |
 | Slack | CLI/MCP利用可否を確認 | Slack CLI未検出、送信先チャンネル未確定。Issue #2 / WBS `T636` で管理 |
 
 ## 6/2 後の実装候補

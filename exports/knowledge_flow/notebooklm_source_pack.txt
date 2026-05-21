@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-05-21 21:55:23 UTC+09:00
+Generated: 2026-05-21 22:12:11 UTC+09:00
 
 ## Purpose
 
@@ -10,13 +10,13 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 
 ## Current WBS Snapshot
 
-- Total tasks: 56
-- Done: 34
-- In progress: 2
-- Not started: 20
-- Completion rate: 61%
-- CEO presentation phase tasks: 41
-- CEO presentation phase done: 23
+- Total tasks: 61
+- Done: 35
+- In progress: 3
+- Not started: 23
+- Completion rate: 57%
+- CEO presentation phase tasks: 46
+- CEO presentation phase done: 24
 
 ## Knowledge Flow Tasks
 
@@ -44,6 +44,9 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 - T637: Obsidian実連携 / Obsidian vaultとして開ける設定ファイルを追加 / 完了 / 2026-05-21 - 2026-05-21
 - T638: 連携証跡台帳 / CLI/MCP連携の実行結果を社長説明用ドキュメントへ集約 / 完了 / 2026-05-21 - 2026-05-21
 - T640: 連携デモリハーサル / NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認 / 未着手 / 2026-05-22 - 2026-05-23
+- T642: NotebookLMプレゼン資料化 / NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化 / 完了 / 2026-05-21 - 2026-05-21
+- T643: NotebookLMスライド草案 / NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る / 未着手 / 2026-05-22 - 2026-05-23
+- T646: Slack送信権限確認 / Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする / 未着手 / 2026-05-24 - 2026-05-25
 
 ## Recommended NotebookLM Questions
 
@@ -81,6 +84,7 @@ python scripts/generate_knowledge_flow_demo.py
 ```
 
 CLI/MCPで実施した連携証跡は `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md` にまとめています。
+NotebookLMでプレゼン資料のたたき台を作るための入力資料は `exports/knowledge_flow/notebooklm_presentation_brief.md` に生成されます。
 
 ## Documents
 
@@ -126,7 +130,7 @@ CLI/MCPで実施した連携証跡は `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02
 | 決定後の受け皿 | 議事録、WBS差し替え、Calendar更新、Git反映、決定後ロードマップ枠 | T609, T612, T615 |
 | 開発ナレッジ連携 | NotebookLM、Slack、Notion、Obsidian を使った資料要約・通知・議事録・ローカル知識管理の候補整理 | T616, T617, T618, T619, T620, T621, T622, T623 |
 | 連携デモ成果物 | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vault、UI/API生成導線 | T624, T625, T626, T627, T628, T629, T630, T631 |
-| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641 |
+| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641, T642, T643, T644, T645, T646 |
 
 ## 関連ドキュメント
 
@@ -156,9 +160,10 @@ CLI/MCPで実施した連携証跡は `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02
 4. Google Sheets の `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` を見せる。
 5. Google Calendar の `Mighty Skill-Bridge 開発計画` を見せる。
 6. 画面の「開発ナレッジ連携デモ」で、NotebookLM/Slack/Notion/Obsidian成果物を見せる。
-7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#6 を開く。
-8. GitHub Projectは `read:project` スコープ復旧後に配置することを説明する。
-9. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
+7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#8 を開く。
+8. NotebookLM Presentation Brief を開き、プレゼン資料のたたき台作成はNotebookLMで進める方針を説明する。
+9. GitHub Projectは `read:project` / `project` スコープ復旧後に配置することを説明する。
+10. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
 
 ## 6/2で決める事項
 
@@ -233,11 +238,9 @@ python scripts/sync_wbs_to_calendar.py
 
 ## 2026-05-21 CLI/MCP連携証跡の追加
 
-- GitHub Issuesに `#1` から `#6` を起票し、NotebookLM、Slack、Notion、Obsidian、GitHub Project、WBS連携のタスクを見える化した。
+- GitHub Issuesに `#1` から `#8` を起票し、NotebookLM、Slack、Notion、Obsidian、GitHub Project、WBS連携、プレゼン資料化のタスクを見える化した。
 - Google Drive MCPで `exports/knowledge_flow/notebooklm_source_pack.txt` をGoogle Docsへ変換した。
-- Notion MCPで `Mighty Skill-Bridge CEO Demo Integration Evidence 2026-06-02` を作成した。
-- Obsidian vaultに `.obsidian` 設定を追加し、ローカルvaultとして開ける状態に寄せた。
-- GitHub Project
+- Google Drive MCPで `exports/knowle
 
 ## Source: docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md
 
@@ -273,7 +276,8 @@ python scripts/sync_wbs_to_calendar.py
 | 10 | 開発ナレッジ連携 | NotebookLM / Slack / Notion / Obsidian をどう使うか | T616, T617, T621, T623 |
 | 11 | 連携成果物デモ | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vaultを見せる | T624, T625, T626, T627, T628, T629, T630 |
 | 12 | CLI/MCP実連携証跡 | Google Drive、Notion、GitHub Issues、Project権限課題、Slack到達点を見せる | T632, T633, T634, T635, T636, T637, T638, T639 |
-| 13 | 社長への確認事項 | 決定してほしい項目、保留してよい項目、次回までの宿題 | T614, T615, T622, T631, T640, T641 |
+| 13 | NotebookLMプレゼン資料化 | NotebookLMでプレゼン草案を作る入力資料とプロンプトを見せる | T642, T643 |
+| 14 | 社長への確認事項 | 決定してほしい項目、保留してよい項目、次回までの宿題 | T614, T615, T622, T631, T640, T641, T644, T645, T646 |
 
 ## 判断マトリクス
 
@@ -303,6 +307,7 @@ python scripts/sync_wbs_to_calendar.py
 | 対象 | 生成物 | 説明 |
 | --- | --- | --- |
 | NotebookLM | `exports/knowledge_flow/notebooklm_source_pack.md` / `exports/knowledge_flow/notebooklm_source_pack.txt` | `docs/` とWBSをまとめた投入用資料。TXT版はGoogle Docs化済み。 |
+| NotebookLM | `exports/knowledge_flow/notebooklm_presentation_brief.md` / `exports/knowledge_flow/notebooklm_presentation_brief.txt` | プレゼン資料のたたき台をNotebookLMで作るための入力資料。 |
 | Slack | `exports/knowledge_flow/slack_ceo_update.md` | 社長レビュー前に投稿できる進捗共有文案。 |
 | Notion | `exports/knowledge_flow/notion_decision_log.csv` | 意思決定DBとして取り込めるCSV。 |
 | Notion | `exports/knowledge_flow/notion_backlog_import.csv` | WBS連携バックログとして取り込めるCSV。 |
@@ -316,10 +321,11 @@ python scripts/sync_wbs_to_calendar.py
 
 | 連携先 | 見せるもの | 補足 |
 | --- | --- | --- |
-| Google Drive / NotebookLM | https://docs.google.com/document/d/1J3spIzQTq5eZ2RGx6K_knt6I3c0GtPDMPhKfBGwnMvI | MarkdownはDrive変換対象外だったため、TXT版を生成してGoogle Docs化した。 |
+| Google Drive / NotebookLM | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU | MarkdownはDrive変換対象外だったため、TXT版を生成してGoogle Docs化した。 |
+| Google Drive / NotebookLM Presentation | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ | プレゼン構成・話す要点・想定QAをNotebookLMで作るためのブリーフ。 |
 | Notion | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 | 6/2社長デモ用の連携証跡ページ。 |
-| GitHub Issues | https://github.com/kanta13jp1/mighty-link-ai-connect/issues | Issue #1-#6で連携タスクを管理。 |
-| GitHub Project | Issue #5 / WBS `T633`, `T641` | `gh` tokenの `read:project` スコープ復旧後にProjectへ配置。 |
+| GitHub Issues | https://github.com/kanta13jp1/mighty-link-ai-connect/issues | Issue #1-#8で連携タスクを管理。 |
+| GitHub Project | Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` | `gh` tokenの `read:project` / `project` スコープ復旧後にProjectへ配置。 |
 | Slack | `exports/knowledge_flow/slack_ceo_update.md` | 送信先チャンネルと共有範囲を6/2に確認。 |
 
 ## 当日質問リスト
@@ -361,17 +367,7 @@ python scripts/sync_wbs_to_calendar.py
 
 ## デモ障害時の代替導線
 
-1. 公開URLが不安定な場合は、ローカル `python src/app.py` と `http://localhost:8000` で見せる。
-2. Google Sheets が開けない場合は、`data/WBS.tsv` と `docs/WBS.md` で構成を説明する。
-3. Calendar同期が見えない場合は、`exports/mighty_development_plan.ics` と同期ログで補足する。
-4. Gemini quota が残っていない場合は、deterministic fallback の構造化結果を見せ、Gemini復帰後の差し替え方針を説明する。
-
-## 当日前チェックコマンド
-
-```powershell
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
-gh issue list --state all --label ceo-demo
-python scripts/sync_wbs_t
+1. 公開URLが不安定な場合は、ローカル `pyth
 
 ## Source: docs/DEVELOPMENT_KNOWLEDGE_FLOW.md
 
@@ -463,6 +459,7 @@ GET  /api/knowledge-flow/status
 | 成果物 | パス | 見せ方 |
 | --- | --- | --- |
 | NotebookLM投入資料 | `exports/knowledge_flow/notebooklm_source_pack.md` / `exports/knowledge_flow/notebooklm_source_pack.txt` | TXT版をGoogle Docsへ変換し、NotebookLM source候補として見せる |
+| NotebookLMプレゼンブリーフ | `exports/knowledge_flow/notebooklm_presentation_brief.md` / `exports/knowledge_flow/notebooklm_presentation_brief.txt` | NotebookLMで8枚以内の社長向けプレゼン構成・話す要点・想定QAを作る入力資料として使う |
 | Slack投稿案 | `exports/knowledge_flow/slack_ceo_update.md` | 投稿前レビュー用の進捗共有文として見せる |
 | Notion意思決定DB | `exports/knowledge_flow/notion_decision_log.csv` | Notion DBへCSV importする候補として見せる |
 | Notionバックログ | `exports/knowledge_flow/notion_backlog_import.csv` | WBS連携バックログのimport候補として見せる |
@@ -476,10 +473,11 @@ GET  /api/knowledge-flow/status
 
 | 対象 | 実施内容 | URL/結果 |
 | --- | --- | --- |
-| Google Drive / NotebookLM | `notebooklm_source_pack.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/1J3spIzQTq5eZ2RGx6K_knt6I3c0GtPDMPhKfBGwnMvI |
+| Google Drive / NotebookLM | `notebooklm_source_pack.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU |
+| Google Drive / NotebookLM Presentation | `notebooklm_presentation_brief.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ |
 | Notion | 連携証跡ページをNotion MCPで作成 | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 |
-| GitHub Issues | CEOデモ向け連携タスクを6件起票 | https://github.com/kanta13jp1/mighty-link-ai-connect/issues |
-| GitHub Project | `gh project list` でスコープ不足を確認 | `read:project` が不足。Issue #5 / WBS `T633`, `T641` で管理 |
+| GitHub Issues | CEOデモ向け連携タスクを8件起票 | https://github.com/kanta13jp1/mighty-link-ai-connect/issues |
+| GitHub Project | `gh project list` と `gh auth refresh` を再試行 | `read:project` / `project` スコープ復旧が必要。Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` で管理 |
 | Slack | CLI/MCP利用可否を確認 | Slack CLI未検出、送信先チャンネル未確定。Issue #2 / WBS `T636` で管理 |
 
 ## 6/2 後の実装候補
@@ -496,7 +494,101 @@ GET  /api/knowledge-flow/status
 - `client_secret.json`, `credentials.json`, `authorized_user.json` はどの外部ツールにも貼り付けない。
 - 個人情報を含む経歴書・案件票は、社長確認前に外部ナレッジツールへ投入しない。
 - Slack / Notion に投稿する場合は、要約・タスクID・公開URL・同期結果に絞る。
-- Obsidian はローカル保管を前提にし、Git 管理する場合は秘密情報が含まれていないか確認する。
+- Obsidian はローカル保管を前提にし、Git
+
+## Source: docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md
+
+# 6/2 社長デモ向け 連携実施証跡
+
+作成日: 2026-05-21
+
+## 目的
+
+6/2 の社長打ち合わせで「実際にやった状態」を見せるため、NotebookLM、Slack、Notion、Obsidian、GitHub Issues、GitHub Project の連携状況を証跡として残す。
+
+実際の企画・サービス内容は 6/2 に決定するため、本資料では開発フローとタスク管理の実装・確認結果だけを扱う。
+
+## 実施済み
+
+| 項目 | 実施内容 | 証跡 |
+| --- | --- | --- |
+| GitHub Issues | CEOデモ向け連携タスクを8件起票 | [#1](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/1), [#2](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/2), [#3](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/3), [#4](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/4), [#5](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/5), [#6](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/6), [#7](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/7), [#8](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/8) |
+| NotebookLM / Google Drive | `notebooklm_source_pack.txt` をGoogle Driveへアップロードし、Google Docsへ変換 | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU |
+| NotebookLM / プレゼン作成 | `notebooklm_presentation_brief.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ |
+| Notion | Notion MCPで連携証跡ページを作成 | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 |
+| Obsidian | `exports/knowledge_flow/obsidian_vault/` にvault雛形と `.obsidian` 設定を追加 | `exports/knowledge_flow/obsidian_vault/Mighty Skill-Bridge Home.md` |
+| Slack | 投稿案を生成し、CLI/MCP利用可否を確認 | `exports/knowledge_flow/slack_ceo_update.md` |
+
+## CLI / MCP 実行結果
+
+| 操作 | コマンド/ツール | 結果 |
+| --- | --- | --- |
+| GitHub Issue起票 | `gh issue create` | Issue #1 から #8 を作成 |
+| NotebookLMプレゼン導線 | Google Drive MCP `_import_document` | Presentation Brief をGoogle Docsへ変換し、Issue #7を起票 |
+| GitHub Project確認 | `gh project list --owner kanta13jp1 --format json` | `read:project` スコープ不足で停止 |
+| GitHub Project認証再試行 | `gh auth refresh -h github.com -s read:project -s project` | 2分でタイムアウト。Issue #8として手動認証待ちに分離 |
+| Google Drive連携 | Google Drive MCP `_import_document` | TXT source pack をGoogle Docsへ変換 |
+| Notion連携 | Notion MCP `_notion_create_pages` | GitHub配下のNotionページとして証跡を作成 |
+| Slack CLI確認 | `Get-Command slack` | ローカルCLIは未検出 |
+
+## GitHub Project の現状
+
+GitHub Project は、現在の `gh` 認証トークンに `read:project` スコープが不足しているため、CLIからProject一覧取得・カード配置ができない。
+
+復旧手順:
+
+```powershell
+gh auth refresh -s read:project
+gh project list --owner kanta13jp1 --format json
+```
+
+復旧後は Issue #1 から #8 を CEO Demo 用Projectへ配置する。正式対応は WBS `T641`, `T644`, `T645` と GitHub Issue #5 / #8 で管理する。
+
+## Slack の現状
+
+このCodexセッションではSlack送信用MCPツールが露出しておらず、ローカルのSlack CLIも検出されなかった。
+
+6/2までの扱い:
+
+- 投稿案は `exports/knowledge_flow/slack_ceo_update.md` に生成済み。
+- 投稿先チャンネル、共有範囲、社長宛の通知有無は 6/2 の確認事項にする。
+- 正式連携は、Slack connector またはWebhookの権限が整ってから WBSへ昇格する。
+
+## WBS 反映
+
+本作業は `data/WBS.tsv` に `T632` から `T641` として追加した。
+
+- `T632`: GitHub Issues連携
+- `T633`: GitHub Project連携
+- `T634`: NotebookLM実連携
+- `T635`: Notion実連携
+- `T636`: Slack連携確認
+- `T637`: Obsidian実連携
+- `T638`: 連携証跡台帳
+- `T639`: Issue-WBS運用
+- `T640`: 連携デモリハーサル
+- `T641`: Project正式ボード化
+- `T642`: NotebookLMプレゼン資料化
+- `T643`: NotebookLMスライド草案
+- `T644`: Project OAuth復旧
+- `T645`: Project Issue配置
+- `T646`: Slack送信権限確認
+
+同期結果:
+
+- Google Sheets: `62 source rows` / `74 hierarchical WBS display rows`
+- Google Calendar: `Success: 17, Updated: 15, Failed: 0`
+- 新規Calendarイベント: `CLI/MCP連携証跡レビュー`, `GitHub Project権限復旧チェック`, `NotebookLMプレゼン草案作成`, `Slack投稿先・送信権限確認`
+
+## 社長への見せ方
+
+1. 公開デモURLを開く。
+2. 「開発ナレッジ連携デモ」セクションを見せる。
+3. Google Docs化したNotebookLM source packを開く。
+4. Notion証跡ページを開く。
+5. GitHub Issues #1-#6 を見せ、Projectは権限復旧待ちとして説明する。
+6. Obsidian vaultの `Mighty Skill-Bridge Home.md` を開く。
+7. Slack投稿案を見せ、チャンネルと共有範囲の判断を依頼する。
 
 ## Source: docs/BACKEND_AI_PIPELINE.md
 
@@ -852,12 +944,10 @@ python scripts/generate_knowledge_flow_demo.py
 
 - `exports/knowledge_flow/notebooklm_source_pack.md`
 - `exports/knowledge_flow/notebooklm_source_pack.txt`
+- `exports/knowledge_flow/notebooklm_presentation_brief.md`
+- `exports/knowledge_flow/notebooklm_presentation_brief.txt`
 - `exports/knowledge_flow/slack_ceo_update.md`
 - `exports/knowledge_flow/notion_decision_log.csv`
 - `exports/knowledge_flow/notion_backlog_import.csv`
 - `exports/knowledge_flow/integration_evidence.md`
-- `exports/knowledge_flow/obsidian_vault/`
-
-CLI/MCPで実施した連携証跡:
-
-- Google Docs化したNotebookLM source pack: `https://docs.google.com/document/d/1J3spIzQTq5eZ2
+- `exports/knowledge_flow/obsidi

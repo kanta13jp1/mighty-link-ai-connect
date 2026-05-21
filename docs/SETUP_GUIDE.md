@@ -163,6 +163,8 @@ python scripts/generate_knowledge_flow_demo.py
 
 - `exports/knowledge_flow/notebooklm_source_pack.md`
 - `exports/knowledge_flow/notebooklm_source_pack.txt`
+- `exports/knowledge_flow/notebooklm_presentation_brief.md`
+- `exports/knowledge_flow/notebooklm_presentation_brief.txt`
 - `exports/knowledge_flow/slack_ceo_update.md`
 - `exports/knowledge_flow/notion_decision_log.csv`
 - `exports/knowledge_flow/notion_backlog_import.csv`
@@ -171,10 +173,11 @@ python scripts/generate_knowledge_flow_demo.py
 
 CLI/MCPで実施した連携証跡:
 
-- Google Docs化したNotebookLM source pack: `https://docs.google.com/document/d/1J3spIzQTq5eZ2RGx6K_knt6I3c0GtPDMPhKfBGwnMvI`
+- Google Docs化したNotebookLM source pack: `https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU`
+- Google Docs化したNotebookLM presentation brief: `https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ`
 - Notion証跡ページ: `https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951`
 - GitHub Issues: `https://github.com/kanta13jp1/mighty-link-ai-connect/issues`
-- GitHub Projectは `gh auth refresh -s read:project` 後に正式連携する。
+- GitHub Projectは `gh auth refresh -h github.com -s read:project -s project` 後に正式連携する。
 - Slackは投稿先チャンネルと共有範囲を確認してから送信連携する。
 
 FastAPI 起動中は、画面の「開発ナレッジ連携デモ」からも生成できます。

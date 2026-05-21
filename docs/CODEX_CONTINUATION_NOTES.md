@@ -288,7 +288,7 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 
 連携URL:
 
-- Google Docs: https://docs.google.com/document/d/1J3spIzQTq5eZ2RGx6K_knt6I3c0GtPDMPhKfBGwnMvI
+- Google Docs: https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU
 - Notion: https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951
 - GitHub Issues: https://github.com/kanta13jp1/mighty-link-ai-connect/issues
 
@@ -306,3 +306,34 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 - `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
 - Google Sheets へ `57 source rows` / `69 hierarchical WBS display rows` を同期済み。
 - Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 15, Updated: 13, Failed: 0`。
+
+## 2026-05-21 作業ログ: NotebookLMプレゼン資料化とProject認証再試行
+
+プレゼン用資料作成はNotebookLMで進める方針に合わせ、Source Packとは別にPresentation Briefを生成し、Google Docs化した。
+
+実施内容:
+
+- `scripts/generate_knowledge_flow_demo.py` に `notebooklm_presentation_brief.md` / `.txt` 生成を追加。
+- Google Drive MCPで `exports/knowledge_flow/notebooklm_presentation_brief.txt` をGoogle Docsへ変換。
+- Presentation Brief URL: https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ
+- GitHub Issue #7 `NotebookLMでプレゼン資料たたき台を作成する` を起票。
+- `gh auth refresh -h github.com -s read:project -s project` を再試行したが、2分でタイムアウト。
+- GitHub Issue #8 `GitHub Project OAuthスコープ復旧を完了する` を起票。
+- Notion証跡ページにPresentation BriefとIssue #7/#8の追加コメントを残した。
+- WBSに `T642` から `T646` を追加した。
+
+残タスク:
+
+- NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のスライド構成、話す要点、想定QAを生成する。
+- ユーザー側でGitHub OAuthブラウザ認証を完了し、Project boardへIssue #1-#8を配置する。
+- Slack投稿先チャンネルとconnector/CLI送信権限を確認する。
+
+同期・検証:
+
+- `data/WBS.tsv` は `61` タスク、全行 `10` 列であることを確認。
+- `python -m compileall src scripts` 成功。
+- FastAPI TestClient で `/api/health`, `/api/knowledge-flow/status`, `/api/knowledge-flow/generate` が `200` を返すことを確認。
+- `python scripts/verify_public_demo.py` 成功。
+- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
+- Google Sheets へ `62 source rows` / `74 hierarchical WBS display rows` を同期済み。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 17, Updated: 15, Failed: 0`。

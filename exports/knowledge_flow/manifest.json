@@ -1,19 +1,21 @@
 {
-  "generated_at_jst": "2026-05-21T21:55:23+09:00",
+  "generated_at_jst": "2026-05-21T22:12:11+09:00",
   "summary": {
-    "total": 56,
-    "done": 34,
-    "active": 2,
-    "todo": 20,
-    "completion_rate": 61,
-    "phase6_total": 41,
-    "phase6_done": 23,
-    "phase6_active": 2,
-    "phase6_todo": 16
+    "total": 61,
+    "done": 35,
+    "active": 3,
+    "todo": 23,
+    "completion_rate": 57,
+    "phase6_total": 46,
+    "phase6_done": 24,
+    "phase6_active": 3,
+    "phase6_todo": 19
   },
   "artifacts": [
     "exports/knowledge_flow/notebooklm_source_pack.md",
     "exports/knowledge_flow/notebooklm_source_pack.txt",
+    "exports/knowledge_flow/notebooklm_presentation_brief.md",
+    "exports/knowledge_flow/notebooklm_presentation_brief.txt",
     "exports/knowledge_flow/slack_ceo_update.md",
     "exports/knowledge_flow/notion_decision_log.csv",
     "exports/knowledge_flow/notion_backlog_import.csv",
