@@ -175,8 +175,9 @@ python scripts/generate_knowledge_flow_demo.py
 
 CLI/MCPで実施した連携証跡:
 
-- Google Docs化したNotebookLM source pack: `https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU`
-- Google Docs化したNotebookLM presentation brief: `https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ`
+- Google Docs化したNotebookLM source pack: `https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit`
+- Google Docs化したNotebookLM presentation brief: `https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit`
+- Google Docsは `python scripts/upload_notebooklm_docs_to_drive.py` で作成・更新し、`authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づくことを検証してからDrive APIへアップロードする。
 - Notion証跡ページ: `https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951`
 - GitHub Issues: `https://github.com/kanta13jp1/mighty-link-ai-connect/issues`
 - GitHub Projectは `gh auth refresh -h github.com -s read:project -s project` 後に正式連携する。

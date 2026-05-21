@@ -288,7 +288,7 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 
 連携URL:
 
-- Google Docs: https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU
+- Google Docs: https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit
 - Notion: https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951
 - GitHub Issues: https://github.com/kanta13jp1/mighty-link-ai-connect/issues
 
@@ -315,7 +315,7 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 
 - `scripts/generate_knowledge_flow_demo.py` に `notebooklm_presentation_brief.md` / `.txt` 生成を追加。
 - Google Drive MCPで `exports/knowledge_flow/notebooklm_presentation_brief.txt` をGoogle Docsへ変換。
-- Presentation Brief URL: https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ
+- Presentation Brief URL: https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit
 - GitHub Issue #7 `NotebookLMでプレゼン資料たたき台を作成する` を起票。
 - `gh auth refresh -h github.com -s read:project -s project` を再試行したが、2分でタイムアウト。
 - GitHub Issue #8 `GitHub Project OAuthスコープ復旧を完了する` を起票。
@@ -359,3 +359,31 @@ Google連携が必ず `k-umezawa@ml-mightylink.com` で実行されるよう、O
 - Google Sheets へ `63 source rows` / `75 hierarchical WBS display rows` を同期済み。
 - Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 18, Updated: 17, Failed: 0`。
 - `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
+
+## 2026-05-22 作業ログ: Workspace Google Docs再作成
+
+Google DocsホームでNotebookLM用資料が `k-umezawa@ml-mightylink.com` 側に表示されない問題に対応した。
+
+実施内容:
+
+- `scripts/upload_notebooklm_docs_to_drive.py` を追加し、Google Drive MCPではなく `authorized_user.json` のLocal OAuth Drive APIでGoogle Docsを作成/更新する導線にした。
+- 実行前に `src/google_workspace_account.py` のガードで `k-umezawa@ml-mightylink.com` を検証するようにした。
+- `exports/knowledge_flow/notebooklm_source_pack.txt` と `exports/knowledge_flow/notebooklm_presentation_brief.txt` をWorkspace所有のネイティブGoogle Docsへ変換した。
+- Drive APIレスポンスのownerが `k-umezawa@ml-mightylink.com` であることを確認し、`exports/knowledge_flow/google_drive_workspace_docs.json` に保存した。
+- WBSに `T648` を追加し、T634/T642の実行エンジンをLocal OAuth Drive APIへ修正した。
+- 手順書と証跡ドキュメントのGoogle Docs URLをWorkspace所有Docへ差し替えた。
+
+Workspace Google Docs:
+
+- Source Pack: https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit
+- Presentation Brief: https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit
+
+同期・検証:
+
+- `python scripts/verify_google_workspace_account.py` 成功。
+- `python scripts/upload_notebooklm_docs_to_drive.py` 成功。
+- Google Sheets へ `64 source rows` / `76 hierarchical WBS display rows` を同期済み。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 19, Updated: 18, Failed: 0`。
+- `python -m compileall src scripts` 成功。
+- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
+- 旧Google Docs IDは `docs/`, `data/`, `exports/`, `scripts/` から除去済み。

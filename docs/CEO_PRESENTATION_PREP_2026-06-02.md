@@ -136,8 +136,8 @@ python scripts/sync_wbs_to_calendar.py
 ## 2026-05-21 CLI/MCP連携証跡の追加
 
 - GitHub Issuesに `#1` から `#8` を起票し、NotebookLM、Slack、Notion、Obsidian、GitHub Project、WBS連携、プレゼン資料化のタスクを見える化した。
-- Google Drive MCPで `exports/knowledge_flow/notebooklm_source_pack.txt` をGoogle Docsへ変換した。
-- Google Drive MCPで `exports/knowledge_flow/notebooklm_presentation_brief.txt` をGoogle Docsへ変換し、NotebookLMでプレゼン資料を作る入力資料を追加した。
+- Google Drive MCPで `exports/knowledge_flow/notebooklm_source_pack.txt` をGoogle Docsへ変換した。2026-05-22にLocal OAuth Drive APIでWorkspace所有Docへ再作成した。
+- Google Drive MCPで `exports/knowledge_flow/notebooklm_presentation_brief.txt` をGoogle Docsへ変換し、NotebookLMでプレゼン資料を作る入力資料を追加した。2026-05-22にLocal OAuth Drive APIでWorkspace所有Docへ再作成した。
 - Notion MCPで `Mighty Skill-Bridge CEO Demo Integration Evidence 2026-06-02` を作成した。
 - Obsidian vaultに `.obsidian` 設定を追加し、ローカルvaultとして開ける状態に寄せた。
 - GitHub Projectは `gh project list` 実行時に `read:project` スコープ不足が判明したため、`T633`, `T641`, Issue #5 で権限復旧タスクとして管理する。
@@ -147,7 +147,16 @@ python scripts/sync_wbs_to_calendar.py
 ## 2026-05-21 NotebookLMプレゼン資料化の追加
 
 - `exports/knowledge_flow/notebooklm_presentation_brief.md` と `.txt` を生成対象に追加した。
-- Google Docs化したNotebookLM Presentation Brief: `https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ`
+- Google Docs化したNotebookLM Presentation Brief: `https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit`
 - GitHub Issue #7 を起票し、NotebookLMで8枚以内のプレゼン構成・話す要点・想定QAを作るタスクにした。
 - GitHub Project OAuth再試行は2分でタイムアウトしたため、Issue #8 と WBS `T644`, `T645` に分離した。
 - WBSに `T642` から `T646` を追加した。
+
+## 2026-05-22 Workspace Google Docs再作成
+
+- Google DocsホームでNotebookLM用資料が見えない状態を解消するため、Google Drive MCPではなく `authorized_user.json` のLocal OAuth Drive APIでGoogle Docsを再作成した。
+- 実行アカウントは `python scripts/verify_google_workspace_account.py` で `k-umezawa@ml-mightylink.com` と確認した。
+- Source Pack: `https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit`
+- Presentation Brief: `https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit`
+- Drive APIレスポンスのownerは `k-umezawa@ml-mightylink.com`。証跡は `exports/knowledge_flow/google_drive_workspace_docs.json` に保存した。
+- WBSに `T648` を追加し、Sheets/Calendar同期対象にした。

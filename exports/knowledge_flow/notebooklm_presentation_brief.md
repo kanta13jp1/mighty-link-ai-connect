@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-05-21 22:23:35 UTC+09:00
+Generated: 2026-05-22 00:32:17 UTC+09:00
 
 ## How to use this in NotebookLM
 
@@ -34,17 +34,16 @@ and which development knowledge-flow tools should become official.
 
 ## WBS Snapshot
 
-- Total tasks: 62
-- Done: 36
+- Total tasks: 63
+- Done: 37
 - In progress: 3
 - Not started: 23
-- Completion rate: 58%
-- CEO presentation phase tasks: 47
-- CEO presentation phase done: 25
+- Completion rate: 59%
+- CEO presentation phase tasks: 48
+- CEO presentation phase done: 26
 
 ## Latest Knowledge-flow / CEO-demo Tasks
 
-- T619: Notion連携 / 仕様・議事録・意思決定DB・バックログ管理のNotion運用設計 / 未着手
 - T620: Obsidian連携 / ローカルナレッジ・ADR・プロンプト資産のObsidian運用設計 / 未着手
 - T621: 連携デモ導線 / 4ツール連携を社長へ見せる説明順・画面遷移・価値訴求整理 / 完了
 - T622: 権限・情報管理 / NotebookLM/Slack/Notion/Obsidian利用時の権限・機密情報ルール整理 / 未着手
@@ -68,6 +67,7 @@ and which development knowledge-flow tools should become official.
 - T642: NotebookLMプレゼン資料化 / NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化 / 完了
 - T643: NotebookLMスライド草案 / NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る / 未着手
 - T646: Slack送信権限確認 / Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする / 未着手
+- T648: Workspace Google Docs再作成 / NotebookLM用Google Docsをk-umezawa@ml-mightylink.com所有で再作成 / 完了
 
 ## Recommended Slide Story
 

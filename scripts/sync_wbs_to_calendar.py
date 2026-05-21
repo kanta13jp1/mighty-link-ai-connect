@@ -177,6 +177,13 @@ SCHEDULE_EVENTS = [
         "is_all_day": True
     },
     {
+        "summary": "【Mighty Skill-Bridge】Workspace Google Docs再作成確認",
+        "description": "NotebookLM用Source PackとPresentation BriefをLocal OAuth Drive APIでk-umezawa@ml-mightylink.com所有のGoogle Docsとして再作成し、Google Docsホームに表示される状態を確認します。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-05-23",
+        "is_all_day": True
+    },
+    {
         "summary": "【Mighty Skill-Bridge】社長プレゼン最終リハーサル",
         "description": "公開URL、ローカルAPI、Google Sheets WBS、Calendar同期、説明資料、想定QA、バックアップ手順を最終確認します。",
         "start_time": "2026-06-01T16:00:00",

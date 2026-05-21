@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-05-21 22:23:35 UTC+09:00
+Generated: 2026-05-22 00:32:17 UTC+09:00
 
 ## Purpose
 
@@ -10,13 +10,13 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 
 ## Current WBS Snapshot
 
-- Total tasks: 62
-- Done: 36
+- Total tasks: 63
+- Done: 37
 - In progress: 3
 - Not started: 23
-- Completion rate: 58%
-- CEO presentation phase tasks: 47
-- CEO presentation phase done: 25
+- Completion rate: 59%
+- CEO presentation phase tasks: 48
+- CEO presentation phase done: 26
 
 ## Knowledge Flow Tasks
 
@@ -47,6 +47,7 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 - T642: NotebookLMプレゼン資料化 / NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化 / 完了 / 2026-05-21 - 2026-05-21
 - T643: NotebookLMスライド草案 / NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る / 未着手 / 2026-05-22 - 2026-05-23
 - T646: Slack送信権限確認 / Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする / 未着手 / 2026-05-24 - 2026-05-25
+- T648: Workspace Google Docs再作成 / NotebookLM用Google Docsをk-umezawa@ml-mightylink.com所有で再作成 / 完了 / 2026-05-22 - 2026-05-22
 
 ## Recommended NotebookLM Questions
 
@@ -245,8 +246,7 @@ python scripts/sync_wbs_to_calendar.py
 ## 2026-05-21 CLI/MCP連携証跡の追加
 
 - GitHub Issuesに `#1` から `#8` を起票し、NotebookLM、Slack、Notion、Obsidian、GitHub Project、WBS連携、プレゼン資料化のタスクを見える化した。
-- Google Drive MCPで `exports/knowledge_flow/notebooklm_source_pack.txt` をGoogle Docsへ変換した。
-- Google Drive MCPで `exports/knowle
+- Google Drive MCPで `exports/knowledge_flow/notebooklm_source_pack.txt` をGoogle Docsへ変換した。2026-05-22にLocal OAuth Drive APIでWor
 
 ## Source: docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md
 
@@ -327,8 +327,8 @@ python scripts/sync_wbs_to_calendar.py
 
 | 連携先 | 見せるもの | 補足 |
 | --- | --- | --- |
-| Google Drive / NotebookLM | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU | MarkdownはDrive変換対象外だったため、TXT版を生成してGoogle Docs化した。 |
-| Google Drive / NotebookLM Presentation | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ | プレゼン構成・話す要点・想定QAをNotebookLMで作るためのブリーフ。 |
+| Google Drive / NotebookLM | https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit | Local OAuth Drive APIでTXT版をGoogle Docs化し、所有者が `k-umezawa@ml-mightylink.com` であることを確認した。 |
+| Google Drive / NotebookLM Presentation | https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit | プレゼン構成・話す要点・想定QAをNotebookLMで作るためのブリーフ。Local OAuth Drive APIでWorkspace側へ再作成済み。 |
 | Notion | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 | 6/2社長デモ用の連携証跡ページ。 |
 | GitHub Issues | https://github.com/kanta13jp1/mighty-link-ai-connect/issues | Issue #1-#8で連携タスクを管理。 |
 | GitHub Project | Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` | `gh` tokenの `read:project` / `project` スコープ復旧後にProjectへ配置。 |
@@ -363,17 +363,7 @@ python scripts/sync_wbs_to_calendar.py
 
 3. 次アクション
 - WBS追加/変更:
-- Calendar追加/変更:
-- Git更新:
-- 社長共有資料:
-
-4. 6/2以降の作業メモ
-- 
-```
-
-## デモ障害時の代替導線
-
-1. 公開URLが不安定な場合は、ローカル `pyth
+- Calendar追加/変
 
 ## Source: docs/DEVELOPMENT_KNOWLEDGE_FLOW.md
 
@@ -479,34 +469,29 @@ GET  /api/knowledge-flow/status
 
 | 対象 | 実施内容 | URL/結果 |
 | --- | --- | --- |
-| Google Drive / NotebookLM | `notebooklm_source_pack.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU |
-| Google Drive / NotebookLM Presentation | `notebooklm_presentation_brief.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ |
+| Google Drive / NotebookLM | `notebooklm_source_pack.txt` をLocal OAuth Drive APIでGoogle Docsへ変換 | https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit |
+| Google Drive / NotebookLM Presentation | `notebooklm_presentation_brief.txt` をLocal OAuth Drive APIでGoogle Docsへ変換 | https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit |
 | Notion | 連携証跡ページをNotion MCPで作成 | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 |
 | GitHub Issues | CEOデモ向け連携タスクを8件起票 | https://github.com/kanta13jp1/mighty-link-ai-connect/issues |
 | GitHub Project | `gh project list` と `gh auth refresh` を再試行 | `read:project` / `project` スコープ復旧が必要。Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` で管理 |
 | Slack | CLI/MCP利用可否を確認 | Slack CLI未検出、送信先チャンネル未確定。Issue #2 / WBS `T636` で管理 |
 
-## 6/2 後の実装候補
+## 2026-05-22 Workspace OAuth Google Docs 再作成
 
-| 候補 | 内容 | 初期実装イメージ |
-| --- | --- | --- |
-| Slack通知 | WBS同期完了、GitHub Actions結果、デモURL検証結果を通知 | 手動テンプレートから開始し、必要ならWebhook化 |
-| Notion DB | 決定事項、保留事項、次アクション、WBS参照IDを管理 | 6/2議事録を元にDB設計 |
-| NotebookLM資料パック | README、WBS、判断材料パック、AI pipeline資料を投入 | 社長説明前のQA生成に活用 |
-| Obsidian vault | ADR、プロンプト、検証メモをローカルに蓄積 | 公式化する内容だけ `docs/` へ昇格 |
+Google Docsホームで資料が見えない問題に対応するため、Google Drive MCPではなく `authorized_user.json` のLocal OAuth Drive APIを使ってNotebookLM用Google Docsを再作成した。
 
-## セキュリティルール
-
-- `client_secret.json`, `credentials.json`, `authorized_user.json` はどの外部ツールにも貼り付けない。
-- 個人情報を含む経歴書・案件票は、社長確認前に外部ナレッジツールへ投入しない。
-- Slack / Notion に投稿する場合は、要約・タスクID・公開URL・同期結果に絞る。
-- Obsidian はローカル保管を前提にし、Git
+- 実行アカウント: `k-umezawa@ml-mightylink.com`
+- 検証コマンド: `python scripts/verify_google_workspace_account.py`
+- 再作成コマンド: `python scripts/upload_notebooklm_docs_to_drive.py`
+- Source Pack: https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit
+- Presentation Brief: https://docs.google.com/document/d/1T
 
 ## Source: docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md
 
 # 6/2 社長デモ向け 連携実施証跡
 
 作成日: 2026-05-21
+更新日: 2026-05-22
 
 ## 目的
 
@@ -519,8 +504,8 @@ GET  /api/knowledge-flow/status
 | 項目 | 実施内容 | 証跡 |
 | --- | --- | --- |
 | GitHub Issues | CEOデモ向け連携タスクを8件起票 | [#1](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/1), [#2](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/2), [#3](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/3), [#4](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/4), [#5](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/5), [#6](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/6), [#7](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/7), [#8](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/8) |
-| NotebookLM / Google Drive | `notebooklm_source_pack.txt` をGoogle Driveへアップロードし、Google Docsへ変換 | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU |
-| NotebookLM / プレゼン作成 | `notebooklm_presentation_brief.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ |
+| NotebookLM / Google Drive | `notebooklm_source_pack.txt` をLocal OAuth Drive APIでGoogle Docsへ変換 | https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit |
+| NotebookLM / プレゼン作成 | `notebooklm_presentation_brief.txt` をLocal OAuth Drive APIでGoogle Docsへ変換 | https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit |
 | Notion | Notion MCPで連携証跡ページを作成 | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 |
 | Obsidian | `exports/knowledge_flow/obsidian_vault/` にvault雛形と `.obsidian` 設定を追加 | `exports/knowledge_flow/obsidian_vault/Mighty Skill-Bridge Home.md` |
 | Slack | 投稿案を生成し、CLI/MCP利用可否を確認 | `exports/knowledge_flow/slack_ceo_update.md` |
@@ -531,13 +516,22 @@ GET  /api/knowledge-flow/status
 | 操作 | コマンド/ツール | 結果 |
 | --- | --- | --- |
 | GitHub Issue起票 | `gh issue create` | Issue #1 から #8 を作成 |
-| NotebookLMプレゼン導線 | Google Drive MCP `_import_document` | Presentation Brief をGoogle Docsへ変換し、Issue #7を起票 |
+| NotebookLMプレゼン導線 | `python scripts/upload_notebooklm_docs_to_drive.py` | Presentation Brief を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ変換し直した |
 | GitHub Project確認 | `gh project list --owner kanta13jp1 --format json` | `read:project` スコープ不足で停止 |
 | GitHub Project認証再試行 | `gh auth refresh -h github.com -s read:project -s project` | 2分でタイムアウト。Issue #8として手動認証待ちに分離 |
-| Google Drive連携 | Google Drive MCP `_import_document` | TXT source pack をGoogle Docsへ変換 |
+| Google Drive連携 | `python scripts/upload_notebooklm_docs_to_drive.py` | TXT source pack を `authorized_user.json` 経由でGoogle Docsへ変換し、ownerが `k-umezawa@ml-mightylink.com` であることを確認 |
 | Notion連携 | Notion MCP `_notion_create_pages` | GitHub配下のNotionページとして証跡を作成 |
 | Slack CLI確認 | `Get-Command slack` | ローカルCLIは未検出 |
 | Google Workspaceアカウント確認 | `python scripts/verify_google_workspace_account.py` | `authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づいていることを確認 |
+
+## 2026-05-22 Google Docsアカウント修正
+
+Google DocsホームでNotebookLM用資料が表示されない問題があったため、Codex/Google Drive MCPで作成した旧Docsではなく、ローカルOAuth `authorized_user.json` を使うDrive APIアップロードへ切り替えた。
+
+- Source Pack: https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit
+- Presentation Brief: https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit
+- owner: `k-umezawa@ml-mightylink.com`
+- 証跡JSON: `exports/knowledge_flow/google_drive_workspace_docs.json`
 
 ## GitHub Project の現状
 

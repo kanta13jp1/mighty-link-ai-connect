@@ -100,12 +100,25 @@ GET  /api/knowledge-flow/status
 
 | 対象 | 実施内容 | URL/結果 |
 | --- | --- | --- |
-| Google Drive / NotebookLM | `notebooklm_source_pack.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU |
-| Google Drive / NotebookLM Presentation | `notebooklm_presentation_brief.txt` をGoogle Docsへ変換 | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ |
+| Google Drive / NotebookLM | `notebooklm_source_pack.txt` をLocal OAuth Drive APIでGoogle Docsへ変換 | https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit |
+| Google Drive / NotebookLM Presentation | `notebooklm_presentation_brief.txt` をLocal OAuth Drive APIでGoogle Docsへ変換 | https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit |
 | Notion | 連携証跡ページをNotion MCPで作成 | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 |
 | GitHub Issues | CEOデモ向け連携タスクを8件起票 | https://github.com/kanta13jp1/mighty-link-ai-connect/issues |
 | GitHub Project | `gh project list` と `gh auth refresh` を再試行 | `read:project` / `project` スコープ復旧が必要。Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` で管理 |
 | Slack | CLI/MCP利用可否を確認 | Slack CLI未検出、送信先チャンネル未確定。Issue #2 / WBS `T636` で管理 |
+
+## 2026-05-22 Workspace OAuth Google Docs 再作成
+
+Google Docsホームで資料が見えない問題に対応するため、Google Drive MCPではなく `authorized_user.json` のLocal OAuth Drive APIを使ってNotebookLM用Google Docsを再作成した。
+
+- 実行アカウント: `k-umezawa@ml-mightylink.com`
+- 検証コマンド: `python scripts/verify_google_workspace_account.py`
+- 再作成コマンド: `python scripts/upload_notebooklm_docs_to_drive.py`
+- Source Pack: https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit
+- Presentation Brief: https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit
+- メタデータ: `exports/knowledge_flow/google_drive_workspace_docs.json`
+
+以後、NotebookLM投入用のGoogle DocsはMCPコネクタではなく、Workspace OAuth検証済みのLocal Drive APIで作成・更新する。
 
 ## 6/2 後の実装候補
 

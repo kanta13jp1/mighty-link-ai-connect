@@ -75,8 +75,8 @@
 
 | 連携先 | 見せるもの | 補足 |
 | --- | --- | --- |
-| Google Drive / NotebookLM | https://docs.google.com/document/d/116S6NfHAt8o7Hr2BjmBXMYaEjWYJmHFh8NiMeWPDOTU | MarkdownはDrive変換対象外だったため、TXT版を生成してGoogle Docs化した。 |
-| Google Drive / NotebookLM Presentation | https://docs.google.com/document/d/1j_56KN8r_0P1jzJyPE3qVEpuu0O7wwV5O68XRORPoiQ | プレゼン構成・話す要点・想定QAをNotebookLMで作るためのブリーフ。 |
+| Google Drive / NotebookLM | https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit | Local OAuth Drive APIでTXT版をGoogle Docs化し、所有者が `k-umezawa@ml-mightylink.com` であることを確認した。 |
+| Google Drive / NotebookLM Presentation | https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit | プレゼン構成・話す要点・想定QAをNotebookLMで作るためのブリーフ。Local OAuth Drive APIでWorkspace側へ再作成済み。 |
 | Notion | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 | 6/2社長デモ用の連携証跡ページ。 |
 | GitHub Issues | https://github.com/kanta13jp1/mighty-link-ai-connect/issues | Issue #1-#8で連携タスクを管理。 |
 | GitHub Project | Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` | `gh` tokenの `read:project` / `project` スコープ復旧後にProjectへ配置。 |
