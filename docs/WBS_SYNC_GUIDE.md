@@ -7,7 +7,7 @@
 
 ## 1. 概要と背景
 
-本プロジェクトでは、プロジェクト管理の円滑化と **Google Workspace AI (Sheets/Docs Live) ＆ Gemini Spark 連携** の体現のため、ローカルの `WBS.tsv` の変更を自動で Google スプレッドシートに反映し、マイティ・リンク様のブランドカラー（Mighty Blue）で美しく自動装飾する Python 同期システムを構築しました。
+本プロジェクトでは、プロジェクト管理の円滑化と **Google Workspace AI (Sheets/Docs Live) ＆ Gemini Spark 連携** の体現のため、ローカルの `data/WBS.tsv` の変更を自動で Google スプレッドシートに反映し、マイティ・リンク様のブランドカラー（Mighty Blue）で美しく自動装飾する Python 同期システムを構築しました。
 
 その過程で直面する Google API の主要なセキュリティ・クォータ制約を完全に克服した手順を、今後の再現性のために記録します。
 
@@ -15,7 +15,7 @@
 
 ## 2. Google Cloud Platform (GCP) セットアップ手順
 
-サービスアカウントが持つ容量制限（403 Drive quota exceeded）を回避し、ユーザー本人の Google アカウント（`kanta13jp@gmail.com`）のドライブ領域にスプレッドシートを直接作成・操作するため、**OAuth 2.0 (デスクトップ アプリ) 認証** を採用しています。
+サービスアカウントが持つ容量制限（403 Drive quota exceeded）を回避し、ユーザー本人の Google Workspace アカウント（`k-umezawa@ml-mightylink.com`）のドライブ領域にスプレッドシートを直接作成・操作するため、**OAuth 2.0 (デスクトップ アプリ) 認証** を採用しています。
 
 ### ステップ 1: APIs の有効化
 1. [Google Cloud Console](https://console.cloud.google.com/) にアクセスします。
@@ -33,7 +33,7 @@
    - ユーザーサポートメール: `kanta13jp@gmail.com`
    - デベロッパーの連絡先情報: `kanta13jp@gmail.com`
 4. 他の項目はデフォルトのまま「保存して次へ」を進めます。
-5. **テストユーザー (Test users)** ステップで、**「+ ADD USERS」** をクリックし、認証を行う Google アカウント (`kanta13jp@gmail.com`) を追加して保存します。*(※このテストユーザーの追加を行わないと、認証時に「このアプリは承認されていません」のエラーが発生します)*
+5. **テストユーザー (Test users)** ステップで、**「+ ADD USERS」** をクリックし、認証を行う Google アカウント (`k-umezawa@ml-mightylink.com`) を追加して保存します。*(※このテストユーザーの追加を行わないと、認証時に「このアプリは承認されていません」のエラーが発生します)*
 6. 最後の「終了」画面で、一番下にある **「作成」** ボタンをクリックして同意画面の構築を完了させます。
 
 ### ステップ 3: OAuth 2.0 クライアント ID の作成とダウンロード
@@ -60,10 +60,10 @@ pip install -r requirements.txt
 
 1. 以下のコマンドを実行します：
    ```powershell
-   python sync_wbs_to_sheets.py
+   python scripts/sync_wbs_to_sheets.py
    ```
 2. スクリプトが `client_secret.json` を検知すると、自動的にブラウザが起動し、Google のサインイン画面が表示されます。
-3. `kanta13jp@gmail.com` アカウントを選択します。
+3. `k-umezawa@ml-mightylink.com` アカウントを選択します。
 4. 「このアプリは Google では検証されていません」という警告画面（テスト用同意画面のため表示されます）が出たら、左下の **「詳細」** をクリックし、**「Mighty-Link AI Connect（安全ではないページ）に移動」** をクリックします。
 5. アプリケーションにスプレッドシートとドライブの操作権限を与えるため、**「続行 (Continue)」** をクリックして許可します。
 6. ブラウザに 「The authentication flow has completed. You may close this window.」と表示されれば、認証成功です！
@@ -72,7 +72,7 @@ pip install -r requirements.txt
 ### ステップ 3: 既存のスプレッドシートへの更新同期
 特定の既存スプレッドシートに対して、WBSの変更（タスク完了ステータスなど）を再同期させたい場合は、引数としてスプレッドシートのID（またはURL）を渡して実行します。
 ```powershell
-python sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
+   python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 ```
 
 ---

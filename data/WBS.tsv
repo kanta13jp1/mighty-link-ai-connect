@@ -3,9 +3,9 @@ T101	1. 企画・設計	要件定義	requirements.md の策定	人間 + AI	Gemin
 T102	1. 企画・設計	DB設計	database.md とスキーマ設計	AIエージェント	Gemini 3.5 Flash	テーブル定義をスプレッドシートへ自動同期	完了	2026-05-21	2026-05-22
 T201	2. フロント開発	UI/UX実装	PDF/画像ドラッグ＆ドロップ画面	AIエージェント	Antigravity 2.0	実装進捗を Sheets Live にリアルタイム反映	完了	2026-05-22	2026-05-23
 T202	2. フロント開発	UI/UX実装	フィット分析結果（レーダーチャート等）	AIエージェント	Antigravity 2.0	UIコンポーネントのテスト結果をセルへ記録	完了	2026-05-23	2026-05-25
-T301	3. バックエンド	API開発	ファイルアップロード＆パースAPI	AIエージェント	Gemini 3.5 Flash	API仕様書を Docs Live に自動同期	未着手	2026-05-25	2026-05-26
-T302	3. バックエンド	AIコア連携	Gemini Omni マルチモーダル解析API	AIエージェント	Gemini Omni	プロンプト応答ログを Sheets Live に蓄積	未着手	2026-05-26	2026-05-27
-T303	3. バックエンド	提案生成	面談想定質問＆育成ロードマップ生成	AIエージェント	Gemini 3.5 Flash	生成結果のフォーマットを Sheets 側で管理	未着手	2026-05-27	2026-05-28
+T301	3. バックエンド	API開発	ファイルアップロード＆パースAPI	AIエージェント	Gemini 3.5 Flash	API仕様書を Docs Live に自動同期	完了	2026-05-25	2026-05-26
+T302	3. バックエンド	AIコア連携	Gemini Omni マルチモーダル解析API	AIエージェント	Gemini Omni	プロンプト応答ログを Sheets Live に蓄積	完了	2026-05-26	2026-05-27
+T303	3. バックエンド	提案生成	面談想定質問＆育成ロードマップ生成	AIエージェント	Gemini 3.5 Flash	生成結果のフォーマットを Sheets 側で管理	完了	2026-05-27	2026-05-28
 T401	4. 検証・品質	テスト実行	Browser Agent による自律UI/UXテスト	AIエージェント	Browser Agent	テスト合格率・バグ率を Sheets Live にプロット	未着手	2026-05-28	2026-05-29
 T402	4. 検証・品質	セキュリティ	Code Mender による脆弱性自動修正	AIエージェント	Code Mender	脆弱性修復ログを Sheets セキュリティタブに同期	未着手	2026-05-29	2026-05-30
 T501	5. デプロイ	インフラ	CI/CD（GitHub Actions）設定	AIエージェント	Gemini 3.5 Flash	デプロイ成否・本番URLを Sheets に自動書き込み	未着手	2026-05-30	2026-05-31

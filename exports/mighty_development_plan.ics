@@ -1,0 +1,56 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Mighty-Link//AI Connect Calendar Sync//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Mighty Skill-Bridge 開発計画
+X-WR-TIMEZONE:Asia/Tokyo
+BEGIN:VEVENT
+UID:42b5bf58-e823-4f3b-8534-08d0bd3924c8@mighty-link.ai
+DTSTAMP:20260521T023955Z
+SUMMARY:【Mighty Skill-Bridge】フェーズ1: 企画・設計（要件定義 & DB設計）
+DESCRIPTION:開発の土台となる要件定義(requirements.md)およびDB設計(database.md)の策定・合意。
+DTSTART;VALUE=DATE:20260520
+DTEND;VALUE=DATE:20260522
+END:VEVENT
+BEGIN:VEVENT
+UID:5480ffe9-8b07-418d-98f6-e59aa8965fe2@mighty-link.ai
+DTSTAMP:20260521T023955Z
+SUMMARY:【Mighty Skill-Bridge】フェーズ2: フロント開発（UI/UX実装）
+DESCRIPTION:プレミアムなガラスモフィズム調UI、ドラッグ＆ドロップパネル、Chart.js連携の実装。
+DTSTART;VALUE=DATE:20260522
+DTEND;VALUE=DATE:20260525
+END:VEVENT
+BEGIN:VEVENT
+UID:ddde78e9-76ab-49ba-9335-c4f3f6c495d1@mighty-link.ai
+DTSTAMP:20260521T023955Z
+SUMMARY:【Mighty Skill-Bridge】フェーズ3: バックエンド & AI（Gemini 3.5 & Omni 連携API）
+DESCRIPTION:FastAPIを用いたマルチモーダルパースAPI、4次元分析API、Google Sheets同期エンジンの開発。
+DTSTART;VALUE=DATE:20260525
+DTEND;VALUE=DATE:20260528
+END:VEVENT
+BEGIN:VEVENT
+UID:14688d45-8a6d-4f22-b301-c7ac77d24eb5@mighty-link.ai
+DTSTAMP:20260521T023955Z
+SUMMARY:【Mighty Skill-Bridge】フェーズ4: テスト & デバッグ（Browser Agent & Code Mender）
+DESCRIPTION:Browser Agentによる自律UIテスト、Code Menderによるセキュリティ診断・デバッグ。
+DTSTART;VALUE=DATE:20260528
+DTEND;VALUE=DATE:20260530
+END:VEVENT
+BEGIN:VEVENT
+UID:f28e3cd6-f7e9-4950-b966-eb117ae267f4@mighty-link.ai
+DTSTAMP:20260521T023955Z
+SUMMARY:【Mighty Skill-Bridge】フェーズ5: 本番公開（CI/CDデプロイ & プレスリリース）
+DESCRIPTION:GitHub ActionsによるCI/CD環境構築、リリース、およびプレスリリース告知文の自動生成・公開。
+DTSTART;VALUE=DATE:20260530
+DTEND;VALUE=DATE:20260601
+END:VEVENT
+BEGIN:VEVENT
+UID:42b2e35c-0bdb-4608-be90-9332bedc0150@mighty-link.ai
+DTSTAMP:20260521T023955Z
+SUMMARY:【Mighty Skill-Bridge】第1回 社長報告会（プロジェクト方針決定）
+DESCRIPTION:「Mighty Skill-Bridge (エンジニア＆案件 AIフィットシミュレーター)」の開発計画(WBS)、仕様・要件、およびAIフィットシミュレータープロトタイプの最終確認・方針決定を行います。
+DTSTART;TZID=Asia/Tokyo:20260602T130000
+DTEND;TZID=Asia/Tokyo:20260602T140000
+END:VEVENT
+END:VCALENDAR

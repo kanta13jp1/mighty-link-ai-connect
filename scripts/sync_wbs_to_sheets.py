@@ -5,9 +5,9 @@
 Mighty-Link AI Connect: WBS Google Sheets Sync Script
 Author: Antigravity 2.0 (AI Agent)
 
-This script parses WBS.tsv and pushes the tasks directly to a specified Google Spreadsheet.
+This script parses data/WBS.tsv and pushes the tasks directly to a specified Google Spreadsheet.
 To bypass Google Cloud Service Account quota limitations, this script supports both:
-1. OAuth 2.0 Desktop Authentication (via client_secret.json) -> Uses kanta13jp@gmail.com's own drive (No Quota Limits!)
+1. OAuth 2.0 Desktop Authentication (via client_secret.json) -> Uses the Workspace user's own drive.
 2. Service Account Authentication (via credentials.json) -> Traditional fallback.
 """
 
@@ -15,6 +15,10 @@ import os
 import sys
 import csv
 import json
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 
 # sys.stdout/stderr override removed to avoid logging capture interference
 
@@ -36,10 +40,11 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 # Configuration
-CREDENTIALS_FILE = "credentials.json"     # Service Account
-CLIENT_SECRET_FILE = "client_secret.json" # OAuth 2.0 Desktop client
-TSV_FILE = "WBS.tsv"
-USER_EMAIL = "kanta13jp@gmail.com"
+CREDENTIALS_FILE = os.path.join(PROJECT_ROOT, "credentials.json")       # Service Account
+CLIENT_SECRET_FILE = os.path.join(PROJECT_ROOT, "client_secret.json")   # OAuth 2.0 Desktop client
+AUTHORIZED_USER_FILE = os.path.join(PROJECT_ROOT, "authorized_user.json")
+TSV_FILE = os.path.join(DATA_DIR, "WBS.tsv")
+USER_EMAIL = "k-umezawa@ml-mightylink.com"
 
 # Mighty-Link Color Palette (Normalized to 0.0 - 1.0 for Sheets API)
 COLORS = {
@@ -79,7 +84,7 @@ def main():
             # Performs local OAuth authentication. Spawns browser on first run, saves authorized_user.json
             client = gspread.oauth(
                 credentials_filename=CLIENT_SECRET_FILE,
-                authorized_user_filename="authorized_user.json"
+                authorized_user_filename=AUTHORIZED_USER_FILE
             )
             auth_mode = "OAuth 2.0 (User Drive)"
             print("[+] OAuth 2.0 Authentication Successful!")
@@ -105,15 +110,15 @@ def main():
                 sys.exit(1)
         else:
             print(f"[-] ERROR: Neither '{CLIENT_SECRET_FILE}' nor '{CREDENTIALS_FILE}' found.")
-            print("\n[💡 Bypass & Setup Instructions (OAuth 2.0 Mode - Recommended)]")
-            print("To completely bypass Drive storage quota limitations, use your personal Google Drive account:")
+            print("\n[*] Bypass & Setup Instructions (OAuth 2.0 Mode - Recommended)")
+            print("To bypass Drive storage quota limitations, use the Workspace Google Drive account:")
             print("1. Go to Google Cloud Console (https://console.cloud.google.com/) -> API & Services -> Credentials.")
             print("2. Click '+ Create Credentials' -> 'OAuth client ID'.")
             print("3. (If prompted) Click 'Configure Consent Screen', select 'External', input App Name ('Mighty WBS'), and save.")
-            print("   * Under 'Test users', add 'kanta13jp@gmail.com'.")
+            print(f"   * Under 'Test users', add '{USER_EMAIL}'.")
             print("4. Go back to Credentials -> Create Credentials -> OAuth client ID.")
             print("5. Choose Application Type: 'Desktop App', name it, and click Create.")
-            print("6. Download the JSON file and rename it to 'client_secret.json' in this folder.")
+            print("6. Download the JSON file and rename it to 'client_secret.json' in the project root folder.")
             sys.exit(1)
 
     # 2. Check for spreadsheet ID, if empty -> AUTO CREATE
@@ -145,7 +150,7 @@ def main():
         except Exception as e:
             print(f"[-] Auto creation failed: {e}")
             if auth_mode == "Service Account (Robot)":
-                print("\n[⚠️ Storage Quota Alert]")
+                print("\n[!] Storage Quota Alert")
                 print("Your Service Account Drive quota is exceeded. To fix this automatically:")
                 print(f"Please setup OAuth 2.0 by downloading 'client_secret.json' as detailed in the instructions above.")
             sys.exit(1)
@@ -168,7 +173,7 @@ def main():
             sys.exit(1)
 
     # 3. Load data and setup Worksheet
-    print("[*] Parsing local WBS.tsv...")
+    print(f"[*] Parsing local {os.path.relpath(TSV_FILE, PROJECT_ROOT)}...")
     wbs_data = load_wbs_data(TSV_FILE)
     if not wbs_data:
         print("[-] No WBS data found in TSV file. Exiting.")
