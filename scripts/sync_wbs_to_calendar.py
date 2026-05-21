@@ -86,9 +86,24 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】フェーズ6: 社長プレゼン準備（6/2判断材料・デモ・想定QA）",
-        "description": "6/2の社長打ち合わせに向け、サービス内容を決め打ちせず、公開デモ、WBS、Google Workspace連携、論点、選択肢、想定QA、決定後の反映手順を準備します。",
+        "description": "6/2の社長打ち合わせに向け、サービス内容を決め打ちせず、公開デモ、WBS、Google Workspace連携、論点、選択肢、判断マトリクス、議事録テンプレート、想定QA、決定後の反映手順を準備します。",
         "start_date": "2026-05-21",
         "end_date": "2026-06-02",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】社長プレゼン判断材料レビュー",
+        "description": "スライド構成、判断マトリクス、想定質問、デモバックアップ導線を確認し、6/2で決める事項と保留事項を分離します。",
+        "start_time": "2026-05-30T10:00:00",
+        "end_time": "2026-05-30T11:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】社長向け事前共有メモ作成",
+        "description": "社長へ事前共有する確認ポイント、当日アジェンダ、公開デモURL、WBS/Calendar確認導線の短文ドラフトを作成します。",
+        "start_date": "2026-05-30",
+        "end_date": "2026-06-01",
         "is_all_day": True
     },
     {

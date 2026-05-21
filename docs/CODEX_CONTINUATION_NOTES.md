@@ -170,3 +170,31 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 
 - 6/2までは「確定サービス資料」ではなく、「決定のための資料」に留める。
 - 社長決定後、`T609` の枠でWBS、Calendar、Git、作業ログへ即反映する。
+
+## 2026-05-21 作業ログ: 社長プレゼン判断材料の追加整備
+
+6/2 までは企画・サービス内容を決め打ちしない前提を保ちながら、社長への説明と当日の意思決定が一気に進むように、プレゼン準備WBSをさらに具体化した。
+
+実施内容:
+
+- WBS に `T610` から `T615` までを追加。
+- 追加タスクは、スライド化素材、判断マトリクス、議事録テンプレート、デモバックアップ、事前送付メモ、決定後ロードマップ枠。
+- `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md` を追加し、スライド構成案、判断マトリクス、当日質問リスト、議事録テンプレート、デモ障害時の代替導線を整理。
+- `docs/CEO_PRESENTATION_PREP_2026-06-02.md`, `docs/SETUP_GUIDE.md`, `docs/PROJECT_STRUCTURE.md`, `docs/WBS.md`, `README.md` を更新し、追加資料と運用手順へ反映。
+- Google Calendar 同期対象に `社長プレゼン判断材料レビュー` と `社長向け事前共有メモ作成` を追加。
+
+同期・検証:
+
+- `data/WBS.tsv` は `30` タスク、全行 `10` 列であることを確認。
+- `python -m compileall src scripts` 成功。
+- `python scripts/verify_public_demo.py` 成功。
+- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
+- Google Sheets へ `31 source rows` / `43 hierarchical WBS display rows` を同期済み。
+- `WBS Summary` の合計は `30 tasks / 完了15 / 実行中1 / 未着手14 / 完了率50%`。
+- フェーズ6は `15 tasks / 完了4 / 実行中1 / 未着手10 / 完了率27%`。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 10, Updated: 8, Failed: 0`。
+
+運用方針:
+
+- 6/2 までは判断材料パックを確定資料ではなく比較・確認用のドラフトとして扱う。
+- 6/2 の決定後、`T609`, `T612`, `T615` を使って WBS、Calendar、Git、作業ログへ即時反映する。

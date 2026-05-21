@@ -32,6 +32,7 @@ mighty-link-ai-connect/
 │   ├── CODEX_CONTINUATION_NOTES.md
 │   ├── BACKEND_AI_PIPELINE.md
 │   ├── CEO_PRESENTATION_PREP_2026-06-02.md
+│   ├── CEO_PRESENTATION_DECISION_PACK_2026-06-02.md
 │   ├── PROJECT_STRUCTURE.md
 │   ├── WBS.md
 │   ├── WBS_SYNC_GUIDE.md
@@ -96,7 +97,7 @@ python scripts/sync_wbs_to_calendar.py
 成功すると次の状態になります。
 
 - `Mighty Skill-Bridge 開発計画` カレンダーが作成または再利用されます。
-- WBS 開発スケジュール全 6 件が同期されます。
+- WBS 開発スケジュールと 6/2 社長プレゼン準備イベントが同期されます。
 - `exports/mighty_development_plan.ics` が生成されます。
 - `authorized_user.json` がプロジェクトルートに保存され、次回以降は認証が自動化されます。
 
@@ -136,6 +137,7 @@ python scripts/share_resources.py
 準備ブリーフ:
 
 - [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md)
+- [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md)
 
 当日前後の必須確認:
 

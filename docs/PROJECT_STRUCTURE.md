@@ -24,7 +24,7 @@ mighty-link-ai-connect/
 | アプリ本体 | `src/` | `app.py`, `index.html` |
 | 運用スクリプト | `scripts/` | `sync_wbs_to_calendar.py`, `share_resources.py`, `verify_public_demo.py` |
 | CI ガード | `.github/workflows/` | `public-demo-guard.yml` |
-| 仕様・手順 | `docs/` | `SETUP_GUIDE.md`, `BACKEND_AI_PIPELINE.md`, `CEO_PRESENTATION_PREP_2026-06-02.md`, `requirements.md`, `database.md` |
+| 仕様・手順 | `docs/` | `SETUP_GUIDE.md`, `BACKEND_AI_PIPELINE.md`, `CEO_PRESENTATION_PREP_2026-06-02.md`, `CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`, `requirements.md`, `database.md` |
 | 同期元データ | `data/` | `WBS.tsv` |
 | 実行時監査ログ | `data/audit/` | `.gitkeep`, `ai_audit.jsonl` (Git 管理対象外) |
 | 生成物 | `exports/` | `mighty_development_plan.ics` |
