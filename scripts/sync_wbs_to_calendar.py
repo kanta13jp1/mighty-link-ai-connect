@@ -184,6 +184,29 @@ SCHEDULE_EVENTS = [
         "is_all_day": True
     },
     {
+        "summary": "【Mighty Skill-Bridge】docs NotebookLM同期・Google Docs化",
+        "description": "docs/*.md 14件をLocal OAuth Drive APIでk-umezawa@ml-mightylink.com所有のGoogle Docsへ同期し、NotebookLM CLI source add-drive用manifestを作成します。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-05-23",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】NotebookLM CLI再認証・Source追加",
+        "description": "notebooklm loginでk-umezawa@ml-mightylink.comを選択し、sync_docs_to_notebooklm.pyを再実行してNotebookLMへdocs sourceを追加します。",
+        "start_time": "2026-05-23T10:00:00",
+        "end_time": "2026-05-23T10:30:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】NotebookLM Agent Brief取得",
+        "description": "NotebookLM ask/summaryで設計情報・ロードマップ・6/2前タスクを要約し、AIエージェントの次回開発入力としてnotebooklm_agent_brief.mdへ保存します。",
+        "start_time": "2026-05-23T10:30:00",
+        "end_time": "2026-05-23T11:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
         "summary": "【Mighty Skill-Bridge】社長プレゼン最終リハーサル",
         "description": "公開URL、ローカルAPI、Google Sheets WBS、Calendar同期、説明資料、想定QA、バックアップ手順を最終確認します。",
         "start_time": "2026-06-01T16:00:00",

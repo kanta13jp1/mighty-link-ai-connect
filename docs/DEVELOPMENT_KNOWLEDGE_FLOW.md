@@ -120,6 +120,33 @@ Google Docsホームで資料が見えない問題に対応するため、Google
 
 以後、NotebookLM投入用のGoogle DocsはMCPコネクタではなく、Workspace OAuth検証済みのLocal Drive APIで作成・更新する。
 
+## 2026-05-22 docs配下のNotebookLM同期導線
+
+AIエージェントがNotebookLMから要約された設計情報・ロードマップ情報を取得して開発判断に使えるよう、`docs/*.md` をWorkspace所有のGoogle Docsへ同期するCLI導線を追加した。
+
+実行コマンド:
+
+```powershell
+python scripts/sync_docs_to_notebooklm.py
+```
+
+実行結果:
+
+- `docs/*.md` 14件を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ同期した。
+- 同期manifest: `exports/knowledge_flow/notebooklm_docs_manifest.json`
+- NotebookLM CLI再認証手順: `exports/knowledge_flow/notebooklm_cli_next_steps.md`
+- Notion証跡ページ: https://www.notion.so/3671d736b9db8164b46dc143befa29eb
+- GitHub Issues: [#9](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/9), [#10](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/10)
+
+現状、`notebooklm` CLIはインストール済みだが認証切れのため、NotebookLMへのsource追加と要約取得は `notebooklm login` 後に再実行する。
+
+```powershell
+notebooklm login
+python scripts/sync_docs_to_notebooklm.py
+```
+
+`notebooklm login` では `k-umezawa@ml-mightylink.com` を選択する。再実行後、AIエージェント向けの要約は `exports/knowledge_flow/notebooklm_agent_brief.md` と `.json` に保存される。
+
 ## 6/2 後の実装候補
 
 | 候補 | 内容 | 初期実装イメージ |

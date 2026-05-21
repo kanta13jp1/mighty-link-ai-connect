@@ -334,10 +334,17 @@ def build_obsidian_vault(summary: dict) -> None:
 - [[Meetings/2026-06-02 CEO Meeting]]
 - [[ADR/ADR-0001-knowledge-flow]]
 - [[Prompts/NotebookLM Source Prompt]]
+- [[Prompts/NotebookLM Agent Brief Prompt]]
 
 ## Rule
 
 Keep private thoughts here. Promote only approved notes back to `docs/` and WBS.
+
+## NotebookLM Agent Brief
+
+- Manifest: `exports/knowledge_flow/notebooklm_docs_manifest.json`
+- Next steps: `exports/knowledge_flow/notebooklm_cli_next_steps.md`
+- Agent brief after CLI re-auth: `exports/knowledge_flow/notebooklm_agent_brief.md`
 """,
     )
     write_text(
@@ -408,6 +415,41 @@ Use the NotebookLM source pack to answer:
 2. What decisions are needed on 2026-06-02?
 3. What are the risks of each knowledge-flow tool?
 4. Which items should become WBS tasks after the meeting?
+
+## Agent Brief Retrieval
+
+After `notebooklm login`, run:
+
+```powershell
+python scripts/sync_docs_to_notebooklm.py
+```
+
+Then read `exports/knowledge_flow/notebooklm_agent_brief.md` before the next Codex implementation pass.
+""",
+    )
+    write_text(
+        OBSIDIAN_DIR / "Prompts" / "NotebookLM Agent Brief Prompt.md",
+        """# NotebookLM Agent Brief Prompt
+
+Use this prompt after the docs source set has been added to NotebookLM:
+
+```text
+このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、
+Codex/AIエージェントが次に開発を進めるための要約を作ってください。
+
+必ず以下を含めてください。
+1. 現在のプロダクト方向性で確定していること
+2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク
+3. 6/2で社長に決めてもらうべき事項
+4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提
+5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題
+6. WBSへ追加すべき次アクション
+```
+
+Expected local outputs:
+
+- `exports/knowledge_flow/notebooklm_agent_brief.md`
+- `exports/knowledge_flow/notebooklm_agent_brief.json`
 """,
     )
     write_text(
@@ -442,6 +484,7 @@ def build_demo_guide() -> str:
 3. Open `notion_decision_log.csv` and `notion_backlog_import.csv` as Notion import sources.
 4. Open `obsidian_vault/Mighty Skill-Bridge Home.md` as a local Obsidian vault entry point.
 5. Explain that no credentials or private customer data are included.
+6. If NotebookLM CLI has been re-authenticated, open `notebooklm_agent_brief.md` as the AI-agent-facing design and roadmap summary.
 
 ## CEO Decision
 
@@ -469,10 +512,14 @@ def generate() -> dict:
         EXPORT_DIR / "notion_backlog_import.csv",
         EXPORT_DIR / "CEO_KNOWLEDGE_FLOW_DEMO_GUIDE.md",
         EXPORT_DIR / "integration_evidence.md",
+        EXPORT_DIR / "notebooklm_docs_manifest.json",
+        EXPORT_DIR / "notebooklm_cli_next_steps.md",
+        EXPORT_DIR / "notebooklm_agent_brief.md",
         OBSIDIAN_DIR / "Mighty Skill-Bridge Home.md",
         OBSIDIAN_DIR / "ADR" / "ADR-0001-knowledge-flow.md",
         OBSIDIAN_DIR / "Meetings" / "2026-06-02 CEO Meeting.md",
         OBSIDIAN_DIR / "Prompts" / "NotebookLM Source Prompt.md",
+        OBSIDIAN_DIR / "Prompts" / "NotebookLM Agent Brief Prompt.md",
         OBSIDIAN_DIR / ".obsidian" / "app.json",
         OBSIDIAN_DIR / ".obsidian" / "appearance.json",
     ]

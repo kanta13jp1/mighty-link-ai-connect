@@ -178,6 +178,21 @@ CLI/MCPで実施した連携証跡:
 - Google Docs化したNotebookLM source pack: `https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit`
 - Google Docs化したNotebookLM presentation brief: `https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit`
 - Google Docsは `python scripts/upload_notebooklm_docs_to_drive.py` で作成・更新し、`authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づくことを検証してからDrive APIへアップロードする。
+
+docs配下をNotebookLM source候補として同期する場合:
+
+```powershell
+python scripts/sync_docs_to_notebooklm.py
+```
+
+NotebookLM CLIが認証切れの場合は、以下を実行してから再同期します。
+
+```powershell
+notebooklm login
+python scripts/sync_docs_to_notebooklm.py
+```
+
+`notebooklm login` では `k-umezawa@ml-mightylink.com` を選択してください。同期状況は `exports/knowledge_flow/notebooklm_docs_manifest.json`、再認証手順は `exports/knowledge_flow/notebooklm_cli_next_steps.md` に保存されます。
 - Notion証跡ページ: `https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951`
 - GitHub Issues: `https://github.com/kanta13jp1/mighty-link-ai-connect/issues`
 - GitHub Projectは `gh auth refresh -h github.com -s read:project -s project` 後に正式連携する。

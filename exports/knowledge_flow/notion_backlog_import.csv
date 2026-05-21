@@ -27,3 +27,8 @@ NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoog
 NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る,T643,NotebookLMスライド草案,未着手,人間 + Codex,2026-05-22,2026-05-23,社長説明のスライド構成・話す要点・想定QAをNotebookLMで生成しdocsへ反映する
 Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする,T646,Slack送信権限確認,未着手,人間 + Codex,2026-05-24,2026-05-25,Slack CLI未検出・送信MCP未露出のため、投稿先とconnector権限を6/2前に確認する
 NotebookLM用Google Docsをk-umezawa@ml-mightylink.com所有で再作成,T648,Workspace Google Docs再作成,完了,Codex,2026-05-22,2026-05-22,Google Drive MCP作成Docではなくauthorized_user.json経由でDocsを作成し、Google Docsホームに表示される状態へ修正する
+NotebookLM CLIをk-umezawa@ml-mightylink.comで再認証,T650,NotebookLM CLI認証復旧,実行中,Codex + 人間,2026-05-22,2026-05-23,notebooklm login後にsync_docs_to_notebooklm.pyを再実行し、NotebookLMへsource追加する
+NotebookLMの要約をAIエージェント開発入力として保存,T651,NotebookLM Agent Brief取得,未着手,Codex,2026-05-23,2026-05-24,notebooklm ask/summaryの結果をnotebooklm_agent_brief.md/jsonへ出力し、次回開発の参照情報にする
+Slack送信ツール・投稿先チャンネル・社長共有範囲の確定,T653,Slack連携実送信準備,未着手,Codex + 人間,2026-05-24,2026-05-25,現セッションでは送信ツール未露出のため、投稿案と権限確認を6/2前の残課題として維持する
+NotebookLM docs同期結果をNotion証跡ページ配下に追加,T654,Notion証跡更新,完了,Codex,2026-05-22,2026-05-22,NotebookLM Docs Sync Evidence 2026-05-22をNotionへ作成し、Issue #9/#10と再実行手順を記録する
+Obsidian vaultにNotebookLM Agent Brief参照導線を追加,T655,Obsidian Agent Brief導線,完了,Codex,2026-05-22,2026-05-22,NotebookLM要約取得後にObsidianから参照できるよう、プロンプトとホーム導線を更新する

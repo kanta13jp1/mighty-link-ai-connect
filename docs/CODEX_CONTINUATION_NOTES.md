@@ -387,3 +387,44 @@ Workspace Google Docs:
 - `python -m compileall src scripts` 成功。
 - `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
 - 旧Google Docs IDは `docs/`, `data/`, `exports/`, `scripts/` から除去済み。
+
+## 2026-05-22 作業ログ: docs配下NotebookLM同期導線追加
+
+AIエージェントがNotebookLMから要約された設計情報・ロードマップ情報を取得して開発を進められるよう、`docs/` 配下をNotebookLM source候補へ同期する導線を追加した。
+
+実施内容:
+
+- `scripts/sync_docs_to_notebooklm.py` を追加。
+- `docs/*.md` 14件を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ同期。
+- 同期manifestを `exports/knowledge_flow/notebooklm_docs_manifest.json` へ保存。
+- NotebookLM CLI `0.3.4` の存在を確認。
+- `notebooklm list` は認証切れで失敗したため、`exports/knowledge_flow/notebooklm_cli_next_steps.md` に再認証手順を保存。
+- 再認証後に `notebooklm source add-drive` と `notebooklm ask/summary` を実行し、`exports/knowledge_flow/notebooklm_agent_brief.md` / `.json` を生成する構成にした。
+- GitHub Issue #9 / #10 を追加。
+- Issue #8 にGitHub Projectの `read:project` スコープ不足の最新状況をコメント。
+- Notion証跡ページ配下に `NotebookLM Docs Sync Evidence 2026-05-22` を作成。
+- Obsidian vaultにNotebookLM Agent Brief参照導線を追加。
+- WBSに `T649` から `T655` を追加。
+
+証跡:
+
+- NotebookLM docs manifest: `exports/knowledge_flow/notebooklm_docs_manifest.json`
+- NotebookLM CLI next steps: `exports/knowledge_flow/notebooklm_cli_next_steps.md`
+- Notion: https://www.notion.so/3671d736b9db8164b46dc143befa29eb
+- GitHub Issue #9: https://github.com/kanta13jp1/mighty-link-ai-connect/issues/9
+- GitHub Issue #10: https://github.com/kanta13jp1/mighty-link-ai-connect/issues/10
+
+同期・検証:
+
+- Google Sheets へ `71 source rows` / `83 hierarchical WBS display rows` を同期済み。
+- Google Calendar `Mighty Skill-Bridge 開発計画` へ再同期済み。最終結果は `Success: 22, Updated: 19, Failed: 0`。
+- NotebookLM CLIは `notebooklm list` 実行時に認証切れを返したため、`notebooklm login` 後の再実行待ち。
+- `python -m compileall src scripts` 成功。
+- `python scripts/verify_google_workspace_account.py` 成功。
+- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` 成功。
+
+残タスク:
+
+- `notebooklm login` で `k-umezawa@ml-mightylink.com` を選択して再認証する。
+- 再認証後に `python scripts/sync_docs_to_notebooklm.py` を再実行し、NotebookLMへのsource追加とAgent Brief取得を完了する。
+- GitHub Projectは `gh auth refresh -s read:project -s project` 後にIssue配置を再実行する。

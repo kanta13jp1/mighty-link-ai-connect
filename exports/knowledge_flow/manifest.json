@@ -1,15 +1,15 @@
 {
-  "generated_at_jst": "2026-05-22T00:32:17+09:00",
+  "generated_at_jst": "2026-05-22T00:54:22+09:00",
   "summary": {
-    "total": 63,
-    "done": 37,
-    "active": 3,
-    "todo": 23,
-    "completion_rate": 59,
-    "phase6_total": 48,
-    "phase6_done": 26,
-    "phase6_active": 3,
-    "phase6_todo": 19
+    "total": 70,
+    "done": 40,
+    "active": 5,
+    "todo": 25,
+    "completion_rate": 57,
+    "phase6_total": 55,
+    "phase6_done": 29,
+    "phase6_active": 5,
+    "phase6_todo": 21
   },
   "artifacts": [
     "exports/knowledge_flow/notebooklm_source_pack.md",
@@ -21,10 +21,14 @@
     "exports/knowledge_flow/notion_backlog_import.csv",
     "exports/knowledge_flow/CEO_KNOWLEDGE_FLOW_DEMO_GUIDE.md",
     "exports/knowledge_flow/integration_evidence.md",
+    "exports/knowledge_flow/notebooklm_docs_manifest.json",
+    "exports/knowledge_flow/notebooklm_cli_next_steps.md",
+    "exports/knowledge_flow/notebooklm_agent_brief.md",
     "exports/knowledge_flow/obsidian_vault/Mighty Skill-Bridge Home.md",
     "exports/knowledge_flow/obsidian_vault/ADR/ADR-0001-knowledge-flow.md",
     "exports/knowledge_flow/obsidian_vault/Meetings/2026-06-02 CEO Meeting.md",
     "exports/knowledge_flow/obsidian_vault/Prompts/NotebookLM Source Prompt.md",
+    "exports/knowledge_flow/obsidian_vault/Prompts/NotebookLM Agent Brief Prompt.md",
     "exports/knowledge_flow/obsidian_vault/.obsidian/app.json",
     "exports/knowledge_flow/obsidian_vault/.obsidian/appearance.json"
   ],

@@ -27,7 +27,7 @@
 | 決定後の受け皿 | 議事録、WBS差し替え、Calendar更新、Git反映、決定後ロードマップ枠 | T609, T612, T615 |
 | 開発ナレッジ連携 | NotebookLM、Slack、Notion、Obsidian を使った資料要約・通知・議事録・ローカル知識管理の候補整理 | T616, T617, T618, T619, T620, T621, T622, T623 |
 | 連携デモ成果物 | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vault、UI/API生成導線 | T624, T625, T626, T627, T628, T629, T630, T631 |
-| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641, T642, T643, T644, T645, T646 |
+| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641, T642, T643, T644, T645, T646, T647, T648, T649, T650, T651, T652, T653, T654, T655 |
 
 ## 関連ドキュメント
 
@@ -57,7 +57,7 @@
 4. Google Sheets の `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` を見せる。
 5. Google Calendar の `Mighty Skill-Bridge 開発計画` を見せる。
 6. 画面の「開発ナレッジ連携デモ」で、NotebookLM/Slack/Notion/Obsidian成果物を見せる。
-7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#8 を開く。
+7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#10 を開く。
 8. NotebookLM Presentation Brief を開き、プレゼン資料のたたき台作成はNotebookLMで進める方針を説明する。
 9. GitHub Projectは `read:project` / `project` スコープ復旧後に配置することを説明する。
 10. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
@@ -160,3 +160,13 @@ python scripts/sync_wbs_to_calendar.py
 - Presentation Brief: `https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit`
 - Drive APIレスポンスのownerは `k-umezawa@ml-mightylink.com`。証跡は `exports/knowledge_flow/google_drive_workspace_docs.json` に保存した。
 - WBSに `T648` を追加し、Sheets/Calendar同期対象にした。
+
+## 2026-05-22 docs配下のNotebookLM同期導線
+
+- `scripts/sync_docs_to_notebooklm.py` を追加し、`docs/*.md` 14件を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ同期した。
+- 同期manifestは `exports/knowledge_flow/notebooklm_docs_manifest.json` に保存した。
+- NotebookLM CLIは `0.3.4` がインストール済みだが、認証切れのため `notebooklm login` が必要。
+- 再認証後に同スクリプトを再実行すると、NotebookLMへsourceを追加し、AIエージェント用の `exports/knowledge_flow/notebooklm_agent_brief.md` を生成する。
+- GitHub Issuesに `#9` と `#10` を追加し、Issue #8へGitHub Projectの `read:project` 不足を再追記した。
+- Notion証跡ページ配下に `NotebookLM Docs Sync Evidence 2026-05-22` を作成した: `https://www.notion.so/3671d736b9db8164b46dc143befa29eb`
+- WBSに `T649` から `T655` を追加した。

@@ -6,3 +6,13 @@ Use the NotebookLM source pack to answer:
 2. What decisions are needed on 2026-06-02?
 3. What are the risks of each knowledge-flow tool?
 4. Which items should become WBS tasks after the meeting?
+
+## Agent Brief Retrieval
+
+After `notebooklm login`, run:
+
+```powershell
+python scripts/sync_docs_to_notebooklm.py
+```
+
+Then read `exports/knowledge_flow/notebooklm_agent_brief.md` before the next Codex implementation pass.
