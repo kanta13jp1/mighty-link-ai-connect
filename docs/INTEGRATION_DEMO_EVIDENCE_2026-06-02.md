@@ -119,7 +119,7 @@ gh project list --owner kanta13jp1 --format json
 - `T664`: 三ツール開発フロー整備
 - `T665`: 古いドキュメント削除・最新化
 - `T666`: Calendar完了イベント削除
-- `T667`: Seedance風デモUI刷新
+- `T667`: Seedance動画デモUI刷新
 
 同期結果:
 
@@ -130,7 +130,7 @@ gh project list --owner kanta13jp1 --format json
 
 ## 社長への見せ方
 
-1. 公開デモURLを開き、Seedance風の黒基調AI studio UIに刷新されたことを見せる。
+1. 公開デモURLを開き、Seedance API動画デモUIに刷新されたことを見せる。
 2. 「開発ナレッジ連携デモ」セクションを見せる。
 3. NotebookLMの `Agent Brief` と `CEO Slide Outline` を開き、AIが資料を要約して開発・プレゼンに使う流れを見せる。
 4. Google Docs化したNotebookLM source packを開く。
@@ -160,7 +160,7 @@ gh project list --owner kanta13jp1 --format json
 - `T664`: 三ツール開発フロー整備
 - `T665`: 古いドキュメント削除・最新化
 - `T666`: Calendar完了イベント削除
-- `T667`: Seedance風デモUI刷新
+- `T667`: Seedance動画デモUI刷新
 
 今回のCalendar運用変更:
 
@@ -179,13 +179,27 @@ gh project list --owner kanta13jp1 --format json
 | GitHub Issue | T664証跡Issueを作成してクローズ | https://github.com/kanta13jp1/mighty-link-ai-connect/issues/13 |
 | Actions警告 | Pages deployは成功したがNode.js 20 deprecation annotationを検出し、課題管理表へ反映 | https://github.com/kanta13jp1/mighty-link-ai-connect/issues/14 |
 
-## 2026-05-22 追加証跡: Seedance風デモUI刷新
+## 2026-05-22 追加証跡: Seedance動画デモUI刷新
 
 | 項目 | 実施内容 | 証跡 |
 | --- | --- | --- |
-| 公開デモUI | root `index.html` を黒基調AI studio UIへ刷新 | `index.html` |
+| 公開デモUI | root `index.html` を動画生成デモUIへ刷新 | `index.html` |
 | ローカルUI | FastAPI用 `src/index.html` に同じファーストビューを反映 | `src/index.html` |
-| ブランド安全性 | Seedanceのブランド・素材・文言は使わず、黒背景、強いタイポグラフィ、映像AIプレビュー構成のみ参考 | `data/qa_tracker.tsv` / `Q-AHOC-20260522-3` |
+| ブランド安全性 | Seedanceのブランド・素材・文言は使わず、強いタイポグラフィ、映像AIプレビュー構成のみ参考 | `data/qa_tracker.tsv` / `Q-AHOC-20260522-3` |
 | 公開デモガード | README fallbackなし、必須DOMマーカー維持を確認 | `python scripts/verify_public_demo.py` |
 | 表示確認 | Playwrightでdesktop/mobileの横スクロールなし、主要CTA表示、desktopのcinematic preview frame表示を確認 | `exports/verification/seedance_refresh_desktop.png` / `exports/verification/seedance_refresh_mobile.png` |
 | 課題管理 | 公開デモデグレリスクをR16として登録しresolved化 | `data/issues_tracker.tsv` |
+
+## 2026-05-22 追加証跡: Seedance API動画デモ接続
+
+| 項目 | 実施内容 | 証跡 |
+| --- | --- | --- |
+| FastAPI | `/api/seedance/video-demo` を追加し、環境変数設定時はSeedance APIへPOSTする | `src/app.py` |
+| 静的動画 | 公開URLでも表示できるプロジェクト生成MP4を追加 | `exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4` |
+| 生成スクリプト | 動画フォールバックを再生成できるスクリプトを追加 | `scripts/generate_seedance_demo_video.py` |
+| UI生成 | root / FastAPI のHTMLを同一テンプレートから生成 | `scripts/render_seedance_video_demo_ui.py` |
+| 検証 | desktop/mobileで動画要素、CTA、横スクロールなし、禁止文言なしを確認 | `exports/verification/seedance_video_desktop.png`, `exports/verification/seedance_video_mobile.png` |
+| WBS | T668を完了として追加 | `data/WBS.tsv`, `docs/WBS.md` |
+| 課題・QA | API認証情報未設定をR17、live mode条件をQ-AHOC-20260522-4として登録 | `data/issues_tracker.tsv`, `data/qa_tracker.tsv` |
+
+実APIへの切り替えはGitに秘密情報を含めず、`SEEDANCE_API_KEY` / `SEEDANCE_API_URL` / 必要に応じて `SEEDANCE_RESULT_API_URL_TEMPLATE` をローカル環境変数で設定して確認する。

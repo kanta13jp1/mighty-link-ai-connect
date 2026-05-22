@@ -13,7 +13,7 @@
 
 ### 1.2 コアバリュー
 - **テクノロジーの架け橋**: 最先端のAIモデルが、エンジニアの経歴に隠された「潜在能力」や「得意領域」を最大化して評価。
-- **直感的ビジュアル**: 社長プレゼンではSeedance風の黒基調AI studio UIを採用し、Mighty Blue / Green / Yellow / Roseのアクセントで4軸分析を映像生成プロダクトのように見せる。
+- **直感的ビジュアル**: UIではSeedance API動画デモUIを採用し、Mighty Blue / Green / Yellow / Roseのアクセントで4軸分析を映像生成プロダクトのように見せる。
 - **Google Workspace API (Sheets/Docs/Calendar) 連携**: 案件マッチング結果やWBSステータスが、Google Sheets / Docs / Calendar と自律的に連携。
 
 ---
@@ -44,6 +44,7 @@
 - **Styling**: Vanilla CSS (CSS Variables を用いたテーマ設計、モダンなダーク＆ライトハイブリッドモード、ガラスモフィズム)
 - **Analytics/Charts**: Chart.js (CDN経由で超軽量ロード)
 - **Backend API**: Gemini API 現行モデル連携 (Mock & Live モード両対応)
+- **Video API**: Seedance API 接続アダプタ。`SEEDANCE_API_KEY` / `SEEDANCE_API_URL` 未設定時はプロジェクト生成MP4を表示する。
 - **Collaboration**: Google Sheets API & Google Docs API 自律同期
 
 ---
@@ -61,7 +62,7 @@
 - **メインカラー (Primary)**: `#8BDCFF` (Mighty Blue - AI解析 / 透明感)
 - **セカンダリカラー (Secondary)**: `#BAFF66` (Mighty Green - 成長とマッチ成立)
 - **アクセントカラー**: `#FFD166` / `#FF6CAB` (判断材料と注意点を分ける)
-- **背景 (Background)**: `#030303` / `#090A0C` (Seedance風の黒基調AI studio)
+- **背景 (Background)**: `#030303` / `#090A0C` (Seedance API動画デモ)
 - **フォント**: Google Fonts 'Outfit' & 'Noto Sans JP'
 - **スタイルエフェクト**: 8px角のパネル、細いグリッド、映像プレビュー風の分析フレーム。
 

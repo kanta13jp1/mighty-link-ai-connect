@@ -310,3 +310,19 @@ NotebookLMで取得した社長向け草案をPowerPoint化する場合は、`sc
 ### `Live Connected` にならない
 
 `client_secret.json` と `authorized_user.json` がプロジェクトルート直下にあるか確認し、`python src/app.py` で起動し直します。
+
+## 2026-05-22 追加: Seedance API 動画デモ
+
+公開デモの第一画面は `exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4` を表示します。ローカル FastAPI 起動時は `/api/seedance/video-demo` から Seedance API へ接続できます。
+
+```powershell
+python scripts/generate_seedance_demo_video.py
+$env:SEEDANCE_API_KEY = "<your seedance or modelark api key>"
+$env:SEEDANCE_API_URL = "<seedance create task endpoint>"
+$env:SEEDANCE_MODEL = "seedance-1-0-pro"
+# タスク取得型APIの場合のみ:
+$env:SEEDANCE_RESULT_API_URL_TEMPLATE = "<result endpoint with {task_id}>"
+python src/app.py
+```
+
+APIキーやエンドポイントが未設定の場合、`/api/seedance/video-demo` は安全なローカル動画を返します。秘密情報は `client_secret.json` などと同じくGitへ含めません。

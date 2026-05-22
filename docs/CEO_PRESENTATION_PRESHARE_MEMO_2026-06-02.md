@@ -59,7 +59,7 @@ Workspace / GitHub で共有可能です。
 ▼ 当日見せられるもの
 
 - 公開デモ URL: https://kanta13jp1.github.io/mighty-link-ai-connect/
-  Seedance風の黒基調AI studio UIで、経歴書と案件票を AI が 4 軸
+  Seedance API動画デモUIで、経歴書と案件票を AI が 4 軸
   (Skill / Culture / Growth / Performing) で評価し、レーダーチャート +
   面接質問案を出力します
 - Google Sheets 「Mighty-Link AI Connect WBS」
@@ -121,7 +121,7 @@ Workspace / GitHub で共有可能です。
 ⑤ 月額コスト上限
 
 当日見せるもの:
-- 公開デモ URL (Seedance風黒基調UI + 4 軸スコア + レーダーチャート + 面接質問生成)
+- 公開デモ URL (Seedance API動画デモUI + 4 軸スコア + レーダーチャート + 面接質問生成)
 - Google Sheets (WBS 82 件 / 課題管理表 / QA 表)
 - Google Calendar (未完了・実行中・会議イベント)
 - NotebookLM (docs 22 件 + 社長向けスライド草案)
@@ -196,7 +196,7 @@ Workspace / GitHub で共有可能です。
 
 送付直前に寛太が確認する項目:
 
-- [ ] 公開デモ URL が Seedance風黒基調の `Mighty Skill-Bridge` UI を返す (README fallback ではない)
+- [ ] 公開デモ URL が Seedance API動画デモの `Mighty Skill-Bridge` UI を返す (README fallback ではない)
 - [ ] PowerPoint が Drive で開ける (`k-umezawa@ml-mightylink.com` 所有)
 - [ ] NotebookLM notebook (`75521ea6-...`) が 22 sources Ready
 - [ ] Google Sheets `Mighty-Link AI Connect WBS` が最新 ([sync_wbs_to_sheets.py](../scripts/sync_wbs_to_sheets.py) 実行直後)

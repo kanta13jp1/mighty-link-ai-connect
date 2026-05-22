@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-05-22 14:28:51 UTC+09:00
+Generated: 2026-05-22 15:14:58 UTC+09:00
 
 ## Purpose
 
@@ -10,13 +10,13 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 
 ## Current WBS Snapshot
 
-- Total tasks: 82
-- Done: 58
+- Total tasks: 83
+- Done: 59
 - In progress: 5
 - Not started: 19
 - Completion rate: 71%
-- CEO presentation phase tasks: 67
-- CEO presentation phase done: 47
+- CEO presentation phase tasks: 68
+- CEO presentation phase done: 48
 
 ## Knowledge Flow Tasks
 
@@ -151,7 +151,7 @@ python scripts/verify_google_workspace_account.py
 
 | 区分 | 内容 | 対応WBS |
 | --- | --- | --- |
-| デモ | 公開URL、Seedance風黒基調UI、ローカルFastAPI、Google Sheets WBS、Calendar同期状況 | T602, T603, T608, T667 |
+| デモ | 公開URL、Seedance API動画デモUI、ローカルFastAPI、Google Sheets WBS、Calendar同期状況 | T602, T603, T608, T667, T668 |
 | 説明資料 | 目的、現状、デモ導線、判断ポイント、次アクション、1枚絵サマリー | T604, T610 |
 | 論点整理 | サービス内容、対象ユーザー、収益/運用、優先機能、リスク、判断マトリクス | T605, T606, T611 |
 | 想定QA | 社長からの質問、回答方針、保留時の扱い | T607 |
@@ -193,7 +193,7 @@ python scripts/verify_google_workspace_account.py
 ## デモ導線
 
 1. 公開URLを開く: `https://kanta13jp1.github.io/mighty-link-ai-connect/`
-2. UIが README fallback ではなく、Seedance風の黒基調AI studioに刷新された Mighty Skill-Bridge のデモ画面であることを確認する。
+2. UIが README fallback ではなく、Seedance API動画デモに刷新された Mighty Skill-Bridge のデモ画面であることを確認する。
 3. サンプル経歴書と案件票を読み込み、フィット分析の流れを説明する。
 4. Google Sheets の `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` を見せる。
 5. Google Calendar の `Mighty Skill-Bridge 開発計画` を見せる。
@@ -238,7 +238,7 @@ python scripts/verify_google_workspace_account.py
 
 ## Risks & Blockers (2026-05-22 時点)
 
-3-tool
+3-t
 
 ## Source: docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md
 

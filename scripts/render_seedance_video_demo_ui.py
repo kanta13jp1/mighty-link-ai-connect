@@ -1,4 +1,24 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""Render the public/static and FastAPI demo HTML.
+
+The generated UI keeps the project-owned Mighty Skill-Bridge identity while
+presenting a Seedance API video-generation flow. It intentionally does not copy
+Seedance assets, copy, or trade dress.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+ROOT_INDEX = PROJECT_ROOT / "index.html"
+SRC_INDEX = PROJECT_ROOT / "src" / "index.html"
+
+
+HTML = r"""<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -834,3 +854,15 @@
     </script>
 </body>
 </html>
+"""
+
+
+def main() -> None:
+    ROOT_INDEX.write_text(HTML, encoding="utf-8", newline="\n")
+    SRC_INDEX.write_text(HTML, encoding="utf-8", newline="\n")
+    print(f"[+] Rendered {ROOT_INDEX}")
+    print(f"[+] Rendered {SRC_INDEX}")
+
+
+if __name__ == "__main__":
+    main()

@@ -116,7 +116,8 @@ gantt
 | **T664** | 6. 社長プレゼン準備 | 三ツール開発フロー整備 | Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定 | Codex | VSCode + Codex + Official Docs | 公式Docs確認、WBS 1件完了、Sheets課題管理表・QA表同期、commit/push/main/master反映までのセッションゲートをAGENTS.md/CLAUDE.md/手順書に反映する |
 | **T665** | 6. 社長プレゼン準備 | 古いドキュメント削除・最新化 | 古いモデル前提・件数固定・Issue固定表記を削除/更新し、公式Docs確認ルールを強化 | Codex | VSCode + Codex + Official Docs | `ANTIGRAVITY_GUIDE.md` の未確認未来モデルセクションを削除し、NotebookLM 22 source / GitHub Issue #1-#11/#13/#14/#16/#18の現状へ更新する |
 | **T666** | 6. 社長プレゼン準備 | Calendar完了イベント削除 | 完了済みWBSに紐づくGoogle Calendarイベントを削除し、未完了・実行中・会議イベントだけを残す同期ルールを実装 | Codex | VSCode + Codex + Google Calendar API | `sync_wbs_to_calendar.py` が `data/WBS.tsv` のステータスを読み、完了済みWBSイベントをCalendarからDELETEしてICS出力からも除外する |
-| **T667** | 6. 社長プレゼン準備 | Seedance風デモUI刷新 | 社長公開URLの第一印象を黒基調AI studio UIへ刷新し、既存デモ導線を維持する | Codex | VSCode + Codex + Playwright + Official Docs | `index.html` / `src/index.html` をSeedance風の映像AIプロダクトUIへ更新し、公開デモガードとローカル表示確認を完了する |
+| **T667** | 6. 社長プレゼン準備 | Seedance動画デモUI刷新 | 公開URLの第一画面を動画生成デモ中心のUIへ刷新し、既存デモ導線を維持する | Codex | VSCode + Codex + Playwright + Official Docs | `index.html` / `src/index.html` をMighty Skill-Bridgeの動画生成プレビューUIへ更新し、公開デモガードとローカル表示確認を完了する |
+| **T668** | 6. 社長プレゼン準備 | Seedance API動画デモ接続 | FastAPIにSeedance API接続アダプタと静的動画フォールバックを追加し、公開URLで動画が表示される状態にする | Codex | VSCode + Codex + FastAPI + Playwright | `/api/seedance/video-demo`、`exports/seedance_demo`、`index.html` / `src/index.html` を接続し、`SEEDANCE_API_KEY` / `SEEDANCE_API_URL` 設定時に実APIへ切り替え可能にする |
 
 ---
 

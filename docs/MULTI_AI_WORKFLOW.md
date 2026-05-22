@@ -326,9 +326,9 @@ feat/<tool>-<wbs-id>-<slug>
 
 ### Light refresh (2026-05-22 7th pass / Seedance UI refresh session)
 
-- **Seedance / ByteDance Seed**: 黒基調、強いタイポグラフィ、映像AIプロダクトのプレビュー体験を参考にしつつ、ブランド名・素材・文言はMighty Skill-Bridge独自に維持する。
+- **Seedance / ByteDance Seed**: 動画生成デモ中心、強いタイポグラフィ、映像AIプロダクトのプレビュー体験を参考にしつつ、ブランド名・素材・文言はMighty Skill-Bridge独自に維持する。
 - **Apple / Obsidian / Unity / Amazon**: Apple HIGはインターフェースの明瞭性、Obsidianはローカルvaultの情報分離、Unityは将来3Dデモ検討時の正本、Amazon Bedrockはマルチモデル選定時の候補としてURL正本化した。現時点では機能名をdocsへ固定しない。
-- **今回のWBS完了単位**: `T667 Seedance風デモUI刷新` をCodexで実装完了。`index.html` と `src/index.html` を同時更新し、公開デモガードとPlaywright desktop/mobile表示確認を通した。
+- **今回のWBS完了単位**: `T667 Seedance動画デモUI刷新` をCodexで実装完了。`index.html` と `src/index.html` を同時更新し、公開デモガードとPlaywright desktop/mobile表示確認を通した。
 
 ---
 
@@ -373,4 +373,4 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-05-22 | Codex | Session gate追加。AGENTS.md/CLAUDE.md作成、Sheets課題管理表/QA表同期、T664完了を反映 |
 | 2026-05-22 | Codex | Light refresh 5th pass: stale-doc削除を実行し、T665完了を反映 |
 | 2026-05-22 | Codex | Light refresh 6th pass: 公式Docs確認範囲拡張、Calendar完了イベント削除ルール、T614/T666完了を反映 |
-| 2026-05-22 | Codex | Light refresh 7th pass: Amazon/Apple/Obsidian/Unityを公式Docs確認範囲へ追加し、Seedance風UI刷新とT667完了を反映 |
+| 2026-05-22 | Codex | Light refresh 7th pass: Amazon/Apple/Obsidian/Unityを公式Docs確認範囲へ追加し、Seedance動画UI刷新とT667完了を反映 |

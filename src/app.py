@@ -70,6 +70,17 @@ AUDIT_LOG_FILE = os.path.join(AUDIT_DIR, "ai_audit.jsonl")
 KNOWLEDGE_FLOW_DIR = os.path.join(EXPORTS_DIR, "knowledge_flow")
 KNOWLEDGE_FLOW_MANIFEST = os.path.join(KNOWLEDGE_FLOW_DIR, "manifest.json")
 KNOWLEDGE_FLOW_SCRIPT = os.path.join(PROJECT_ROOT, "scripts", "generate_knowledge_flow_demo.py")
+SEEDANCE_DEMO_DIR = os.path.join(EXPORTS_DIR, "seedance_demo")
+SEEDANCE_DEMO_VIDEO = os.path.join(SEEDANCE_DEMO_DIR, "mighty_skill_bridge_seedance_demo.mp4")
+SEEDANCE_DEMO_MANIFEST = os.path.join(SEEDANCE_DEMO_DIR, "manifest.json")
+SEEDANCE_MODEL = os.environ.get("SEEDANCE_MODEL", "seedance-1-0-pro")
+SEEDANCE_API_URL = os.environ.get("SEEDANCE_API_URL", "").strip()
+SEEDANCE_RESULT_API_URL_TEMPLATE = os.environ.get("SEEDANCE_RESULT_API_URL_TEMPLATE", "").strip()
+SEEDANCE_API_KEY = (
+    os.environ.get("SEEDANCE_API_KEY")
+    or os.environ.get("ARK_API_KEY")
+    or os.environ.get("BYTEPLUS_API_KEY")
+)
 
 CREDENTIALS_FILE = os.path.join(PROJECT_ROOT, "credentials.json")
 CLIENT_SECRET_FILE = os.path.join(PROJECT_ROOT, "client_secret.json")
@@ -220,6 +231,93 @@ def read_recent_audit_events(limit: int = 20) -> List[dict]:
         except json.JSONDecodeError:
             continue
     return list(reversed(events))
+
+
+def seedance_demo_video_url() -> Optional[str]:
+    if os.path.exists(SEEDANCE_DEMO_VIDEO):
+        return "/exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4"
+    return None
+
+
+def read_seedance_manifest() -> Optional[dict]:
+    if not os.path.exists(SEEDANCE_DEMO_MANIFEST):
+        return None
+    with open(SEEDANCE_DEMO_MANIFEST, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def find_video_url(value):
+    """Return the first plausible video URL from nested Seedance-like payloads."""
+    if isinstance(value, str):
+        lowered = value.lower()
+        if lowered.startswith(("http://", "https://", "/exports/")) and any(
+            marker in lowered for marker in (".mp4", ".webm", ".mov", "video", "output")
+        ):
+            return value
+        return None
+    if isinstance(value, list):
+        for item in value:
+            found = find_video_url(item)
+            if found:
+                return found
+        return None
+    if isinstance(value, dict):
+        preferred_keys = (
+            "video_url",
+            "url",
+            "output_url",
+            "download_url",
+            "content_url",
+            "video",
+            "videos",
+            "output",
+            "data",
+            "result",
+            "results",
+            "assets",
+        )
+        for key in preferred_keys:
+            if key in value:
+                found = find_video_url(value[key])
+                if found:
+                    return found
+        for item in value.values():
+            found = find_video_url(item)
+            if found:
+                return found
+    return None
+
+
+def find_task_id(value) -> Optional[str]:
+    if isinstance(value, dict):
+        for key in ("task_id", "id", "request_id", "job_id"):
+            if key in value and value[key]:
+                return str(value[key])
+        for item in value.values():
+            found = find_task_id(item)
+            if found:
+                return found
+    if isinstance(value, list):
+        for item in value:
+            found = find_task_id(item)
+            if found:
+                return found
+    return None
+
+
+def seedance_fallback_response(reason: str, prompt: str, task_id: Optional[str] = None) -> dict:
+    video_url = seedance_demo_video_url()
+    return {
+        "status": "success",
+        "mode": "fallback",
+        "provider": "local_seedance_demo_asset",
+        "model": SEEDANCE_MODEL,
+        "video_url": video_url,
+        "task_id": task_id,
+        "fallback_reason": reason,
+        "manifest": read_seedance_manifest(),
+        "prompt_digest": stable_digest(prompt),
+    }
 
 
 def profile_audit_payload(profile: ParsedProfile, ai_mode: str, fallback_reason: str, source_text: str, file_name: Optional[str] = None) -> dict:
@@ -501,6 +599,18 @@ elif AI_FORCE_MOCK:
 else:
     print("[!] Warning: GEMINI_API_KEY not set or library missing. Running in mock fallback mode.")
 
+SEEDANCE_READY = bool(SEEDANCE_API_KEY and SEEDANCE_API_URL)
+if SEEDANCE_READY:
+    print("[+] Seedance API adapter configured via environment variables.")
+else:
+    print("[!] Seedance API credentials not set. Using local demo video fallback.")
+
+
+class SeedanceVideoRequest(BaseModel):
+    prompt: str
+    aspect_ratio: str = "16:9"
+    duration_seconds: int = 6
+
 # Static Hosting route
 @app.get("/", response_class=HTMLResponse)
 async def serve_index():
@@ -542,7 +652,10 @@ async def health_check():
         "sheets_live": SHEETS_LIB_AVAILABLE and (os.path.exists(CREDENTIALS_FILE) or os.path.exists(CLIENT_SECRET_FILE)),
         "gemini_live": GEMINI_READY,
         "ai_mode": "gemini_live" if GEMINI_READY else "deterministic_fallback",
-        "ai_force_mock": AI_FORCE_MOCK
+        "ai_force_mock": AI_FORCE_MOCK,
+        "seedance_live": SEEDANCE_READY,
+        "seedance_model": SEEDANCE_MODEL,
+        "seedance_demo_video": seedance_demo_video_url(),
     }
 
 
@@ -607,6 +720,89 @@ async def generate_knowledge_flow_artifacts():
         "stdout": result.stdout,
         "manifest": manifest,
     }
+
+
+@app.post("/api/seedance/video-demo")
+async def generate_seedance_video(req: SeedanceVideoRequest):
+    """Create a Seedance video when credentials are set, otherwise return a safe local preview."""
+    prompt = normalize_text(req.prompt)
+    if not prompt:
+        raise HTTPException(status_code=400, detail="prompt is required.")
+
+    if not seedance_demo_video_url():
+        return {
+            "status": "error",
+            "mode": "missing_fallback_asset",
+            "provider": "local_seedance_demo_asset",
+            "message": "Run scripts/generate_seedance_demo_video.py before launching the demo.",
+        }
+
+    if not SEEDANCE_READY:
+        return seedance_fallback_response(
+            "SEEDANCE_API_KEY and SEEDANCE_API_URL are not configured.",
+            prompt,
+        )
+
+    headers = {
+        "Authorization": f"Bearer {SEEDANCE_API_KEY}",
+        "Content-Type": "application/json",
+    }
+    payload = {
+        "model": SEEDANCE_MODEL,
+        "prompt": prompt,
+        "aspect_ratio": req.aspect_ratio,
+        "duration": req.duration_seconds,
+        "duration_seconds": req.duration_seconds,
+    }
+
+    try:
+        create_response = requests.post(
+            SEEDANCE_API_URL,
+            headers=headers,
+            json=payload,
+            timeout=45,
+        )
+        create_response.raise_for_status()
+        create_payload = create_response.json()
+        video_url = find_video_url(create_payload)
+        task_id = find_task_id(create_payload)
+
+        if video_url:
+            return {
+                "status": "success",
+                "mode": "live",
+                "provider": "seedance_api",
+                "model": SEEDANCE_MODEL,
+                "video_url": video_url,
+                "task_id": task_id,
+                "raw_status": create_payload.get("status") if isinstance(create_payload, dict) else None,
+            }
+
+        if task_id and SEEDANCE_RESULT_API_URL_TEMPLATE:
+            result_url = SEEDANCE_RESULT_API_URL_TEMPLATE.format(task_id=task_id)
+            result_response = requests.get(result_url, headers=headers, timeout=45)
+            result_response.raise_for_status()
+            result_payload = result_response.json()
+            video_url = find_video_url(result_payload)
+            if video_url:
+                return {
+                    "status": "success",
+                    "mode": "live",
+                    "provider": "seedance_api",
+                    "model": SEEDANCE_MODEL,
+                    "video_url": video_url,
+                    "task_id": task_id,
+                    "raw_status": result_payload.get("status") if isinstance(result_payload, dict) else None,
+                }
+
+        return seedance_fallback_response(
+            "Seedance task was accepted but no video URL was returned yet.",
+            prompt,
+            task_id,
+        )
+    except Exception as exc:
+        return seedance_fallback_response(f"Seedance API request failed: {exc}", prompt)
+
 
 # 1. API: Multi-modal Resume/Job Parser
 @app.post("/api/parse")

@@ -1,0 +1,9 @@
+{
+  "status": "ready",
+  "provider": "local_seedance_demo_asset",
+  "video": "exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4",
+  "fps": 12,
+  "duration_seconds": 6,
+  "resolution": "1280x720",
+  "note": "Procedural Mighty-owned fallback video for Seedance API demo UI."
+}
