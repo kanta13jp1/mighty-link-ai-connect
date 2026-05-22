@@ -319,6 +319,11 @@ feat/<tool>-<wbs-id>-<slug>
   - **本プロジェクトへの impact**: JSON hooks は sync スクリプト群 (Codex レーン) の自動起動 trigger 候補。Live voice transcription は 6/2 デモで「社長のフィードバックをリアルタイム議事録化」する見せ場候補 (T640 リハーサルで Antigravity 復帰後評価)。
 - **OpenAI Codex**: 変更なし (前回 fetch から 24h 以内、リリースサイクル 0.133.0 維持)。
 
+### Light refresh (2026-05-22 4th pass / Claude resume session)
+
+- **Anthropic / OpenAI / Google**: 変更なし (前回 fetch から < 12h、3 ソースとも本日中の知見で十分)。次回は 2026-05-23 (5/27 quota refresh 後の Antigravity CLI 評価とまとめて再 fetch)。
+- 本セッションでは公式 docs fetch をスキップする代わりに、**stale-doc 削除ルール** ([[feedback-stale-doc-deletion]]) を新規追加。docs/ANTIGRAVITY_GUIDE.md の "Gemini 3.5 Pro (来月予約)" 表記を I/O 2026 確定情報で訂正。
+
 ---
 
 ### Session gate (2026-05-22 Codex pass)
