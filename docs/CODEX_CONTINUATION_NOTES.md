@@ -652,3 +652,36 @@ Gemini quota中でも開発を止めないため、Antigravity + Gemini / VSCode
 - OpenAI: Codexのプロジェクト指示は `AGENTS.md` に集約し、1セッション1 coherent unit of work としてT665を完了。
 - Google: Geminiモデル選定は固定名ではなく公式モデル一覧確認、Sheets同期はbatchUpdate前提でWBS/課題管理表/QA表をまとめて更新。
 - POST_DECISION_ROADMAP.md は 6/2 後に方向性確定で不要セクションを削除する計画を HANDOFF-12 として事前に登録
+
+## 2026-05-22 (5th session) Claude Code WBS 完遂: T614 + Calendar 完了イベント削除ルール導入
+
+本日 5 回目の Claude Code セッションで **T614 (事前送付メモ)** を完遂。WBS 上の予定は 5/30-5/31 → 1 週間以上前倒し。あわせてユーザーからの新規ルール「カレンダーに同期したイベントで完了したものは、カレンダーからは削除したいです」に対応する memory 化と Codex への実装 handoff (HANDOFF-13) を実施。
+
+### 5th session 完遂内容
+
+- 新規 [docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md](CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md) — 社長への事前共有メモ 3 種類 (長文版 / 短文版 / 当日アジェンダ短文) + 送付前チェックリスト + 送付タイミング案 (T614 deliverable)
+- [docs/CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md) 関連 docs リストに PRESHARE_MEMO 追加
+- [README.md](../README.md) Documents セクションに PRESHARE_MEMO 追加
+- [data/issues_tracker.tsv](../data/issues_tracker.tsv) — HANDOFF-13 新規追加 (sync_wbs_to_calendar.py の完了行 DELETE 実装)
+- 新規 memory (Claude 専有): `feedback_calendar_completed_event_deletion.md` — Calendar 完了イベント削除ルール
+
+### 5th session WBS.tsv 反映依頼 (Codex セッションへ handoff)
+
+- **T614** ステータス `未着手` → `完了`、終了予定日 `2026-05-31` → 実際終了日 `2026-05-22`、実行エンジン `VSCode + Codex` → `VSCode + Claude Code`、担当 `人間 + Codex` → `Claude Code`
+- 既存依頼 (T605/T606/T607/T615 完了 flip / T663 実行中化) と一括 commit 推奨
+
+### 5th session HANDOFF-13: sync_wbs_to_calendar.py 完了行 DELETE 実装
+
+[[feedback-calendar-completed-event-deletion]] memory 由来。実装方針:
+
+1. `data/WBS.tsv` パース時に各行の `ステータス` 列を確認
+2. `ステータス == "完了"` の行については Calendar 上の対応イベント (タイトル一致) があれば **DELETE**
+3. `ステータス != "完了"` の行については従来どおり upsert
+4. 既存の `delete_duplicates` / `delete_stale_titles` ロジックはそのまま維持
+5. 削除件数を sync ログに `[+] Removed completed event: <title>` として記録
+
+完了行が「未着手」に巻き戻された場合は次回 sync で再作成される (upsert)。
+
+### 5th session — stale-doc 削除ルール (4th session 由来) の継続
+
+新規 stale-doc 訂正は発生せず。前回 R1 訂正の効果を継続。HANDOFF-12 (POST_DECISION_ROADMAP の方向性確定後不要セクション削除) は 6/3 までに実施予定 (本セッションでは方向性未確定のため未実施)。

@@ -48,6 +48,7 @@ python scripts/verify_google_workspace_account.py
 - [6/2 社長打ち合わせ 想定 QA パック](docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md) - T607 deliverable
 - [6/2 社長打ち合わせ 運用・体制・リスク・費用感 論点](docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) - T606 deliverable
 - [6/2 決定後ロードマップ枠](docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md) - T615 deliverable
+- [6/2 社長 事前共有メモ + 当日アジェンダ短文](docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md) - T614 deliverable
 - [6/2 社長プレゼン 最終レビュー チェックリスト](docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) - T663 deliverable
 - [Sheets 追加タブ スキーマ (課題管理表 / QA 表)](docs/SHEETS_TRACKERS_SCHEMA.md)
 - [開発ナレッジ連携フロー手順書](docs/DEVELOPMENT_KNOWLEDGE_FLOW.md)
