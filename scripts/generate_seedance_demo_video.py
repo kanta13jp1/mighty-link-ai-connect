@@ -22,6 +22,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = PROJECT_ROOT / "exports" / "seedance_demo"
 FRAMES_DIR = OUT_DIR / "_frames"
 VIDEO_PATH = OUT_DIR / "mighty_skill_bridge_seedance_demo.mp4"
+PROCEDURAL_BACKUP_VIDEO_PATH = OUT_DIR / "mighty_skill_bridge_procedural_fallback.mp4"
 MANIFEST_PATH = OUT_DIR / "manifest.json"
 
 WIDTH = 1280
@@ -131,6 +132,16 @@ def draw_frame(index: int) -> Image.Image:
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
+    target_video = VIDEO_PATH
+    existing_manifest = {}
+    if MANIFEST_PATH.exists():
+        try:
+            existing_manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            existing_manifest = {}
+    if existing_manifest.get("provider") == "seedance_api_saved_default" and VIDEO_PATH.exists():
+        target_video = PROCEDURAL_BACKUP_VIDEO_PATH
+
     if FRAMES_DIR.exists():
         shutil.rmtree(FRAMES_DIR)
     FRAMES_DIR.mkdir(parents=True)
@@ -157,22 +168,26 @@ def main() -> None:
         "+faststart",
         "-t",
         str(SECONDS),
-        str(VIDEO_PATH),
+        str(target_video),
     ]
     subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     shutil.rmtree(FRAMES_DIR)
 
-    manifest = {
+    manifest = existing_manifest if existing_manifest.get("provider") == "seedance_api_saved_default" else {}
+    manifest.update({
         "status": "ready",
-        "provider": "local_seedance_demo_asset",
-        "video": VIDEO_PATH.relative_to(PROJECT_ROOT).as_posix(),
+        "provider": manifest.get("provider", "local_seedance_demo_asset"),
+        "video": manifest.get("video", VIDEO_PATH.relative_to(PROJECT_ROOT).as_posix()),
+        "backup_video": target_video.relative_to(PROJECT_ROOT).as_posix() if target_video != VIDEO_PATH else manifest.get("backup_video"),
         "fps": FPS,
         "duration_seconds": SECONDS,
         "resolution": f"{WIDTH}x{HEIGHT}",
-        "note": "Procedural Mighty-owned fallback video for Seedance API demo UI.",
-    }
+        "note": manifest.get("note", "Procedural Mighty-owned fallback video for Seedance API demo UI."),
+    })
+    if manifest.get("backup_video") is None:
+        manifest.pop("backup_video", None)
     MANIFEST_PATH.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"[+] Seedance demo video generated: {VIDEO_PATH}")
+    print(f"[+] Seedance demo video generated: {target_video}")
     print(f"[*] Manifest: {MANIFEST_PATH}")
 
 

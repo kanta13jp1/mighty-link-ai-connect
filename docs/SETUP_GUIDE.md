@@ -336,6 +336,7 @@ $env:SEEDANCE_API_KEY = "<BytePlus ModelArk API key>"
 $env:SEEDANCE_API_URL = "https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks"
 $env:SEEDANCE_RESULT_API_URL_TEMPLATE = "https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks/{task_id}"
 $env:SEEDANCE_MODEL = "dreamina-seedance-2-0-260128"
+$env:SEEDANCE_API_ENABLED = "1"
 ```
 
 `/api/seedance/video-demo` sends `content: [{type: "text", text: prompt}]`, `ratio`, and `duration`. If another BytePlus media endpoint requires the older `prompt` field, set this before starting FastAPI:
@@ -380,3 +381,33 @@ The browser also continues polling after a `pending` response. It calls:
 ```
 
 every 10 seconds for up to about 10 minutes, then replaces the preview video when a generated URL is returned. If DevTools still shows `task_status=running`, keep the page open or raise the polling window for longer generation jobs.
+
+## 2026-05-22 Seedance cost guard and saved default video
+
+Seedance API billing calls are disabled by default. Even if `SEEDANCE_API_KEY` is set, FastAPI returns the saved local video unless this flag is set before startup:
+
+```powershell
+$env:SEEDANCE_API_ENABLED = "1"
+python src/app.py
+```
+
+For normal demos, leave `SEEDANCE_API_ENABLED` unset. The default video is:
+
+```text
+exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4
+```
+
+The generated Seedance result has been saved to that path, and the previous procedural fallback is kept at:
+
+```text
+exports/seedance_demo/mighty_skill_bridge_procedural_fallback.mp4
+```
+
+The UI exposes a `Download Video` button that downloads the currently displayed video. Token/resource usage should be checked from BytePlus Console:
+
+```text
+ModelArk > Usage
+ModelArk > Model activation > Media > Dreamina-Seedance-2.0
+```
+
+The API response used by this demo does not currently expose token consumption, so the source of truth for spend is the BytePlus usage/resource-pack screens.

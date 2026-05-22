@@ -596,6 +596,7 @@ HTML = r"""<!DOCTYPE html>
                     <div class="hero-actions">
                         <button class="bridge-btn" onclick="runAnalysis()"><span class="play-glyph"></span>Analyze Fit</button>
                         <button class="sample-btn" onclick="generateSeedanceVideo()">Generate Video</button>
+                        <a id="video-download-link" class="sample-btn download-link" href="exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4" download="mighty_skill_bridge_seedance_demo.mp4">Download Video</a>
                     </div>
                 </div>
             </div>
@@ -697,6 +698,7 @@ HTML = r"""<!DOCTYPE html>
 
         function setVideoSource(url) {
             const video = document.getElementById("seedance-video");
+            const downloadLink = document.getElementById("video-download-link");
             if (!url) {
                 url = seedanceFallbackVideo;
             }
@@ -705,6 +707,7 @@ HTML = r"""<!DOCTYPE html>
                 video.src = url;
                 video.load();
             }
+            downloadLink.href = url;
             video.play().catch(() => {});
         }
 

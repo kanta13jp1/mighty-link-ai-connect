@@ -35,6 +35,13 @@ def env_int(name: str, default: int, minimum: int, maximum: int) -> int:
     return max(minimum, min(value, maximum))
 
 
+def env_flag(name: str, default: bool = False) -> bool:
+    raw_value = os.environ.get(name)
+    if raw_value is None:
+        return default
+    return raw_value.strip().lower() in {"1", "true", "yes", "on"}
+
+
 # Set console encoding to UTF-8 to prevent encoding errors on Windows terminal
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -89,6 +96,7 @@ SEEDANCE_RESULT_API_URL_TEMPLATE = os.environ.get("SEEDANCE_RESULT_API_URL_TEMPL
 SEEDANCE_PAYLOAD_STYLE = os.environ.get("SEEDANCE_PAYLOAD_STYLE", "content_task").strip().lower()
 SEEDANCE_POLL_TIMEOUT_SECONDS = env_int("SEEDANCE_POLL_TIMEOUT_SECONDS", 30, 0, 600)
 SEEDANCE_POLL_INTERVAL_SECONDS = env_int("SEEDANCE_POLL_INTERVAL_SECONDS", 5, 1, 60)
+SEEDANCE_API_ENABLED = env_flag("SEEDANCE_API_ENABLED", False)
 SEEDANCE_API_KEY = (
     os.environ.get("SEEDANCE_API_KEY")
     or os.environ.get("ARK_API_KEY")
@@ -731,9 +739,12 @@ elif AI_FORCE_MOCK:
 else:
     print("[!] Warning: GEMINI_API_KEY not set or library missing. Running in mock fallback mode.")
 
-SEEDANCE_READY = bool(SEEDANCE_API_KEY and SEEDANCE_API_URL)
+SEEDANCE_CONFIGURED = bool(SEEDANCE_API_KEY and SEEDANCE_API_URL)
+SEEDANCE_READY = bool(SEEDANCE_API_ENABLED and SEEDANCE_CONFIGURED)
 if SEEDANCE_READY:
-    print("[+] Seedance API adapter configured via environment variables.")
+    print("[+] Seedance API adapter enabled via environment variables.")
+elif SEEDANCE_CONFIGURED:
+    print("[*] Seedance API credentials detected, but external calls are disabled. Set SEEDANCE_API_ENABLED=1 to enable billing calls.")
 else:
     print("[!] Seedance API credentials not set. Using local demo video fallback.")
 
@@ -786,6 +797,8 @@ async def health_check():
         "ai_mode": "gemini_live" if GEMINI_READY else "deterministic_fallback",
         "ai_force_mock": AI_FORCE_MOCK,
         "seedance_live": SEEDANCE_READY,
+        "seedance_api_enabled": SEEDANCE_API_ENABLED,
+        "seedance_credentials_configured": SEEDANCE_CONFIGURED,
         "seedance_model": SEEDANCE_MODEL,
         "seedance_result_polling": bool(SEEDANCE_RESULT_API_URL_TEMPLATE),
         "seedance_poll_timeout_seconds": SEEDANCE_POLL_TIMEOUT_SECONDS,
@@ -872,8 +885,11 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
         }
 
     if not SEEDANCE_READY:
+        reason = "Seedance API billing calls are disabled by default. Set SEEDANCE_API_ENABLED=1 before starting FastAPI to generate a new video."
+        if not SEEDANCE_CONFIGURED:
+            reason = "SEEDANCE_API_KEY and SEEDANCE_API_URL are not configured."
         return seedance_fallback_response(
-            "SEEDANCE_API_KEY and SEEDANCE_API_URL are not configured.",
+            reason,
             prompt,
         )
 
@@ -944,8 +960,11 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
 async def get_seedance_video_task(task_id: str):
     """Check an existing Seedance task once so the browser can continue polling."""
     if not SEEDANCE_READY:
+        reason = "Seedance API billing calls are disabled by default. Set SEEDANCE_API_ENABLED=1 before starting FastAPI to poll a remote task."
+        if not SEEDANCE_CONFIGURED:
+            reason = "SEEDANCE_API_KEY and SEEDANCE_API_URL are not configured."
         return seedance_fallback_response(
-            "SEEDANCE_API_KEY and SEEDANCE_API_URL are not configured.",
+            reason,
             task_id,
             task_id,
         )

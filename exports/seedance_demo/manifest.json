@@ -1,9 +1,11 @@
-{
-  "status": "ready",
-  "provider": "local_seedance_demo_asset",
-  "video": "exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4",
-  "fps": 12,
-  "duration_seconds": 6,
-  "resolution": "1280x720",
-  "note": "Procedural Mighty-owned fallback video for Seedance API demo UI."
+﻿{
+    "status":  "ready",
+    "provider":  "seedance_api_saved_default",
+    "model":  "dreamina-seedance-2-0-260128",
+    "task_id":  "cgt-20260522194932-9g599",
+    "task_status":  "succeeded",
+    "video":  "exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4",
+    "backup_video":  "exports/seedance_demo/mighty_skill_bridge_procedural_fallback.mp4",
+    "downloaded_at":  "2026-05-22T12:01:24Z",
+    "note":  "Generated Seedance video saved as the default local demo asset. Seedance API calls are disabled by default unless SEEDANCE_API_ENABLED=1."
 }
