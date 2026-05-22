@@ -714,6 +714,33 @@ HTML = r"""<!DOCTYPE html>
             document.getElementById("api-status").textContent = provider || "Seedance API Preview";
         }
 
+        function wait(ms) {
+            return new Promise((resolve) => setTimeout(resolve, ms));
+        }
+
+        async function pollSeedanceTask(taskId) {
+            const maxAttempts = 60;
+            for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+                setStatus(`Rendering ${attempt}/${maxAttempts}`, "Seedance API");
+                const response = await fetch(`/api/seedance/video-task/${encodeURIComponent(taskId)}`);
+                if (!response.ok) {
+                    break;
+                }
+                const data = await response.json();
+                if (data.mode === "live" && data.video_url) {
+                    setVideoSource(data.video_url);
+                    setStatus("Video ready", "Seedance API");
+                    return;
+                }
+                if (data.mode === "fallback") {
+                    break;
+                }
+                await wait(10000);
+            }
+            setVideoSource(seedanceFallbackVideo);
+            setStatus("Preview ready", "Preview video");
+        }
+
         async function generateSeedanceVideo() {
             const prompt = document.getElementById("seedance-prompt").value.trim();
             setStatus("Generating", "Seedance API");
@@ -734,6 +761,8 @@ HTML = r"""<!DOCTYPE html>
                 setVideoSource(data.video_url || seedanceFallbackVideo);
                 if (data.mode === "live") {
                     setStatus("Video ready", "Seedance API");
+                } else if (data.mode === "pending" && data.task_id) {
+                    await pollSeedanceTask(data.task_id);
                 } else {
                     setStatus("Preview ready", "Preview video");
                 }

@@ -87,7 +87,7 @@ SEEDANCE_MODEL = os.environ.get("SEEDANCE_MODEL", "seedance-1-0-pro")
 SEEDANCE_API_URL = os.environ.get("SEEDANCE_API_URL", "").strip()
 SEEDANCE_RESULT_API_URL_TEMPLATE = os.environ.get("SEEDANCE_RESULT_API_URL_TEMPLATE", "").strip()
 SEEDANCE_PAYLOAD_STYLE = os.environ.get("SEEDANCE_PAYLOAD_STYLE", "content_task").strip().lower()
-SEEDANCE_POLL_TIMEOUT_SECONDS = env_int("SEEDANCE_POLL_TIMEOUT_SECONDS", 120, 0, 600)
+SEEDANCE_POLL_TIMEOUT_SECONDS = env_int("SEEDANCE_POLL_TIMEOUT_SECONDS", 30, 0, 600)
 SEEDANCE_POLL_INTERVAL_SECONDS = env_int("SEEDANCE_POLL_INTERVAL_SECONDS", 5, 1, 60)
 SEEDANCE_API_KEY = (
     os.environ.get("SEEDANCE_API_KEY")
@@ -344,6 +344,21 @@ def seedance_fallback_response(reason: str, prompt: str, task_id: Optional[str] 
         "model": SEEDANCE_MODEL,
         "video_url": video_url,
         "task_id": task_id,
+        "fallback_reason": reason,
+        "manifest": read_seedance_manifest(),
+        "prompt_digest": stable_digest(prompt),
+    }
+
+
+def seedance_pending_response(reason: str, prompt: str, task_id: str, raw_status: Optional[str] = None) -> dict:
+    return {
+        "status": "success",
+        "mode": "pending",
+        "provider": "seedance_api",
+        "model": SEEDANCE_MODEL,
+        "video_url": seedance_demo_video_url(),
+        "task_id": task_id,
+        "task_status": raw_status or "running",
         "fallback_reason": reason,
         "manifest": read_seedance_manifest(),
         "prompt_digest": stable_digest(prompt),
@@ -907,7 +922,12 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
                     "task_id": task_id,
                     "raw_status": result_payload.get("status") if isinstance(result_payload, dict) else None,
                 }
-            return seedance_fallback_response(poll_reason, prompt, task_id)
+            return seedance_pending_response(
+                poll_reason,
+                prompt,
+                task_id,
+                find_task_status(result_payload),
+            )
 
         return seedance_fallback_response(
             "Seedance task was accepted but no video URL was returned yet.",
@@ -918,6 +938,61 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
         return seedance_fallback_response(f"Seedance API request failed: {exc}", prompt)
     except ValueError as exc:
         return seedance_fallback_response(f"Seedance API returned non-JSON response: {exc}", prompt)
+
+
+@app.get("/api/seedance/video-task/{task_id}")
+async def get_seedance_video_task(task_id: str):
+    """Check an existing Seedance task once so the browser can continue polling."""
+    if not SEEDANCE_READY:
+        return seedance_fallback_response(
+            "SEEDANCE_API_KEY and SEEDANCE_API_URL are not configured.",
+            task_id,
+            task_id,
+        )
+    if not SEEDANCE_RESULT_API_URL_TEMPLATE:
+        return seedance_pending_response(
+            "SEEDANCE_RESULT_API_URL_TEMPLATE is not configured for result polling.",
+            task_id,
+            task_id,
+            "unknown",
+        )
+
+    headers = {
+        "Authorization": f"Bearer {SEEDANCE_API_KEY}",
+        "Content-Type": "application/json",
+    }
+    result_url = SEEDANCE_RESULT_API_URL_TEMPLATE.format(task_id=task_id)
+    try:
+        result_response = requests.get(result_url, headers=headers, timeout=45)
+        if not result_response.ok:
+            return seedance_fallback_response(
+                f"Seedance result request failed: {summarize_seedance_http_error(result_response)}",
+                task_id,
+                task_id,
+            )
+        result_payload = result_response.json()
+        video_url = find_video_url(result_payload)
+        task_status = find_task_status(result_payload)
+        if video_url:
+            return {
+                "status": "success",
+                "mode": "live",
+                "provider": "seedance_api",
+                "model": SEEDANCE_MODEL,
+                "video_url": video_url,
+                "task_id": task_id,
+                "task_status": task_status,
+            }
+        return seedance_pending_response(
+            "Seedance task is still running.",
+            task_id,
+            task_id,
+            task_status,
+        )
+    except requests.RequestException as exc:
+        return seedance_fallback_response(f"Seedance result request failed: {exc}", task_id, task_id)
+    except ValueError as exc:
+        return seedance_fallback_response(f"Seedance result returned non-JSON response: {exc}", task_id, task_id)
 
 
 # 1. API: Multi-modal Resume/Job Parser

@@ -352,7 +352,7 @@ ModelArk video generation is asynchronous. A successful create request can retur
 
 ```powershell
 $env:SEEDANCE_RESULT_API_URL_TEMPLATE = "https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks/{task_id}"
-$env:SEEDANCE_POLL_TIMEOUT_SECONDS = "120"
+$env:SEEDANCE_POLL_TIMEOUT_SECONDS = "30"
 $env:SEEDANCE_POLL_INTERVAL_SECONDS = "5"
 python src/app.py
 ```
@@ -368,7 +368,15 @@ Expected fields:
 ```text
 seedance_live: True
 seedance_result_polling: True
-seedance_poll_timeout_seconds: 120
+seedance_poll_timeout_seconds: 30
 ```
 
 If `fallback_reason` says the task was accepted but no URL was returned within the timeout, increase `SEEDANCE_POLL_TIMEOUT_SECONDS`, restart FastAPI, and retry.
+
+The browser also continues polling after a `pending` response. It calls:
+
+```text
+/api/seedance/video-task/{task_id}
+```
+
+every 10 seconds for up to about 10 minutes, then replaces the preview video when a generated URL is returned. If DevTools still shows `task_status=running`, keep the page open or raise the polling window for longer generation jobs.
