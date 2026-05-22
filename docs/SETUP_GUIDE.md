@@ -490,3 +490,24 @@ Gemini live mode now uses the current `google-genai` package instead of the depr
 ```powershell
 pip install -r requirements.txt
 ```
+
+## 2026-05-23 Chrome DevTools workspace route
+
+Chrome DevTools can request the following local-only endpoint when DevTools is open against `localhost` or `127.0.0.1`:
+
+```text
+/.well-known/appspecific/com.chrome.devtools.json
+```
+
+FastAPI now responds with Chrome's Automatic Workspace connection JSON:
+
+```json
+{
+  "workspace": {
+    "root": "<absolute local project root>",
+    "uuid": "<stable project uuid>"
+  }
+}
+```
+
+This removes the noisy 404 from local server logs and lets Chrome offer a workspace connection in DevTools. The response intentionally includes the absolute local project path, so this route is for the local FastAPI development server only. The public GitHub Pages demo does not use this FastAPI route.

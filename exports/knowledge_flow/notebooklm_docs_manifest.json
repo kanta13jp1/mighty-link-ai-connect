@@ -1,5 +1,5 @@
 {
-  "generated_at_jst": "2026-05-22T22:55:11+09:00",
+  "generated_at_jst": "2026-05-23T00:17:52+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "google_docs": {
     "docs_antigravity_guide_md": {
@@ -16,7 +16,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:05.145Z",
-      "modifiedTime": "2026-05-22T13:51:24.635Z"
+      "modifiedTime": "2026-05-22T15:13:44.634Z"
     },
     "docs_backend_ai_pipeline_md": {
       "source": "docs/BACKEND_AI_PIPELINE.md",
@@ -32,7 +32,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:08.445Z",
-      "modifiedTime": "2026-05-22T13:51:26.658Z"
+      "modifiedTime": "2026-05-22T15:13:47.214Z"
     },
     "docs_ceo_presentation_decision_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md",
@@ -48,7 +48,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:11.504Z",
-      "modifiedTime": "2026-05-22T13:51:28.718Z"
+      "modifiedTime": "2026-05-22T15:13:49.549Z"
     },
     "docs_ceo_presentation_discussion_points_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md",
@@ -64,7 +64,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:10.521Z",
-      "modifiedTime": "2026-05-22T13:51:30.927Z"
+      "modifiedTime": "2026-05-22T15:13:51.986Z"
     },
     "docs_ceo_presentation_final_review_checklist_md": {
       "source": "docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md",
@@ -80,7 +80,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:13.734Z",
-      "modifiedTime": "2026-05-22T13:51:33.314Z"
+      "modifiedTime": "2026-05-22T15:13:54.146Z"
     },
     "docs_ceo_presentation_ops_discussion_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md",
@@ -96,7 +96,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:16.975Z",
-      "modifiedTime": "2026-05-22T13:51:35.913Z"
+      "modifiedTime": "2026-05-22T15:13:56.881Z"
     },
     "docs_ceo_presentation_post_decision_roadmap_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
@@ -112,7 +112,7 @@
         }
       ],
       "createdTime": "2026-05-22T01:55:28.832Z",
-      "modifiedTime": "2026-05-22T13:51:38.403Z"
+      "modifiedTime": "2026-05-22T15:13:59.207Z"
     },
     "docs_ceo_presentation_prep_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PREP_2026-06-02.md",
@@ -128,7 +128,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:13.861Z",
-      "modifiedTime": "2026-05-22T13:51:40.971Z"
+      "modifiedTime": "2026-05-22T15:14:01.262Z"
     },
     "docs_ceo_presentation_preshare_memo_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md",
@@ -144,7 +144,7 @@
         }
       ],
       "createdTime": "2026-05-22T04:29:57.435Z",
-      "modifiedTime": "2026-05-22T13:51:43.277Z"
+      "modifiedTime": "2026-05-22T15:14:03.503Z"
     },
     "docs_ceo_presentation_qa_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md",
@@ -160,7 +160,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:23.139Z",
-      "modifiedTime": "2026-05-22T13:51:45.364Z"
+      "modifiedTime": "2026-05-22T15:14:05.628Z"
     },
     "docs_codex_continuation_notes_md": {
       "source": "docs/CODEX_CONTINUATION_NOTES.md",
@@ -176,7 +176,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:17.070Z",
-      "modifiedTime": "2026-05-22T13:51:47.831Z"
+      "modifiedTime": "2026-05-22T15:14:08.167Z"
     },
     "docs_database_md": {
       "source": "docs/database.md",
@@ -192,7 +192,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:20.169Z",
-      "modifiedTime": "2026-05-22T13:51:50.092Z"
+      "modifiedTime": "2026-05-22T15:14:10.530Z"
     },
     "docs_development_knowledge_flow_md": {
       "source": "docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
@@ -208,7 +208,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:23.586Z",
-      "modifiedTime": "2026-05-22T13:51:52.234Z"
+      "modifiedTime": "2026-05-22T15:14:13.098Z"
     },
     "docs_google_workspace_migration_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
@@ -224,7 +224,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:26.826Z",
-      "modifiedTime": "2026-05-22T13:51:55.823Z"
+      "modifiedTime": "2026-05-22T15:14:15.333Z"
     },
     "docs_integration_demo_evidence_2026_06_02_md": {
       "source": "docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md",
@@ -240,7 +240,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:30.369Z",
-      "modifiedTime": "2026-05-22T13:51:57.835Z"
+      "modifiedTime": "2026-05-22T15:14:17.701Z"
     },
     "docs_multi_ai_workflow_md": {
       "source": "docs/MULTI_AI_WORKFLOW.md",
@@ -256,7 +256,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:39.743Z",
-      "modifiedTime": "2026-05-22T13:52:00.294Z"
+      "modifiedTime": "2026-05-22T15:14:20.687Z"
     },
     "docs_project_structure_md": {
       "source": "docs/PROJECT_STRUCTURE.md",
@@ -272,7 +272,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:33.155Z",
-      "modifiedTime": "2026-05-22T13:52:02.718Z"
+      "modifiedTime": "2026-05-22T15:14:22.755Z"
     },
     "docs_requirements_md": {
       "source": "docs/requirements.md",
@@ -288,7 +288,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:35.726Z",
-      "modifiedTime": "2026-05-22T13:52:05.211Z"
+      "modifiedTime": "2026-05-22T15:14:25.092Z"
     },
     "docs_setup_guide_md": {
       "source": "docs/SETUP_GUIDE.md",
@@ -304,7 +304,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:39.055Z",
-      "modifiedTime": "2026-05-22T13:52:07.619Z"
+      "modifiedTime": "2026-05-22T15:14:26.979Z"
     },
     "docs_sheets_trackers_schema_md": {
       "source": "docs/SHEETS_TRACKERS_SCHEMA.md",
@@ -320,7 +320,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:50.427Z",
-      "modifiedTime": "2026-05-22T13:52:09.650Z"
+      "modifiedTime": "2026-05-22T15:14:29.439Z"
     },
     "docs_wbs_md": {
       "source": "docs/WBS.md",
@@ -336,7 +336,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-05-22T13:52:11.661Z"
+      "modifiedTime": "2026-05-22T15:14:31.761Z"
     },
     "docs_wbs_sync_guide_md": {
       "source": "docs/WBS_SYNC_GUIDE.md",
@@ -352,19 +352,19 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:44.871Z",
-      "modifiedTime": "2026-05-22T13:52:13.996Z"
+      "modifiedTime": "2026-05-22T15:14:33.952Z"
     }
   },
   "notebooklm": {
     "available": true,
     "status": "ready",
-    "status_output": "Current Context                            \n+---------------------------------------------------------------------+\n| Property     | Value                                                |\n|--------------+------------------------------------------------------|\n| Notebook ID  | 75521ea6-6b9b-47b2-9508-50050d8ab2d5                 |\n| Title        | Mighty Skill-Bridge Development Knowledge 2026-06-02 |\n| Ownership    | Owner                                                |\n| Created      | 2026-05-22                                           |\n| Conversation | ec395455-3359-4609-bd4a-065c24a0341a                 |\n+---------------------------------------------------------------------+",
-    "list_output": "Notebooks                                   \n+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 75521ea6-6b9b-47b2-9508-5�c | Mighty Skill-Bridge       | Owner | 2026-05-22 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 5790a227-0187-4b6c-a88e-0�c | Dreamina Seedance 2.0     | Owner | 2026-05-22 |\n|                            | Resource Pack Guide       |       |            |\n| 6d164541-3e0c-49a4-8728-8�c | Google I/O 2026: Building | Owner | 2026-05-22 |\n|                            | the Agentic Future        |       |            |\n| 4af4503e-1085-4281-9b3e-f�c | Mighty-Link AI Connect    | Owner | 2026-05-22 |\n|                            | Project Management WBS    |       |            |\n+-----------------------------------------------------------------------------+",
+    "status_output": "Current Context                            \n+---------------------------------------------------------------------+\n| Property     | Value                                                |\n|--------------+------------------------------------------------------|\n| Notebook ID  | 75521ea6-6b9b-47b2-9508-50050d8ab2d5                 |\n| Title        | Mighty Skill-Bridge Development Knowledge 2026-06-02 |\n| Ownership    | Owner                                                |\n| Created      | 2026-05-23                                           |\n| Conversation | None (will auto-select on next ask)                  |\n+---------------------------------------------------------------------+",
+    "list_output": "Notebooks                                   \n+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 75521ea6-6b9b-47b2-9508-5�c | Mighty Skill-Bridge       | Owner | 2026-05-23 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 5790a227-0187-4b6c-a88e-0�c | Dreamina Seedance 2.0     | Owner | 2026-05-22 |\n|                            | Resource Pack Guide       |       |            |\n| 6d164541-3e0c-49a4-8728-8�c | Google I/O 2026: Building | Owner | 2026-05-22 |\n|                            | the Agentic Future        |       |            |\n| 4af4503e-1085-4281-9b3e-f�c | Mighty-Link AI Connect    | Owner | 2026-05-22 |\n|                            | Project Management WBS    |       |            |\n+-----------------------------------------------------------------------------+",
     "notebook_id": "75521ea6-6b9b-47b2-9508-50050d8ab2d5",
     "notebook_title": "Mighty Skill-Bridge Development Knowledge 2026-06-02",
     "notebook_info": {
       "action": "used_existing",
-      "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 75521ea6-6b9b-47b2-9508-5�c | Mighty Skill-Bridge       | Owner | 2026-05-22 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
+      "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 75521ea6-6b9b-47b2-9508-5�c | Mighty Skill-Bridge       | Owner | 2026-05-23 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
     },
     "source_results": [
       {

@@ -20,6 +20,7 @@ import json
 import io
 import re
 import hashlib
+import uuid
 import requests
 import subprocess
 import time
@@ -92,6 +93,7 @@ KNOWLEDGE_FLOW_DIR = os.path.join(EXPORTS_DIR, "knowledge_flow")
 KNOWLEDGE_FLOW_MANIFEST = os.path.join(KNOWLEDGE_FLOW_DIR, "manifest.json")
 KNOWLEDGE_FLOW_SCRIPT = os.path.join(PROJECT_ROOT, "scripts", "generate_knowledge_flow_demo.py")
 FAVICON_FILE = os.path.join(PROJECT_ROOT, "favicon.ico")
+CHROME_DEVTOOLS_WORKSPACE_PATH = "/.well-known/appspecific/com.chrome.devtools.json"
 SEEDANCE_DEMO_DIR = os.path.join(EXPORTS_DIR, "seedance_demo")
 SEEDANCE_DEMO_VIDEO = os.path.join(SEEDANCE_DEMO_DIR, "mighty_skill_bridge_seedance_demo.mp4")
 SEEDANCE_DEMO_MANIFEST = os.path.join(SEEDANCE_DEMO_DIR, "manifest.json")
@@ -121,6 +123,17 @@ GEMINI_DAILY_REPORTED_TOKEN_LIMIT = env_int("GEMINI_DAILY_REPORTED_TOKEN_LIMIT",
 
 os.makedirs(EXPORTS_DIR, exist_ok=True)
 app.mount("/exports", StaticFiles(directory=EXPORTS_DIR), name="exports")
+
+
+def deterministic_uuid4(seed: str) -> str:
+    digest = bytearray(hashlib.sha256(seed.encode("utf-8")).digest()[:16])
+    digest[6] = (digest[6] & 0x0F) | 0x40
+    digest[8] = (digest[8] & 0x3F) | 0x80
+    return str(uuid.UUID(bytes=bytes(digest)))
+
+
+DEVTOOLS_WORKSPACE_UUID = deterministic_uuid4(os.path.normcase(os.path.abspath(PROJECT_ROOT)))
+
 
 # Mighty-Link Color Palette (Normalized for Sheets API)
 COLORS = {
@@ -1016,6 +1029,17 @@ async def favicon():
     if not os.path.exists(FAVICON_FILE):
         raise HTTPException(status_code=404, detail="favicon.ico not found in project root.")
     return FileResponse(FAVICON_FILE, media_type="image/x-icon")
+
+
+@app.get(CHROME_DEVTOOLS_WORKSPACE_PATH, include_in_schema=False)
+async def chrome_devtools_workspace():
+    """Lets Chrome DevTools connect this localhost app to the workspace without a 404."""
+    return JSONResponse({
+        "workspace": {
+            "root": os.path.abspath(PROJECT_ROOT),
+            "uuid": DEVTOOLS_WORKSPACE_UUID,
+        }
+    })
 
 
 @app.get("/", response_class=HTMLResponse)
