@@ -36,7 +36,7 @@
 - [CEO_PRESENTATION_QA_PACK_2026-06-02.md](CEO_PRESENTATION_QA_PACK_2026-06-02.md): 22 想定 QA + 保留フロー + 機材チェックリスト (T607 deliverable)。
 - [CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md): 開発体制・運用責任分担・リスク R9-R13・費用感 12 Q-OPS (T606 deliverable)。
 - [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md): 6/1 21:00 JST Final Review 用 35 項目 checklist (T663 deliverable)。
-- [SHEETS_TRACKERS_SCHEMA.md](SHEETS_TRACKERS_SCHEMA.md): 課題管理表 + QA 表の Sheets スキーマと運用フロー。
+- [SHEETS_TRACKERS_SCHEMA.md](SHEETS_TRACKERS_SCHEMA.md): 課題管理表 + QA表の Sheets スキーマと運用フロー。
 - [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md): 3-tool 体制 (Antigravity+Gemini / Codex / Claude Code) と handoff 規約。
 - [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md): NotebookLM / Slack / Notion / Obsidian 連携の開発フロー候補。
 - [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md): CLI/MCPで実施した連携証跡、GitHub Issues、Project権限課題。

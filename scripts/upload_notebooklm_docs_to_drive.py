@@ -70,6 +70,15 @@ DOC_SOURCES = [
     },
 ]
 
+FILE_SOURCES = [
+    {
+        "key": "ceo_presentation_pptx",
+        "title": "Mighty Skill-Bridge CEO Presentation Deck 2026-06-02.pptx",
+        "source": EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02.pptx",
+        "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    },
+]
+
 
 def load_credentials() -> UserCredentials:
     if not AUTHORIZED_USER_FILE.exists():
@@ -105,6 +114,23 @@ def multipart_body(metadata: dict[str, Any], content: str) -> tuple[bytes, str]:
     return body, boundary
 
 
+def multipart_binary_body(
+    metadata: dict[str, Any],
+    content: bytes,
+    *,
+    content_type: str,
+) -> tuple[bytes, str]:
+    boundary = f"mighty-drive-boundary-{uuid.uuid4().hex}"
+    body = (
+        f"--{boundary}\r\n"
+        "Content-Type: application/json; charset=UTF-8\r\n\r\n"
+        f"{json.dumps(metadata, ensure_ascii=False)}\r\n"
+        f"--{boundary}\r\n"
+        f"Content-Type: {content_type}\r\n\r\n"
+    ).encode("utf-8") + content + f"\r\n--{boundary}--\r\n".encode("utf-8")
+    return body, boundary
+
+
 def request_json(
     credentials: UserCredentials,
     method: str,
@@ -119,19 +145,28 @@ def request_json(
         request_headers.update(headers)
 
     response = None
-    for attempt in range(3):
-        response = requests.request(
-            method,
-            url,
-            params=params,
-            headers=request_headers,
-            data=data,
-            timeout=90,
-        )
-        if response.status_code not in {429, 500, 502, 503, 504}:
+    transient_statuses = {429, 500, 502, 503, 504}
+    max_attempts = 5
+    for attempt in range(max_attempts):
+        try:
+            response = requests.request(
+                method,
+                url,
+                params=params,
+                headers=request_headers,
+                data=data,
+                timeout=90,
+            )
+        except requests.RequestException as exc:
+            if attempt == max_attempts - 1:
+                raise RuntimeError(f"Drive API {method} failed after retries: {exc}") from exc
+            time.sleep(min(2 ** attempt, 8))
+            continue
+
+        if response.status_code not in transient_statuses:
             break
-        if attempt < 2:
-            time.sleep(2 ** attempt)
+        if attempt < max_attempts - 1:
+            time.sleep(min(2 ** attempt, 8))
 
     assert response is not None
     if response.status_code >= 400:
@@ -195,6 +230,46 @@ def upload_as_google_doc(
     )
 
 
+def upload_binary_file(
+    credentials: UserCredentials,
+    *,
+    title: str,
+    content: bytes,
+    mime_type: str,
+    existing_file_id: str | None,
+) -> dict[str, Any]:
+    metadata = {
+        "name": title,
+        "mimeType": mime_type,
+    }
+    body, boundary = multipart_binary_body(metadata, content, content_type=mime_type)
+    params = {
+        "uploadType": "multipart",
+        "fields": "id,name,mimeType,webViewLink,webContentLink,createdTime,modifiedTime,ownedByMe,owners(emailAddress,displayName)",
+        "supportsAllDrives": "true",
+    }
+    headers = {"Content-Type": f"multipart/related; boundary={boundary}"}
+
+    if existing_file_id:
+        return request_json(
+            credentials,
+            "PATCH",
+            f"https://www.googleapis.com/upload/drive/v3/files/{existing_file_id}",
+            params=params,
+            headers=headers,
+            data=body,
+        )
+
+    return request_json(
+        credentials,
+        "POST",
+        "https://www.googleapis.com/upload/drive/v3/files",
+        params=params,
+        headers=headers,
+        data=body,
+    )
+
+
 def load_previous_metadata() -> dict[str, Any]:
     if not OUTPUT_FILE.exists():
         return {}
@@ -228,6 +303,7 @@ def main() -> None:
     credentials = load_credentials()
     previous = load_previous_metadata()
     previous_docs = previous.get("documents", {}) if isinstance(previous, dict) else {}
+    previous_files = previous.get("files", {}) if isinstance(previous, dict) else {}
 
     documents: dict[str, Any] = {}
     for source in DOC_SOURCES:
@@ -261,10 +337,45 @@ def main() -> None:
             "source": str(source_path.relative_to(PROJECT_ROOT)).replace(os.sep, "/"),
         }
 
+    files: dict[str, Any] = {}
+    for source in FILE_SOURCES:
+        source_path = source["source"]
+        if not source_path.exists():
+            raise FileNotFoundError(f"Missing source file: {source_path}")
+
+        previous_id = previous_files.get(source["key"], {}).get("id")
+        existing = get_file(credentials, previous_id) if previous_id else None
+        existing_id = existing["id"] if existing else None
+
+        result = upload_binary_file(
+            credentials,
+            title=source["title"],
+            content=source_path.read_bytes(),
+            mime_type=source["mimeType"],
+            existing_file_id=existing_id,
+        )
+        verify_workspace_owner(result)
+        if not result.get("webViewLink"):
+            result["webViewLink"] = f"https://drive.google.com/file/d/{result['id']}/view"
+
+        files[source["key"]] = {
+            "id": result["id"],
+            "name": result["name"],
+            "url": result["webViewLink"],
+            "downloadUrl": result.get("webContentLink"),
+            "mimeType": result["mimeType"],
+            "ownedByMe": result.get("ownedByMe"),
+            "owners": result.get("owners", []),
+            "createdTime": result.get("createdTime"),
+            "modifiedTime": result.get("modifiedTime"),
+            "source": str(source_path.relative_to(PROJECT_ROOT)).replace(os.sep, "/"),
+        }
+
     metadata = {
         "account": EXPECTED_GOOGLE_ACCOUNT,
         "auth_file": str(AUTHORIZED_USER_FILE.relative_to(PROJECT_ROOT)).replace(os.sep, "/"),
         "documents": documents,
+        "files": files,
     }
     OUTPUT_FILE.write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
@@ -272,6 +383,8 @@ def main() -> None:
     print(f"[*] Account: {EXPECTED_GOOGLE_ACCOUNT}")
     for key, doc in documents.items():
         print(f"  - {key}: {doc['url']}")
+    for key, item in files.items():
+        print(f"  - {key}: {item['url']}")
     print(f"[*] Metadata: {OUTPUT_FILE.relative_to(PROJECT_ROOT)}")
 
 

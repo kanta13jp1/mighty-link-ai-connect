@@ -172,9 +172,10 @@ and which development knowledge-flow tools should become official.
 
 - Public demo remains guarded by Public Demo Guard and GitHub Pages deployment.
 - WBS is synced to Google Sheets and Google Calendar.
-- GitHub Issues #1-#10 track the CEO demo integration backlog.
+- GitHub Issues #1-#13 track the CEO demo integration backlog.
 - NotebookLM source pack was uploaded to Google Docs for source ingestion.
 - NotebookLM CLI is authenticated as the Workspace account and generated an agent brief plus CEO slide outline.
+- CEO PowerPoint deck was generated from the NotebookLM slide outline.
 - Notion MCP created an integration evidence page.
 - Obsidian vault starter exists locally with `.obsidian` settings.
 - Slack post draft exists, while channel and write permission remain pending.
@@ -348,6 +349,7 @@ Keep private thoughts here. Promote only approved notes back to `docs/` and WBS.
 - Next steps: `exports/knowledge_flow/notebooklm_cli_next_steps.md`
 - Agent brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
 - CEO slide outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
+- CEO PowerPoint deck: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx`
 """,
     )
     write_text(
@@ -455,6 +457,7 @@ Expected local outputs:
 - `exports/knowledge_flow/notebooklm_agent_brief.json`
 - `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
 - `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
+- `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx`
 """,
     )
     write_text(
@@ -484,13 +487,14 @@ def build_demo_guide() -> str:
 
 ## Demo Order
 
-1. Open `notebooklm_agent_brief.md` as the AI-agent-facing design and roadmap summary retrieved from NotebookLM.
-2. Open `notebooklm_ceo_slide_outline.md` as the NotebookLM-generated CEO presentation draft.
-3. Open `notebooklm_source_pack.md` and `notebooklm_source_pack.txt` to show the input source package.
-4. Open `slack_ceo_update.md` and show the ready-to-post progress update.
-5. Open `notion_decision_log.csv` and `notion_backlog_import.csv` as Notion import sources.
-6. Open `obsidian_vault/Mighty Skill-Bridge Home.md` as a local Obsidian vault entry point.
-7. Explain that no credentials or private customer data are included.
+1. Open `mighty_skill_bridge_ceo_presentation_2026-06-02.pptx` as the CEO-facing deck assembled from the NotebookLM outline.
+2. Open `notebooklm_agent_brief.md` as the AI-agent-facing design and roadmap summary retrieved from NotebookLM.
+3. Open `notebooklm_ceo_slide_outline.md` as the NotebookLM-generated CEO presentation draft.
+4. Open `notebooklm_source_pack.md` and `notebooklm_source_pack.txt` to show the input source package.
+5. Open `slack_ceo_update.md` and show the ready-to-post progress update.
+6. Open `notion_decision_log.csv` and `notion_backlog_import.csv` as Notion import sources.
+7. Open `obsidian_vault/Mighty Skill-Bridge Home.md` as a local Obsidian vault entry point.
+8. Explain that no credentials or private customer data are included.
 
 ## CEO Decision
 
@@ -524,6 +528,9 @@ def generate() -> dict:
         EXPORT_DIR / "notebooklm_agent_brief.json",
         EXPORT_DIR / "notebooklm_ceo_slide_outline.md",
         EXPORT_DIR / "notebooklm_ceo_slide_outline.json",
+        EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02.pptx",
+        EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02.md",
+        EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02.json",
         OBSIDIAN_DIR / "Mighty Skill-Bridge Home.md",
         OBSIDIAN_DIR / "ADR" / "ADR-0001-knowledge-flow.md",
         OBSIDIAN_DIR / "Meetings" / "2026-06-02 CEO Meeting.md",

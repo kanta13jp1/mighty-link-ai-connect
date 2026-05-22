@@ -21,3 +21,4 @@ Expected local outputs:
 - `exports/knowledge_flow/notebooklm_agent_brief.json`
 - `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
 - `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
+- `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx`

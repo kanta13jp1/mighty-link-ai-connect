@@ -1,4 +1,4 @@
-# Google Sheets 追加タブ スキーマ: 課題管理表 / QA 表
+# Google Sheets 追加タブ スキーマ: 課題管理表 / QA表
 
 作成日: 2026-05-22
 オーナー: VSCode + Claude Code レーン (スキーマ維持) / 実装は Codex レーン
@@ -8,7 +8,7 @@
 
 ## 背景
 
-2026-05-22 にユーザー (kanta13jp@gmail.com) が「スプレッドシートには、WBS の他に、課題管理表、QA 表も作成してください。課題や QA が出たらこちらに反映してください」と明示。既存の Sheets 3 タブ (`Mighty-Link WBS` / `WBS Summary` / `WBS Timeline`) に、**`課題管理表`** と **`QA 表`** の 2 タブを追加する。
+2026-05-22 にユーザー (kanta13jp@gmail.com) が「スプレッドシートには、WBS の他に、課題管理表、QA表も作成してください。課題や QA が出たらこちらに反映してください」と明示。既存の Sheets 3 タブ (`Mighty-Link WBS` / `WBS Summary` / `WBS Timeline`) に、**`課題管理表`** と **`QA表`** の 2 タブを追加する。
 
 ---
 
@@ -17,8 +17,8 @@
 ### 1.1 正本 / sync 方向
 
 - 正本: [data/issues_tracker.tsv](../data/issues_tracker.tsv)
-- sync 方向: TSV → Sheets (Codex レーンが `scripts/sync_issues_to_sheets.py` を実装予定)
-- 編集: Claude Code が `data/issues_tracker.tsv` を append-only で更新 (既存行の変更時は `更新日` を当日に書き換え)
+- sync 方向: TSV → Sheets (`scripts/sync_wbs_to_sheets.py` の同一実行で WBS と一緒に同期)
+- 編集: 課題を検知したレーンが `data/issues_tracker.tsv` を append-only で更新 (既存行の変更時は `更新日` を当日に書き換え)
 - Sheets タブ名: **`課題管理表`**
 
 ### 1.2 カラム定義
@@ -57,14 +57,14 @@
 
 ---
 
-## 2. QA 表 (QA Tracker)
+## 2. QA表 (QA Tracker)
 
 ### 2.1 正本 / sync 方向
 
 - 正本: [data/qa_tracker.tsv](../data/qa_tracker.tsv)
-- sync 方向: TSV → Sheets (Codex レーンが `scripts/sync_qa_to_sheets.py` を実装予定)
-- 編集: Claude Code が `data/qa_tracker.tsv` を append-only で更新
-- Sheets タブ名: **`QA 表`**
+- sync 方向: TSV → Sheets (`scripts/sync_wbs_to_sheets.py` の同一実行で WBS と一緒に同期)
+- 編集: QAを検知したレーンが `data/qa_tracker.tsv` を append-only で更新
+- Sheets タブ名: **`QA表`**
 
 ### 2.2 カラム定義
 
@@ -100,16 +100,14 @@
 
 ### 3.1 推奨アーキテクチャ
 
-`scripts/sync_wbs_to_sheets.py` を base に、以下 2 本を追加:
+`scripts/sync_wbs_to_sheets.py` を base に、以下 2 タブの同期を同一スクリプトへ統合済み:
 
 ```text
 scripts/
-├── sync_wbs_to_sheets.py        # 既存 (WBS 3 タブ)
-├── sync_issues_to_sheets.py     # NEW (課題管理表)
-└── sync_qa_to_sheets.py         # NEW (QA 表)
+└── sync_wbs_to_sheets.py        # WBS 3 タブ + 課題管理表 + QA表
 ```
 
-または、`sync_trackers_to_sheets.py` として 2 タブを 1 スクリプトでまとめる選択肢もあり (Codex 判断)。
+WBS と tracker を同じ OAuth / Google Workspace アカウント検証で同期することで、実行漏れと誤アカウント同期を避ける。
 
 ### 3.2 共通部分の再利用
 
@@ -125,13 +123,12 @@ scripts/
 
 - 既存 3 タブを **破壊しない** (`worksheet.clear()` の前に existing rows をバックアップ、新タブのみ idempotent な upsert)
 - `課題管理表` は **append-only** 思想だが、`状態` カラムの変更は許容 (`更新日` 自動更新)
-- `QA 表` は ID 安定 (QA-01 は常に同じ行)
+- `QA表` は ID 安定 (QA-01 は常に同じ行)
 - TSV の改行 / タブを含むセル ('回答方針' 等で長文化リスク) は `csv.QUOTE_ALL` で escape
 
 ### 3.4 検証
 
-- `python scripts/sync_issues_to_sheets.py --dry-run` で diff=0 確認 (Codex 実装時に dry-run mode を必須)
-- 同上 `sync_qa_to_sheets.py`
+- `python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8` で `Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` / `課題管理表` / `QA表` を同時更新
 - 実行後の Sheets 目視確認 (k-umezawa@ml-mightylink.com で開く)
 - 行数が `wc -l data/issues_tracker.tsv` (ヘッダ除く) と一致
 
@@ -144,7 +141,7 @@ scripts/
 1. Claude Code が `data/issues_tracker.tsv` に新行を append
 2. 重要度が `HIGH` で `risk:ceo-blocker` 該当ならば対応 docs (CEO_PRESENTATION_PREP の Risks 表) も同時更新
 3. コミット → push → PR → main merge
-4. main merge 後に `python scripts/sync_issues_to_sheets.py` 実行 (Codex 実装後)
+4. main merge 後に `python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8` 実行
 
 ### 4.2 新規 QA 発生時 (社長 / 顧客から実際に聞かれた)
 
@@ -152,7 +149,7 @@ scripts/
 2. 回答方針が確立できる場合は同時に記入、できない場合は `保留中` で先に入れる
 3. 保留中 QA は 7 日以内に解消する SLA。解消したら同行を `回答済` に書き換え + `更新日` 更新
 4. コミット → push → PR → main merge
-5. main merge 後に `python scripts/sync_qa_to_sheets.py` 実行 (Codex 実装後)
+5. main merge 後に `python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8` 実行
 
 ### 4.3 既存課題 / QA の状態変更
 
@@ -164,8 +161,8 @@ scripts/
 ## 5. 制約事項
 
 - 個人情報 / 認証情報 / API キーは絶対に tracker に記入しない (Sheets は社長共有のため、Workspace 内とはいえ Issue 名にのみ抽象化)
-- `data/issues_tracker.tsv` / `data/qa_tracker.tsv` は `data/WBS.tsv` と異なり **Claude Code が書き込み** (WBS は Codex 専有、tracker は Claude 専有という分業)
-- Codex / Antigravity が変更したい場合は PR コメント or `[claude]` レーン経由で依頼
+- `data/WBS.tsv` の直接編集は Codex レーンを正とする。
+- `data/issues_tracker.tsv` / `data/qa_tracker.tsv` は、課題やQAを検知したレーンが更新してよい。ただし1行1件、ID安定、`更新日` 更新、秘密情報禁止を守る。
 
 ---
 
@@ -173,4 +170,5 @@ scripts/
 
 | 日付 | 変更者 | 内容 |
 | --- | --- | --- |
-| 2026-05-22 | Claude Code | 初版作成 (課題管理表 + QA 表 スキーマ定義、sync スクリプト実装方針、運用フロー) |
+| 2026-05-22 | Claude Code | 初版作成 (課題管理表 + QA表 スキーマ定義、sync スクリプト実装方針、運用フロー) |
+| 2026-05-22 | Codex | `sync_wbs_to_sheets.py` に `課題管理表` / `QA表` 同期を統合し、同一OAuth実行で5タブを更新する運用へ変更 |

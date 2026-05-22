@@ -181,3 +181,13 @@ python scripts/sync_docs_to_notebooklm.py
 ```
 
 この状態により、AIエージェントはNotebookLMから要約された設計情報・ロードマップ・残課題をローカル成果物として読み込み、次回以降の開発判断に使える。
+
+## 2026-05-22 NotebookLMからPPTXまでの実証
+
+- NotebookLM CLIで取得した `exports/knowledge_flow/notebooklm_ceo_slide_outline.md` を出発点に、社長説明用PowerPoint `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx` を生成した。
+- 生成スクリプトは `scripts/generate_ceo_presentation_deck.py`。NotebookLM CLIは構成・論点・話すメモの生成、ローカルスクリプトはPPTX組版とパッケージ検証を担当する。
+- `@oai/artifact-tool/presentation-jsx` はこのWindowsシェルでは解決できなかったため、今回のPPTX成果物は `python-pptx` で作成した。制約は成果物サマリーと証跡に明記する。
+- Google Driveへのアップロード対象にPPTXを追加し、`exports/knowledge_flow/google_drive_workspace_docs.json` の `files.ceo_presentation_pptx` にURLを記録する運用にした。
+- Drive URL: `https://docs.google.com/presentation/d/1XGHnQHBpJyyhh_Y3I2lq2UThPRC-2dcL/edit?usp=drivesdk&ouid=117190324786156797159&rtpof=true&sd=true`
+- SlackはローカルCLI未検出、送信MCP未露出のため、実送信ではなく投稿案生成と権限確認を継続する。実送信は投稿先チャンネル・共有範囲の承認後に行う。
+- GitHub Projectは `read:project` / `project` OAuth scope不足が継続している。Issue #8 / #5で復旧待ちとして扱い、Issueは実装タスク管理、WBSは日程・報告管理として先行運用する。

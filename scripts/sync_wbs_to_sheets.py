@@ -55,10 +55,14 @@ CREDENTIALS_FILE = os.path.join(PROJECT_ROOT, "credentials.json")       # Servic
 CLIENT_SECRET_FILE = os.path.join(PROJECT_ROOT, "client_secret.json")   # OAuth 2.0 Desktop client
 AUTHORIZED_USER_FILE = os.path.join(PROJECT_ROOT, "authorized_user.json")
 TSV_FILE = os.path.join(DATA_DIR, "WBS.tsv")
+ISSUES_TSV_FILE = os.path.join(DATA_DIR, "issues_tracker.tsv")
+QA_TSV_FILE = os.path.join(DATA_DIR, "qa_tracker.tsv")
 USER_EMAIL = "k-umezawa@ml-mightylink.com"
 WBS_SHEET_NAME = "Mighty-Link WBS"
 SUMMARY_SHEET_NAME = "WBS Summary"
 TIMELINE_SHEET_NAME = "WBS Timeline"
+ISSUES_SHEET_NAME = "課題管理表"
+QA_SHEET_NAME = "QA表"
 DATA_START_ROW = 8
 
 # Mighty-Link Color Palette (Normalized to 0.0 - 1.0 for Sheets API)
@@ -111,6 +115,26 @@ def load_wbs_data(filepath):
         for row in reader:
             data.append(row)
     return data
+
+
+def load_tracker_data(filepath):
+    """Loads an optional tracker TSV and pads rows to a rectangular grid."""
+    if not os.path.exists(filepath):
+        print(f"[!] Tracker source not found, skipping: {os.path.relpath(filepath, PROJECT_ROOT)}")
+        return []
+
+    rows = []
+    with open(filepath, "r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.reader(f, delimiter="\t")
+        for row in reader:
+            if row and any(cell.strip() for cell in row):
+                rows.append(row)
+
+    if not rows:
+        return []
+
+    width = max(len(row) for row in rows)
+    return [row + [""] * (width - len(row)) for row in rows]
 
 
 def normalize_status(status):
@@ -320,6 +344,20 @@ def build_timeline_sheet(task_rows):
             row[13],
         ])
     return values
+
+
+def build_tracker_sheet(title, description, rows):
+    if not rows:
+        return []
+    width = max(len(row) for row in rows)
+    report_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    padded_rows = [row + [""] * (width - len(row)) for row in rows]
+    return [
+        [title] + [""] * (width - 1),
+        [f"{description} / Last Sync: {report_time}"] + [""] * (width - 1),
+        [""] * width,
+        padded_rows[0],
+    ] + padded_rows[1:]
 
 
 def get_sheet_metadata(sh, sheet_id):
@@ -584,7 +622,7 @@ def apply_wbs_styles(sh, worksheet, num_rows, num_cols, last_data_row):
     sh.batch_update({"requests": requests})
 
 
-def apply_simple_table_styles(sh, worksheet, num_rows, num_cols, freeze_rows=4, percent_cols=None, date_cols=None):
+def apply_simple_table_styles(sh, worksheet, num_rows, num_cols, freeze_rows=4, percent_cols=None, date_cols=None, col_widths=None):
     percent_cols = percent_cols if percent_cols is not None else [5]
     date_cols = date_cols if date_cols is not None else [(6, 8)]
     sheet_id = worksheet.id
@@ -630,7 +668,8 @@ def apply_simple_table_styles(sh, worksheet, num_rows, num_cols, freeze_rows=4, 
             }
         },
     ])
-    for col_idx, width in enumerate([220, 72, 72, 72, 72, 82, 110, 110, 90, 140, 140, 140]):
+    widths = col_widths or [220, 72, 72, 72, 72, 82, 110, 110, 90, 140, 140, 140]
+    for col_idx, width in enumerate(widths):
         if col_idx < num_cols:
             requests.append(set_column_width_request(sheet_id, col_idx, width))
     for col_idx in percent_cols:
@@ -648,6 +687,50 @@ def apply_simple_table_styles(sh, worksheet, num_rows, num_cols, freeze_rows=4, 
             "horizontalAlignment": "CENTER",
         }, "userEnteredFormat(numberFormat,horizontalAlignment)"))
     sh.batch_update({"requests": requests})
+
+
+def apply_tracker_styles(sh, worksheet, num_rows, num_cols, tracker_type):
+    if tracker_type == "issues":
+        col_widths = [90, 110, 80, 110, 260, 300, 360, 120, 105, 105, 145, 260, 110, 320, 105]
+        date_cols = [(8, 10), (14, 15)]
+    else:
+        col_widths = [95, 130, 300, 380, 320, 120, 260, 150, 100, 105]
+        date_cols = [(9, 10)]
+
+    apply_simple_table_styles(
+        sh,
+        worksheet,
+        num_rows,
+        num_cols,
+        freeze_rows=4,
+        percent_cols=[],
+        date_cols=date_cols,
+        col_widths=col_widths,
+    )
+
+    data_start = 4
+    requests = []
+    sheet_id = worksheet.id
+    if tracker_type == "issues":
+        requests.extend([
+            add_text_conditional(sheet_id, data_start, num_rows, 2, "HIGH", COLORS["status_alert"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 2, "MED", COLORS["status_working"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 2, "LOW", COLORS["status_done"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 3, "open", COLORS["white"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 3, "in_progress", COLORS["status_working"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 3, "resolved", COLORS["status_done"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 3, "wont_fix", COLORS["status_todo"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 3, "deferred", COLORS["phase_bg"]),
+        ])
+    else:
+        requests.extend([
+            add_text_conditional(sheet_id, data_start, num_rows, 8, "保留中", COLORS["status_working"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 8, "回答済", COLORS["status_done"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 8, "想定済", COLORS["white"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 8, "解決不要", COLORS["status_todo"]),
+        ])
+    if requests:
+        sh.batch_update({"requests": requests})
 
 def main():
     print("="*60)
@@ -767,17 +850,50 @@ def main():
     phase_names = [row[3] for row in enhanced_rows if row[1] == 1]
     summary_values = build_summary_sheet(phase_names, last_data_row)
     timeline_values = build_timeline_sheet(task_rows)
+    issue_source_rows = load_tracker_data(ISSUES_TSV_FILE)
+    qa_source_rows = load_tracker_data(QA_TSV_FILE)
+    issue_values = build_tracker_sheet(
+        "Mighty-Link 課題管理表",
+        "6/2社長プレゼン準備と開発運用で発生した課題・ブロッカーを管理",
+        issue_source_rows,
+    )
+    qa_values = build_tracker_sheet(
+        "Mighty-Link QA表",
+        "社長・顧客からの想定質問、保留時対応、回答状況を管理",
+        qa_source_rows,
+    )
 
     wbs_rows = max(len(enhanced_values) + 20, 120)
     wbs_cols = len(ENHANCED_HEADERS)
     worksheet = ensure_worksheet(sh, WBS_SHEET_NAME, rows=wbs_rows, cols=wbs_cols)
     summary_sheet = ensure_worksheet(sh, SUMMARY_SHEET_NAME, rows=max(len(summary_values) + 20, 60), cols=9)
     timeline_sheet = ensure_worksheet(sh, TIMELINE_SHEET_NAME, rows=max(len(timeline_values) + 20, 80), cols=9)
+    issue_sheet = None
+    qa_sheet = None
+    if issue_values:
+        issue_sheet = ensure_worksheet(
+            sh,
+            ISSUES_SHEET_NAME,
+            rows=max(len(issue_values) + 20, 80),
+            cols=len(issue_values[0]),
+        )
+    if qa_values:
+        qa_sheet = ensure_worksheet(
+            sh,
+            QA_SHEET_NAME,
+            rows=max(len(qa_values) + 20, 90),
+            cols=len(qa_values[0]),
+        )
 
     # Remove default Sheet1 if present to keep the workbook clean.
     try:
         default_sheet = sh.worksheet("Sheet1")
-        if default_sheet.id not in [worksheet.id, summary_sheet.id, timeline_sheet.id]:
+        protected_sheet_ids = [worksheet.id, summary_sheet.id, timeline_sheet.id]
+        if issue_sheet:
+            protected_sheet_ids.append(issue_sheet.id)
+        if qa_sheet:
+            protected_sheet_ids.append(qa_sheet.id)
+        if default_sheet.id not in protected_sheet_ids:
             sh.del_worksheet(default_sheet)
     except Exception:
         pass
@@ -787,14 +903,26 @@ def main():
     worksheet.update(values=enhanced_values, range_name="A1", value_input_option="USER_ENTERED")
     summary_sheet.update(values=summary_values, range_name="A1", value_input_option="USER_ENTERED")
     timeline_sheet.update(values=timeline_values, range_name="A1", value_input_option="USER_ENTERED")
+    if issue_sheet:
+        issue_sheet.update(values=issue_values, range_name="A1", value_input_option="USER_ENTERED")
+    if qa_sheet:
+        qa_sheet.update(values=qa_values, range_name="A1", value_input_option="USER_ENTERED")
     print(f"[+] Successfully wrote {len(wbs_data)} source rows into {len(enhanced_values)} hierarchical WBS display rows.")
+    if issue_values:
+        print(f"[+] Successfully wrote {max(len(issue_values) - 4, 0)} issue tracker rows into '{ISSUES_SHEET_NAME}'.")
+    if qa_values:
+        print(f"[+] Successfully wrote {max(len(qa_values) - 4, 0)} QA tracker rows into '{QA_SHEET_NAME}'.")
 
     # 5. Apply Professional Styles (CATS-inspired WBS Design)
     try:
         apply_wbs_styles(sh, worksheet, len(enhanced_values), len(ENHANCED_HEADERS), last_data_row)
         apply_simple_table_styles(sh, summary_sheet, len(summary_values), 9, freeze_rows=4, percent_cols=[5], date_cols=[(6, 8)])
         apply_simple_table_styles(sh, timeline_sheet, len(timeline_values), 9, freeze_rows=4, percent_cols=[8], date_cols=[(5, 7)])
-        print("[+] CATS-like hierarchy, summary, timeline, filters, freeze panes, and status colors applied.")
+        if issue_sheet:
+            apply_tracker_styles(sh, issue_sheet, len(issue_values), len(issue_values[0]), "issues")
+        if qa_sheet:
+            apply_tracker_styles(sh, qa_sheet, len(qa_values), len(qa_values[0]), "qa")
+        print("[+] CATS-like hierarchy, summary, timeline, tracker tabs, filters, freeze panes, and status colors applied.")
     except Exception as e:
         print(f"[!] Warning while setting styles/dimensions: {e}")
 

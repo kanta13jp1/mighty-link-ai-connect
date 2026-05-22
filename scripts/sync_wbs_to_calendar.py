@@ -223,6 +223,46 @@ SCHEDULE_EVENTS = [
         "is_all_day": False
     },
     {
+        "summary": "【Mighty Skill-Bridge】NotebookLM PowerPoint化",
+        "description": "NotebookLM CLIで取得したCEO Slide Outlineを社長説明用PowerPointへ変換し、exports/knowledge_flow配下にPPTXと生成サマリーを保存します。",
+        "start_time": "2026-05-22T16:00:00",
+        "end_time": "2026-05-22T17:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】PowerPoint Drive共有・Notion証跡更新",
+        "description": "社長説明用PPTXをk-umezawa@ml-mightylink.com所有のGoogle Driveへアップロードし、Notion MCPでNotebookLM/PPTX/Slack/Projectの証跡を更新します。",
+        "start_time": "2026-05-22T17:00:00",
+        "end_time": "2026-05-22T18:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】三ツール開発フロー整備",
+        "description": "Antigravity + Gemini、VSCode + Codex、VSCode + Claude Codeを併用する開発ゲート、公式Docs確認、Sheets課題管理表・QA表同期、commit/push/main/master反映の手順を固定します。",
+        "start_time": "2026-05-22T18:00:00",
+        "end_time": "2026-05-22T18:30:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】GitHub Issues/Project再追跡",
+        "description": "PowerPoint生成Issueを追加し、GitHub Projectはread:project/projectスコープ不足としてIssue #8/#5で復旧待ちを継続します。",
+        "start_time": "2026-05-24T13:00:00",
+        "end_time": "2026-05-24T14:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】6/2資料最終パックレビュー",
+        "description": "PPTX、NotebookLM資料、WBS、Calendar、GitHub Issues、Notion証跡、Slack投稿案を通しで確認し、社長に見せる順番を固定します。",
+        "start_time": "2026-05-30T16:00:00",
+        "end_time": "2026-05-30T17:00:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
         "summary": "【Mighty Skill-Bridge】社長プレゼン最終リハーサル",
         "description": "公開URL、ローカルAPI、Google Sheets WBS、Calendar同期、説明資料、想定QA、バックアップ手順を最終確認します。",
         "start_time": "2026-06-01T16:00:00",

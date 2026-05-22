@@ -305,7 +305,7 @@ feat/<tool>-<wbs-id>-<slug>
 
 ### 次セッションで適用候補 (Codex レーンへ handoff)
 
-- [ ] `AGENTS.md` 新規作成 (Codex 用)
+- [x] `AGENTS.md` 新規作成 (Codex 用) — T664で完了
 - [ ] `.codex/config.toml` で sandbox / approval / model を固定
 - [ ] `scripts/sync_docs_to_notebooklm.py` に Gemini explicit context caching を導入 (1-hour TTL)
 - [ ] Codex skills: `/sync-wbs`, `/sync-notebooklm`, `/verify-demo` を packaging
@@ -321,6 +321,26 @@ feat/<tool>-<wbs-id>-<slug>
 
 ---
 
+### Session gate (2026-05-22 Codex pass)
+
+ユーザー指示により、以後の各開発セッションでは以下を必須ゲートとする。
+
+1. `docs/` 配下の関連ドキュメントを読む。
+2. Anthropic / OpenAI / Google の公式Docs最新版を確認する。
+   - Anthropic Claude Code: overview / memory / settings / security
+   - OpenAI Codex: overview / AGENTS.md / best practices / MCP
+   - Google Gemini / Workspace: Gemini models / context caching / Sheets batchUpdate
+3. WBS上のタスクを最低1件完了し、`data/WBS.tsv` と `docs/WBS.md` に反映する。
+4. 課題・QAが出た場合は `data/issues_tracker.tsv` / `data/qa_tracker.tsv` に反映する。
+5. `python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8` で `Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` / `課題管理表` / `QA表` を同期する。
+6. `python scripts/sync_wbs_to_calendar.py` でWBSカレンダーを同期する。
+7. 公開URL guardを実行し、CEO共有済みURLのデグレを防ぐ。
+8. commit → push `main` → `master`反映まで完了する。
+
+本パスでT664を完了し、`AGENTS.md` と `CLAUDE.md` を追加した。Anthropic公式Docsの推奨どおり、Claude Codeは `CLAUDE.md` から `@AGENTS.md` を import して共通ルールを読む。OpenAI Codexは公式AGENTS.mdの仕組みに合わせ、repo rootの `AGENTS.md` を共通セッションゲートとして読む。
+
+---
+
 ## 更新履歴
 
 | 日付 | 変更者 | 内容 |
@@ -328,3 +348,4 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-05-22 | Claude Code | 初版作成 (3-tool 構成、handoff 規約、6/2 day-by-day) |
 | 2026-05-22 | Claude Code | Best Practices Refresh セクション追加 (Anthropic / Google / OpenAI 公式 docs 反映、R1 降格提案、AGENTS.md / context caching 採用候補) |
 | 2026-05-22 | Claude Code | Light refresh 2nd pass: Antigravity 2.0 JSON hooks / live voice transcription、Claude Code Rewind "Summarize up to here" 追記 |
+| 2026-05-22 | Codex | Session gate追加。AGENTS.md/CLAUDE.md作成、Sheets課題管理表/QA表同期、T664完了を反映 |

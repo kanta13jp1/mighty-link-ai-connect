@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-05-22 01:47:26 UTC+09:00
+Generated: 2026-05-22 09:11:33 UTC+09:00
 
 ## How to use this in NotebookLM
 
@@ -25,9 +25,10 @@ and which development knowledge-flow tools should become official.
 
 - Public demo remains guarded by Public Demo Guard and GitHub Pages deployment.
 - WBS is synced to Google Sheets and Google Calendar.
-- GitHub Issues #1-#10 track the CEO demo integration backlog.
+- GitHub Issues #1-#13 track the CEO demo integration backlog.
 - NotebookLM source pack was uploaded to Google Docs for source ingestion.
 - NotebookLM CLI is authenticated as the Workspace account and generated an agent brief plus CEO slide outline.
+- CEO PowerPoint deck was generated from the NotebookLM slide outline.
 - Notion MCP created an integration evidence page.
 - Obsidian vault starter exists locally with `.obsidian` settings.
 - Slack post draft exists, while channel and write permission remain pending.
@@ -35,21 +36,16 @@ and which development knowledge-flow tools should become official.
 
 ## WBS Snapshot
 
-- Total tasks: 72
-- Done: 45
-- In progress: 4
-- Not started: 23
-- Completion rate: 62%
-- CEO presentation phase tasks: 57
-- CEO presentation phase done: 34
+- Total tasks: 79
+- Done: 50
+- In progress: 5
+- Not started: 24
+- Completion rate: 63%
+- CEO presentation phase tasks: 64
+- CEO presentation phase done: 39
 
 ## Latest Knowledge-flow / CEO-demo Tasks
 
-- T627: Notion実体化 / Notion用意思決定DB・バックログCSVの生成 / 完了
-- T628: Obsidian実体化 / Obsidian vault雛形・ADR・議事録・プロンプトノート生成 / 完了
-- T629: 連携UIデモ / 公開デモ/ローカルUIへ開発ナレッジ連携デモセクション追加 / 完了
-- T630: 連携APIデモ / FastAPIにKnowledge Flow生成・状態確認APIを追加 / 完了
-- T631: 連携成果物検証 / 生成成果物・公開URL・API・Sheets/Calendar同期の総合確認 / 完了
 - T632: GitHub Issues連携 / GitHub Issuesに6/2社長デモ向け連携タスクを起票 / 完了
 - T633: GitHub Project連携 / GitHub Project board取得・配置のCLI権限確認 / 実行中
 - T634: NotebookLM実連携 / NotebookLM投入用Source PackをGoogle Drive/Docsへアップロード / 完了
@@ -69,6 +65,11 @@ and which development knowledge-flow tools should become official.
 - T655: Obsidian Agent Brief導線 / Obsidian vaultにNotebookLM Agent Brief参照導線を追加 / 完了
 - T656: NotebookLM補助ログイン導線 / NotebookLM CLIのログイン保存を補助するWorkspace専用スクリプト作成 / 完了
 - T657: NotebookLM社長スライド草案取得 / NotebookLMからCEO向け8枚以内のプレゼン草案を取得して保存 / 完了
+- T658: NotebookLM PowerPoint化 / NotebookLM CLIで取得したCEO Slide Outlineを社長説明用PowerPointへ変換 / 完了
+- T660: Notion PPTX証跡更新 / Notion MCPでPPTX生成・Drive共有・残課題を証跡ページへ記録 / 完了
+- T662: Slack MCP/CLI到達性証跡 / Slack CLIと送信MCPの利用可否を確認し、投稿案と残課題を整理 / 完了
+- T663: 6/2資料最終パックレビュー / PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認 / 未着手
+- T664: 三ツール開発フロー整備 / Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定 / 完了
 
 ## Recommended Slide Story
 

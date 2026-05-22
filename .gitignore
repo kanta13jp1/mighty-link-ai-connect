@@ -13,3 +13,7 @@ data/audit/*.jsonl
 # Local system files
 .DS_Store
 Thumbs.db
+
+# Local AI tool settings
+.claude/settings.local.json
+CLAUDE.local.md

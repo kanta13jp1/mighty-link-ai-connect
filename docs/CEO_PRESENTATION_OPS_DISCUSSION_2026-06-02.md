@@ -53,7 +53,7 @@
 | WBS 進捗 | Google Sheets `Mighty-Link WBS` | Codex (data/WBS.tsv 経由) | 社長 / 寛太 |
 | Issues / PR | GitHub | Codex (実装) / Claude (review) | 寛太 |
 | 課題管理 | Google Sheets `課題管理表` (NEW) | Claude (data/issues_tracker.tsv 経由) | 社長 / 寛太 |
-| 想定 QA | Google Sheets `QA 表` (NEW) | Claude (data/qa_tracker.tsv 経由) | 寛太 (社長は当日のみ) |
+| 想定 QA | Google Sheets `QA表` (NEW) | Claude/Codex (data/qa_tracker.tsv 経由) | 寛太 (社長は当日のみ) |
 | 連携証跡 | docs/INTEGRATION_DEMO_EVIDENCE_*.md + Notion | Codex (作成) / Claude (整合性) | 社長 (要求時) |
 
 ### 2.2 社長の関与パターン
@@ -162,7 +162,7 @@
 ## 7. 関連 docs と最新化フロー
 
 - 課題管理表 (`data/issues_tracker.tsv` ↔ Google Sheets `課題管理表` タブ) で R9-R13 を追跡。スキーマ [SHEETS_TRACKERS_SCHEMA.md](SHEETS_TRACKERS_SCHEMA.md)。
-- QA 表 (`data/qa_tracker.tsv` ↔ Google Sheets `QA 表` タブ) に Q-OPS-01〜12 を取り込む (本書から `T606-OPS` カテゴリで起票)。
+- QA表 (`data/qa_tracker.tsv` ↔ Google Sheets `QA表` タブ) に Q-OPS-01〜12 を取り込む (本書から `T606-OPS` カテゴリで起票)。
 - 費用感の実測値は Codex レーンが Gemini quota 消費レポートを月次で `docs/COST_REPORT_<YYYY-MM>.md` に出す (6/2 後の新規 WBS タスク)。
 
 ---
