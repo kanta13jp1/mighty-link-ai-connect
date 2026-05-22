@@ -257,7 +257,7 @@ feat/<tool>-<wbs-id>-<slug>
 
 ## Best Practices Refresh (2026-05-22)
 
-毎セッション開始時に Anthropic / OpenAI / Google / Microsoft / Meta / Kimi / MiMo / DeepSeek / Grok / Seedance の公式 docs を読み、3-tool 体制への適用可能な best practice を本セクションに追記する (上書きせず日付付きで accrue)。
+毎セッション開始時に Anthropic / OpenAI / Google / Microsoft / Meta / Amazon / Apple / Kimi / MiMo / DeepSeek / Grok / Seedance / Obsidian / Unity の公式 docs を読み、3-tool 体制への適用可能な best practice を本セクションに追記する (上書きせず日付付きで accrue)。
 
 ### Anthropic Claude Code & API ([code.claude.com/docs](https://code.claude.com/docs/en/overview) / [platform.claude.com prompt-caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching))
 
@@ -320,9 +320,15 @@ feat/<tool>-<wbs-id>-<slug>
 
 ### Light refresh (2026-05-22 6th pass / Codex calendar cleanup session)
 
-- **公式Docs確認範囲を拡張**: Anthropic / OpenAI / Google に加え、Microsoft AI Foundry、Meta Llama、Kimi/Moonshot、MiMo、DeepSeek、Grok/xAI、Seedance/ByteDance Seedを `AGENTS.md` のURL正本へ追加。未確認のモデル名・機能名はdocsへ固定しない。
+- **公式Docs確認範囲を拡張**: Anthropic / OpenAI / Google に加え、Microsoft AI Foundry、Meta Llama、Amazon Bedrock、Apple Machine Learning/HIG、Kimi/Moonshot、MiMo、DeepSeek、Grok/xAI、Seedance/ByteDance Seed、Obsidian、Unityを `AGENTS.md` のURL正本へ追加。未確認のモデル名・機能名はdocsへ固定しない。
 - **Google Calendar同期ルール**: `sync_wbs_to_calendar.py` は `data/WBS.tsv` の `ステータス` を読み、完了済みWBSに紐づくCalendarイベントを削除する。未完了・実行中・会議イベントは残し、完了履歴はSheets/Docs/Git履歴で追跡する。
 - **今回のWBS完了単位**: `T614 事前送付メモ` をClaude Code成果物として完了反映し、`T666 Calendar完了イベント削除` をCodexで実装完了。
+
+### Light refresh (2026-05-22 7th pass / Seedance UI refresh session)
+
+- **Seedance / ByteDance Seed**: 黒基調、強いタイポグラフィ、映像AIプロダクトのプレビュー体験を参考にしつつ、ブランド名・素材・文言はMighty Skill-Bridge独自に維持する。
+- **Apple / Obsidian / Unity / Amazon**: Apple HIGはインターフェースの明瞭性、Obsidianはローカルvaultの情報分離、Unityは将来3Dデモ検討時の正本、Amazon Bedrockはマルチモデル選定時の候補としてURL正本化した。現時点では機能名をdocsへ固定しない。
+- **今回のWBS完了単位**: `T667 Seedance風デモUI刷新` をCodexで実装完了。`index.html` と `src/index.html` を同時更新し、公開デモガードとPlaywright desktop/mobile表示確認を通した。
 
 ---
 
@@ -331,17 +337,21 @@ feat/<tool>-<wbs-id>-<slug>
 ユーザー指示により、以後の各開発セッションでは以下を必須ゲートとする。
 
 1. `docs/` 配下の関連ドキュメントを読む。
-2. Anthropic / OpenAI / Google / Microsoft / Meta / Kimi / MiMo / DeepSeek / Grok / Seedance の公式Docs最新版を確認する。
+2. Anthropic / OpenAI / Google / Microsoft / Meta / Amazon / Apple / Kimi / MiMo / DeepSeek / Grok / Seedance / Obsidian / Unity の公式Docs最新版を確認する。
    - Anthropic Claude Code: overview / memory / settings / security
    - OpenAI Codex: overview / AGENTS.md / best practices / MCP
    - Google Gemini / Workspace: Gemini models / context caching / Sheets batchUpdate
    - Microsoft AI / Azure AI Foundry: Azure AI Foundry / Azure OpenAI overview
    - Meta Llama: developer docs / getting started
+   - Amazon Bedrock / AWS AI: Bedrock user guide
+   - Apple Machine Learning / HIG: developer docs and interface guidance
    - Kimi / Moonshot AI: platform docs
    - MiMo: official repository/docs
    - DeepSeek: API docs
    - Grok / xAI: docs
    - Seedance / ByteDance Seed: Seedance product/API docs
+   - Obsidian: Help docs for vault and knowledge-base operation
+   - Unity: Unity docs/manual for future 3D demo considerations
 3. WBS上のタスクを最低1件完了し、`data/WBS.tsv` と `docs/WBS.md` に反映する。
 4. 課題・QAが出た場合は `data/issues_tracker.tsv` / `data/qa_tracker.tsv` に反映する。
 5. `python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8` で `Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` / `課題管理表` / `QA表` を同期する。
@@ -363,3 +373,4 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-05-22 | Codex | Session gate追加。AGENTS.md/CLAUDE.md作成、Sheets課題管理表/QA表同期、T664完了を反映 |
 | 2026-05-22 | Codex | Light refresh 5th pass: stale-doc削除を実行し、T665完了を反映 |
 | 2026-05-22 | Codex | Light refresh 6th pass: 公式Docs確認範囲拡張、Calendar完了イベント削除ルール、T614/T666完了を反映 |
+| 2026-05-22 | Codex | Light refresh 7th pass: Amazon/Apple/Obsidian/Unityを公式Docs確認範囲へ追加し、Seedance風UI刷新とT667完了を反映 |

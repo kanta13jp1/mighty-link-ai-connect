@@ -7,7 +7,7 @@
 
 ## 1. 概要と背景
 
-本プロジェクトでは、プロジェクト管理の円滑化と **Google Workspace AI (Sheets/Docs Live) ＆ Gemini Spark 連携** の体現のため、ローカルの `data/WBS.tsv` の変更を自動で Google スプレッドシートに反映し、マイティ・リンク様のブランドカラー（Mighty Blue）で美しく自動装飾する Python 同期システムを構築しました。
+本プロジェクトでは、プロジェクト管理の円滑化と **Google Workspace API (Sheets/Docs/Calendar) ＆ Gemini API 連携** の体現のため、ローカルの `data/WBS.tsv` の変更を自動で Google スプレッドシートに反映し、社長プレゼン向けの黒基調AI studio UIと整合する管理表として自動装飾する Python 同期システムを構築しました。
 
 2026-05-22 時点では、参考ファイル `【次期CATS】WBS_分析計画工程(後半).xlsx` の思想に寄せ、単純な TSV 一覧ではなく、以下の 5 タブを自動生成します。
 

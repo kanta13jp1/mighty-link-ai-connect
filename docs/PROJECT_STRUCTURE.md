@@ -11,7 +11,7 @@ mighty-link-ai-connect/
 ├── .github/      # GitHub Actions による公開デモ保護
 ├── docs/         # 要件、設計、手順、作業ログ
 ├── data/         # 同期元データ、ローカル監査ログ
-├── exports/      # 生成ファイル、外部取り込み用ファイル
+├── exports/      # 生成ファイル、外部取り込み用ファイル、検証スクリーンショット
 ├── AGENTS.md     # Codex / multi-agent 共通のプロジェクト指示
 ├── CLAUDE.md     # Claude Code 用 project memory entrypoint
 ├── requirements.txt
@@ -30,6 +30,7 @@ mighty-link-ai-connect/
 | 同期元データ | `data/` | `WBS.tsv`, `issues_tracker.tsv`, `qa_tracker.tsv` |
 | 実行時監査ログ | `data/audit/` | `.gitkeep`, `ai_audit.jsonl` (Git 管理対象外) |
 | 生成物 | `exports/` | `mighty_development_plan.ics`, `knowledge_flow/` |
+| 検証証跡 | `exports/verification/` | `seedance_refresh_desktop.png`, `seedance_refresh_mobile.png` |
 | AIエージェント指示 | ルート直下 | `AGENTS.md`, `CLAUDE.md` |
 | 認証情報 | ルート直下 | `client_secret.json`, `authorized_user.json` |
 
@@ -53,10 +54,11 @@ mighty-link-ai-connect/
 - Obsidian vault を置く場合は、原則として本リポジトリ外に配置する。リポジトリ内へ置く場合は `docs/` に昇格した公式メモだけを Git 管理し、未整理メモや秘密情報は含めない。
 - Notion / Slack / NotebookLM 連携は、6/2 の社長判断後に `config/` または環境変数で外部設定化する。
 - `exports/knowledge_flow/` は社長説明用の安全なデモ成果物として Git 管理する。認証情報や個人情報は含めない。
+- `exports/verification/` は公開デモやローカルUIの視覚確認スクリーンショットを保存する。社長説明に使えるものだけをGit管理し、個人情報や認証画面は含めない。
 - `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx` はNotebookLM CLIの草案を社長説明用PPTXにした成果物として管理する。再生成は `scripts/generate_ceo_presentation_deck.py` で行う。
 - GitHub Issues は実装タスクの粒度、WBS は日程・報告粒度として使い分ける。GitHub Project は `read:project` スコープ復旧後にIssue配置を行う。
 - `AGENTS.md` はAntigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの共通セッションゲートを定義する。`CLAUDE.md` はAnthropic公式推奨に従い `@AGENTS.md` を import する。
-- 毎セッションの公式Docs確認は、Anthropic、OpenAI、Google、Microsoft、Meta、Kimi/Moonshot、MiMo、DeepSeek、Grok/xAI、Seedance/ByteDance Seed を対象にする。URL正本は `AGENTS.md` に集約し、未確認の未来モデル名や古いベストプラクティスはdocsへ残さない。
+- 毎セッションの公式Docs確認は、Anthropic、OpenAI、Google、Microsoft、Meta、Amazon、Apple、Kimi/Moonshot、MiMo、DeepSeek、Grok/xAI、Seedance/ByteDance Seed、Obsidian、Unity を対象にする。URL正本は `AGENTS.md` に集約し、未確認の未来モデル名や古いベストプラクティスはdocsへ残さない。
 - `.claude/settings.local.json` と `CLAUDE.local.md` はローカル専用設定として `.gitignore` 対象にし、共有すべき指示は `AGENTS.md` / `CLAUDE.md` / `docs/` へ昇格する。
 - Google Sheets同期は `sync_wbs_to_sheets.py` 1本で `Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` / `課題管理表` / `QA表` を更新する。
 - Google Calendar同期は `sync_wbs_to_calendar.py` 1本で `data/WBS.tsv` の完了状態を読み、完了済みWBSに紐づくイベントをCalendarから削除し、未完了・実行中・会議イベントだけを残す。完了履歴はSheets/Docs/Git履歴で追跡する。

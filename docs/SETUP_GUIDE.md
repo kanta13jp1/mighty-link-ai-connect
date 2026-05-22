@@ -218,7 +218,7 @@ python scripts/sync_wbs_to_calendar.py
 
 `sync_wbs_to_sheets.py` は `Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` に加え、`data/issues_tracker.tsv` から `課題管理表`、`data/qa_tracker.tsv` から `QA表` も同時に更新します。課題やQAが発生した場合は、該当TSVを更新してから同じ同期コマンドを再実行してください。
 
-三ツール開発体制では、各セッション開始時に [AGENTS.md](../AGENTS.md) / [CLAUDE.md](../CLAUDE.md) / [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) を確認し、Anthropic・OpenAI・Google・Microsoft・Meta・Kimi/Moonshot・MiMo・DeepSeek・Grok/xAI・Seedance/ByteDance Seed公式Docsの最新版を確認してから作業します。各セッションの終了時は、WBSタスクを最低1件完了させ、Sheets/Calendar同期、commit、push、`main`/`master`反映まで行います。
+三ツール開発体制では、各セッション開始時に [AGENTS.md](../AGENTS.md) / [CLAUDE.md](../CLAUDE.md) / [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) を確認し、Anthropic・OpenAI・Google・Microsoft・Meta・Amazon・Apple・Kimi/Moonshot・MiMo・DeepSeek・Grok/xAI・Seedance/ByteDance Seed・Obsidian・Unity公式Docsの最新版を確認してから作業します。各セッションの終了時は、WBSタスクを最低1件完了させ、Sheets/Calendar同期、commit、push、`main`/`master`反映まで行います。
 
 ## 9. FastAPI サーバー起動
 

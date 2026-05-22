@@ -88,7 +88,7 @@ gh project list --owner kanta13jp1 --format json
 
 ## WBS 反映
 
-本作業は `data/WBS.tsv` に `T632` から `T666` として追加・更新した。
+本作業は `data/WBS.tsv` に `T632` から `T667` として追加・更新した。
 
 - `T632`: GitHub Issues連携
 - `T633`: GitHub Project連携
@@ -119,17 +119,18 @@ gh project list --owner kanta13jp1 --format json
 - `T664`: 三ツール開発フロー整備
 - `T665`: 古いドキュメント削除・最新化
 - `T666`: Calendar完了イベント削除
+- `T667`: Seedance風デモUI刷新
 
 同期結果:
 
-- Google Sheets: `82 source rows` / `94 hierarchical WBS display rows` (81 task rows + header)
-- Google Sheets tracker tabs: `課題管理表` 28 rows / `QA表` 36 rows
+- Google Sheets: `83 source rows` / `95 hierarchical WBS display rows` (82 task rows + header)
+- Google Sheets tracker tabs: `課題管理表` 29 rows / `QA表` 37 rows
 - Google Calendar: 初回 cleanup で `Deleted completed: 17`、直近再同期は `Active: 13, Success: 13, Updated: 13, Failed: 0, Deleted completed: 0, Deleted stale: 0`
 - Calendar反映イベント例: `GitHub Project権限復旧チェック`, `Slack投稿先・送信権限確認`, `GitHub Issues/Project再追跡`, `6/2資料最終パックレビュー`, `社長プレゼン最終リハーサル`, `第1回 社長報告会`
 
 ## 社長への見せ方
 
-1. 公開デモURLを開く。
+1. 公開デモURLを開き、Seedance風の黒基調AI studio UIに刷新されたことを見せる。
 2. 「開発ナレッジ連携デモ」セクションを見せる。
 3. NotebookLMの `Agent Brief` と `CEO Slide Outline` を開き、AIが資料を要約して開発・プレゼンに使う流れを見せる。
 4. Google Docs化したNotebookLM source packを開く。
@@ -159,6 +160,7 @@ gh project list --owner kanta13jp1 --format json
 - `T664`: 三ツール開発フロー整備
 - `T665`: 古いドキュメント削除・最新化
 - `T666`: Calendar完了イベント削除
+- `T667`: Seedance風デモUI刷新
 
 今回のCalendar運用変更:
 
@@ -176,3 +178,14 @@ gh project list --owner kanta13jp1 --format json
 | QA表 | 公式Docs毎回確認ルールを `Q-AHOC-20260522-1` として追加 | `data/qa_tracker.tsv` |
 | GitHub Issue | T664証跡Issueを作成してクローズ | https://github.com/kanta13jp1/mighty-link-ai-connect/issues/13 |
 | Actions警告 | Pages deployは成功したがNode.js 20 deprecation annotationを検出し、課題管理表へ反映 | https://github.com/kanta13jp1/mighty-link-ai-connect/issues/14 |
+
+## 2026-05-22 追加証跡: Seedance風デモUI刷新
+
+| 項目 | 実施内容 | 証跡 |
+| --- | --- | --- |
+| 公開デモUI | root `index.html` を黒基調AI studio UIへ刷新 | `index.html` |
+| ローカルUI | FastAPI用 `src/index.html` に同じファーストビューを反映 | `src/index.html` |
+| ブランド安全性 | Seedanceのブランド・素材・文言は使わず、黒背景、強いタイポグラフィ、映像AIプレビュー構成のみ参考 | `data/qa_tracker.tsv` / `Q-AHOC-20260522-3` |
+| 公開デモガード | README fallbackなし、必須DOMマーカー維持を確認 | `python scripts/verify_public_demo.py` |
+| 表示確認 | Playwrightでdesktop/mobileの横スクロールなし、主要CTA表示、desktopのcinematic preview frame表示を確認 | `exports/verification/seedance_refresh_desktop.png` / `exports/verification/seedance_refresh_mobile.png` |
+| 課題管理 | 公開デモデグレリスクをR16として登録しresolved化 | `data/issues_tracker.tsv` |

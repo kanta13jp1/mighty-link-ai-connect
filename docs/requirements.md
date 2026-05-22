@@ -13,8 +13,8 @@
 
 ### 1.2 コアバリュー
 - **テクノロジーの架け橋**: 最先端のAIモデルが、エンジニアの経歴に隠された「潜在能力」や「得意領域」を最大化して評価。
-- **直感的ビジュアル**: マイティ・リンク様のブランドカラー（Mighty Blue）を基調とした、ガラスモフィズムと鮮やかなチャートによるプレミアムUI。
-- **Google Workspace AI (Sheets/Docs Live) 連携**: 案件マッチング結果やWBSステータスが、Google Sheets / Docs と自律的に双方向連携。
+- **直感的ビジュアル**: 社長プレゼンではSeedance風の黒基調AI studio UIを採用し、Mighty Blue / Green / Yellow / Roseのアクセントで4軸分析を映像生成プロダクトのように見せる。
+- **Google Workspace API (Sheets/Docs/Calendar) 連携**: 案件マッチング結果やWBSステータスが、Google Sheets / Docs / Calendar と自律的に連携。
 
 ---
 
@@ -25,7 +25,7 @@
 - 案件の募集要項（PDF/テキスト等）をドロップ、またはテキスト入力するエリア。
 - アップロード中のローディングアニメーション（滑らかなマイクロインタラクション）。
 
-### 2.2 【AIコア】多次元フィット・エンジン (Gemini Spark)
+### 2.2 【AIコア】多次元フィット・エンジン (Gemini API / deterministic fallback)
 - **スキル・フィット (Skill Fit)**: 使用技術、フレームワーク、アーキテクチャ設計力のマッチ度。
 - **カルチャー・フィット (Culture Fit)**: 過去の在籍企業形態、アジャイル/ウォーターフォール等の開発文化マッチ度。
 - **グロース・フィット (Growth Fit)**: エンジニアが今後目指したいキャリア像と案件の親和性。
@@ -48,7 +48,7 @@
 
 ---
 
-## 4. Sheets Live & Docs Live 連携仕様 (Gemini Spark)
+## 4. Sheets Live & Docs Live 連携仕様 (Google Workspace API)
 
 - **同期アクション1 (WBS進捗)**: 各タスク完了時に `sync_wbs_to_sheets.py` が WBS シートを自動更新。
 - **同期アクション2 (マッチングデータベース)**: ユーザーがシミュレーターでマッチングを実行するたびに、結果（エンジニア名、案件名、マッチング率、レーダーチャート用スコア、面談想定質問）が Google Sheets の「マッチングログ」シートへ自動蓄積。
@@ -56,13 +56,14 @@
 
 ---
 
-## 5. UI/UX デザインシステム (Mighty Blue System)
+## 5. UI/UX デザインシステム (AI Studio System)
 
-- **メインカラー (Primary)**: `#1A73E8` (Mighty Blue - 信頼とテクノロジー)
-- **セカンダリカラー (Secondary)**: `#34A853` (Mighty Green - 成長とマッチ成立)
-- **背景 (Background)**: `#0F172A` (Slate Dark - 宇宙とプレミアムな未来感)
+- **メインカラー (Primary)**: `#8BDCFF` (Mighty Blue - AI解析 / 透明感)
+- **セカンダリカラー (Secondary)**: `#BAFF66` (Mighty Green - 成長とマッチ成立)
+- **アクセントカラー**: `#FFD166` / `#FF6CAB` (判断材料と注意点を分ける)
+- **背景 (Background)**: `#030303` / `#090A0C` (Seedance風の黒基調AI studio)
 - **フォント**: Google Fonts 'Outfit' & 'Noto Sans JP'
-- **スタイルエフェクト**: `backdrop-filter: blur(16px)` を用いた美しい透かし効果。
+- **スタイルエフェクト**: 8px角のパネル、細いグリッド、映像プレビュー風の分析フレーム。
 
 ---
 *Created and approved as part of WBS Task T101.*

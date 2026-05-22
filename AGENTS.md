@@ -9,11 +9,15 @@
   - Google Gemini / Workspace: `https://ai.google.dev/gemini-api/docs/models`, `https://ai.google.dev/gemini-api/docs/caching`, `https://developers.google.com/workspace/sheets/api/guides/batchupdate`
   - Microsoft AI / Azure AI Foundry: `https://learn.microsoft.com/en-us/azure/ai-foundry/openai/overview`, `https://learn.microsoft.com/en-us/azure/ai-foundry/`
   - Meta Llama: `https://llama.developer.meta.com/docs/overview`, `https://ai.meta.com/llama/get-started/`
+  - Amazon Bedrock / AWS AI: `https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-bedrock.html`
+  - Apple Machine Learning / HIG: `https://developer.apple.com/machine-learning/`, `https://developer.apple.com/design/human-interface-guidelines/`
   - Kimi / Moonshot AI: `https://platform.moonshot.ai/docs/`
   - MiMo: `https://github.com/XiaomiMiMo/MiMo`
   - DeepSeek: `https://api-docs.deepseek.com/`
   - Grok / xAI: `https://docs.x.ai/`
   - Seedance / ByteDance Seed: `https://seed.bytedance.com/en/seedance`
+  - Obsidian: `https://help.obsidian.md/`
+  - Unity: `https://docs.unity.com/`, `https://docs.unity3d.com/Manual/`
 - Every development session must complete at least one WBS task and reflect it in `data/WBS.tsv` and `docs/WBS.md`.
 - Delete or rewrite stale docs aggressively. Do not preserve outdated model names, obsolete issue ranges, resolved blockers, or old sync counts as current guidance.
 - Use `k-umezawa@ml-mightylink.com` for Google OAuth. Run `python scripts/verify_google_workspace_account.py` when touching Google integrations.

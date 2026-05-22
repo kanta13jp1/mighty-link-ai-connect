@@ -18,7 +18,7 @@
 
 | 区分 | 内容 | 対応WBS |
 | --- | --- | --- |
-| デモ | 公開URL、ローカルFastAPI、Google Sheets WBS、Calendar同期状況 | T602, T603, T608 |
+| デモ | 公開URL、Seedance風黒基調UI、ローカルFastAPI、Google Sheets WBS、Calendar同期状況 | T602, T603, T608, T667 |
 | 説明資料 | 目的、現状、デモ導線、判断ポイント、次アクション、1枚絵サマリー | T604, T610 |
 | 論点整理 | サービス内容、対象ユーザー、収益/運用、優先機能、リスク、判断マトリクス | T605, T606, T611 |
 | 想定QA | 社長からの質問、回答方針、保留時の扱い | T607 |
@@ -60,7 +60,7 @@
 ## デモ導線
 
 1. 公開URLを開く: `https://kanta13jp1.github.io/mighty-link-ai-connect/`
-2. UIが README fallback ではなく、Mighty Skill-Bridge のデモ画面であることを確認する。
+2. UIが README fallback ではなく、Seedance風の黒基調AI studioに刷新された Mighty Skill-Bridge のデモ画面であることを確認する。
 3. サンプル経歴書と案件票を読み込み、フィット分析の流れを説明する。
 4. Google Sheets の `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` を見せる。
 5. Google Calendar の `Mighty Skill-Bridge 開発計画` を見せる。
@@ -220,3 +220,11 @@ python scripts/sync_wbs_to_calendar.py
 - 8枚構成: 本日決めたいこと、現在の到達点、Google Workspace基盤、ナレッジ連携実績、NotebookLMからPPTXへ、サービス方向性、運用・リスク、次アクション。
 - PPTXは `upload_notebooklm_docs_to_drive.py` のDriveアップロード対象に追加し、`k-umezawa@ml-mightylink.com` 所有ファイルとして扱う。
 - WBSは `T658` から `T663` を追加し、PPTX生成、Drive共有、Notion証跡、Issues/Project再追跡、Slack到達性確認、最終パックレビューを管理する。
+
+## 2026-05-22 Seedance風デモUI刷新
+
+- 公開URLの第一印象を社長プレゼン向けに改善するため、`index.html` と `src/index.html` のファーストビューを黒基調AI studio UIへ刷新した。
+- Seedanceの質感は、黒背景、強いタイポグラフィ、映像AIプロダクト風のプレビューフレーム、グリッド表現のみを参考にし、ブランド・素材・文言はMighty Skill-Bridge独自のまま維持した。
+- 既存の経歴書/案件票アップロード、`Mighty AI Bridge 実行`、開発ナレッジ連携デモ、レーダーチャート出力のDOMマーカーは維持した。
+- `python scripts/verify_public_demo.py` とPlaywright desktop/mobile表示確認で、README fallbackなし、横スクロールなし、主要CTA表示を確認した。
+- WBSは `T667` を追加し、本セッションで完了反映する。

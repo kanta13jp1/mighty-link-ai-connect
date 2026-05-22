@@ -3,7 +3,7 @@
 > [!NOTE]
 > **本WBSの設計思想**
 > 開発するプロダクト **『Mighty Skill-Bridge（エンジニア＆案件 AIフィットシミュレーター）』** を、Antigravity 2.0 およびGoogle Gemini APIの現行モデルを用いて開発するための完全詳細タスクリストです。
-> 最新の **Google Workspace AI (Docs/Sheets Live) ＆ Gemini Spark 連携** の思想に基づき、スプレッドシートにコピペするだけで即座に動的なプロジェクト管理ボードとして機能するフォーマットで設計されています。
+> 最新の **Google Workspace API (Sheets/Docs/Calendar) ＆ Gemini API 連携** の思想に基づき、スプレッドシートにコピペするだけで即座に動的なプロジェクト管理ボードとして機能するフォーマットで設計されています。
 
 ---
 
@@ -116,15 +116,16 @@ gantt
 | **T664** | 6. 社長プレゼン準備 | 三ツール開発フロー整備 | Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定 | Codex | VSCode + Codex + Official Docs | 公式Docs確認、WBS 1件完了、Sheets課題管理表・QA表同期、commit/push/main/master反映までのセッションゲートをAGENTS.md/CLAUDE.md/手順書に反映する |
 | **T665** | 6. 社長プレゼン準備 | 古いドキュメント削除・最新化 | 古いモデル前提・件数固定・Issue固定表記を削除/更新し、公式Docs確認ルールを強化 | Codex | VSCode + Codex + Official Docs | `ANTIGRAVITY_GUIDE.md` の未確認未来モデルセクションを削除し、NotebookLM 22 source / GitHub Issue #1-#11/#13/#14/#16/#18の現状へ更新する |
 | **T666** | 6. 社長プレゼン準備 | Calendar完了イベント削除 | 完了済みWBSに紐づくGoogle Calendarイベントを削除し、未完了・実行中・会議イベントだけを残す同期ルールを実装 | Codex | VSCode + Codex + Google Calendar API | `sync_wbs_to_calendar.py` が `data/WBS.tsv` のステータスを読み、完了済みWBSイベントをCalendarからDELETEしてICS出力からも除外する |
+| **T667** | 6. 社長プレゼン準備 | Seedance風デモUI刷新 | 社長公開URLの第一印象を黒基調AI studio UIへ刷新し、既存デモ導線を維持する | Codex | VSCode + Codex + Playwright + Official Docs | `index.html` / `src/index.html` をSeedance風の映像AIプロダクトUIへ更新し、公開デモガードとローカル表示確認を完了する |
 
 ---
 
-## 🤖 Sheets Live & Gemini Spark による自律同期シナリオ
+## 🤖 Sheets Live & Google Workspace API による自律同期シナリオ
 
-Google Workspace AI & Gemini Spark のパワーを活かし、このWBSは以下のように自律的に同期・稼働します。
+Google Workspace API と `data/WBS.tsv` 正本運用を活かし、このWBSは以下のように同期・稼働します。
 
 1. **リアルタイム進捗更新 (Sheets Live)**
-   - Antigravity 2.0 のサブエージェントが各タスクを完了（例：`T201: PDFアップロード画面の実装` がパス）すると、バックグラウンドの Gemini Spark が API を介してスプレッドシートの該当タスクの進捗ステータスを自動的に `[Done]` に書き換え、セルを美しいグリーンに塗り替えます。
+   - Codex が各セッションで `data/WBS.tsv` を更新し、`sync_wbs_to_sheets.py` がGoogle Sheets APIを介してスプレッドシートの該当タスクの進捗ステータスと装飾を更新します。
 2. **要件定義書のライブ同期 (Docs Live)**
    - 最初の要件定義（T101）で合意された `requirements.md` の内容は、Google Docs Live に自動で連携され、社長様とリアルタイムで共同編集・コメントのやり取りが可能な状態になります。
 3. **24時間自律セキュリティレポート**
