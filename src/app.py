@@ -22,8 +22,18 @@ import re
 import hashlib
 import requests
 import subprocess
+import time
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List, Optional, Set, Tuple
+
+
+def env_int(name: str, default: int, minimum: int, maximum: int) -> int:
+    try:
+        value = int(os.environ.get(name, str(default)))
+    except (TypeError, ValueError):
+        return default
+    return max(minimum, min(value, maximum))
+
 
 # Set console encoding to UTF-8 to prevent encoding errors on Windows terminal
 if hasattr(sys.stdout, "reconfigure"):
@@ -77,6 +87,8 @@ SEEDANCE_MODEL = os.environ.get("SEEDANCE_MODEL", "seedance-1-0-pro")
 SEEDANCE_API_URL = os.environ.get("SEEDANCE_API_URL", "").strip()
 SEEDANCE_RESULT_API_URL_TEMPLATE = os.environ.get("SEEDANCE_RESULT_API_URL_TEMPLATE", "").strip()
 SEEDANCE_PAYLOAD_STYLE = os.environ.get("SEEDANCE_PAYLOAD_STYLE", "content_task").strip().lower()
+SEEDANCE_POLL_TIMEOUT_SECONDS = env_int("SEEDANCE_POLL_TIMEOUT_SECONDS", 120, 0, 600)
+SEEDANCE_POLL_INTERVAL_SECONDS = env_int("SEEDANCE_POLL_INTERVAL_SECONDS", 5, 1, 60)
 SEEDANCE_API_KEY = (
     os.environ.get("SEEDANCE_API_KEY")
     or os.environ.get("ARK_API_KEY")
@@ -306,6 +318,23 @@ def find_task_id(value) -> Optional[str]:
     return None
 
 
+def find_task_status(value) -> Optional[str]:
+    if isinstance(value, dict):
+        for key in ("status", "task_status", "TaskStatus", "state", "State", "phase"):
+            if key in value and value[key] is not None and not isinstance(value[key], (dict, list)):
+                return str(value[key])
+        for item in value.values():
+            found = find_task_status(item)
+            if found:
+                return found
+    if isinstance(value, list):
+        for item in value:
+            found = find_task_status(item)
+            if found:
+                return found
+    return None
+
+
 def seedance_fallback_response(reason: str, prompt: str, task_id: Optional[str] = None) -> dict:
     video_url = seedance_demo_video_url()
     return {
@@ -361,6 +390,51 @@ def build_seedance_payload(prompt: str, req: "SeedanceVideoRequest") -> dict:
         "ratio": req.aspect_ratio,
         "duration": req.duration_seconds,
     }
+
+
+def poll_seedance_result(task_id: str, headers: dict) -> Tuple[Optional[str], Optional[dict], str]:
+    if not SEEDANCE_RESULT_API_URL_TEMPLATE:
+        return (
+            None,
+            None,
+            "Seedance task was accepted, but SEEDANCE_RESULT_API_URL_TEMPLATE is not configured for result polling.",
+        )
+    if SEEDANCE_POLL_TIMEOUT_SECONDS <= 0:
+        return None, None, "Seedance task was accepted, but result polling is disabled."
+
+    result_url = SEEDANCE_RESULT_API_URL_TEMPLATE.format(task_id=task_id)
+    deadline = time.monotonic() + SEEDANCE_POLL_TIMEOUT_SECONDS
+    attempts = 0
+    last_status = "unknown"
+    last_payload = None
+
+    while True:
+        attempts += 1
+        response = requests.get(result_url, headers=headers, timeout=45)
+        if not response.ok:
+            return (
+                None,
+                last_payload,
+                f"Seedance result request failed: {summarize_seedance_http_error(response)}",
+            )
+
+        result_payload = response.json()
+        last_payload = result_payload
+        video_url = find_video_url(result_payload)
+        if video_url:
+            return video_url, result_payload, ""
+
+        last_status = find_task_status(result_payload) or last_status
+        if time.monotonic() >= deadline:
+            break
+        time.sleep(SEEDANCE_POLL_INTERVAL_SECONDS)
+
+    return (
+        None,
+        last_payload,
+        f"Seedance task was accepted but no video URL was returned within {SEEDANCE_POLL_TIMEOUT_SECONDS}s. "
+        f"task_status={last_status}; attempts={attempts}",
+    )
 
 
 def profile_audit_payload(profile: ParsedProfile, ai_mode: str, fallback_reason: str, source_text: str, file_name: Optional[str] = None) -> dict:
@@ -698,6 +772,8 @@ async def health_check():
         "ai_force_mock": AI_FORCE_MOCK,
         "seedance_live": SEEDANCE_READY,
         "seedance_model": SEEDANCE_MODEL,
+        "seedance_result_polling": bool(SEEDANCE_RESULT_API_URL_TEMPLATE),
+        "seedance_poll_timeout_seconds": SEEDANCE_POLL_TIMEOUT_SECONDS,
         "seedance_demo_video": seedance_demo_video_url(),
     }
 
@@ -819,17 +895,8 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
                 "raw_status": create_payload.get("status") if isinstance(create_payload, dict) else None,
             }
 
-        if task_id and SEEDANCE_RESULT_API_URL_TEMPLATE:
-            result_url = SEEDANCE_RESULT_API_URL_TEMPLATE.format(task_id=task_id)
-            result_response = requests.get(result_url, headers=headers, timeout=45)
-            if not result_response.ok:
-                return seedance_fallback_response(
-                    f"Seedance result request failed: {summarize_seedance_http_error(result_response)}",
-                    prompt,
-                    task_id,
-                )
-            result_payload = result_response.json()
-            video_url = find_video_url(result_payload)
+        if task_id:
+            video_url, result_payload, poll_reason = poll_seedance_result(task_id, headers)
             if video_url:
                 return {
                     "status": "success",
@@ -840,6 +907,7 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
                     "task_id": task_id,
                     "raw_status": result_payload.get("status") if isinstance(result_payload, dict) else None,
                 }
+            return seedance_fallback_response(poll_reason, prompt, task_id)
 
         return seedance_fallback_response(
             "Seedance task was accepted but no video URL was returned yet.",

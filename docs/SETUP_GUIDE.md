@@ -345,3 +345,30 @@ $env:SEEDANCE_PAYLOAD_STYLE = "prompt_legacy"
 ```
 
 After changing environment variables or pulling code, restart `python src/app.py`. A `fallback` response with `seedance_live: true` means credentials are loaded but BytePlus returned an API error; check `fallback_reason` for the provider response body.
+
+## 2026-05-22 Seedance async result polling
+
+ModelArk video generation is asynchronous. A successful create request can return a `task_id` before the generated video URL is ready. The local adapter now polls the result endpoint after task creation:
+
+```powershell
+$env:SEEDANCE_RESULT_API_URL_TEMPLATE = "https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks/{task_id}"
+$env:SEEDANCE_POLL_TIMEOUT_SECONDS = "120"
+$env:SEEDANCE_POLL_INTERVAL_SECONDS = "5"
+python src/app.py
+```
+
+Check polling readiness:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/api/health
+```
+
+Expected fields:
+
+```text
+seedance_live: True
+seedance_result_polling: True
+seedance_poll_timeout_seconds: 120
+```
+
+If `fallback_reason` says the task was accepted but no URL was returned within the timeout, increase `SEEDANCE_POLL_TIMEOUT_SECONDS`, restart FastAPI, and retry.
