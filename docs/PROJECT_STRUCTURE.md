@@ -55,6 +55,7 @@ mighty-link-ai-connect/
 - Notion / Slack / NotebookLM 連携は、6/2 の社長判断後に `config/` または環境変数で外部設定化する。
 - `exports/knowledge_flow/` は社長説明用の安全なデモ成果物として Git 管理する。認証情報や個人情報は含めない。
 - `exports/seedance_demo/` は公開URLでも表示できるプロジェクト生成動画を管理する。Seedance APIキーや外部レスポンスは含めない。
+- `favicon.ico` はGitHub PagesとFastAPIローカル画面で共通利用するブランドアイコンとしてルートに置く。
 - `data/external_api_usage.jsonl` はローカルの外部API利用台帳で、Git管理対象外。`/admin` と `/api/admin/usage` から確認する。
 - `exports/verification/` は公開デモやローカルUIの視覚確認スクリーンショットを保存する。社長説明に使えるものだけをGit管理し、個人情報や認証画面は含めない。
 - `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx` はNotebookLM CLIの草案を社長説明用PPTXにした成果物として管理する。再生成は `scripts/generate_ceo_presentation_deck.py` で行う。

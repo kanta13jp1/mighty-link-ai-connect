@@ -49,7 +49,7 @@ if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -69,9 +69,12 @@ except ImportError:
     SHEETS_LIB_AVAILABLE = False
 
 try:
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types as genai_types
     GEMINI_LIB_AVAILABLE = True
 except ImportError:
+    genai = None
+    genai_types = None
     GEMINI_LIB_AVAILABLE = False
 
 # Initialize FastAPI App
@@ -88,6 +91,7 @@ EXTERNAL_API_USAGE_LOG_FILE = os.path.join(DATA_DIR, "external_api_usage.jsonl")
 KNOWLEDGE_FLOW_DIR = os.path.join(EXPORTS_DIR, "knowledge_flow")
 KNOWLEDGE_FLOW_MANIFEST = os.path.join(KNOWLEDGE_FLOW_DIR, "manifest.json")
 KNOWLEDGE_FLOW_SCRIPT = os.path.join(PROJECT_ROOT, "scripts", "generate_knowledge_flow_demo.py")
+FAVICON_FILE = os.path.join(PROJECT_ROOT, "favicon.ico")
 SEEDANCE_DEMO_DIR = os.path.join(EXPORTS_DIR, "seedance_demo")
 SEEDANCE_DEMO_VIDEO = os.path.join(SEEDANCE_DEMO_DIR, "mighty_skill_bridge_seedance_demo.mp4")
 SEEDANCE_DEMO_MANIFEST = os.path.join(SEEDANCE_DEMO_DIR, "manifest.json")
@@ -111,6 +115,7 @@ CLIENT_SECRET_FILE = os.path.join(PROJECT_ROOT, "client_secret.json")
 AUTHORIZED_USER_FILE = os.path.join(PROJECT_ROOT, "authorized_user.json")
 SPREADSHEET_ID = "1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8"
 USER_EMAIL = "k-umezawa@ml-mightylink.com"
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-1.5-flash")
 GEMINI_DAILY_CALL_LIMIT = env_int("GEMINI_DAILY_CALL_LIMIT", 20, 0, 10000)
 GEMINI_DAILY_REPORTED_TOKEN_LIMIT = env_int("GEMINI_DAILY_REPORTED_TOKEN_LIMIT", 100000, 0, 1_000_000_000)
 
@@ -963,14 +968,31 @@ def build_fallback_match(engineer_text: str, job_text: str, fallback_reason: str
 API_KEY = os.environ.get("GEMINI_API_KEY")
 AI_FORCE_MOCK = os.environ.get("AI_FORCE_MOCK", "").lower() in {"1", "true", "yes", "on"}
 GEMINI_READY = API_KEY is not None and GEMINI_LIB_AVAILABLE and not AI_FORCE_MOCK
+GEMINI_CLIENT = None
 
 if GEMINI_READY:
-    genai.configure(api_key=API_KEY)
-    print("[+] Gemini API successfully configured via GEMINI_API_KEY.")
+    GEMINI_CLIENT = genai.Client(api_key=API_KEY)
+    print(f"[+] Gemini API successfully configured via GEMINI_API_KEY using {GEMINI_MODEL}.")
 elif AI_FORCE_MOCK:
     print("[!] AI_FORCE_MOCK enabled. Running in quota-safe mock fallback mode.")
+elif not GEMINI_LIB_AVAILABLE:
+    print("[!] google-genai is not installed. Running in deterministic fallback mode.")
 else:
-    print("[!] Warning: GEMINI_API_KEY not set or library missing. Running in mock fallback mode.")
+    print("[*] GEMINI_API_KEY not set. Running in deterministic fallback mode.")
+
+
+def generate_gemini_content(contents, response_mime_type: Optional[str] = None):
+    if GEMINI_CLIENT is None:
+        raise RuntimeError("Gemini client is not configured.")
+    config = None
+    if response_mime_type:
+        config = genai_types.GenerateContentConfig(response_mime_type=response_mime_type)
+    return GEMINI_CLIENT.models.generate_content(
+        model=GEMINI_MODEL,
+        contents=contents,
+        config=config,
+    )
+
 
 SEEDANCE_CONFIGURED = bool(SEEDANCE_API_KEY and SEEDANCE_API_URL)
 SEEDANCE_READY = bool(SEEDANCE_API_ENABLED and SEEDANCE_CONFIGURED)
@@ -988,6 +1010,14 @@ class SeedanceVideoRequest(BaseModel):
     duration_seconds: int = 6
 
 # Static Hosting route
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    """Serves the project favicon for browser tabs and DevTools requests."""
+    if not os.path.exists(FAVICON_FILE):
+        raise HTTPException(status_code=404, detail="favicon.ico not found in project root.")
+    return FileResponse(FAVICON_FILE, media_type="image/x-icon")
+
+
 @app.get("/", response_class=HTMLResponse)
 async def serve_index():
     """Serves the main frontend page index.html."""
@@ -1055,6 +1085,7 @@ ADMIN_DASHBOARD_HTML = """<!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mighty Skill-Bridge API Guard</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
     <style>
         :root { color-scheme: dark; --bg:#070807; --panel:#111312; --line:#2a2f2b; --text:#f3f5ef; --muted:#a6ada4; --ok:#9df56d; --warn:#ffd166; --bad:#ff7d7d; --blue:#8bdcff; }
         * { box-sizing: border-box; }
@@ -1172,6 +1203,12 @@ async def admin_dashboard():
 
 @app.get("/api/admin/usage")
 async def admin_usage():
+    return build_external_api_usage_summary()
+
+
+@app.get("/admin/usage")
+async def admin_usage_alias():
+    """Human-friendly alias for users who type /admin/usage in the browser."""
     return build_external_api_usage_summary()
 
 
@@ -1533,13 +1570,12 @@ async def parse_document(
                     "operation": "parse",
                     "billable": False,
                     "outcome": "blocked",
-                    "model": "gemini-1.5-flash",
+                    "model": GEMINI_MODEL,
                     "reason": circuit_reason,
                     "prompt_digest": stable_digest(source_text),
                 })
                 raise RuntimeError(circuit_reason)
             local_profile = build_profile(source_text, doc_type)
-            model = genai.GenerativeModel("gemini-1.5-flash")
             
             prompt = (
                 f"You are a professional HR data extraction engine.\n"
@@ -1553,13 +1589,13 @@ async def parse_document(
             response = None
             if file_bytes:
                 # Multimodal API Input (PDF/Images)
-                pdf_part = {
-                    "mime_type": file_type,
-                    "data": file_bytes
-                }
-                response = model.generate_content([prompt, pdf_part])
+                pdf_part = genai_types.Part.from_bytes(
+                    data=file_bytes,
+                    mime_type=file_type or "application/octet-stream",
+                )
+                response = generate_gemini_content([pdf_part, prompt])
             else:
-                response = model.generate_content(f"{prompt}\n\nDocument Content:\n{text}")
+                response = generate_gemini_content(f"{prompt}\n\nDocument Content:\n{text}")
                 
             parsed_text = response.text.strip()
             append_external_api_event({
@@ -1567,7 +1603,7 @@ async def parse_document(
                 "operation": "parse",
                 "billable": True,
                 "outcome": "success",
-                "model": "gemini-1.5-flash",
+                "model": GEMINI_MODEL,
                 "prompt_digest": stable_digest(source_text),
                 **find_token_usage(getattr(response, "usage_metadata", None)),
             })
@@ -1592,7 +1628,7 @@ async def parse_document(
                     "operation": "parse",
                     "billable": False,
                     "outcome": "exception",
-                    "model": "gemini-1.5-flash",
+                    "model": GEMINI_MODEL,
                     "reason": fallback_reason,
                     "prompt_digest": stable_digest(source_text),
                 })
@@ -1649,7 +1685,7 @@ async def evaluate_matching(req: EvaluationRequest):
                     "operation": "match",
                     "billable": False,
                     "outcome": "blocked",
-                    "model": "gemini-1.5-flash",
+                    "model": GEMINI_MODEL,
                     "reason": circuit_reason,
                     "prompt_digest": stable_digest(req.engineer_content + req.job_content),
                 })
@@ -1659,7 +1695,6 @@ async def evaluate_matching(req: EvaluationRequest):
                 req.job_content,
                 "local deterministic pre-score for Gemini prompt context"
             )
-            model = genai.GenerativeModel("gemini-1.5-flash")
             
             prompt = (
                 "You are the Mighty-Link AI engine. Evaluate the fit between the Candidate Resume and the Job Description.\n"
@@ -1697,9 +1732,9 @@ async def evaluate_matching(req: EvaluationRequest):
                 f"Job Description Data:\n{req.job_content}"
             )
             
-            response = model.generate_content(
+            response = generate_gemini_content(
                 prompt,
-                generation_config={"response_mime_type": "application/json"}
+                response_mime_type="application/json"
             )
             
             res_text = response.text.strip()
@@ -1717,7 +1752,7 @@ async def evaluate_matching(req: EvaluationRequest):
                 "operation": "match",
                 "billable": True,
                 "outcome": "success",
-                "model": "gemini-1.5-flash",
+                "model": GEMINI_MODEL,
                 "prompt_digest": stable_digest(req.engineer_content + req.job_content),
                 **find_token_usage(getattr(response, "usage_metadata", None)),
             })
@@ -1734,7 +1769,7 @@ async def evaluate_matching(req: EvaluationRequest):
                     "operation": "match",
                     "billable": False,
                     "outcome": "exception",
-                    "model": "gemini-1.5-flash",
+                    "model": GEMINI_MODEL,
                     "reason": fallback_reason,
                     "prompt_digest": stable_digest(req.engineer_content + req.job_content),
                 })
@@ -1994,6 +2029,12 @@ async def sync_to_sheets(req: SyncRequest):
 
 
 if __name__ == "__main__":
+    if sys.platform.startswith("win"):
+        try:
+            import asyncio
+            asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+        except (AttributeError, RuntimeError):
+            pass
     import uvicorn
     print("[*] Starting Mighty Skill-Bridge FastAPI local server...")
     uvicorn.run(app, host="127.0.0.1", port=8000)

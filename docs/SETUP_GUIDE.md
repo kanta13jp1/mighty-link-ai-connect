@@ -464,3 +464,29 @@ python src/app.py
 ```
 
 After generation, unset `SEEDANCE_API_ENABLED` and restart FastAPI. BytePlus ModelArk usage/resource-pack screens remain the authoritative billing view because Seedance video responses may not include token usage.
+
+## 2026-05-22 Favicon and local route polish
+
+The project root now includes a branded `favicon.ico`. It is used by both:
+
+```text
+https://kanta13jp1.github.io/mighty-link-ai-connect/favicon.ico
+http://127.0.0.1:8000/favicon.ico
+```
+
+FastAPI serves it through an explicit `/favicon.ico` route, and both `index.html` and `src/index.html` declare it in the document head. If the browser still shows a missing icon after pulling this change, restart FastAPI and hard-refresh the tab.
+
+The admin usage JSON is available from either path:
+
+```text
+http://127.0.0.1:8000/api/admin/usage
+http://127.0.0.1:8000/admin/usage
+```
+
+On Windows, the local server also switches to `WindowsSelectorEventLoopPolicy` before starting Uvicorn. This reduces noisy `ConnectionResetError` traces that can appear when Chrome cancels or resumes partial video requests during MP4 preview playback.
+
+Gemini live mode now uses the current `google-genai` package instead of the deprecated `google-generativeai` package. Reinstall dependencies after pulling this change:
+
+```powershell
+pip install -r requirements.txt
+```
