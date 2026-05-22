@@ -174,3 +174,4 @@ gh project list --owner kanta13jp1 --format json
 | 課題管理表 | HANDOFF-2/10/11をresolved化しIssue #13を関連付け | `data/issues_tracker.tsv` |
 | QA表 | 公式Docs毎回確認ルールを `Q-AHOC-20260522-1` として追加 | `data/qa_tracker.tsv` |
 | GitHub Issue | T664証跡Issueを作成してクローズ | https://github.com/kanta13jp1/mighty-link-ai-connect/issues/13 |
+| Actions警告 | Pages deployは成功したがNode.js 20 deprecation annotationを検出し、課題管理表へ反映 | https://github.com/kanta13jp1/mighty-link-ai-connect/issues/14 |

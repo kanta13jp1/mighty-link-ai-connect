@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-05-22 09:11:33 UTC+09:00
+Generated: 2026-05-22 09:21:06 UTC+09:00
 
 ## How to use this in NotebookLM
 
