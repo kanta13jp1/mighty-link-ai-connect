@@ -603,3 +603,34 @@ Gemini quota中でも開発を止めないため、Antigravity + Gemini / VSCode
 
 - GitHub Projectは引き続き `read:project` scope不足。`gh auth refresh -h github.com -s read:project -s project` 後にT645を再開。
 - SlackはCLI/送信MCP未露出のため、T653で投稿先・権限確認後に再開。
+
+## 2026-05-22 (4th session) Claude Code WBS 完遂: T615 + stale-doc 削除ルール導入
+
+本日 4 回目の Claude Code セッションで **T615 (決定後ロードマップ枠)** を完遂。WBS 上の予定は 6/1-6/2 → 10 日以上前倒し。加えてユーザーからの新規ルール「内容が古いドキュメントはどんどん削除してください」に対応するメモリ追加と最初の stale-doc 訂正を実施。
+
+### 4th session 完遂内容
+
+- 新規 [docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md](CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md) — 方向性 A/B/C/D 別 Phase 7 WBS テンプレ + 共通 Phase 7-common (T701-T708) + 議事録 → WBS 反映 7 ステップ手順 (T615 deliverable)
+- [docs/ANTIGRAVITY_GUIDE.md](ANTIGRAVITY_GUIDE.md) 表中の **Gemini 3.5 Pro「来月予約」表現を訂正** — I/O 2026 公表ベンチで Gemini 3.5 Flash > 3.1 Pro at 4x speed が確定したため。R1 リスクを `LOW / resolved` に降格。
+- [docs/MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) に Best Practices Refresh 4th pass (no changes) と stale-doc 訂正ログを追記。
+- [docs/CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md) 関連 docs リストに POST_DECISION_ROADMAP 追加。
+- [README.md](../README.md) Documents セクションに POST_DECISION_ROADMAP 追加。
+- [data/issues_tracker.tsv](../data/issues_tracker.tsv) — R1 `MED/in_progress → LOW/resolved`、HANDOFF-12 新規追加 (Phase 7 採用後の本書 stale セクション削除計画)。
+- 新規 memory: `feedback_stale_doc_deletion.md` — 古い記述を append-only ではなく能動的に削除する運用ルール。
+
+### 4th session WBS.tsv 反映依頼 (Codex セッションへ handoff)
+
+- **T615** ステータス `未着手` → `完了`、終了予定日 `2026-06-02` → 実際終了日 `2026-05-22`、実行エンジン `VSCode + Codex` → `VSCode + Claude Code`、担当 `Codex` → `Claude Code`
+- 既存依頼 (T605/T606/T607 の `完了` flip と T663 の `実行中` 化) と一括 commit 推奨
+
+### 4th session Codex への handoff キュー追加
+
+- **HANDOFF-12** Phase 7 採用後の POST_DECISION_ROADMAP 不要セクション物理削除 (6/3 までに方向性確定後に実行) — [[feedback-stale-doc-deletion]] 準拠
+- 既存 HANDOFF-3〜9 はそのまま (5/27 quota refresh 後対応分含む)
+
+### 採用した stale-doc 削除ルール
+
+[[feedback-stale-doc-deletion]] memory を新規追加。今回の対応:
+
+- ANTIGRAVITY_GUIDE.md の Gemini Pro 来月予約表現を訂正 (削除ではなく上書き)
+- POST_DECISION_ROADMAP.md は 6/2 後に方向性確定で不要セクションを削除する計画を HANDOFF-12 として事前に登録
