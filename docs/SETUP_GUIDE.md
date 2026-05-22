@@ -326,3 +326,22 @@ python src/app.py
 ```
 
 APIキーやエンドポイントが未設定の場合、`/api/seedance/video-demo` は安全なローカル動画を返します。秘密情報は `client_secret.json` などと同じくGitへ含めません。
+
+## 2026-05-22 Seedance API 400 debug note
+
+For ModelArk Seedance 2.0, the local adapter now uses a content-task payload by default:
+
+```powershell
+$env:SEEDANCE_API_KEY = "<BytePlus ModelArk API key>"
+$env:SEEDANCE_API_URL = "https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks"
+$env:SEEDANCE_RESULT_API_URL_TEMPLATE = "https://ark.ap-southeast.bytepluses.com/api/v3/contents/generations/tasks/{task_id}"
+$env:SEEDANCE_MODEL = "dreamina-seedance-2-0-260128"
+```
+
+`/api/seedance/video-demo` sends `content: [{type: "text", text: prompt}]`, `ratio`, and `duration`. If another BytePlus media endpoint requires the older `prompt` field, set this before starting FastAPI:
+
+```powershell
+$env:SEEDANCE_PAYLOAD_STYLE = "prompt_legacy"
+```
+
+After changing environment variables or pulling code, restart `python src/app.py`. A `fallback` response with `seedance_live: true` means credentials are loaded but BytePlus returned an API error; check `fallback_reason` for the provider response body.

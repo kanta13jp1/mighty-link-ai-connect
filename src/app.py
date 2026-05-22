@@ -76,6 +76,7 @@ SEEDANCE_DEMO_MANIFEST = os.path.join(SEEDANCE_DEMO_DIR, "manifest.json")
 SEEDANCE_MODEL = os.environ.get("SEEDANCE_MODEL", "seedance-1-0-pro")
 SEEDANCE_API_URL = os.environ.get("SEEDANCE_API_URL", "").strip()
 SEEDANCE_RESULT_API_URL_TEMPLATE = os.environ.get("SEEDANCE_RESULT_API_URL_TEMPLATE", "").strip()
+SEEDANCE_PAYLOAD_STYLE = os.environ.get("SEEDANCE_PAYLOAD_STYLE", "content_task").strip().lower()
 SEEDANCE_API_KEY = (
     os.environ.get("SEEDANCE_API_KEY")
     or os.environ.get("ARK_API_KEY")
@@ -317,6 +318,48 @@ def seedance_fallback_response(reason: str, prompt: str, task_id: Optional[str] 
         "fallback_reason": reason,
         "manifest": read_seedance_manifest(),
         "prompt_digest": stable_digest(prompt),
+    }
+
+
+def summarize_seedance_http_error(response: requests.Response) -> str:
+    """Expose enough provider error detail for setup debugging without logging credentials."""
+    try:
+        error_payload = response.json()
+    except ValueError:
+        error_payload = response.text
+    if isinstance(error_payload, (dict, list)):
+        detail = json.dumps(error_payload, ensure_ascii=False)
+    else:
+        detail = str(error_payload)
+    detail = detail.replace(SEEDANCE_API_KEY or "", "[redacted]")
+    if len(detail) > 1200:
+        detail = detail[:1200] + "...[truncated]"
+    return f"{response.status_code} {response.reason}: {detail}"
+
+
+def build_seedance_payload(prompt: str, req: "SeedanceVideoRequest") -> dict:
+    """Build a ModelArk Seedance task payload.
+
+    ModelArk's current Seedance task API expects text input under `content`.
+    Keep a `prompt_legacy` escape hatch because BytePlus has multiple media endpoints.
+    """
+    if SEEDANCE_PAYLOAD_STYLE == "prompt_legacy":
+        return {
+            "model": SEEDANCE_MODEL,
+            "prompt": prompt,
+            "aspect_ratio": req.aspect_ratio,
+            "duration": req.duration_seconds,
+        }
+    return {
+        "model": SEEDANCE_MODEL,
+        "content": [
+            {
+                "type": "text",
+                "text": prompt,
+            }
+        ],
+        "ratio": req.aspect_ratio,
+        "duration": req.duration_seconds,
     }
 
 
@@ -747,13 +790,7 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
         "Authorization": f"Bearer {SEEDANCE_API_KEY}",
         "Content-Type": "application/json",
     }
-    payload = {
-        "model": SEEDANCE_MODEL,
-        "prompt": prompt,
-        "aspect_ratio": req.aspect_ratio,
-        "duration": req.duration_seconds,
-        "duration_seconds": req.duration_seconds,
-    }
+    payload = build_seedance_payload(prompt, req)
 
     try:
         create_response = requests.post(
@@ -762,7 +799,11 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
             json=payload,
             timeout=45,
         )
-        create_response.raise_for_status()
+        if not create_response.ok:
+            return seedance_fallback_response(
+                f"Seedance API request failed: {summarize_seedance_http_error(create_response)}",
+                prompt,
+            )
         create_payload = create_response.json()
         video_url = find_video_url(create_payload)
         task_id = find_task_id(create_payload)
@@ -781,7 +822,12 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
         if task_id and SEEDANCE_RESULT_API_URL_TEMPLATE:
             result_url = SEEDANCE_RESULT_API_URL_TEMPLATE.format(task_id=task_id)
             result_response = requests.get(result_url, headers=headers, timeout=45)
-            result_response.raise_for_status()
+            if not result_response.ok:
+                return seedance_fallback_response(
+                    f"Seedance result request failed: {summarize_seedance_http_error(result_response)}",
+                    prompt,
+                    task_id,
+                )
             result_payload = result_response.json()
             video_url = find_video_url(result_payload)
             if video_url:
@@ -800,8 +846,10 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
             prompt,
             task_id,
         )
-    except Exception as exc:
+    except requests.RequestException as exc:
         return seedance_fallback_response(f"Seedance API request failed: {exc}", prompt)
+    except ValueError as exc:
+        return seedance_fallback_response(f"Seedance API returned non-JSON response: {exc}", prompt)
 
 
 # 1. API: Multi-modal Resume/Job Parser
