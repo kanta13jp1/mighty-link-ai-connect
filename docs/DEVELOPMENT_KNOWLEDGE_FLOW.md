@@ -132,7 +132,7 @@ python scripts/sync_docs_to_notebooklm.py
 
 実行結果:
 
-- `docs/*.md` 21件を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ同期した。
+- `docs/*.md` 22件を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ同期した。
 - 同期manifest: `exports/knowledge_flow/notebooklm_docs_manifest.json`
 - NotebookLM CLI再認証手順: `exports/knowledge_flow/notebooklm_cli_next_steps.md`
 - Notion証跡ページ: https://www.notion.so/3671d736b9db8164b46dc143befa29eb
@@ -168,7 +168,7 @@ python scripts/sync_docs_to_notebooklm.py
 - NotebookLM CLIは `k-umezawa@ml-mightylink.com` で認証済み。
 - NotebookLM notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
 - Notebook title: `Mighty Skill-Bridge Development Knowledge 2026-06-02`
-- Source status: `docs/*.md` 21件すべて `ready`
+- Source status: `docs/*.md` 22件すべて `ready`
 - Agent Brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
 - CEO Slide Outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
 - CLI補助ログイン: `scripts/notebooklm_login_workspace.py`

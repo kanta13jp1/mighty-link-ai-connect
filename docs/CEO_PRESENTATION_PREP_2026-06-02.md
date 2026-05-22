@@ -115,7 +115,7 @@
 | R4 | MED | 3 tools 並走で `data/WBS.tsv` の merge 競合 | WBS 行重複・並び順崩壊 | **`data/WBS.tsv` への書き込みは Codex のみ**。Antigravity / Claude は PR コメントで提案 | Codex | 通年 |
 | R5 | MED | 5/27 18:48 quota refresh が遅延・失敗 | デモ動画・radar polish が Antigravity で間に合わない | Codex が frontend タスクの静止画 fallback を準備、Antigravity 完成版が無くてもデモ可能な状態を維持 | Codex | 5/27-5/30 |
 | R6 | LOW | `requirements.txt` 依存ドリフト | デモ前に dependency 競合で起動失敗 | **5/30 EOD で freeze**、以降 upgrade 禁止。`requirements.txt` を編集する PR は Claude review 必須 | Claude (gate) | 5/30 |
-| R7 | LOW | NotebookLM CLI 認証切れ ([notebooklm_cli_next_steps.md](../exports/knowledge_flow/notebooklm_cli_next_steps.md)) | 21 sources の再 sync 不可 | `python scripts/notebooklm_login_workspace.py` を 6/1 dry-run で再確認 | Codex | 6/1 |
+| R7 | LOW | NotebookLM CLI 認証切れ ([notebooklm_cli_next_steps.md](../exports/knowledge_flow/notebooklm_cli_next_steps.md)) | 22 sources の再 sync 不可 | `python scripts/notebooklm_login_workspace.py` を 6/1 dry-run で再確認 | Codex | 6/1 |
 | R8 | LOW | サービス方向性 3 選択肢のいずれにも社長が首肯しない | 6/2 結論が出ず、ロードマップ更新不可 | 「保留」を 4th option として明示。決定後の WBS 差し替えフロー (T612) を準備済 | Claude | 6/2 |
 
 **Hard gate**: R1 / R2 / R5 は EOD 5/30 までに緩和策が動いていることを Final Review (6/1 21:00 JST) で確認する。それ以外は劣化シナリオ込みで 6/2 を実施可能。
@@ -190,10 +190,10 @@ python scripts/sync_wbs_to_calendar.py
 
 ## 2026-05-22 docs配下のNotebookLM同期導線
 
-- `scripts/sync_docs_to_notebooklm.py` を追加し、`docs/*.md` 21件を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ同期した。
+- `scripts/sync_docs_to_notebooklm.py` を追加し、`docs/*.md` 22件を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ同期した。
 - 同期manifestは `exports/knowledge_flow/notebooklm_docs_manifest.json` に保存した。
 - NotebookLM CLIは `0.3.4` がインストール済み。`scripts/notebooklm_login_workspace.py` で `k-umezawa@ml-mightylink.com` の認証状態を保存した。
-- 再実行によりNotebookLMへ21件のsourceを追加し、AIエージェント用の `exports/knowledge_flow/notebooklm_agent_brief.md` と社長説明用の `exports/knowledge_flow/notebooklm_ceo_slide_outline.md` を生成した。
+- 再実行によりNotebookLMへ22件のsourceを追加し、AIエージェント用の `exports/knowledge_flow/notebooklm_agent_brief.md` と社長説明用の `exports/knowledge_flow/notebooklm_ceo_slide_outline.md` を生成した。
 - GitHub Issuesに `#9` と `#10` を追加し、Issue #8へGitHub Projectの `read:project` 不足を再追記した。
 - Notion証跡ページ配下に `NotebookLM Docs Sync Evidence 2026-05-22` を作成した: `https://www.notion.so/3671d736b9db8164b46dc143befa29eb`
 - WBSに `T649` から `T655` を追加した。
@@ -202,7 +202,7 @@ python scripts/sync_wbs_to_calendar.py
 
 - NotebookLM notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
 - title: `Mighty Skill-Bridge Development Knowledge 2026-06-02`
-- source: `docs/*.md` 21件すべて `ready`
+- source: `docs/*.md` 22件すべて `ready`
 - AIエージェント向け要約: `exports/knowledge_flow/notebooklm_agent_brief.md`
 - 社長向け8枚以内スライド草案: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
 - Google Docs化したAgent Brief: `https://docs.google.com/document/d/1W46XIEOj97A-Lp9wfwiDw79RWqB8BGcM04qQjtuJVc4/edit`

@@ -32,7 +32,7 @@
 | B-1 | `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx` がローカルで開ける | PowerPoint 起動 | Claude review | 5/25 | pending | T658 完了済 |
 | B-2 | PPTX が Drive にアップロード済、`k-umezawa@ml-mightylink.com` 所有 | Drive share URL を `exports/knowledge_flow/*.json` (manifest) から確認 | Codex | 5/25 | pending | T657 in-flight |
 | B-3 | PPTX のスライド数が 8 枚、表紙〜判断マトリクスまで揃う | PowerPoint 内目視 | Claude review | 5/25 | pending | |
-| B-4 | NotebookLM notebook `75521ea6-6b9b-47b2-9508-50050d8ab2d5` が 21 sources Ready | NotebookLM UI スクショ取得 | 人間 | 5/25 | pending | スクショは `exports/knowledge_flow/backup/` |
+| B-4 | NotebookLM notebook `75521ea6-6b9b-47b2-9508-50050d8ab2d5` が 22 sources Ready | NotebookLM UI スクショ取得 | 人間 | 5/25 | pending | スクショは `exports/knowledge_flow/backup/` |
 | B-5 | NotebookLM Agent Brief が最新 docs を反映 | `exports/knowledge_flow/notebooklm_agent_brief.md` mtime と `docs/*.md` mtime 比較 | Codex | 5/26 | pending | T651 |
 | B-6 | NotebookLM CEO Slide Outline が PPTX 内容と一致 | `notebooklm_ceo_slide_outline.md` ↔ PPTX 目視 | Claude review | 5/25 | pending | |
 
@@ -43,7 +43,7 @@
 | C-1 | Google Sheets `Mighty-Link WBS` が `data/WBS.tsv` と行一致 | `python scripts/sync_wbs_to_sheets.py --dry-run` で diff=0 | Codex | 5/30 | pending | |
 | C-2 | Google Sheets `WBS Summary` の集計値が最新 | Sheets 目視 (Phase 別完了率) | Codex | 5/30 | pending | |
 | C-3 | Google Sheets `WBS Timeline` が 6/2 までの帯を表示 | Sheets 目視 | Codex | 5/30 | pending | |
-| C-4 | Google Calendar `Mighty Skill-Bridge 開発計画` が 6/2 まで埋まる | `python scripts/sync_wbs_to_calendar.py --dry-run` 出力確認 | Codex | 5/30 | pending | 既存 `Success: 28, Updated: 24, Failed: 0` 維持 |
+| C-4 | Google Calendar `Mighty Skill-Bridge 開発計画` が未完了・実行中・会議イベントだけを表示 | `python scripts/sync_wbs_to_calendar.py` 出力で `Deleted completed` と `Failed: 0` を確認 | Codex | 5/30 | pending | 完了済みWBSイベントはCalendarから削除し、履歴はSheets/Gitで確認 |
 | C-5 | `exports/mighty_development_plan.ics` が最新 commit | git log で確認 | Codex | 5/30 | pending | |
 | C-6 | GitHub Issues #1-#11/#13/#14/#16 すべてに最新コメント (進捗 or 完了マーク) | `gh issue list --state all --limit 20` レビュー | Claude | 5/30 | pending | |
 | C-7 | GitHub Issues #5/#8 の `read:project` scope 問題が解決 or 6/2 デモから除外明記 | Issue ステータス確認 | 人間 + Claude | 5/27 | pending | 未解決なら **R2 mitigation 発動** |
@@ -111,7 +111,7 @@
 - [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md) — プレゼン構成・デモ導線
 - [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) — 判断マトリクス
 - [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md) — CLI/MCP 連携証跡
-- [WBS.md](WBS.md) — T601-T663 全体像
+- [WBS.md](WBS.md) — T601-T666 全体像
 
 ---
 

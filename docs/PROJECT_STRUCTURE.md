@@ -56,8 +56,10 @@ mighty-link-ai-connect/
 - `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx` はNotebookLM CLIの草案を社長説明用PPTXにした成果物として管理する。再生成は `scripts/generate_ceo_presentation_deck.py` で行う。
 - GitHub Issues は実装タスクの粒度、WBS は日程・報告粒度として使い分ける。GitHub Project は `read:project` スコープ復旧後にIssue配置を行う。
 - `AGENTS.md` はAntigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの共通セッションゲートを定義する。`CLAUDE.md` はAnthropic公式推奨に従い `@AGENTS.md` を import する。
+- 毎セッションの公式Docs確認は、Anthropic、OpenAI、Google、Microsoft、Meta、Kimi/Moonshot、MiMo、DeepSeek、Grok/xAI、Seedance/ByteDance Seed を対象にする。URL正本は `AGENTS.md` に集約し、未確認の未来モデル名や古いベストプラクティスはdocsへ残さない。
 - `.claude/settings.local.json` と `CLAUDE.local.md` はローカル専用設定として `.gitignore` 対象にし、共有すべき指示は `AGENTS.md` / `CLAUDE.md` / `docs/` へ昇格する。
 - Google Sheets同期は `sync_wbs_to_sheets.py` 1本で `Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` / `課題管理表` / `QA表` を更新する。
+- Google Calendar同期は `sync_wbs_to_calendar.py` 1本で `data/WBS.tsv` の完了状態を読み、完了済みWBSに紐づくイベントをCalendarから削除し、未完了・実行中・会議イベントだけを残す。完了履歴はSheets/Docs/Git履歴で追跡する。
 - 内容が古くなったdocsは、追記で温存せず削除または現在形へ置換する。削除判断は「公式Docsで裏取りできない未来モデル名」「現状と違う同期件数」「解決済みブロッカーを現行リスクとして扱う記述」「CEOに見せる導線を誤らせる古いIssue番号」を優先する。
 
 ## 実行コマンド

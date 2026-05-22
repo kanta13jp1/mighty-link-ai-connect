@@ -77,7 +77,7 @@
 | --- | --- | --- |
 | Google Drive / NotebookLM | https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit | Local OAuth Drive APIでTXT版をGoogle Docs化し、所有者が `k-umezawa@ml-mightylink.com` であることを確認した。 |
 | Google Drive / NotebookLM Presentation | https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit | プレゼン構成・話す要点・想定QAをNotebookLMで作るためのブリーフ。Local OAuth Drive APIでWorkspace側へ再作成済み。 |
-| Google Drive / NotebookLM docs同期 | `exports/knowledge_flow/notebooklm_docs_manifest.json` | `docs/*.md` 21件をWorkspace所有Google Docsへ同期。NotebookLM CLI再認証後にsource追加とAgent Brief取得を実行する。 |
+| Google Drive / NotebookLM docs同期 | `exports/knowledge_flow/notebooklm_docs_manifest.json` | `docs/*.md` 22件をWorkspace所有Google Docsへ同期。NotebookLM CLI再認証後にsource追加とAgent Brief取得を実行する。 |
 | Notion / NotebookLM証跡 | https://www.notion.so/3671d736b9db8164b46dc143befa29eb | docs同期、Issue #9/#10、NotebookLM CLI再認証手順をNotion証跡ページとして追加。 |
 | Notion | https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951 | 6/2社長デモ用の連携証跡ページ。 |
 | GitHub Issues | https://github.com/kanta13jp1/mighty-link-ai-connect/issues | Issue #1-#11/#13/#14/#16で連携タスクと課題を管理。 |
@@ -135,7 +135,7 @@
 | --- | --- | --- |
 | Agent Brief | AIエージェントが次回開発時に読む設計・ロードマップ要約 | `exports/knowledge_flow/notebooklm_agent_brief.md` |
 | CEO Slide Outline | 6/2社長説明で使う8枚以内のプレゼン草案、話す要点、想定質問 | `exports/knowledge_flow/notebooklm_ceo_slide_outline.md` |
-| Source Manifest | `docs/*.md` 21件のGoogle Docs化とNotebookLM source ready証跡 | `exports/knowledge_flow/notebooklm_docs_manifest.json` |
+| Source Manifest | `docs/*.md` 22件のGoogle Docs化とNotebookLM source ready証跡 | `exports/knowledge_flow/notebooklm_docs_manifest.json` |
 | CEO PowerPoint Deck | NotebookLMの草案を社長説明で開けるPPTXにした成果物 | `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx` |
 | CEO PowerPoint Drive URL | Workspaceアカウント所有でGoogle Driveへアップロードしたプレゼン | https://docs.google.com/presentation/d/1XGHnQHBpJyyhh_Y3I2lq2UThPRC-2dcL/edit?usp=drivesdk&ouid=117190324786156797159&rtpof=true&sd=true |
 

@@ -14,6 +14,7 @@ This script:
 
 import os
 import sys
+import csv
 import datetime
 import uuid
 import json
@@ -54,6 +55,7 @@ CREDENTIALS_FILE = os.path.join(PROJECT_ROOT, "credentials.json")       # Servic
 CLIENT_SECRET_FILE = os.path.join(PROJECT_ROOT, "client_secret.json")   # OAuth 2.0 Desktop client
 AUTHORIZED_USER_FILE = os.path.join(PROJECT_ROOT, "authorized_user.json")
 USER_EMAIL = "k-umezawa@ml-mightylink.com"
+WBS_FILE = os.path.join(PROJECT_ROOT, "data", "WBS.tsv")
 
 # WBS Schedule definitions (Parsed from docs/WBS.md / data/WBS.tsv)
 SCHEDULE_EVENTS = [
@@ -185,7 +187,7 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】docs NotebookLM同期・Google Docs化",
-        "description": "docs/*.md 21件をLocal OAuth Drive APIでk-umezawa@ml-mightylink.com所有のGoogle Docsへ同期し、NotebookLM CLI source add-drive用manifestを作成します。",
+        "description": "docs/*.md 22件をLocal OAuth Drive APIでk-umezawa@ml-mightylink.com所有のGoogle Docsへ同期し、NotebookLM CLI source add-drive用manifestを作成します。",
         "start_date": "2026-05-22",
         "end_date": "2026-05-23",
         "is_all_day": True
@@ -216,7 +218,7 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】NotebookLM CEO Slide Outline取得",
-        "description": "NotebookLMの21 source ready状態から、6/2社長説明用の8枚以内スライド草案、話す要点、想定質問を取得し、Google Docs化対象に追加します。",
+        "description": "NotebookLMの22 source ready状態から、6/2社長説明用の8枚以内スライド草案、話す要点、想定質問を取得し、Google Docs化対象に追加します。",
         "start_time": "2026-05-22T14:00:00",
         "end_time": "2026-05-22T14:30:00",
         "time_zone": "Asia/Tokyo",
@@ -292,9 +294,80 @@ STALE_EVENT_SUMMARIES = [
     "【Mighty Skill-Bridge】フェーズ3: バックエンド & AI（Gemini 3.5 & Omni 連携API）",
 ]
 
-def generate_ics_file():
+# Calendar events can represent one or more WBS rows. Completed rows should be
+# removed from Google Calendar so the remaining calendar is an action view.
+EVENT_WBS_IDS_BY_INDEX = {
+    0: ["T101", "T102"],
+    1: ["T201", "T202"],
+    2: ["T301", "T302", "T303", "T304", "T305", "T306", "T307"],
+    3: ["T401", "T402"],
+    4: ["T501", "T502"],
+    7: ["T614"],
+    8: ["T616"],
+    11: ["T638"],
+    15: ["T647"],
+    16: ["T648"],
+    17: ["T649"],
+    18: ["T650"],
+    19: ["T651"],
+    20: ["T656"],
+    21: ["T657"],
+    22: ["T658"],
+    23: ["T659", "T660"],
+    24: ["T664"],
+    25: ["T665"],
+}
+
+COMPLETED_STATUS = "完了"
+
+
+def load_wbs_statuses():
+    """Loads WBS status by task id from the local source of truth."""
+    if not os.path.exists(WBS_FILE):
+        print(f"[!] WBS source not found. Calendar sync will keep all events: {WBS_FILE}")
+        return {}
+
+    with open(WBS_FILE, "r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f, delimiter="\t")
+        return {
+            row.get("タスクID", "").strip(): row.get("ステータス", "").strip()
+            for row in reader
+            if row.get("タスクID")
+        }
+
+
+def event_wbs_ids(event_index):
+    """Returns WBS ids represented by a schedule event index."""
+    return EVENT_WBS_IDS_BY_INDEX.get(event_index, [])
+
+
+def is_event_completed(event_index, wbs_statuses):
+    """True when every mapped WBS row for this event is complete."""
+    ids = event_wbs_ids(event_index)
+    return bool(ids) and all(wbs_statuses.get(task_id) == COMPLETED_STATUS for task_id in ids)
+
+
+def iter_events_for_sync(wbs_statuses):
+    """Yields events that should remain visible in Calendar/ICS."""
+    for index, ev in enumerate(SCHEDULE_EVENTS):
+        if is_event_completed(index, wbs_statuses):
+            continue
+        yield index, ev
+
+
+def iter_completed_events(wbs_statuses):
+    """Yields events that should be deleted from Google Calendar."""
+    for index, ev in enumerate(SCHEDULE_EVENTS):
+        if is_event_completed(index, wbs_statuses):
+            yield index, ev
+
+
+def generate_ics_file(wbs_statuses=None):
     """Generates standard iCalendar (.ics) file for 1-click import."""
     print("[*] Generating iCalendar (.ics) file...")
+    wbs_statuses = wbs_statuses or load_wbs_statuses()
+    sync_events = list(iter_events_for_sync(wbs_statuses))
+    skipped_count = len(SCHEDULE_EVENTS) - len(sync_events)
     
     ics_lines = [
         "BEGIN:VCALENDAR",
@@ -308,7 +381,7 @@ def generate_ics_file():
     
     now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     
-    for ev in SCHEDULE_EVENTS:
+    for _index, ev in sync_events:
         ics_lines.append("BEGIN:VEVENT")
         stable_uid = uuid.uuid5(uuid.NAMESPACE_URL, ev["summary"])
         ics_lines.append(f"UID:{stable_uid}@mighty-link.ai")
@@ -340,6 +413,7 @@ def generate_ics_file():
         f.write(ics_content)
         
     print(f"[+] iCalendar (.ics) file generated successfully: {os.path.abspath(filepath)}")
+    print(f"[*] Active events exported: {len(sync_events)}; completed events skipped: {skipped_count}")
     print("[*] You can import this file directly into Google Calendar, Outlook, or Apple Calendar.")
     return filepath
 
@@ -367,16 +441,20 @@ def get_google_auth_token(auth_mode):
             return creds.token
     raise Exception("No valid credentials found to extract access token.")
 
-def build_event_body(ev):
+def build_event_body(ev, wbs_ids=None):
     """Builds a deterministic Calendar API event payload."""
+    private_props = {
+        "syncSource": "mighty-link-ai-connect",
+        "syncKey": hashlib.sha1(ev["summary"].encode("utf-8")).hexdigest()
+    }
+    if wbs_ids:
+        private_props["wbsIds"] = ",".join(wbs_ids)
+
     event_body = {
         "summary": ev["summary"],
         "description": ev["description"],
         "extendedProperties": {
-            "private": {
-                "syncSource": "mighty-link-ai-connect",
-                "syncKey": hashlib.sha1(ev["summary"].encode("utf-8")).hexdigest()
-            }
+            "private": private_props
         }
     }
 
@@ -463,10 +541,11 @@ def find_existing_event(headers, calendar_id, ev, desired_event):
 
     return selected
 
-def remove_stale_event_aliases(headers, calendar_id):
-    """Deletes known stale event titles so renamed WBS events do not linger."""
+def remove_events_by_summary(headers, calendar_id, summaries, reason):
+    """Deletes matching calendar events in the project window."""
     list_url = f"https://www.googleapis.com/calendar/v3/calendars/{calendar_id}/events"
-    for summary in STALE_EVENT_SUMMARIES:
+    deleted_count = 0
+    for summary in summaries:
         params = {
             "q": summary,
             "singleEvents": "true",
@@ -475,7 +554,7 @@ def remove_stale_event_aliases(headers, calendar_id):
         }
         res = requests.get(list_url, headers=headers, params=params)
         if res.status_code != 200:
-            print(f"  [!] Could not check stale events for {summary}: {res.text}")
+            print(f"  [!] Could not check {reason} events for {summary}: {res.text}")
             continue
         for item in res.json().get("items", []):
             if item.get("summary") != summary:
@@ -483,11 +562,31 @@ def remove_stale_event_aliases(headers, calendar_id):
             delete_url = f"{list_url}/{item['id']}"
             delete_res = requests.delete(delete_url, headers=headers)
             if delete_res.status_code in [200, 204]:
-                print(f"  [*] Removed stale event: {summary}")
+                print(f"  [*] Removed {reason} event: {summary}")
+                deleted_count += 1
             else:
-                print(f"  [!] Failed to remove stale event {item['id']}: {delete_res.text}")
+                print(f"  [!] Failed to remove {reason} event {item['id']}: {delete_res.text}")
+    return deleted_count
 
-def sync_to_google_calendar(access_token, auth_mode):
+
+def remove_stale_event_aliases(headers, calendar_id):
+    """Deletes known stale event titles so renamed WBS events do not linger."""
+    return remove_events_by_summary(headers, calendar_id, STALE_EVENT_SUMMARIES, "stale")
+
+
+def remove_completed_wbs_events(headers, calendar_id, wbs_statuses):
+    """Deletes Calendar events whose mapped WBS tasks are complete."""
+    completed_events = list(iter_completed_events(wbs_statuses))
+    completed_summaries = [ev["summary"] for _index, ev in completed_events]
+    if not completed_summaries:
+        print("[*] No completed WBS-linked calendar events to remove.")
+        return 0
+
+    print(f"[*] Removing completed WBS-linked calendar events: {len(completed_summaries)} target title(s)")
+    return remove_events_by_summary(headers, calendar_id, completed_summaries, "completed WBS")
+
+
+def sync_to_google_calendar(access_token, auth_mode, wbs_statuses):
     """Creates events in Google Calendar via HTTP REST API."""
     print(f"[*] Starting API Sync (Auth Mode: {auth_mode})...")
     
@@ -532,15 +631,17 @@ def sync_to_google_calendar(access_token, auth_mode):
         target_calendar_id = USER_EMAIL
         print(f"[*] Service Account mode: Writing to {USER_EMAIL} (Requires manual calendar sharing configured).")
 
-    remove_stale_event_aliases(headers, target_calendar_id)
+    stale_deleted_count = remove_stale_event_aliases(headers, target_calendar_id)
+    completed_deleted_count = remove_completed_wbs_events(headers, target_calendar_id, wbs_statuses)
 
     # 3. Create Events
     success_count = 0
     fail_count = 0
     update_count = 0
+    sync_events = list(iter_events_for_sync(wbs_statuses))
     
-    for ev in SCHEDULE_EVENTS:
-        event_body = build_event_body(ev)
+    for event_index, ev in sync_events:
+        event_body = build_event_body(ev, event_wbs_ids(event_index))
         existing_event = find_existing_event(headers, target_calendar_id, ev, event_body)
 
         if existing_event:
@@ -562,7 +663,11 @@ def sync_to_google_calendar(access_token, auth_mode):
             fail_count += 1
             
     print("="*60)
-    print(f"[+] API Sync Complete! Success: {success_count}, Updated: {update_count}, Failed: {fail_count}")
+    print(
+        "[+] API Sync Complete! "
+        f"Active: {len(sync_events)}, Success: {success_count}, Updated: {update_count}, "
+        f"Failed: {fail_count}, Deleted completed: {completed_deleted_count}, Deleted stale: {stale_deleted_count}"
+    )
     
     if fail_count > 0 and "Service Account" in auth_mode:
         print("[!] Note: Google Service Accounts cannot write to your calendar by default.")
@@ -581,8 +686,10 @@ def main():
     print("[*] Mighty-Link AI Connect: WBS Google Calendar Sync Tool")
     print("="*60)
 
+    wbs_statuses = load_wbs_statuses()
+
     # Always generate the .ics file first (failsafe & convenient)
-    generate_ics_file()
+    generate_ics_file(wbs_statuses)
     
     client = None
     auth_mode = None
@@ -633,7 +740,7 @@ def main():
     if client:
         try:
             access_token = get_google_auth_token(auth_mode)
-            sync_to_google_calendar(access_token, auth_mode)
+            sync_to_google_calendar(access_token, auth_mode, wbs_statuses)
         except Exception as e:
             print(f"[-] API Execution failed: {e}")
             print("[*] Please import the generated 'exports/mighty_development_plan.ics' file manually.")

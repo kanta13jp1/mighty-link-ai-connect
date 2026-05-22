@@ -62,11 +62,11 @@ Workspace / GitHub で共有可能です。
   経歴書と案件票を AI が 4 軸 (Skill / Culture / Growth / Performing)
   で評価し、レーダーチャート + 面接質問案を出力します
 - Google Sheets 「Mighty-Link AI Connect WBS」
-  Phase 1-6 の 80 タスクの進捗、課題管理表 (R1-R14)、想定 QA 表 (35 項目)
+  Phase 1-6 の 81 タスクの進捗、課題管理表 28 行、想定 QA 表 36 項目
 - Google Calendar 「Mighty Skill-Bridge 開発計画」
-  Phase 6 の作業スケジュールが 6/2 まで埋まっています
+  未完了・実行中・会議イベントだけが残り、完了済みWBSイベントは削除されます
 - NotebookLM (notebook id: 75521ea6-...)
-  docs/ 14 件のドキュメントが投入済、社長向けスライド草案 + Agent Brief 取得済
+  docs/ 22 件のドキュメントが投入済、社長向けスライド草案 + Agent Brief 取得済
 - PowerPoint プレゼン草案 (Google Drive 上で開けます)
   当日の説明はこちらに沿って進める想定です
 
@@ -121,9 +121,9 @@ Workspace / GitHub で共有可能です。
 
 当日見せるもの:
 - 公開デモ URL (4 軸スコア + レーダーチャート + 面接質問生成)
-- Google Sheets (WBS 80 件 / 課題管理表 / QA 表)
-- Google Calendar (Phase 6 スケジュール)
-- NotebookLM (docs 14 件 + 社長向けスライド草案)
+- Google Sheets (WBS 81 件 / 課題管理表 / QA 表)
+- Google Calendar (未完了・実行中・会議イベント)
+- NotebookLM (docs 22 件 + 社長向けスライド草案)
 - PowerPoint プレゼン草案 (8 枚)
 
 当日決めないこと: 正式サービス名 / 課金モデル / 本番 SLA
@@ -197,9 +197,9 @@ Workspace / GitHub で共有可能です。
 
 - [ ] 公開デモ URL が `Mighty Skill-Bridge` UI を返す (README fallback ではない)
 - [ ] PowerPoint が Drive で開ける (`k-umezawa@ml-mightylink.com` 所有)
-- [ ] NotebookLM notebook (`75521ea6-...`) が 14 sources Ready
+- [ ] NotebookLM notebook (`75521ea6-...`) が 22 sources Ready
 - [ ] Google Sheets `Mighty-Link AI Connect WBS` が最新 ([sync_wbs_to_sheets.py](../scripts/sync_wbs_to_sheets.py) 実行直後)
-- [ ] Google Calendar `Mighty Skill-Bridge 開発計画` が 6/2 まで埋まっている
+- [ ] Google Calendar `Mighty Skill-Bridge 開発計画` は完了済みWBSイベントが削除され、未完了・実行中・会議イベントだけが残っている
 - [ ] 社長のスケジュール確保確認済 (90 分枠)
 - [ ] 寛太側でノート PC + ネットワーク + 公開 URL + ローカル FastAPI fallback すべて起動可能
 - [ ] 議事録テンプレ ([DECISION_PACK 議事録テンプレート](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md#議事録テンプレート)) を `docs/CEO_MEETING_MINUTES_2026-06-02.md` として空ファイル準備済

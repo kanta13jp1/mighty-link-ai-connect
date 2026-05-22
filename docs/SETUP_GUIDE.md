@@ -100,7 +100,7 @@ python scripts/sync_wbs_to_calendar.py
 成功すると次の状態になります。
 
 - `Mighty Skill-Bridge 開発計画` カレンダーが作成または再利用されます。
-- WBS 開発スケジュールと 6/2 社長プレゼン準備イベントが同期されます。
+- WBS 開発スケジュールと 6/2 社長プレゼン準備イベントが同期されます。`data/WBS.tsv` で完了済みのWBSに紐づくイベントはGoogle Calendarから削除され、未完了・実行中・会議イベントだけが残ります。
 - `exports/mighty_development_plan.ics` が生成されます。
 - `authorized_user.json` がプロジェクトルートに保存され、次回以降は認証が自動化されます。
 - `python scripts/verify_google_workspace_account.py` で、`authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づいていることを確認できます。
@@ -218,7 +218,7 @@ python scripts/sync_wbs_to_calendar.py
 
 `sync_wbs_to_sheets.py` は `Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` に加え、`data/issues_tracker.tsv` から `課題管理表`、`data/qa_tracker.tsv` から `QA表` も同時に更新します。課題やQAが発生した場合は、該当TSVを更新してから同じ同期コマンドを再実行してください。
 
-三ツール開発体制では、各セッション開始時に [AGENTS.md](../AGENTS.md) / [CLAUDE.md](../CLAUDE.md) / [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) を確認し、Anthropic・OpenAI・Google公式Docsの最新版を確認してから作業します。各セッションの終了時は、WBSタスクを最低1件完了させ、Sheets/Calendar同期、commit、push、`main`/`master`反映まで行います。
+三ツール開発体制では、各セッション開始時に [AGENTS.md](../AGENTS.md) / [CLAUDE.md](../CLAUDE.md) / [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) を確認し、Anthropic・OpenAI・Google・Microsoft・Meta・Kimi/Moonshot・MiMo・DeepSeek・Grok/xAI・Seedance/ByteDance Seed公式Docsの最新版を確認してから作業します。各セッションの終了時は、WBSタスクを最低1件完了させ、Sheets/Calendar同期、commit、push、`main`/`master`反映まで行います。
 
 ## 9. FastAPI サーバー起動
 

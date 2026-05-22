@@ -297,7 +297,7 @@ def build_slides(prs: Presentation, context: dict[str, Any]) -> None:
     slide = prs.slides.add_slide(blank)
     add_header(slide, 4, "Knowledge Flow", "開発ナレッジ連携の実績とデモ", source_note)
     lanes = [
-        ("NotebookLM", "21 source ready\nAgent Brief / CEO outline取得済み", COLORS["sky"], "完了"),
+        ("NotebookLM", "22 source ready\nAgent Brief / CEO outline取得済み", COLORS["sky"], "完了"),
         ("Slack", "投稿案生成済み\nCLI/MCP送信ツールは未露出", COLORS["amber_bg"], "権限確認待ち"),
         ("Notion", "証跡ページ作成\n意思決定DB候補を管理", COLORS["green_bg"], "MCP実行済み"),
         ("Obsidian", "ローカルvault生成\nADR / Prompt / Meeting導線", COLORS["panel"], "完了"),
@@ -328,7 +328,7 @@ def build_slides(prs: Presentation, context: dict[str, Any]) -> None:
     add_header(slide, 5, "NotebookLM to PPTX", "NotebookLMからPPTXへ", source_note)
     add_flow_box(slide, 1.0, 2.05, "docs/ + WBS", "公式手順・WBSを同期", COLORS["panel"])
     add_arrow(slide, 3.48, 2.34)
-    add_flow_box(slide, 3.95, 2.05, "Google Docs", "Workspace所有で21件", COLORS["sky"])
+    add_flow_box(slide, 3.95, 2.05, "Google Docs", "Workspace所有で22件", COLORS["sky"])
     add_arrow(slide, 6.43, 2.34)
     add_flow_box(slide, 6.9, 2.05, "NotebookLM CLI", "要約・QA・8枚構成", COLORS["green_bg"])
     add_arrow(slide, 9.38, 2.34)

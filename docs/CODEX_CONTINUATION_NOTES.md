@@ -643,8 +643,8 @@ Gemini quota中でも開発を止めないため、Antigravity + Gemini / VSCode
 - `ANTIGRAVITY_GUIDE.md`: 未確認の未来モデル導入セクションを削除し、Gemini API公式モデル一覧を毎回確認して現行モデルを選ぶ方針へ更新。
 - `docs/WBS.md` / `data/WBS.tsv`: T605/T606/T607/T615の完了反映に加え、T665を完了タスクとして追加。
 - `data/issues_tracker.tsv`: R1をdocs staleリスクとして再定義し、R15とGitHub Issue #16を追加。
-- `data/qa_tracker.tsv`: QA-08/QA-16/QA-17を現行モデル選定・Issue #16・NotebookLM 21 sourceに更新。
-- `scripts/sync_wbs_to_calendar.py` / `scripts/generate_ceo_presentation_deck.py` / プレゼン関連docs: GitHub Issues #1-#11/#13/#14/#16 と NotebookLM 21 sourceの表記へ更新。
+- `data/qa_tracker.tsv`: QA-08/QA-16/QA-17を現行モデル選定・Issue #16・NotebookLM source数に更新。
+- `scripts/sync_wbs_to_calendar.py` / `scripts/generate_ceo_presentation_deck.py` / プレゼン関連docs: GitHub Issues #1-#11/#13/#14/#16/#18 と NotebookLM 22 sourceの表記へ更新。
 
 ### 採用した公式Docs由来の運用
 
@@ -685,3 +685,23 @@ Gemini quota中でも開発を止めないため、Antigravity + Gemini / VSCode
 ### 5th session — stale-doc 削除ルール (4th session 由来) の継続
 
 新規 stale-doc 訂正は発生せず。前回 R1 訂正の効果を継続。HANDOFF-12 (POST_DECISION_ROADMAP の方向性確定後不要セクション削除) は 6/3 までに実施予定 (本セッションでは方向性未確定のため未実施)。
+
+## 2026-05-22 Codex continuation: T666 Calendar完了イベント削除
+
+Claude Code 5th session からのHANDOFF-13をCodexで実装した。ユーザー要望どおり、カレンダーは「これから見るべき予定」だけを残すアクションビューとして扱い、完了履歴はWBS/Sheets/Git履歴で追う。
+
+### 完了内容
+
+- `scripts/sync_wbs_to_calendar.py`: `data/WBS.tsv` の `ステータス` を読み込み、完了済みWBSに紐づくイベントをGoogle CalendarからDELETEし、ICS出力からも除外する処理を追加。
+- `data/WBS.tsv` / `docs/WBS.md`: T614を完了へ反映し、T666を追加して完了。
+- `data/issues_tracker.tsv`: HANDOFF-13をresolved化し、GitHub Issue #18へ紐づけ。
+- `data/qa_tracker.tsv`: 完了済みCalendarイベントの扱いをQ-AHOC-20260522-2として記録。
+- `AGENTS.md`, `docs/MULTI_AI_WORKFLOW.md`, `docs/SETUP_GUIDE.md`, `docs/PROJECT_STRUCTURE.md`: 毎セッションの公式Docs確認範囲をAnthropic/OpenAI/Googleに加えてMicrosoft/Meta/Kimi/MiMo/DeepSeek/Grok/Seedanceまで拡張し、Calendar完了イベント削除ルールを追記。
+- `scripts/sync_docs_to_notebooklm.py`: 再実行でNotebookLM sourceが22件 readyになったため、WBS/プレゼン関連docsの件数表記を更新。
+- 同期結果: Sheets `82 source rows / 94 hierarchical rows`, 課題管理表28行, QA表36行。Calendarは初回cleanupで `Deleted completed: 17`、直近再同期は `Active: 13, Failed: 0, Deleted completed: 0`。
+
+### 採用した運用ルール
+
+- Calendarに残すのは未完了・実行中・社長打ち合わせなどの会議イベント。
+- 完了済みイベントを確認したい場合は、Google Sheets `Mighty-Link WBS`、`docs/WBS.md`、Git履歴、または過去のICS差分を参照する。
+- 未来のWBS行を完了から戻した場合、次回 `sync_wbs_to_calendar.py` で再作成される。
