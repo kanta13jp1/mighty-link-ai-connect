@@ -64,7 +64,7 @@
 4. Google Sheets の `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` を見せる。
 5. Google Calendar の `Mighty Skill-Bridge 開発計画` を見せる。
 6. 画面の「開発ナレッジ連携デモ」で、NotebookLM/Slack/Notion/Obsidian成果物を見せる。
-7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#11 を開く。
+7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#11/#13/#14/#16 を開く。
 8. NotebookLM Presentation Brief を開き、プレゼン資料のたたき台作成はNotebookLMで進める方針を説明する。
 9. GitHub Projectは `read:project` / `project` スコープ復旧後に配置することを説明する。
 10. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
@@ -108,13 +108,13 @@
 
 | # | 重要度 | リスク / Blocker | 影響 | 緩和策 | オーナー | 期限 |
 | --- | --- | --- | --- | --- | --- | --- |
-| R1 | HIGH | Gemini 3.5 Pro 一般公開が「来月」想定 ([ANTIGRAVITY_GUIDE.md:47](ANTIGRAVITY_GUIDE.md#L47)) で 6/2 までに来ない可能性 | サービス方向性 pack の品質が Flash 相当に留まる可能性 | Claude Code が決定マトリクスを起草 (E-1/E-4)、Pro 到着なら Antigravity が精緻化、無ければ Claude 版で出荷 | Claude / Antigravity | 5/29 |
+| R1 | LOW | 未確認の未来モデル名や公開時期がdocsに残る | 社長説明や実装判断が古い前提に引っ張られる | 公式Docsで確認できない未来モデル前提は削除または現在形に置換。`ANTIGRAVITY_GUIDE.md` の該当セクションはT665で削除済み | Codex / Claude | 継続 |
 | R2 | HIGH | GitHub `read:project` scope 不足 (Issue #5, #8) | gh CLI で Project ボード操作不可、6/2 デモで Project ボードを見せられない | `gh auth refresh -s project` をブラウザ承認 (人間タスク)。5/27 までに未解決なら **Project ボードを 6/2 デモから除外**、Issues 一覧表示で代替 | 人間 + Codex | 5/27 |
 | R3 | MED | Slack CLI / MCP 未露出 ([CODEX_CONTINUATION_NOTES.md:453](CODEX_CONTINUATION_NOTES.md#L453)) | Slack live 送信不可 (T636/T646/T653/T662) | [exports/knowledge_flow/slack_ceo_update.md](../exports/knowledge_flow/slack_ceo_update.md) の草稿表示で代替。live send は約束しない | Codex (草稿維持) / Claude (代替説明準備) | 5/29 |
 | R4 | MED | 3 tools 並走で `data/WBS.tsv` の merge 競合 | WBS 行重複・並び順崩壊 | **`data/WBS.tsv` への書き込みは Codex のみ**。Antigravity / Claude は PR コメントで提案 | Codex | 通年 |
 | R5 | MED | 5/27 18:48 quota refresh が遅延・失敗 | デモ動画・radar polish が Antigravity で間に合わない | Codex が frontend タスクの静止画 fallback を準備、Antigravity 完成版が無くてもデモ可能な状態を維持 | Codex | 5/27-5/30 |
 | R6 | LOW | `requirements.txt` 依存ドリフト | デモ前に dependency 競合で起動失敗 | **5/30 EOD で freeze**、以降 upgrade 禁止。`requirements.txt` を編集する PR は Claude review 必須 | Claude (gate) | 5/30 |
-| R7 | LOW | NotebookLM CLI 認証切れ ([notebooklm_cli_next_steps.md](../exports/knowledge_flow/notebooklm_cli_next_steps.md)) | 14 sources の再 sync 不可 | `python scripts/notebooklm_login_workspace.py` を 6/1 dry-run で再確認 | Codex | 6/1 |
+| R7 | LOW | NotebookLM CLI 認証切れ ([notebooklm_cli_next_steps.md](../exports/knowledge_flow/notebooklm_cli_next_steps.md)) | 21 sources の再 sync 不可 | `python scripts/notebooklm_login_workspace.py` を 6/1 dry-run で再確認 | Codex | 6/1 |
 | R8 | LOW | サービス方向性 3 選択肢のいずれにも社長が首肯しない | 6/2 結論が出ず、ロードマップ更新不可 | 「保留」を 4th option として明示。決定後の WBS 差し替えフロー (T612) を準備済 | Claude | 6/2 |
 
 **Hard gate**: R1 / R2 / R5 は EOD 5/30 までに緩和策が動いていることを Final Review (6/1 21:00 JST) で確認する。それ以外は劣化シナリオ込みで 6/2 を実施可能。
@@ -189,10 +189,10 @@ python scripts/sync_wbs_to_calendar.py
 
 ## 2026-05-22 docs配下のNotebookLM同期導線
 
-- `scripts/sync_docs_to_notebooklm.py` を追加し、`docs/*.md` 14件を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ同期した。
+- `scripts/sync_docs_to_notebooklm.py` を追加し、`docs/*.md` 21件を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ同期した。
 - 同期manifestは `exports/knowledge_flow/notebooklm_docs_manifest.json` に保存した。
 - NotebookLM CLIは `0.3.4` がインストール済み。`scripts/notebooklm_login_workspace.py` で `k-umezawa@ml-mightylink.com` の認証状態を保存した。
-- 再実行によりNotebookLMへ14件のsourceを追加し、AIエージェント用の `exports/knowledge_flow/notebooklm_agent_brief.md` と社長説明用の `exports/knowledge_flow/notebooklm_ceo_slide_outline.md` を生成した。
+- 再実行によりNotebookLMへ21件のsourceを追加し、AIエージェント用の `exports/knowledge_flow/notebooklm_agent_brief.md` と社長説明用の `exports/knowledge_flow/notebooklm_ceo_slide_outline.md` を生成した。
 - GitHub Issuesに `#9` と `#10` を追加し、Issue #8へGitHub Projectの `read:project` 不足を再追記した。
 - Notion証跡ページ配下に `NotebookLM Docs Sync Evidence 2026-05-22` を作成した: `https://www.notion.so/3671d736b9db8164b46dc143befa29eb`
 - WBSに `T649` から `T655` を追加した。
@@ -201,7 +201,7 @@ python scripts/sync_wbs_to_calendar.py
 
 - NotebookLM notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
 - title: `Mighty Skill-Bridge Development Knowledge 2026-06-02`
-- source: `docs/*.md` 14件すべて `ready`
+- source: `docs/*.md` 21件すべて `ready`
 - AIエージェント向け要約: `exports/knowledge_flow/notebooklm_agent_brief.md`
 - 社長向け8枚以内スライド草案: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
 - Google Docs化したAgent Brief: `https://docs.google.com/document/d/1W46XIEOj97A-Lp9wfwiDw79RWqB8BGcM04qQjtuJVc4/edit`

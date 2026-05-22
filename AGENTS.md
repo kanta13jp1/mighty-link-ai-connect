@@ -8,6 +8,7 @@
   - OpenAI Codex: `https://developers.openai.com/codex`, `https://developers.openai.com/codex/guides/agents-md`, `https://developers.openai.com/codex/learn/best-practices`, `https://developers.openai.com/codex/mcp`
   - Google Gemini / Workspace: `https://ai.google.dev/gemini-api/docs/models`, `https://ai.google.dev/gemini-api/docs/caching`, `https://developers.google.com/workspace/sheets/api/guides/batchupdate`
 - Every development session must complete at least one WBS task and reflect it in `data/WBS.tsv` and `docs/WBS.md`.
+- Delete or rewrite stale docs aggressively. Do not preserve outdated model names, obsolete issue ranges, resolved blockers, or old sync counts as current guidance.
 - Use `k-umezawa@ml-mightylink.com` for Google OAuth. Run `python scripts/verify_google_workspace_account.py` when touching Google integrations.
 - Keep `data/WBS.tsv` as the WBS source of truth. Keep `data/issues_tracker.tsv` and `data/qa_tracker.tsv` as the source of truth for the Sheets `課題管理表` and `QA表` tabs.
 - Do not commit secrets or local OAuth files: `client_secret.json`, `credentials.json`, `authorized_user.json`, `.claude/settings.local.json`, or `CLAUDE.local.md`.

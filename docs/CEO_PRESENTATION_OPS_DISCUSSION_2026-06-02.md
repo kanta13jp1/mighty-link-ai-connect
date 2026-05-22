@@ -89,7 +89,7 @@
 | R9 | HIGH | パイロット顧客の経歴書/個人情報の取り扱い (方向性 A 選択時) | 法務 / コンプラ違反 | 利用同意書テンプレート作成、Workspace 内クローズで運用 | YES (法務確認時期) |
 | R10 | MED | 公開 URL の外部漏洩 (方向性 A/C 選択時) | デモ環境への意図しないアクセス | basic auth or IP 制限導入 | YES (採用可否) |
 | R11 | MED | 3 AI ツール並走の月額コスト超過 | 予算超過 | quota メーター監視 + 月次レポート、超過時の優先 lane 決定 | YES (上限値) |
-| R12 | LOW | Antigravity 2.0 の Managed Agents tier コスト | Enterprise tier への switch コスト発生 | I/O 2026 で発表された Managed Agents API の料金監視 | NO (Codex/Claude が監視) |
+| R12 | LOW | Antigravity 2.0 の Managed Agents tier コスト | Enterprise tier への switch コスト発生 | Antigravity / Google公式情報で料金・利用条件を確認し、正式採用前に監視 | NO (Codex/Claude が監視) |
 | R13 | LOW | 寛太のリソース集中による単一障害点 | 寛太が稼働不可になるとプロジェクト停止 | docs/CODEX_CONTINUATION_NOTES.md と docs/MULTI_AI_WORKFLOW.md で再現性確保中 | NO |
 
 ### 3.3 社長への確認事項

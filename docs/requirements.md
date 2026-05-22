@@ -9,7 +9,7 @@
 
 ### 1.1 背景と目的
 エンジニアのスキルシート（経歴書）と案件定義書（アサイン要件）のマッチングは、従来のキーワード一致や手動査定では、「本質的な志向性の不一致」「潜在的スキルの見落とし」「ソフトスキルのミスマッチ」といった課題を抱えていました。
-**『Mighty Skill-Bridge』** は、Gemini 3.5 Flash および Gemini Omni のマルチモーダル解析技術を活用し、履歴書/経歴書（PDFや画像）と案件定義書（テキストやPDF）を高度にパースし、単なるキーワードマッチを超えた「多次元フィット分析」を瞬時に実行する、次世代のエンジニア＆案件 AIフィットシミュレーターです。
+**『Mighty Skill-Bridge』** は、Google Gemini APIで公式提供中の現行モデルとマルチモーダル解析技術を活用し、履歴書/経歴書（PDFや画像）と案件定義書（テキストやPDF）を高度にパースし、単なるキーワードマッチを超えた「多次元フィット分析」を瞬時に実行する、次世代のエンジニア＆案件 AIフィットシミュレーターです。
 
 ### 1.2 コアバリュー
 - **テクノロジーの架け橋**: 最先端のAIモデルが、エンジニアの経歴に隠された「潜在能力」や「得意領域」を最大化して評価。
@@ -43,7 +43,7 @@
 - **Core Logic**: HTML5 + Vanilla JavaScript (ES6+)
 - **Styling**: Vanilla CSS (CSS Variables を用いたテーマ設計、モダンなダーク＆ライトハイブリッドモード、ガラスモフィズム)
 - **Analytics/Charts**: Chart.js (CDN経由で超軽量ロード)
-- **Backend API**: Gemini 3.5 Flash / Gemini Omni API 連携 (Mock & Live モード両対応)
+- **Backend API**: Gemini API 現行モデル連携 (Mock & Live モード両対応)
 - **Collaboration**: Google Sheets API & Google Docs API 自律同期
 
 ---

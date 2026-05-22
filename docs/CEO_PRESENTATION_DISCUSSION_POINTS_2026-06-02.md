@@ -85,10 +85,10 @@
 
 ## D-4: AI エンジン選定方針 (2026-05-22 新規論点)
 
-**論点**: Gemini ファミリーに張るか、複数 AI を比較しながら進めるか。Best Practices Refresh ([MULTI_AI_WORKFLOW.md Best Practices Refresh](MULTI_AI_WORKFLOW.md#best-practices-refresh-2026-05-22)) で **Gemini 3.5 Flash > Gemini 3.1 Pro at 4x speed** が判明し、Pro 待ちのリスク (旧 R1) が降格された。
+**論点**: Gemini ファミリーに張るか、複数 AI を比較しながら進めるか。Best Practices Refresh ([MULTI_AI_WORKFLOW.md Best Practices Refresh](MULTI_AI_WORKFLOW.md#best-practices-refresh-2026-05-22)) では **固定の未来モデル名や未確認の公開時期を判断材料にしない** ことを確認済み。毎セッション開始時にGemini API公式モデル一覧を確認し、現行モデルの品質・速度・コスト・quotaで選ぶ。
 
 **選択肢**:
-- A. **Gemini ファミリー単一 commit** — 3.5 Flash 中心、Pro 来月公開時に置換、Omni でマルチモーダル
+- A. **Gemini ファミリー単一 commit** — 公式モデル一覧で確認した現行Flash/Pro/マルチモーダル対応モデルを中心にする
 - B. **マルチ AI 並走** — Gemini + Claude + GPT-5.5 を機能別に使い分け
 - C. **Gemini + Claude 二択** — Claude を docs/review/triage に、Gemini を実装/UI/マルチモーダルに
 - D. **未定** — 6/2 では決めない
@@ -122,7 +122,7 @@
 **論点**: 開発フローへの正式採用優先順位。
 
 **選択肢** (各ツールごとに 採用 / 保留 / 後回し / 不要):
-- NotebookLM — 既に CLI + Workspace OAuth 連携済、14 docs source ready
+- NotebookLM — 既に CLI + Workspace OAuth 連携済、21 docs source ready
 - Slack — CLI / MCP 未露出 ([R3](CEO_PRESENTATION_PREP_2026-06-02.md#risks--blockers-2026-05-22-時点))、投稿草稿のみ
 - Notion — MCP 経由で証跡ページ作成済
 - Obsidian — vault 雛形 + `.obsidian` config 済、ローカル運用前提

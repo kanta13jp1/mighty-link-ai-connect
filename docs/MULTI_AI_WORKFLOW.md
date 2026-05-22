@@ -23,8 +23,8 @@
 
 ### Antigravity + Gemini (主力・マルチモーダル)
 
-- **モデル**: Gemini 3.5 Flash (メイン) / Gemini Omni (画像・音声・動画) / Gemini 3.5 Pro (長文推論、来月一般公開予定 — [ANTIGRAVITY_GUIDE.md:47](ANTIGRAVITY_GUIDE.md#L47))
-- **強み**: 並列サブエージェント (frontend / backend / browser-agent)、Code Mender 自律修正、Omni マルチモーダル、Browser Agent による UI 自律テスト
+- **モデル**: Google公式の [Gemini API model docs](https://ai.google.dev/gemini-api/docs/models) で公開中のFlash/Pro/マルチモーダル対応モデルから毎セッション選定する。未確認の未来モデル名は正本にしない。
+- **強み**: 並列サブエージェント (frontend / backend / browser-agent)、Code Mender 自律修正、Gemini APIのマルチモーダル処理、Browser Agent による UI 自律テスト
 - **担当領域**:
   - フロントエンド UI 実装・polish
   - マルチモーダルデモ (動画・音声・画像)
@@ -146,7 +146,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 種類 | 正本 | 補助 |
 |---|---|---|
 | WBS 進捗 | Google Sheets `Mighty-Link WBS` ([WBS_SYNC_GUIDE.md](WBS_SYNC_GUIDE.md)) | `data/WBS.tsv` (Codex のみ書き込み) |
-| blocker / 課題 | GitHub Issues #1-#11 | [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md) |
+| blocker / 課題 | GitHub Issues #1-#11 / #13 / #14 / #16 と Google Sheets `課題管理表` | [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md) |
 | tool 間 handoff | [CODEX_CONTINUATION_NOTES.md](CODEX_CONTINUATION_NOTES.md) の日付別ログを per-tool で extend | 本書 (Multi-AI Workflow) |
 | サービス方向性 | [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) | NotebookLM agent brief |
 | 連携証跡 | [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md) | Notion 証跡ページ |
@@ -215,8 +215,8 @@ feat/<tool>-<wbs-id>-<slug>
 | 5/25 Mon | idle | T659 PPTX Drive verify、T660 Notion evidence | INTEGRATION_DEMO_EVIDENCE 整合性 |
 | 5/26 Tue | idle | sync スクリプト CI smoke | スライド内容 review |
 | 5/27 Wed 18:48↻ | **復帰**: T202 radar polish、デモ動画 v1 | frontend 引き継ぎ、backend 専念 | 切り戻し checklist 発行 |
-| 5/28 Thu | デモ動画 v2 (Omni)、T610 1-pager visual | T630 `/api/knowledge-flow/generate` hardening | T611 決定マトリクス review |
-| 5/29 Fri | サービス方向性 pack (Pro) | T647 Workspace account guard tests | dry-run スクリプト (T640) |
+| 5/28 Thu | デモ動画 v2 (Gemini API multimodal)、T610 1-pager visual | T630 `/api/knowledge-flow/generate` hardening | T611 決定マトリクス review |
+| 5/29 Fri | サービス方向性 pack refinement | T647 Workspace account guard tests | dry-run スクリプト (T640) |
 | 5/30 Sat | demo polish、backup screenshots (T613) | exports/knowledge_flow verify | T663 first full review |
 | 5/31 Sun | reserve | reserve | reserve |
 | 6/1 Mon | **full dry-run** with backup | freeze、tag `ceo-demo-2026-06-02` | T663 sign-off |
@@ -236,8 +236,8 @@ feat/<tool>-<wbs-id>-<slug>
 |---|---|---|
 | GitHub Project `read:project` scope 不足 ([INTEGRATION_DEMO_EVIDENCE_2026-06-02.md:68-77](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md#L68-L77)) | gh CLI で Project 操作不可 (Issue #5/#8) | `gh auth refresh -s project` の人間ブラウザ承認待ち。5/27 までに未解決なら 6/2 デモから Project ボードを除外 |
 | Slack CLI / MCP 未露出 ([CODEX_CONTINUATION_NOTES.md:453](CODEX_CONTINUATION_NOTES.md#L453)) | Slack live 送信不可 (T636/T646/T653/T662) | [exports/knowledge_flow/slack_ceo_update.md](../exports/knowledge_flow/slack_ceo_update.md) の草稿表示で代替。live send は約束しない |
-| サービス方向性未確定 | 6/2 で決定するため Claude が決定マトリクス起草、Pro 来れば Antigravity 精緻化 | [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) |
-| Gemini 3.5 Pro 一般公開「来月」 ([ANTIGRAVITY_GUIDE.md:47](ANTIGRAVITY_GUIDE.md#L47)) | 6/2 までに来ない可能性 | Claude 起草版で出荷可能な品質を担保 |
+| サービス方向性未確定 | 6/2 で決定するため Claude が決定マトリクス起草、モデル精緻化はGemini API公式Docs確認後にAntigravityで実施 | [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) |
+| 未確認の未来モデル名・公開時期がdocsへ残る | 社長説明や実装判断が古い前提に引っ張られる | 公式Docs確認後に削除または現在形へ置換 |
 | `data/WBS.tsv` cartesian INSERT 重複リスク (他プロジェクトで先例) | 3 tools が書き込むと重複 | **Codex のみ書き込み**。他は PR コメント提案 |
 
 ---
@@ -272,20 +272,12 @@ feat/<tool>-<wbs-id>-<slug>
 - **Agent SDK + Background agents** で複数フルセッション並走監視可。本プロジェクトは VSCode + Claude Code 単一セッション運用なので当面採用不要。
 - **MCP** で外部ツール統合 (Slack / Notion / Drive)。Slack MCP 未露出 (R3) は依然ブロッカー。
 
-### Google Antigravity 2.0 & Gemini ([blog.google I/O 2026](https://blog.google/innovation-and-ai/technology/developers-tools/google-io-2026-developer-highlights/) / [ai.google.dev caching](https://ai.google.dev/gemini-api/docs/caching))
+### Google Antigravity / Gemini / Workspace ([Gemini models](https://ai.google.dev/gemini-api/docs/models) / [Gemini caching](https://ai.google.dev/gemini-api/docs/caching) / [Sheets batchUpdate](https://developers.google.com/workspace/sheets/api/guides/batchupdate))
 
-- **Antigravity 2.0** = 2026-05 I/O 発表で **CLI / SDK / Managed Agents tier / Enterprise** を持つマルチサーフェス化。Gemini CLI → Antigravity CLI へ統合済。
-- **Dynamic subagents** + **Scheduled tasks** が公式機能化。本プロジェクトでは 6/2 後にデモ動画再生成の Scheduled task 化を検討。
-- **Gemini 3.5 Flash > Gemini 3.1 Pro at 4x speed** が公式ベンチマーク (I/O 2026)。
-  - **本プロジェクトへの impact: R1 (Pro 待ち) リスクの優先度を MED へ降格可能**。サービス方向性 pack を Flash で書き切る方針に switch 推奨。Pro 来月公開を待たない。
-- **Voice command** が Antigravity に追加 → 6/2 デモでハンズフリー操作の見せ場候補 (Antigravity 復帰後 5/27 以降に評価)。
-- **Context caching (2026)**:
-  - **Default TTL = 1 hour** (本プロジェクトの sync スクリプト等の繰り返し prompt に最適)。
-  - **Implicit caching** が Gemini 2.5+ で自動有効 (savings 保証なし)。
-  - **Explicit caching** が savings 保証あり (Files API 経由で system instructions / PDF / video をキャッシュ)。
-  - 最小: 3.5 Flash = 1,024 token / 3 Pro Preview = 4,096 token。
-  - 適用候補: `scripts/sync_docs_to_notebooklm.py` の docs 14 件 + system prompt を explicit cache に乗せる (post-6/2 タスク)。
-- **Gemini 3 系は temperature=1.0 デフォルト維持を強く推奨**。本プロジェクトコードで temperature を下げている箇所があれば見直し対象 (Codex レーンに triage 依頼)。
+- **モデル選定は固定名ではなく公式Docs確認ベース**: 毎セッション開始時にGemini APIのモデル一覧を確認し、Flash/Pro/マルチモーダル対応モデルを品質・速度・コスト・quotaで選ぶ。未確認の「来月公開」や旧称は正本にしない。
+- **Context caching**: Gemini公式Docsでcontext cachingのTTL、対象モデル、explicit/implicit cachingの条件を確認してから `scripts/sync_docs_to_notebooklm.py` などの長文投入最適化へ反映する。
+- **Workspace Sheets**: `sync_wbs_to_sheets.py` はSheets API `batchUpdate` の原子的な一括更新を前提に、`Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` / `課題管理表` / `QA表` を同一OAuthアカウントで同期する。
+- **本プロジェクトへのimpact**: R1は特定モデルの公開時期ではなく **未確認モデル前提・古いdocs混入リスク** として扱う。T665で古い記述を削除/更新済み。
 
 ### OpenAI Codex CLI ([developers.openai.com/codex best-practices](https://developers.openai.com/codex/learn/best-practices))
 
@@ -301,7 +293,7 @@ feat/<tool>-<wbs-id>-<slug>
 ### 本セッションで即適用したこと
 
 - 本書の Refresh セクション初期化。
-- Risks 表 (CEO_PRESENTATION_PREP_2026-06-02.md) の R1 (Gemini Pro 待ち) を **HIGH → MED** に降格する PR を Codex レーンに依頼予定 (Flash > 3.1 Pro at 4x speed のため)。
+- Risks 表 (CEO_PRESENTATION_PREP_2026-06-02.md) の R1 を **未確認モデル前提・古いdocs混入リスク** として再定義済み。Codexレーンでは今後も公式Docs確認後に古い記述を削除/現在形へ更新する。
 
 ### 次セッションで適用候補 (Codex レーンへ handoff)
 
@@ -319,10 +311,12 @@ feat/<tool>-<wbs-id>-<slug>
   - **本プロジェクトへの impact**: JSON hooks は sync スクリプト群 (Codex レーン) の自動起動 trigger 候補。Live voice transcription は 6/2 デモで「社長のフィードバックをリアルタイム議事録化」する見せ場候補 (T640 リハーサルで Antigravity 復帰後評価)。
 - **OpenAI Codex**: 変更なし (前回 fetch から 24h 以内、リリースサイクル 0.133.0 維持)。
 
-### Light refresh (2026-05-22 4th pass / Claude resume session)
+### Light refresh (2026-05-22 5th pass / Codex cleanup session)
 
-- **Anthropic / OpenAI / Google**: 変更なし (前回 fetch から < 12h、3 ソースとも本日中の知見で十分)。次回は 2026-05-23 (5/27 quota refresh 後の Antigravity CLI 評価とまとめて再 fetch)。
-- 本セッションでは公式 docs fetch をスキップする代わりに、**stale-doc 削除ルール** ([[feedback-stale-doc-deletion]]) を新規追加。docs/ANTIGRAVITY_GUIDE.md の "Gemini 3.5 Pro (来月予約)" 表記を I/O 2026 確定情報で訂正。
+- **Anthropic Claude Code**: `CLAUDE.md` / `AGENTS.md` memory import方針を再確認。共有ルールは `AGENTS.md` に集約し、Claude固有の入口は `CLAUDE.md` に限定する。
+- **OpenAI Codex**: `AGENTS.md` と「1 coherent unit of work」方針を再確認。今回のWBS完了単位は `T665 古いドキュメント削除・最新化`。
+- **Google Gemini / Workspace**: Gemini models / context caching / Sheets batchUpdateを再確認。未確認の未来モデル名を正本化せず、Sheetsはbatch更新を維持する。
+- **stale-doc 削除実施**: `ANTIGRAVITY_GUIDE.md` から未確認の未来モデル導入セクションを物理削除し、NotebookLM 21 source / GitHub Issue #1-#11/#13/#14/#16 の現状へ表記を更新。
 
 ---
 
@@ -354,3 +348,4 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-05-22 | Claude Code | Best Practices Refresh セクション追加 (Anthropic / Google / OpenAI 公式 docs 反映、R1 降格提案、AGENTS.md / context caching 採用候補) |
 | 2026-05-22 | Claude Code | Light refresh 2nd pass: Antigravity 2.0 JSON hooks / live voice transcription、Claude Code Rewind "Summarize up to here" 追記 |
 | 2026-05-22 | Codex | Session gate追加。AGENTS.md/CLAUDE.md作成、Sheets課題管理表/QA表同期、T664完了を反映 |
+| 2026-05-22 | Codex | Light refresh 5th pass: stale-doc削除を実行し、T665完了を反映 |

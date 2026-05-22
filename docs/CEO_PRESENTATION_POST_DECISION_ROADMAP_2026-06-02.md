@@ -78,7 +78,7 @@
 | T720 | WBS UI 内製化 ([O-1](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#o-1-wbs-ui-内製化)) | Antigravity + Codex | 6/3 - 6/13 | 本 UI 内に WBS 階層・進捗・タイムライン表示 |
 | T721 | Sheets 進捗の双方向 sync (現状は TSV → Sheets の片方向、双方向化) | Codex | 6/3 - 6/13 | Sheets で編集 → TSV 反映 / 逆方向 |
 | T722 | Calendar イベントクリック → 本 UI のタスク詳細遷移 | Antigravity | 6/9 - 6/13 | Antigravity Browser Agent 経由 |
-| T723 | 社長向け週次レポート自動生成 (Q-OPS-04 隔週レビューに直結) | Codex | 6/9 - 6/16 | Gemini 3.5 Flash で `docs/WEEKLY_REPORT_<YYYY-MM-DD>.md` 自動生成 |
+| T723 | 社長向け週次レポート自動生成 (Q-OPS-04 隔週レビューに直結) | Codex | 6/9 - 6/16 | Gemini API公式Docsで確認した現行モデルで `docs/WEEKLY_REPORT_<YYYY-MM-DD>.md` 自動生成 |
 | T724 | 既存顧客 1 社の PM フロー試行 (要・別途同意) | 人間 + Codex | 6/9 - 6/16 | 社長判断後に営業 |
 | T725 | NotebookLM に WBS スナップショットを週次 sync | Codex | 6/3 - 6/16 | 既存 `sync_docs_to_notebooklm.py` の Phase 7 拡張 |
 | T726 | 6/16 定例レビュー UI 動線完成 | Antigravity | 6/13 - 6/16 | 30 分で社長確認が終わる導線 |

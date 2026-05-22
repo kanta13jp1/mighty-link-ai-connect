@@ -29,9 +29,9 @@
 | 2 | `カテゴリ` | text | YES | `quota`, `auth`, `integration`, `compliance`, `cost`, `infra`, `docs`, `wbs-handoff` から選ぶ | `quota` |
 | 3 | `重要度` | enum | YES | `HIGH` / `MED` / `LOW` | `HIGH` |
 | 4 | `状態` | enum | YES | `open` / `in_progress` / `resolved` / `wont_fix` / `deferred` | `open` |
-| 5 | `タイトル` | text | YES | 1 行サマリ (60 字以内推奨) | `Gemini 3.5 Pro 公開待ち` |
+| 5 | `タイトル` | text | YES | 1 行サマリ (60 字以内推奨) | `未確認モデル前提の削除` |
 | 6 | `影響` | text | YES | サービス / プレゼンへの影響 | `サービス方向性 pack の品質が Flash 相当に留まる可能性` |
-| 7 | `緩和策` | text | YES | 現在進めている対処 | `Claude Code が決定マトリクスを起草、Pro 来れば Antigravity が精緻化` |
+| 7 | `緩和策` | text | YES | 現在進めている対処 | `Claude Code が決定マトリクスを起草、Gemini API公式Docs確認後にAntigravityが精緻化` |
 | 8 | `オーナー` | text | YES | `Claude` / `Codex` / `Antigravity` / `人間` / `Claude+人間` 等 | `Claude+Antigravity` |
 | 9 | `起票日` | date | YES | YYYY-MM-DD | `2026-05-22` |
 | 10 | `解決予定日` | date | NO | YYYY-MM-DD、未定なら空欄 | `2026-05-29` |

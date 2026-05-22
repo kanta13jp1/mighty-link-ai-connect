@@ -1,5 +1,5 @@
 {
-  "generated_at_jst": "2026-05-22T09:20:54+09:00",
+  "generated_at_jst": "2026-05-22T11:06:42+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "google_docs": {
     "docs_antigravity_guide_md": {
@@ -16,7 +16,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:05.145Z",
-      "modifiedTime": "2026-05-22T00:16:43.184Z"
+      "modifiedTime": "2026-05-22T02:02:06.679Z"
     },
     "docs_backend_ai_pipeline_md": {
       "source": "docs/BACKEND_AI_PIPELINE.md",
@@ -32,7 +32,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:08.445Z",
-      "modifiedTime": "2026-05-22T00:16:45.485Z"
+      "modifiedTime": "2026-05-22T02:02:09.589Z"
     },
     "docs_ceo_presentation_decision_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md",
@@ -48,7 +48,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:11.504Z",
-      "modifiedTime": "2026-05-22T00:16:47.848Z"
+      "modifiedTime": "2026-05-22T02:02:12.300Z"
     },
     "docs_ceo_presentation_discussion_points_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md",
@@ -64,7 +64,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:10.521Z",
-      "modifiedTime": "2026-05-22T00:16:50.360Z"
+      "modifiedTime": "2026-05-22T02:02:14.880Z"
     },
     "docs_ceo_presentation_final_review_checklist_md": {
       "source": "docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md",
@@ -80,7 +80,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:13.734Z",
-      "modifiedTime": "2026-05-22T00:16:52.972Z"
+      "modifiedTime": "2026-05-22T02:02:16.872Z"
     },
     "docs_ceo_presentation_ops_discussion_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md",
@@ -96,7 +96,23 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:16.975Z",
-      "modifiedTime": "2026-05-22T00:16:55.135Z"
+      "modifiedTime": "2026-05-22T02:02:19.217Z"
+    },
+    "docs_ceo_presentation_post_decision_roadmap_2026_06_02_md": {
+      "source": "docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
+      "id": "12H5nzd8jDRQU1eg33xNQgkoaEaodz4zQmjSTbaJWHkk",
+      "name": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
+      "url": "https://docs.google.com/document/d/12H5nzd8jDRQU1eg33xNQgkoaEaodz4zQmjSTbaJWHkk/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-05-22T01:55:28.832Z",
+      "modifiedTime": "2026-05-22T02:02:21.593Z"
     },
     "docs_ceo_presentation_prep_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PREP_2026-06-02.md",
@@ -112,7 +128,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:13.861Z",
-      "modifiedTime": "2026-05-22T00:16:57.663Z"
+      "modifiedTime": "2026-05-22T02:02:24.291Z"
     },
     "docs_ceo_presentation_qa_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md",
@@ -128,7 +144,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:23.139Z",
-      "modifiedTime": "2026-05-22T00:17:00.331Z"
+      "modifiedTime": "2026-05-22T02:02:27.004Z"
     },
     "docs_codex_continuation_notes_md": {
       "source": "docs/CODEX_CONTINUATION_NOTES.md",
@@ -144,7 +160,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:17.070Z",
-      "modifiedTime": "2026-05-22T00:17:02.476Z"
+      "modifiedTime": "2026-05-22T02:02:29.194Z"
     },
     "docs_database_md": {
       "source": "docs/database.md",
@@ -160,7 +176,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:20.169Z",
-      "modifiedTime": "2026-05-22T00:17:04.710Z"
+      "modifiedTime": "2026-05-22T02:02:31.992Z"
     },
     "docs_development_knowledge_flow_md": {
       "source": "docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
@@ -176,7 +192,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:23.586Z",
-      "modifiedTime": "2026-05-22T00:17:06.939Z"
+      "modifiedTime": "2026-05-22T02:02:34.585Z"
     },
     "docs_google_workspace_migration_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
@@ -192,7 +208,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:26.826Z",
-      "modifiedTime": "2026-05-22T00:17:09.237Z"
+      "modifiedTime": "2026-05-22T02:02:37.463Z"
     },
     "docs_integration_demo_evidence_2026_06_02_md": {
       "source": "docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md",
@@ -208,7 +224,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:30.369Z",
-      "modifiedTime": "2026-05-22T00:17:11.899Z"
+      "modifiedTime": "2026-05-22T02:02:40.148Z"
     },
     "docs_multi_ai_workflow_md": {
       "source": "docs/MULTI_AI_WORKFLOW.md",
@@ -224,7 +240,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:39.743Z",
-      "modifiedTime": "2026-05-22T00:17:14.192Z"
+      "modifiedTime": "2026-05-22T02:02:42.707Z"
     },
     "docs_project_structure_md": {
       "source": "docs/PROJECT_STRUCTURE.md",
@@ -240,7 +256,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:33.155Z",
-      "modifiedTime": "2026-05-22T00:17:16.547Z"
+      "modifiedTime": "2026-05-22T02:02:45.343Z"
     },
     "docs_requirements_md": {
       "source": "docs/requirements.md",
@@ -256,7 +272,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:35.726Z",
-      "modifiedTime": "2026-05-22T00:17:19.050Z"
+      "modifiedTime": "2026-05-22T02:02:47.763Z"
     },
     "docs_setup_guide_md": {
       "source": "docs/SETUP_GUIDE.md",
@@ -272,7 +288,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:39.055Z",
-      "modifiedTime": "2026-05-22T00:17:23.025Z"
+      "modifiedTime": "2026-05-22T02:02:50.110Z"
     },
     "docs_sheets_trackers_schema_md": {
       "source": "docs/SHEETS_TRACKERS_SCHEMA.md",
@@ -288,7 +304,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:50.427Z",
-      "modifiedTime": "2026-05-22T00:17:25.107Z"
+      "modifiedTime": "2026-05-22T02:02:52.494Z"
     },
     "docs_wbs_md": {
       "source": "docs/WBS.md",
@@ -304,7 +320,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-05-22T00:17:27.429Z"
+      "modifiedTime": "2026-05-22T02:02:55.045Z"
     },
     "docs_wbs_sync_guide_md": {
       "source": "docs/WBS_SYNC_GUIDE.md",
@@ -320,7 +336,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:44.871Z",
-      "modifiedTime": "2026-05-22T00:17:30.094Z"
+      "modifiedTime": "2026-05-22T02:02:57.605Z"
     }
   },
   "notebooklm": {
@@ -387,6 +403,15 @@
         "source_id": "78880073-eacf-4082-add0-ac30602ee363",
         "returncode": 0,
         "stdout": "Source refreshed: 78880073-eacf-4082-add0-ac30602ee363",
+        "stderr": ""
+      },
+      {
+        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
+        "drive_file_id": "12H5nzd8jDRQU1eg33xNQgkoaEaodz4zQmjSTbaJWHkk",
+        "action": "refreshed_existing",
+        "source_id": "ccdca1c0-cfb6-42a7-9415-5ea2d4ffdc47",
+        "returncode": 0,
+        "stdout": "Source refreshed: ccdca1c0-cfb6-42a7-9415-5ea2d4ffdc47",
         "stderr": ""
       },
       {

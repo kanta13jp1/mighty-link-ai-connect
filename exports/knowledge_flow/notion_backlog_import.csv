@@ -15,7 +15,7 @@ Obsidian vault雛形・ADR・議事録・プロンプトノート生成,T628,Obs
 公開デモ/ローカルUIへ開発ナレッジ連携デモセクション追加,T629,連携UIデモ,完了,Codex,2026-05-21,2026-05-21,社長に画面上で4ツール連携の成果物リンクを見せられる状態にする
 FastAPIにKnowledge Flow生成・状態確認APIを追加,T630,連携APIデモ,完了,Codex,2026-05-21,2026-05-21,/api/knowledge-flow/generateで成果物を再生成できるようにする
 生成成果物・公開URL・API・Sheets/Calendar同期の総合確認,T631,連携成果物検証,完了,Codex,2026-05-21,2026-05-21,社長提示前にデモ導線と生成ファイルの存在を確認する
-GitHub Issuesに6/2社長デモ向け連携タスクを起票,T632,GitHub Issues連携,完了,Codex,2026-05-21,2026-05-21,Issue #1-#6を作成し、NotebookLM/Slack/Notion/Obsidian/GitHub Project/WBS連携を追跡可能にする
+GitHub Issuesに6/2社長デモ向け連携タスクを起票,T632,GitHub Issues連携,完了,Codex,2026-05-21,2026-05-21,Issue #1-#11/#13/#14/#16を作成・更新し、NotebookLM/Slack/Notion/Obsidian/GitHub Project/WBS連携を追跡可能にする
 GitHub Project board取得・配置のCLI権限確認,T633,GitHub Project連携,実行中,Codex,2026-05-21,2026-05-23,gh project listでread:projectスコープ不足を確認し、Project復旧タスクをIssue #5として管理する
 NotebookLM投入用Source PackをGoogle Drive/Docsへアップロード,T634,NotebookLM実連携,完了,Codex,2026-05-21,2026-05-21,TXTをGoogle Docs化し、k-umezawa@ml-mightylink.com所有のNotebookLM source候補としてURLを証跡化する
 Notion MCPで社長デモ用の連携証跡ページを作成,T635,Notion実連携,完了,Codex,2026-05-21,2026-05-21,Google Doc URL、GitHub Issues、Slack/Projectの到達点、6/2決定事項をNotionページへ記録する
@@ -33,7 +33,7 @@ Slack送信ツール・投稿先チャンネル・社長共有範囲の確定,T6
 NotebookLM docs同期結果をNotion証跡ページ配下に追加,T654,Notion証跡更新,完了,Codex,2026-05-22,2026-05-22,NotebookLM Docs Sync Evidence 2026-05-22をNotionへ作成し、Issue #9/#10と再実行手順を記録する
 Obsidian vaultにNotebookLM Agent Brief参照導線を追加,T655,Obsidian Agent Brief導線,完了,Codex,2026-05-22,2026-05-22,NotebookLM要約取得後にObsidianから参照できるよう、プロンプトとホーム導線を更新する
 NotebookLM CLIのログイン保存を補助するWorkspace専用スクリプト作成,T656,NotebookLM補助ログイン導線,完了,Codex,2026-05-22,2026-05-22,upstream notebooklm loginの遷移中断に備え、scripts/notebooklm_login_workspace.pyで永続profileとstorage_stateを保存できる導線を追加する
-NotebookLMからCEO向け8枚以内のプレゼン草案を取得して保存,T657,NotebookLM社長スライド草案取得,完了,Codex,2026-05-22,2026-05-22,NotebookLM notebook 75521ea6-6b9b-47b2-9508-50050d8ab2d5の14 source ready状態からCEO Slide Outlineを取得し、Google Docs化対象に追加する
+NotebookLMからCEO向け8枚以内のプレゼン草案を取得して保存,T657,NotebookLM社長スライド草案取得,完了,Codex,2026-05-22,2026-05-22,NotebookLM notebook 75521ea6-6b9b-47b2-9508-50050d8ab2d5の21 source ready状態からCEO Slide Outlineを取得し、Google Docs化対象に追加する
 NotebookLM CLIで取得したCEO Slide Outlineを社長説明用PowerPointへ変換,T658,NotebookLM PowerPoint化,完了,Codex,2026-05-22,2026-05-22,exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptxを生成し、NotebookLM由来の構成を社長説明で開ける成果物にする
 Notion MCPでPPTX生成・Drive共有・残課題を証跡ページへ記録,T660,Notion PPTX証跡更新,完了,Codex,2026-05-22,2026-05-22,社長に見せる連携証跡として、PowerPoint成果物、NotebookLM notebook、Slack/Project制約、次アクションをNotionへ残す
 Slack CLIと送信MCPの利用可否を確認し、投稿案と残課題を整理,T662,Slack MCP/CLI到達性証跡,完了,Codex,2026-05-22,2026-05-22,ローカルslack CLI未検出、送信MCP未露出を確認し、実送信は投稿先・権限確認後の残課題としてIssue #2/T653に集約する

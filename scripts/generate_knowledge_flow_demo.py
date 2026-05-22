@@ -40,7 +40,7 @@ def jst_now() -> dt.datetime:
 
 
 def read_wbs_rows() -> list[dict]:
-    with WBS_FILE.open("r", encoding="utf-8", newline="") as f:
+    with WBS_FILE.open("r", encoding="utf-8-sig", newline="") as f:
         return list(csv.DictReader(f, delimiter="\t"))
 
 
@@ -172,7 +172,7 @@ and which development knowledge-flow tools should become official.
 
 - Public demo remains guarded by Public Demo Guard and GitHub Pages deployment.
 - WBS is synced to Google Sheets and Google Calendar.
-- GitHub Issues #1-#13 track the CEO demo integration backlog.
+- GitHub Issues #1-#11/#13/#14/#16 track the CEO demo integration backlog.
 - NotebookLM source pack was uploaded to Google Docs for source ingestion.
 - NotebookLM CLI is authenticated as the Workspace account and generated an agent brief plus CEO slide outline.
 - CEO PowerPoint deck was generated from the NotebookLM slide outline.
@@ -309,13 +309,18 @@ def write_notion_csvs(rows: list[dict]) -> None:
         for row in knowledge_tasks(rows)
     ]
     write_csv(EXPORT_DIR / "notion_decision_log.csv", decisions)
-    write_csv(EXPORT_DIR / "notion_backlog_import.csv", backlog)
+    write_csv(
+        EXPORT_DIR / "notion_backlog_import.csv",
+        backlog,
+        fieldnames=["Task", "WBS ID", "Phase", "Status", "Owner", "Start", "Due", "Notes"],
+    )
 
 
-def write_csv(path: Path, rows: list[dict]) -> None:
+def write_csv(path: Path, rows: list[dict], fieldnames: list[str] | None = None) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
+    columns = fieldnames or list(rows[0].keys())
     with path.open("w", encoding="utf-8-sig", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        writer = csv.DictWriter(f, fieldnames=columns)
         writer.writeheader()
         writer.writerows(rows)
 

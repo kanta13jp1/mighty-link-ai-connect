@@ -62,7 +62,7 @@
 **関連論点**: D-1 (補足質問)
 
 **回答方針**: マイティ・リンクのコアビジョン「人 × ビジネス × テクノロジーを力強く繋ぐ」を体現する点 (README.md, ANTIGRAVITY_GUIDE.md:5) を軸に、以下の差別化軸を提示:
-1. **マルチモーダル評価** — Gemini Omni で経歴書 PDF + ポートフォリオ画像 + 動画を一体評価 ([requirements.md:12, 28-37](requirements.md))
+1. **マルチモーダル評価** — Gemini APIの現行マルチモーダル対応モデルで経歴書 PDF + ポートフォリオ画像 + 動画を一体評価 ([requirements.md:12, 28-37](requirements.md))
 2. **4 軸スコアリング** — Skill / Culture / Growth / Performing で単純キーワードマッチを超える
 3. **Workspace ネイティブ統合** — Sheets / Calendar / Drive と本日確認できるレベルの実連携
 
@@ -124,9 +124,9 @@
 
 **関連論点**: [D-4](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-4-ai-エンジン選定方針-2026-05-22-新規論点), [Risks & Blockers R1](CEO_PRESENTATION_PREP_2026-06-02.md#risks--blockers-2026-05-22-時点)
 
-**回答方針**: **重要な訂正**: 「**Gemini 3.5 Flash が Gemini 3.1 Pro を 4 倍速で上回ることが I/O 2026 で公表されました**」と先制。Pro 公開を待つ必要は薄く、Flash で出荷可能。**R1 リスクは HIGH から MED に降格済** ([MULTI_AI_WORKFLOW.md Best Practices Refresh](MULTI_AI_WORKFLOW.md#best-practices-refresh-2026-05-22))。
+**回答方針**: **重要な訂正**: 固定の未来モデル名や「来月」前提では判断しない。毎セッション開始時にGemini API公式モデル一覧を確認し、現行のFlash/Pro/マルチモーダル対応モデルを品質・速度・コスト・quotaで比較して採用する。**R1はdocs staleリスクとして解消済** ([MULTI_AI_WORKFLOW.md Best Practices Refresh](MULTI_AI_WORKFLOW.md#best-practices-refresh-2026-05-22))。
 
-**保留時の対応**: Pro が将来公開された際の switch コスト見積を「方向性確定後に提示する」と返答。
+**保留時の対応**: 方向性確定後に、採用候補モデルのswitchコストと評価観点を提示する。
 
 ---
 
@@ -203,7 +203,7 @@
 2. `data/WBS.tsv` を直接見せる
 3. `exports/mighty_development_plan.ics` で Calendar 内容説明
 4. `exports/knowledge_flow/backup/` のスクショ集
-5. デモ動画 (Antigravity 復帰後 5/27 以降に Omni で生成予定)
+5. デモ動画 (Antigravity 復帰後 5/27 以降にGemini APIの現行マルチモーダル対応モデルで生成予定)
 
 **保留時の対応**: なし。即答カテゴリ。
 
@@ -223,7 +223,7 @@
 
 **関連論点**: [R2](CEO_PRESENTATION_PREP_2026-06-02.md#risks--blockers-2026-05-22-時点), Issues #5/#8
 
-**回答方針**: 「**読み取り権限の OAuth scope 復旧待ち**」と説明 ([INTEGRATION_DEMO_EVIDENCE_2026-06-02.md:68-77](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md)). ブラウザでの `gh auth refresh -s project` 承認が必要 (人間ブロック)。代替として GitHub Issues #1-#11 一覧を見せる。
+**回答方針**: 「**読み取り権限の OAuth scope 復旧待ち**」と説明 ([INTEGRATION_DEMO_EVIDENCE_2026-06-02.md:68-77](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md)). ブラウザでの `gh auth refresh -s project` 承認が必要 (人間ブロック)。代替として GitHub Issues #1-#11/#13/#14/#16 一覧を見せる。
 
 **保留時の対応**: R2 mitigation 発動。デモから Project ボードを **明確に除外**する旨を社長へ通知 (R2 が 5/27 までに未解決の場合)。
 
@@ -235,7 +235,7 @@
 
 **関連論点**: [D-6 連携ツール採用判断](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-6-連携ツール採用判断-notebooklm--slack--notion--obsidian)
 
-**回答方針**: 「**今この場で実演できます**」と提示。notebook `75521ea6-...` に 14 docs 投入済、Agent Brief と CEO Slide Outline 取得済 ([CEO_PRESENTATION_PREP_2026-06-02.md:174-184](CEO_PRESENTATION_PREP_2026-06-02.md))。具体的価値: 「次回打ち合わせ前に **NotebookLM に質問するだけで論点が出る** 状態を作れる」。
+**回答方針**: 「**今この場で実演できます**」と提示。notebook `75521ea6-...` に 21 docs 投入済、Agent Brief と CEO Slide Outline 取得済 ([CEO_PRESENTATION_PREP_2026-06-02.md:174-184](CEO_PRESENTATION_PREP_2026-06-02.md))。具体的価値: 「次回打ち合わせ前に **NotebookLM に質問するだけで論点が出る** 状態を作れる」。
 
 **保留時の対応**: D-6 NotebookLM を「**採用**」に振る前提で社長合意を取りたい。「保留」「後回し」になった場合は CLI 認証維持コスト (月 0 円) のみ継続。
 

@@ -58,6 +58,7 @@ mighty-link-ai-connect/
 - `AGENTS.md` はAntigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの共通セッションゲートを定義する。`CLAUDE.md` はAnthropic公式推奨に従い `@AGENTS.md` を import する。
 - `.claude/settings.local.json` と `CLAUDE.local.md` はローカル専用設定として `.gitignore` 対象にし、共有すべき指示は `AGENTS.md` / `CLAUDE.md` / `docs/` へ昇格する。
 - Google Sheets同期は `sync_wbs_to_sheets.py` 1本で `Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` / `課題管理表` / `QA表` を更新する。
+- 内容が古くなったdocsは、追記で温存せず削除または現在形へ置換する。削除判断は「公式Docsで裏取りできない未来モデル名」「現状と違う同期件数」「解決済みブロッカーを現行リスクとして扱う記述」「CEOに見せる導線を誤らせる古いIssue番号」を優先する。
 
 ## 実行コマンド
 

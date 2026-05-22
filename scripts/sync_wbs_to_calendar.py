@@ -72,7 +72,7 @@ SCHEDULE_EVENTS = [
         "is_all_day": True
     },
     {
-        "summary": "【Mighty Skill-Bridge】フェーズ3: バックエンド & AI（Gemini 3.5 & Omni 連携API）",
+        "summary": "【Mighty Skill-Bridge】フェーズ3: バックエンド & AI（Gemini API連携）",
         "description": "FastAPIを用いたマルチモーダルパースAPI、4次元分析API、Google Sheets同期エンジン、構造化プロファイル抽出・4軸スコアリングfallback基盤、AI判定監査ログ(JSONL)・recent audit API、GitHub Pages公開デモ保護ガード、CATS型WBSスプレッドシートUIの開発。",
         "start_date": "2026-05-25",
         "end_date": "2026-05-28", # 3 days
@@ -147,7 +147,7 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】GitHub Project権限復旧チェック",
-        "description": "gh auth refresh -s read:project 実行後にProject board取得/作成とIssue #1-#6の配置可否を確認します。",
+        "description": "gh auth refresh -s read:project 実行後にProject board取得/作成とIssue #1-#11/#13/#14/#16の配置可否を確認します。",
         "start_time": "2026-05-24T10:00:00",
         "end_time": "2026-05-24T11:00:00",
         "time_zone": "Asia/Tokyo",
@@ -185,7 +185,7 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】docs NotebookLM同期・Google Docs化",
-        "description": "docs/*.md 14件をLocal OAuth Drive APIでk-umezawa@ml-mightylink.com所有のGoogle Docsへ同期し、NotebookLM CLI source add-drive用manifestを作成します。",
+        "description": "docs/*.md 21件をLocal OAuth Drive APIでk-umezawa@ml-mightylink.com所有のGoogle Docsへ同期し、NotebookLM CLI source add-drive用manifestを作成します。",
         "start_date": "2026-05-22",
         "end_date": "2026-05-23",
         "is_all_day": True
@@ -216,7 +216,7 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】NotebookLM CEO Slide Outline取得",
-        "description": "NotebookLMの14 source ready状態から、6/2社長説明用の8枚以内スライド草案、話す要点、想定質問を取得し、Google Docs化対象に追加します。",
+        "description": "NotebookLMの21 source ready状態から、6/2社長説明用の8枚以内スライド草案、話す要点、想定質問を取得し、Google Docs化対象に追加します。",
         "start_time": "2026-05-22T14:00:00",
         "end_time": "2026-05-22T14:30:00",
         "time_zone": "Asia/Tokyo",
@@ -243,6 +243,14 @@ SCHEDULE_EVENTS = [
         "description": "Antigravity + Gemini、VSCode + Codex、VSCode + Claude Codeを併用する開発ゲート、公式Docs確認、Sheets課題管理表・QA表同期、commit/push/main/master反映の手順を固定します。",
         "start_time": "2026-05-22T18:00:00",
         "end_time": "2026-05-22T18:30:00",
+        "time_zone": "Asia/Tokyo",
+        "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】古いドキュメント削除・最新化",
+        "description": "公式Docs確認後、未確認の未来モデル前提、古いNotebookLM件数、古いIssue番号を削除または現在形へ置き換えます。",
+        "start_time": "2026-05-22T19:00:00",
+        "end_time": "2026-05-22T19:30:00",
         "time_zone": "Asia/Tokyo",
         "is_all_day": False
     },
@@ -278,6 +286,10 @@ SCHEDULE_EVENTS = [
         "time_zone": "Asia/Tokyo",
         "is_all_day": False
     }
+]
+
+STALE_EVENT_SUMMARIES = [
+    "【Mighty Skill-Bridge】フェーズ3: バックエンド & AI（Gemini 3.5 & Omni 連携API）",
 ]
 
 def generate_ics_file():
@@ -451,6 +463,30 @@ def find_existing_event(headers, calendar_id, ev, desired_event):
 
     return selected
 
+def remove_stale_event_aliases(headers, calendar_id):
+    """Deletes known stale event titles so renamed WBS events do not linger."""
+    list_url = f"https://www.googleapis.com/calendar/v3/calendars/{calendar_id}/events"
+    for summary in STALE_EVENT_SUMMARIES:
+        params = {
+            "q": summary,
+            "singleEvents": "true",
+            "timeMin": "2026-05-19T00:00:00+09:00",
+            "timeMax": "2026-06-04T23:59:59+09:00",
+        }
+        res = requests.get(list_url, headers=headers, params=params)
+        if res.status_code != 200:
+            print(f"  [!] Could not check stale events for {summary}: {res.text}")
+            continue
+        for item in res.json().get("items", []):
+            if item.get("summary") != summary:
+                continue
+            delete_url = f"{list_url}/{item['id']}"
+            delete_res = requests.delete(delete_url, headers=headers)
+            if delete_res.status_code in [200, 204]:
+                print(f"  [*] Removed stale event: {summary}")
+            else:
+                print(f"  [!] Failed to remove stale event {item['id']}: {delete_res.text}")
+
 def sync_to_google_calendar(access_token, auth_mode):
     """Creates events in Google Calendar via HTTP REST API."""
     print(f"[*] Starting API Sync (Auth Mode: {auth_mode})...")
@@ -495,6 +531,8 @@ def sync_to_google_calendar(access_token, auth_mode):
     if "Service Account" in auth_mode:
         target_calendar_id = USER_EMAIL
         print(f"[*] Service Account mode: Writing to {USER_EMAIL} (Requires manual calendar sharing configured).")
+
+    remove_stale_event_aliases(headers, target_calendar_id)
 
     # 3. Create Events
     success_count = 0

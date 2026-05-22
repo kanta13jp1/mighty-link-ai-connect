@@ -25,6 +25,12 @@ Generated/updated: 2026-05-22
   - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/6
   - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/7
   - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/8
+  - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/9
+  - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/10
+  - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/11
+  - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/13
+  - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/14
+  - https://github.com/kanta13jp1/mighty-link-ai-connect/issues/16
 
 ## Local Evidence
 
@@ -48,7 +54,7 @@ Generated/updated: 2026-05-22
 - Workspace account: `k-umezawa@ml-mightylink.com`
 - Notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
 - Notebook title: `Mighty Skill-Bridge Development Knowledge 2026-06-02`
-- Source status: `docs/*.md` 14 sources ready
+- Source status: `docs/*.md` 21 sources ready
 - Login helper: `scripts/notebooklm_login_workspace.py`
 
 ## Known Gaps

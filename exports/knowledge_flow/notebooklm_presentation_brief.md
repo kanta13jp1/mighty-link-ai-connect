@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-05-22 09:21:06 UTC+09:00
+Generated: 2026-05-22 11:01:58 UTC+09:00
 
 ## How to use this in NotebookLM
 
@@ -25,7 +25,7 @@ and which development knowledge-flow tools should become official.
 
 - Public demo remains guarded by Public Demo Guard and GitHub Pages deployment.
 - WBS is synced to Google Sheets and Google Calendar.
-- GitHub Issues #1-#13 track the CEO demo integration backlog.
+- GitHub Issues #1-#11/#13/#14/#16 track the CEO demo integration backlog.
 - NotebookLM source pack was uploaded to Google Docs for source ingestion.
 - NotebookLM CLI is authenticated as the Workspace account and generated an agent brief plus CEO slide outline.
 - CEO PowerPoint deck was generated from the NotebookLM slide outline.
@@ -36,13 +36,13 @@ and which development knowledge-flow tools should become official.
 
 ## WBS Snapshot
 
-- Total tasks: 79
-- Done: 50
+- Total tasks: 80
+- Done: 55
 - In progress: 5
-- Not started: 24
-- Completion rate: 63%
-- CEO presentation phase tasks: 64
-- CEO presentation phase done: 39
+- Not started: 20
+- Completion rate: 69%
+- CEO presentation phase tasks: 65
+- CEO presentation phase done: 44
 
 ## Latest Knowledge-flow / CEO-demo Tasks
 
