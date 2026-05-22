@@ -9,6 +9,7 @@ __pycache__/
 
 # Runtime audit logs
 data/audit/*.jsonl
+data/external_api_usage*.jsonl
 
 # Local system files
 .DS_Store

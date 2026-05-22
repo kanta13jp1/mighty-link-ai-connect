@@ -411,3 +411,56 @@ ModelArk > Model activation > Media > Dreamina-Seedance-2.0
 ```
 
 The API response used by this demo does not currently expose token consumption, so the source of truth for spend is the BytePlus usage/resource-pack screens.
+
+## 2026-05-22 External API guard dashboard
+
+Local FastAPI exposes a billing-safety dashboard:
+
+```text
+http://127.0.0.1:8000/admin
+```
+
+The dashboard reads a local, gitignored JSONL ledger:
+
+```text
+data/external_api_usage.jsonl
+```
+
+It shows:
+
+- Daily billable call counts
+- Blocked calls
+- Provider-reported token counts when available
+- Seedance saved-default video metadata
+- Recent external API events without prompts, API keys, or signed video URLs
+
+The same data is available as JSON:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/api/admin/usage
+```
+
+Export the raw local ledger:
+
+```text
+http://127.0.0.1:8000/api/admin/usage/export
+```
+
+Default circuit-breaker values:
+
+```powershell
+$env:SEEDANCE_API_ENABLED = ""          # external Seedance calls disabled by default
+$env:SEEDANCE_DAILY_GENERATION_LIMIT = "1"
+$env:GEMINI_DAILY_CALL_LIMIT = "20"
+$env:GEMINI_DAILY_REPORTED_TOKEN_LIMIT = "100000"
+```
+
+To intentionally generate a new Seedance video:
+
+```powershell
+$env:SEEDANCE_API_ENABLED = "1"
+$env:SEEDANCE_DAILY_GENERATION_LIMIT = "1"
+python src/app.py
+```
+
+After generation, unset `SEEDANCE_API_ENABLED` and restart FastAPI. BytePlus ModelArk usage/resource-pack screens remain the authoritative billing view because Seedance video responses may not include token usage.

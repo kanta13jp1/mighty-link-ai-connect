@@ -49,7 +49,7 @@ if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
@@ -84,6 +84,7 @@ DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 EXPORTS_DIR = os.path.join(PROJECT_ROOT, "exports")
 AUDIT_DIR = os.path.join(DATA_DIR, "audit")
 AUDIT_LOG_FILE = os.path.join(AUDIT_DIR, "ai_audit.jsonl")
+EXTERNAL_API_USAGE_LOG_FILE = os.path.join(DATA_DIR, "external_api_usage.jsonl")
 KNOWLEDGE_FLOW_DIR = os.path.join(EXPORTS_DIR, "knowledge_flow")
 KNOWLEDGE_FLOW_MANIFEST = os.path.join(KNOWLEDGE_FLOW_DIR, "manifest.json")
 KNOWLEDGE_FLOW_SCRIPT = os.path.join(PROJECT_ROOT, "scripts", "generate_knowledge_flow_demo.py")
@@ -97,6 +98,8 @@ SEEDANCE_PAYLOAD_STYLE = os.environ.get("SEEDANCE_PAYLOAD_STYLE", "content_task"
 SEEDANCE_POLL_TIMEOUT_SECONDS = env_int("SEEDANCE_POLL_TIMEOUT_SECONDS", 30, 0, 600)
 SEEDANCE_POLL_INTERVAL_SECONDS = env_int("SEEDANCE_POLL_INTERVAL_SECONDS", 5, 1, 60)
 SEEDANCE_API_ENABLED = env_flag("SEEDANCE_API_ENABLED", False)
+SEEDANCE_DAILY_GENERATION_LIMIT = env_int("SEEDANCE_DAILY_GENERATION_LIMIT", 1, 0, 1000)
+SEEDANCE_DAILY_REPORTED_TOKEN_LIMIT = env_int("SEEDANCE_DAILY_REPORTED_TOKEN_LIMIT", 0, 0, 1_000_000_000)
 SEEDANCE_API_KEY = (
     os.environ.get("SEEDANCE_API_KEY")
     or os.environ.get("ARK_API_KEY")
@@ -108,6 +111,8 @@ CLIENT_SECRET_FILE = os.path.join(PROJECT_ROOT, "client_secret.json")
 AUTHORIZED_USER_FILE = os.path.join(PROJECT_ROOT, "authorized_user.json")
 SPREADSHEET_ID = "1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8"
 USER_EMAIL = "k-umezawa@ml-mightylink.com"
+GEMINI_DAILY_CALL_LIMIT = env_int("GEMINI_DAILY_CALL_LIMIT", 20, 0, 10000)
+GEMINI_DAILY_REPORTED_TOKEN_LIMIT = env_int("GEMINI_DAILY_REPORTED_TOKEN_LIMIT", 100000, 0, 1_000_000_000)
 
 os.makedirs(EXPORTS_DIR, exist_ok=True)
 app.mount("/exports", StaticFiles(directory=EXPORTS_DIR), name="exports")
@@ -254,6 +259,202 @@ def read_recent_audit_events(limit: int = 20) -> List[dict]:
     return list(reversed(events))
 
 
+def today_key() -> str:
+    return datetime.datetime.now().strftime("%Y-%m-%d")
+
+
+def utc_now_iso() -> str:
+    return datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+
+
+def read_external_api_events(limit: Optional[int] = None) -> List[dict]:
+    if not os.path.exists(EXTERNAL_API_USAGE_LOG_FILE):
+        return []
+    with open(EXTERNAL_API_USAGE_LOG_FILE, "r", encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip()]
+    if limit:
+        lines = lines[-max(1, min(limit, 1000)):]
+    events = []
+    for line in lines:
+        try:
+            events.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue
+    return events
+
+
+def append_external_api_event(event: dict) -> None:
+    os.makedirs(DATA_DIR, exist_ok=True)
+    safe_event = {
+        "timestamp": utc_now_iso(),
+        "day": today_key(),
+        "provider": event.get("provider", "unknown"),
+        "operation": event.get("operation", "unknown"),
+        "billable": bool(event.get("billable", False)),
+        "outcome": event.get("outcome", "unknown"),
+        "model": event.get("model"),
+        "task_id": event.get("task_id"),
+        "http_status": event.get("http_status"),
+        "reported_total_tokens": event.get("reported_total_tokens"),
+        "reported_input_tokens": event.get("reported_input_tokens"),
+        "reported_output_tokens": event.get("reported_output_tokens"),
+        "token_source": event.get("token_source", "provider_not_reported"),
+        "reason": event.get("reason"),
+        "prompt_digest": event.get("prompt_digest"),
+    }
+    with open(EXTERNAL_API_USAGE_LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(json.dumps(safe_event, ensure_ascii=False) + "\n")
+
+
+def find_token_usage(value) -> dict:
+    """Extract provider-reported usage tokens from common API response shapes."""
+    usage = {
+        "reported_total_tokens": None,
+        "reported_input_tokens": None,
+        "reported_output_tokens": None,
+        "token_source": "provider_not_reported",
+    }
+    if value is None:
+        return usage
+    if not isinstance(value, (dict, list)):
+        value = {
+            "total_token_count": getattr(value, "total_token_count", None),
+            "prompt_token_count": getattr(value, "prompt_token_count", None),
+            "candidates_token_count": getattr(value, "candidates_token_count", None),
+            "total_tokens": getattr(value, "total_tokens", None),
+            "input_tokens": getattr(value, "input_tokens", None),
+            "output_tokens": getattr(value, "output_tokens", None),
+        }
+    if isinstance(value, list):
+        for item in value:
+            found = find_token_usage(item)
+            if found["reported_total_tokens"] is not None:
+                return found
+        return usage
+    if isinstance(value, dict):
+        candidates = []
+        for key in ("usage", "usage_metadata", "token_usage", "billing", "data", "result"):
+            if isinstance(value.get(key), dict):
+                candidates.append(value[key])
+        candidates.append(value)
+        for candidate in candidates:
+            total = (
+                candidate.get("total_tokens")
+                or candidate.get("total_token_count")
+                or candidate.get("tokens")
+                or candidate.get("total")
+            )
+            input_tokens = (
+                candidate.get("input_tokens")
+                or candidate.get("prompt_tokens")
+                or candidate.get("prompt_token_count")
+            )
+            output_tokens = (
+                candidate.get("output_tokens")
+                or candidate.get("completion_tokens")
+                or candidate.get("candidates_token_count")
+            )
+            if total is None and (input_tokens is not None or output_tokens is not None):
+                total = int(input_tokens or 0) + int(output_tokens or 0)
+            if total is not None:
+                return {
+                    "reported_total_tokens": int(total),
+                    "reported_input_tokens": int(input_tokens) if input_tokens is not None else None,
+                    "reported_output_tokens": int(output_tokens) if output_tokens is not None else None,
+                    "token_source": "provider_response",
+                }
+        for item in value.values():
+            found = find_token_usage(item)
+            if found["reported_total_tokens"] is not None:
+                return found
+    return usage
+
+
+def external_api_daily_stats(provider: str, operation: Optional[str] = None) -> dict:
+    events = [
+        event for event in read_external_api_events()
+        if event.get("day") == today_key()
+        and event.get("provider") == provider
+        and (operation is None or event.get("operation") == operation)
+    ]
+    billable_events = [event for event in events if event.get("billable")]
+    return {
+        "events": len(events),
+        "billable_calls": len(billable_events),
+        "blocked_calls": sum(1 for event in events if event.get("outcome") == "blocked"),
+        "reported_total_tokens": sum(int(event.get("reported_total_tokens") or 0) for event in events),
+    }
+
+
+def check_external_api_circuit(provider: str, operation: str, call_limit: int, token_limit: int = 0) -> Tuple[bool, str, dict]:
+    stats = external_api_daily_stats(provider, operation)
+    if call_limit <= 0:
+        return False, f"{provider}:{operation} is disabled by daily call limit 0.", stats
+    if stats["billable_calls"] >= call_limit:
+        return False, f"{provider}:{operation} daily call limit reached ({stats['billable_calls']}/{call_limit}).", stats
+    if token_limit > 0 and stats["reported_total_tokens"] >= token_limit:
+        return False, f"{provider}:{operation} daily reported token limit reached ({stats['reported_total_tokens']}/{token_limit}).", stats
+    return True, "allowed", stats
+
+
+def build_external_api_usage_summary() -> dict:
+    events = read_external_api_events()
+    today = today_key()
+    providers = {}
+    for provider in ("seedance_api", "gemini_api"):
+        provider_events = [event for event in events if event.get("provider") == provider]
+        today_events = [event for event in provider_events if event.get("day") == today]
+        providers[provider] = {
+            "total_events": len(provider_events),
+            "today_events": len(today_events),
+            "today_billable_calls": sum(1 for event in today_events if event.get("billable")),
+            "today_blocked_calls": sum(1 for event in today_events if event.get("outcome") == "blocked"),
+            "today_reported_total_tokens": sum(int(event.get("reported_total_tokens") or 0) for event in today_events),
+        }
+    seedance_create_stats = external_api_daily_stats("seedance_api", "generation_create")
+    gemini_parse_stats = external_api_daily_stats("gemini_api", "parse")
+    gemini_match_stats = external_api_daily_stats("gemini_api", "match")
+    return {
+        "status": "success",
+        "day": today,
+        "usage_log": os.path.relpath(EXTERNAL_API_USAGE_LOG_FILE, PROJECT_ROOT),
+        "providers": providers,
+        "circuit_breakers": {
+            "seedance_generation_create": {
+                "enabled": SEEDANCE_API_ENABLED,
+                "configured": SEEDANCE_CONFIGURED,
+                "daily_call_limit": SEEDANCE_DAILY_GENERATION_LIMIT,
+                "today_billable_calls": seedance_create_stats["billable_calls"],
+                "today_reported_total_tokens": seedance_create_stats["reported_total_tokens"],
+                "daily_reported_token_limit": SEEDANCE_DAILY_REPORTED_TOKEN_LIMIT or None,
+                "state": "open" if (
+                    not SEEDANCE_API_ENABLED
+                    or seedance_create_stats["billable_calls"] >= SEEDANCE_DAILY_GENERATION_LIMIT
+                    or (
+                        SEEDANCE_DAILY_REPORTED_TOKEN_LIMIT > 0
+                        and seedance_create_stats["reported_total_tokens"] >= SEEDANCE_DAILY_REPORTED_TOKEN_LIMIT
+                    )
+                ) else "closed",
+            },
+            "gemini_parse": {
+                "enabled": GEMINI_READY,
+                "daily_call_limit": GEMINI_DAILY_CALL_LIMIT,
+                "today_billable_calls": gemini_parse_stats["billable_calls"],
+                "today_reported_total_tokens": gemini_parse_stats["reported_total_tokens"],
+            },
+            "gemini_match": {
+                "enabled": GEMINI_READY,
+                "daily_call_limit": GEMINI_DAILY_CALL_LIMIT,
+                "today_billable_calls": gemini_match_stats["billable_calls"],
+                "today_reported_total_tokens": gemini_match_stats["reported_total_tokens"],
+            },
+        },
+        "seedance_saved_default": read_seedance_manifest(),
+        "recent_events": list(reversed(read_external_api_events(limit=100))),
+        "usage_note": "Provider-reported token usage is shown when the API response includes it. Seedance video responses may not include tokens; use BytePlus Console > ModelArk > Usage as the spend source of truth.",
+    }
+
+
 def seedance_demo_video_url() -> Optional[str]:
     if os.path.exists(SEEDANCE_DEMO_VIDEO):
         return "/exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4"
@@ -263,7 +464,7 @@ def seedance_demo_video_url() -> Optional[str]:
 def read_seedance_manifest() -> Optional[dict]:
     if not os.path.exists(SEEDANCE_DEMO_MANIFEST):
         return None
-    with open(SEEDANCE_DEMO_MANIFEST, "r", encoding="utf-8") as f:
+    with open(SEEDANCE_DEMO_MANIFEST, "r", encoding="utf-8-sig") as f:
         return json.load(f)
 
 
@@ -435,6 +636,16 @@ def poll_seedance_result(task_id: str, headers: dict) -> Tuple[Optional[str], Op
         attempts += 1
         response = requests.get(result_url, headers=headers, timeout=45)
         if not response.ok:
+            append_external_api_event({
+                "provider": "seedance_api",
+                "operation": "task_poll",
+                "billable": False,
+                "outcome": "http_error",
+                "model": SEEDANCE_MODEL,
+                "task_id": task_id,
+                "http_status": response.status_code,
+                "reason": summarize_seedance_http_error(response),
+            })
             return (
                 None,
                 last_payload,
@@ -443,11 +654,33 @@ def poll_seedance_result(task_id: str, headers: dict) -> Tuple[Optional[str], Op
 
         result_payload = response.json()
         last_payload = result_payload
+        usage = find_token_usage(result_payload)
         video_url = find_video_url(result_payload)
         if video_url:
+            append_external_api_event({
+                "provider": "seedance_api",
+                "operation": "task_poll",
+                "billable": False,
+                "outcome": "live",
+                "model": SEEDANCE_MODEL,
+                "task_id": task_id,
+                "http_status": response.status_code,
+                **usage,
+            })
             return video_url, result_payload, ""
 
         last_status = find_task_status(result_payload) or last_status
+        append_external_api_event({
+            "provider": "seedance_api",
+            "operation": "task_poll",
+            "billable": False,
+            "outcome": "pending",
+            "model": SEEDANCE_MODEL,
+            "task_id": task_id,
+            "http_status": response.status_code,
+            "reason": f"task_status={last_status}",
+            **usage,
+        })
         if time.monotonic() >= deadline:
             break
         time.sleep(SEEDANCE_POLL_INTERVAL_SECONDS)
@@ -816,6 +1049,140 @@ async def recent_audit_events(limit: int = 20):
     }
 
 
+ADMIN_DASHBOARD_HTML = """<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mighty Skill-Bridge API Guard</title>
+    <style>
+        :root { color-scheme: dark; --bg:#070807; --panel:#111312; --line:#2a2f2b; --text:#f3f5ef; --muted:#a6ada4; --ok:#9df56d; --warn:#ffd166; --bad:#ff7d7d; --blue:#8bdcff; }
+        * { box-sizing: border-box; }
+        body { margin:0; font-family: "Segoe UI", "Noto Sans JP", sans-serif; background: var(--bg); color: var(--text); }
+        header { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 24px; border-bottom:1px solid var(--line); background:#050605; position:sticky; top:0; }
+        main { max-width:1180px; margin:0 auto; padding:24px; display:grid; gap:18px; }
+        h1 { margin:0; font-size:22px; }
+        h2 { margin:0 0 12px; font-size:16px; color:var(--muted); font-weight:700; }
+        .grid { display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:14px; }
+        .card { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; }
+        .metric { font-size:32px; font-weight:800; line-height:1; }
+        .label { color:var(--muted); font-size:13px; margin-top:8px; }
+        .state { display:inline-flex; align-items:center; padding:5px 10px; border:1px solid var(--line); border-radius:999px; font-size:13px; color:var(--muted); }
+        .closed { color:var(--ok); border-color:rgba(157,245,109,.35); }
+        .open { color:var(--bad); border-color:rgba(255,125,125,.35); }
+        table { width:100%; border-collapse:collapse; font-size:13px; }
+        th, td { text-align:left; padding:9px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+        th { color:var(--muted); font-weight:600; }
+        code { color:var(--blue); }
+        a { color:var(--blue); text-decoration:none; }
+        .muted { color:var(--muted); }
+        .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+        button, .button { border:1px solid var(--line); border-radius:7px; padding:9px 12px; background:#191c1a; color:var(--text); cursor:pointer; font-weight:700; }
+        button:hover, .button:hover { border-color:var(--blue); }
+        @media (max-width: 860px) { .grid { grid-template-columns:1fr; } header { align-items:flex-start; flex-direction:column; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>External API Guard</h1>
+            <div class="muted">Mighty Skill-Bridge local billing safety dashboard</div>
+        </div>
+        <div class="toolbar">
+            <a class="button" href="/">Demo</a>
+            <a class="button" href="/api/admin/usage/export">Export JSONL</a>
+            <button onclick="loadUsage()">Refresh</button>
+        </div>
+    </header>
+    <main>
+        <section class="grid" id="cards"></section>
+        <section class="card">
+            <h2>Circuit Breakers</h2>
+            <div id="breakers"></div>
+        </section>
+        <section class="card">
+            <h2>Saved Seedance Video</h2>
+            <div id="saved-video" class="muted"></div>
+        </section>
+        <section class="card">
+            <h2>Recent Events</h2>
+            <div class="muted" style="margin-bottom:10px;">Prompts and API keys are not stored. Signed video URLs are not stored in this ledger.</div>
+            <table>
+                <thead><tr><th>Time</th><th>Provider</th><th>Operation</th><th>Outcome</th><th>Billable</th><th>Tokens</th><th>Task</th><th>Reason</th></tr></thead>
+                <tbody id="events"></tbody>
+            </table>
+        </section>
+        <section class="card muted" id="note"></section>
+    </main>
+    <script>
+        const fmt = (value) => value === null || value === undefined ? "-" : value;
+        function stateClass(value) { return value === "closed" ? "closed" : "open"; }
+        async function loadUsage() {
+            const response = await fetch("/api/admin/usage");
+            const data = await response.json();
+            const seedance = data.providers.seedance_api;
+            const gemini = data.providers.gemini_api;
+            document.getElementById("cards").innerHTML = `
+                <div class="card"><div class="metric">${seedance.today_billable_calls}</div><div class="label">Seedance billable calls today</div></div>
+                <div class="card"><div class="metric">${gemini.today_billable_calls}</div><div class="label">Gemini billable calls today</div></div>
+                <div class="card"><div class="metric">${seedance.today_reported_total_tokens + gemini.today_reported_total_tokens}</div><div class="label">Provider-reported tokens today</div></div>
+            `;
+            const breakerRows = Object.entries(data.circuit_breakers).map(([name, breaker]) => `
+                <tr>
+                    <td><code>${name}</code></td>
+                    <td><span class="state ${stateClass(breaker.state || (breaker.enabled ? "closed" : "open"))}">${breaker.state || (breaker.enabled ? "enabled" : "disabled")}</span></td>
+                    <td>${fmt(breaker.today_billable_calls)} / ${fmt(breaker.daily_call_limit)}</td>
+                    <td>${fmt(breaker.today_reported_total_tokens)} / ${fmt(breaker.daily_reported_token_limit)}</td>
+                </tr>
+            `).join("");
+            document.getElementById("breakers").innerHTML = `<table><thead><tr><th>Name</th><th>State</th><th>Calls</th><th>Reported tokens</th></tr></thead><tbody>${breakerRows}</tbody></table>`;
+            const saved = data.seedance_saved_default || {};
+            document.getElementById("saved-video").innerHTML = `
+                <div>Provider: <code>${fmt(saved.provider)}</code></div>
+                <div>Model: <code>${fmt(saved.model)}</code></div>
+                <div>Task: <code>${fmt(saved.task_id)}</code></div>
+                <div>Video: <a href="/${fmt(saved.video)}" download>${fmt(saved.video)}</a></div>
+                <div>Backup: <code>${fmt(saved.backup_video)}</code></div>
+            `;
+            document.getElementById("events").innerHTML = data.recent_events.map((event) => `
+                <tr>
+                    <td>${fmt(event.timestamp)}</td>
+                    <td>${fmt(event.provider)}</td>
+                    <td>${fmt(event.operation)}</td>
+                    <td>${fmt(event.outcome)}</td>
+                    <td>${event.billable ? "yes" : "no"}</td>
+                    <td>${fmt(event.reported_total_tokens)}</td>
+                    <td><code>${fmt(event.task_id)}</code></td>
+                    <td>${fmt(event.reason)}</td>
+                </tr>
+            `).join("") || `<tr><td colspan="8" class="muted">No local usage events yet.</td></tr>`;
+            document.getElementById("note").textContent = data.usage_note;
+        }
+        loadUsage();
+    </script>
+</body>
+</html>"""
+
+
+@app.get("/admin", response_class=HTMLResponse)
+async def admin_dashboard():
+    """Local-only external API usage and circuit-breaker dashboard."""
+    return HTMLResponse(content=ADMIN_DASHBOARD_HTML)
+
+
+@app.get("/api/admin/usage")
+async def admin_usage():
+    return build_external_api_usage_summary()
+
+
+@app.get("/api/admin/usage/export", response_class=PlainTextResponse)
+async def admin_usage_export():
+    if not os.path.exists(EXTERNAL_API_USAGE_LOG_FILE):
+        return PlainTextResponse("", media_type="application/jsonl")
+    with open(EXTERNAL_API_USAGE_LOG_FILE, "r", encoding="utf-8") as f:
+        return PlainTextResponse(f.read(), media_type="application/jsonl")
+
+
 def read_knowledge_flow_manifest() -> Optional[dict]:
     if not os.path.exists(KNOWLEDGE_FLOW_MANIFEST):
         return None
@@ -888,10 +1255,37 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
         reason = "Seedance API billing calls are disabled by default. Set SEEDANCE_API_ENABLED=1 before starting FastAPI to generate a new video."
         if not SEEDANCE_CONFIGURED:
             reason = "SEEDANCE_API_KEY and SEEDANCE_API_URL are not configured."
+        append_external_api_event({
+            "provider": "seedance_api",
+            "operation": "generation_create",
+            "billable": False,
+            "outcome": "blocked",
+            "model": SEEDANCE_MODEL,
+            "reason": reason,
+            "prompt_digest": stable_digest(prompt),
+        })
         return seedance_fallback_response(
             reason,
             prompt,
         )
+
+    allowed, circuit_reason, _stats = check_external_api_circuit(
+        "seedance_api",
+        "generation_create",
+        SEEDANCE_DAILY_GENERATION_LIMIT,
+        SEEDANCE_DAILY_REPORTED_TOKEN_LIMIT,
+    )
+    if not allowed:
+        append_external_api_event({
+            "provider": "seedance_api",
+            "operation": "generation_create",
+            "billable": False,
+            "outcome": "blocked",
+            "model": SEEDANCE_MODEL,
+            "reason": circuit_reason,
+            "prompt_digest": stable_digest(prompt),
+        })
+        return seedance_fallback_response(circuit_reason, prompt)
 
     headers = {
         "Authorization": f"Bearer {SEEDANCE_API_KEY}",
@@ -907,15 +1301,37 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
             timeout=45,
         )
         if not create_response.ok:
+            append_external_api_event({
+                "provider": "seedance_api",
+                "operation": "generation_create",
+                "billable": True,
+                "outcome": "http_error",
+                "model": SEEDANCE_MODEL,
+                "http_status": create_response.status_code,
+                "reason": summarize_seedance_http_error(create_response),
+                "prompt_digest": stable_digest(prompt),
+            })
             return seedance_fallback_response(
                 f"Seedance API request failed: {summarize_seedance_http_error(create_response)}",
                 prompt,
             )
         create_payload = create_response.json()
+        usage = find_token_usage(create_payload)
         video_url = find_video_url(create_payload)
         task_id = find_task_id(create_payload)
 
         if video_url:
+            append_external_api_event({
+                "provider": "seedance_api",
+                "operation": "generation_create",
+                "billable": True,
+                "outcome": "live",
+                "model": SEEDANCE_MODEL,
+                "task_id": task_id,
+                "http_status": create_response.status_code,
+                "prompt_digest": stable_digest(prompt),
+                **usage,
+            })
             return {
                 "status": "success",
                 "mode": "live",
@@ -927,6 +1343,17 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
             }
 
         if task_id:
+            append_external_api_event({
+                "provider": "seedance_api",
+                "operation": "generation_create",
+                "billable": True,
+                "outcome": "task_created",
+                "model": SEEDANCE_MODEL,
+                "task_id": task_id,
+                "http_status": create_response.status_code,
+                "prompt_digest": stable_digest(prompt),
+                **usage,
+            })
             video_url, result_payload, poll_reason = poll_seedance_result(task_id, headers)
             if video_url:
                 return {
@@ -951,6 +1378,15 @@ async def generate_seedance_video(req: SeedanceVideoRequest):
             task_id,
         )
     except requests.RequestException as exc:
+        append_external_api_event({
+            "provider": "seedance_api",
+            "operation": "generation_create",
+            "billable": False,
+            "outcome": "request_exception",
+            "model": SEEDANCE_MODEL,
+            "reason": str(exc),
+            "prompt_digest": stable_digest(prompt),
+        })
         return seedance_fallback_response(f"Seedance API request failed: {exc}", prompt)
     except ValueError as exc:
         return seedance_fallback_response(f"Seedance API returned non-JSON response: {exc}", prompt)
@@ -963,6 +1399,15 @@ async def get_seedance_video_task(task_id: str):
         reason = "Seedance API billing calls are disabled by default. Set SEEDANCE_API_ENABLED=1 before starting FastAPI to poll a remote task."
         if not SEEDANCE_CONFIGURED:
             reason = "SEEDANCE_API_KEY and SEEDANCE_API_URL are not configured."
+        append_external_api_event({
+            "provider": "seedance_api",
+            "operation": "task_poll",
+            "billable": False,
+            "outcome": "blocked",
+            "model": SEEDANCE_MODEL,
+            "task_id": task_id,
+            "reason": reason,
+        })
         return seedance_fallback_response(
             reason,
             task_id,
@@ -984,15 +1429,36 @@ async def get_seedance_video_task(task_id: str):
     try:
         result_response = requests.get(result_url, headers=headers, timeout=45)
         if not result_response.ok:
+            append_external_api_event({
+                "provider": "seedance_api",
+                "operation": "task_poll",
+                "billable": False,
+                "outcome": "http_error",
+                "model": SEEDANCE_MODEL,
+                "task_id": task_id,
+                "http_status": result_response.status_code,
+                "reason": summarize_seedance_http_error(result_response),
+            })
             return seedance_fallback_response(
                 f"Seedance result request failed: {summarize_seedance_http_error(result_response)}",
                 task_id,
                 task_id,
             )
         result_payload = result_response.json()
+        usage = find_token_usage(result_payload)
         video_url = find_video_url(result_payload)
         task_status = find_task_status(result_payload)
         if video_url:
+            append_external_api_event({
+                "provider": "seedance_api",
+                "operation": "task_poll",
+                "billable": False,
+                "outcome": "live",
+                "model": SEEDANCE_MODEL,
+                "task_id": task_id,
+                "http_status": result_response.status_code,
+                **usage,
+            })
             return {
                 "status": "success",
                 "mode": "live",
@@ -1002,6 +1468,17 @@ async def get_seedance_video_task(task_id: str):
                 "task_id": task_id,
                 "task_status": task_status,
             }
+        append_external_api_event({
+            "provider": "seedance_api",
+            "operation": "task_poll",
+            "billable": False,
+            "outcome": "pending",
+            "model": SEEDANCE_MODEL,
+            "task_id": task_id,
+            "http_status": result_response.status_code,
+            "reason": f"task_status={task_status or 'unknown'}",
+            **usage,
+        })
         return seedance_pending_response(
             "Seedance task is still running.",
             task_id,
@@ -1044,6 +1521,23 @@ async def parse_document(
     # --- Live Gemini Parsing Logic ---
     if GEMINI_READY:
         try:
+            allowed, circuit_reason, _stats = check_external_api_circuit(
+                "gemini_api",
+                "parse",
+                GEMINI_DAILY_CALL_LIMIT,
+                GEMINI_DAILY_REPORTED_TOKEN_LIMIT,
+            )
+            if not allowed:
+                append_external_api_event({
+                    "provider": "gemini_api",
+                    "operation": "parse",
+                    "billable": False,
+                    "outcome": "blocked",
+                    "model": "gemini-1.5-flash",
+                    "reason": circuit_reason,
+                    "prompt_digest": stable_digest(source_text),
+                })
+                raise RuntimeError(circuit_reason)
             local_profile = build_profile(source_text, doc_type)
             model = genai.GenerativeModel("gemini-1.5-flash")
             
@@ -1068,6 +1562,15 @@ async def parse_document(
                 response = model.generate_content(f"{prompt}\n\nDocument Content:\n{text}")
                 
             parsed_text = response.text.strip()
+            append_external_api_event({
+                "provider": "gemini_api",
+                "operation": "parse",
+                "billable": True,
+                "outcome": "success",
+                "model": "gemini-1.5-flash",
+                "prompt_digest": stable_digest(source_text),
+                **find_token_usage(getattr(response, "usage_metadata", None)),
+            })
             print(f"[+] Gemini Parser Sync completed successfully.")
             audit_event = write_audit_event(
                 "parse",
@@ -1083,6 +1586,16 @@ async def parse_document(
             
         except Exception as e:
             fallback_reason = str(e)
+            if "daily" not in fallback_reason.lower():
+                append_external_api_event({
+                    "provider": "gemini_api",
+                    "operation": "parse",
+                    "billable": False,
+                    "outcome": "exception",
+                    "model": "gemini-1.5-flash",
+                    "reason": fallback_reason,
+                    "prompt_digest": stable_digest(source_text),
+                })
             print(f"[-] Gemini live parser failed: {e}. Falling back to deterministic parser.")
     elif AI_FORCE_MOCK:
         fallback_reason = "AI_FORCE_MOCK is enabled to avoid Gemini quota usage."
@@ -1124,6 +1637,23 @@ async def evaluate_matching(req: EvaluationRequest):
     # --- Live Gemini Evaluation Logic ---
     if GEMINI_READY:
         try:
+            allowed, circuit_reason, _stats = check_external_api_circuit(
+                "gemini_api",
+                "match",
+                GEMINI_DAILY_CALL_LIMIT,
+                GEMINI_DAILY_REPORTED_TOKEN_LIMIT,
+            )
+            if not allowed:
+                append_external_api_event({
+                    "provider": "gemini_api",
+                    "operation": "match",
+                    "billable": False,
+                    "outcome": "blocked",
+                    "model": "gemini-1.5-flash",
+                    "reason": circuit_reason,
+                    "prompt_digest": stable_digest(req.engineer_content + req.job_content),
+                })
+                raise RuntimeError(circuit_reason)
             fallback_context = build_fallback_match(
                 req.engineer_content,
                 req.job_content,
@@ -1182,6 +1712,15 @@ async def evaluate_matching(req: EvaluationRequest):
             match_data = json.loads(res_text.strip())
             match_data["ai_mode"] = "gemini_live"
             match_data.setdefault("structured", fallback_context.get("structured", {}))
+            append_external_api_event({
+                "provider": "gemini_api",
+                "operation": "match",
+                "billable": True,
+                "outcome": "success",
+                "model": "gemini-1.5-flash",
+                "prompt_digest": stable_digest(req.engineer_content + req.job_content),
+                **find_token_usage(getattr(response, "usage_metadata", None)),
+            })
             audit_event = write_audit_event("match", match_audit_payload(match_data))
             match_data["audit_event_id"] = audit_event["event_id"]
             print("[+] Gemini Evaluator completed successfully.")
@@ -1189,6 +1728,16 @@ async def evaluate_matching(req: EvaluationRequest):
             
         except Exception as e:
             fallback_reason = str(e)
+            if "daily" not in fallback_reason.lower():
+                append_external_api_event({
+                    "provider": "gemini_api",
+                    "operation": "match",
+                    "billable": False,
+                    "outcome": "exception",
+                    "model": "gemini-1.5-flash",
+                    "reason": fallback_reason,
+                    "prompt_digest": stable_digest(req.engineer_content + req.job_content),
+                })
             print(f"[-] Gemini live evaluation failed: {e}. Falling back to deterministic evaluator.")
     elif AI_FORCE_MOCK:
         fallback_reason = "AI_FORCE_MOCK is enabled to avoid Gemini quota usage."
