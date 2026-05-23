@@ -325,6 +325,56 @@ def add_image_panel(slide, image_path, x, y, w, h, *, label="LIVE DEMO", caption
                  align=PP_ALIGN.LEFT)
 
 
+def render_gallery_slide(prs, spec):
+    """Demo Gallery: 2x3 grid showing 6 screen captures with labels."""
+    slide = base_slide(prs)
+    add_header(slide, spec["num"], spec["title"], spec.get("subtitle"))
+    # Optional intro line below header
+    if spec.get("intro"):
+        add_text(slide, spec["intro"],
+                 Inches(0.5), Inches(1.4), Inches(12.3), Inches(0.3),
+                 font_size=12, color=C["text_secondary"], font_name=FONT_BODY,
+                 align=PP_ALIGN.LEFT)
+    # 2 rows x 3 cols grid (6 cells)
+    # Tile size: 3.95" wide x 2.20" tall, gap 0.10"
+    tile_w = Inches(3.95)
+    tile_h = Inches(2.20)
+    gap_x = Inches(0.10)
+    gap_y = Inches(0.18)
+    start_x = Inches(0.5)
+    start_y = Inches(1.75)
+    label_h = Inches(0.30)
+    img_h = tile_h - label_h - Inches(0.05)
+    captures = spec["captures"]
+    for idx, cap in enumerate(captures[:6]):
+        row = idx // 3
+        col = idx % 3
+        x = start_x + col * (tile_w + gap_x)
+        y = start_y + row * (tile_h + gap_y)
+        # Outer panel with neon stripe (top this time for tile aesthetic)
+        add_rect(slide, x, y, tile_w, tile_h, C["panel"])
+        # Top neon stripe
+        accent = C.get(cap.get("accent", "neon_blue"), C["neon_blue"])
+        add_rect(slide, x, y, tile_w, Inches(0.04), accent)
+        # Image
+        img_path = cap["path"]
+        if Path(img_path).exists():
+            slide.shapes.add_picture(str(img_path),
+                                     x + Inches(0.08), y + Inches(0.10),
+                                     width=tile_w - Inches(0.16),
+                                     height=img_h - Inches(0.05))
+        # Label (number + title)
+        label_y = y + tile_h - label_h - Inches(0.02)
+        add_text(slide, f"0{idx + 1}  {cap['label']}",
+                 x + Inches(0.12), label_y, tile_w - Inches(0.24), label_h,
+                 font_size=10, bold=True, color=C["text_primary"],
+                 font_name=FONT_MONO, align=PP_ALIGN.LEFT,
+                 anchor=MSO_ANCHOR.MIDDLE)
+    # CTA box at bottom
+    add_cta_box(slide, spec["question"])
+    add_footer(slide)
+
+
 def render_slide(prs, spec):
     slide = base_slide(prs)
     add_header(slide, spec["num"], spec["title"], spec.get("subtitle"))
@@ -479,6 +529,25 @@ def build_manifest(generated_at_jst):
     }
 
 
+SCREENSHOT_DIR = EXPORT_DIR / "screenshots"
+
+GALLERY_SPEC = {
+    "num": "2.5",
+    "title": "デモ画面ギャラリー — 全 6 画面ツアー",
+    "subtitle": "Public hero / Report / Video / Models / Knowledge Flow / Admin",
+    "intro": "公開デモの 5 セクション + ローカル管理者ダッシュボードを 1 枚に集約 (1920×1080 でキャプチャ済)。",
+    "captures": [
+        {"label": "Public Hero (Step 1)",      "path": SCREENSHOT_DIR / "01_public_hero.png",            "accent": "neon_green"},
+        {"label": "Report Section (Step 2)",   "path": SCREENSHOT_DIR / "02_public_report.png",          "accent": "neon_blue"},
+        {"label": "Video Demo (Step 3)",       "path": SCREENSHOT_DIR / "03_public_video.png",           "accent": "neon_green"},
+        {"label": "Mighty Models Band",        "path": SCREENSHOT_DIR / "04_public_models.png",          "accent": "neon_blue"},
+        {"label": "Knowledge Flow Artifacts",  "path": SCREENSHOT_DIR / "05_public_knowledge_flow.png",  "accent": "neon_green"},
+        {"label": "Admin Dashboard (/admin)",  "path": SCREENSHOT_DIR / "06_local_admin_dashboard.png",  "accent": "neon_red"},
+    ],
+    "question": "公開する画面と、社内のみで使う画面 (/admin) の境界をどこに置きますか?",
+}
+
+
 def main():
     generated_at = jst_now()
     prs = Presentation()
@@ -488,9 +557,11 @@ def main():
     # Title slide
     render_title_slide(prs)
 
-    # Content slides
+    # Content slides: insert gallery after slide 2 (現在の到達点と公開デモ)
     for spec in SLIDES:
         render_slide(prs, spec)
+        if spec.get("num") == 2:
+            render_gallery_slide(prs, GALLERY_SPEC)
 
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
     prs.save(str(PPTX_FILE))
