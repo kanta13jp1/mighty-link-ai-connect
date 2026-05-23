@@ -729,6 +729,432 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ==========================================================================
+           多次元フィット分析レポートセクション用スタイル (プレミアム＆動的)
+           ========================================================================== */
+        .report-section {
+            width: min(1512px, 100%);
+            margin: 28px auto 0;
+            padding: 0 32px;
+            display: none; /* 初期状態は非表示、分析開始時にフェードイン */
+        }
+
+        .report-section.active {
+            display: block;
+            animation: reportFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes reportFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .report-container {
+            display: grid;
+            grid-template-columns: minmax(360px, 0.45fr) minmax(0, 1fr);
+            gap: 28px;
+            align-items: start;
+        }
+
+        /* 左カラム */
+        .report-left {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .gauge-card, .radar-card {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--panel);
+            padding: 24px;
+            box-shadow: 0 20px 50px var(--shadow);
+            backdrop-filter: blur(18px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ドーナツゲージ */
+        .gauge-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+        }
+
+        .gauge-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .gauge-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.05);
+            stroke-width: 8;
+        }
+
+        .gauge-fill {
+            fill: none;
+            stroke: url(#gauge-grad);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 314; /* 2 * PI * r (r=50 -> 314) */
+            stroke-dashoffset: 314; /* 100% offset */
+            transition: stroke-dashoffset 0.1s linear;
+        }
+
+        .gauge-value {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            margin-top: 55px;
+        }
+
+        .gauge-value strong {
+            font-size: 54px;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--text);
+            text-shadow: 0 0 15px rgba(139, 220, 255, 0.3);
+        }
+
+        .gauge-value span {
+            font-size: 18px;
+            color: var(--muted);
+            margin-left: 4px;
+            font-weight: 700;
+        }
+
+        .badge-capsule {
+            margin-top: 20px;
+            padding: 8px 18px;
+            border: 1px solid rgba(186, 255, 102, 0.3);
+            border-radius: 30px;
+            background: rgba(186, 255, 102, 0.06);
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(186, 255, 102, 0.2);
+            box-shadow: 0 0 15px rgba(186, 255, 102, 0.08);
+        }
+
+        .sync-status {
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: 11px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* レーダーチャート */
+        .radar-card {
+            align-items: stretch;
+        }
+
+        .chart-label {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 14px;
+            letter-spacing: 0.05em;
+        }
+
+        .chart-wrapper {
+            height: 240px;
+            position: relative;
+        }
+
+        .radar-footer {
+            margin-top: 14px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* 右カラム */
+        .report-right {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--panel-strong);
+            padding: 32px;
+            box-shadow: 0 20px 50px var(--shadow);
+            backdrop-filter: blur(24px);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .report-right h2 {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text);
+            border-left: 4px solid var(--blue);
+            padding-left: 12px;
+            line-height: 1.2;
+        }
+
+        .report-desc {
+            color: rgba(247, 247, 242, 0.85);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* 4軸プログレスバー */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .metric-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .metric-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .metric-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .metric-pct {
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .progress-track {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+
+        .bar-skill {
+            background: linear-gradient(90deg, #8bdcff, #38bdf8);
+            box-shadow: 0 0 10px rgba(139, 220, 255, 0.4);
+        }
+        .bar-culture {
+            background: linear-gradient(90deg, #baff66, #84cc16);
+            box-shadow: 0 0 10px rgba(186, 255, 102, 0.4);
+        }
+        .bar-growth {
+            background: linear-gradient(90deg, #ffd166, #eab308);
+            box-shadow: 0 0 10px rgba(255, 209, 102, 0.4);
+        }
+        .bar-performing {
+            background: linear-gradient(90deg, #ff6cab, #ec4899);
+            box-shadow: 0 0 10px rgba(255, 108, 171, 0.4);
+        }
+
+        .bar-skill-pct { color: var(--blue); }
+        .bar-culture-pct { color: var(--green); }
+        .bar-growth-pct { color: var(--yellow); }
+        .bar-performing-pct { color: var(--rose); }
+
+        /* タブエリア */
+        .tabs-area {
+            margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border-top: 1px solid var(--line);
+            padding-top: 24px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+        }
+
+        .tab-btn.active {
+            border-color: var(--blue);
+            background: rgba(139, 220, 255, 0.08);
+            color: var(--blue);
+            text-shadow: 0 0 10px rgba(139, 220, 255, 0.2);
+        }
+
+        .tab-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            animation: reportTabFadeIn 0.4s ease forwards;
+        }
+
+        @keyframes reportTabFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .qa-item {
+            border-left: 3px solid var(--yellow);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 0 8px 8px 0;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            border-right: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .qa-item:nth-child(2) {
+            border-left-color: var(--blue);
+        }
+
+        .qa-q {
+            color: var(--yellow);
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.5;
+        }
+
+        .qa-item:nth-child(2) .qa-q {
+            color: var(--blue);
+        }
+
+        .qa-a {
+            color: rgba(247, 247, 242, 0.8);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .qa-a strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .qa-tip {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            background: rgba(186, 255, 102, 0.06);
+            border: 1px solid rgba(186, 255, 102, 0.15);
+            color: var(--green);
+            font-size: 12px;
+        }
+
+        /* ロードマップタイムライン */
+        .roadmap-timeline {
+            position: relative;
+            padding-left: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .roadmap-timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background: var(--line);
+        }
+
+        .roadmap-step {
+            position: relative;
+        }
+
+        .step-badge {
+            position: absolute;
+            left: -28px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 3px solid var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: transparent;
+            font-size: 0;
+            box-shadow: 0 0 10px rgba(139, 220, 255, 0.5);
+        }
+
+        .roadmap-step:nth-child(2) .step-badge {
+            border-color: var(--green);
+            box-shadow: 0 0 10px rgba(186, 255, 102, 0.5);
+        }
+
+        .roadmap-step:nth-child(3) .step-badge {
+            border-color: var(--yellow);
+            box-shadow: 0 0 10px rgba(255, 209, 102, 0.5);
+        }
+
+        .step-detail {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px 18px;
+        }
+
+        .step-detail h4 {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .step-detail p {
+            color: rgba(247, 247, 242, 0.7);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 900px) {
+            .report-container {
+                grid-template-columns: 1fr;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -810,6 +1236,153 @@
                     <p id="match-summary" class="analysis-copy">候補者と案件の一致度を4軸で可視化し、動画生成用のプロンプトへ接続します。</p>
                 </div>
             </aside>
+        </section>
+
+        <!-- ==========================================================================
+             多次元フィット分析レポートセクション (完全復活＆プレミアム化)
+             ========================================================================== -->
+        <section id="report-section" class="report-section">
+            <div class="report-container">
+                <!-- 左カラム: 円形ゲージ & レーダーチャート -->
+                <div class="report-left">
+                    <!-- ドーナツゲージカード -->
+                    <div class="gauge-card">
+                        <div class="gauge-container">
+                            <svg viewBox="0 0 120 120" class="gauge-svg">
+                                <defs>
+                                    <linearGradient id="gauge-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#8bdcff" />
+                                        <stop offset="100%" stop-color="#baff66" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="60" cy="60" r="50" class="gauge-bg" />
+                                <circle cx="60" cy="60" r="50" class="gauge-fill" id="gauge-circle" />
+                            </svg>
+                            <div class="gauge-value">
+                                <strong id="gauge-score">0</strong>
+                                <span>%</span>
+                            </div>
+                        </div>
+                        <div class="badge-capsule">
+                            極めて高いマッチ度 (Highly Compatible)
+                        </div>
+                        <div class="sync-status">
+                            Google Sheets の「マッチングログ」へ分析結果を自動同期しました。
+                        </div>
+                    </div>
+
+                    <!-- レーダーチャートカード -->
+                    <div class="radar-card">
+                        <div class="chart-label">Fit Radar</div>
+                        <div class="chart-wrapper">
+                            <canvas id="reportRadarChart"></canvas>
+                        </div>
+                        <div class="radar-footer">
+                            Growth-Fit (キャリア)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右カラム: レポートテキスト & プログレスバー & インタラクティブタブ -->
+                <div class="report-right">
+                    <h2>多次元フィット分析レポート</h2>
+                    <p id="report-desc" class="report-desc">
+                        本シミュレーターの診断結果、佐藤賢太様のスキル・経歴は、対象案件（LLM自律エージェント開発）に対して「89%」という極めて高い適合性（Highly Compatible）を示しました。特に「Skill-Fit（95%）」においては、Python、TypeScriptに加え、FastAPIやReactのフルスタックスキル、さらにgspread等を用いたGoogle API連携開発実績が、案件で募集されている技術スタック（FastAPI, React, Sheets/Docs Live 連携）と100%合致しています。また「Growth-Fit（92%）」でも、最先端の生成AIを活用してテクノロジーの架け橋となるアーキテクト像を目指す佐藤様の志向性が、募集背景にあるGemini Spark連携開発の方向性と完全に同期しています。即戦力として、初週からアーキテクチャ設計およびAPI開発で強烈なリーダーシップを発揮できると確信します。
+                    </p>
+
+                    <!-- 4軸プログレスバー -->
+                    <div class="metrics-grid">
+                        <div class="metric-row">
+                            <div class="metric-info">
+                                <span class="metric-name">Skill-Fit (技術適合性)</span>
+                                <span class="metric-pct bar-skill-pct" id="bar-val-skill">0%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-bar bar-skill" id="bar-fill-skill"></div>
+                            </div>
+                        </div>
+                        <div class="metric-row">
+                            <div class="metric-info">
+                                <span class="metric-name">Culture-Fit (文化適合性)</span>
+                                <span class="metric-pct bar-culture-pct" id="bar-val-culture">0%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-bar bar-culture" id="bar-fill-culture"></div>
+                            </div>
+                        </div>
+                        <div class="metric-row">
+                            <div class="metric-info">
+                                <span class="metric-name">Growth-Fit (キャリア親和性)</span>
+                                <span class="metric-pct bar-growth-pct" id="bar-val-growth">0%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-bar bar-growth" id="bar-fill-growth"></div>
+                            </div>
+                        </div>
+                        <div class="metric-row">
+                            <div class="metric-info">
+                                <span class="metric-name">Performing-Fit (即戦力性)</span>
+                                <span class="metric-pct bar-performing-pct" id="bar-val-performing">0%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-bar bar-performing" id="bar-fill-performing"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- タブエリア -->
+                    <div class="tabs-area">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" onclick="switchReportTab('qa')">面談想定質問 (Q&A)</button>
+                            <button class="tab-btn" onclick="switchReportTab('roadmap')">Docs Live 連携ロードマップ</button>
+                        </div>
+
+                        <!-- 面談想定質問コンテンツ -->
+                        <div class="tab-content" id="tab-qa">
+                            <div class="qa-item">
+                                <div class="qa-q">Q1. Google Sheets API や Drive API を活用した、OAuth 2.0 認証を含む連携開発の実績について具体的に教えてください。</div>
+                                <div class="qa-a">
+                                    <strong>【回答例の指針】</strong> Python (gspread/google-auth) を用いて、サービスアカウントまたはデスクトップ OAuth 認証を駆使し、スプレッドシートの自動生成、セル書式設定、429クォータ回避のための batch_update API を実装した経験を具体的に説明します。Windows環境下でのエンコーディングエラー回避など、実践的なトラブルシューティング能力もアピールしてください。
+                                    <div class="qa-tip">💡 アピール強化のコツ: 実際に作成した Python の自動同期スクリプトのモジュール構成や、APIクォータ制限をバッチ処理で劇的に最適化した実績を提示すると非常に好印象です。</div>
+                                </div>
+                            </div>
+                            <div class="qa-item">
+                                <div class="qa-q">Q2. 生成AI (LLM) と外部システム (RAGやエージェント) を組み合わせる際、どのような設計上の工夫を行ってきましたか？</div>
+                                <div class="qa-a">
+                                    <strong>【回答例の指針】</strong> 単なるAPIコールに留まらず、ローカルデータソースとの整合性を保つためのハイブリッド設計 (IndexedDBやSQLite3) や、プロンプトのコンテキストウィンドウを効率化するための構造化パーサー、そしてGeminiのマルチモーダル機能を利用したPDFのパース精度向上に関する工夫を説明します。
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ロードマップコンテンツ -->
+                        <div class="tab-content" id="tab-roadmap" style="display: none;">
+                            <div class="roadmap-timeline">
+                                <div class="roadmap-step">
+                                    <div class="step-badge">Phase 1</div>
+                                    <div class="step-detail">
+                                        <h4>OAuth & 認証基盤の確立 (Day 1-3)</h4>
+                                        <p>k-umezawa@ml-mightylink.com 組織アカウントを用いたセキュアなOAuth 2.0フローをデプロイし、自動同期のテスト実行とトークン保持機構を確立します。</p>
+                                    </div>
+                                </div>
+                                <div class="roadmap-step">
+                                    <div class="step-badge">Phase 2</div>
+                                    <div class="step-detail">
+                                        <h4>5タブ同期＆書式自動化 (Day 4-7)</h4>
+                                        <p>WBS, Timeline, Summary, 課題管理表, QA表の5タブを対象に、色付け、罫線、フォントなどを整えた状態での完全自動同期とクォータ制御バッチを実装します。</p>
+                                    </div>
+                                </div>
+                                <div class="roadmap-step">
+                                    <div class="step-badge">Phase 3</div>
+                                    <div class="step-detail">
+                                        <h4>多次元レポーティング & 本番稼働 (Day 8-14)</h4>
+                                        <p>シミュレーション結果のスプレッドシート・カレンダー側への反映を行い、CEOプレゼン向け NotebookLM 自動連携と公開デモの稼働確認を完了します。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section id="models" class="model-band" aria-label="Mighty models">
@@ -928,6 +1501,7 @@
         ];
 
         let radarChart = null;
+        let reportRadarChart = null;
 
         function toggleNav() {
             const links = document.querySelector(".nav-links");
@@ -1064,15 +1638,37 @@
             updateMetrics({skill: 0, culture: 0, growth: 0, performing: 0});
             renderRadar({skill: 50, culture: 50, growth: 50, performing: 50});
 
+            const reportSection = document.getElementById("report-section");
+            if (reportSection) {
+                // reset gauge and progress fills
+                const circle = document.getElementById("gauge-circle");
+                if (circle) circle.style.strokeDashoffset = 314;
+                document.getElementById("gauge-score").textContent = "0";
+
+                ["skill", "culture", "growth", "performing"].forEach(key => {
+                    const bar = document.getElementById(`bar-fill-${key}`);
+                    const val = document.getElementById(`bar-val-${key}`);
+                    if (bar) bar.style.width = "0%";
+                    if (val) val.textContent = "0%";
+                });
+
+                reportSection.classList.add("active");
+            }
+
             const scores = {
                 skill: 95,
                 culture: 88,
                 growth: 92,
-                performing: 84
+                performing: 82
             };
             setTimeout(() => {
                 updateMetricsAnimated(scores);
                 renderRadar(scores);
+
+                // Animate detailed report metrics (gauge, bars)
+                animateGaugeAndBars(scores, 1200);
+                renderReportRadar(scores);
+
                 document.getElementById("match-summary").textContent =
                     "FastAPI、React、Google Workspace API、LLM連携の重なりが強く、短期プロトタイプの実行適性が高いマッチです。追加確認はOAuth運用、データ権限、面談時の実装深掘りです。";
                 buildPromptFromInputs();
@@ -1094,6 +1690,132 @@
             animateValue("metric-culture", 0, scores.culture, 1200);
             animateValue("metric-growth", 0, scores.growth, 1200);
             animateValue("metric-performing", 0, scores.performing, 1200);
+        }
+
+        function switchReportTab(tabName) {
+            const tabQa = document.getElementById("tab-qa");
+            const tabRoadmap = document.getElementById("tab-roadmap");
+            const btns = document.querySelectorAll(".tab-buttons .tab-btn");
+            if (!tabQa || !tabRoadmap) return;
+
+            if (tabName === 'qa') {
+                tabQa.style.display = "flex";
+                tabRoadmap.style.display = "none";
+                btns[0].classList.add("active");
+                btns[1].classList.remove("active");
+            } else {
+                tabQa.style.display = "none";
+                tabRoadmap.style.display = "flex";
+                btns[0].classList.remove("active");
+                btns[1].classList.add("active");
+            }
+        }
+
+        function renderReportRadar(scores) {
+            const canvas = document.getElementById("reportRadarChart");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            if (reportRadarChart) {
+                reportRadarChart.destroy();
+            }
+
+            const grad = ctx.createLinearGradient(0, 0, 0, 240);
+            grad.addColorStop(0, "rgba(139, 220, 255, 0.42)");
+            grad.addColorStop(1, "rgba(186, 255, 102, 0.08)");
+
+            reportRadarChart = new Chart(ctx, {
+                type: "radar",
+                data: {
+                    labels: ["Skill-Fit", "Culture-Fit", "Growth-Fit", "Performing-Fit"],
+                    datasets: [{
+                        data: [scores.skill, scores.culture, scores.growth, scores.performing],
+                        backgroundColor: grad,
+                        borderColor: "#8bdcff",
+                        pointBackgroundColor: ["#8bdcff", "#baff66", "#ffd166", "#ff6cab"],
+                        pointBorderColor: "#030303",
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    animation: {
+                        duration: 1200,
+                        easing: "easeOutQuart"
+                    },
+                    scales: {
+                        r: {
+                            min: 50,
+                            max: 100,
+                            ticks: { display: false, stepSize: 10 },
+                            grid: { color: "rgba(255,255,255,0.08)" },
+                            angleLines: { color: "rgba(255,255,255,0.08)" },
+                            pointLabels: {
+                                color: "#aaa9a2",
+                                font: { size: 10, weight: "700" }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function animateGaugeAndBars(scores, duration) {
+            const circle = document.getElementById("gauge-circle");
+            const scoreText = document.getElementById("gauge-score");
+            const startScore = 0;
+            const endScore = 89;
+
+            const barFillSkill = document.getElementById("bar-fill-skill");
+            const barFillCulture = document.getElementById("bar-fill-culture");
+            const barFillGrowth = document.getElementById("bar-fill-growth");
+            const barFillPerforming = document.getElementById("bar-fill-performing");
+
+            const barValSkill = document.getElementById("bar-val-skill");
+            const barValCulture = document.getElementById("bar-val-culture");
+            const barValGrowth = document.getElementById("bar-val-growth");
+            const barValPerforming = document.getElementById("bar-val-performing");
+
+            let startTimestamp = null;
+
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 4); // easeOutQuart
+
+                // Score text & circle
+                const currentScore = Math.floor(easeProgress * (endScore - startScore) + startScore);
+                if (scoreText) scoreText.textContent = currentScore;
+                if (circle) {
+                    const offset = 314 - (314 * (easeProgress * endScore) / 100);
+                    circle.style.strokeDashoffset = offset;
+                }
+
+                // Progress bars
+                const curSkill = Math.floor(easeProgress * scores.skill);
+                if (barFillSkill) barFillSkill.style.width = curSkill + "%";
+                if (barValSkill) barValSkill.textContent = curSkill + "%";
+
+                const curCulture = Math.floor(easeProgress * scores.culture);
+                if (barFillCulture) barFillCulture.style.width = curCulture + "%";
+                if (barValCulture) barValCulture.textContent = curCulture + "%";
+
+                const curGrowth = Math.floor(easeProgress * scores.growth);
+                if (barFillGrowth) barFillGrowth.style.width = curGrowth + "%";
+                if (barValGrowth) barValGrowth.textContent = curGrowth + "%";
+
+                const curPerforming = Math.floor(easeProgress * scores.performing);
+                if (barFillPerforming) barFillPerforming.style.width = curPerforming + "%";
+                if (barValPerforming) barValPerforming.textContent = curPerforming + "%";
+
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
         }
 
         function generateKnowledgeFlowArtifacts() {
