@@ -631,6 +631,7 @@ def build_seedance_payload(prompt: str, req: "SeedanceVideoRequest") -> dict:
         ],
         "ratio": req.aspect_ratio,
         "duration": req.duration_seconds,
+        "generate_audio": False,
     }
 
 

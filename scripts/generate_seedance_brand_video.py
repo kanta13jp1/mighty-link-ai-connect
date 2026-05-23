@@ -126,6 +126,7 @@ def main():
         ],
         "ratio": "16:9",
         "duration": 6,
+        "generate_audio": False,
     }
 
     try:
