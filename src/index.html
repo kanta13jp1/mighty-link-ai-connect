@@ -1921,8 +1921,10 @@
         }
 
         window.addEventListener("DOMContentLoaded", () => {
-            loadSampleEngineer();
-            loadSampleJob();
+            // Step 1 inputs start empty so users see the placeholder copy and
+            // can experience the "Load Sample" buttons as a real onboarding step.
+            // `runAnalysis()` still auto-loads samples if the user clicks
+            // Analyze with empty fields, so direct Analyze use keeps working.
             setVideoSource(seedanceFallbackVideo);
         });
 
