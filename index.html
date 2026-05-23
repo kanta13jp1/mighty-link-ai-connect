@@ -198,14 +198,43 @@
            Step 1: Hero & 入力パネル用スタイル (統合ダッシュボード)
            ========================================================================== */
         .hero {
+            position: relative;
+            overflow: hidden;
             min-height: auto;
             width: min(1512px, 100%);
             margin: 0 auto;
-            padding: 38px 32px 24px;
+            padding: 58px 32px 42px; /* ビデオの広がりを出すパディング */
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 28px;
             align-items: stretch;
+            border: 1px solid var(--line);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .hero-video-bg-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-video-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            /* 暗めのグラデーションで前面テキストの視認性を確保 (WCAG 2.1 AA準拠) */
+            background: linear-gradient(180deg, rgba(3, 3, 3, 0.48) 0%, rgba(3, 3, 3, 0.72) 100%);
+            z-index: 2;
         }
 
         .hero-center-actions {
@@ -214,6 +243,8 @@
             justify-content: center;
             margin-top: 12px;
             margin-bottom: 8px;
+            position: relative;
+            z-index: 3;
         }
 
         .big-btn {
@@ -254,12 +285,14 @@
         }
 
         .panel {
-            border: 1px solid var(--line);
+            position: relative;
+            z-index: 3; /* 前面にフローティング */
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 12px;
             padding: 24px 28px;
-            background: var(--panel-strong);
+            background: rgba(12, 13, 15, 0.48); /* 強い半透明ガラス */
             box-shadow: 0 16px 54px var(--shadow);
-            backdrop-filter: blur(18px);
+            backdrop-filter: blur(22px); /* 強いボケ効果 */
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -1204,6 +1237,14 @@
              Step 1: AI Fit Simulation Profile Inputs (プロフィール入力)
              ========================================================================== -->
         <section class="hero" aria-label="Step 1: AI Fit Simulation Profile Inputs">
+            <!-- 没入型背景ビデオ (Seedance API 同期) -->
+            <div class="hero-video-bg-container">
+                <video id="hero-video-bg" class="hero-video-bg" autoplay muted loop playsinline preload="auto">
+                    <source src="exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4" type="video/mp4">
+                </video>
+                <div class="hero-overlay"></div>
+            </div>
+
             <!-- 左カラム: Engineer Profile -->
             <div class="panel input-panel">
                 <div class="step-kicker">Step 1</div>
@@ -1407,7 +1448,7 @@
                     <h2>AI-Generated Match Story</h2>
                     <p class="video-desc">AIフィット分析から、候補者と案件のシナジーを映画的なプロダクト映像として生成します。</p>
                     
-                    <textarea id="seedance-prompt" class="prompt-input" readonly>Mighty Skill-BridgeのAIフィット分析。エンジニアの経験、案件要件、4軸スコア、面談準備を映画的なプロダクト映像として見せる。</textarea>
+                    <textarea id="seedance-prompt" class="prompt-input" readonly>Cinematic loop of network connections for Mighty Skill-Bridge. Glowing neon blue and green light lines flowing, connecting nodes, representing AI agents, data synergy, technology bridge, dark mode, high-tech, 8k resolution, smooth ambient motion, slow pan</textarea>
                     
                     <div class="video-actions">
                         <span class="status-indicator">
@@ -1528,17 +1569,35 @@
 
         function setVideoSource(url) {
             const video = document.getElementById("seedance-video");
+            const bgVideo = document.getElementById("hero-video-bg");
             const downloadLink = document.getElementById("video-download-link");
             if (!url) {
                 url = seedanceFallbackVideo;
             }
-            const current = video.currentSrc || video.getAttribute("src") || "";
-            if (!current.includes(url)) {
-                video.src = url;
-                video.load();
+            
+            // 下部 Step 3 詳細プレイヤー
+            if (video) {
+                const current = video.currentSrc || video.getAttribute("src") || "";
+                if (!current.includes(url)) {
+                    video.src = url;
+                    video.load();
+                }
+                video.play().catch(() => {});
             }
-            downloadLink.href = url;
-            video.play().catch(() => {});
+
+            // 上部 Step 1 没入型背景ビデオ
+            if (bgVideo) {
+                const bgCurrent = bgVideo.currentSrc || bgVideo.getAttribute("src") || "";
+                if (!bgCurrent.includes(url)) {
+                    bgVideo.src = url;
+                    bgVideo.load();
+                }
+                bgVideo.play().catch(() => {});
+            }
+
+            if (downloadLink) {
+                downloadLink.href = url;
+            }
         }
 
         function setStatus(text, provider) {
@@ -1635,7 +1694,10 @@
         function buildPromptFromInputs() {
             const engineer = document.getElementById("engineer-input").value.trim() || sampleEngineer;
             const job = document.getElementById("job-input").value.trim() || sampleJob;
-            document.getElementById("seedance-prompt").value = `Mighty Skill-BridgeのAIフィット分析。候補者: ${engineer.split("\n")[0]}。案件: ${job.split("\n")[0]}。4軸スコア、強み、面談準備を映像化する。`;
+            const engName = engineer.split("\n")[0].replace("氏名: ", "").trim();
+            const jobName = job.split("\n")[0].replace("案件名: ", "").trim();
+            
+            document.getElementById("seedance-prompt").value = `Cinematic loop of network connections for Mighty Skill-Bridge: candidate ${engName} and project ${jobName}. Glowing neon blue and green light lines flowing, connecting nodes, representing AI agents, data synergy, technology bridge, dark mode, high-tech, 8k resolution, smooth ambient motion, slow pan`;
         }
 
         function runAnalysis() {
