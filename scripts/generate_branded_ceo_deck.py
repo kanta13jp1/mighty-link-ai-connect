@@ -325,54 +325,66 @@ def add_image_panel(slide, image_path, x, y, w, h, *, label="LIVE DEMO", caption
                  align=PP_ALIGN.LEFT)
 
 
-def render_gallery_slide(prs, spec):
-    """Demo Gallery: 2x3 grid showing 6 screen captures with labels."""
+def render_one_screen_slide(prs, spec, gallery_idx, gallery_total):
+    """One full-bleed screenshot per slide, with operation note + accent panel."""
     slide = base_slide(prs)
-    add_header(slide, spec["num"], spec["title"], spec.get("subtitle"))
-    # Optional intro line below header
-    if spec.get("intro"):
-        add_text(slide, spec["intro"],
-                 Inches(0.5), Inches(1.4), Inches(12.3), Inches(0.3),
-                 font_size=12, color=C["text_secondary"], font_name=FONT_BODY,
-                 align=PP_ALIGN.LEFT)
-    # 2 rows x 3 cols grid (6 cells)
-    # Tile size: 3.95" wide x 2.20" tall, gap 0.10"
-    tile_w = Inches(3.95)
-    tile_h = Inches(2.20)
-    gap_x = Inches(0.10)
-    gap_y = Inches(0.18)
-    start_x = Inches(0.5)
-    start_y = Inches(1.75)
-    label_h = Inches(0.30)
-    img_h = tile_h - label_h - Inches(0.05)
-    captures = spec["captures"]
-    for idx, cap in enumerate(captures[:6]):
-        row = idx // 3
-        col = idx % 3
-        x = start_x + col * (tile_w + gap_x)
-        y = start_y + row * (tile_h + gap_y)
-        # Outer panel with neon stripe (top this time for tile aesthetic)
-        add_rect(slide, x, y, tile_w, tile_h, C["panel"])
-        # Top neon stripe
-        accent = C.get(cap.get("accent", "neon_blue"), C["neon_blue"])
-        add_rect(slide, x, y, tile_w, Inches(0.04), accent)
-        # Image
-        img_path = cap["path"]
-        if Path(img_path).exists():
-            slide.shapes.add_picture(str(img_path),
-                                     x + Inches(0.08), y + Inches(0.10),
-                                     width=tile_w - Inches(0.16),
-                                     height=img_h - Inches(0.05))
-        # Label (number + title)
-        label_y = y + tile_h - label_h - Inches(0.02)
-        add_text(slide, f"0{idx + 1}  {cap['label']}",
-                 x + Inches(0.12), label_y, tile_w - Inches(0.24), label_h,
-                 font_size=10, bold=True, color=C["text_primary"],
-                 font_name=FONT_MONO, align=PP_ALIGN.LEFT,
-                 anchor=MSO_ANCHOR.MIDDLE)
-    # CTA box at bottom
-    add_cta_box(slide, spec["question"])
-    add_footer(slide)
+    # Composite header: "02.5-N / Demo Tour" + title
+    num = f"02.{gallery_idx}"
+    add_header(slide, num, spec["title"], spec.get("subtitle"))
+
+    accent = C.get(spec.get("accent", "neon_green"), C["neon_green"])
+
+    # Big screenshot centered horizontally; 16:9 ratio = 11.5" x 6.47" too tall
+    # Use 10.5" x 5.91" — fits within 1.6 (header) + 5.91 + 0.95 (caption+CTA+footer) = 8.46 (need 7.5)
+    # → smaller: 9.5" x 5.34", centered at x=1.92, y=1.6
+    img_w = Inches(9.5)
+    img_h = Inches(5.34)
+    img_x = (SLIDE_W - img_w) / 2
+    img_y = Inches(1.6)
+
+    # Panel behind image
+    add_rect(slide, img_x - Inches(0.1), img_y - Inches(0.1),
+             img_w + Inches(0.2), img_h + Inches(0.2),
+             C["panel"])
+    # Top neon stripe
+    add_rect(slide, img_x - Inches(0.1), img_y - Inches(0.1),
+             img_w + Inches(0.2), Inches(0.05), accent)
+
+    # Image
+    img_path = Path(spec["path"])
+    if img_path.exists():
+        slide.shapes.add_picture(str(img_path), img_x, img_y, width=img_w, height=img_h)
+
+    # Right side label badge (operation context)
+    if spec.get("op"):
+        badge_x = img_x + img_w + Inches(0.1)
+        badge_y = img_y
+        # Right padding could overflow; clamp to slide
+        badge_w = Inches(13.333) - badge_x - Inches(0.3)
+        if badge_w > Inches(0.3):
+            add_text(slide, spec["op"], badge_x, badge_y, badge_w, Inches(1.0),
+                     font_size=10, bold=True, color=accent, font_name=FONT_MONO,
+                     align=PP_ALIGN.LEFT)
+
+    # Caption below image
+    caption = spec.get("caption", "")
+    cap_y = img_y + img_h + Inches(0.15)
+    add_text(slide, caption, Inches(0.5), cap_y, Inches(12.3), Inches(0.45),
+             font_size=14, color=C["text_secondary"], font_name=FONT_BODY,
+             align=PP_ALIGN.CENTER)
+
+    # Progress indicator dots (1 / 6 etc.)
+    dots_y = Inches(6.75)
+    dot_size = Inches(0.14)
+    dot_gap = Inches(0.12)
+    total_w = gallery_total * dot_size + (gallery_total - 1) * dot_gap
+    dots_x = (SLIDE_W - total_w) / 2
+    for i in range(gallery_total):
+        dx = dots_x + i * (dot_size + dot_gap)
+        color = accent if i == gallery_idx - 1 else C["text_muted"]
+        add_rect(slide, dx, dots_y, dot_size, dot_size, color)
+
+    add_footer(slide, f"Mighty Skill-Bridge · Demo Tour {gallery_idx}/{gallery_total} · 6/2 CEO Brief")
 
 
 def render_slide(prs, spec):
@@ -531,21 +543,56 @@ def build_manifest(generated_at_jst):
 
 SCREENSHOT_DIR = EXPORT_DIR / "screenshots"
 
-GALLERY_SPEC = {
-    "num": "2.5",
-    "title": "デモ画面ギャラリー — 全 6 画面ツアー",
-    "subtitle": "Public hero / Report / Video / Models / Knowledge Flow / Admin",
-    "intro": "公開デモの 5 セクション + ローカル管理者ダッシュボードを 1 枚に集約 (1920×1080 でキャプチャ済)。",
-    "captures": [
-        {"label": "Public Hero (Step 1)",      "path": SCREENSHOT_DIR / "01_public_hero.png",            "accent": "neon_green"},
-        {"label": "Report Section (Step 2)",   "path": SCREENSHOT_DIR / "02_public_report.png",          "accent": "neon_blue"},
-        {"label": "Video Demo (Step 3)",       "path": SCREENSHOT_DIR / "03_public_video.png",           "accent": "neon_green"},
-        {"label": "Mighty Models Band",        "path": SCREENSHOT_DIR / "04_public_models.png",          "accent": "neon_blue"},
-        {"label": "Knowledge Flow Artifacts",  "path": SCREENSHOT_DIR / "05_public_knowledge_flow.png",  "accent": "neon_green"},
-        {"label": "Admin Dashboard (/admin)",  "path": SCREENSHOT_DIR / "06_local_admin_dashboard.png",  "accent": "neon_red"},
-    ],
-    "question": "公開する画面と、社内のみで使う画面 (/admin) の境界をどこに置きますか?",
-}
+GALLERY_CAPTURES = [
+    {
+        "title": "Step 1: 入力フォーム (Profile + Job)",
+        "subtitle": "クリーン状態の公開デモ — 経歴書と案件票の入力受付",
+        "path": SCREENSHOT_DIR / "01_public_hero.png",
+        "accent": "neon_green",
+        "op": "操作: 公開 URL を開いた直後",
+        "caption": "Mighty Skill-Bridge のエントリーポイント。経歴書 (Profile) と案件票 (Job) を並列で受け付ける Step 1 入力 UI。",
+    },
+    {
+        "title": "Step 1: サンプルロード後の状態",
+        "subtitle": "Load Sample で経歴書 + 案件票がプリフィル",
+        "path": SCREENSHOT_DIR / "02_inputs_loaded.png",
+        "accent": "neon_blue",
+        "op": "操作: 「Load Sample」x2 押下",
+        "caption": "実データに近いサンプルが投入された状態。社長デモではこの状態から Analyze を実行する。",
+    },
+    {
+        "title": "Step 2: 4 軸フィット分析レポート",
+        "subtitle": "Analyze 実行後 — deterministic fallback で構造化結果",
+        "path": SCREENSHOT_DIR / "03_report_results.png",
+        "accent": "neon_green",
+        "op": "操作: 「Analyze Fit & Generate Story」押下",
+        "caption": "Skill / Culture / Growth / Performing の 4 軸スコア + 面接質問生成。Gemini quota 中でも結果が出ることを実証。",
+    },
+    {
+        "title": "Step 3: Seedance AI 動画デモ",
+        "subtitle": "ブランドループ動画 + 非同期生成 + ダウンロード導線",
+        "path": SCREENSHOT_DIR / "04_video_demo.png",
+        "accent": "neon_blue",
+        "op": "操作: 動画セクションへスクロール",
+        "caption": "Seedance API で生成した Mighty Skill-Bridge ブランドビデオ。動画生成は非同期 polling + 課金ガード付き。",
+    },
+    {
+        "title": "ナレッジ連携アーティファクト",
+        "subtitle": "NotebookLM / Slack / Notion / Obsidian 成果物",
+        "path": SCREENSHOT_DIR / "05_knowledge_flow.png",
+        "accent": "neon_green",
+        "op": "操作: Knowledge Flow セクション + Refresh",
+        "caption": "Notebook Flow / Skill Bridge / Seedance / API Guard カードと、生成済 NotebookLM/Slack/Notion/Obsidian 成果物の状態確認。",
+    },
+    {
+        "title": "管理者ダッシュボード /admin",
+        "subtitle": "外部 API 課金ガード + Circuit Breaker + Recent Events",
+        "path": SCREENSHOT_DIR / "06_admin_dashboard.png",
+        "accent": "neon_red",
+        "op": "操作: http://127.0.0.1:8000/admin",
+        "caption": "Seedance + Gemini の日次呼び出し上限、サーキットブレーカー状態、ログイベントを 1 画面で監視。社内限定運用。",
+    },
+]
 
 
 def main():
@@ -557,11 +604,13 @@ def main():
     # Title slide
     render_title_slide(prs)
 
-    # Content slides: insert gallery after slide 2 (現在の到達点と公開デモ)
+    # Content slides: insert per-screen gallery after slide 2 (現在の到達点と公開デモ)
+    gallery_total = len(GALLERY_CAPTURES)
     for spec in SLIDES:
         render_slide(prs, spec)
         if spec.get("num") == 2:
-            render_gallery_slide(prs, GALLERY_SPEC)
+            for idx, cap in enumerate(GALLERY_CAPTURES, start=1):
+                render_one_screen_slide(prs, cap, idx, gallery_total)
 
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
     prs.save(str(PPTX_FILE))
