@@ -330,6 +330,13 @@ feat/<tool>-<wbs-id>-<slug>
 - **Apple / Obsidian / Unity / Amazon**: Apple HIGはインターフェースの明瞭性、Obsidianはローカルvaultの情報分離、Unityは将来3Dデモ検討時の正本、Amazon Bedrockはマルチモデル選定時の候補としてURL正本化した。現時点では機能名をdocsへ固定しない。
 - **今回のWBS完了単位**: `T667 Seedance動画デモUI刷新` をCodexで実装完了。`index.html` と `src/index.html` を同時更新し、公開デモガードとPlaywright desktop/mobile表示確認を通した。
 
+### Light refresh (2026-05-23 / Seedance navigation polish session)
+
+- **Seedance / ByteDance Seed**: 公式ページの `Home / Models / Blog & Publication / Join Us`、`EN / 中文`、`Models / Teams / Learn More` 型の情報設計を確認。Mighty Skill-Bridgeではブランド・素材・文言は独自のまま、ヘッダー/フッター項目配置とスクロール時ヘッダー縮小を採用した。
+- **OpenAI Codex / Anthropic Claude Code**: `AGENTS.md` と `CLAUDE.md` によるセッションゲート、1タスク単位の作業、検証後commit/pushの流れを再確認。今回の完了単位は `T676 Seedance風ナビ/フッター刷新`。
+- **Google Workspace**: Sheets `batchUpdate` と `data/WBS.tsv` 正本運用を維持。WBS、課題管理表、QA表の同期対象に `T676 / R25 / Q-AHOC-20260523-2` を追加した。
+- **Cost guard**: Seedance APIは引き続き `SEEDANCE_API_ENABLED=1` の明示設定なしでは外部課金呼び出しを行わず、通常デモでは保存済み動画とDownload導線を使う。
+
 ---
 
 ### Session gate (2026-05-22 Codex pass)
@@ -374,3 +381,4 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-05-22 | Codex | Light refresh 5th pass: stale-doc削除を実行し、T665完了を反映 |
 | 2026-05-22 | Codex | Light refresh 6th pass: 公式Docs確認範囲拡張、Calendar完了イベント削除ルール、T614/T666完了を反映 |
 | 2026-05-22 | Codex | Light refresh 7th pass: Amazon/Apple/Obsidian/Unityを公式Docs確認範囲へ追加し、Seedance動画UI刷新とT667完了を反映 |
+| 2026-05-23 | Codex | Light refresh: Seedance公式ページのナビ/フッター/スクロール構造をMighty独自UIへ反映し、T676完了を記録 |

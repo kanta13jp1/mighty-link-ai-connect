@@ -511,3 +511,33 @@ FastAPI now responds with Chrome's Automatic Workspace connection JSON:
 ```
 
 This removes the noisy 404 from local server logs and lets Chrome offer a workspace connection in DevTools. The response intentionally includes the absolute local project path, so this route is for the local FastAPI development server only. The public GitHub Pages demo does not use this FastAPI route.
+
+## 2026-05-23 Seedance-style demo navigation and footer
+
+The public and local demo HTML is generated from:
+
+```text
+scripts/render_seedance_video_demo_ui.py
+```
+
+Run this script whenever the demo shell changes so the CEO-facing GitHub Pages file and the FastAPI-served file stay aligned:
+
+```powershell
+python scripts/render_seedance_video_demo_ui.py
+```
+
+The first viewport now keeps the saved Seedance video as the default visual, keeps `Generate Video` wired to `/api/seedance/video-demo`, and keeps `Download Video` pointed at the currently displayed MP4. The navigation mirrors the Seedance-style information architecture used for the demo:
+
+- `Home`
+- `Models`
+- `Blog & Publication`
+- `Join Us`
+- `EN / JP`
+
+The header shrinks on scroll by toggling the `.scrolled` class, and the footer exposes `Models`, `Teams`, and `Learn More` columns. Do not remove the existing public-demo guard markers (`bridge-btn`, `runAnalysis()`, `knowledge-flow-demo`, `generateKnowledgeFlowArtifacts`, `sampleEngineer`, `radarChart`) when polishing this screen.
+
+Normal demos should keep billing calls disabled:
+
+```powershell
+$env:SEEDANCE_API_ENABLED = ""
+```

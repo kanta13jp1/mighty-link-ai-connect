@@ -65,11 +65,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 18px;
-            padding: 18px 28px;
+            gap: 22px;
+            min-height: 76px;
+            padding: 18px 32px;
             border-bottom: 1px solid var(--line);
-            background: rgba(3, 3, 3, 0.82);
+            background: rgba(3, 3, 3, 0.58);
             backdrop-filter: blur(18px);
+            transition: min-height 0.22s ease, padding 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+        }
+
+        .topbar.scrolled {
+            min-height: 58px;
+            padding-top: 11px;
+            padding-bottom: 11px;
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(3, 3, 3, 0.9);
         }
 
         .brand {
@@ -110,6 +120,56 @@
             white-space: nowrap;
         }
 
+        .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(16px, 2.4vw, 38px);
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .nav-links a,
+        .language-switch a {
+            color: rgba(247, 247, 242, 0.72);
+            font-size: 14px;
+            font-weight: 700;
+            transition: color 0.18s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover,
+        .language-switch a:hover {
+            color: var(--text);
+        }
+
+        .topbar-tools {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+            min-width: 0;
+        }
+
+        .language-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(247, 247, 242, 0.38);
+            font-size: 14px;
+        }
+
+        .mobile-menu {
+            display: none;
+            width: 38px;
+            height: 38px;
+            border: 1px solid var(--line-strong);
+            border-radius: 8px;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+        }
+
         .status-strip {
             display: flex;
             align-items: center;
@@ -129,22 +189,25 @@
         }
 
         main {
-            width: min(1440px, 100%);
+            width: 100%;
             margin: 0 auto;
-            padding: 28px;
+            padding: 0;
         }
 
         .hero {
-            min-height: calc(100vh - 94px);
+            min-height: calc(100vh - 76px);
+            width: min(1512px, 100%);
+            margin: 0 auto;
+            padding: 28px 32px 34px;
             display: grid;
-            grid-template-columns: minmax(0, 1.04fr) minmax(380px, 0.62fr);
+            grid-template-columns: minmax(0, 1.12fr) minmax(360px, 0.52fr);
             gap: 24px;
             align-items: stretch;
         }
 
         .stage {
             position: relative;
-            min-height: 640px;
+            min-height: 690px;
             border: 1px solid var(--line);
             border-radius: 8px;
             overflow: hidden;
@@ -157,7 +220,8 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
+            object-position: center;
             background: #030303;
         }
 
@@ -384,7 +448,9 @@
         }
 
         .workspace {
-            margin-top: 24px;
+            width: min(1512px, 100%);
+            margin: 0 auto;
+            padding: 24px 32px 0;
             display: grid;
             grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
             gap: 24px;
@@ -417,7 +483,8 @@
         }
 
         .knowledge-flow-section {
-            margin-top: 24px;
+            width: min(1512px, 100%);
+            margin: 24px auto 0;
             padding: 18px;
             display: grid;
             gap: 14px;
@@ -463,11 +530,86 @@
             line-height: 1.6;
         }
 
-        .footer-note {
-            padding: 28px 0 8px;
+        .model-band {
+            width: min(1512px, 100%);
+            margin: 0 auto;
+            padding: 0 32px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .model-tile {
+            min-height: 132px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 16px;
+            display: grid;
+            align-content: space-between;
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+                rgba(9, 10, 12, 0.82);
+            overflow: hidden;
+        }
+
+        .model-tile span {
             color: var(--muted);
             font-size: 12px;
-            text-align: center;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .model-tile strong {
+            margin-top: 26px;
+            color: var(--text);
+            font-size: 24px;
+            line-height: 1;
+        }
+
+        .model-tile small {
+            margin-top: 10px;
+            color: rgba(247, 247, 242, 0.64);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .site-footer {
+            margin-top: 48px;
+            padding: 42px 32px 32px;
+            border-top: 1px solid var(--line);
+            background: rgba(0, 0, 0, 0.36);
+        }
+
+        .footer-inner {
+            width: min(1512px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(240px, 1fr) repeat(3, minmax(160px, 0.56fr));
+            gap: 28px;
+        }
+
+        .footer-brand {
+            display: grid;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .footer-column {
+            display: grid;
+            align-content: start;
+            gap: 10px;
+        }
+
+        .footer-column h3 {
+            color: var(--text);
+            font-size: 15px;
+        }
+
+        .footer-column a {
+            color: var(--muted);
+            font-size: 13px;
         }
 
         @media (max-width: 1080px) {
@@ -496,19 +638,40 @@
 
         @media (max-width: 720px) {
             .topbar,
-            main {
+            .hero,
+            .workspace,
+            .model-band,
+            .site-footer {
                 padding-left: 16px;
                 padding-right: 16px;
             }
 
             .topbar {
-                align-items: flex-start;
-                flex-direction: column;
+                flex-wrap: wrap;
+                min-height: auto;
             }
 
-            .status-strip {
+            .nav-links {
+                order: 4;
+                width: 100%;
                 justify-content: flex-start;
-                white-space: normal;
+                gap: 18px;
+                overflow-x: auto;
+                padding-top: 4px;
+                scrollbar-width: none;
+            }
+
+            .topbar-tools {
+                margin-left: auto;
+            }
+
+            .language-switch {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: inline-grid;
+                place-items: center;
             }
 
             .stage {
@@ -530,7 +693,9 @@
             }
 
             .signal-panel,
-            .knowledge-flow-grid {
+            .knowledge-flow-grid,
+            .model-band,
+            .footer-inner {
                 grid-template-columns: 1fr 1fr;
             }
 
@@ -546,6 +711,24 @@
                 justify-content: center;
             }
         }
+
+        @media (max-width: 520px) {
+            .brand-text strong {
+                font-size: 15px;
+            }
+
+            .brand-text span,
+            .status-strip {
+                display: none;
+            }
+
+            .signal-panel,
+            .knowledge-flow-grid,
+            .model-band,
+            .footer-inner {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -557,9 +740,23 @@
                 <span>エンジニア＆案件 AIフィットシミュレーター</span>
             </span>
         </a>
-        <div class="status-strip" aria-live="polite">
-            <span class="status-dot"></span>
-            <span id="api-status">Seedance API Preview</span>
+        <nav class="nav-links" aria-label="Primary navigation">
+            <a href="#top">Home</a>
+            <a href="#models">Models</a>
+            <a href="#knowledge-flow-demo">Blog & Publication</a>
+            <a href="#join-us">Join Us</a>
+        </nav>
+        <div class="topbar-tools">
+            <div class="language-switch" aria-label="Language">
+                <a href="#top" aria-current="true">EN</a>
+                <span>/</span>
+                <a href="#top">JP</a>
+            </div>
+            <div class="status-strip" aria-live="polite">
+                <span class="status-dot"></span>
+                <span id="api-status">Seedance API Preview</span>
+            </div>
+            <button class="mobile-menu" type="button" aria-label="Open menu" onclick="toggleNav()">☰</button>
         </div>
     </header>
 
@@ -615,7 +812,30 @@
             </aside>
         </section>
 
-        <section class="workspace" aria-label="Analysis input">
+        <section id="models" class="model-band" aria-label="Mighty models">
+            <a class="model-tile" href="#top">
+                <span>Video Generation</span>
+                <strong>Seedance</strong>
+                <small>Prompt to fit preview</small>
+            </a>
+            <a class="model-tile" href="#top">
+                <span>Matching</span>
+                <strong>Skill Bridge</strong>
+                <small>Engineer x project</small>
+            </a>
+            <a class="model-tile" href="#knowledge-flow-demo">
+                <span>Knowledge</span>
+                <strong>Notebook Flow</strong>
+                <small>Docs to brief</small>
+            </a>
+            <a class="model-tile" href="/admin">
+                <span>Safety</span>
+                <strong>API Guard</strong>
+                <small>Calls and limits</small>
+            </a>
+        </section>
+
+        <section id="join-us" class="workspace" aria-label="Analysis input">
             <div class="panel">
                 <div class="section-label">
                     <span>Engineer</span>
@@ -650,7 +870,39 @@
             <div id="knowledge-flow-output" class="knowledge-flow-output">Ready.</div>
         </section>
 
-        <p class="footer-note">Mighty-Link AI Connect</p>
+        <footer class="site-footer" aria-label="Site footer">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <a class="brand" href="#top" aria-label="Mighty Skill-Bridge footer home">
+                        <span class="brand-mark">M</span>
+                        <span class="brand-text">
+                            <strong>Mighty Skill-Bridge</strong>
+                            <span>Mighty-Link AI Connect</span>
+                        </span>
+                    </a>
+                    <span>Advancing project intelligence, in service of better teams.</span>
+                    <span>Copyright © 2026 Mighty-Link</span>
+                </div>
+                <div class="footer-column">
+                    <h3>Models</h3>
+                    <a href="#top">Seedance Video</a>
+                    <a href="#top">AI Fit Radar</a>
+                    <a href="#knowledge-flow-demo">Knowledge Flow</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Teams</h3>
+                    <a href="#join-us">Engineering</a>
+                    <a href="#join-us">Project</a>
+                    <a href="/admin">Operations</a>
+                </div>
+                <div class="footer-column">
+                    <h3>Learn More</h3>
+                    <a href="docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md">Pre-share memo</a>
+                    <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.md">Knowledge flow</a>
+                    <a href="docs/WBS.md">WBS</a>
+                </div>
+            </div>
+        </footer>
     </main>
 
     <script>
@@ -676,6 +928,12 @@
         ];
 
         let radarChart = null;
+
+        function toggleNav() {
+            const links = document.querySelector(".nav-links");
+            if (!links) return;
+            links.scrollIntoView({behavior: "smooth", block: "nearest", inline: "start"});
+        }
 
         function setVideoSource(url) {
             const video = document.getElementById("seedance-video");
@@ -864,6 +1122,10 @@
             renderRadar({skill: 95, culture: 88, growth: 92, performing: 84});
             setVideoSource(seedanceFallbackVideo);
         });
+
+        window.addEventListener("scroll", () => {
+            document.querySelector(".topbar").classList.toggle("scrolled", window.scrollY > 18);
+        }, {passive: true});
     </script>
 </body>
 </html>
