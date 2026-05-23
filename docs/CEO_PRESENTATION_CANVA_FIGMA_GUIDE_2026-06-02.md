@@ -17,6 +17,14 @@ Claude Code は実際に Canva/Figma を直接操作しないため、**人間 (
 
 ---
 
+## 0. MCP 自動化版あり (推奨、2026-05-23 追加)
+
+**手動作業を完全自動化したい場合は [MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md](MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md) を参照** (所要 5-10 分、Canva MCP 経由でテキスト投入 + ブランドカラー指定 + PPTX/PDF export 自動化)。
+
+本書 (CANVA_FIGMA_GUIDE) は MCP セットアップが詰まった場合 / Canva MCP の機能制約に当たった場合のフォールバック手順として有効。8 枚コピペカード自体は MCP 版でも本書の内容を流用する。
+
+---
+
 ## 1. 推奨パス: Canva PPTX インポート (最短 30 分 / 最高クオリティ)
 
 ### なぜ Canva が最推奨か
