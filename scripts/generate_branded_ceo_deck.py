@@ -223,7 +223,8 @@ SLIDES = [
             "動画生成の非同期 polling + 外部 API 課金ガード (/admin ダッシュボード)",
             "AI 制限時 deterministic fallback + Public Demo Guard + Favicon / Chrome DevTools 対応完了",
         ],
-        "evidence": "公開 URL: https://kanta13jp1.github.io/mighty-link-ai-connect/    Admin: /admin",
+        "evidence": "https://kanta13jp1.github.io/mighty-link-ai-connect/",
+        "image_path": str(PROJECT_ROOT / "exports" / "knowledge_flow" / "screenshots" / "public_demo_hero_1920x1080.png"),
         "question": "最初の対象業務 (採用 / 営業 / SES 案件配属) のどれを最優先にしますか?",
         "accent": "neon_green",
     },
@@ -308,6 +309,22 @@ SLIDES = [
 ]
 
 
+def add_image_panel(slide, image_path, x, y, w, h, *, label="LIVE DEMO", caption=None):
+    """Image panel: dark navy bg + neon left stripe + label header + screenshot + optional caption."""
+    add_panel(slide, x, y, w, h, label=label, accent=C["neon_green"])
+    img_x = x + Inches(0.2)
+    img_y = y + Inches(0.5)
+    img_w = w - Inches(0.4)
+    img_h = h - (Inches(0.95) if caption else Inches(0.7))
+    slide.shapes.add_picture(str(image_path), img_x, img_y, width=img_w, height=img_h)
+    if caption:
+        add_text(slide, caption,
+                 x + Inches(0.2), y + h - Inches(0.4),
+                 w - Inches(0.4), Inches(0.3),
+                 font_size=9, color=C["text_secondary"], font_name=FONT_MONO,
+                 align=PP_ALIGN.LEFT)
+
+
 def render_slide(prs, spec):
     slide = base_slide(prs)
     add_header(slide, spec["num"], spec["title"], spec.get("subtitle"))
@@ -321,24 +338,30 @@ def render_slide(prs, spec):
                 Inches(0.75), Inches(2.0), Inches(7.5), Inches(3.5),
                 font_size=14, color=C["text_primary"], bullet_color=accent)
 
-    # Right panel: EVIDENCE (40% width)
-    add_panel(slide, Inches(8.7), Inches(1.6), Inches(4.1), Inches(4.0),
-              label="EVIDENCE", accent=C["neon_green"])
-    # Evidence body
-    box = slide.shapes.add_textbox(Inches(8.9), Inches(2.0), Inches(3.7), Inches(3.5))
-    tf = box.text_frame
-    tf.word_wrap = True
-    tf.margin_left = Emu(0)
-    tf.margin_right = Emu(0)
-    tf.margin_top = Emu(0)
-    tf.margin_bottom = Emu(0)
-    p = tf.paragraphs[0]
-    p.alignment = PP_ALIGN.LEFT
-    run = p.add_run()
-    run.text = spec["evidence"]
-    run.font.name = FONT_MONO
-    run.font.size = Pt(10)
-    run.font.color.rgb = C["text_secondary"]
+    # Right panel: IMAGE (if image_path) or EVIDENCE (text)
+    img_path = spec.get("image_path")
+    if img_path and Path(img_path).exists():
+        add_image_panel(slide, img_path,
+                        Inches(8.7), Inches(1.6), Inches(4.1), Inches(4.0),
+                        label="LIVE DEMO",
+                        caption=spec.get("evidence"))
+    else:
+        add_panel(slide, Inches(8.7), Inches(1.6), Inches(4.1), Inches(4.0),
+                  label="EVIDENCE", accent=C["neon_green"])
+        box = slide.shapes.add_textbox(Inches(8.9), Inches(2.0), Inches(3.7), Inches(3.5))
+        tf = box.text_frame
+        tf.word_wrap = True
+        tf.margin_left = Emu(0)
+        tf.margin_right = Emu(0)
+        tf.margin_top = Emu(0)
+        tf.margin_bottom = Emu(0)
+        p = tf.paragraphs[0]
+        p.alignment = PP_ALIGN.LEFT
+        run = p.add_run()
+        run.text = spec["evidence"]
+        run.font.name = FONT_MONO
+        run.font.size = Pt(10)
+        run.font.color.rgb = C["text_secondary"]
 
     # CTA: 社長への質問 (full width bottom band)
     add_cta_box(slide, spec["question"])
