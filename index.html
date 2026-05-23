@@ -203,23 +203,33 @@
             min-height: auto;
             width: min(1512px, 100%);
             margin: 0 auto;
-            padding: 58px 32px 42px; /* ビデオの広がりを出すパディング */
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 28px;
-            align-items: stretch;
+            padding: 34px 32px 42px;
+            display: flex;
+            flex-direction: column;
+            gap: 34px; /* 動画とフォームの間のマージン */
             border: 1px solid var(--line);
             border-top: none;
             border-radius: 0 0 12px 12px;
+            background: #030303;
         }
 
-        .hero-video-bg-container {
-            position: absolute;
-            inset: 0;
+        /* 1. 最上部動画ショーケース (100%露出) */
+        .hero-video-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
+        }
+
+        .hero-video-frame {
+            position: relative;
+            width: 100%;
+            height: 380px; /* 横長で美しいアスペクト */
+            border: 1px solid var(--line-strong);
+            border-radius: 12px;
+            overflow: hidden;
+            background: #050505;
+            box-shadow: 0 20px 50px var(--shadow), 0 0 30px rgba(139, 220, 255, 0.08);
         }
 
         .hero-video-bg {
@@ -229,22 +239,43 @@
             object-position: center;
         }
 
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            /* 暗めのグラデーションで前面テキストの視認性を確保 (WCAG 2.1 AA準拠) */
-            background: linear-gradient(180deg, rgba(3, 3, 3, 0.48) 0%, rgba(3, 3, 3, 0.72) 100%);
-            z-index: 2;
+        .hero-video-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 700;
+            padding-left: 4px;
+        }
+
+        .hero-video-status .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 12px rgba(186, 255, 102, 0.8);
+            animation: statusPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 0.5; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* 2. 動画の下に綺麗に並ぶ被らない2カラム入力 */
+        .hero-inputs-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            width: 100%;
         }
 
         .hero-center-actions {
-            grid-column: span 2;
             display: flex;
             justify-content: center;
-            margin-top: 12px;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 3;
+            margin-top: 8px;
+            width: 100%;
         }
 
         .big-btn {
@@ -1237,37 +1268,46 @@
              Step 1: AI Fit Simulation Profile Inputs (プロフィール入力)
              ========================================================================== -->
         <section class="hero" aria-label="Step 1: AI Fit Simulation Profile Inputs">
-            <!-- 没入型背景ビデオ (Seedance API 同期) -->
-            <div class="hero-video-bg-container">
-                <video id="hero-video-bg" class="hero-video-bg" autoplay muted loop playsinline preload="auto">
-                    <source src="exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4" type="video/mp4">
-                </video>
-                <div class="hero-overlay"></div>
+            <!-- 1. 最上部: 100%露出する独立したシネマティックブランドビデオスクリーン -->
+            <div class="hero-video-showcase">
+                <div class="step-kicker">AI Brand Video</div>
+                <div class="hero-video-frame">
+                    <video id="hero-video-bg" class="hero-video-bg" autoplay muted loop playsinline preload="auto">
+                        <source src="exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4" type="video/mp4">
+                    </video>
+                    <div class="stage-vignette"></div>
+                </div>
+                <div class="hero-video-status">
+                    <span class="status-dot"></span>Mighty AI System Engine Active (Ambient Looping)
+                </div>
             </div>
 
-            <!-- 左カラム: Engineer Profile -->
-            <div class="panel input-panel">
-                <div class="step-kicker">Step 1</div>
-                <div class="section-label">
-                    <span>Engineer Profile</span>
-                    <button class="sample-btn" onclick="loadSampleEngineer()">Load Sample</button>
+            <!-- 2. 下部: 動画と一切被らない2カラムフローティング入力フォーム -->
+            <div class="hero-inputs-container">
+                <!-- 左カラム: Engineer Profile -->
+                <div class="panel input-panel">
+                    <div class="step-kicker">Step 1</div>
+                    <div class="section-label">
+                        <span>Engineer Profile</span>
+                        <button class="sample-btn" onclick="loadSampleEngineer()">Load Sample</button>
+                    </div>
+                    <h2>Engineer Skill & Experience</h2>
+                    <textarea id="engineer-input" class="textarea-input" placeholder="エンジニアのスキルや経歴を入力してください..."></textarea>
                 </div>
-                <h2>Engineer Skill & Experience</h2>
-                <textarea id="engineer-input" class="textarea-input" placeholder="エンジニアのスキルや経歴を入力してください..."></textarea>
-            </div>
 
-            <!-- 右カラム: Project Requirements -->
-            <div class="panel input-panel">
-                <div class="step-kicker">Step 1</div>
-                <div class="section-label">
-                    <span>Project Requirements</span>
-                    <button class="sample-btn" onclick="loadSampleJob()">Load Sample</button>
+                <!-- 右カラム: Project Requirements -->
+                <div class="panel input-panel">
+                    <div class="step-kicker">Step 1</div>
+                    <div class="section-label">
+                        <span>Project Requirements</span>
+                        <button class="sample-btn" onclick="loadSampleJob()">Load Sample</button>
+                    </div>
+                    <h2>Job & Team Requirements</h2>
+                    <textarea id="job-input" class="textarea-input" placeholder="案件の必須要件や歓迎要件を入力してください..."></textarea>
                 </div>
-                <h2>Job & Team Requirements</h2>
-                <textarea id="job-input" class="textarea-input" placeholder="案件の必須要件や歓迎要件を入力してください..."></textarea>
             </div>
             
-            <!-- 中央下: Analyze Big Button -->
+            <!-- 3. 中央下: Analyze Big Button -->
             <div class="hero-center-actions">
                 <button class="big-btn" onclick="runAnalysis()">
                     <span class="play-glyph"></span>Analyze Fit & Generate Story
@@ -1569,7 +1609,6 @@
 
         function setVideoSource(url) {
             const video = document.getElementById("seedance-video");
-            const bgVideo = document.getElementById("hero-video-bg");
             const downloadLink = document.getElementById("video-download-link");
             if (!url) {
                 url = seedanceFallbackVideo;
@@ -1583,16 +1622,6 @@
                     video.load();
                 }
                 video.play().catch(() => {});
-            }
-
-            // 上部 Step 1 没入型背景ビデオ
-            if (bgVideo) {
-                const bgCurrent = bgVideo.currentSrc || bgVideo.getAttribute("src") || "";
-                if (!bgCurrent.includes(url)) {
-                    bgVideo.src = url;
-                    bgVideo.load();
-                }
-                bgVideo.play().catch(() => {});
             }
 
             if (downloadLink) {
