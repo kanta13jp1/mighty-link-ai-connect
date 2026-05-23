@@ -1,6 +1,6 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-05-23T12:49:25+09:00
+Generated: 2026-05-23T21:23:56+09:00
 
 ## Current Status
 

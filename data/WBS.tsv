@@ -94,3 +94,5 @@ T677	6. 社長プレゼン準備	Sheetsガント風タイムライン化	WBS Tim
 T678	6. 社長プレゼン準備	Sheets遅延タスク可視化	WBS Timelineでスケジュール遅延・期限間近タスクを色で把握できるようにする	Codex	VSCode + Codex + Google Sheets API	`sync_wbs_to_sheets.py`のGantt表示へ遅延列、終了遅れ/着手遅れ/期限間近判定、行色、バー色、条件付き書式を追加し、Google Sheets API batchUpdateで同期する	完了	2026-05-23	2026-05-23
 T679	6. 社長プレゼン準備	UI・動画非同期化	縦統合型シネマティックダッシュボードへのリファクタリング（被らない動画＆非同期化）	AIエージェント	Antigravity + Gemini	index.htmlのデモ動画プレビューと入力フォームの重なりを解消し、最上部動画と下部動画の再生ソースを非同期化する	完了	2026-05-23	2026-05-23
 T680	6. 社長プレゼン準備	UI・動画リソース	最上部動画のprocedural fallback固定と下部詳細プレイヤーのSeedance API動画割り当ての修正	AIエージェント	Antigravity + Gemini	最上部背景動画をprocedural fallbackに固定し、下部詳細動画とダウンロード用ソースにSeedance API製MP4を設定し、完全非同期化をビジュアル検証・修正する	完了	2026-05-23	2026-05-23
+T681	6. 社長プレゼン準備	UI・動画生成	Seedance APIによる最上部ブランドループ動画の新規生成と静的差し替え	AIエージェント	Antigravity + Gemini	scripts/generate_seedance_brand_video.py を実装し、環境変数設定時に実APIにて美麗なデータネットワーク動画を生成してmighty_skill_bridge_procedural_fallback.mp4を完全に上書き静的配置する	完了	2026-05-23	2026-05-23
+
