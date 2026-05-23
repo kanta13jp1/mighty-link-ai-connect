@@ -1,0 +1,23 @@
+{
+  "generated_at_jst": "2026-05-23T23:38:21.626674+09:00",
+  "account": "k-umezawa@ml-mightylink.com",
+  "generator": "scripts/generate_branded_ceo_deck.py",
+  "source_outline": "exports/knowledge_flow/notebooklm_ceo_slide_outline.md",
+  "source_count": 22,
+  "brand_palette": {
+    "bg": "#0D0E15",
+    "panel": "#161824",
+    "neon_blue": "#00F0FF",
+    "neon_green": "#39FF14",
+    "neon_red": "#FF3366",
+    "text_primary": "#F1F5FF",
+    "text_secondary": "#C5CAE0"
+  },
+  "outputs": {
+    "pptx": "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02_branded.pptx",
+    "summary": "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02_branded.md"
+  },
+  "slide_count": 9,
+  "companion_deck": "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx",
+  "purpose": "Canva/Figma template-style branded variant; visual upgrade only, same content as companion deck"
+}
