@@ -1,14 +1,14 @@
 {
-  "generated_at_jst": "2026-05-23T13:05:32+09:00",
+  "generated_at_jst": "2026-05-23T13:18:34+09:00",
   "summary": {
     "total": 93,
-    "done": 70,
-    "active": 5,
+    "done": 71,
+    "active": 4,
     "todo": 18,
-    "completion_rate": 75,
+    "completion_rate": 76,
     "phase6_total": 78,
-    "phase6_done": 59,
-    "phase6_active": 5,
+    "phase6_done": 60,
+    "phase6_active": 4,
     "phase6_todo": 14
   },
   "artifacts": [
