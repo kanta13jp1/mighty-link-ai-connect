@@ -89,6 +89,12 @@ FILE_SOURCES = [
         "source": EXPORT_DIR / "mighty_skill_bridge_ui_wireframes_2026-06-02.pptx",
         "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     },
+    {
+        "key": "ui_wireframes_canva_pptx",
+        "title": "Mighty Skill-Bridge UI Wireframes — 10 Patterns 2026-06-02 (Canva, Branded).pptx",
+        "source": PROJECT_ROOT / "exports" / "mighty_skill_bridge_wireframes_v2.pptx",
+        "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    },
 ]
 
 

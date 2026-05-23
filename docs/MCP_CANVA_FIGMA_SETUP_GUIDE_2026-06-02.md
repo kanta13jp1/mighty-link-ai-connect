@@ -340,6 +340,48 @@ Canva MCP が返したダウンロード URL から PPTX/PDF をローカル `ex
 
 ---
 
+## 4.7. 実機実行ログ — Canva MCP で 10-pattern wireframe deck 自動生成 (2026-05-24)
+
+寛太様が Canva MCP OAuth 認証完了 → ローカル Claude Code から HANDOFF-26/27 を実行し、Canva design を自動生成した実績:
+
+| 項目 | 値 |
+| --- | --- |
+| **Canva design ID** | `DAHKhHscdEI` |
+| **edit URL** | <https://www.canva.com/d/Mft5giDcMgir88Y> |
+| **view URL** | <https://www.canva.com/d/lLCcnCJnbJE9Xsa> |
+| **Drive PPTX** | <https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit> |
+| **local PPTX** | `exports/mighty_skill_bridge_wireframes_v2.pptx` (19.7 MB, 12 slides) |
+| **page count** | 12 (Cover + 10 patterns + Next Steps) |
+| **brand colors** | Mighty cyber palette (#0D0E15 / #00F0FF / #39FF14 / #FF3366 / #F1F5FF) |
+| **badge prefix** | 各 slide title に `WF-01 · ... 〜 WF-10 · ...` 形式、Rationale に 💡 prefix |
+
+### 実行手順 (Canva MCP — 再現可能)
+
+```text
+1. claude mcp add --transport http canva https://mcp.canva.com/mcp
+2. ブラウザで OAuth 認可 (k-umezawa@ml-mightylink.com)
+3. /mcp list で canva server connected 確認
+4. mcp__canva__generate-design (10 wireframe patterns 仕様 + cyber palette)
+5. mcp__canva__perform-editing-operations (WF-NN バッジ + 💡 Rationale 修正、v2 として再エクスポート)
+6. mcp__canva__export-design --format pptx → exports/ に保存
+7. python scripts/upload_notebooklm_docs_to_drive.py で Drive アップロード
+```
+
+### Canva MCP 可視性ルール (重要)
+
+- `claude mcp add` は **ローカル `~/.claude` 設定にのみ書き込まれる**
+- API-side Claude (本ガイドを編集している Claude Code) からは **Canva MCP を直接呼べない**
+- 解決策: 寛太様ローカルセッションで Canva MCP を実行 → 成果物 (PPTX / Canva URL) を API-side に共有 → docs / Drive 反映
+- 対照: Figma MCP は plugin marketplace 経由なので API-side からも直接呼出可
+
+### Canva MCP の落とし穴
+
+- 初回 generate-design は title bullet に WF-NN バッジ未付与・💡 Rationale prefix 落ちが発生しがち (HANDOFF-27 で実例)
+- perform-editing-operations で per-slide editor 操作を流し、`WF-01 · {title}` 形式 + `💡 Rationale: ...` 形式へ揃える後段が必要
+- export-design (pptx) は ZIP 約 20 MB、Drive アップロード必須
+
+---
+
 ## 4.5. よくあるエラーと修正 (2026-05-23 実機検証)
 
 寛太が実際にコマンド実行して遭遇したエラーとその修正:
