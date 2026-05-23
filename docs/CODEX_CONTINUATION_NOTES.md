@@ -956,3 +956,38 @@ claude
 claude mcp list
 claude mcp get canva
 ```
+
+## 2026-05-23 (9th session) Claude Code PPTX 再生成 + Drive 同期
+
+ユーザー (2026-05-23) より「PowerPoint ファイル生成まで進めてください」と要望。既存 Codex script (`scripts/generate_ceo_presentation_deck.py`) を実行し、最新 NotebookLM source outline (22 sources、2026-05-23 22:23 生成) ベースで PPTX を再生成 + Drive 同期。
+
+### 9th session — 実行内容
+
+1. `python scripts/generate_ceo_presentation_deck.py` 実行
+   - PPTX: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx` (48,858 bytes、8 slides)
+   - Summary: `mighty_skill_bridge_ceo_presentation_2026-06-02.md`
+   - Manifest: `mighty_skill_bridge_ceo_presentation_2026-06-02.json` (`generated_at_jst: 2026-05-23T23:26:59+09:00`)
+2. `python scripts/upload_notebooklm_docs_to_drive.py` 実行
+   - Drive URL: <https://docs.google.com/presentation/d/1XGHnQHBpJyyhh_Y3I2lq2UThPRC-2dcL/edit?usp=drivesdk>
+   - Workspace アカウント検証 OK (`k-umezawa@ml-mightylink.com` 寛太梅澤)
+   - Metadata: `exports/knowledge_flow/google_drive_workspace_docs.json`
+
+### 9th session — 生成された 8 枚スライド
+
+1. 本日決めたいこと
+2. 現在の到達点と公開デモ
+3. Google Workspace で進捗が回る基盤
+4. 開発ナレッジ連携の実績とデモ
+5. NotebookLM から PPTX へ
+6. サービス方向性の選択肢
+7. 運用・リスク論点と未完了項目
+8. 次アクションと WBS への即時反映
+
+### 9th session — 美麗化への次ステップ
+
+本セッションで生成された PPTX は **NotebookLM CLI + python-pptx 由来の標準デザイン**。社長プレゼン品質に上げるには 2 パス:
+
+- **HANDOFF-14b** (MCP 自動化、推奨): 寛太が Canva MCP セットアップ (HANDOFF-17) → Claude Code から自動生成 (2-5 分)
+- **HANDOFF-14a** (手動 Canva、保険): [CANVA_FIGMA_GUIDE](CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md) 手順 1-7 を寛太が手動実行 (30 分)
+
+どちらも 8 枚コピペカードは [CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md](CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md) §5 を流用。
