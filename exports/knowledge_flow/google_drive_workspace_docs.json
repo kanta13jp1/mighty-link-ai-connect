@@ -15,7 +15,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:24:43.067Z",
-      "modifiedTime": "2026-05-23T14:28:19.099Z",
+      "modifiedTime": "2026-05-23T15:24:39.213Z",
       "source": "exports/knowledge_flow/notebooklm_source_pack.txt"
     },
     "notebooklm_presentation_brief": {
@@ -31,7 +31,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:24:46.489Z",
-      "modifiedTime": "2026-05-23T14:28:22.261Z",
+      "modifiedTime": "2026-05-23T15:24:41.901Z",
       "source": "exports/knowledge_flow/notebooklm_presentation_brief.txt"
     },
     "notebooklm_agent_brief": {
@@ -47,7 +47,7 @@
         }
       ],
       "createdTime": "2026-05-21T16:35:24.795Z",
-      "modifiedTime": "2026-05-23T14:28:24.726Z",
+      "modifiedTime": "2026-05-23T15:24:44.175Z",
       "source": "exports/knowledge_flow/notebooklm_agent_brief.md"
     },
     "notebooklm_ceo_slide_outline": {
@@ -63,7 +63,7 @@
         }
       ],
       "createdTime": "2026-05-21T16:35:27.388Z",
-      "modifiedTime": "2026-05-23T14:28:27.076Z",
+      "modifiedTime": "2026-05-23T15:24:46.373Z",
       "source": "exports/knowledge_flow/notebooklm_ceo_slide_outline.md"
     }
   },
@@ -82,8 +82,25 @@
         }
       ],
       "createdTime": "2026-05-21T17:25:09.130Z",
-      "modifiedTime": "2026-05-23T14:28:29.812Z",
+      "modifiedTime": "2026-05-23T15:24:48.769Z",
       "source": "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx"
+    },
+    "ceo_presentation_pptx_branded": {
+      "id": "1myH1m8TKiukdxR7F_EertJ1102CfglBC",
+      "name": "Mighty Skill-Bridge CEO Presentation Deck 2026-06-02 (Branded).pptx",
+      "url": "https://docs.google.com/presentation/d/1myH1m8TKiukdxR7F_EertJ1102CfglBC/edit?usp=drivesdk&ouid=117190324786156797159&rtpof=true&sd=true",
+      "downloadUrl": "https://drive.google.com/uc?id=1myH1m8TKiukdxR7F_EertJ1102CfglBC&export=download",
+      "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-05-23T15:24:51.404Z",
+      "modifiedTime": "2026-05-23T15:24:51.404Z",
+      "source": "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02_branded.pptx"
     }
   }
 }
