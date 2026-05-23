@@ -325,7 +325,7 @@ def build_summary_sheet(phase_names, last_data_row):
 
 def build_timeline_sheet(task_rows):
     """Builds a visual Gantt-style timeline grid for the WBS Timeline tab."""
-    base_cols = 8
+    base_cols = 9
     header_rows = 5
     today = datetime.date.today()
 
@@ -341,10 +341,35 @@ def build_timeline_sheet(task_rows):
             yield current
             current += datetime.timedelta(days=1)
 
-    def task_kind(row):
+    def delay_state(row, start_date, end_date):
+        progress = str(row[13]).strip()
+        if progress == "100%":
+            return "on_track"
+        if end_date and end_date < today:
+            return "overdue_end"
+        if progress == "0%" and start_date and start_date < today:
+            return "overdue_start"
+        if end_date and 0 <= (end_date - today).days <= 1:
+            return "due_soon"
+        return "on_track"
+
+    def delay_label(state):
+        labels = {
+            "overdue_end": "終了遅れ",
+            "overdue_start": "着手遅れ",
+            "due_soon": "期限間近",
+            "on_track": "正常",
+        }
+        return labels.get(state, "正常")
+
+    def task_kind(row, state):
         progress = str(row[13]).strip()
         if progress == "100%":
             return "done"
+        if state in ["overdue_end", "overdue_start"]:
+            return "overdue"
+        if state == "due_soon":
+            return "due_soon"
         if progress == "50%":
             return "working"
         return "todo"
@@ -360,11 +385,13 @@ def build_timeline_sheet(task_rows):
             valid_dates.append(start_date)
         if end_date:
             valid_dates.append(end_date)
+        state = delay_state(row, start_date, end_date)
         entries.append({
             "row": row,
             "start": start_date,
             "end": end_date,
-            "kind": task_kind(row),
+            "delay": state,
+            "kind": task_kind(row, state),
         })
 
     if valid_dates:
@@ -386,9 +413,9 @@ def build_timeline_sheet(task_rows):
 
     title = "Mighty-Link AI Connect WBS Timeline"
     description = f"Gantt-style schedule view generated from data/WBS.tsv / Last Sync: {report_time}"
-    legend = "Legend: gray=done, green=active, white=planned, blue line=today"
+    legend = "Legend: orange=late, yellow=due soon, gray=done, green=active, white=planned, blue line=today"
     month_row = [""] * total_cols
-    metadata_headers = ["分類", "WBS#", "タスク", "状態", "担当", "開始", "終了", "進捗"]
+    metadata_headers = ["分類", "WBS#", "タスク", "状態", "担当", "開始", "終了", "進捗", "遅延"]
     day_header_row = metadata_headers + [str(date_value.day) for date_value in date_columns]
 
     month_spans = []
@@ -414,10 +441,12 @@ def build_timeline_sheet(task_rows):
     ]
 
     bar_ranges = []
+    delay_rows = []
     for entry in entries:
         row = entry["row"]
         start = entry["start"]
         end = entry["end"]
+        delay = entry["delay"]
         sheet_row_idx = len(values)
         values_row = [
             row[3],
@@ -428,7 +457,10 @@ def build_timeline_sheet(task_rows):
             row[10],
             row[11],
             row[13],
+            delay_label(delay),
         ] + [""] * len(date_columns)
+        if delay != "on_track":
+            delay_rows.append({"row": sheet_row_idx, "delay": delay})
 
         if start and end:
             clipped_start = max(start, start_date)
@@ -445,6 +477,7 @@ def build_timeline_sheet(task_rows):
                     "start_col": start_col,
                     "end_col": end_col,
                     "kind": entry["kind"],
+                    "delay": delay,
                 })
         values.append(values_row)
 
@@ -462,6 +495,7 @@ def build_timeline_sheet(task_rows):
         "weekend_cols": weekend_cols,
         "today_col": today_col,
         "bar_ranges": bar_ranges,
+        "delay_rows": delay_rows,
     }
     return values, meta
 
@@ -469,9 +503,21 @@ def build_timeline_sheet(task_rows):
 def gantt_color(kind):
     if kind == "done":
         return {"red": 183/255, "green": 183/255, "blue": 183/255}
+    if kind == "overdue":
+        return {"red": 244/255, "green": 180/255, "blue": 0/255}
+    if kind == "due_soon":
+        return {"red": 251/255, "green": 188/255, "blue": 5/255}
     if kind == "working":
         return {"red": 217/255, "green": 234/255, "blue": 211/255}
     return {"red": 1.0, "green": 1.0, "blue": 1.0}
+
+
+def delay_row_color(delay):
+    if delay in ["overdue_end", "overdue_start"]:
+        return COLORS["status_alert"]
+    if delay == "due_soon":
+        return COLORS["warning_bg"]
+    return COLORS["white"]
 
 
 def apply_gantt_timeline_styles(sh, worksheet, num_rows, num_cols, meta):
@@ -561,7 +607,7 @@ def apply_gantt_timeline_styles(sh, worksheet, num_rows, num_cols, meta):
         if end_col - start_col > 1:
             requests.append({"mergeCells": {"range": grid_range(sheet_id, 3, 4, start_col, end_col), "mergeType": "MERGE_ALL"}})
 
-    col_widths = [180, 72, 260, 90, 120, 92, 92, 68]
+    col_widths = [180, 72, 260, 90, 120, 92, 92, 68, 92]
     for col_idx, width in enumerate(col_widths):
         requests.append(set_column_width_request(sheet_id, col_idx, width))
     for col_idx in range(base_cols, num_cols):
@@ -590,6 +636,14 @@ def apply_gantt_timeline_styles(sh, worksheet, num_rows, num_cols, meta):
             "backgroundColor": weekend_bg,
             "borders": border_format(),
         }, "userEnteredFormat(backgroundColor,borders)"))
+
+    for delayed in meta["delay_rows"]:
+        requests.append(repeat_format(sheet_id, delayed["row"], delayed["row"] + 1, 0, num_cols, {
+            "backgroundColor": delay_row_color(delayed["delay"]),
+            "verticalAlignment": "MIDDLE",
+            "wrapStrategy": "WRAP",
+            "borders": border_format(),
+        }, "userEnteredFormat(backgroundColor,verticalAlignment,wrapStrategy,borders)"))
 
     for bar in meta["bar_ranges"]:
         requests.append(repeat_format(sheet_id, bar["row"], bar["row"] + 1, bar["start_col"], bar["end_col"], {
@@ -623,6 +677,9 @@ def apply_gantt_timeline_styles(sh, worksheet, num_rows, num_cols, meta):
         add_text_conditional(sheet_id, header_rows, num_rows, 3, "完了", COLORS["status_done"]),
         add_text_conditional(sheet_id, header_rows, num_rows, 3, "実行中", COLORS["status_working"]),
         add_text_conditional(sheet_id, header_rows, num_rows, 3, "未着手", COLORS["status_todo"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 8, "終了遅れ", COLORS["status_alert"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 8, "着手遅れ", COLORS["status_alert"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 8, "期限間近", COLORS["warning_bg"]),
     ])
     sh.batch_update({"requests": requests})
 

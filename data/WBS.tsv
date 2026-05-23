@@ -1,4 +1,4 @@
-﻿タスクID	大フェーズ	小フェーズ	タスク名	担当	実行エンジン	Sheets Live 連携アクション	ステータス	開始日	終了予定日
+タスクID	大フェーズ	小フェーズ	タスク名	担当	実行エンジン	Sheets Live 連携アクション	ステータス	開始日	終了予定日
 T101	1. 企画・設計	要件定義	requirements.md の策定	人間 + AI	Gemini API 現行モデル	完了時に Docs Live へ自動文書書き出し	完了	2026-05-20	2026-05-21
 T102	1. 企画・設計	DB設計	database.md とスキーマ設計	AIエージェント	Gemini API 現行モデル	テーブル定義をスプレッドシートへ自動同期	完了	2026-05-21	2026-05-22
 T201	2. フロント開発	UI/UX実装	PDF/画像ドラッグ＆ドロップ画面	AIエージェント	Antigravity 2.0	実装進捗を Sheets Live にリアルタイム反映	完了	2026-05-22	2026-05-23
@@ -16,7 +16,7 @@ T501	5. デプロイ	インフラ	CI/CD（GitHub Actions）設定	AIエージェ
 T502	5. デプロイ	リリース	プレスリリース・SNS告知文の自動生成	人間 + AI	Gemini API 現行モデル	告知文候補（3パターン）を Docs Live に書き出し	未着手	2026-05-31	2026-06-01
 T601	6. 社長プレゼン準備	方針整理	6/2打ち合わせの目的・決定事項・判断軸整理	Codex	VSCode + Codex	プレゼン準備ブリーフをDocs/Sheetsへ同期できる形で整備	完了	2026-05-21	2026-05-21
 T602	6. 社長プレゼン準備	デモ構成	公開URLデモの見せ方・説明順・想定操作シナリオ設計	Codex	VSCode + Codex	デモシナリオと確認観点をWBS Summaryへ反映	実行中	2026-05-22	2026-05-23
-T603	6. 社長プレゼン準備	安定稼働確認	公開URL・ローカルAPI・Google Sheets同期の本番前ヘルスチェック	Codex	VSCode + Codex	Public Demo Guardと同期結果を作業ログへ記録	未着手	2026-05-23	2026-05-24
+T603	6. 社長プレゼン準備	安定稼働確認	公開URL・ローカルAPI・Google Sheets同期の本番前ヘルスチェック	Codex	VSCode + Codex	Public Demo Guardと同期結果を作業ログへ記録	完了	2026-05-23	2026-05-24
 T604	6. 社長プレゼン準備	資料骨子	社長向けプレゼン構成・スライド見出し・説明順の作成	Codex	VSCode + Codex	決定前提ではなく判断材料としてプレゼン骨子を管理	未着手	2026-05-24	2026-05-26
 T605	6. 社長プレゼン準備	選択肢整理	サービス内容決定前の論点・選択肢・確認質問リスト化	Claude Code	VSCode + Claude Code	docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.mdへ6/2で決める論点・未決事項を整理済	完了	2026-05-22	2026-05-22
 T606	6. 社長プレゼン準備	運用・体制論点	6/2以降の開発体制・運用・リスク・費用感の論点整理	Claude Code	VSCode + Claude Code	docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.mdへ社長確認が必要な運用論点を整理済	完了	2026-05-22	2026-05-22
@@ -91,3 +91,4 @@ T674	6. 社長プレゼン準備	Favicon and local route polish	Add a branded fa
 T675	6. 社長プレゼン準備	Chrome DevTools workspace route	Add the Chrome DevTools automatic workspace JSON route to remove localhost 404 noise	Codex	VSCode + Codex + FastAPI + Chrome official docs	FastAPI now returns devtools workspace JSON at /.well-known/appspecific/com.chrome.devtools.json with the local project root and a stable UUID so Chrome DevTools stops logging 404 for that development-only request	完了	2026-05-23	2026-05-23
 T676	6. 社長プレゼン準備	Seedance風ナビ/フッター刷新	Seedance公式ページに近いヘッダー/フッター項目配置とスクロール時ヘッダー挙動を公開デモへ追加	Codex	VSCode + Codex + Playwright + Official Docs	index.html/src/index.htmlを生成元から再描画し、Home/Models/Blog & Publication/Join Us、EN/JP、Models/Teams/Learn More系フッター、動画デフォルト/Download/Seedance API導線を維持してPC/モバイル検証を完了する	完了	2026-05-23	2026-05-23
 T677	6. 社長プレゼン準備	Sheetsガント風タイムライン化	WBS Timelineタブを添付画像のように日付軸とバーで予定を可視化できる表示へ改善	Codex	VSCode + Codex + Google Sheets API	`sync_wbs_to_sheets.py`でdata/WBS.tsvから日別列、月ヘッダー、今日ライン、状態別バー、固定列を生成し、WBS/課題管理表/QA表と同時にGoogle Sheetsへ同期する	完了	2026-05-23	2026-05-23
+T678	6. 社長プレゼン準備	Sheets遅延タスク可視化	WBS Timelineでスケジュール遅延・期限間近タスクを色で把握できるようにする	Codex	VSCode + Codex + Google Sheets API	`sync_wbs_to_sheets.py`のGantt表示へ遅延列、終了遅れ/着手遅れ/期限間近判定、行色、バー色、条件付き書式を追加し、Google Sheets API batchUpdateで同期する	完了	2026-05-23	2026-05-23
