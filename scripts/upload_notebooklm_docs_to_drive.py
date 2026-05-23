@@ -77,6 +77,12 @@ FILE_SOURCES = [
         "source": EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02.pptx",
         "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     },
+    {
+        "key": "ceo_presentation_pptx_branded",
+        "title": "Mighty Skill-Bridge CEO Presentation Deck 2026-06-02 (Branded).pptx",
+        "source": EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02_branded.pptx",
+        "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    },
 ]
 
 
