@@ -83,6 +83,12 @@ FILE_SOURCES = [
         "source": EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02_branded.pptx",
         "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     },
+    {
+        "key": "ui_wireframes_pptx",
+        "title": "Mighty Skill-Bridge UI Wireframes — 10 Patterns 2026-06-02.pptx",
+        "source": EXPORT_DIR / "mighty_skill_bridge_ui_wireframes_2026-06-02.pptx",
+        "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    },
 ]
 
 

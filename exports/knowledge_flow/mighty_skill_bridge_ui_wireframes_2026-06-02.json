@@ -1,0 +1,75 @@
+{
+  "generated_at_jst": "2026-05-24T02:52:01.403677+09:00",
+  "account": "k-umezawa@ml-mightylink.com",
+  "generator": "scripts/generate_wireframes_deck.py",
+  "outputs": {
+    "pptx": "exports/knowledge_flow/mighty_skill_bridge_ui_wireframes_2026-06-02.pptx",
+    "summary": "exports/knowledge_flow/mighty_skill_bridge_ui_wireframes_2026-06-02.md"
+  },
+  "slide_count": 11,
+  "style": "greyscale wireframe",
+  "figma_companion_file_key": "aiQt3c1Cenru4x6GMcLuL5",
+  "figma_companion_url": "https://www.figma.com/design/aiQt3c1Cenru4x6GMcLuL5",
+  "patterns": [
+    {
+      "num": 1,
+      "title": "Vertical Hero Stack — Mobile-first",
+      "subtitle": "1 column / top-to-bottom flow. 縦スクロールで完結。スマホ親和。",
+      "rationale": "最小 UI で迷わず Step 1→2→3 を順に体験できる。SES 営業が客先で iPad プレゼン時に強い。"
+    },
+    {
+      "num": 2,
+      "title": "Split Form — Profile vs Job (Current)",
+      "subtitle": "2 列並列入力 / 中央 Analyze CTA。現行 UI のベース。",
+      "rationale": "比較対象を視覚的に対置。デスクトップでの広い画面前提。"
+    },
+    {
+      "num": 3,
+      "title": "Step Wizard — 4-step Progress Flow",
+      "subtitle": "経歴 → 案件 → 確認 → 結果。1 ステップずつ集中。",
+      "rationale": "初めて使う社内人事担当が迷わない。各ステップで Help が出せる。"
+    },
+    {
+      "num": 4,
+      "title": "Conversational Chat — AI Interview",
+      "subtitle": "AI が質問 / ユーザーが回答 / 最終 fit を結果バブルで提示。",
+      "rationale": "応募者本人が直接使う場合に親しみやすい。チャット履歴で説明責任。"
+    },
+    {
+      "num": 5,
+      "title": "Drag & Drop Cards — 4 Quadrant Workspace",
+      "subtitle": "Engineers / Jobs / Matches / Reports の 4 象限。カード DnD。",
+      "rationale": "中規模の人事チームが複数案件 × 複数候補を同時管理。"
+    },
+    {
+      "num": 6,
+      "title": "Pipeline Board — Kanban for Recruiters",
+      "subtitle": "候補 → 評価中 → 推薦 → 配属済。Score badge 付きカード。",
+      "rationale": "リクルーター業務の標準ビュー。複数案件並列追跡しやすい。"
+    },
+    {
+      "num": 7,
+      "title": "Comparison Table — Multi-candidate Matrix",
+      "subtitle": "候補 (rows) × 評価軸 (cols)。color-coded score。",
+      "rationale": "経営報告/最終決裁で最強。1 画面で 5-10 候補を比較できる。"
+    },
+    {
+      "num": 8,
+      "title": "Dashboard Tiles — Exec Overview",
+      "subtitle": "6 タイル: 本日マッチ / Score 分布 / Skill Gap / Recent / Queue / Metrics。",
+      "rationale": "社長 / 経営層が一目で全体把握。週次レビューで使う。"
+    },
+    {
+      "num": 9,
+      "title": "Inline Preview — Live Suggestions",
+      "subtitle": "入力中に右パネルへリアルタイム fit / 候補をストリーミング表示。",
+      "rationale": "AI ライブ感を最大化。社長デモで「打ちながら結果が変わる」を見せる。"
+    },
+    {
+      "num": 10,
+      "title": "Search-First Catalog — Engineer/Job Library",
+      "subtitle": "検索バー + フィルタ → グリッドカード → 詳細モーダル。",
+      "rationale": "蓄積データが増えた後の \"リクルーターの日常入口\"。検索駆動。"
+    }
+  ]
+}
