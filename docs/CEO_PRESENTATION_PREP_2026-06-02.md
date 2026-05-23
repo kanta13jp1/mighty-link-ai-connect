@@ -39,6 +39,7 @@
 - [CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md](CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md): 社長への事前共有メモ (長文 / 短文 / 当日アジェンダ短文) + 送付前チェックリスト (T614 deliverable)。
 - [CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md](CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md): Canva PPTX import + Figma 代替パス + 8 枚コピペカード + Mighty Skill-Bridge ブランドカラー (T658-extend、手動版)。
 - [MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md](MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md): Canva MCP + Figma MCP セットアップ + 自動化プロンプト + プラン別機能マトリクス (T658-mcp-extend、自動化版、推奨)。
+- **Figma Slides ファイル (2026-05-24 自動生成)**: [Mighty Skill-Bridge CEO Brief 2026-06-02](https://www.figma.com/slides/PAQWzAUPoPTy3ibLcOmPDC) — Figma MCP `use_figma` で 9 slides (1 cover + 8 content) を Mighty Skill-Bridge brand colors + デモスクショ埋め込みで自動生成。当日の社長プレゼン用第一候補。
 - [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md): 6/1 21:00 JST Final Review 用 35 項目 checklist (T663 deliverable)。
 - [SHEETS_TRACKERS_SCHEMA.md](SHEETS_TRACKERS_SCHEMA.md): 課題管理表 + QA表の Sheets スキーマと運用フロー。
 - [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md): 3-tool 体制 (Antigravity+Gemini / Codex / Claude Code) と handoff 規約。

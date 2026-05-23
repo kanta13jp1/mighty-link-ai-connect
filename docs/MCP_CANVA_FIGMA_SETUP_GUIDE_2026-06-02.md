@@ -297,6 +297,49 @@ Canva MCP が返したダウンロード URL から PPTX/PDF をローカル `ex
 
 ---
 
+## 4.6. 実機実行ログ — Figma MCP で 9 slides 自動生成 (2026-05-24)
+
+寛太様が Figma MCP OAuth 認証完了 → Claude Code から本ガイドの手順を実行し、Figma Slides ファイルを自動生成した実績:
+
+| 項目 | 値 |
+| --- | --- |
+| **Figma file** | [Mighty Skill-Bridge CEO Brief 2026-06-02](https://www.figma.com/slides/PAQWzAUPoPTy3ibLcOmPDC) |
+| **fileKey** | `PAQWzAUPoPTy3ibLcOmPDC` |
+| **team** | `tokyofigma01` (team::1404391492263715179) |
+| **owner** | kanta13jp@gmail.com (handle: kanta13jp1) |
+| **slide count** | 9 (1 title cover + 8 content) |
+| **slide size** | 1920×1080 (16:9) |
+| **brand colors** | Mighty Skill-Bridge / Seedance cinematic 7 色適用 |
+| **embedded image** | Slide 2 (現在の到達点と公開デモ) に公開デモのライブスクショ |
+
+### 実行手順 (再現可能)
+
+```text
+1. claude mcp authenticate (Figma)
+2. mcp__plugin_design_figma__whoami → planKey 取得
+3. mcp__plugin_design_figma__create_new_file --editorType slides --planKey team::... --fileName "..."
+4. mcp__plugin_design_figma__upload_assets --fileKey ... --count 1 (POST PNG via curl multipart)
+5. mcp__plugin_design_figma__use_figma --code "<JS that creates 9 slides via figma.createSlide() with brand styling + bullets + CTA + image fill>"
+```
+
+### Figma Plugin API メモ (実装中に判明)
+
+- `figma.createSlide()` 動作。返値は SLIDE 型 (1920×1080 固定)
+- SLIDES ファイルは Page → SLIDE_GRID → SLIDE_ROW → SLIDE 階層
+- SLIDE.name は自動採番 ("1", "2" ...) で `slide.name = "..."` のオーバーライドは効かない
+- 画像 fill は `{ type: "IMAGE", scaleMode: "FIT"/"FILL"/"CROP"/"TILE", imageHash: "..." }`
+  - imageHash は upload_assets の戻り値 (`placedOnNodeId` と一緒に返る `imageHash`)
+- フォント: `figma.loadFontAsync({ family: "Inter", style: "Bold"|"Semi Bold"|"Regular" })` で事前ロード必須
+- 注意: `figma.slides` は存在しない (figma globals に slides namespace なし)。スライド操作は通常の Plugin API で行う
+
+### Figma MCP Starter プラン制限
+
+- Figma 公式 Starter プランでは get_screenshot の MCP tool call 数に制限あり (本実機実行で `Upgrade your plan` メッセージ受信)
+- 制限到達後も use_figma / create_new_file / upload_assets は引き続き動作
+- スライド検証は Figma エディタで直接開いて目視推奨 (Drive アップロード等の自動チェックは別途)
+
+---
+
 ## 4.5. よくあるエラーと修正 (2026-05-23 実機検証)
 
 寛太が実際にコマンド実行して遭遇したエラーとその修正:
