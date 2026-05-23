@@ -324,6 +324,310 @@ def build_summary_sheet(phase_names, last_data_row):
 
 
 def build_timeline_sheet(task_rows):
+    """Builds a visual Gantt-style timeline grid for the WBS Timeline tab."""
+    base_cols = 8
+    header_rows = 5
+    today = datetime.date.today()
+
+    def parse_iso_date(value):
+        try:
+            return datetime.date.fromisoformat((value or "").strip())
+        except ValueError:
+            return None
+
+    def day_range(start_date, end_date):
+        current = start_date
+        while current <= end_date:
+            yield current
+            current += datetime.timedelta(days=1)
+
+    def task_kind(row):
+        progress = str(row[13]).strip()
+        if progress == "100%":
+            return "done"
+        if progress == "50%":
+            return "working"
+        return "todo"
+
+    entries = []
+    valid_dates = []
+    for row in task_rows:
+        start_date = parse_iso_date(row[10])
+        end_date = parse_iso_date(row[11])
+        if start_date and end_date and end_date < start_date:
+            start_date, end_date = end_date, start_date
+        if start_date:
+            valid_dates.append(start_date)
+        if end_date:
+            valid_dates.append(end_date)
+        entries.append({
+            "row": row,
+            "start": start_date,
+            "end": end_date,
+            "kind": task_kind(row),
+        })
+
+    if valid_dates:
+        start_date = min(valid_dates) - datetime.timedelta(days=2)
+        end_date = max(valid_dates) + datetime.timedelta(days=3)
+    else:
+        start_date = today - datetime.timedelta(days=7)
+        end_date = today + datetime.timedelta(days=14)
+
+    # Keep the sheet readable if future WBS data grows beyond the current 6/2 prep window.
+    max_days = 120
+    if (end_date - start_date).days + 1 > max_days:
+        end_date = start_date + datetime.timedelta(days=max_days - 1)
+
+    date_columns = list(day_range(start_date, end_date))
+    date_index = {date_value: idx for idx, date_value in enumerate(date_columns)}
+    total_cols = base_cols + len(date_columns)
+    report_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    title = "Mighty-Link AI Connect WBS Timeline"
+    description = f"Gantt-style schedule view generated from data/WBS.tsv / Last Sync: {report_time}"
+    legend = "Legend: gray=done, green=active, white=planned, blue line=today"
+    month_row = [""] * total_cols
+    metadata_headers = ["分類", "WBS#", "タスク", "状態", "担当", "開始", "終了", "進捗"]
+    day_header_row = metadata_headers + [str(date_value.day) for date_value in date_columns]
+
+    month_spans = []
+    current_month_key = None
+    current_month_start = None
+    for idx, date_value in enumerate(date_columns):
+        month_key = (date_value.year, date_value.month)
+        if month_key != current_month_key:
+            if current_month_key is not None:
+                month_spans.append((base_cols + current_month_start, base_cols + idx))
+            current_month_key = month_key
+            current_month_start = idx
+            month_row[base_cols + idx] = f"'{date_value.year}年{date_value.month}月"
+    if current_month_key is not None:
+        month_spans.append((base_cols + current_month_start, base_cols + len(date_columns)))
+
+    values = [
+        [title] + [""] * (total_cols - 1),
+        [description] + [""] * (total_cols - 1),
+        [legend] + [""] * (total_cols - 1),
+        month_row,
+        day_header_row,
+    ]
+
+    bar_ranges = []
+    for entry in entries:
+        row = entry["row"]
+        start = entry["start"]
+        end = entry["end"]
+        sheet_row_idx = len(values)
+        values_row = [
+            row[3],
+            row[0],
+            row[5],
+            row[7],
+            row[8],
+            row[10],
+            row[11],
+            row[13],
+        ] + [""] * len(date_columns)
+
+        if start and end:
+            clipped_start = max(start, start_date)
+            clipped_end = min(end, end_date)
+            if clipped_start <= clipped_end and clipped_start in date_index and clipped_end in date_index:
+                start_offset = date_index[clipped_start]
+                end_offset = date_index[clipped_end]
+                start_col = base_cols + start_offset
+                end_col = base_cols + end_offset + 1
+                label = f"{row[0]} {row[5]} ・ {row[7]}"
+                values_row[start_col] = label[:64]
+                bar_ranges.append({
+                    "row": sheet_row_idx,
+                    "start_col": start_col,
+                    "end_col": end_col,
+                    "kind": entry["kind"],
+                })
+        values.append(values_row)
+
+    weekend_cols = [
+        base_cols + idx
+        for idx, date_value in enumerate(date_columns)
+        if date_value.weekday() >= 5
+    ]
+    today_col = base_cols + date_index[today] if today in date_index else None
+
+    meta = {
+        "base_cols": base_cols,
+        "header_rows": header_rows,
+        "month_spans": month_spans,
+        "weekend_cols": weekend_cols,
+        "today_col": today_col,
+        "bar_ranges": bar_ranges,
+    }
+    return values, meta
+
+
+def gantt_color(kind):
+    if kind == "done":
+        return {"red": 183/255, "green": 183/255, "blue": 183/255}
+    if kind == "working":
+        return {"red": 217/255, "green": 234/255, "blue": 211/255}
+    return {"red": 1.0, "green": 1.0, "blue": 1.0}
+
+
+def apply_gantt_timeline_styles(sh, worksheet, num_rows, num_cols, meta):
+    print("[*] Applying Gantt-style WBS timeline styles...")
+    sheet_id = worksheet.id
+    base_cols = meta["base_cols"]
+    header_rows = meta["header_rows"]
+    requests = cleanup_sheet_requests(sh, worksheet, max(num_rows, 80), max(num_cols, 20))
+
+    requests.extend([
+        {
+            "updateSheetProperties": {
+                "properties": {
+                    "sheetId": sheet_id,
+                    "gridProperties": {
+                        "frozenRowCount": header_rows,
+                        "frozenColumnCount": base_cols,
+                        "hideGridlines": False,
+                    },
+                },
+                "fields": "gridProperties(frozenRowCount,frozenColumnCount,hideGridlines)",
+            }
+        },
+        {"mergeCells": {"range": grid_range(sheet_id, 0, 1, 0, base_cols), "mergeType": "MERGE_ALL"}},
+        {"mergeCells": {"range": grid_range(sheet_id, 1, 2, 0, base_cols), "mergeType": "MERGE_ALL"}},
+        {"mergeCells": {"range": grid_range(sheet_id, 2, 3, 0, base_cols), "mergeType": "MERGE_ALL"}},
+        repeat_format(sheet_id, 0, 1, 0, num_cols, {
+            "backgroundColor": COLORS["title_bg"],
+            "textFormat": {"foregroundColor": COLORS["header_text"], "bold": True, "fontSize": 16},
+            "horizontalAlignment": "LEFT",
+            "verticalAlignment": "MIDDLE",
+        }),
+        repeat_format(sheet_id, 1, 2, 0, num_cols, {
+            "backgroundColor": COLORS["summary_bg"],
+            "textFormat": {"fontSize": 9},
+            "horizontalAlignment": "LEFT",
+            "verticalAlignment": "MIDDLE",
+        }),
+        repeat_format(sheet_id, 2, 3, 0, num_cols, {
+            "backgroundColor": COLORS["white"],
+            "textFormat": {"fontSize": 9, "bold": True},
+            "horizontalAlignment": "LEFT",
+            "verticalAlignment": "MIDDLE",
+        }),
+        repeat_format(sheet_id, 3, 4, 0, num_cols, {
+            "backgroundColor": COLORS["subheader_bg"],
+            "textFormat": {"bold": True},
+            "horizontalAlignment": "CENTER",
+            "verticalAlignment": "MIDDLE",
+            "borders": border_format(),
+        }),
+        repeat_format(sheet_id, 4, 5, 0, num_cols, {
+            "backgroundColor": COLORS["header_bg"],
+            "textFormat": {"foregroundColor": COLORS["header_text"], "bold": True, "fontSize": 9},
+            "horizontalAlignment": "CENTER",
+            "verticalAlignment": "MIDDLE",
+            "wrapStrategy": "WRAP",
+            "borders": border_format(),
+        }),
+        repeat_format(sheet_id, header_rows, num_rows, 0, base_cols, {
+            "verticalAlignment": "MIDDLE",
+            "wrapStrategy": "WRAP",
+            "borders": border_format(),
+        }),
+        repeat_format(sheet_id, header_rows, num_rows, base_cols, num_cols, {
+            "verticalAlignment": "MIDDLE",
+            "horizontalAlignment": "CENTER",
+            "wrapStrategy": "CLIP",
+            "borders": border_format(),
+        }),
+        repeat_format(sheet_id, header_rows, num_rows, 5, 7, {
+            "numberFormat": {"type": "DATE", "pattern": "yyyy-mm-dd"},
+            "horizontalAlignment": "CENTER",
+        }, "userEnteredFormat(numberFormat,horizontalAlignment)"),
+        repeat_format(sheet_id, header_rows, num_rows, 7, 8, {
+            "numberFormat": {"type": "PERCENT", "pattern": "0%"},
+            "horizontalAlignment": "CENTER",
+        }, "userEnteredFormat(numberFormat,horizontalAlignment)"),
+        {
+            "setBasicFilter": {
+                "filter": {"range": grid_range(sheet_id, header_rows - 1, num_rows, 0, num_cols)}
+            }
+        },
+    ])
+
+    for start_col, end_col in meta["month_spans"]:
+        if end_col - start_col > 1:
+            requests.append({"mergeCells": {"range": grid_range(sheet_id, 3, 4, start_col, end_col), "mergeType": "MERGE_ALL"}})
+
+    col_widths = [180, 72, 260, 90, 120, 92, 92, 68]
+    for col_idx, width in enumerate(col_widths):
+        requests.append(set_column_width_request(sheet_id, col_idx, width))
+    for col_idx in range(base_cols, num_cols):
+        requests.append(set_column_width_request(sheet_id, col_idx, 28))
+
+    for row_idx, height in {0: 38, 1: 28, 2: 26, 3: 26, 4: 34}.items():
+        requests.append({
+            "updateDimensionProperties": {
+                "range": {"sheetId": sheet_id, "dimension": "ROWS", "startIndex": row_idx, "endIndex": row_idx + 1},
+                "properties": {"pixelSize": height},
+                "fields": "pixelSize",
+            }
+        })
+    if num_rows > header_rows:
+        requests.append({
+            "updateDimensionProperties": {
+                "range": {"sheetId": sheet_id, "dimension": "ROWS", "startIndex": header_rows, "endIndex": num_rows},
+                "properties": {"pixelSize": 30},
+                "fields": "pixelSize",
+            }
+        })
+
+    weekend_bg = {"red": 248/255, "green": 249/255, "blue": 250/255}
+    for col_idx in meta["weekend_cols"]:
+        requests.append(repeat_format(sheet_id, 3, num_rows, col_idx, col_idx + 1, {
+            "backgroundColor": weekend_bg,
+            "borders": border_format(),
+        }, "userEnteredFormat(backgroundColor,borders)"))
+
+    for bar in meta["bar_ranges"]:
+        requests.append(repeat_format(sheet_id, bar["row"], bar["row"] + 1, bar["start_col"], bar["end_col"], {
+            "backgroundColor": gantt_color(bar["kind"]),
+            "textFormat": {"bold": True, "fontSize": 9, "foregroundColor": COLORS["black"]},
+            "horizontalAlignment": "LEFT",
+            "verticalAlignment": "MIDDLE",
+            "wrapStrategy": "CLIP",
+            "borders": border_format(),
+        }, "userEnteredFormat(backgroundColor,textFormat,horizontalAlignment,verticalAlignment,wrapStrategy,borders)"))
+
+    if meta["today_col"] is not None:
+        today_border = {"style": "SOLID_THICK", "width": 2, "color": COLORS["header_bg"]}
+        requests.extend([
+            repeat_format(sheet_id, 3, 5, meta["today_col"], meta["today_col"] + 1, {
+                "backgroundColor": {"red": 232/255, "green": 240/255, "blue": 254/255},
+                "textFormat": {"bold": True},
+                "horizontalAlignment": "CENTER",
+                "verticalAlignment": "MIDDLE",
+            }, "userEnteredFormat(backgroundColor,textFormat,horizontalAlignment,verticalAlignment)"),
+            {
+                "updateBorders": {
+                    "range": grid_range(sheet_id, 3, num_rows, meta["today_col"], meta["today_col"] + 1),
+                    "left": today_border,
+                    "right": today_border,
+                }
+            },
+        ])
+
+    requests.extend([
+        add_text_conditional(sheet_id, header_rows, num_rows, 3, "完了", COLORS["status_done"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 3, "実行中", COLORS["status_working"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 3, "未着手", COLORS["status_todo"]),
+    ])
+    sh.batch_update({"requests": requests})
+
+
+def build_timeline_sheet_legacy(task_rows):
     values = [
         ["Mighty-Link AI Connect WBS Timeline"] + [""] * 8,
         ["予定開始日・終了日・進捗率を横断確認するための軽量タイムライン"] + [""] * 8,
@@ -849,7 +1153,7 @@ def main():
     enhanced_values, enhanced_rows, task_rows, last_data_row = build_enhanced_wbs(wbs_data)
     phase_names = [row[3] for row in enhanced_rows if row[1] == 1]
     summary_values = build_summary_sheet(phase_names, last_data_row)
-    timeline_values = build_timeline_sheet(task_rows)
+    timeline_values, timeline_meta = build_timeline_sheet(task_rows)
     issue_source_rows = load_tracker_data(ISSUES_TSV_FILE)
     qa_source_rows = load_tracker_data(QA_TSV_FILE)
     issue_values = build_tracker_sheet(
@@ -867,7 +1171,8 @@ def main():
     wbs_cols = len(ENHANCED_HEADERS)
     worksheet = ensure_worksheet(sh, WBS_SHEET_NAME, rows=wbs_rows, cols=wbs_cols)
     summary_sheet = ensure_worksheet(sh, SUMMARY_SHEET_NAME, rows=max(len(summary_values) + 20, 60), cols=9)
-    timeline_sheet = ensure_worksheet(sh, TIMELINE_SHEET_NAME, rows=max(len(timeline_values) + 20, 80), cols=9)
+    timeline_cols = len(timeline_values[0]) if timeline_values else 9
+    timeline_sheet = ensure_worksheet(sh, TIMELINE_SHEET_NAME, rows=max(len(timeline_values) + 20, 80), cols=timeline_cols)
     issue_sheet = None
     qa_sheet = None
     if issue_values:
@@ -917,7 +1222,7 @@ def main():
     try:
         apply_wbs_styles(sh, worksheet, len(enhanced_values), len(ENHANCED_HEADERS), last_data_row)
         apply_simple_table_styles(sh, summary_sheet, len(summary_values), 9, freeze_rows=4, percent_cols=[5], date_cols=[(6, 8)])
-        apply_simple_table_styles(sh, timeline_sheet, len(timeline_values), 9, freeze_rows=4, percent_cols=[8], date_cols=[(5, 7)])
+        apply_gantt_timeline_styles(sh, timeline_sheet, len(timeline_values), timeline_cols, timeline_meta)
         if issue_sheet:
             apply_tracker_styles(sh, issue_sheet, len(issue_values), len(issue_values[0]), "issues")
         if qa_sheet:
