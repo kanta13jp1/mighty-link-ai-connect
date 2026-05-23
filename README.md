@@ -53,7 +53,9 @@ python scripts/verify_google_workspace_account.py
 - [Canva / Figma MCP セットアップ + 自動化フロー](docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md) - T658-mcp-extend (自動化版、推奨)
 - [Figma Slides: Mighty Skill-Bridge CEO Brief 2026-06-02](https://www.figma.com/slides/PAQWzAUPoPTy3ibLcOmPDC) - 2026-05-24 Figma MCP で 9 slides 自動生成、当日プレゼン用第一候補
 - [Branded PPTX on Drive: CEO Presentation Deck 2026-06-02 (Branded)](https://docs.google.com/presentation/d/1myH1m8TKiukdxR7F_EertJ1102CfglBC/edit?usp=drivesdk) - 2026-05-24 アップロード、PowerPoint フォールバック
-- [UI Wireframes — 10 Patterns (Drive)](https://docs.google.com/presentation/d/1qTdOWsLhUf0GzVDkztiuuLczcYkQuQfo/edit?usp=drivesdk) - 2026-05-24 生成、社長 UI パターン判断材料 (greyscale)
+- [UI Wireframes — 10 Patterns (Canva, Branded — Drive)](https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit?usp=drivesdk) - 2026-05-24 Canva MCP 生成、cyber palette フルカラー版、社長判断材料の第一候補
+- [UI Wireframes — 10 Patterns (Canva — edit)](https://www.canva.com/d/Mft5giDcMgir88Y) / [view](https://www.canva.com/d/lLCcnCJnbJE9Xsa) - Canva 上で 12 ページを編集可能
+- [UI Wireframes — 10 Patterns (greyscale, Drive)](https://docs.google.com/presentation/d/1qTdOWsLhUf0GzVDkztiuuLczcYkQuQfo/edit?usp=drivesdk) - 2026-05-24 python-pptx 生成、印刷向け greyscale 版
 - [UI Wireframes Companion (Figma file)](https://www.figma.com/design/aiQt3c1Cenru4x6GMcLuL5) - Figma 上で 10 パターンを編集可能 (MCP rate limit 解除後に同内容を流し込み予定)
 - [6/2 社長プレゼン 最終レビュー チェックリスト](docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) - T663 deliverable
 - [Sheets 追加タブ スキーマ (課題管理表 / QA 表)](docs/SHEETS_TRACKERS_SCHEMA.md)
