@@ -1,11 +1,11 @@
-﻿{
-    "status":  "ready",
-    "provider":  "seedance_api_saved_default",
-    "model":  "dreamina-seedance-2-0-260128",
-    "task_id":  "cgt-20260522194932-9g599",
-    "task_status":  "succeeded",
-    "video":  "exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4",
-    "backup_video":  "exports/seedance_demo/mighty_skill_bridge_procedural_fallback.mp4",
-    "downloaded_at":  "2026-05-22T12:01:24Z",
-    "note":  "Generated Seedance video saved as the default local demo asset. Seedance API calls are disabled by default unless SEEDANCE_API_ENABLED=1."
+{
+    "hero_brand_video": {
+        "status": "ready",
+        "provider": "seedance_api_brand_loop",
+        "model": "dreamina-seedance-2-0-260128",
+        "task_id": "cgt-20260523205421-jh9h9",
+        "video": "exports/seedance_demo/mighty_skill_bridge_procedural_fallback.mp4",
+        "generated_at": "2026-05-23T12:57:21Z",
+        "prompt": "Premium cinematic ambient loop of futuristic network connections. Glowing neon cyber blue and green laser light lines flowing, connecting nodes, representing AI agents, data synergy, technology bridge, dark mode, high-tech, 8k resolution, smooth ambient motion, slow tracking pan"
+    }
 }
