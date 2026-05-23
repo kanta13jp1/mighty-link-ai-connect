@@ -545,12 +545,12 @@ SCREENSHOT_DIR = EXPORT_DIR / "screenshots"
 
 GALLERY_CAPTURES = [
     {
-        "title": "Step 1: 入力フォーム (Profile + Job)",
-        "subtitle": "クリーン状態の公開デモ — 経歴書と案件票の入力受付",
+        "title": "Step 1: 入力フォーム (Clean / 空欄)",
+        "subtitle": "サイト初訪時 — 経歴書 + 案件票がプレースホルダー表示",
         "path": SCREENSHOT_DIR / "01_public_hero.png",
         "accent": "neon_green",
-        "op": "操作: 公開 URL を開いた直後",
-        "caption": "Mighty Skill-Bridge のエントリーポイント。経歴書 (Profile) と案件票 (Job) を並列で受け付ける Step 1 入力 UI。",
+        "op": "操作: サイトにアクセスした直後 (auto-load なし)",
+        "caption": "Mighty Skill-Bridge のエントリーポイント。サンプル自動投入を廃止し、本物の Step 1 として「Load Sample」または手入力を体験させる UX へ刷新。",
     },
     {
         "title": "Step 1: サンプルロード後の状態",
