@@ -325,7 +325,7 @@ def build_summary_sheet(phase_names, last_data_row):
 
 def build_timeline_sheet(task_rows):
     """Builds a visual Gantt-style timeline grid for the WBS Timeline tab."""
-    base_cols = 9
+    base_cols = 10
     header_rows = 5
     today = datetime.date.today()
 
@@ -415,7 +415,7 @@ def build_timeline_sheet(task_rows):
     description = f"Gantt-style schedule view generated from data/WBS.tsv / Last Sync: {report_time}"
     legend = "Legend: orange=late, yellow=due soon, gray=done, green=active, white=planned, blue line=today"
     month_row = [""] * total_cols
-    metadata_headers = ["分類", "WBS#", "タスク", "状態", "担当", "開始", "終了", "進捗", "遅延"]
+    metadata_headers = ["分類", "WBS#", "WP", "タスク", "状態", "担当", "開始", "終了", "進捗", "遅延"]
     day_header_row = metadata_headers + [str(date_value.day) for date_value in date_columns]
 
     month_spans = []
@@ -451,6 +451,7 @@ def build_timeline_sheet(task_rows):
         values_row = [
             row[3],
             row[0],
+            row[2],
             row[5],
             row[7],
             row[8],
@@ -588,11 +589,11 @@ def apply_gantt_timeline_styles(sh, worksheet, num_rows, num_cols, meta):
             "wrapStrategy": "CLIP",
             "borders": border_format(),
         }),
-        repeat_format(sheet_id, header_rows, num_rows, 5, 7, {
+        repeat_format(sheet_id, header_rows, num_rows, 6, 8, {
             "numberFormat": {"type": "DATE", "pattern": "yyyy-mm-dd"},
             "horizontalAlignment": "CENTER",
         }, "userEnteredFormat(numberFormat,horizontalAlignment)"),
-        repeat_format(sheet_id, header_rows, num_rows, 7, 8, {
+        repeat_format(sheet_id, header_rows, num_rows, 8, 9, {
             "numberFormat": {"type": "PERCENT", "pattern": "0%"},
             "horizontalAlignment": "CENTER",
         }, "userEnteredFormat(numberFormat,horizontalAlignment)"),
@@ -607,7 +608,7 @@ def apply_gantt_timeline_styles(sh, worksheet, num_rows, num_cols, meta):
         if end_col - start_col > 1:
             requests.append({"mergeCells": {"range": grid_range(sheet_id, 3, 4, start_col, end_col), "mergeType": "MERGE_ALL"}})
 
-    col_widths = [180, 72, 260, 90, 120, 92, 92, 68, 92]
+    col_widths = [180, 72, 80, 260, 90, 120, 92, 92, 68, 92]
     for col_idx, width in enumerate(col_widths):
         requests.append(set_column_width_request(sheet_id, col_idx, width))
     for col_idx in range(base_cols, num_cols):
@@ -674,12 +675,12 @@ def apply_gantt_timeline_styles(sh, worksheet, num_rows, num_cols, meta):
         ])
 
     requests.extend([
-        add_text_conditional(sheet_id, header_rows, num_rows, 3, "完了", COLORS["status_done"]),
-        add_text_conditional(sheet_id, header_rows, num_rows, 3, "実行中", COLORS["status_working"]),
-        add_text_conditional(sheet_id, header_rows, num_rows, 3, "未着手", COLORS["status_todo"]),
-        add_text_conditional(sheet_id, header_rows, num_rows, 8, "終了遅れ", COLORS["status_alert"]),
-        add_text_conditional(sheet_id, header_rows, num_rows, 8, "着手遅れ", COLORS["status_alert"]),
-        add_text_conditional(sheet_id, header_rows, num_rows, 8, "期限間近", COLORS["warning_bg"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 4, "完了", COLORS["status_done"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 4, "実行中", COLORS["status_working"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 4, "未着手", COLORS["status_todo"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 9, "終了遅れ", COLORS["status_alert"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 9, "着手遅れ", COLORS["status_alert"]),
+        add_text_conditional(sheet_id, header_rows, num_rows, 9, "期限間近", COLORS["warning_bg"]),
     ])
     sh.batch_update({"requests": requests})
 
