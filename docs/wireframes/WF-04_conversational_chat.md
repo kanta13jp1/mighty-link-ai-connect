@@ -12,7 +12,7 @@
 | status | spec-ready (visual = Canva slide 5) |
 | pick-when | 応募者本人が直接利用、説明責任が必要、AI ライブ感重視 |
 | skip-when | HR 一括処理 / multi-candidate 比較 |
-| output target | `static/wireframes/wf-04.html` |
+| output target | `exports/wireframes/wf-04.html` |
 
 ## 2. ASCII Layout
 
@@ -134,7 +134,7 @@ any ── reset ──> init
 ## 12. Implementation Prompt (LLM-ready)
 
 ```text
-Implement WF-04 "Conversational Chat" for Mighty Skill-Bridge as static/wireframes/wf-04.html.
+Implement WF-04 "Conversational Chat" for Mighty Skill-Bridge as exports/wireframes/wf-04.html.
 
 Stack: vanilla HTML/JS. Use POST /api/parse twice (engineer then job), then POST /api/match.
 

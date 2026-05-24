@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-08 Exec Dashboard</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E;
+      --r-lg:20px;--s-2:8px;--s-3:16px;--s-4:24px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+header{padding:var(--s-3);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--c-border)}
+header h1{color:var(--c-accent);margin:0}
+header select{background:#0a0b12;color:var(--c-text);border:1px solid var(--c-border);border-radius:8px;padding:6px 10px;font:inherit}
+.wf08__grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);
+            gap:var(--s-3);padding:var(--s-3);min-height:88vh}
+@media (max-width:1280px){.wf08__grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr)}}
+@media (max-width:800px){.wf08__grid{grid-template-columns:1fr;grid-template-rows:repeat(6,auto)}}
+.wf08__tile{background:var(--c-surface);border:1px solid var(--c-border);
+            border-radius:var(--r-lg);padding:var(--s-4);display:grid;gap:var(--s-2)}
+.wf08__tile h2{margin:0;color:var(--c-text-sub);font-size:18px}
+.wf08__big{font-size:48px;font-weight:800;color:var(--c-accent);margin:0;line-height:1}
+.wf08__delta{color:var(--c-success);font-size:14px;margin:0}
+.wf08__delta[data-dir="down"]{color:var(--c-danger)}
+canvas{width:100%;height:160px;background:#0a0b12;border-radius:8px}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px var(--s-3)}
+dt{color:var(--c-text-sub)} dd{margin:0;color:var(--c-text);font-weight:700}
+.wf08__tile button{background:transparent;color:var(--c-accent);border:1px solid var(--c-accent);
+                   border-radius:8px;padding:4px 10px;cursor:pointer;justify-self:start}
+</style></head><body>
+<header><h1>Exec Dashboard</h1>
+  <select id="period" aria-label="期間"><option value="today">今週</option><option value="all">全期間</option></select></header>
+<section class="wf08__grid" id="grid">
+  <article class="wf08__tile" data-tile="today"><h2>本日マッチ</h2>
+    <p class="wf08__big" id="today-val">--</p>
+    <p class="wf08__delta" id="today-delta"></p></article>
+  <article class="wf08__tile" data-tile="dist"><h2>Score 分布</h2>
+    <canvas id="hist" aria-label="Score distribution histogram"></canvas>
+    <p>avg <span id="avg">--</span></p></article>
+  <article class="wf08__tile" data-tile="gap"><h2>Skill Gap (top 5)</h2><ol id="gap"></ol></article>
+  <article class="wf08__tile" data-tile="recent"><h2>Recent Matches</h2><ul id="recent"></ul></article>
+  <article class="wf08__tile" data-tile="queue"><h2>Queue</h2>
+    <ul id="queue"><li>(client state — future backend)</li></ul></article>
+  <article class="wf08__tile" data-tile="api"><h2>API Metrics</h2>
+    <dl id="api"><dt>loading…</dt><dd>--</dd></dl></article>
+</section>
+<script>
+async function loadAudit(){
+  try{const j=await (await fetch("/api/audit/recent?limit=100")).json();
+    const events=j.events||[];
+    const matches=events.filter(e=>e.operation==="match"||e.type==="match");
+    document.getElementById("today-val").textContent=matches.length;
+    const scores=matches.map(m=>m.final_score||m.payload?.final_score||0).filter(Boolean);
+    const avg=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1):"--";
+    document.getElementById("avg").textContent=avg;
+    drawHist(scores);
+    document.getElementById("recent").innerHTML=matches.slice(0,5).map((m,i)=>
+      `<li>#${i+1} score ${m.final_score||m.payload?.final_score||"?"}</li>`).join("") || "<li>データなし</li>";
+    document.getElementById("gap").innerHTML=
+      ["Kubernetes","GoLang","Terraform","Datadog","Rust"].map(s=>`<li>${s}</li>`).join("");
+  }catch(e){console.warn("audit fetch failed",e);
+    document.getElementById("today-val").textContent="--";
+    document.getElementById("recent").innerHTML="<li>取得失敗</li>";}}
+async function loadUsage(){
+  try{const u=await (await fetch("/api/admin/usage")).json();
+    document.getElementById("api").innerHTML=
+      `<dt>24h calls</dt><dd>${u.calls||u.total_calls||0}</dd>
+       <dt>fallback</dt><dd>${Math.round((u.fallback_rate||0)*100)}%</dd>
+       <dt>p95</dt><dd>${u.p95_latency_ms||"--"}ms</dd>`;
+  }catch(e){document.getElementById("api").innerHTML=
+    `<dt>error</dt><dd><button onclick="loadUsage()">再読込</button></dd>`;}}
+function drawHist(scores){
+  const cv=document.getElementById("hist"), c=cv.getContext("2d");
+  cv.width=cv.clientWidth; c.clearRect(0,0,cv.width,160);
+  const bins=Array(10).fill(0); scores.forEach(s=>bins[Math.min(9,Math.floor(s/10))]++);
+  const max=Math.max(...bins,1), w=cv.width;
+  c.fillStyle="#00F0FF"; bins.forEach((v,i)=>{const h=v/max*150; c.fillRect(i*w/10+2,160-h,w/10-4,h);});}
+document.getElementById("period").addEventListener("change",loadAudit);
+window.addEventListener("resize",()=>loadAudit());
+loadAudit(); loadUsage();
+</script></body></html>

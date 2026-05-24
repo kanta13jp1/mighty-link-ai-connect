@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — UI Wireframes Catalog</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-border:#2A2D3E;
+      --r-md:12px;--r-lg:20px;--s-3:16px;--s-4:24px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif;
+     padding:var(--s-4);max-width:1200px;margin:0 auto}
+h1{color:var(--c-accent);margin:0 0 8px}
+.lead{color:var(--c-text-sub);max-width:720px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--s-3);margin-top:var(--s-4)}
+.card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);
+      padding:var(--s-3);display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;transition:border-color .15s}
+.card:hover{border-color:var(--c-accent)}
+.card h2{margin:0;font-size:18px;color:var(--c-accent)}
+.card .id{font-size:12px;color:var(--c-text-sub);letter-spacing:0.1em}
+.card p{margin:0;font-size:13px;color:var(--c-text-sub)}
+.card .links{display:flex;gap:8px;font-size:12px}
+.card .links a{color:var(--c-accent);text-decoration:none;border:1px solid var(--c-accent);
+                padding:4px 8px;border-radius:6px}
+nav.top{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:var(--s-3)}
+nav.top a{color:var(--c-text-sub);text-decoration:none;border-bottom:1px dashed var(--c-text-sub)}
+.note{background:var(--c-surface);border-left:3px solid var(--c-accent);padding:var(--s-3);
+      border-radius:var(--r-md);margin-top:var(--s-4);font-size:13px;color:var(--c-text-sub)}
+</style></head><body>
+<header>
+  <h1>UI Wireframes — 10 Patterns</h1>
+  <p class="lead">Mighty Skill-Bridge AI フィット診断 UI の 10 種類の方向性。社長判断後に
+    `@docs/wireframes/WF-XX_*.md を実装` プロンプトで AI が拡張可能。</p>
+  <nav class="top">
+    <a href="https://github.com/kanta13jp1/mighty-link-ai-connect/blob/main/docs/wireframes/README.md">📖 Spec Pack README</a>
+    <a href="wireframes_spec.json">🧬 JSON spec</a>
+    <a href="https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit">🎨 Canva deck (visual)</a>
+    <a href="/">← public demo に戻る</a>
+  </nav>
+</header>
+<section class="grid">
+  <a class="card" href="wf-01.html"><span class="id">WF-01</span><h2>Vertical Hero Stack</h2>
+    <p>Mobile-first / 1 column / iPad プレゼン親和</p>
+    <div class="links"><span>SES 営業</span></div></a>
+  <a class="card" href="wf-02.html"><span class="id">WF-02</span><h2>Split Form</h2>
+    <p>2 列並列入力 / 現行 UI のベース / desktop 視覚対置</p>
+    <div class="links"><span>デスクトップ HR</span></div></a>
+  <a class="card" href="wf-03.html"><span class="id">WF-03</span><h2>Step Wizard</h2>
+    <p>4 step progress / 初回ユーザー親和 / help 充実</p>
+    <div class="links"><span>社内人事</span></div></a>
+  <a class="card" href="wf-04.html"><span class="id">WF-04</span><h2>Conversational Chat</h2>
+    <p>AI Interview / 応募者本人向け / 履歴で説明責任</p>
+    <div class="links"><span>応募者本人</span></div></a>
+  <a class="card" href="wf-05.html"><span class="id">WF-05</span><h2>DnD 4-Quadrant</h2>
+    <p>Engineers / Jobs / Matches / Reports / カード DnD</p>
+    <div class="links"><span>中規模人事</span></div></a>
+  <a class="card" href="wf-06.html"><span class="id">WF-06</span><h2>Kanban Pipeline</h2>
+    <p>候補 → 評価中 → 推薦 → 配属済 / score badge</p>
+    <div class="links"><span>リクルーター</span></div></a>
+  <a class="card" href="wf-07.html"><span class="id">WF-07</span><h2>Comparison Table</h2>
+    <p>候補 × 評価軸 / color-coded / CSV export</p>
+    <div class="links"><span>最終決裁者</span></div></a>
+  <a class="card" href="wf-08.html"><span class="id">WF-08</span><h2>Dashboard Tiles</h2>
+    <p>6 tile / KPI 一覧 / 週次レビュー用</p>
+    <div class="links"><span>社長 / 経営層</span></div></a>
+  <a class="card" href="wf-09.html"><span class="id">WF-09</span><h2>Inline Live Preview</h2>
+    <p>入力中にリアルタイム fit / 800ms debounce / AbortController</p>
+    <div class="links"><span>社長デモ専用</span></div></a>
+  <a class="card" href="wf-10.html"><span class="id">WF-10</span><h2>Search-First Catalog</h2>
+    <p>検索 + フィルタ + グリッド + drawer / 蓄積後の日常入口</p>
+    <div class="links"><span>リクルーター日常</span></div></a>
+</section>
+<div class="note">
+  <strong>📌 実装注意:</strong> 各 WF は単一 HTML ファイル (vanilla JS / build なし) で
+  既存 FastAPI <code>/api/parse</code> + <code>/api/match</code> を fetch する。
+  ローカル起動時のみ全機能動作 (公開 GitHub Pages では静的表示のみ、API 呼び出し失敗)。
+  <code>python src/app.py</code> → <code>http://localhost:8000/exports/wireframes/</code> で確認可能。
+</div>
+</body></html>

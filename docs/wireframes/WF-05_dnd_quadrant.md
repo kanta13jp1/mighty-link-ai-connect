@@ -12,7 +12,7 @@
 | status | spec-ready (visual = Canva slide 6) |
 | pick-when | 中規模 HR チーム、複数候補 × 複数案件並列、視覚的整理重視 |
 | skip-when | 初回ユーザー、モバイル中心、単発 1 候補 |
-| output target | `static/wireframes/wf-05.html` |
+| output target | `exports/wireframes/wf-05.html` |
 
 ## 2. ASCII Layout
 
@@ -127,7 +127,7 @@ dragging ── drop elsewhere ──> idle (no-op)
 ## 12. Implementation Prompt (LLM-ready)
 
 ```text
-Implement WF-05 "DnD 4-Quadrant Workspace" for Mighty Skill-Bridge as static/wireframes/wf-05.html.
+Implement WF-05 "DnD 4-Quadrant Workspace" for Mighty Skill-Bridge as exports/wireframes/wf-05.html.
 
 Stack: vanilla HTML/JS, HTML5 drag-and-drop API. Use POST /api/parse on Add modal,
 POST /api/match when 2 cards land in Matches zone.

@@ -12,7 +12,7 @@
 | status | spec-ready (visual = Canva slide 10) |
 | pick-when | 社長デモ専用、AI ライブ感最大化、入力中に意思決定したい |
 | skip-when | API 課金重い (debounce 必須)、本番運用 (quota 浪費リスク) |
-| output target | `static/wireframes/wf-09.html` |
+| output target | `exports/wireframes/wf-09.html` |
 
 ## 2. ASCII Layout
 
@@ -132,7 +132,7 @@ computing ── new input       ──> abort previous, computing (race-conditi
 ## 12. Implementation Prompt (LLM-ready)
 
 ```text
-Implement WF-09 "Inline Live Preview" for Mighty Skill-Bridge as static/wireframes/wf-09.html.
+Implement WF-09 "Inline Live Preview" for Mighty Skill-Bridge as exports/wireframes/wf-09.html.
 
 Stack: vanilla HTML/JS, AbortController. Use POST /api/parse x2 + POST /api/match on debounced
 input (800ms).

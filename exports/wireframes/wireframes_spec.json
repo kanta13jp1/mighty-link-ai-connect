@@ -16,7 +16,7 @@
       "no new framework (React/Vue)",
       "must not break verify_public_demo.py guard",
       "do not modify root index.html or src/index.html",
-      "single-file output under static/wireframes/wf-XX.html"
+      "single-file output under exports/wireframes/wf-XX.html"
     ]
   },
   "api_contract": {
@@ -74,7 +74,7 @@
       "id": "WF-01",
       "title": "Vertical Hero Stack — Mobile-first",
       "spec": "docs/wireframes/WF-01_vertical_hero_stack.md",
-      "output": "static/wireframes/wf-01.html",
+      "output": "exports/wireframes/wf-01.html",
       "category": "mobile-first / hero stack",
       "pick_when": "スマホ/iPad 中心、客先プレゼン、最少クリック",
       "skip_when": "デスクトップ multi-window 運用、複数候補同時管理",
@@ -85,7 +85,7 @@
       "id": "WF-02",
       "title": "Split Form — Profile vs Job (Current)",
       "spec": "docs/wireframes/WF-02_split_form.md",
-      "output": "static/wireframes/wf-02.html",
+      "output": "exports/wireframes/wf-02.html",
       "category": "desktop-first / split form",
       "pick_when": "デスクトップ常用、左右視覚比較、現行から最小変更",
       "skip_when": "スマホ中心、片方の入力が長文",
@@ -96,7 +96,7 @@
       "id": "WF-03",
       "title": "Step Wizard — 4-step Progress Flow",
       "spec": "docs/wireframes/WF-03_step_wizard.md",
-      "output": "static/wireframes/wf-03.html",
+      "output": "exports/wireframes/wf-03.html",
       "category": "onboarding / wizard",
       "pick_when": "初回ユーザー多い、social 内部展開、help/tooltip 充実したい",
       "skip_when": "慣れたヘビーユーザーが速度優先",
@@ -107,7 +107,7 @@
       "id": "WF-04",
       "title": "Conversational Chat — AI Interview",
       "spec": "docs/wireframes/WF-04_conversational_chat.md",
-      "output": "static/wireframes/wf-04.html",
+      "output": "exports/wireframes/wf-04.html",
       "category": "conversational / chat",
       "pick_when": "応募者本人が直接利用、説明責任が必要、AI ライブ感重視",
       "skip_when": "HR 一括処理 / multi-candidate 比較",
@@ -118,7 +118,7 @@
       "id": "WF-05",
       "title": "Drag & Drop Cards — 4 Quadrant Workspace",
       "spec": "docs/wireframes/WF-05_dnd_quadrant.md",
-      "output": "static/wireframes/wf-05.html",
+      "output": "exports/wireframes/wf-05.html",
       "category": "workspace / drag-and-drop",
       "pick_when": "中規模 HR チーム、複数候補 × 複数案件並列、視覚的整理重視",
       "skip_when": "初回ユーザー、モバイル中心、単発 1 候補",
@@ -129,7 +129,7 @@
       "id": "WF-06",
       "title": "Pipeline Board — Kanban for Recruiters",
       "spec": "docs/wireframes/WF-06_kanban_pipeline.md",
-      "output": "static/wireframes/wf-06.html",
+      "output": "exports/wireframes/wf-06.html",
       "category": "kanban / pipeline",
       "pick_when": "リクルーター日常運用、進捗状態追跡が中心",
       "skip_when": "単発分析、初回ユーザー、スマホ中心",
@@ -141,7 +141,7 @@
       "id": "WF-07",
       "title": "Comparison Table — Multi-candidate Matrix",
       "spec": "docs/wireframes/WF-07_comparison_table.md",
-      "output": "static/wireframes/wf-07.html",
+      "output": "exports/wireframes/wf-07.html",
       "category": "comparison / data-grid",
       "pick_when": "経営層への報告、最終 5-10 候補絞り込み",
       "skip_when": "単発分析、入力 UI なし",
@@ -152,7 +152,7 @@
       "id": "WF-08",
       "title": "Dashboard Tiles — Exec Overview",
       "spec": "docs/wireframes/WF-08_dashboard_tiles.md",
-      "output": "static/wireframes/wf-08.html",
+      "output": "exports/wireframes/wf-08.html",
       "category": "dashboard / executive",
       "pick_when": "社長 / 経営層、週次レビュー、KPI 一覧",
       "skip_when": "1 候補単発分析、入力 UI 必要",
@@ -164,7 +164,7 @@
       "id": "WF-09",
       "title": "Inline Preview — Live Suggestions",
       "spec": "docs/wireframes/WF-09_inline_live_preview.md",
-      "output": "static/wireframes/wf-09.html",
+      "output": "exports/wireframes/wf-09.html",
       "category": "live-preview / split",
       "pick_when": "社長デモ専用、AI ライブ感最大化",
       "skip_when": "API 課金重い、本番運用",
@@ -176,7 +176,7 @@
       "id": "WF-10",
       "title": "Search-First Catalog — Engineer/Job Library",
       "spec": "docs/wireframes/WF-10_search_catalog.md",
-      "output": "static/wireframes/wf-10.html",
+      "output": "exports/wireframes/wf-10.html",
       "category": "search / catalog",
       "pick_when": "データ蓄積後の日常運用、検索駆動",
       "skip_when": "初期データ 0、単発分析",
@@ -186,14 +186,14 @@
   ],
   "shared_acceptance": [
     "verify_public_demo.py が pass し続ける (root index.html / src/index.html を変更しない)",
-    "static/wireframes/ 配下の単一ファイルで完結 (新 build step 禁止)",
+    "exports/wireframes/ 配下の単一ファイルで完結 (新 build step 禁止)",
     "Mighty cyber palette を CSS custom properties で適用",
     "keyboard only で primary flow を完走できる",
     "mobile (375x812) で横スクロール 0",
     "prefers-reduced-motion を尊重"
   ],
   "usage": {
-    "ai_prompt_template": "Implement {WF-XX} per docs/wireframes/{WF-XX}_*.md. Output single static/wireframes/wf-XX.html. Use existing FastAPI /api/parse + /api/match. Do not modify root index.html.",
-    "future_automation": "scripts/generate_wireframe_impl.py --wf XX --out static/wireframes/wf-XX.html (TBD, Codex lane)"
+    "ai_prompt_template": "Implement {WF-XX} per docs/wireframes/{WF-XX}_*.md. Output single exports/wireframes/wf-XX.html. Use existing FastAPI /api/parse + /api/match. Do not modify root index.html.",
+    "future_automation": "scripts/generate_wireframe_impl.py --wf XX --out exports/wireframes/wf-XX.html (TBD, Codex lane)"
   }
 }

@@ -12,7 +12,7 @@
 | status | spec-ready (visual = Canva slide 11) |
 | pick-when | データ蓄積後の日常運用、検索駆動でアイテム探す |
 | skip-when | 初期データ 0 (空状態)、単発分析 |
-| output target | `static/wireframes/wf-10.html` |
+| output target | `exports/wireframes/wf-10.html` |
 
 ## 2. ASCII Layout
 
@@ -138,7 +138,7 @@ drawer open ── Re-analyze ──> drawer-analyzing → drawer-done
 ## 12. Implementation Prompt (LLM-ready)
 
 ```text
-Implement WF-10 "Search-First Catalog" for Mighty Skill-Bridge as static/wireframes/wf-10.html.
+Implement WF-10 "Search-First Catalog" for Mighty Skill-Bridge as exports/wireframes/wf-10.html.
 
 Stack: vanilla HTML/JS, IntersectionObserver for infinite scroll, native <dialog> for drawer.
 

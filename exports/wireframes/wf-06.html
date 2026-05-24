@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-06 Pipeline Board</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E;
+      --r-md:12px;--r-lg:20px;--s-2:8px;--s-3:16px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+header{padding:var(--s-3);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--c-border)}
+header h1{color:var(--c-accent);margin:0}
+.wf06__columns{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-3);
+                padding:var(--s-3);height:calc(100vh - 80px);box-sizing:border-box;overflow-x:auto}
+@media (max-width:800px){.wf06__columns{grid-auto-columns:280px;grid-template-columns:none;grid-auto-flow:column;height:auto}}
+.wf06__col{background:var(--c-surface);border:1px solid var(--c-border);
+            border-radius:var(--r-lg);padding:var(--s-3);overflow-y:auto;min-width:0;display:flex;flex-direction:column}
+.wf06__col h2{margin:0 0 var(--s-3);font-size:16px;color:var(--c-text-sub)}
+.wf06__col.is-over{border-color:var(--c-accent)}
+.wf06__cards{list-style:none;padding:0;margin:0;flex:1}
+.wf06__card{background:var(--c-bg);border:1px solid var(--c-border);border-radius:var(--r-md);
+             padding:var(--s-3);margin-bottom:var(--s-2);cursor:grab;
+             display:flex;justify-content:space-between;gap:var(--s-2)}
+.wf06__card.is-dragging{opacity:.4}
+.wf06__card .score{color:var(--c-accent);font-weight:700}
+.wf06__card[data-band="high"]{border-left:4px solid var(--c-success)}
+.wf06__card[data-band="mid"]{border-left:4px solid var(--c-accent)}
+.wf06__card[data-band="low"]{border-left:4px solid var(--c-danger)}
+.wf06__card small{display:block;color:var(--c-text-sub);margin-top:4px}
+button{background:var(--c-accent);color:var(--c-bg);border:0;border-radius:var(--r-md);
+       padding:var(--s-2) var(--s-3);font-weight:700;cursor:pointer}
+.wf06__filters{display:flex;gap:var(--s-3);align-items:center}
+.wf06__filters input[type="number"]{background:#0a0b12;color:var(--c-text);border:1px solid var(--c-border);
+                                     border-radius:8px;padding:4px 8px;width:80px;font:inherit}
+.wf06__filters label{color:var(--c-text-sub)}
+</style></head><body>
+<header><h1>Pipeline</h1>
+  <div class="wf06__filters">
+    <label>min score <input type="number" id="minScore" min="50" max="100" placeholder="0"></label>
+    <button id="add">+ Add Candidate</button></div></header>
+<main class="wf06__columns" id="board">
+  <section class="wf06__col" data-status="candidate"><h2>候補 <span class="count">(0)</span></h2><ol class="wf06__cards"></ol></section>
+  <section class="wf06__col" data-status="evaluating"><h2>評価中 <span class="count">(0)</span></h2><ol class="wf06__cards"></ol></section>
+  <section class="wf06__col" data-status="recommended"><h2>推薦 <span class="count">(0)</span></h2><ol class="wf06__cards"></ol></section>
+  <section class="wf06__col" data-status="placed"><h2>配属済 <span class="count">(0)</span></h2><ol class="wf06__cards"></ol></section>
+</main>
+<script>
+const state={cards:[],minScore:0};
+function band(s){return s>=80?"high":s<65?"low":"mid"}
+function render(){
+  document.querySelectorAll(".wf06__col").forEach(col=>{
+    const list=col.querySelector(".wf06__cards"); list.innerHTML="";
+    const filt=state.cards.filter(c=>c.status===col.dataset.status && c.score>=state.minScore);
+    col.querySelector(".count").textContent=`(${filt.length})`;
+    filt.forEach(c=>{
+      const li=document.createElement("li"); li.className="wf06__card"; li.draggable=true;
+      li.dataset.band=band(c.score); li.dataset.id=c.id;
+      li.innerHTML=`<div><strong>${c.name}</strong><small>${c.meta}</small></div><span class="score">${c.score}</span>`;
+      li.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",c.id); li.classList.add("is-dragging");});
+      li.addEventListener("dragend",()=>li.classList.remove("is-dragging"));
+      list.appendChild(li);});});
+}
+document.querySelectorAll(".wf06__col").forEach(col=>{
+  col.addEventListener("dragover",e=>{e.preventDefault(); col.classList.add("is-over")});
+  col.addEventListener("dragleave",()=>col.classList.remove("is-over"));
+  col.addEventListener("drop",e=>{e.preventDefault(); col.classList.remove("is-over");
+    const id=e.dataTransfer.getData("text/plain");
+    const c=state.cards.find(x=>x.id===id); if(c){c.status=col.dataset.status; render();}});});
+document.getElementById("add").addEventListener("click",async()=>{
+  const eng=prompt("経歴書テキスト"); if(!eng) return;
+  const job=prompt("案件票テキスト"); if(!job) return;
+  try{
+    const fdE=new FormData(); fdE.append("text",eng); fdE.append("doc_type","engineer");
+    const fdJ=new FormData(); fdJ.append("text",job); fdJ.append("doc_type","job");
+    await Promise.all([fetch("/api/parse",{method:"POST",body:fdE}),
+                       fetch("/api/parse",{method:"POST",body:fdJ})]);
+    const m=await (await fetch("/api/match",{method:"POST",
+      headers:{"content-type":"application/json"},
+      body:JSON.stringify({engineer_content:eng,job_content:job})})).json();
+    state.cards.push({id:"c"+Date.now(),
+      name:eng.split(/\n|\//)[0].slice(0,18),
+      meta:job.split(/\n|\//)[0].slice(0,30),
+      score:m.final_score, status:"candidate"});
+    render();
+  }catch(e){alert("失敗: "+e.message);}});
+document.getElementById("minScore").addEventListener("change",e=>{state.minScore=+e.target.value||0; render();});
+render();
+</script></body></html>

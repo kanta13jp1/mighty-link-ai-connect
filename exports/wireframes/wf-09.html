@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-09 Live Preview</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E;
+      --r-md:12px;--r-lg:20px;--s-3:16px;--s-4:24px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+header{padding:var(--s-3);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--c-border)}
+header h1{color:var(--c-accent);margin:0}
+.wf09__split{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3);padding:var(--s-3);
+             height:calc(100vh - 80px);box-sizing:border-box}
+@media (max-width:900px){.wf09__split{grid-template-columns:1fr;height:auto}}
+.wf09__input h2{font-size:18px;color:var(--c-text-sub);margin:0 0 8px}
+textarea{width:100%;min-height:200px;background:var(--c-surface);color:var(--c-text);
+         border:1px solid var(--c-border);border-radius:var(--r-md);
+         padding:var(--s-3);box-sizing:border-box;margin-bottom:var(--s-3);font:inherit}
+.wf09__hint{color:var(--c-text-sub);font-size:13px}
+.wf09__preview{background:var(--c-surface);border:1px solid var(--c-border);
+                border-radius:var(--r-lg);padding:var(--s-4);transition:filter .2s;
+                position:sticky;top:var(--s-3);align-self:start}
+.wf09__preview[aria-busy="true"]{filter:blur(2px)}
+.wf09__score{display:flex;align-items:baseline;gap:var(--s-3);margin:0}
+.wf09__score strong{font-size:96px;color:var(--c-accent);line-height:1}
+.wf09__score span{color:var(--c-success);font-size:24px}
+.wf09__score span[data-dir="down"]{color:var(--c-danger)}
+.wf09__skills{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.wf09__skills li{background:#0a0b12;padding:6px var(--s-3);border-radius:8px}
+canvas{margin-top:var(--s-3);background:#0a0b12;border-radius:8px}
+.wf09__status{color:var(--c-text-sub);margin-top:var(--s-3)}
+</style></head><body>
+<header><h1>Live Preview</h1></header>
+<main class="wf09__split">
+  <section class="wf09__input">
+    <h2>経歴書</h2><textarea id="eng" placeholder="入力中に右側へリアルタイム反映..."></textarea>
+    <h2>案件票</h2><textarea id="job" placeholder="..."></textarea>
+    <p class="wf09__hint">打ち止め 800ms 後に再計算 (前回 fetch は abort)</p></section>
+  <aside class="wf09__preview" id="preview" aria-live="polite" aria-busy="false">
+    <p class="wf09__score"><strong id="score">--</strong><span id="delta"></span></p>
+    <h3>Top Scores</h3><ul class="wf09__skills" id="skills"><li>(入力待ち)</li></ul>
+    <canvas id="radar" width="240" height="240" aria-label="radar chart"></canvas>
+    <p class="wf09__status" id="status">idle</p></aside>
+</main>
+<script>
+const DEBOUNCE=800; let timer, ctrl, prev=0;
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function debounce(fn){return (...a)=>{clearTimeout(timer); timer=setTimeout(()=>fn(...a),DEBOUNCE)}}
+function drawRadar(scores){
+  const cv=document.getElementById("radar"), c=cv.getContext("2d");
+  c.clearRect(0,0,cv.width,cv.height);
+  const cx=cv.width/2, cy=cv.height/2, R=100;
+  const keys=["skill","culture","growth","performing"];
+  c.strokeStyle="#2A2D3E"; c.beginPath();
+  for(let i=0;i<4;i++){const a=Math.PI*2*i/4-Math.PI/2;
+    c.lineTo(cx+Math.cos(a)*R, cy+Math.sin(a)*R);} c.closePath(); c.stroke();
+  c.strokeStyle="#00F0FF"; c.fillStyle="rgba(0,240,255,0.2)"; c.beginPath();
+  keys.forEach((k,i)=>{const a=Math.PI*2*i/4-Math.PI/2; const r=R*(scores[k]||0)/100;
+    c.lineTo(cx+Math.cos(a)*r, cy+Math.sin(a)*r);}); c.closePath(); c.fill(); c.stroke();
+  c.fillStyle="#C5CAE0"; c.font="11px Yu Gothic UI";
+  keys.forEach((k,i)=>{const a=Math.PI*2*i/4-Math.PI/2;
+    c.fillText(k, cx+Math.cos(a)*(R+10)-15, cy+Math.sin(a)*(R+10)+4);});}
+async function compute(){
+  const eng=document.getElementById("eng").value.trim();
+  const job=document.getElementById("job").value.trim();
+  if(!eng||!job) return;
+  if(ctrl) ctrl.abort(); ctrl=new AbortController();
+  const pv=document.getElementById("preview"); pv.setAttribute("aria-busy","true");
+  document.getElementById("status").textContent="計算中…";
+  try{
+    const m=await (await fetch("/api/match",{method:"POST",signal:ctrl.signal,
+      headers:{"content-type":"application/json"},
+      body:JSON.stringify({engineer_content:eng,job_content:job})})).json();
+    const s=m.final_score, d=s-prev;
+    if(reduce){document.getElementById("score").textContent=s;}
+    else{
+      const start=prev, dt=300, t0=performance.now();
+      function step(now){const p=Math.min(1,(now-t0)/dt);
+        document.getElementById("score").textContent=Math.round(start+(s-start)*p);
+        if(p<1) requestAnimationFrame(step);}
+      requestAnimationFrame(step);}
+    const dl=document.getElementById("delta");
+    dl.textContent= prev===0?"":(d>0?` ↑ +${d}`: d<0?` ↓ ${d}`: " →");
+    dl.dataset.dir = d<0?"down":"up";
+    prev=s;
+    if(m.scores){
+      document.getElementById("skills").innerHTML=
+        Object.entries(m.scores).map(([k,v])=>`<li>${k}: ${v}</li>`).join("");
+      drawRadar(m.scores);}
+    document.getElementById("status").textContent="idle";
+  }catch(e){if(e.name!=="AbortError"){
+    document.getElementById("status").textContent="再計算失敗: "+e.message;}}
+  finally{pv.setAttribute("aria-busy","false")}
+}
+const fire=debounce(compute);
+document.getElementById("eng").addEventListener("input",fire);
+document.getElementById("job").addEventListener("input",fire);
+</script></body></html>

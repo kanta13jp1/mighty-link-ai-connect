@@ -12,7 +12,7 @@
 | status | spec-ready (visual = Canva slide 7) |
 | pick-when | リクルーター日常運用、進捗状態追跡が中心 |
 | skip-when | 単発分析、初回ユーザー、スマホ中心 |
-| output target | `static/wireframes/wf-06.html` |
+| output target | `exports/wireframes/wf-06.html` |
 
 ## 2. ASCII Layout
 
@@ -137,7 +137,7 @@ recommended ── drag to placed ──> celebrate animation
 ## 12. Implementation Prompt (LLM-ready)
 
 ```text
-Implement WF-06 "Pipeline Board" for Mighty Skill-Bridge as static/wireframes/wf-06.html.
+Implement WF-06 "Pipeline Board" for Mighty Skill-Bridge as exports/wireframes/wf-06.html.
 
 Stack: vanilla HTML/JS, HTML5 DnD. Use POST /api/parse + POST /api/match on Add Candidate.
 
