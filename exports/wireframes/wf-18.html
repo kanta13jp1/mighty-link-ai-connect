@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-18 Notification Inbox</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-warning:#FFD93D;--c-border:#2A2D3E;
+      --r-md:10px;--r-lg:18px;--s-3:16px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+header{padding:var(--s-3);border-bottom:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:18px;color:var(--c-accent)}
+header .badge{background:var(--c-danger);color:#fff;font:700 12px/1 "JetBrains Mono",monospace;padding:4px 10px;border-radius:999px}
+.wf18{display:grid;grid-template-columns:240px 1fr;gap:var(--s-3);padding:var(--s-3);max-width:1280px;margin:0 auto;height:calc(100vh - 64px);box-sizing:border-box}
+@media (max-width:720px){.wf18{grid-template-columns:1fr;height:auto}}
+.filters{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--s-3);font-size:14px;height:fit-content}
+.filters h3{margin:0 0 12px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--c-text-sub)}
+.filters .item{padding:8px 10px;border-radius:6px;cursor:pointer;color:var(--c-text);display:flex;justify-content:space-between;align-items:center}
+.filters .item.active{background:rgba(0,240,255,.12);color:var(--c-accent);font-weight:600}
+.filters .item .count{background:#0a0b12;color:var(--c-text-sub);font:600 11px/1 "JetBrains Mono",monospace;padding:3px 7px;border-radius:4px}
+.list{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);overflow-y:auto}
+.notif{display:grid;grid-template-columns:auto 1fr auto;gap:12px;padding:14px 16px;border-bottom:1px solid var(--c-border);cursor:pointer;transition:background .1s}
+.notif:hover{background:#1a1d2c}
+.notif.unread{background:rgba(0,240,255,.05);border-left:3px solid var(--c-accent)}
+.notif .icon{width:36px;height:36px;border-radius:50%;background:#0a0b12;display:flex;align-items:center;justify-content:center;font-size:18px;border:1px solid var(--c-border)}
+.notif.match .icon{border-color:var(--c-success);color:var(--c-success)}
+.notif.risk .icon{border-color:var(--c-danger);color:var(--c-danger)}
+.notif.sys .icon{border-color:var(--c-warning);color:var(--c-warning)}
+.notif .body p{margin:0;font-size:14px;color:var(--c-text)}
+.notif .body small{display:block;color:var(--c-text-sub);font-size:12px;margin-top:4px}
+.notif .meta{text-align:right;color:var(--c-text-sub);font-size:11px;font-family:"JetBrains Mono",monospace}
+.notif .meta .score{color:var(--c-accent);font-size:16px;font-weight:800;display:block;margin-bottom:4px}
+.toolbar{padding:10px var(--s-3);background:#0a0b12;border-bottom:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--c-text-sub)}
+.toolbar button{background:transparent;color:var(--c-accent);border:1px solid var(--c-accent);border-radius:6px;padding:4px 10px;cursor:pointer;font:inherit;font-size:12px}
+</style></head><body>
+<script src="_mock.js"></script>
+<header><h1>WF-18 Notification Inbox</h1>
+  <span class="badge" id="unreadBadge">5 unread</span></header>
+<main class="wf18">
+  <aside class="filters">
+    <h3>Filter</h3>
+    <div class="item active" data-f="all">All <span class="count">12</span></div>
+    <div class="item" data-f="unread">Unread <span class="count" id="cu">5</span></div>
+    <div class="item" data-f="match">新規 fit <span class="count">7</span></div>
+    <div class="item" data-f="risk">リスク <span class="count">2</span></div>
+    <div class="item" data-f="sys">システム <span class="count">3</span></div></aside>
+  <section class="list">
+    <div class="toolbar"><span id="cnt">12 件</span>
+      <button id="markAll">全て既読</button></div>
+    <div id="rows"></div></section>
+</main>
+<script>
+const NOW = new Date('2026-05-25T08:00:00+09:00').getTime();
+const NOTIFS=[
+  {id:1,type:"match",unread:true,name:"山田太郎 × 株式会社X SRE",summary:"final 88 / Skill 88 · Culture 82",score:88,ts:NOW-60_000*5},
+  {id:2,type:"match",unread:true,name:"鈴木一郎 × 株式会社Z Cloud",summary:"final 91 / Performing 88 が突出",score:91,ts:NOW-60_000*22},
+  {id:3,type:"risk",unread:true,name:"佐藤花子 × 株式会社Y FE",summary:"Skill 不足の可能性 (60 未満)",score:62,ts:NOW-60_000*45},
+  {id:4,type:"sys",unread:true,name:"Gemini API quota 80% 使用",summary:"fallback 切替準備を推奨",score:0,ts:NOW-60_000*70},
+  {id:5,type:"match",unread:true,name:"田中二郎 × 株式会社W ML",summary:"final 75 / Growth 85 が伸びしろ",score:75,ts:NOW-3600_000*2},
+  {id:6,type:"match",unread:false,name:"高橋三郎 × 株式会社V Data",summary:"final 80 / 評価会へ移行可",score:80,ts:NOW-3600_000*4},
+  {id:7,type:"match",unread:false,name:"伊藤四郎 × 株式会社U DevOps",summary:"final 79",score:79,ts:NOW-3600_000*8},
+  {id:8,type:"sys",unread:false,name:"日次 sync 完了",summary:"55 件の課題 / 48 件の QA",score:0,ts:NOW-3600_000*10},
+  {id:9,type:"match",unread:false,name:"野村五郎 × 株式会社T QA",summary:"final 77",score:77,ts:NOW-3600_000*14},
+  {id:10,type:"risk",unread:false,name:"小林六郎 配属リスク",summary:"on-call 経験不足",score:64,ts:NOW-3600_000*18},
+  {id:11,type:"match",unread:false,name:"加藤七郎 × 株式会社S BE",summary:"final 84",score:84,ts:NOW-3600_000*22},
+  {id:12,type:"sys",unread:false,name:"backup 完了",summary:"all artifacts synced",score:0,ts:NOW-3600_000*24},
+];
+const ICONS={match:"✓",risk:"⚠",sys:"⚙"};
+let filter="all";
+function rel(t){const d=NOW-t; if(d<60_000) return "今"; if(d<3600_000) return Math.floor(d/60_000)+"分前";
+  if(d<86400_000) return Math.floor(d/3600_000)+"時間前"; return Math.floor(d/86400_000)+"日前";}
+function render(){
+  const rows = NOTIFS.filter(n => filter==="all" || (filter==="unread"?n.unread:n.type===filter));
+  document.getElementById("rows").innerHTML = rows.map(n=>
+    `<div class="notif ${n.type} ${n.unread?'unread':''}" data-id="${n.id}">
+      <div class="icon">${ICONS[n.type]}</div>
+      <div class="body"><p>${n.name}</p><small>${n.summary}</small></div>
+      <div class="meta">${n.score?`<span class="score">${n.score}</span>`:""}${rel(n.ts)}</div></div>`).join("");
+  document.getElementById("cnt").textContent = rows.length+" 件";
+  const unread = NOTIFS.filter(n=>n.unread).length;
+  document.getElementById("unreadBadge").textContent = unread+" unread";
+  document.getElementById("cu").textContent = unread;
+  document.querySelectorAll(".notif").forEach(el=>el.addEventListener("click",()=>{
+    const id=+el.dataset.id; const n=NOTIFS.find(x=>x.id===id); n.unread=false; render();}));
+}
+document.querySelectorAll(".filters .item").forEach(el=>el.addEventListener("click",()=>{
+  document.querySelectorAll(".filters .item").forEach(x=>x.classList.remove("active"));
+  el.classList.add("active"); filter=el.dataset.f; render();}));
+document.getElementById("markAll").addEventListener("click",()=>{NOTIFS.forEach(n=>n.unread=false); render();});
+// Simulate incoming notification from /api/match
+(async()=>{
+  try{const m=await (await fetch("/api/match",{method:"POST",headers:{"content-type":"application/json"},
+    body:JSON.stringify({engineer_content:"新規候補",job_content:"案件サンプル"})})).json();
+    NOTIFS.unshift({id:99,type:"match",unread:true,name:"📡 新規マッチ到着",
+      summary:`final ${m.final_score} / 文脈推論完了`,score:m.final_score,ts:NOW});
+    render();
+  }catch(e){}
+})();
+render();
+</script></body></html>

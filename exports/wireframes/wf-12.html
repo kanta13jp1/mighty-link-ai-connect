@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-12 Calendar Timeline</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-warning:#FFD93D;--c-border:#2A2D3E;
+      --r-md:12px;--r-lg:20px;--s-3:16px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+header{padding:var(--s-3);border-bottom:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+header h1{margin:0;font-size:18px;color:var(--c-accent)}
+header .ctrl{display:flex;gap:8px;align-items:center;color:var(--c-text-sub);font-size:14px}
+header button{background:transparent;color:var(--c-accent);border:1px solid var(--c-accent);border-radius:8px;padding:6px 12px;cursor:pointer;font:inherit}
+.wf12{padding:var(--s-3);max-width:1280px;margin:0 auto}
+.legend{display:flex;gap:16px;font-size:12px;color:var(--c-text-sub);margin-bottom:12px;flex-wrap:wrap}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.legend .ph::before{background:var(--c-accent)} .legend .ev::before{background:var(--c-success)}
+.legend .rk::before{background:var(--c-danger)} .legend .pl::before{background:var(--c-warning)}
+.timeline{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);overflow:hidden}
+.weeks{display:grid;grid-template-columns:160px repeat(8,1fr);border-bottom:1px solid var(--c-border);font-size:12px;color:var(--c-text-sub)}
+.weeks div{padding:10px 8px;border-right:1px solid var(--c-border);text-align:center}
+.weeks div:first-child{text-align:left;color:var(--c-accent);font-weight:700}
+.row{display:grid;grid-template-columns:160px 1fr;border-bottom:1px solid var(--c-border)}
+.row .label{padding:14px;border-right:1px solid var(--c-border);display:flex;flex-direction:column;gap:4px;background:#0a0b12}
+.row .label strong{color:var(--c-accent);font-size:13px}
+.row .label small{color:var(--c-text-sub);font-size:11px}
+.row .bars{position:relative;height:48px}
+.row .bars .bar{position:absolute;top:8px;height:32px;border-radius:6px;display:flex;align-items:center;
+                padding:0 10px;font-size:12px;font-weight:600;color:var(--c-bg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar.ph{background:var(--c-accent)} .bar.ev{background:var(--c-success)}
+.bar.rk{background:var(--c-danger);color:#fff} .bar.pl{background:var(--c-warning)}
+.scrubber{position:absolute;top:0;bottom:0;width:2px;background:#fff;opacity:.4;pointer-events:none}
+.tip{position:absolute;background:#000;color:#fff;padding:6px 10px;border-radius:6px;font-size:12px;pointer-events:none;
+     transform:translate(-50%,-110%);display:none;border:1px solid var(--c-accent);white-space:nowrap}
+.bar:hover + .tip,.bar:hover{cursor:pointer}
+</style></head><body>
+<script src="_mock.js"></script>
+<header><h1>WF-12 Calendar Timeline</h1>
+  <div class="ctrl"><button id="prev">← 前 4 週</button>
+    <span>2026-06-02 〜 2026-07-27 (8 週間)</span>
+    <button id="next">次 4 週 →</button></div></header>
+<main class="wf12">
+  <div class="legend">
+    <span class="ph">配属期間</span><span class="ev">レビュー会</span><span class="rk">リスク窓</span><span class="pl">3 週ロードマップ</span></div>
+  <div class="timeline">
+    <div class="weeks"><div>候補 / 案件</div><div>W1</div><div>W2</div><div>W3</div><div>W4</div><div>W5</div><div>W6</div><div>W7</div><div>W8</div></div>
+    <div class="row"><div class="label"><strong>山田太郎</strong><small>株式会社X SRE · 88</small></div>
+      <div class="bars" id="bars1"></div></div>
+    <div class="row"><div class="label"><strong>佐藤花子</strong><small>株式会社Y FE · 72</small></div>
+      <div class="bars" id="bars2"></div></div>
+    <div class="row"><div class="label"><strong>鈴木一郎</strong><small>株式会社Z Cloud · 91</small></div>
+      <div class="bars" id="bars3"></div></div>
+    <div class="row"><div class="label"><strong>田中二郎</strong><small>(pending) · --</small></div>
+      <div class="bars" id="bars4"></div></div>
+  </div>
+  <p style="color:var(--c-text-sub);font-size:13px;margin-top:12px">
+    バー幅 = 週数 (各列 = 1 週)。新規候補追加: /api/match の final_score を高さで自動配置可。</p>
+</main>
+<script>
+function placeBar(target, week, span, cls, label){
+  const W = 100/8;
+  const div=document.createElement("div");
+  div.className="bar "+cls;
+  div.style.left=`calc(${week*W}% + 4px)`;
+  div.style.width=`calc(${span*W}% - 8px)`;
+  div.textContent=label;
+  document.getElementById(target).appendChild(div);
+}
+// row1: 配属 8 週、レビュー 1週目末、ロードマップ前半
+placeBar("bars1",0,8,"ph","配属 (W1–W8)");
+// row2: 配属 6 週 + リスク窓 1, レビュー
+placeBar("bars2",1,5,"ph","配属 (W2–W6)");
+placeBar("bars2",0,1,"rk","入社準備");
+placeBar("bars2",6,2,"ev","フォローアップ");
+// row3: ロードマップ + 配属
+placeBar("bars3",0,3,"pl","ロードマップ");
+placeBar("bars3",3,5,"ph","配属");
+// row4: candidate pending
+placeBar("bars4",2,4,"pl","評価予定");
+// Async candidate from /api/match (mock)
+(async () => {
+  try{
+    const m = await (await fetch("/api/match",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({engineer_content:"Python AWS 5y",job_content:"SRE Senior"})})).json();
+    const lbl = document.querySelector('[id="bars4"]').parentElement.querySelector(".label small");
+    lbl.textContent = `(pending) · ${m.final_score}`;
+  }catch(e){}
+})();
+</script></body></html>

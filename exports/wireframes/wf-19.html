@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-19 Onboarding Tour</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E;
+      --r-md:12px;--r-lg:20px;--s-3:16px;--s-4:24px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif;min-height:100dvh}
+.app{filter:blur(0);transition:filter .3s}
+.app.is-tour{filter:blur(0)}
+header{padding:var(--s-3);border-bottom:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:18px;color:var(--c-accent)}
+.layout{display:grid;grid-template-columns:240px 1fr;gap:var(--s-3);padding:var(--s-3);max-width:1280px;margin:0 auto}
+@media (max-width:720px){.layout{grid-template-columns:1fr}}
+.side{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--s-3);font-size:14px}
+.side .item{padding:8px 10px;border-radius:6px;color:var(--c-text-sub);cursor:pointer}
+.side .item.active{background:rgba(0,240,255,.12);color:var(--c-accent);font-weight:600}
+.main{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--s-4);min-height:480px}
+.empty{text-align:center;padding:40px 20px}
+.empty .ill{font-size:80px;line-height:1;margin-bottom:16px;color:var(--c-accent)}
+.empty h2{margin:0 0 8px;font-size:24px}
+.empty p{color:var(--c-text-sub);margin:0 auto 24px;max-width:480px;font-size:14px;line-height:1.6}
+.empty button{background:var(--c-accent);color:var(--c-bg);border:0;border-radius:8px;padding:12px 24px;font-weight:700;cursor:pointer;font-size:14px}
+.step-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-3);margin-top:var(--s-4)}
+@media (max-width:720px){.step-row{grid-template-columns:1fr}}
+.step{background:#0a0b12;border:1px solid var(--c-border);border-radius:var(--r-md);padding:var(--s-3);text-align:left}
+.step .n{font:700 24px/1 "JetBrains Mono",monospace;color:var(--c-accent);margin-bottom:8px}
+.step h3{margin:0 0 6px;font-size:16px}
+.step p{margin:0;color:var(--c-text-sub);font-size:13px;line-height:1.5}
+.cta-btn{margin-top:16px;background:var(--c-accent);color:var(--c-bg);border:0;border-radius:8px;padding:8px 16px;font-weight:700;cursor:pointer;font:inherit;font-size:13px}
+/* Coachmark overlay */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;display:none}
+.overlay.is-open{display:block}
+.spotlight{position:absolute;border:2px solid var(--c-accent);border-radius:12px;
+           box-shadow:0 0 0 9999px rgba(0,0,0,.55),0 0 24px rgba(0,240,255,.5);pointer-events:none;transition:all .3s}
+.tip{position:absolute;background:var(--c-surface);border:1px solid var(--c-accent);border-radius:12px;padding:16px;max-width:300px;
+     box-shadow:0 12px 40px rgba(0,0,0,.6);z-index:101}
+.tip h4{margin:0 0 6px;color:var(--c-accent);font-size:14px}
+.tip p{margin:0 0 12px;color:var(--c-text-sub);font-size:13px}
+.tip .actions{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--c-text-sub)}
+.tip button{background:var(--c-accent);color:var(--c-bg);border:0;border-radius:6px;padding:6px 14px;font-weight:700;cursor:pointer;font:inherit;font-size:12px}
+.tip button.skip{background:transparent;color:var(--c-text-sub);border:1px solid var(--c-border)}
+</style></head><body>
+<script src="_mock.js"></script>
+<header><h1>WF-19 Onboarding Tour</h1>
+  <button onclick="startTour()" style="background:transparent;color:var(--c-accent);border:1px solid var(--c-accent);border-radius:8px;padding:6px 14px;cursor:pointer">↻ もう一度ツアー</button></header>
+<div class="app">
+  <div class="layout">
+    <aside class="side" id="side">
+      <div class="item active">📥 Inbox</div>
+      <div class="item">👥 Candidates</div>
+      <div class="item">📋 Jobs</div>
+      <div class="item">📊 Reports</div>
+      <div class="item">⚙ Settings</div></aside>
+    <section class="main" id="main">
+      <div class="empty">
+        <div class="ill">🌱</div>
+        <h2>ようこそ、Mighty Skill-Bridge へ。</h2>
+        <p>あなたの workspace はまだ空です。まずは 3 ステップで、最初のマッチを作りましょう。</p>
+        <button id="addFirst">+ 最初の候補を追加</button>
+        <div class="step-row">
+          <div class="step"><div class="n">01</div><h3>経歴を貼る</h3><p>テキスト or PDF。整形は AI に任せます。</p></div>
+          <div class="step"><div class="n">02</div><h3>案件を貼る</h3><p>同じく、整形不要で投入できます。</p></div>
+          <div class="step"><div class="n">03</div><h3>スコアを見る</h3><p>4 軸 + 推奨質問 + 3 週ロードマップが届きます。</p></div></div>
+      </div></section>
+  </div></div>
+
+<div class="overlay" id="overlay"></div>
+<script>
+const STEPS=[
+  {sel:"#side",pos:"right",h:"① ここがメニュー",t:"Inbox / 候補 / 案件 / レポートを切り替えます。最初は Inbox から。"},
+  {sel:"#addFirst",pos:"bottom",h:"② まずは候補追加",t:"このボタンから最初の候補を登録します。経歴テキストを貼るだけで OK。"},
+  {sel:".step-row",pos:"top",h:"③ 3 ステップだけ",t:"01 貼る → 02 貼る → 03 見る。順序通り進めば 3 分で完了します。"},
+  {sel:"header",pos:"bottom",h:"完了!",t:"いつでも右上「↻ もう一度ツアー」から再開できます。準備ができたら ✕ で閉じてください。"},
+];
+let stepIdx=0;
+function startTour(){
+  if(localStorage.getItem("wf19_skip")==="1"){/* ignore opt-out for this demo */}
+  stepIdx=0; document.getElementById("overlay").classList.add("is-open"); paint();
+}
+function paint(){
+  const o=document.getElementById("overlay"); o.innerHTML="";
+  const step=STEPS[stepIdx]; if(!step){close(); return;}
+  const target=document.querySelector(step.sel); if(!target){close();return;}
+  const r=target.getBoundingClientRect();
+  const spot=document.createElement("div"); spot.className="spotlight";
+  spot.style.cssText=`top:${r.top-6}px;left:${r.left-6}px;width:${r.width+12}px;height:${r.height+12}px`;
+  o.appendChild(spot);
+  const tip=document.createElement("div"); tip.className="tip";
+  const tipY = step.pos==="bottom" ? r.bottom+12 : step.pos==="top" ? r.top-180 : r.top;
+  const tipX = step.pos==="right" ? r.right+12 : r.left;
+  tip.style.top=tipY+"px"; tip.style.left=tipX+"px";
+  tip.innerHTML=`<h4>${step.h}</h4><p>${step.t}</p>
+    <div class="actions"><span>${stepIdx+1} / ${STEPS.length}</span>
+      <div><button class="skip" onclick="close_()">スキップ</button>
+        <button onclick="next()">${stepIdx===STEPS.length-1?"完了":"次へ →"}</button></div></div>`;
+  o.appendChild(tip);
+}
+function next(){stepIdx++; paint();}
+function close_(){document.getElementById("overlay").classList.remove("is-open");}
+window.close = close_;
+window.next = next; window.startTour = startTour;
+document.getElementById("addFirst").addEventListener("click",async()=>{
+  const eng=prompt("最初の経歴を貼り付け (Load Sample 可)","山田太郎 / Python AWS K8s 8y");
+  if(!eng) return;
+  const job=prompt("案件票","株式会社X SRE / Python+AWS+K8s 必須");
+  if(!job) return;
+  try{
+    const m=await (await fetch("/api/match",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({engineer_content:eng,job_content:job})})).json();
+    document.getElementById("main").innerHTML =
+      `<h2 style="color:var(--c-accent);margin-top:0">🎉 最初のマッチが完成しました</h2>
+       <p style="font-size:48px;font-weight:800;color:var(--c-accent);margin:8px 0">${m.final_score} / 100</p>
+       <p style="color:var(--c-text-sub);font-size:14px">${m.summary||""}</p>
+       <button onclick="location.reload()" class="cta-btn">続けてもう 1 件追加</button>`;
+  }catch(e){alert("失敗: "+e.message);}});
+setTimeout(startTour, 600);
+</script></body></html>

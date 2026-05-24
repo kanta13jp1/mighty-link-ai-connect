@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-15 Card Swipe</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E;
+      --r-md:14px;--r-lg:24px;--s-3:16px;--s-4:24px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif;
+     min-height:100dvh;display:flex;flex-direction:column}
+header{padding:var(--s-3);border-bottom:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:18px;color:var(--c-accent)}
+.progress{color:var(--c-text-sub);font:600 13px/1 "JetBrains Mono",monospace}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:var(--s-4);position:relative}
+.stack{position:relative;width:min(380px,90vw);height:540px}
+.card{position:absolute;inset:0;background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);
+      padding:var(--s-4);display:flex;flex-direction:column;gap:12px;cursor:grab;
+      transition:transform .25s ease,opacity .25s;will-change:transform;user-select:none}
+.card.dragging{cursor:grabbing;transition:none}
+.card:nth-child(1){z-index:3;box-shadow:0 12px 40px rgba(0,0,0,.6)}
+.card:nth-child(2){z-index:2;transform:translateY(12px) scale(.96);opacity:.7}
+.card:nth-child(3){z-index:1;transform:translateY(24px) scale(.92);opacity:.4}
+.card .head{display:flex;justify-content:space-between;align-items:flex-start}
+.card .head h2{margin:0;font-size:22px}
+.card .head .score{font-size:42px;font-weight:800;color:var(--c-accent);line-height:1}
+.card .meta{color:var(--c-text-sub);font-size:13px}
+.card .axes{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;margin-top:8px}
+.card .axes div{background:#0a0b12;padding:8px 10px;border-radius:8px}
+.card .axes div b{color:var(--c-accent);font-weight:700;margin-right:6px}
+.card .summary{flex:1;font-size:14px;color:var(--c-text-sub);line-height:1.55;overflow:hidden}
+.card .verdict{position:absolute;top:24px;font-size:32px;font-weight:800;padding:6px 14px;border:3px solid;border-radius:8px;opacity:0;transition:opacity .15s;letter-spacing:.05em}
+.card .verdict.yes{right:24px;color:var(--c-success);border-color:var(--c-success);transform:rotate(8deg)}
+.card .verdict.no{left:24px;color:var(--c-danger);border-color:var(--c-danger);transform:rotate(-8deg)}
+.controls{display:flex;gap:24px;margin-top:var(--s-4)}
+.controls button{width:64px;height:64px;border-radius:50%;border:2px solid;background:transparent;cursor:pointer;font-size:24px;
+                  display:flex;align-items:center;justify-content:center;transition:transform .1s}
+.controls button:hover{transform:scale(1.1)}
+.controls .no{color:var(--c-danger);border-color:var(--c-danger)}
+.controls .yes{color:var(--c-success);border-color:var(--c-success)}
+.empty{text-align:center;color:var(--c-text-sub);padding:48px}
+.empty button{margin-top:12px;background:var(--c-accent);color:var(--c-bg);border:0;border-radius:8px;padding:10px 20px;font-weight:700;cursor:pointer}
+</style></head><body>
+<script src="_mock.js"></script>
+<header><h1>WF-15 Card Swipe</h1>
+  <span class="progress" id="prog">1 / 6</span></header>
+<main>
+  <div class="stack" id="stack"></div>
+  <div class="controls">
+    <button class="no" id="no" title="保留 (←)">✕</button>
+    <button class="yes" id="yes" title="推薦 (→)">✓</button></div>
+  <p style="color:var(--c-text-sub);font-size:12px;margin-top:16px">← / → キー or ドラッグで判定</p>
+</main>
+<script>
+const CANDIDATES=[
+  {name:"山田太郎",meta:"Python AWS 8y · 株式会社X SRE",skill:88,culture:82,growth:75,performing:90},
+  {name:"佐藤花子",meta:"React TS 5y · 株式会社Y FE",skill:72,culture:90,growth:88,performing:70},
+  {name:"鈴木一郎",meta:"Go Cloud 8y · 株式会社Z Cloud",skill:95,culture:85,growth:70,performing:88},
+  {name:"田中二郎",meta:"Python ML 4y · 株式会社W ML",skill:60,culture:70,growth:85,performing:65},
+  {name:"高橋三郎",meta:"Data Eng 6y · 株式会社V Data",skill:80,culture:85,growth:72,performing:75},
+  {name:"伊藤四郎",meta:"DevOps 7y · 株式会社U DevOps",skill:82,culture:78,growth:85,performing:80},
+];
+const verdicts=[]; let idx=0;
+function final(c){return Math.round(c.skill*.35+c.culture*.25+c.growth*.20+c.performing*.20);}
+function summary(c){const f=final(c);
+  return `Final ${f}/100。${c.skill>=85?"Skill 高":c.skill<70?"Skill 注意":"Skill 中"} / ${c.culture>=85?"Culture 強":"Culture 中"}。
+  ${f>=80?"推薦の根拠が揃っています。":f<70?"差分を埋める材料が必要。":"判断が分かれる候補です。"}`;
+}
+function render(){
+  const stack=document.getElementById("stack"); stack.innerHTML="";
+  const remain=CANDIDATES.slice(idx,idx+3);
+  if(remain.length===0){
+    stack.innerHTML=`<div class="empty"><h2 style="color:var(--c-accent)">完了</h2>
+      <p>推薦 ${verdicts.filter(v=>v==="yes").length} / 保留 ${verdicts.filter(v=>v==="no").length} / 全 ${verdicts.length}</p>
+      <button onclick="idx=0;verdicts.length=0;render();document.getElementById('prog').textContent='1 / '+${CANDIDATES.length}">もう一度</button></div>`;
+    return;
+  }
+  remain.reverse().forEach((c,i)=>{
+    const card=document.createElement("div"); card.className="card"; card.dataset.idx=idx+(remain.length-1-i);
+    card.innerHTML=`<div class="verdict yes">SAVE</div><div class="verdict no">SKIP</div>
+      <div class="head"><div><h2>${c.name}</h2><div class="meta">${c.meta}</div></div>
+        <div class="score">${final(c)}</div></div>
+      <div class="axes">
+        <div><b>Skill</b>${c.skill}</div><div><b>Culture</b>${c.culture}</div>
+        <div><b>Growth</b>${c.growth}</div><div><b>Performing</b>${c.performing}</div></div>
+      <div class="summary">${summary(c)}</div>`;
+    stack.appendChild(card);
+    if(i===remain.length-1) bindDrag(card);
+  });
+  document.getElementById("prog").textContent=`${Math.min(idx+1,CANDIDATES.length)} / ${CANDIDATES.length}`;
+}
+function bindDrag(card){
+  let sx=0,sy=0,dx=0,dy=0,active=false;
+  const start=(e)=>{active=true;card.classList.add("dragging");
+    const p=e.touches?e.touches[0]:e; sx=p.clientX;sy=p.clientY;};
+  const move=(e)=>{if(!active) return; const p=e.touches?e.touches[0]:e;
+    dx=p.clientX-sx; dy=p.clientY-sy;
+    card.style.transform=`translate(${dx}px,${dy}px) rotate(${dx*.05}deg)`;
+    card.querySelector(".verdict.yes").style.opacity=Math.max(0,Math.min(1,dx/80));
+    card.querySelector(".verdict.no").style.opacity=Math.max(0,Math.min(1,-dx/80));};
+  const end=()=>{if(!active) return; active=false; card.classList.remove("dragging");
+    if(Math.abs(dx)>120){fly(dx>0?"yes":"no");}
+    else{card.style.transform=""; card.querySelectorAll(".verdict").forEach(v=>v.style.opacity=0);}};
+  card.addEventListener("mousedown",start);card.addEventListener("mousemove",move);card.addEventListener("mouseup",end);card.addEventListener("mouseleave",end);
+  card.addEventListener("touchstart",start);card.addEventListener("touchmove",move);card.addEventListener("touchend",end);
+}
+function fly(v){
+  const card=document.querySelector(".card:nth-child(3)") || document.querySelector(".card");
+  if(!card) return;
+  const x=v==="yes"?800:-800;
+  card.style.transition="transform .3s,opacity .3s"; card.style.transform=`translate(${x}px,0) rotate(${x*.05}deg)`; card.style.opacity="0";
+  verdicts.push(v); idx++; setTimeout(render,260);
+}
+document.getElementById("yes").addEventListener("click",()=>fly("yes"));
+document.getElementById("no").addEventListener("click",()=>fly("no"));
+addEventListener("keydown",e=>{if(e.key==="ArrowRight") fly("yes"); if(e.key==="ArrowLeft") fly("no");});
+render();
+</script></body></html>

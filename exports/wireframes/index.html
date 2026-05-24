@@ -26,9 +26,10 @@ nav.top a{color:var(--c-text-sub);text-decoration:none;border-bottom:1px dashed 
       border-radius:var(--r-md);margin-top:var(--s-4);font-size:13px;color:var(--c-text-sub)}
 </style></head><body>
 <header>
-  <h1>UI Wireframes — 10 Patterns</h1>
-  <p class="lead">Mighty Skill-Bridge AI フィット診断 UI の 10 種類の方向性。社長判断後に
-    `@docs/wireframes/WF-XX_*.md を実装` プロンプトで AI が拡張可能。</p>
+  <h1>UI Wireframes — 20 Patterns</h1>
+  <p class="lead">Mighty Skill-Bridge AI フィット診断 UI の 20 種類の方向性。
+    第 1 弾 WF-01〜WF-10 (HANDOFF-29) = 主要 10 パターン、第 2 弾 WF-11〜WF-20 (HANDOFF-34) = 特化 10 パターン。
+    社長判断後に `@docs/wireframes/WF-XX_*.md を実装` プロンプトで AI が拡張可能。</p>
   <nav class="top">
     <a href="https://github.com/kanta13jp1/mighty-link-ai-connect/blob/main/docs/wireframes/README.md">📖 Spec Pack README</a>
     <a href="wireframes_spec.json">🧬 JSON spec</a>
@@ -67,6 +68,36 @@ nav.top a{color:var(--c-text-sub);text-decoration:none;border-bottom:1px dashed 
   <a class="card" href="wf-10.html"><span class="id">WF-10</span><h2>Search-First Catalog</h2>
     <p>検索 + フィルタ + グリッド + drawer / 蓄積後の日常入口</p>
     <div class="links"><span>リクルーター日常</span></div></a>
+  <a class="card" href="wf-11.html"><span class="id">WF-11</span><h2>Voice Interview</h2>
+    <p>🎙 Web Speech API / 音声で経歴 → 案件 → fit 結果</p>
+    <div class="links"><span>応募者本人 / 電話面接的</span></div></a>
+  <a class="card" href="wf-12.html"><span class="id">WF-12</span><h2>Calendar Timeline</h2>
+    <p>8 週ガント / 配属期間 + レビュー + リスク窓を可視化</p>
+    <div class="links"><span>配属計画 PM</span></div></a>
+  <a class="card" href="wf-13.html"><span class="id">WF-13</span><h2>Map / Geo View</h2>
+    <p>📍 SVG マップ + 通勤距離 + リモート可フラグ</p>
+    <div class="links"><span>勤務地ベース判定</span></div></a>
+  <a class="card" href="wf-14.html"><span class="id">WF-14</span><h2>Spreadsheet Editor</h2>
+    <p>Excel 風 / contenteditable + 4 軸数値編集 + 再計算 + CSV</p>
+    <div class="links"><span>パワーユーザー HR</span></div></a>
+  <a class="card" href="wf-15.html"><span class="id">WF-15</span><h2>Card Swipe</h2>
+    <p>Tinder 風 / ← / → ドラッグまたはキーで Yes/No</p>
+    <div class="links"><span>1 件ずつ集中判定</span></div></a>
+  <a class="card" href="wf-16.html"><span class="id">WF-16</span><h2>Org Tree</h2>
+    <p>階層 hierarchy + 折りたたみ + ノード詳細 drawer</p>
+    <div class="links"><span>組織配置責任者</span></div></a>
+  <a class="card" href="wf-17.html"><span class="id">WF-17</span><h2>A vs B Diff</h2>
+    <p>2 候補のペア比較 / 4 軸差分バー + verdict</p>
+    <div class="links"><span>最終 2 名から 1 名選定</span></div></a>
+  <a class="card" href="wf-18.html"><span class="id">WF-18</span><h2>Notification Inbox</h2>
+    <p>📥 新規 fit / リスク / システム通知の一覧 + filter</p>
+    <div class="links"><span>常駐運用担当</span></div></a>
+  <a class="card" href="wf-19.html"><span class="id">WF-19</span><h2>Onboarding Tour</h2>
+    <p>🌱 empty state + coachmark + 3 ステップ初回体験</p>
+    <div class="links"><span>新規ユーザー</span></div></a>
+  <a class="card" href="wf-20.html"><span class="id">WF-20</span><h2>Print Report</h2>
+    <p>🖨 A4 1 ページ / @media print 対応 / PDF 保存可</p>
+    <div class="links"><span>経営層への配布資料</span></div></a>
 </section>
 <div class="note">
   <strong>📌 実装注意:</strong> 各 WF は単一 HTML ファイル (vanilla JS / build なし) で

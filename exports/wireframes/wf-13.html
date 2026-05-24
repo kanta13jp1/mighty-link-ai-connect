@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-13 Map / Geo View</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E;
+      --r-md:12px;--r-lg:20px;--s-3:16px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+header{padding:var(--s-3);border-bottom:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:18px;color:var(--c-accent)}
+.wf13{display:grid;grid-template-columns:1fr 320px;gap:var(--s-3);padding:var(--s-3);max-width:1440px;margin:0 auto;height:calc(100vh - 64px);box-sizing:border-box}
+@media (max-width:900px){.wf13{grid-template-columns:1fr;height:auto}}
+.map{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);position:relative;overflow:hidden;min-height:520px}
+.map svg{width:100%;height:100%;display:block}
+.grid-bg{stroke:rgba(0,240,255,.08);stroke-width:.4;fill:none}
+.coast{fill:#161824;stroke:rgba(0,240,255,.25);stroke-width:1.2}
+.pin{cursor:pointer;transition:transform .15s}
+.pin:hover{transform-origin:center;transform:scale(1.3)}
+.pin .ring{fill:rgba(0,240,255,.15);stroke:var(--c-accent);stroke-width:1}
+.pin .dot{fill:var(--c-accent)}
+.pin.eng .dot{fill:var(--c-success)} .pin.eng .ring{fill:rgba(57,255,20,.15);stroke:var(--c-success)}
+.pin.job .dot{fill:var(--c-danger)} .pin.job .ring{fill:rgba(255,51,102,.15);stroke:var(--c-danger)}
+.pin text{font:600 11px/1 "Yu Gothic UI",sans-serif;fill:#fff;text-anchor:middle;pointer-events:none}
+.line{stroke:var(--c-accent);stroke-width:1;stroke-dasharray:4 3;opacity:.4}
+.side{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--s-3);overflow-y:auto}
+.side h2{margin:0 0 12px;font-size:16px;color:var(--c-accent)}
+.side .legend{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--c-text-sub);margin-bottom:16px}
+.side .legend span::before{content:"●";margin-right:6px}
+.side .legend .eng::before{color:var(--c-success)} .side .legend .job::before{color:var(--c-danger)}
+.match{padding:10px;background:#0a0b12;border:1px solid var(--c-border);border-radius:8px;margin-bottom:8px;font-size:13px}
+.match strong{color:var(--c-accent)}
+.match .km{color:var(--c-text-sub);font-size:11px}
+</style></head><body>
+<script src="_mock.js"></script>
+<header><h1>WF-13 Map / Geo View</h1>
+  <span style="color:var(--c-text-sub);font-size:13px">📍 勤務地ベースの fit / Tokyo metro</span></header>
+<main class="wf13">
+  <div class="map">
+    <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+      <defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M40 0 L0 0 0 40" class="grid-bg"/></pattern></defs>
+      <rect width="800" height="600" fill="url(#g)"/>
+      <!-- 簡略 Tokyo 湾シルエット -->
+      <path class="coast" d="M0 380 L120 360 L200 380 L260 420 L320 410 L400 440 L500 420 L580 460 L640 440 L720 470 L800 460 L800 600 L0 600 Z"/>
+      <!-- connect lines -->
+      <line class="line" x1="280" y1="220" x2="420" y2="180"/>
+      <line class="line" x1="280" y1="220" x2="540" y2="280"/>
+      <line class="line" x1="360" y1="320" x2="420" y2="180"/>
+      <line class="line" x1="360" y1="320" x2="540" y2="280"/>
+      <!-- engineer pins (green) -->
+      <g class="pin eng" transform="translate(280,220)"><circle class="ring" r="22"/><circle class="dot" r="6"/>
+        <text y="-26">山田 (新宿)</text></g>
+      <g class="pin eng" transform="translate(360,320)"><circle class="ring" r="22"/><circle class="dot" r="6"/>
+        <text y="-26">佐藤 (渋谷)</text></g>
+      <g class="pin eng" transform="translate(170,260)"><circle class="ring" r="18"/><circle class="dot" r="5"/>
+        <text y="-22">鈴木 (中野)</text></g>
+      <!-- job pins (red) -->
+      <g class="pin job" transform="translate(420,180)"><circle class="ring" r="22"/><circle class="dot" r="6"/>
+        <text y="-26">案件A (大手町)</text></g>
+      <g class="pin job" transform="translate(540,280)"><circle class="ring" r="22"/><circle class="dot" r="6"/>
+        <text y="-26">案件B (品川)</text></g>
+      <g class="pin job" transform="translate(620,180)"><circle class="ring" r="18"/><circle class="dot" r="5"/>
+        <text y="-22">案件C (秋葉原)</text></g>
+    </svg>
+  </div>
+  <aside class="side">
+    <h2>Geo Matches</h2>
+    <div class="legend">
+      <span class="eng">エンジニア (現住地)</span>
+      <span class="job">案件 (勤務地)</span></div>
+    <div id="matches"></div>
+    <p style="font-size:12px;color:var(--c-text-sub);margin-top:12px">
+      距離は通勤負荷の代理指標。リモート可案件は距離ペナルティを 0 にする運用想定。</p>
+  </aside>
+</main>
+<script>
+const PAIRS=[
+  {eng:"山田",job:"案件A",km:8,score:88},
+  {eng:"山田",job:"案件B",km:12,score:75},
+  {eng:"佐藤",job:"案件A",km:7,score:82},
+  {eng:"佐藤",job:"案件B",km:5,score:91},
+  {eng:"鈴木",job:"案件C",km:14,score:70},
+];
+async function decorate(){
+  let html="";
+  for(const p of PAIRS){
+    try{
+      const m=await (await fetch("/api/match",{method:"POST",headers:{"content-type":"application/json"},
+        body:JSON.stringify({engineer_content:p.eng+" 5y",job_content:p.job})})).json();
+      p.score = m.final_score;
+    }catch(e){}
+    html += `<div class="match"><strong>${p.eng} × ${p.job}</strong> · score ${p.score}
+      <div class="km">通勤 ${p.km} km / 通勤負荷 ${p.km<10?"低":p.km<15?"中":"高"}</div></div>`;
+  }
+  document.getElementById("matches").innerHTML=html;
+}
+decorate();
+</script></body></html>

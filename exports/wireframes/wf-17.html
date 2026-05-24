@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-17 A vs B Diff</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-warning:#FFD93D;--c-border:#2A2D3E;
+      --r-md:12px;--r-lg:20px;--s-3:16px;--s-4:24px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+header{padding:var(--s-3);border-bottom:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+header h1{margin:0;font-size:18px;color:var(--c-accent)}
+header .ctrl{display:flex;gap:8px;font-size:13px}
+header button{background:transparent;color:var(--c-accent);border:1px solid var(--c-accent);border-radius:8px;padding:6px 14px;cursor:pointer;font:inherit;font-size:13px}
+.wf17{padding:var(--s-3);max-width:1280px;margin:0 auto}
+.head{display:grid;grid-template-columns:1fr 80px 1fr;gap:var(--s-3);margin-bottom:var(--s-3);align-items:center}
+@media (max-width:720px){.head{grid-template-columns:1fr;text-align:center}}
+.head .who{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--s-3);text-align:center}
+.head .who h2{margin:0 0 8px;font-size:22px}
+.head .who .meta{color:var(--c-text-sub);font-size:13px}
+.head .who .final{font-size:64px;font-weight:800;color:var(--c-accent);line-height:1;margin-top:8px}
+.head .vs{text-align:center;font-size:32px;color:var(--c-text-sub);font-weight:800;letter-spacing:.05em}
+.axes{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--s-3);margin-bottom:var(--s-3)}
+.axes h3{margin:0 0 16px;font-size:16px;color:var(--c-accent)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;align-items:center}
+.row .label{grid-column:1/-1;text-align:center;font:600 12px/1 "JetBrains Mono",monospace;color:var(--c-text-sub);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.bar{background:#0a0b12;height:32px;border-radius:6px;position:relative;display:flex;align-items:center;padding:0 10px;font-weight:700;font-size:14px}
+.bar .fill{position:absolute;top:0;bottom:0;left:0;background:var(--c-accent);opacity:.18;border-radius:6px}
+.bar .fill.high{background:var(--c-success)} .bar .fill.low{background:var(--c-danger)}
+.bar.right{justify-content:flex-end}
+.bar.right .fill{left:auto;right:0}
+.bar .val{position:relative;z-index:1}
+.bar.right .val{order:2}
+.bar .diff{position:relative;z-index:1;font-size:12px;margin-left:8px;color:var(--c-success)}
+.bar .diff.minus{color:var(--c-danger)}
+.bar.right .diff{margin-left:0;margin-right:8px;order:1}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3)}
+@media (max-width:720px){.summary-grid{grid-template-columns:1fr}}
+.summary{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--s-3)}
+.summary h4{margin:0 0 8px;color:var(--c-accent);font-size:14px}
+.summary p{margin:0 0 8px;color:var(--c-text-sub);font-size:13px;line-height:1.6}
+.verdict{margin-top:var(--s-3);padding:var(--s-3);background:var(--c-surface);border:1px solid var(--c-accent);border-radius:var(--r-lg);text-align:center}
+.verdict strong{color:var(--c-accent);font-size:22px}
+</style></head><body>
+<script src="_mock.js"></script>
+<header><h1>WF-17 A vs B Diff</h1>
+  <div class="ctrl"><button id="swap">⇄ Swap A/B</button><button id="reeval">↻ Re-evaluate</button></div></header>
+<main class="wf17">
+  <div class="head">
+    <div class="who" id="a"><h2>山田太郎</h2><div class="meta">Python AWS 8y · 株式会社X SRE</div><div class="final">88</div></div>
+    <div class="vs">vs</div>
+    <div class="who" id="b"><h2>佐藤花子</h2><div class="meta">React TS 5y · 株式会社X SRE</div><div class="final">72</div></div>
+  </div>
+  <div class="axes">
+    <h3>4 軸 詳細比較</h3>
+    <div id="rows"></div></div>
+  <div class="summary-grid">
+    <div class="summary"><h4>A: 山田太郎 の強み</h4>
+      <p>• Skill / Performing が 90 前後と安定。大規模 SRE 経験が案件規模感に合致。</p>
+      <p>• Culture 82。長期チームへの定着が見込める。</p>
+      <p>• Growth は 75 と中程度。新技術習得スピードに余地あり。</p></div>
+    <div class="summary"><h4>B: 佐藤花子 の強み</h4>
+      <p>• Culture 90 と高く、案件チームの価値観 fit が突出。</p>
+      <p>• Growth 88 でキャッチアップ速度に強み。</p>
+      <p>• Skill / Performing は 70 台。案件難度に対し補完支援が必要。</p></div>
+  </div>
+  <div class="verdict" id="verdict"></div>
+</main>
+<script>
+const STATE={
+  a:{name:"山田太郎",skill:88,culture:82,growth:75,performing:90,final:88},
+  b:{name:"佐藤花子",skill:72,culture:90,growth:88,performing:70,final:72},
+};
+const AXES=["skill","culture","growth","performing"];
+function render(){
+  document.getElementById("rows").innerHTML = AXES.map(k=>{
+    const a=STATE.a[k], b=STATE.b[k], d=a-b;
+    const aFillCls = a>=80?"high":a<70?"low":"";
+    const bFillCls = b>=80?"high":b<70?"low":"";
+    return `<div class="row">
+      <div class="label">${k.toUpperCase()}</div>
+      <div class="bar"><div class="fill ${aFillCls}" style="width:${a}%"></div>
+        <span class="val">${a}</span><span class="diff ${d>0?"":"minus"}">${d>0?"+"+d:d}</span></div>
+      <div class="bar right"><div class="fill ${bFillCls}" style="width:${b}%"></div>
+        <span class="diff ${d<0?"":"minus"}">${d<0?"+"+(-d):d===0?"0":-d}</span><span class="val">${b}</span></div></div>`;
+  }).join("");
+  const winner = STATE.a.final >= STATE.b.final ? STATE.a : STATE.b;
+  const margin = Math.abs(STATE.a.final - STATE.b.final);
+  document.getElementById("verdict").innerHTML =
+    `<strong>${winner.name}</strong> 総合 +${margin} pt 優位 — ${margin<5?"接戦、二次面談で決着推奨":margin<10?"優位、最終判断材料は QA で":"明確に優位、推薦可"}`;
+}
+function paint(){
+  document.querySelector("#a h2").textContent = STATE.a.name;
+  document.querySelector("#a .final").textContent = STATE.a.final;
+  document.querySelector("#b h2").textContent = STATE.b.name;
+  document.querySelector("#b .final").textContent = STATE.b.final;
+  render();
+}
+document.getElementById("swap").addEventListener("click",()=>{[STATE.a,STATE.b]=[STATE.b,STATE.a]; paint();});
+document.getElementById("reeval").addEventListener("click",async()=>{
+  for(const k of ["a","b"]){
+    try{const m=await (await fetch("/api/match",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({engineer_content:STATE[k].name,job_content:"株式会社X SRE"})})).json();
+      Object.assign(STATE[k],m.scores,{final:m.final_score});}catch(e){}
+  } paint();
+});
+paint();
+</script></body></html>
