@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-14 Spreadsheet Editor</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E;
+      --r-md:8px;--s-3:16px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+header{padding:var(--s-3);border-bottom:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+header h1{margin:0;font-size:18px;color:var(--c-accent)}
+.toolbar{display:flex;gap:6px;align-items:center;color:var(--c-text-sub);font-size:13px}
+.toolbar button{background:transparent;color:var(--c-accent);border:1px solid var(--c-accent);border-radius:6px;padding:6px 12px;cursor:pointer;font:inherit;font-size:12px}
+.formula-bar{display:flex;gap:8px;align-items:center;padding:8px var(--s-3);background:var(--c-surface);border-bottom:1px solid var(--c-border);font-family:"JetBrains Mono",monospace;font-size:13px}
+.formula-bar .cell-ref{color:var(--c-accent);font-weight:700;min-width:48px}
+.formula-bar .fx{color:var(--c-text-sub)}
+.formula-bar input{flex:1;background:#0a0b12;color:var(--c-text);border:1px solid var(--c-border);border-radius:4px;padding:6px 10px;font:inherit}
+.wf14{padding:0 var(--s-3) var(--s-3);max-width:1280px;margin:0 auto;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:880px;font-size:13px;background:var(--c-surface);font-family:"JetBrains Mono",monospace}
+th,td{border:1px solid var(--c-border);padding:8px 10px;text-align:right;min-width:80px}
+th{background:#0a0b12;color:var(--c-text-sub);text-align:center;font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:11px}
+th.label{text-align:left;color:var(--c-accent)}
+td.label{text-align:left;color:var(--c-text);font-weight:600;background:#10131c}
+td[contenteditable="true"]{cursor:cell;outline:none}
+td[contenteditable="true"]:focus{background:#1a1d2c;outline:2px solid var(--c-accent);outline-offset:-2px}
+td.formula{color:var(--c-accent);background:#0e1726}
+td.high{color:var(--c-success)} td.low{color:var(--c-danger)}
+.footer{padding:8px var(--s-3);color:var(--c-text-sub);font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:"JetBrains Mono",monospace}
+</style></head><body>
+<script src="_mock.js"></script>
+<header><h1>WF-14 Spreadsheet Editor</h1>
+  <div class="toolbar">
+    <button id="add">+ 行追加</button>
+    <button id="recalc">Recalc (call /api/match)</button>
+    <button id="csv">⬇ CSV</button>
+  </div></header>
+<div class="formula-bar"><span class="cell-ref" id="ref">F2</span><span class="fx">𝑓𝑥</span>
+  <input id="fx" value="=WEIGHTED({Skill}*0.35 + {Culture}*0.25 + {Growth}*0.20 + {Performing}*0.20)" readonly></div>
+<main class="wf14">
+  <table id="tbl"><thead><tr>
+    <th class="label">候補 (A)</th><th>Skill (B)</th><th>Culture (C)</th><th>Growth (D)</th><th>Performing (E)</th><th>Final (F)</th><th>Δ vs avg</th></tr></thead>
+    <tbody></tbody></table>
+</main>
+<div class="footer"><span>セル編集 = contenteditable / Final 列 = AI 算出 (read-only)</span>
+  <span id="stat">6 rows · avg --</span></div>
+<script>
+const DATA=[
+  {name:"山田太郎",skill:88,culture:82,growth:75,performing:90},
+  {name:"佐藤花子",skill:72,culture:90,growth:88,performing:70},
+  {name:"鈴木一郎",skill:95,culture:85,growth:70,performing:88},
+  {name:"田中二郎",skill:60,culture:70,growth:85,performing:65},
+  {name:"高橋三郎",skill:80,culture:85,growth:72,performing:75},
+  {name:"伊藤四郎",skill:82,culture:78,growth:85,performing:80},
+];
+function calcFinal(r){return Math.round(r.skill*.35 + r.culture*.25 + r.growth*.20 + r.performing*.20);}
+function render(){
+  const tbody=document.querySelector("#tbl tbody"); tbody.innerHTML="";
+  const finals=DATA.map(calcFinal); const avg=finals.reduce((a,b)=>a+b,0)/finals.length;
+  DATA.forEach((r,i)=>{
+    const f=finals[i], d=Math.round(f-avg);
+    const tr=document.createElement("tr");
+    const klass = f>=80?"high":f<70?"low":"";
+    tr.innerHTML = `<td class="label">${r.name}</td>`+
+      ["skill","culture","growth","performing"].map(k=>
+        `<td contenteditable="true" data-row="${i}" data-key="${k}">${r[k]}</td>`).join("")+
+      `<td class="formula ${klass}">${f}</td><td class="${d>0?"high":d<0?"low":""}">${d>0?"+":""}${d}</td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById("stat").textContent=`${DATA.length} rows · avg ${avg.toFixed(1)}`;
+  document.querySelectorAll("td[contenteditable]").forEach(td=>{
+    td.addEventListener("focus",()=>{const r=+td.dataset.row, c=td.dataset.key;
+      const col={skill:"B",culture:"C",growth:"D",performing:"E"}[c];
+      document.getElementById("ref").textContent=col+(r+2);
+      document.getElementById("fx").value = td.textContent;
+      document.getElementById("fx").readOnly=false;});
+    td.addEventListener("blur",e=>{const v=+e.target.textContent;
+      if(isFinite(v)){DATA[+e.target.dataset.row][e.target.dataset.key]=Math.max(0,Math.min(100,v)); render();}});
+  });
+}
+document.getElementById("add").addEventListener("click",async()=>{
+  const name=prompt("候補名"); if(!name) return;
+  try{
+    const m=await (await fetch("/api/match",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({engineer_content:name+" 5y",job_content:"案件サンプル"})})).json();
+    DATA.push({name,skill:m.scores.skill,culture:m.scores.culture,growth:m.scores.growth,performing:m.scores.performing});
+    render();
+  }catch(e){alert("追加失敗: "+e.message);}});
+document.getElementById("recalc").addEventListener("click",async()=>{
+  for(const r of DATA){
+    try{const m=await (await fetch("/api/match",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({engineer_content:r.name,job_content:"再評価"})})).json();
+      Object.assign(r,m.scores);}catch(e){}
+  } render();});
+document.getElementById("csv").addEventListener("click",()=>{
+  const head="候補,Skill,Culture,Growth,Performing,Final\n";
+  const body=DATA.map(r=>[r.name,r.skill,r.culture,r.growth,r.performing,calcFinal(r)].join(",")).join("\n");
+  const blob=new Blob(["﻿"+head+body],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download=`spreadsheet_${Date.now()}.csv`; a.click();});
+render();
+</script></body></html>

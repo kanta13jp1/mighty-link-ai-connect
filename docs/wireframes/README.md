@@ -125,7 +125,7 @@ Breakpoints: `--bp-mobile: 480px` / `--bp-tablet: 900px` / `--bp-desktop: 1280px
 
 ---
 
-## 10 patterns index
+## 20 patterns index
 
 | # | spec | 強み | 弱み | 想定ユーザー |
 | --- | --- | --- | --- | --- |
@@ -139,6 +139,19 @@ Breakpoints: `--bp-mobile: 480px` / `--bp-tablet: 900px` / `--bp-desktop: 1280px
 | **WF-08** | [Dashboard Tiles](WF-08_dashboard_tiles.md) | 経営層一覧 | drill-down 別途 | 社長 / 経営層 |
 | **WF-09** | [Inline Live Preview](WF-09_inline_live_preview.md) | AI ライブ感最大 | API 課金重い | 社長デモ専用 |
 | **WF-10** | [Search Catalog](WF-10_search_catalog.md) | データ蓄積後の入口 | 初期データ 0 で空 | リクルーター日常 |
+| **WF-11** | Voice Interview (impl 直接、spec md なし) | 音声入力 / 電話面接の感触 | ノイズ / 認識精度 | 応募者本人 |
+| **WF-12** | Calendar Timeline (impl 直接) | 配属計画の時間軸が一目 | 8 週固定、ズーム未対応 | 配属計画 PM |
+| **WF-13** | Map / Geo View (impl 直接) | 通勤距離を判定軸に | 地図は SVG 簡易、本物の Maps API 未統合 | 勤務地依存案件 |
+| **WF-14** | Spreadsheet Editor (impl 直接) | パワーユーザーが即編集できる | formula は擬似的 | パワーユーザー HR |
+| **WF-15** | Card Swipe (impl 直接) | 1 件ずつ集中判断 | 並列比較できない | 1 件ずつ集中したい判定者 |
+| **WF-16** | Org Tree (impl 直接) | 階層ビューで配置全体把握 | 横スクロール深いと辛い | 組織配置責任者 |
+| **WF-17** | A vs B Diff (impl 直接) | 2 候補絞り込みに特化 | 3+ 同時比較は WF-07 へ | 最終 2 名から 1 名選定 |
+| **WF-18** | Notification Inbox (impl 直接) | event 駆動運用に強い | 通知設定 UI 別途要 | 常駐運用担当 |
+| **WF-19** | Onboarding Tour (impl 直接) | empty state を歓迎に変換 | 慣れたら邪魔 | 新規ユーザー初回 |
+| **WF-20** | Print Report (impl 直接) | A4 PDF / 経営層配布資料 | インタラクションなし | 経営層配布 |
+
+> WF-01〜WF-10 は専用 spec md (`WF-XX_*.md`) を持ちますが、WF-11〜WF-20 は impl HTML を直接読んで仕様を把握する想定です。
+> 必要に応じて `docs/wireframes/WF-11_voice_interview.md` 等を follow-up セッションで追加可能です。
 
 ---
 

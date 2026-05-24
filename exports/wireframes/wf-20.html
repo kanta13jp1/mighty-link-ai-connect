@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-20 Print Report</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E}
+*{box-sizing:border-box}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif;line-height:1.5}
+.toolbar{position:sticky;top:0;background:#0a0b12;border-bottom:1px solid var(--c-border);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.toolbar h1{margin:0;font-size:16px;color:var(--c-accent)}
+.toolbar button{background:var(--c-accent);color:var(--c-bg);border:0;border-radius:6px;padding:8px 16px;font:600 13px/1 inherit;cursor:pointer;margin-left:6px}
+.toolbar button.ghost{background:transparent;color:var(--c-accent);border:1px solid var(--c-accent)}
+.page{background:#fff;color:#1a1a1a;width:210mm;min-height:297mm;margin:24px auto;padding:18mm 16mm;
+      box-shadow:0 12px 40px rgba(0,0,0,.5);font-family:"Yu Gothic UI",sans-serif;line-height:1.5;position:relative}
+@media (max-width:720px){.page{width:100%;padding:24px;min-height:auto}}
+.page::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:#00C0CC}
+.head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid #DCDCDC;padding-bottom:16px;margin-bottom:20px}
+.head .brand{font:700 14px/1 "Helvetica Neue",sans-serif;letter-spacing:.15em;text-transform:uppercase;color:#00939C}
+.head .meta{text-align:right;font:500 12px/1.5 "Helvetica Neue",sans-serif;color:#666}
+h2.title{font-size:28px;margin:0 0 4px;letter-spacing:-.01em;font-weight:700;color:#0a0a0a}
+.sub{font-size:13px;color:#666;margin-bottom:24px}
+.score-bar{display:grid;grid-template-columns:140px 1fr;gap:24px;border:1px solid #DCDCDC;border-radius:8px;padding:16px 20px;margin-bottom:20px;background:#FAFCFD}
+.score-bar .final{font-size:64px;font-weight:800;color:#00939C;line-height:1}
+.score-bar .final small{display:block;font-size:11px;color:#666;font-weight:500;letter-spacing:.15em;text-transform:uppercase;margin-top:2px}
+.score-bar .axes{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-self:center}
+.score-bar .axes div{text-align:center;border-left:1px solid #DCDCDC;padding-left:10px}
+.score-bar .axes div:first-child{border-left:0;padding-left:0}
+.score-bar .axes div b{display:block;font-size:24px;font-weight:700;color:#0a0a0a;line-height:1.1}
+.score-bar .axes div span{font-size:10px;color:#666;letter-spacing:.1em;text-transform:uppercase}
+section.block{margin-bottom:18px}
+section.block h3{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#00939C;border-bottom:1px solid #DCDCDC;padding-bottom:4px;margin:0 0 10px}
+section.block p,section.block li{font-size:13px;color:#222;margin:0 0 6px;line-height:1.6}
+section.block ul{padding-left:20px;margin:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:720px){.two{grid-template-columns:1fr}}
+.qa{border-left:3px solid #00C0CC;padding:8px 12px;margin-bottom:8px;background:#F2FBFC}
+.qa b{display:block;font-size:13px;margin-bottom:4px}
+.qa p{font-size:12px;color:#444;margin:0}
+.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media (max-width:720px){.roadmap{grid-template-columns:1fr}}
+.roadmap .wk{border:1px solid #DCDCDC;padding:10px 12px;border-radius:6px}
+.roadmap .wk b{display:block;font-size:11px;color:#00939C;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.roadmap .wk p{font-size:12px;margin:0}
+.footer{margin-top:32px;padding-top:12px;border-top:1px solid #DCDCDC;font-size:10px;color:#888;display:flex;justify-content:space-between}
+@media print{
+  body{background:#fff} .toolbar{display:none}
+  .page{box-shadow:none;margin:0;width:auto;min-height:auto;padding:18mm 16mm}
+}
+</style></head><body>
+<script src="_mock.js"></script>
+<div class="toolbar"><h1>WF-20 Print Report (A4 / 1 page)</h1>
+  <div><button class="ghost" id="reload">↻ /api/match で再生成</button>
+    <button id="print">🖨 印刷 / PDF 保存</button></div></div>
+<article class="page" id="page">
+  <header class="head">
+    <div class="brand">Mighty Skill-Bridge / Fit Report</div>
+    <div class="meta">Report ID: MK-2026-06-02-001<br>Generated: 2026-05-25 JST<br>Confidential — Internal Use Only</div>
+  </header>
+  <h2 class="title">山田太郎 × 株式会社X (SRE Senior)</h2>
+  <div class="sub">Engineer Profile · Senior · 8y · Python / AWS / Kubernetes</div>
+
+  <div class="score-bar">
+    <div class="final" id="final">88<small>FINAL / 100</small></div>
+    <div class="axes">
+      <div><b id="s-skill">88</b><span>Skill</span></div>
+      <div><b id="s-culture">82</b><span>Culture</span></div>
+      <div><b id="s-growth">75</b><span>Growth</span></div>
+      <div><b id="s-performing">90</b><span>Performing</span></div></div></div>
+
+  <section class="block"><h3>Executive Summary</h3>
+    <p id="summary">Skill / Performing が同時に 85+ で、案件規模感への適合は高水準。Culture は 82 と安定し、長期定着が見込める。Growth 75 は中位だが、3 週ロードマップで補完可能。総合的に推薦可。</p></section>
+
+  <div class="two">
+    <section class="block"><h3>強み / Strengths</h3>
+      <ul><li>大規模 SRE (月 5M req) の再現性ある運用経験</li>
+        <li>K8s + IaC (Terraform) の実装力</li>
+        <li>on-call ローテへの心理的耐性</li></ul></section>
+    <section class="block"><h3>ギャップ / Gaps</h3>
+      <ul><li>新言語 (Go / Rust) 採用への切替速度</li>
+        <li>マネジメント経験は限定的 (チーム ≤ 4)</li>
+        <li>顧客 SLA 折衝の経験ログが浅い</li></ul></section>
+  </div>
+
+  <section class="block"><h3>推奨 QA (面接時)</h3>
+    <div class="qa" id="qa1"><b>Q1: 月 5M req の SLI/SLO 設計で苦労した点は?</b>
+      <p>A: 負荷ピーク帯の予測 + alert の precision 確保。具体数値 (例: error budget %) を引き出す。</p></div>
+    <div class="qa" id="qa2"><b>Q2: on-call ローテでの意思決定速度の保ち方は?</b>
+      <p>A: runbook の鮮度管理 + 共有原則 (例: degrade vs scale)。チーム文化への接続を確認。</p></div></section>
+
+  <section class="block"><h3>配属後 3 週間ロードマップ</h3>
+    <div class="roadmap">
+      <div class="wk"><b>Week 1</b><p id="rw1">環境構築 + コードベース walkthrough + on-call shadow</p></div>
+      <div class="wk"><b>Week 2</b><p id="rw2">小規模 PR 3 本 + on-call primary 半週</p></div>
+      <div class="wk"><b>Week 3</b><p id="rw3">SLI/SLO レビュー参加 + skill gap topic を内部勉強会で共有</p></div></div></section>
+
+  <div class="footer"><span>Mighty-Link Inc.</span>
+    <span>WF-20 Print Report — テスト案 / 1 page A4 印刷 / PDF 出力対応</span></div>
+</article>
+<script>
+document.getElementById("print").addEventListener("click",()=>window.print());
+document.getElementById("reload").addEventListener("click",async()=>{
+  try{
+    const m=await (await fetch("/api/match",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({engineer_content:"山田太郎 Python AWS K8s 8y",job_content:"株式会社X SRE Senior"})})).json();
+    document.getElementById("final").innerHTML = m.final_score+'<small>FINAL / 100</small>';
+    document.getElementById("s-skill").textContent=m.scores.skill;
+    document.getElementById("s-culture").textContent=m.scores.culture;
+    document.getElementById("s-growth").textContent=m.scores.growth;
+    document.getElementById("s-performing").textContent=m.scores.performing;
+    if(m.summary) document.getElementById("summary").textContent=m.summary;
+    if(m.qa && m.qa[0]) document.getElementById("qa1").innerHTML=`<b>Q1: ${m.qa[0].question}</b><p>A: ${m.qa[0].answer}</p>`;
+    if(m.qa && m.qa[1]) document.getElementById("qa2").innerHTML=`<b>Q2: ${m.qa[1].question}</b><p>A: ${m.qa[1].answer}</p>`;
+    if(m.roadmap_week1) document.getElementById("rw1").textContent=m.roadmap_week1;
+    if(m.roadmap_week2) document.getElementById("rw2").textContent=m.roadmap_week2;
+    if(m.roadmap_week3) document.getElementById("rw3").textContent=m.roadmap_week3;
+  }catch(e){alert("再生成失敗: "+e.message);}
+});
+</script></body></html>

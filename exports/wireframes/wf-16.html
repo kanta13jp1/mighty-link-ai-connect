@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-16 Org Tree</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-warning:#FFD93D;--c-border:#2A2D3E;
+      --r-md:10px;--r-lg:18px;--s-3:16px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+header{padding:var(--s-3);border-bottom:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:18px;color:var(--c-accent)}
+.wf16{padding:var(--s-3);max-width:1280px;margin:0 auto}
+.tree{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--s-3);overflow-x:auto}
+.tree ul{list-style:none;padding-left:24px;margin:0;border-left:1px dashed var(--c-border)}
+.tree > ul{padding-left:0;border-left:0}
+.node{margin:6px 0}
+.node-row{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#0a0b12;border:1px solid var(--c-border);
+          border-radius:var(--r-md);cursor:pointer;transition:border-color .15s}
+.node-row:hover{border-color:var(--c-accent)}
+.node-row .caret{color:var(--c-text-sub);width:14px;text-align:center;font-size:12px;transition:transform .15s}
+.node.collapsed > ul{display:none}
+.node.collapsed > .node-row .caret{transform:rotate(-90deg)}
+.node-row .role{font:600 11px/1 "JetBrains Mono",monospace;color:var(--c-accent);background:rgba(0,240,255,.08);
+                padding:3px 8px;border-radius:4px;letter-spacing:.05em;text-transform:uppercase}
+.node-row .name{flex:1;font-weight:600}
+.node-row .badge{font-size:11px;padding:2px 8px;border-radius:999px;background:#1a1d2c;color:var(--c-text-sub)}
+.node-row .score{font:700 14px/1 "JetBrains Mono",monospace;color:var(--c-accent);min-width:36px;text-align:right}
+.node-row .score.high{color:var(--c-success)} .node-row .score.low{color:var(--c-danger)}
+.drawer{margin-top:var(--s-3);background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--s-3)}
+.drawer h3{margin:0 0 8px;color:var(--c-accent)}
+.drawer .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+@media (max-width:600px){.drawer .grid{grid-template-columns:1fr 1fr}}
+.drawer .grid div{background:#0a0b12;padding:10px;border-radius:8px;text-align:center}
+.drawer .grid div b{display:block;color:var(--c-accent);font-size:20px;font-weight:800;margin-bottom:2px}
+.drawer .grid div span{color:var(--c-text-sub);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+</style></head><body>
+<script src="_mock.js"></script>
+<header><h1>WF-16 Org Tree</h1>
+  <span style="color:var(--c-text-sub);font-size:13px">階層ビュー / クリックで展開・閉じる</span></header>
+<main class="wf16">
+  <div class="tree">
+    <ul>
+      <li class="node" data-id="root">
+        <div class="node-row" data-name="DX 推進室" data-role="div" data-skill="--" data-culture="--" data-growth="--" data-performing="--" data-final="--">
+          <span class="caret">▼</span><span class="role">Div</span>
+          <span class="name">DX 推進室</span><span class="badge">3 teams · 14 members</span>
+          <span class="score">--</span></div>
+        <ul>
+          <li class="node" data-id="t-sre">
+            <div class="node-row" data-name="SRE チーム" data-role="team" data-skill="86" data-culture="80" data-growth="78" data-performing="88" data-final="84">
+              <span class="caret">▼</span><span class="role">Team</span>
+              <span class="name">SRE チーム</span><span class="badge">Lead: 山田 / 4 members</span>
+              <span class="score high">84</span></div>
+            <ul>
+              <li class="node"><div class="node-row" data-name="山田太郎" data-role="lead" data-skill="88" data-culture="82" data-growth="75" data-performing="90" data-final="84">
+                <span class="caret">▼</span><span class="role">Lead</span><span class="name">山田太郎</span><span class="badge">8y</span><span class="score high">84</span></div><ul></ul></li>
+              <li class="node"><div class="node-row" data-name="佐藤花子" data-role="sr" data-skill="78" data-culture="85" data-growth="80" data-performing="76" data-final="79">
+                <span class="caret">▼</span><span class="role">Sr</span><span class="name">佐藤花子</span><span class="badge">5y</span><span class="score">79</span></div><ul></ul></li>
+              <li class="node"><div class="node-row" data-name="鈴木一郎" data-role="mid" data-skill="72" data-culture="78" data-growth="85" data-performing="70" data-final="76">
+                <span class="caret">▼</span><span class="role">Mid</span><span class="name">鈴木一郎</span><span class="badge">3y</span><span class="score">76</span></div><ul></ul></li>
+            </ul></li>
+          <li class="node" data-id="t-app">
+            <div class="node-row" data-name="App チーム" data-role="team" data-skill="75" data-culture="88" data-growth="82" data-performing="74" data-final="79">
+              <span class="caret">▼</span><span class="role">Team</span>
+              <span class="name">App チーム</span><span class="badge">Lead: 高橋 / 5 members</span>
+              <span class="score">79</span></div>
+            <ul>
+              <li class="node"><div class="node-row" data-name="高橋三郎" data-role="lead" data-skill="80" data-culture="90" data-growth="85" data-performing="75" data-final="82">
+                <span class="caret">▼</span><span class="role">Lead</span><span class="name">高橋三郎</span><span class="badge">7y</span><span class="score high">82</span></div><ul></ul></li>
+              <li class="node"><div class="node-row" data-name="伊藤四郎" data-role="mid" data-skill="62" data-culture="70" data-growth="80" data-performing="68" data-final="69">
+                <span class="caret">▼</span><span class="role">Mid</span><span class="name">伊藤四郎</span><span class="badge">2y</span><span class="score low">69</span></div><ul></ul></li>
+            </ul></li>
+          <li class="node" data-id="t-data">
+            <div class="node-row" data-name="Data チーム" data-role="team" data-skill="82" data-culture="76" data-growth="80" data-performing="84" data-final="81">
+              <span class="caret">▼</span><span class="role">Team</span>
+              <span class="name">Data チーム</span><span class="badge">Lead: 田中 / 5 members</span>
+              <span class="score high">81</span></div>
+            <ul></ul></li>
+        </ul></li>
+    </ul>
+  </div>
+  <div class="drawer" id="drawer"><h3>選択中: (なし)</h3>
+    <p style="color:var(--c-text-sub);font-size:13px">ノードをクリックして詳細を表示。新規 fit 評価は /api/match を呼ぶ。</p></div>
+</main>
+<script>
+document.querySelectorAll(".node-row").forEach(r=>{
+  const node=r.parentElement;
+  r.querySelector(".caret").addEventListener("click",e=>{e.stopPropagation(); node.classList.toggle("collapsed");});
+  r.addEventListener("click",async()=>{
+    const d=r.dataset;
+    const grid = `<div><b>${d.skill}</b><span>Skill</span></div>
+      <div><b>${d.culture}</b><span>Culture</span></div>
+      <div><b>${d.growth}</b><span>Growth</span></div>
+      <div><b>${d.performing}</b><span>Performing</span></div>`;
+    document.getElementById("drawer").innerHTML =
+      `<h3>選択中: ${d.name} <small style="color:var(--c-text-sub);font-size:13px">(${d.role.toUpperCase()})</small></h3>
+       <p style="color:var(--c-text-sub);font-size:13px">Final: <b style="color:var(--c-accent);font-size:18px">${d.final}</b></p>
+       <div class="grid">${grid}</div>
+       <p style="color:var(--c-text-sub);font-size:12px;margin-top:12px">↻ <a href="#" id="reeval" style="color:var(--c-accent)">Re-evaluate against open 案件</a></p>`;
+    document.getElementById("reeval")?.addEventListener("click",async e=>{
+      e.preventDefault();
+      try{const m = await (await fetch("/api/match",{method:"POST",headers:{"content-type":"application/json"},
+        body:JSON.stringify({engineer_content:d.name+" "+d.role,job_content:"open 案件 SRE Senior"})})).json();
+        alert(`Re-eval: ${d.name} = ${m.final_score}/100`);}catch(err){alert("eval 失敗");}
+    });
+  });
+});
+</script></body></html>
