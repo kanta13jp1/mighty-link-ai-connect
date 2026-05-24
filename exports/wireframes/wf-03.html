@@ -44,6 +44,7 @@ dialog{background:var(--c-surface);color:var(--c-text);border:1px solid var(--c-
 </main>
 <dialog id="help"><h2>使い方</h2><p>経歴と案件を順に貼り付け → Step 3 で「分析」 → Step 4 で結果。</p>
   <button onclick="this.parentElement.close()">閉じる</button></dialog>
+<script src="_mock.js"></script>
 <script>
 const state={step:1, data:{engineer:"", job:"", profile1:null, profile2:null, match:null}};
 const SAMPLE_E="山田太郎 / 経験 8 年 / Python・AWS・K8s";

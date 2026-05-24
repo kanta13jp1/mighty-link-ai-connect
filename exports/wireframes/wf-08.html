@@ -42,6 +42,7 @@ dt{color:var(--c-text-sub)} dd{margin:0;color:var(--c-text);font-weight:700}
   <article class="wf08__tile" data-tile="api"><h2>API Metrics</h2>
     <dl id="api"><dt>loading…</dt><dd>--</dd></dl></article>
 </section>
+<script src="_mock.js"></script>
 <script>
 async function loadAudit(){
   try{const j=await (await fetch("/api/audit/recent?limit=100")).json();
