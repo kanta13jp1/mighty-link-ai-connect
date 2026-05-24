@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — LP-02 Liquid Aurora</title>
+<style>
+  :root{--bg:#0A0014;--ink:#F5EBFF;--muted:#B0A0CC;--p:#A855F7;--c:#22D3EE;--m:#F472B6}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter","Noto Sans JP",sans-serif;overflow-x:hidden}
+  .aurora{position:fixed;inset:0;z-index:0;filter:blur(80px);opacity:.7;pointer-events:none}
+  .aurora .blob{position:absolute;border-radius:50%;mix-blend-mode:screen;animation:float 18s ease-in-out infinite}
+  .aurora .b1{width:50vw;height:50vw;left:-10vw;top:-10vw;background:var(--p);animation-delay:-2s}
+  .aurora .b2{width:40vw;height:40vw;right:-5vw;top:20vh;background:var(--c);animation-delay:-8s}
+  .aurora .b3{width:45vw;height:45vw;left:20vw;bottom:-10vw;background:var(--m);animation-delay:-14s}
+  @keyframes float{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.1)}}
+  main{position:relative;z-index:1}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:24px 40px}
+  nav .logo{font-weight:700;font-size:18px;background:linear-gradient(90deg,var(--p),var(--c));
+            -webkit-background-clip:text;background-clip:text;color:transparent}
+  nav button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+             color:var(--ink);padding:10px 22px;border-radius:999px;backdrop-filter:blur(20px);font:600 14px/1 inherit;cursor:pointer}
+  .hero{text-align:center;padding:140px 24px 100px}
+  .hero h1{font-size:clamp(56px,10vw,160px);font-weight:700;line-height:.95;letter-spacing:-.04em;margin:0 0 32px;
+           background:linear-gradient(180deg,#FFFFFF 0%,#D4B9FF 60%,#7AA8FF 100%);
+           -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{font-size:clamp(18px,2vw,24px);max-width:640px;margin:0 auto;color:var(--muted);line-height:1.5}
+  .pills{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:48px}
+  .pills a{padding:18px 40px;border-radius:999px;text-decoration:none;font-weight:700;font-size:16px;
+           background:linear-gradient(90deg,var(--p),var(--c));color:#0A0014;
+           box-shadow:0 0 60px rgba(168,85,247,.5)}
+  .pills a.ghost{background:rgba(255,255,255,.06);color:var(--ink);box-shadow:none;backdrop-filter:blur(20px);
+                  border:1px solid rgba(255,255,255,.18)}
+  .features{padding:80px 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1240px;margin:0 auto}
+  @media (max-width:900px){.features{grid-template-columns:1fr}}
+  .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);
+        border-radius:28px;padding:36px;backdrop-filter:blur(30px);position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;top:-2px;left:-2px;right:-2px;height:2px;
+    background:linear-gradient(90deg,var(--p),var(--c),var(--m));opacity:.8}
+  .card h3{margin:0 0 16px;font-size:24px;letter-spacing:-.01em}
+  .card p{margin:0;color:var(--muted);line-height:1.6}
+  .card .icon{width:48px;height:48px;border-radius:16px;
+              background:linear-gradient(135deg,var(--p),var(--c));margin-bottom:24px}
+  .stat-row{display:flex;justify-content:center;gap:80px;padding:80px 24px;flex-wrap:wrap;text-align:center}
+  .stat-row .n{font-size:80px;font-weight:700;letter-spacing:-.04em;line-height:1;
+                background:linear-gradient(180deg,#FFF,#7AA8FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat-row .l{color:var(--muted);margin-top:8px;font-size:14px;letter-spacing:.1em;text-transform:uppercase}
+  footer{padding:40px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,.08)}
+</style></head><body>
+<div class="aurora"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<main>
+  <nav><div class="logo">Mighty Skill-Bridge</div><button>Get early access</button></nav>
+  <section class="hero">
+    <h1>採用判断を、<br>光の速さで。</h1>
+    <p>4 軸の AI が、経歴書と案件票から「合う / 合わない」をリアルタイムにスコア化。
+      決裁会議が 30 分から 3 分になる。</p>
+    <div class="pills"><a href="/">Try the live demo →</a><a class="ghost" href="#">Watch 90s overview</a></div>
+  </section>
+  <section class="features">
+    <div class="card"><div class="icon"></div><h3>瞬間スコア</h3><p>入力中にスコアが流れる。タイピングしながら判断材料が育つ。</p></div>
+    <div class="card"><div class="icon"></div><h3>4 軸推論</h3><p>Skill / Culture / Growth / Performing をフェアに分解。</p></div>
+    <div class="card"><div class="icon"></div><h3>3 週ロードマップ</h3><p>配属初日からの 21 日プランを自動生成。</p></div>
+  </section>
+  <section class="stat-row">
+    <div><div class="n">88<sub style="font-size:24px">/100</sub></div><div class="l">平均適合スコア</div></div>
+    <div><div class="n">3<sub style="font-size:24px">min</sub></div><div class="l">判断までの時間</div></div>
+    <div><div class="n">10×</div><div class="l">レビュー速度</div></div>
+  </section>
+  <footer>Mighty-Link · LP-02 Liquid Aurora — preview デザインテイスト案</footer>
+</main></body></html>

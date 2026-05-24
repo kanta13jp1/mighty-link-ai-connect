@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — LP-05 Pop Energy</title>
+<style>
+  :root{--bg:#FFEC4D;--ink:#0A0A0A;--p1:#FF2E92;--p2:#22D3EE;--p3:#7C3AED;--p4:#00E676}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter","Noto Sans JP",sans-serif;font-weight:700}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:20px 32px;
+       background:var(--ink);color:#fff}
+  nav .logo{font-size:18px;letter-spacing:-.02em}
+  nav .logo .dot{display:inline-block;width:14px;height:14px;background:var(--p1);border-radius:50%;margin-right:8px}
+  nav a{color:#fff;text-decoration:none;margin-left:24px;font-size:14px}
+  nav .cta{background:var(--p4);color:var(--ink);padding:10px 20px;border-radius:999px;border:0;font:700 14px/1 inherit;cursor:pointer}
+  .hero{padding:60px 32px 80px;position:relative;overflow:hidden}
+  .hero h1{font-size:clamp(56px,12vw,180px);line-height:.9;letter-spacing:-.05em;margin:0;font-weight:900}
+  .hero h1 .a{background:var(--p1);color:#fff;padding:0 16px;display:inline-block;transform:rotate(-2deg);border-radius:24px}
+  .hero h1 .b{background:var(--p2);color:var(--ink);padding:0 16px;display:inline-block;transform:rotate(1deg);border-radius:24px}
+  .hero h1 .c{background:var(--p3);color:#fff;padding:0 16px;display:inline-block;transform:rotate(-1deg);border-radius:24px}
+  .hero p{font-size:clamp(18px,2vw,24px);margin-top:32px;max-width:600px;font-weight:600}
+  .blob{position:absolute;border-radius:50%;mix-blend-mode:multiply;animation:bounce 6s ease-in-out infinite}
+  .blob.b1{width:200px;height:200px;background:var(--p1);right:-40px;top:20px}
+  .blob.b2{width:160px;height:160px;background:var(--p2);right:120px;bottom:-20px;animation-delay:-2s}
+  @keyframes bounce{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(8deg)}}
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:60px 32px}
+  @media (max-width:720px){.features{grid-template-columns:1fr}}
+  .feat{border-radius:32px;padding:36px;background:#fff;border:3px solid var(--ink);
+        box-shadow:6px 6px 0 var(--ink);transition:transform .15s}
+  .feat:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+  .feat.c1{background:var(--p1);color:#fff}
+  .feat.c2{background:var(--p4)}
+  .feat.c3{background:var(--p2)}
+  .feat .emo{font-size:48px;display:block;margin-bottom:16px}
+  .feat h3{font-size:28px;margin:0 0 12px;letter-spacing:-.02em}
+  .feat p{font-size:16px;margin:0;font-weight:600;line-height:1.4}
+  .marquee{background:var(--ink);color:#fff;padding:24px 0;font-size:48px;font-weight:900;
+            white-space:nowrap;overflow:hidden;letter-spacing:-.02em;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink)}
+  .marquee span{display:inline-block;animation:scroll 30s linear infinite;padding-right:48px}
+  .marquee span em{color:var(--p1);font-style:normal}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .cta-band{padding:80px 32px;text-align:center;background:var(--p3);color:#fff}
+  .cta-band h2{font-size:clamp(40px,6vw,80px);margin:0 0 24px;letter-spacing:-.03em;line-height:1}
+  .cta-band a{display:inline-block;background:var(--p4);color:var(--ink);padding:24px 48px;
+              border-radius:999px;text-decoration:none;font-size:20px;border:3px solid var(--ink);
+              box-shadow:6px 6px 0 var(--ink)}
+  footer{padding:24px 32px;font-size:14px;font-weight:600;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+</style></head><body>
+<nav><div class="logo"><span class="dot"></span>Mighty Skill-Bridge</div>
+  <div><a href="#">Product</a><a href="#">Pricing</a><a href="#">Docs</a>
+    <button class="cta">Try now ✨</button></div></nav>
+<section class="hero">
+  <h1><span class="a">AI が</span> <span class="b">合う人</span><br><span class="c">を秒で見抜く</span>。</h1>
+  <p>経歴 × 案件 = スコア。3 分で社内人事の判断材料が揃う、めっちゃ早いマッチング。</p>
+  <div class="blob b1"></div><div class="blob b2"></div>
+</section>
+<section class="features">
+  <div class="feat c1"><span class="emo">⚡</span><h3>Instant</h3><p>貼り付けて 3 秒。タイピング中にスコアが流れる。</p></div>
+  <div class="feat c2"><span class="emo">🎯</span><h3>4-Axis</h3><p>Skill / Culture / Growth / Performing。フェアに分解。</p></div>
+  <div class="feat c3"><span class="emo">🗺</span><h3>Roadmap</h3><p>配属初日からの 3 週間プランも自動生成。</p></div>
+</section>
+<div class="marquee"><span>POP · POP · <em>FIT</em> · POP · POP · <em>FIT</em> · POP · POP · <em>FIT</em> · POP · POP · <em>FIT</em> · </span></div>
+<section class="cta-band"><h2>判断、3 分。<br>配属、3 週間。</h2>
+  <a href="/">▶ デモを試す</a></section>
+<footer><span>Mighty-Link Inc.</span><span>LP-05 Pop Energy — テイスト案</span></footer>
+</body></html>

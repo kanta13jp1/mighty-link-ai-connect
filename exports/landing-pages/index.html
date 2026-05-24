@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — LP Design Taste Catalog</title>
+<style>
+:root{--bg:#0E0F14;--ink:#F1F5FF;--muted:#9BA0B0;--accent:#00F0FF;--border:#2A2D3E;
+      --r-md:14px;--r-lg:24px;--s-3:16px;--s-4:24px}
+body{margin:0;background:var(--bg);color:var(--ink);
+     font-family:"Inter","Yu Gothic UI",sans-serif;padding:var(--s-4);max-width:1280px;margin:0 auto;line-height:1.55}
+h1{color:var(--accent);margin:0 0 8px;font-size:32px;letter-spacing:-.02em}
+.lead{color:var(--muted);max-width:760px;margin:0}
+nav.top{display:flex;gap:var(--s-3);flex-wrap:wrap;margin-top:var(--s-3);font-size:14px}
+nav.top a{color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--muted)}
+nav.top a:hover{color:var(--accent);border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--s-3);margin-top:var(--s-4)}
+.card{background:#161824;border:1px solid var(--border);border-radius:var(--r-lg);
+      padding:var(--s-3);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;
+      transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card .swatch{aspect-ratio:16/10;border-radius:var(--r-md);background:#0A0014;
+              display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;letter-spacing:-.02em;
+              border:1px solid var(--border);position:relative;overflow:hidden}
+.card .id{font:600 12px/1 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:.1em}
+.card h2{margin:0;font-size:20px;color:var(--accent);letter-spacing:-.01em}
+.card p{margin:0;font-size:13px;color:var(--muted)}
+.card .ref{font-size:12px;color:var(--muted);font-style:italic}
+.note{background:#161824;border-left:3px solid var(--accent);padding:var(--s-3);
+      border-radius:var(--r-md);margin-top:var(--s-4);font-size:13px;color:var(--muted)}
+/* Swatch styles per LP taste */
+.sw-01{background:#08090C;color:#E8D6B3;font-family:"Times New Roman",serif;font-style:italic}
+.sw-02{background:radial-gradient(circle at 30% 30%,#A855F7,transparent 60%),
+                  radial-gradient(circle at 70% 70%,#22D3EE,transparent 60%),#0A0014;color:#fff}
+.sw-03{background:#FAFAFA;color:#0F172A}
+.sw-04{background:#000;color:#FFF;font-family:"JetBrains Mono",monospace;text-transform:uppercase}
+.sw-05{background:#FFEC4D;color:#0A0A0A;font-weight:900;font-size:28px}
+.sw-06{background:linear-gradient(135deg,#FFC4D6,#C9D8FF);color:#3A2E40}
+.sw-07{background:linear-gradient(135deg,#08080C,#3A1465);color:#FFD27D;backdrop-filter:blur(20px)}
+.sw-08{background:#F2EAD8;color:#A85A2B;font-family:"Cormorant Garamond",serif;font-style:italic}
+.sw-09{background:linear-gradient(135deg,#0A2540,#3A1465);color:#7A73FF}
+.sw-10{background:#FFFFFF;color:#191919}
+</style></head><body>
+<header>
+  <h1>LP Design Taste Catalog — 10 Patterns</h1>
+  <p class="lead">Mighty Skill-Bridge を題材に、ランディングページの<strong>デザインテイスト</strong>を 10 種類試作。
+    Runway / Luma / Veo / Sora / Kling / Pika / Higgsfield / Aesop / Stripe / Linear / Notion / Framer
+    などを参照しつつ、AI 案件マッチング SaaS としての見せ方を分散させた。</p>
+  <nav class="top">
+    <a href="/">← 公開デモに戻る</a>
+    <a href="../wireframes/index.html">UI Wireframes (10) →</a>
+    <a href="https://github.com/kanta13jp1/mighty-link-ai-connect">📦 GitHub</a>
+  </nav>
+</header>
+<section class="grid">
+  <a class="card" href="lp-01.html"><div class="swatch sw-01"><em>Mighty.</em></div>
+    <span class="id">LP-01</span><h2>Cinematic Noir</h2>
+    <p>Full-bleed dark, oversized serif, 余白多い editorial hero。</p>
+    <span class="ref">⟶ Runway / Apple Vision Pro</span></a>
+  <a class="card" href="lp-02.html"><div class="swatch sw-02">Aurora</div>
+    <span class="id">LP-02</span><h2>Liquid Aurora</h2>
+    <p>動く gradient blob + glass pill button + 大型グラデ見出し。</p>
+    <span class="ref">⟶ Luma Ray / Higgsfield</span></a>
+  <a class="card" href="lp-03.html"><div class="swatch sw-03">Research Paper</div>
+    <span class="id">LP-03</span><h2>Research Whitepaper</h2>
+    <p>白基調、citation、formula box、TOC、academic font。</p>
+    <span class="ref">⟶ DeepMind Veo / arXiv style</span></a>
+  <a class="card" href="lp-04.html"><div class="swatch sw-04">[ MATCH ]</div>
+    <span class="id">LP-04</span><h2>Brutalist Mono</h2>
+    <p>黒白 mono、直角コンテナ、scroll marquee、データテーブル。</p>
+    <span class="ref">⟶ Sora / Linear (dark)</span></a>
+  <a class="card" href="lp-05.html"><div class="swatch sw-05">POP ⚡</div>
+    <span class="id">LP-05</span><h2>Pop Energy</h2>
+    <p>飽和 magenta/cyan、emoji、shadow offset、playful bounce。</p>
+    <span class="ref">⟶ Kling</span></a>
+  <a class="card" href="lp-06.html"><div class="swatch sw-06">やさしく</div>
+    <span class="id">LP-06</span><h2>Pastel Soft</h2>
+    <p>パステル、丸み、柔らかな blob、quicksand sans。</p>
+    <span class="ref">⟶ Pika / Notion (warm)</span></a>
+  <a class="card" href="lp-07.html"><div class="swatch sw-07">Premium</div>
+    <span class="id">LP-07</span><h2>Glass Premium</h2>
+    <p>frosted glass、backdrop blur、grain noise、subtle gradient。</p>
+    <span class="ref">⟶ Higgsfield / Apple VR</span></a>
+  <a class="card" href="lp-08.html"><div class="swatch sw-08"><em>Editorial</em></div>
+    <span class="id">LP-08</span><h2>Warm Editorial</h2>
+    <p>クリーム × terra cotta、condensed serif、roman numeral。</p>
+    <span class="ref">⟶ Aesop / Oatly / Patagonia</span></a>
+  <a class="card" href="lp-09.html"><div class="swatch sw-09">API · 4-Axis</div>
+    <span class="id">LP-09</span><h2>Precision Product</h2>
+    <p>紺グラデ + grid line + feature matrix + code snippet。</p>
+    <span class="ref">⟶ Stripe / Linear</span></a>
+  <a class="card" href="lp-10.html"><div class="swatch sw-10">📝 Doc</div>
+    <span class="id">LP-10</span><h2>Doc Modern</h2>
+    <p>白基調 + emoji + sidebar nav + テンプレ駆動 + 価格表。</p>
+    <span class="ref">⟶ Notion / Framer</span></a>
+</section>
+<div class="note">
+  <strong>📌 社長レビュー観点</strong>:
+  (1) Mighty Skill-Bridge の「判断インフラ」性格にどれが一番合うか /
+  (2) ターゲット顧客 (SES 営業 / 大手 HR / 経営層) のどこを取りに行くか /
+  (3) ブランドカラー (cyber palette) を全面に出すか editorial に振るか /
+  (4) 6/2 以降の本サイトに昇格させるテイストを 1 つ選定。
+</div>
+</body></html>
