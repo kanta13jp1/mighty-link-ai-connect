@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — LP-03 Research Paper</title>
+<style>
+  :root{--bg:#FAFAFA;--ink:#0F172A;--muted:#475569;--accent:#1A56DB;--line:#E2E8F0;--mono:"JetBrains Mono","Roboto Mono",monospace}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter","Noto Sans JP",sans-serif;line-height:1.55}
+  nav{display:flex;justify-content:space-between;padding:20px 40px;border-bottom:1px solid var(--line);
+       font:500 14px/1 inherit}
+  nav .logo{font-weight:700}
+  nav ul{list-style:none;display:flex;gap:32px;margin:0;padding:0}
+  nav a{color:inherit;text-decoration:none;color:var(--muted)}
+  nav a:hover{color:var(--accent)}
+  .container{max-width:1080px;margin:0 auto;padding:80px 40px}
+  @media (max-width:720px){.container{padding:48px 24px}}
+  .tag{display:inline-block;font:500 11px/1 var(--mono);color:var(--accent);letter-spacing:.2em;
+        text-transform:uppercase;margin-bottom:24px;padding:6px 10px;border:1px solid var(--accent);border-radius:4px}
+  h1{font-size:clamp(40px,5vw,72px);line-height:1.05;letter-spacing:-.02em;margin:0 0 32px;font-weight:600;max-width:18ch}
+  .abstract{font-size:18px;color:var(--muted);max-width:64ch;border-left:3px solid var(--accent);padding-left:24px;margin-bottom:48px}
+  .authors{font:500 13px/1.6 var(--mono);color:var(--muted);margin-bottom:64px}
+  .authors a{color:var(--accent);text-decoration:none}
+  .toc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:80px;padding:32px;
+        background:#fff;border:1px solid var(--line);border-radius:8px}
+  @media (max-width:720px){.toc{grid-template-columns:1fr 1fr}}
+  .toc a{color:inherit;text-decoration:none;font:500 13px/1.4 inherit}
+  .toc a span{display:block;font:500 11px/1 var(--mono);color:var(--accent);margin-bottom:6px}
+  section.body{display:grid;grid-template-columns:200px 1fr;gap:64px;margin-top:80px}
+  @media (max-width:720px){section.body{grid-template-columns:1fr}}
+  section.body h2{font:600 12px/1 var(--mono);color:var(--accent);text-transform:uppercase;letter-spacing:.2em;margin:0;padding-top:8px}
+  section.body p{margin:0 0 16px;color:var(--muted);font-size:16px}
+  section.body p strong{color:var(--ink)}
+  .figure{margin:48px 0;background:#fff;border:1px solid var(--line);padding:32px;border-radius:8px}
+  .figure .legend{font:500 12px/1.4 var(--mono);color:var(--muted);margin-top:16px}
+  .formula{font:500 14px/1.5 var(--mono);background:#fff;padding:24px;border:1px solid var(--line);border-radius:8px;color:var(--ink);overflow-x:auto}
+  .refs{margin-top:80px;padding-top:32px;border-top:1px solid var(--line);font:500 13px/1.7 var(--mono);color:var(--muted)}
+  .refs li{margin-bottom:8px}
+  .cta-band{background:var(--ink);color:#fff;padding:64px 40px;text-align:center}
+  .cta-band h3{font-size:32px;margin:0 0 16px;font-weight:600}
+  .cta-band a{display:inline-block;background:#fff;color:var(--ink);padding:14px 28px;border-radius:6px;
+              text-decoration:none;font-weight:600;font-family:var(--mono);font-size:14px}
+  footer{padding:32px 40px;border-top:1px solid var(--line);font:500 12px/1 var(--mono);color:var(--muted);text-align:center}
+</style></head><body>
+<nav><div class="logo">Mighty Skill-Bridge / Research</div>
+  <ul><li><a href="#">Paper</a></li><li><a href="#">Method</a></li><li><a href="#">Demo</a></li><li><a href="#">Cite</a></li></ul></nav>
+<div class="container">
+  <div class="tag">Technical Report · 2026-06-02</div>
+  <h1>4-axis Engineer-Job Fit Scoring with Deterministic Fallbacks.</h1>
+  <p class="abstract">本書は、経歴書 × 案件票の適合度を Skill / Culture / Growth / Performing の
+    4 軸で評価する Gemini ベース推論パイプラインを提示する。Live 推論と決定的フォールバックを
+    同一スキーマで両立させ、quota 枯渇時もサービス継続性を担保する設計を報告する。</p>
+  <p class="authors">Mighty-Link Research Team · 寛太梅澤 et al. ·
+    <a href="https://github.com/kanta13jp1/mighty-link-ai-connect">github.com/kanta13jp1/mighty-link-ai-connect</a></p>
+  <div class="toc">
+    <a href="#"><span>§1</span>Introduction</a>
+    <a href="#"><span>§2</span>Method</a>
+    <a href="#"><span>§3</span>Evaluation</a>
+    <a href="#"><span>§4</span>Deployment</a>
+  </div>
+  <section class="body"><h2>§1 Intro</h2><div>
+    <p>従来の SES マッチングは経験年数 + キーワード一致に過剰依存し、<strong>カルチャー適合や成長軌道</strong>を
+      欠落させてきた。本稿は LLM の文脈推論を 4 軸に分解することで、判断材料を再構築する。</p></div></section>
+  <section class="body"><h2>§2 Method</h2><div>
+    <p>4 軸の重み配分は経営層レビューで反復調整される。各軸は <strong>50–100</strong> に正規化され、
+      最終スコアは加重平均と確信度バンドで提示される。</p>
+    <div class="formula">final_score = round( Σ w_i · score_i ) , i ∈ {skill, culture, growth, performing}</div>
+    <p>Gemini quota 枯渇時は決定的 fallback (BM25 + 構造化ルール) が同スキーマで応答するため、
+      上流クライアントは live/fallback の差を意識しない。</p></div></section>
+  <section class="body"><h2>§3 Eval</h2><div>
+    <div class="figure"><div style="display:flex;gap:8px;align-items:flex-end;height:120px">
+      <div style="flex:1;background:#1A56DB;height:80%"></div>
+      <div style="flex:1;background:#1A56DB;height:65%"></div>
+      <div style="flex:1;background:#1A56DB;height:72%"></div>
+      <div style="flex:1;background:#1A56DB;height:90%"></div></div>
+      <div class="legend">Fig. 1 — 4 軸スコア分布 (n=142 マッチ、平均 78.3)</div></div></div></section>
+  <section class="body"><h2>§4 Deploy</h2><div>
+    <p>FastAPI + GitHub Pages の構成で <strong>ローカル / 公開</strong>双方に展開済。
+      verify_public_demo.py CI guard により、生産 URL の README fallback 退化を防止する。</p></div></section>
+  <ol class="refs">
+    <li>[1] Gemini API Models. <a href="#">ai.google.dev/gemini-api/docs/models</a></li>
+    <li>[2] Anthropic Claude Code Memory. <a href="#">code.claude.com/docs/en/memory</a></li>
+    <li>[3] OpenAI Codex AGENTS.md. <a href="#">developers.openai.com/codex/guides/agents-md</a></li>
+  </ol>
+</div>
+<section class="cta-band"><h3>Run the demo locally.</h3>
+  <a href="/">python src/app.py → localhost:8000</a></section>
+<footer>© Mighty-Link Research · LP-03 Research Paper — テイスト案</footer>
+</body></html>

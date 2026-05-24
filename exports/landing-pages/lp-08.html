@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — LP-08 Warm Editorial</title>
+<style>
+  :root{--bg:#F2EAD8;--cream:#E8DBC2;--ink:#2A2620;--muted:#665E50;--accent:#A85A2B;--line:#C9BFA9}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Cormorant Garamond","Noto Serif JP",serif;line-height:1.6}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:24px 48px;border-bottom:1px solid var(--line);
+       font:500 13px/1 "Inter",sans-serif;letter-spacing:.15em;text-transform:uppercase}
+  nav .logo{font-weight:600}
+  nav ul{list-style:none;display:flex;gap:32px;margin:0;padding:0}
+  nav a{color:inherit;text-decoration:none}
+  .hero{padding:120px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-bottom:1px solid var(--line)}
+  @media (max-width:900px){.hero{grid-template-columns:1fr;padding:64px 24px;gap:40px}}
+  .hero h1{font-size:clamp(56px,8vw,128px);line-height:.95;letter-spacing:-.02em;margin:0;font-weight:400}
+  .hero h1 em{color:var(--accent);font-style:italic}
+  .hero .right{text-align:right}
+  @media (max-width:900px){.hero .right{text-align:left}}
+  .hero .right p{font-size:18px;color:var(--muted);max-width:32ch;margin:0 0 24px auto;font-family:"Inter",sans-serif;line-height:1.7}
+  @media (max-width:900px){.hero .right p{margin:0 0 24px}}
+  .hero .right .meta{font:500 12px/1.5 "Inter",sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  section{padding:96px 48px;border-bottom:1px solid var(--line)}
+  @media (max-width:720px){section{padding:64px 24px}}
+  .philosophy{max-width:64ch;margin:0 auto;text-align:center}
+  .philosophy h2{font-size:clamp(32px,4vw,48px);line-height:1.2;margin:0 0 32px;font-weight:400;letter-spacing:-.01em}
+  .philosophy p{font-size:18px;color:var(--muted);font-family:"Inter",sans-serif;line-height:1.7}
+  .pairs{display:grid;grid-template-columns:repeat(4,1fr);gap:48px;max-width:1200px;margin:0 auto}
+  @media (max-width:900px){.pairs{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.pairs{grid-template-columns:1fr}}
+  .pair{position:relative;padding-left:28px;border-left:1px solid var(--line)}
+  .pair .roman{font:500 12px/1 "Inter",sans-serif;letter-spacing:.3em;color:var(--accent);margin-bottom:16px;display:block}
+  .pair h3{font-size:28px;margin:0 0 12px;font-weight:400;letter-spacing:-.01em}
+  .pair p{font-size:15px;color:var(--muted);font-family:"Inter",sans-serif;margin:0;line-height:1.7}
+  .figure-row{display:grid;grid-template-columns:2fr 1fr;gap:64px;align-items:center;max-width:1200px;margin:0 auto}
+  @media (max-width:720px){.figure-row{grid-template-columns:1fr}}
+  .figure{background:var(--cream);height:480px;border:1px solid var(--line);position:relative;overflow:hidden}
+  .figure::after{content:"01";position:absolute;bottom:24px;left:24px;font-size:120px;font-weight:300;
+    color:var(--ink);opacity:.18;line-height:1}
+  .figure-row .text h2{font-size:48px;margin:0 0 24px;font-weight:400;letter-spacing:-.01em;line-height:1.1}
+  .figure-row .text p{color:var(--muted);font-family:"Inter",sans-serif;font-size:16px;line-height:1.7;margin:0 0 24px}
+  .figure-row .text a{font:500 13px/1 "Inter",sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:4px}
+  .closing{text-align:center;background:var(--ink);color:var(--bg);padding:120px 48px}
+  .closing h2{font-size:clamp(40px,6vw,80px);font-weight:400;letter-spacing:-.02em;margin:0 0 32px;line-height:1.1}
+  .closing h2 em{font-style:italic;color:var(--accent)}
+  .closing a{font:500 13px/1 "Inter",sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--bg);
+              border:1px solid var(--bg);padding:18px 32px;text-decoration:none;display:inline-block}
+  footer{padding:32px 48px;font:500 12px/1.6 "Inter",sans-serif;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+         display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px}
+</style></head><body>
+<nav><div class="logo">Mighty Skill-Bridge</div>
+  <ul><li><a href="#">Index</a></li><li><a href="#">Approach</a></li><li><a href="#">Studio</a></li><li><a href="#">Stockists</a></li></ul></nav>
+<section class="hero">
+  <h1>慎ましく、<br><em>確かな</em><br>フィット。</h1>
+  <div class="right"><p>派手な数字ではなく、4 軸に分解された静かな根拠を。
+    Mighty Skill-Bridge は、判断の品質を上げるために生まれた。</p>
+    <div class="meta">Tokyo · est. 2026 · v0.10 preview</div></div>
+</section>
+<section class="philosophy"><h2>Skill / Culture / Growth / Performing —<br>四つの軸で、合うを問い直す。</h2>
+  <p>キーワード一致と経験年数では、現場の「合う / 合わない」を説明しきれない。
+    私たちは、文脈推論を四つの観点に分解し、判断する人の道具を作る。</p></section>
+<section><div class="pairs">
+  <div class="pair"><span class="roman">— I.</span><h3>Skill</h3><p>到達点を、規模で裏付ける。</p></div>
+  <div class="pair"><span class="roman">— II.</span><h3>Culture</h3><p>働き方を、文脈で読み取る。</p></div>
+  <div class="pair"><span class="roman">— III.</span><h3>Growth</h3><p>3 週間後を、いま設計する。</p></div>
+  <div class="pair"><span class="roman">— IV.</span><h3>Performing</h3><p>再現性を、過去から測る。</p></div></div></section>
+<section><div class="figure-row">
+  <div class="figure"></div>
+  <div class="text"><h2>道具としての <em>AI</em>。</h2>
+    <p>派手な自動化ではなく、判断者の思考を支える道具として。
+      Mighty Skill-Bridge は声を奪わず、視点を増やす。</p>
+    <a href="/">View the demo →</a></div></div></section>
+<section class="closing"><h2>判断を、<br>道具で、<em>静かに</em>速く。</h2>
+  <a href="/">Begin the demo</a></section>
+<footer><span>Mighty-Link Studio · Tokyo</span><span>LP-08 Warm Editorial — テイスト案</span></footer>
+</body></html>

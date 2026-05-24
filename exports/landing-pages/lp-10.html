@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — LP-10 Doc Modern</title>
+<style>
+  :root{--bg:#FFFFFF;--ink:#191919;--muted:#787774;--accent:#0F62FE;--line:#E9E9E7;--soft:#F7F7F5}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter","Noto Sans JP",sans-serif;line-height:1.6}
+  nav{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:14px 32px;
+       border-bottom:1px solid var(--line);background:rgba(255,255,255,.92);backdrop-filter:blur(10px);z-index:10}
+  nav .logo{font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px}
+  nav .logo .e{font-size:20px}
+  nav ul{list-style:none;display:flex;gap:28px;margin:0;padding:0;font-size:14px}
+  nav a{color:var(--ink);text-decoration:none;opacity:.7}
+  nav a:hover{opacity:1}
+  nav .cta{background:var(--ink);color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;font-size:13px}
+  .hero{max-width:900px;margin:0 auto;padding:80px 32px 60px;text-align:center}
+  .badge{display:inline-block;padding:6px 12px;background:var(--soft);border-radius:999px;font-size:13px;color:var(--muted);margin-bottom:24px;border:1px solid var(--line)}
+  .badge b{color:var(--accent)}
+  .hero h1{font-size:clamp(40px,6vw,72px);line-height:1.1;letter-spacing:-.02em;margin:0 0 24px;font-weight:700}
+  .hero h1 .emoji{display:inline-block;transform:translateY(8px)}
+  .hero p{font-size:18px;color:var(--muted);margin:0 auto 32px;max-width:560px}
+  .hero .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .hero .actions a{padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px}
+  .hero .actions .primary{background:var(--ink);color:#fff}
+  .hero .actions .ghost{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+  .preview{max-width:1100px;margin:0 auto;padding:0 32px}
+  .preview .frame{background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:48px;
+                   display:grid;grid-template-columns:240px 1fr;gap:32px;min-height:340px}
+  @media (max-width:720px){.preview .frame{grid-template-columns:1fr;padding:24px}}
+  .preview .sidebar{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--muted)}
+  .preview .sidebar .item{padding:8px 12px;border-radius:6px;cursor:pointer}
+  .preview .sidebar .item.active{background:#fff;color:var(--ink);font-weight:600;border:1px solid var(--line)}
+  .preview .doc h2{font-size:24px;margin:0 0 16px}
+  .preview .doc p{color:var(--muted);font-size:15px;margin:0 0 12px}
+  .preview .callout{background:#FFF8E5;border-left:3px solid #F5B800;padding:14px 18px;border-radius:8px;margin:16px 0;font-size:14px}
+  .features{max-width:1100px;margin:80px auto;padding:0 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media (max-width:720px){.features{grid-template-columns:1fr}}
+  .feat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px;transition:box-shadow .15s}
+  .feat:hover{box-shadow:0 4px 20px rgba(0,0,0,.04)}
+  .feat .emoji{font-size:32px;display:block;margin-bottom:16px}
+  .feat h3{margin:0 0 8px;font-size:18px}
+  .feat p{margin:0;color:var(--muted);font-size:14px}
+  .quote{max-width:760px;margin:80px auto;padding:0 32px;text-align:center}
+  .quote p{font-size:28px;line-height:1.4;font-weight:500;letter-spacing:-.01em;margin:0 0 16px;color:var(--ink)}
+  .quote .author{color:var(--muted);font-size:14px}
+  .pricing{max-width:1100px;margin:80px auto;padding:0 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media (max-width:720px){.pricing{grid-template-columns:1fr}}
+  .price{background:#fff;border:1px solid var(--line);border-radius:12px;padding:28px}
+  .price.featured{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+  .price h4{margin:0 0 8px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .price .amt{font-size:36px;font-weight:700;letter-spacing:-.02em;margin-bottom:16px}
+  .price ul{list-style:none;padding:0;margin:0 0 24px;color:var(--muted);font-size:14px}
+  .price li{padding:6px 0;border-bottom:1px solid var(--line)}
+  .price li::before{content:"✓ ";color:var(--accent);font-weight:700}
+  .price a{display:block;text-align:center;padding:10px;border-radius:8px;background:var(--soft);color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}
+  .price.featured a{background:var(--ink);color:#fff}
+  footer{border-top:1px solid var(--line);padding:32px;text-align:center;color:var(--muted);font-size:13px}
+</style></head><body>
+<nav><div class="logo"><span class="e">🧩</span> Mighty Skill-Bridge</div>
+  <ul><li><a href="#">Product</a></li><li><a href="#">Templates</a></li><li><a href="#">Docs</a></li><li><a href="#">Pricing</a></li></ul>
+  <a class="cta" href="/">Try it free</a></nav>
+<section class="hero">
+  <div class="badge"><b>Preview</b> · 6/2 社長プレゼン版</div>
+  <h1>経歴と案件の適合度、<br>ドキュメントみたいに <span class="emoji">📝</span> 整理。</h1>
+  <p>4 軸スコア、推奨質問、3 週間ロードマップ。チーム共有しやすいフォーマットで、判断が自然に伝播する。</p>
+  <div class="actions">
+    <a class="primary" href="/">無料ではじめる →</a>
+    <a class="ghost" href="#">テンプレートを見る</a>
+  </div>
+</section>
+<section class="preview">
+  <div class="frame">
+    <div class="sidebar">
+      <div class="item">📂 Workspace</div>
+      <div class="item">　└ Candidates</div>
+      <div class="item active">　　└ 山田太郎 × 案件A</div>
+      <div class="item">　└ Reports</div>
+      <div class="item">📝 Templates</div>
+      <div class="item">⚙ Settings</div>
+    </div>
+    <div class="doc">
+      <h2>📊 Fit Report — 山田太郎 × 株式会社X SRE</h2>
+      <p>Final Score: <b style="color:var(--accent)">88 / 100</b> · Skill 88 · Culture 82 · Growth 75 · Performing 90</p>
+      <div class="callout">💡 <b>推奨</b> — Skill / Performing が同時に 85+ で、SRE 規模感のフィット確実。
+        Growth 軸は OSS 貢献 PR を 1 件提示してギャップ最終確認。</div>
+      <p>📌 推奨質問 1: 「直近 5M req/s の SLI/SLO 設計で苦労した点は?」</p>
+      <p>📌 推奨質問 2: 「on-call ローテで意思決定速度を保つ工夫は?」</p>
+    </div>
+  </div>
+</section>
+<section class="features">
+  <div class="feat"><span class="emoji">📋</span><h3>テンプレ駆動</h3><p>QA / ロードマップ / 判断メモが定型で出るのでチーム共有が速い。</p></div>
+  <div class="feat"><span class="emoji">🔗</span><h3>共有しやすい</h3><p>1 マッチ = 1 リンク。経営会議の資料に貼るだけ。</p></div>
+  <div class="feat"><span class="emoji">🧠</span><h3>判断が学習する</h3><p>過去 match から重み配分を提案。意思決定の癖が見える。</p></div>
+</section>
+<section class="quote">
+  <p>"会議に持ち込む資料の質が上がった。<br>判断のばらつきも目に見えて減った。"</p>
+  <span class="author">— HR Ops Lead, 大手 SIer (社内 PoC)</span>
+</section>
+<section class="pricing">
+  <div class="price"><h4>Free</h4><div class="amt">¥0</div>
+    <ul><li>月 20 マッチ</li><li>4 軸スコア</li><li>3 週ロードマップ</li></ul>
+    <a href="/">はじめる</a></div>
+  <div class="price featured"><h4>Team ⭐</h4><div class="amt">¥4,800<small style="font-size:14px;color:var(--muted)">/月</small></div>
+    <ul><li>無制限マッチ</li><li>Sheets / Notion 連携</li><li>API アクセス</li><li>共有テンプレ</li></ul>
+    <a href="/">14 日間試す</a></div>
+  <div class="price"><h4>Enterprise</h4><div class="amt">お問い合わせ</div>
+    <ul><li>SSO / 監査ログ</li><li>専用 SLA</li><li>On-prem 配備</li></ul>
+    <a href="/">相談する</a></div>
+</section>
+<footer>Mighty-Link · LP-10 Doc Modern — テイスト案</footer>
+</body></html>
