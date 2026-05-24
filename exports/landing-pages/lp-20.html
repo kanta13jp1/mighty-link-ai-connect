@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — LP-20 Template Workspace</title>
+<style>
+  :root{--bg:#FFFFFF;--soft:#F7F6F3;--ink:#37352F;--muted:#787774;--accent:#2383E2;--line:#E9E9E7;--green:#0F7B6C;--red:#E03E3E;--yellow:#DFAB01}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Inter","Noto Sans JP",sans-serif;line-height:1.5;font-size:15px}
+  nav{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:12px 24px;
+       border-bottom:1px solid var(--line);background:rgba(255,255,255,.95);backdrop-filter:blur(8px);z-index:10}
+  nav .logo{font-weight:700;display:flex;align-items:center;gap:8px;font-size:16px}
+  nav .logo .icon{width:24px;height:24px;background:var(--ink);color:#fff;border-radius:6px;display:flex;
+                   align-items:center;justify-content:center;font-size:14px;font-weight:700}
+  nav ul{list-style:none;display:flex;gap:24px;margin:0;padding:0;font-size:14px;font-weight:500}
+  nav a{color:var(--ink);text-decoration:none;opacity:.75}
+  nav .cta{background:var(--ink);color:#fff;padding:6px 14px;border-radius:6px;text-decoration:none;font-weight:600;font-size:13px}
+  .hero{padding:80px 24px 40px;max-width:1200px;margin:0 auto;text-align:center}
+  .badge{display:inline-block;padding:4px 10px;background:var(--soft);border:1px solid var(--line);
+         border-radius:999px;font-size:12px;color:var(--muted);margin-bottom:24px}
+  .badge b{color:var(--accent)}
+  .hero h1{font-size:clamp(40px,6vw,72px);line-height:1.1;letter-spacing:-.02em;margin:0 0 16px;font-weight:700}
+  .hero p{font-size:18px;color:var(--muted);margin:0 auto 32px;max-width:560px}
+  .hero .actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .hero .actions a{padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px}
+  .hero .actions .primary{background:var(--ink);color:#fff}
+  .hero .actions .ghost{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+  .workspace{max-width:1200px;margin:48px auto;padding:0 24px}
+  .workspace .frame{background:var(--soft);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;grid-template-columns:240px 1fr;min-height:520px}
+  @media (max-width:720px){.workspace .frame{grid-template-columns:1fr}}
+  .sidebar{padding:16px 12px;background:var(--soft);border-right:1px solid var(--line);font-size:14px}
+  @media (max-width:720px){.sidebar{display:none}}
+  .sidebar .group{margin-bottom:16px}
+  .sidebar .group h4{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px;padding:0 4px}
+  .sidebar .item{padding:4px 8px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:6px;color:var(--ink)}
+  .sidebar .item:hover{background:rgba(0,0,0,.05)}
+  .sidebar .item.active{background:rgba(35,131,226,.12);color:var(--accent);font-weight:600}
+  .sidebar .item .ic{width:14px;display:inline-block;text-align:center}
+  .canvas{padding:20px;background:#fff}
+  .canvas .crumb{font-size:13px;color:var(--muted);margin-bottom:8px}
+  .canvas h2{font-size:28px;margin:0 0 16px;font-weight:700}
+  .canvas h2 .emo{font-size:22px;margin-right:6px}
+  .canvas .props{display:flex;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:16px;padding:10px;background:var(--soft);border-radius:6px}
+  .canvas .props div b{color:var(--ink);font-weight:600;margin-left:4px}
+  .canvas .tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:12px;font-size:13px;font-weight:500}
+  .canvas .tabs span{padding:8px 14px;cursor:pointer;color:var(--muted)}
+  .canvas .tabs span.active{color:var(--ink);border-bottom:2px solid var(--ink)}
+  .canvas table{width:100%;border-collapse:collapse;font-size:14px;background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .canvas th,.canvas td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
+  .canvas th{background:var(--soft);font-weight:600;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .canvas .tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500}
+  .canvas .tag.green{background:#EDF3EF;color:var(--green)}
+  .canvas .tag.yellow{background:#FBF3DB;color:var(--yellow)}
+  .canvas .tag.red{background:#FDECEC;color:var(--red)}
+  .features{padding:64px 24px;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media (max-width:720px){.features{grid-template-columns:1fr}}
+  .feat{padding:24px;border:1px solid var(--line);border-radius:8px;background:#fff}
+  .feat .emo{font-size:24px;display:block;margin-bottom:8px}
+  .feat h3{font-size:16px;margin:0 0 4px;font-weight:700}
+  .feat p{font-size:14px;color:var(--muted);margin:0;line-height:1.5}
+  .template-cta{padding:64px 24px;text-align:center;background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .template-cta h2{font-size:32px;margin:0 0 16px;font-weight:700;letter-spacing:-.01em}
+  .template-cta a{display:inline-block;padding:10px 20px;background:var(--ink);color:#fff;
+                   border-radius:6px;text-decoration:none;font-weight:600;font-size:14px}
+  .template-cta .templates{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;font-size:13px;color:var(--muted)}
+  .template-cta .templates span{padding:4px 10px;background:#fff;border:1px solid var(--line);border-radius:999px}
+  footer{padding:24px;text-align:center;color:var(--muted);font-size:13px}
+</style></head><body>
+<nav><div class="logo"><div class="icon">M</div>Mighty Skill-Bridge</div>
+  <ul><li><a href="#">Product</a></li><li><a href="#">Templates</a></li><li><a href="#">Pricing</a></li></ul>
+  <a class="cta" href="/">Duplicate template →</a></nav>
+<section class="hero">
+  <div class="badge"><b>Free template</b> · 6/2 社長プレゼン版</div>
+  <h1>判断を、データベースに。</h1>
+  <p>マッチ 1 件 = 1 ページ。プロパティで絞り、テンプレートで増やす。
+    チーム横断で判断の癖が学習されていく。</p>
+  <div class="actions"><a class="primary" href="/">テンプレートを複製</a>
+    <a class="ghost" href="#">ライブ workspace を見る</a></div>
+</section>
+<section class="workspace"><div class="frame">
+  <div class="sidebar">
+    <div class="group"><h4>Workspace</h4>
+      <div class="item"><span class="ic">⌂</span>Home</div>
+      <div class="item"><span class="ic">🔍</span>Search</div>
+      <div class="item"><span class="ic">📥</span>Inbox <span style="margin-left:auto;background:var(--accent);color:#fff;padding:0 6px;border-radius:8px;font-size:11px">3</span></div>
+    </div>
+    <div class="group"><h4>Databases</h4>
+      <div class="item active"><span class="ic">📊</span>Matches</div>
+      <div class="item"><span class="ic">👤</span>Candidates</div>
+      <div class="item"><span class="ic">📋</span>Jobs</div>
+      <div class="item"><span class="ic">📈</span>Reports</div>
+    </div>
+    <div class="group"><h4>Templates</h4>
+      <div class="item"><span class="ic">📝</span>Match brief</div>
+      <div class="item"><span class="ic">📨</span>Decision memo</div>
+      <div class="item"><span class="ic">🗺</span>3-week plan</div>
+    </div>
+  </div>
+  <div class="canvas">
+    <div class="crumb">Workspace › Databases ›</div>
+    <h2><span class="emo">📊</span>Matches</h2>
+    <div class="props">
+      <div>Sort:<b>Final ↓</b></div><div>Filter:<b>Score ≥ 70</b></div>
+      <div>View:<b>Table</b></div><div>Rows:<b>6 / 142</b></div></div>
+    <div class="tabs"><span class="active">Table</span><span>Board</span><span>Calendar</span><span>Gallery</span></div>
+    <table><thead><tr><th>名前</th><th>案件</th><th>Final</th><th>Skill</th><th>Culture</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>山田 太郎</td><td>株式会社X SRE</td><td><b>88</b></td><td>88</td><td>82</td><td><span class="tag green">推薦</span></td></tr>
+        <tr><td>佐藤 花子</td><td>株式会社Y FE</td><td><b>72</b></td><td>72</td><td>90</td><td><span class="tag yellow">評価中</span></td></tr>
+        <tr><td>鈴木 一郎</td><td>株式会社Z Cloud</td><td><b>91</b></td><td>95</td><td>85</td><td><span class="tag green">配属済</span></td></tr>
+        <tr><td>田中 二郎</td><td>株式会社W ML</td><td><b>67</b></td><td>60</td><td>78</td><td><span class="tag red">保留</span></td></tr>
+        <tr><td>高橋 三郎</td><td>株式会社V Data</td><td><b>85</b></td><td>88</td><td>80</td><td><span class="tag green">推薦</span></td></tr>
+        <tr><td>伊藤 四郎</td><td>株式会社U DevOps</td><td><b>79</b></td><td>82</td><td>72</td><td><span class="tag yellow">評価中</span></td></tr>
+      </tbody></table>
+  </div></div></section>
+<section class="features">
+  <div class="feat"><span class="emo">🗂</span><h3>Database 型</h3><p>マッチをページ・プロパティ・タグで管理。Notion 経験者なら即理解。</p></div>
+  <div class="feat"><span class="emo">🔁</span><h3>テンプレート複製</h3><p>判断メモ / 3 週プランをテンプレ化、新マッチに即適用。</p></div>
+  <div class="feat"><span class="emo">🔗</span><h3>共有 URL</h3><p>1 マッチ = 1 URL。会議資料に貼るだけで完結。</p></div>
+</section>
+<section class="template-cta">
+  <h2>テンプレートを複製、3 分で開始。</h2>
+  <a href="/">Duplicate template →</a>
+  <div class="templates">
+    <span>📝 Match Brief</span><span>📨 Decision Memo</span><span>🗺 3-Week Plan</span><span>📊 Pipeline Tracker</span></div></section>
+<footer>Mighty-Link · LP-20 Template Workspace — テイスト案</footer>
+</body></html>

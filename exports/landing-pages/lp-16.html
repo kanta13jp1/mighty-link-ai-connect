@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — LP-16 Documentary Activism</title>
+<style>
+  :root{--bg:#1A1A1A;--ink:#F2F2EC;--muted:#A09F98;--accent:#D33A2C;--line:#2E2E2A}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Georgia","Noto Serif JP",serif;line-height:1.55}
+  nav{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;
+       padding:24px 40px;z-index:10}
+  nav .logo{font-weight:700;font-family:"Helvetica Neue",sans-serif;letter-spacing:.05em;font-size:14px;text-transform:uppercase}
+  nav ul{list-style:none;display:flex;gap:28px;margin:0;padding:0;font-family:"Helvetica Neue",sans-serif;
+          font-size:12px;text-transform:uppercase;letter-spacing:.15em}
+  nav a{color:inherit;text-decoration:none;opacity:.85}
+  nav a:hover{color:var(--accent)}
+  .hero{height:100vh;min-height:680px;position:relative;display:flex;align-items:flex-end;padding:64px 48px;
+        background:linear-gradient(180deg,rgba(0,0,0,.3) 0%,rgba(0,0,0,.85) 100%),
+        linear-gradient(135deg,#3E3E38 0%,#1A1A1A 50%,#4A3D38 100%)}
+  .hero::before{content:"";position:absolute;inset:0;background-image:
+    repeating-linear-gradient(180deg,transparent 0,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);pointer-events:none}
+  .hero .stamp{position:absolute;top:96px;left:48px;font:500 11px/1.4 "Helvetica Neue",sans-serif;
+                letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-left:3px solid var(--accent);padding-left:12px}
+  .hero h1{font-size:clamp(40px,7vw,108px);line-height:1.05;letter-spacing:-.01em;margin:0;font-weight:400;max-width:18ch}
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .credit{position:absolute;bottom:32px;right:48px;font:500 11px/1.4 "Helvetica Neue",sans-serif;
+                 letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right;max-width:280px}
+  @media (max-width:720px){.hero{padding:120px 24px 32px}
+    .hero .stamp{top:80px;left:24px}.hero .credit{position:static;text-align:left;margin-top:32px;max-width:none}}
+  .manifesto{padding:120px 48px;max-width:880px;margin:0 auto}
+  .manifesto h2{font-size:clamp(28px,3.5vw,48px);line-height:1.3;letter-spacing:-.01em;font-weight:400;margin:0 0 32px}
+  .manifesto h2 em{color:var(--accent);font-style:italic}
+  .manifesto p{font-size:18px;color:var(--muted);line-height:1.8;margin:0 0 20px}
+  .manifesto p strong{color:var(--ink);font-weight:400;border-bottom:1px solid var(--accent)}
+  .signatures{padding:64px 48px;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .signatures p{font:500 11px/1.4 "Helvetica Neue",sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 24px}
+  .signatures .names{font:400 16px/1.6 "Georgia",serif;color:var(--ink);font-style:italic}
+  .figures{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-bottom:1px solid var(--line)}
+  @media (max-width:720px){.figures{grid-template-columns:1fr}}
+  .figures .fig{aspect-ratio:1/1;background:linear-gradient(135deg,#2E2E2A,#4A3D38);position:relative;
+                 padding:32px;display:flex;flex-direction:column;justify-content:flex-end;border-right:1px solid var(--line)}
+  .figures .fig:last-child{border-right:0}
+  .figures .fig::before{content:"";position:absolute;inset:0;background-image:
+    repeating-linear-gradient(45deg,transparent 0,transparent 8px,rgba(0,0,0,.1) 8px,rgba(0,0,0,.1) 9px)}
+  .figures .fig .num{position:absolute;top:32px;left:32px;font:700 12px/1 "Helvetica Neue",sans-serif;
+                      letter-spacing:.2em;color:var(--accent)}
+  .figures .fig p{position:relative;z-index:1;margin:0;font-size:14px;color:var(--ink)}
+  .cta-band{padding:120px 48px;text-align:center}
+  .cta-band h2{font-size:clamp(36px,5vw,72px);line-height:1.15;letter-spacing:-.01em;margin:0 0 32px;font-weight:400;max-width:24ch;margin-inline:auto}
+  .cta-band h2 em{font-style:italic;color:var(--accent)}
+  .cta-band a{font:500 12px/1 "Helvetica Neue",sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--ink);
+               border:1px solid var(--ink);padding:20px 36px;text-decoration:none;display:inline-block}
+  footer{padding:32px 48px;font:500 11px/1.4 "Helvetica Neue",sans-serif;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+         display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;border-top:1px solid var(--line)}
+</style></head><body>
+<nav><div class="logo">Mighty Skill-Bridge</div>
+  <ul><li><a href="#">Manifesto</a></li><li><a href="#">Stories</a></li><li><a href="#">Approach</a></li><li><a href="#">Join</a></li></ul></nav>
+<section class="hero">
+  <div class="stamp">FIELD REPORT №01 · Tokyo · 2026-06-02</div>
+  <h1>判断は、<br><em>人を</em>大切にする<br>作業である。</h1>
+  <p class="credit">Photo essay /<br>Mighty Skill-Bridge<br>company manifesto, v1</p>
+</section>
+<section class="manifesto">
+  <h2>キーワード一致は、<em>人間性</em>を見落とす。</h2>
+  <p>SES 配属の現場では、毎日 <strong>「合うかどうか」</strong>の判断が下されている。
+    しかし多くの場合、その判断は経験年数とキーワードの一致に支配され、
+    その人がどう働きたいか、どこへ向かいたいかは、暗黙の余白に追いやられてきた。</p>
+  <p>私たちは、その余白を <strong>4 つの軸</strong>に分解する。
+    Skill / Culture / Growth / Performing —— それぞれが対等で、どれも欠けてはいけない。
+    AI は判断を奪わない。判断者の <strong>視点を増やす</strong>道具に徹する。</p>
+  <p>これは、ツールの話ではない。<strong>働く人と、案件を出す人</strong>、両方への敬意の話である。</p></section>
+<section class="signatures"><p>signed by</p>
+  <div class="names">寛太 梅澤 · Mighty-Link 共同創業者 / その他 14 名のチーム</div></section>
+<section class="figures">
+  <div class="fig"><span class="num">01 /</span><p>配属判断の所要時間 — 30 分から 3 分へ。</p></div>
+  <div class="fig"><span class="num">02 /</span><p>判断の納得度 — 「説明できる」が増える。</p></div>
+  <div class="fig"><span class="num">03 /</span><p>配属後の離脱 — 3 週ロードマップで早期発見。</p></div></section>
+<section class="cta-band">
+  <h2><em>判断する</em>仕事を、<br>もう一度、誇りある作業に。</h2>
+  <a href="/">Read the demo</a></section>
+<footer><span>Mighty-Link · est. 2026</span><span>LP-16 Documentary Activism — テイスト案</span></footer>
+</body></html>
