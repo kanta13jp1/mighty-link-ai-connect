@@ -1232,6 +1232,97 @@
                 grid-template-columns: 1fr;
             }
         }
+        /* ====== Scroll fade-in (Seedance-style section reveal) ====== */
+        .fade-in-on-scroll {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            will-change: opacity, transform;
+        }
+        .fade-in-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in-on-scroll {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        /* ====== 4-Pillar feature grid (Skill / Culture / Growth / Performing) ====== */
+        .pillars-strip {
+            padding: clamp(48px, 8vw, 88px) clamp(20px, 5vw, 64px);
+            border-bottom: 1px solid var(--line);
+        }
+        .pillars-strip .pillars-head {
+            max-width: 1080px;
+            margin: 0 auto 36px;
+            text-align: center;
+        }
+        .pillars-strip .pillars-head .step-kicker {
+            margin-bottom: 14px;
+        }
+        .pillars-strip .pillars-head h2 {
+            font-size: clamp(28px, 4vw, 44px);
+            line-height: 1.15;
+            margin: 0 0 14px;
+            letter-spacing: -0.01em;
+        }
+        .pillars-strip .pillars-head p {
+            color: var(--muted);
+            max-width: 56ch;
+            margin: 0 auto;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .pillars-strip .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .pillars-strip article {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 24px 22px;
+            transition: border-color 0.18s ease, transform 0.18s ease;
+        }
+        .pillars-strip article:hover {
+            border-color: rgba(139, 220, 255, 0.55);
+            transform: translateY(-2px);
+        }
+        .pillars-strip article .pillar-num {
+            display: inline-block;
+            font: 700 11px/1 "JetBrains Mono", monospace;
+            letter-spacing: 0.18em;
+            color: rgba(139, 220, 255, 0.85);
+            margin-bottom: 14px;
+        }
+        .pillars-strip article h3 {
+            font-size: 19px;
+            margin: 0 0 8px;
+            letter-spacing: -0.005em;
+        }
+        .pillars-strip article p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13.5px;
+            line-height: 1.65;
+        }
+        @media (max-width: 900px) {
+            .pillars-strip .pillars-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 520px) {
+            .pillars-strip .pillars-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1314,6 +1405,40 @@
                 <button class="big-btn" onclick="runAnalysis()">
                     <span class="play-glyph"></span>Analyze Fit & Generate Story
                 </button>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             4-Pillar Highlight Grid (Skill / Culture / Growth / Performing)
+             ========================================================================== -->
+        <section class="pillars-strip fade-in-on-scroll" aria-label="4-axis fit scoring overview">
+            <div class="pillars-head">
+                <div class="step-kicker">4-Axis Fit Scoring</div>
+                <h2>合う・合わないを、4 つの軸で読み解く。</h2>
+                <p>Mighty Skill-Bridge は経歴と案件の文脈推論を 4 軸に分解。
+                    キーワード一致では拾えない「合うかどうか」を、判断者の手に届く解像度で返す。</p>
+            </div>
+            <div class="pillars-grid">
+                <article class="fade-in-on-scroll">
+                    <span class="pillar-num">01 / SKILL</span>
+                    <h3>到達点を、規模で裏付ける。</h3>
+                    <p>キーワード一致ではなく、過去 PJ 規模からの実証された到達点を 0–100 で評価。</p>
+                </article>
+                <article class="fade-in-on-scroll">
+                    <span class="pillar-num">02 / CULTURE</span>
+                    <h3>働き方を、文脈で読み取る。</h3>
+                    <p>組織形態・意思決定速度・密度の整合性を、文脈推論で読み取る。</p>
+                </article>
+                <article class="fade-in-on-scroll">
+                    <span class="pillar-num">03 / GROWTH</span>
+                    <h3>3 週間後を、いま設計する。</h3>
+                    <p>配属直後のキャッチアップ可能性を、week 1 / 2 / 3 のロードマップに分解。</p>
+                </article>
+                <article class="fade-in-on-scroll">
+                    <span class="pillar-num">04 / PERFORMING</span>
+                    <h3>再現性を、過去から測る。</h3>
+                    <p>実績の再現性 — 過去 PJ の規模と成果から、将来 perf を推定する。</p>
+                </article>
             </div>
         </section>
 
@@ -1503,7 +1628,7 @@
             </div>
         </section>
 
-        <section id="models" class="model-band" aria-label="Mighty models">
+        <section id="models" class="model-band fade-in-on-scroll" aria-label="Mighty models">
             <a class="model-tile" href="#top">
                 <span>Video Generation</span>
                 <strong>Seedance</strong>
@@ -1527,7 +1652,7 @@
         </section>
 
 
-        <section id="knowledge-flow-demo" class="knowledge-flow-section" aria-label="Knowledge flow artifacts">
+        <section id="knowledge-flow-demo" class="knowledge-flow-section fade-in-on-scroll" aria-label="Knowledge flow artifacts">
             <div class="knowledge-flow-header">
                 <div class="knowledge-flow-title">
                     <h2>Knowledge Flow</h2>
@@ -1935,6 +2060,25 @@
         window.addEventListener("scroll", () => {
             document.querySelector(".topbar").classList.toggle("scrolled", window.scrollY > 18);
         }, {passive: true});
+
+        /* ====== Scroll-triggered fade-in (Seedance-style section reveal) ====== */
+        (function () {
+            const targets = document.querySelectorAll(".fade-in-on-scroll");
+            if (!("IntersectionObserver" in window) ||
+                matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                targets.forEach(el => el.classList.add("is-visible"));
+                return;
+            }
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add("is-visible");
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { rootMargin: "0px 0px -80px 0px", threshold: 0.12 });
+            targets.forEach(el => io.observe(el));
+        })();
     </script>
 </body>
 </html>
