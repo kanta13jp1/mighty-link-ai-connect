@@ -12,7 +12,7 @@
 | status | spec-ready (visual = Canva slide 9) |
 | pick-when | 社長 / 経営層、週次レビュー、KPI 一覧 |
 | skip-when | 1 候補単発分析、入力 UI 必要 |
-| output target | `static/wireframes/wf-08.html` |
+| output target | `exports/wireframes/wf-08.html` |
 
 ## 2. ASCII Layout
 
@@ -134,7 +134,7 @@ ready   ── change period      ──> loading (re-fetch all 6)
 ## 12. Implementation Prompt (LLM-ready)
 
 ```text
-Implement WF-08 "Exec Dashboard Tiles" for Mighty Skill-Bridge as static/wireframes/wf-08.html.
+Implement WF-08 "Exec Dashboard Tiles" for Mighty Skill-Bridge as exports/wireframes/wf-08.html.
 
 Stack: vanilla HTML/JS, Canvas 2D for histogram. Use GET /api/audit/recent + GET /api/admin/usage.
 

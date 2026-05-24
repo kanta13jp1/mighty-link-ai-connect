@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-07 Comparison Table</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E;
+      --r-md:12px;--s-3:16px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif;padding:var(--s-3)}
+h1{color:var(--c-accent);margin:0 0 var(--s-3)}
+.wf07__bar{display:flex;gap:var(--s-3);align-items:center;flex-wrap:wrap;margin-bottom:var(--s-3)}
+.wf07__bar input{flex:1;min-width:240px;background:#0a0b12;color:var(--c-text);
+                 border:1px solid var(--c-border);border-radius:var(--r-md);padding:8px;font:inherit}
+.wf07__matrix{width:100%;border-collapse:collapse;background:var(--c-surface);border-radius:var(--r-md);overflow:hidden}
+.wf07__matrix th,.wf07__matrix td{padding:var(--s-3);text-align:left;border-bottom:1px solid var(--c-border)}
+.wf07__matrix th{cursor:pointer;color:var(--c-text-sub);user-select:none;position:sticky;top:0;background:var(--c-surface);z-index:1}
+.wf07__matrix th[aria-sort]{color:var(--c-accent)}
+.wf07__matrix td[data-band="high"]{background:rgba(57,255,20,.12);color:var(--c-success)}
+.wf07__matrix td[data-band="mid"]{background:rgba(0,240,255,.10);color:var(--c-accent)}
+.wf07__matrix td[data-band="low"]{background:rgba(255,51,102,.10);color:var(--c-danger)}
+button{background:var(--c-accent);color:var(--c-bg);border:0;border-radius:var(--r-md);
+       padding:8px 16px;font-weight:700;cursor:pointer;font:inherit}
+@media (max-width:700px){
+  .wf07__matrix thead{display:none}
+  .wf07__matrix,.wf07__matrix tbody,.wf07__matrix tr,.wf07__matrix td{display:block;width:100%}
+  .wf07__matrix tr{margin-bottom:var(--s-3);border:1px solid var(--c-border);border-radius:var(--r-md);padding:8px}
+  .wf07__matrix td::before{content:attr(data-label) ": ";color:var(--c-text-sub);margin-right:8px}
+}
+</style></head><body>
+<h1>Comparison</h1>
+<div class="wf07__bar">
+  <label>案件: <input id="job" placeholder="案件テキスト" aria-label="job"></label>
+  <button id="add">+ Add Candidate</button>
+  <button id="csv">Export CSV</button></div>
+<table class="wf07__matrix"><thead><tr>
+  <th>候補</th>
+  <th data-key="skill">Skill</th>
+  <th data-key="culture">Culture</th>
+  <th data-key="growth">Growth</th>
+  <th data-key="performing">Performing</th>
+  <th data-key="final_score" aria-sort="descending">Final ▼</th></tr></thead>
+<tbody id="rows"></tbody></table>
+<script>
+const state={rows:[],sortKey:"final_score",dir:-1};
+const KEYS=["skill","culture","growth","performing","final_score"];
+const LABELS={skill:"Skill",culture:"Culture",growth:"Growth",performing:"Performing",final_score:"Final"};
+function band(s){return s>=80?"high":s<65?"low":"mid"}
+function badge(s){return s>=80?"🟢":s<65?"🔴":"🟡"}
+function render(){
+  state.rows.sort((a,b)=>(a[state.sortKey]-b[state.sortKey])*state.dir);
+  document.getElementById("rows").innerHTML=state.rows.map(r=>
+    `<tr><td data-label="候補">${r.name}</td>`+
+    KEYS.map(k=>`<td data-label="${LABELS[k]}" data-band="${band(r[k])}">${r[k]} ${badge(r[k])}</td>`).join("")+
+    `</tr>`).join("");
+}
+document.querySelectorAll("th[data-key]").forEach(th=>th.addEventListener("click",()=>{
+  const k=th.dataset.key;
+  if(state.sortKey===k){state.dir*=-1}else{state.sortKey=k;state.dir=-1}
+  document.querySelectorAll("th[data-key]").forEach(x=>x.removeAttribute("aria-sort"));
+  th.setAttribute("aria-sort",state.dir<0?"descending":"ascending");
+  render();}));
+document.getElementById("add").addEventListener("click",async()=>{
+  const eng=prompt("経歴書テキスト"); if(!eng) return;
+  const job=document.getElementById("job").value.trim();
+  if(!job){alert("先に案件テキストを入力");return;}
+  try{
+    const m=await (await fetch("/api/match",{method:"POST",
+      headers:{"content-type":"application/json"},
+      body:JSON.stringify({engineer_content:eng,job_content:job})})).json();
+    state.rows.push({name:eng.split(/\n|\//)[0].slice(0,18),...m.scores,final_score:m.final_score});
+    render();
+  }catch(e){alert("失敗: "+e.message);}});
+document.getElementById("csv").addEventListener("click",()=>{
+  const head="候補,Skill,Culture,Growth,Performing,Final\n";
+  const body=state.rows.map(r=>[r.name,r.skill,r.culture,r.growth,r.performing,r.final_score].join(",")).join("\n");
+  const blob=new Blob(["﻿"+head+body],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download=`comparison_${new Date().toISOString().slice(0,19).replace(/[:T]/g,"-")}.csv`; a.click();});
+render();
+</script></body></html>

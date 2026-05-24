@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-10 Search Catalog</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-border:#2A2D3E;--r-md:12px;--r-lg:20px;--s-3:16px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+header{padding:var(--s-3) var(--s-3) 0}
+header h1{color:var(--c-accent);margin:0}
+.wf10__search{position:sticky;top:0;background:var(--c-bg);display:grid;
+              grid-template-columns:1fr auto auto;gap:var(--s-3);padding:var(--s-3);z-index:5;align-items:start}
+@media (max-width:600px){.wf10__search{grid-template-columns:1fr}}
+input[type="search"],input[type="number"]{background:var(--c-surface);color:var(--c-text);
+  border:1px solid var(--c-border);border-radius:var(--r-md);padding:var(--s-3);font:inherit}
+fieldset{border:1px solid var(--c-border);border-radius:var(--r-md);padding:8px;margin:0}
+fieldset label{margin-right:var(--s-3);color:var(--c-text-sub)}
+details summary{cursor:pointer;color:var(--c-text-sub);padding:8px}
+details[open]{background:var(--c-surface);border-radius:var(--r-md);padding:8px}
+.wf10__meta{padding:0 var(--s-3);color:var(--c-text-sub);margin:0 0 8px}
+.wf10__grid{list-style:none;padding:var(--s-3);margin:0;display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--s-3)}
+.wf10__grid li{background:var(--c-surface);border:1px solid var(--c-border);
+               border-radius:var(--r-md);padding:var(--s-3);cursor:pointer}
+.wf10__grid li:hover{border-color:var(--c-accent)}
+.wf10__drawer{width:90vw;max-width:720px;background:var(--c-surface);color:var(--c-text);
+              border:1px solid var(--c-border);border-radius:var(--r-lg);padding:var(--s-3)}
+.wf10__drawer::backdrop{background:rgba(0,0,0,0.6)}
+button{background:var(--c-accent);color:var(--c-bg);border:0;border-radius:var(--r-md);
+       padding:8px 16px;font-weight:700;cursor:pointer;font:inherit}
+</style></head><body>
+<header><h1>Catalog</h1></header>
+<form class="wf10__search" role="search">
+  <input type="search" id="q" placeholder="検索 (例: Python AWS Senior)" aria-label="search">
+  <fieldset><legend style="color:var(--c-text-sub);font-size:12px">Tab</legend>
+    <label><input type="radio" name="tab" value="engineers" checked> Engineers</label>
+    <label><input type="radio" name="tab" value="jobs"> Jobs</label></fieldset>
+  <details><summary>Filters</summary>
+    <label>min score <input type="number" id="minScore" min="50" max="100" placeholder="0"></label>
+  </details>
+</form>
+<p class="wf10__meta"><span id="count">--</span></p>
+<ul class="wf10__grid" id="grid"></ul>
+<dialog class="wf10__drawer" id="drawer"></dialog>
+<script>
+const state={data:{engineers:[],jobs:[]},query:"",tab:"engineers",minScore:0,page:0,pageSize:24};
+const DEMO_ENG=[
+  {name:"山田 太郎",text:"Python AWS Kubernetes 8y senior",score:88,updated:"2026-05-24"},
+  {name:"佐藤 花子",text:"React TypeScript Next.js 5y",score:72,updated:"2026-05-23"},
+  {name:"鈴木 一郎",text:"Go Cloud Native Datadog 8y",score:91,updated:"2026-05-22"},
+  {name:"田中 二郎",text:"Python ML PyTorch 4y",score:67,updated:"2026-05-22"},
+];
+const DEMO_JOB=[
+  {name:"株式会社X SRE",text:"Python AWS K8s 必須",score:0,updated:"2026-05-24"},
+  {name:"株式会社Y Frontend",text:"React TS Next 必須",score:0,updated:"2026-05-23"},
+];
+async function loadCatalog(){
+  const cached=sessionStorage.getItem("wf10_catalog");
+  if(cached){try{state.data=JSON.parse(cached); return}catch(e){}}
+  try{
+    const j=await fetch("/api/audit/recent?limit=200");
+    if(j.ok){const data=await j.json();
+      (data.events||[]).forEach(e=>{
+        const op=e.operation||e.type;
+        const txt=e.source_excerpt||e.payload?.parsed_text||e.payload?.summary||"";
+        if(op==="parse"){
+          const dt=e.doc_type||e.payload?.doc_type;
+          const target = dt==="engineer" ? state.data.engineers : state.data.jobs;
+          target.push({name:txt.split(/\n|\//)[0].slice(0,18)||"unknown",
+                       text:txt.slice(0,200), score:e.payload?.score||0, updated:e.timestamp});}});
+      if(state.data.engineers.length===0) state.data.engineers=DEMO_ENG;
+      if(state.data.jobs.length===0) state.data.jobs=DEMO_JOB;
+    }else{state.data={engineers:DEMO_ENG,jobs:DEMO_JOB}}
+  }catch(e){state.data={engineers:DEMO_ENG,jobs:DEMO_JOB}}
+  sessionStorage.setItem("wf10_catalog",JSON.stringify(state.data));
+}
+function render(){
+  const all=state.data[state.tab]||[];
+  const tokens=state.query.toLowerCase().split(/\s+/).filter(Boolean);
+  const filt=all.filter(x=>{
+    if(state.minScore && x.score<state.minScore) return false;
+    return tokens.every(t=>(x.name+" "+x.text).toLowerCase().includes(t));});
+  document.getElementById("count").textContent=`${filt.length} / ${all.length}`;
+  const ul=document.getElementById("grid"); ul.innerHTML="";
+  filt.slice(0,(state.page+1)*state.pageSize).forEach(x=>{
+    const li=document.createElement("li");
+    li.innerHTML=`<strong>${x.name}</strong> <span style="color:var(--c-accent);float:right">${x.score||""}</span><br>
+                  <small style="color:var(--c-text-sub)">${(x.text||"").slice(0,80)}</small>`;
+    li.addEventListener("click",()=>openDrawer(x));
+    ul.appendChild(li);});
+}
+function openDrawer(x){
+  const d=document.getElementById("drawer");
+  d.innerHTML=`<h2>${x.name}</h2><p>${x.text||""}</p>
+    <p><small>Updated: ${x.updated||"--"}</small></p>
+    <button id="close">閉じる</button>`;
+  d.showModal();
+  d.querySelector("#close").addEventListener("click",()=>d.close());
+}
+document.getElementById("q").addEventListener("input",e=>{clearTimeout(window.__t);
+  window.__t=setTimeout(()=>{state.query=e.target.value;state.page=0;render()},250)});
+document.querySelectorAll("input[name='tab']").forEach(r=>r.addEventListener("change",e=>{
+  state.tab=e.target.value;state.page=0;render()}));
+document.getElementById("minScore").addEventListener("change",e=>{
+  state.minScore=+e.target.value||0; state.page=0; render()});
+window.addEventListener("scroll",()=>{
+  if(window.innerHeight+window.scrollY >= document.body.offsetHeight-200){state.page++; render()}});
+loadCatalog().then(render);
+</script></body></html>

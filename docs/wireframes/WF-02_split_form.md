@@ -12,7 +12,7 @@
 | status | spec-ready (visual = Canva slide 3、現行 `index.html` と最も近い) |
 | pick-when | デスクトップ常用、左右視覚比較、現行から最小変更 |
 | skip-when | スマホ中心、片方の入力が長文 |
-| output target | `static/wireframes/wf-02.html` |
+| output target | `exports/wireframes/wf-02.html` |
 
 ## 2. ASCII Layout
 
@@ -128,7 +128,7 @@ WF-01 と同じ: `Promise.all([/api/parse engineer, /api/parse job])` → `/api/
 ```text
 You are implementing WF-02 "Split Form" for Mighty Skill-Bridge, the closest to the current index.html.
 
-Constraints: same as WF-01 (static/wireframes/wf-02.html, vanilla, no build, use /api/parse + /api/match).
+Constraints: same as WF-01 (exports/wireframes/wf-02.html, vanilla, no build, use /api/parse + /api/match).
 
 Key differences vs WF-01:
 - Two-column grid for desktop (≥ 901px), collapses to 1-column on mobile

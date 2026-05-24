@@ -12,7 +12,7 @@
 | status | spec-ready (visual = Canva slide 8) |
 | pick-when | 経営層への報告、最終 5-10 候補絞り込み |
 | skip-when | 単発分析、入力 UI なし (前処理 WF と組み合わせ前提) |
-| output target | `static/wireframes/wf-07.html` |
+| output target | `exports/wireframes/wf-07.html` |
 
 ## 2. ASCII Layout
 
@@ -122,7 +122,7 @@ rows  ── export CSV              ──> client download
 ## 12. Implementation Prompt (LLM-ready)
 
 ```text
-Implement WF-07 "Comparison Table" for Mighty Skill-Bridge as static/wireframes/wf-07.html.
+Implement WF-07 "Comparison Table" for Mighty Skill-Bridge as exports/wireframes/wf-07.html.
 
 Stack: vanilla HTML/JS. Use POST /api/parse + POST /api/match per Add Candidate.
 

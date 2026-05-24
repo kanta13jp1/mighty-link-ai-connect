@@ -12,7 +12,7 @@
 | status | spec-ready (visual = Canva slide 4) |
 | pick-when | 初回ユーザー多い、social 内部展開、help/tooltip 充実したい |
 | skip-when | 慣れたヘビーユーザーが速度優先 |
-| output target | `static/wireframes/wf-03.html` |
+| output target | `exports/wireframes/wf-03.html` |
 
 ## 2. ASCII Layout
 
@@ -133,7 +133,7 @@ State variables: `currentStep: 1..4`, `data: {engineer: "", job: "", profile1, p
 ## 12. Implementation Prompt (LLM-ready)
 
 ```text
-Implement WF-03 "Step Wizard" for Mighty Skill-Bridge as static/wireframes/wf-03.html.
+Implement WF-03 "Step Wizard" for Mighty Skill-Bridge as exports/wireframes/wf-03.html.
 
 Stack: vanilla HTML/JS, no build. Use POST /api/parse per step (engineer at step1→2, job at step2→3)
 and POST /api/match at step3→4.

@@ -148,7 +148,7 @@ Breakpoints: `--bp-mobile: 480px` / `--bp-tablet: 900px` / `--bp-desktop: 1280px
 
 ```text
 @docs/wireframes/WF-03_step_wizard.md を実装してください。
-出力は static/wireframes/wf-03.html 単一ファイル。
+出力は exports/wireframes/wf-03.html 単一ファイル。
 既存 src/app.py の /api/parse + /api/match を fetch で呼び出してください。
 verify_public_demo.py が破壊されないよう、root index.html は触らないでください。
 ```
@@ -156,7 +156,7 @@ verify_public_demo.py が破壊されないよう、root index.html は触らな
 ### 自動化 (将来)
 
 ```powershell
-python scripts/generate_wireframe_impl.py --wf 03 --out static/wireframes/wf-03.html
+python scripts/generate_wireframe_impl.py --wf 03 --out exports/wireframes/wf-03.html
 ```
 
 (`generate_wireframe_impl.py` は本パック実装後、必要時に Codex レーンで作成想定)

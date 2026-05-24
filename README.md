@@ -53,6 +53,7 @@ python scripts/verify_google_workspace_account.py
 - [Canva / Figma MCP セットアップ + 自動化フロー](docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md) - T658-mcp-extend (自動化版、推奨)
 - [Figma Slides: Mighty Skill-Bridge CEO Brief 2026-06-02](https://www.figma.com/slides/PAQWzAUPoPTy3ibLcOmPDC) - 2026-05-24 Figma MCP で 9 slides 自動生成、当日プレゼン用第一候補
 - [Branded PPTX on Drive: CEO Presentation Deck 2026-06-02 (Branded)](https://docs.google.com/presentation/d/1myH1m8TKiukdxR7F_EertJ1102CfglBC/edit?usp=drivesdk) - 2026-05-24 アップロード、PowerPoint フォールバック
+- [UI Wireframes — Live Catalog (10 動くプロト)](exports/wireframes/index.html) - 2026-05-24 materialize、ローカル `python src/app.py` 起動後 `http://localhost:8000/exports/wireframes/` で 10 WF をブラウザ確認可能
 - [UI Wireframes — Implementation-Ready Spec Pack](docs/wireframes/README.md) - 2026-05-24 生成、10 WF を AI に渡して即実装できる spec md x10 + 機械可読 JSON。社長 6/2 判断後の AI 実装着手用
 - [UI Wireframes — 10 Patterns (Canva, Branded — Drive)](https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit?usp=drivesdk) - 2026-05-24 Canva MCP 生成、cyber palette フルカラー版、社長判断材料の第一候補
 - [UI Wireframes — 10 Patterns (Canva — edit)](https://www.canva.com/d/Mft5giDcMgir88Y) / [view](https://www.canva.com/d/lLCcnCJnbJE9Xsa) - Canva 上で 12 ページを編集可能

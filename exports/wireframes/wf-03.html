@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — WF-03 Step Wizard</title>
+<style>
+:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;
+      --c-accent:#00F0FF;--c-border:#2A2D3E;--r-md:12px;--r-lg:20px;
+      --s-2:8px;--s-3:16px;--s-4:24px;--s-5:40px}
+body{margin:0;background:var(--c-bg);color:var(--c-text);font-family:"Yu Gothic UI",sans-serif}
+.wf03{max-width:960px;margin:0 auto;padding:var(--s-4)}
+.wf03 header{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s-4)}
+.wf03 header h1{color:var(--c-accent);margin:0}
+.wf03__steps{display:flex;gap:var(--s-4);list-style:none;padding:0;overflow-x:auto}
+.wf03__steps li{flex:1;min-width:120px;text-align:center;padding-bottom:var(--s-2);
+                border-bottom:3px solid var(--c-border);color:var(--c-text-sub)}
+.wf03__steps li[aria-current="step"]{border-bottom-color:var(--c-accent);color:var(--c-accent);font-weight:700}
+.wf03__steps li.is-reached{cursor:pointer}
+.wf03__card{background:var(--c-surface);border:1px solid var(--c-border);
+            border-radius:var(--r-lg);padding:var(--s-5);margin-top:var(--s-4);min-height:280px}
+@media (max-width:600px){.wf03__card{padding:var(--s-4)}}
+textarea{width:100%;min-height:240px;background:#0a0b12;color:var(--c-text);
+         border:1px solid var(--c-border);border-radius:var(--r-md);padding:var(--s-3);box-sizing:border-box;font:inherit}
+.wf03__nav{display:flex;justify-content:space-between;margin-top:var(--s-4);gap:var(--s-3)}
+@media (max-width:600px){.wf03__nav{flex-direction:column}}
+.wf03__nav button{background:var(--c-surface);color:var(--c-text);border:1px solid var(--c-border);
+                  padding:var(--s-3) var(--s-4);border-radius:var(--r-md);cursor:pointer;font:inherit}
+.wf03__nav button[data-act="next"]{background:var(--c-accent);color:var(--c-bg);border:0;font-weight:700}
+.wf03__nav button:disabled{opacity:.4;cursor:not-allowed}
+.wf03__nav button[aria-busy="true"]{opacity:.6;cursor:progress}
+dialog{background:var(--c-surface);color:var(--c-text);border:1px solid var(--c-accent);
+       border-radius:var(--r-lg);padding:var(--s-4);max-width:560px}
+.wf03__gauge{font-size:80px;color:var(--c-accent);font-weight:800;text-align:center}
+</style></head><body>
+<main class="wf03">
+  <header><h1>Mighty Skill-Bridge</h1>
+    <button onclick="document.getElementById('help').showModal()" aria-label="help">Help ?</button></header>
+  <ol class="wf03__steps" role="list" id="steps">
+    <li data-step="1" aria-current="step" class="is-reached">経歴入力</li>
+    <li data-step="2">案件入力</li><li data-step="3">確認</li><li data-step="4">結果</li>
+  </ol>
+  <section class="wf03__card" id="card" aria-live="polite"></section>
+  <nav class="wf03__nav"><button data-act="back" disabled>← Back</button>
+    <button data-act="next">Next →</button></nav>
+</main>
+<dialog id="help"><h2>使い方</h2><p>経歴と案件を順に貼り付け → Step 3 で「分析」 → Step 4 で結果。</p>
+  <button onclick="this.parentElement.close()">閉じる</button></dialog>
+<script>
+const state={step:1, data:{engineer:"", job:"", profile1:null, profile2:null, match:null}};
+const SAMPLE_E="山田太郎 / 経験 8 年 / Python・AWS・K8s";
+const SAMPLE_J="株式会社X SRE / Python+AWS+K8s 必須 / 単価 90-120万";
+const $=s=>document.querySelector(s);
+const STEPS={1:{title:"Step 1 / 4 — 経歴書を貼り付け",input:"engineer",sample:SAMPLE_E},
+             2:{title:"Step 2 / 4 — 案件票を貼り付け",input:"job",sample:SAMPLE_J},
+             3:{title:"Step 3 / 4 — 内容を確認",input:null},
+             4:{title:"Step 4 / 4 — 結果",input:null}};
+function render(){
+  const s=STEPS[state.step], c=$("#card");
+  if(s.input){
+    c.innerHTML=`<h2>${s.title}</h2><textarea id="ta">${state.data[s.input]||""}</textarea>
+                 <p><button type="button" id="loadSample" style="background:transparent;color:var(--c-accent);border:1px solid var(--c-accent);border-radius:8px;padding:6px 12px;cursor:pointer">Load Sample</button></p>`;
+    $("#loadSample").addEventListener("click",()=>$("#ta").value=s.sample);
+  } else if(state.step===3){
+    c.innerHTML=`<h2>${s.title}</h2>
+      <p><strong>経歴:</strong> ${state.data.engineer.slice(0,120)}…</p>
+      <p><strong>案件:</strong> ${state.data.job.slice(0,120)}…</p>
+      <button id="analyze" style="background:var(--c-accent);color:var(--c-bg);border:0;border-radius:12px;padding:12px 24px;font-weight:700;cursor:pointer">⚡ Analyze Fit</button>`;
+    $("#analyze").addEventListener("click", analyze);
+  } else {
+    const m=state.data.match||{};
+    const qa=(m.qa||[]).map(q=>`<details><summary>${q.question}</summary><p>${q.answer}</p></details>`).join("");
+    c.innerHTML=`<h2>${s.title}</h2><div class="wf03__gauge">${m.final_score||"--"}</div>
+      <pre style="background:#0a0b12;padding:12px;border-radius:8px">${JSON.stringify(m.scores||{},null,2)}</pre>
+      <p>${m.summary||""}</p>${qa}
+      <p>Week1: ${m.roadmap_week1||""}</p><p>Week2: ${m.roadmap_week2||""}</p><p>Week3: ${m.roadmap_week3||""}</p>`;
+  }
+  document.querySelectorAll(".wf03__steps li").forEach(li=>{
+    const n=+li.dataset.step;
+    if(n===state.step) li.setAttribute("aria-current","step"); else li.removeAttribute("aria-current");
+    if(n<=state.step) li.classList.add("is-reached");});
+  $('button[data-act="back"]').disabled = state.step===1;
+  $('button[data-act="next"]').hidden = state.step===4 || state.step===3;
+}
+async function parseDoc(text,t){const fd=new FormData();fd.append("text",text);fd.append("doc_type",t);
+  return (await fetch("/api/parse",{method:"POST",body:fd})).json()}
+async function analyze(){
+  const btn=$("#analyze"); btn.disabled=true; btn.setAttribute("aria-busy","true"); btn.textContent="分析中...";
+  try{state.data.match=await (await fetch("/api/match",{method:"POST",
+    headers:{"content-type":"application/json"},
+    body:JSON.stringify({engineer_content:state.data.engineer,job_content:state.data.job})})).json();
+    state.step=4; render();
+  }catch(e){alert("分析失敗: "+e.message); btn.disabled=false; btn.removeAttribute("aria-busy"); btn.textContent="⚡ Analyze Fit"}
+}
+$('button[data-act="next"]').addEventListener("click",async (ev)=>{
+  const btn=ev.currentTarget; const s=STEPS[state.step];
+  if(s.input){
+    const text=$("#ta").value.trim();
+    if(!text){alert("入力してください");return;}
+    state.data[s.input]=text;
+    btn.setAttribute("aria-busy","true"); btn.disabled=true;
+    try{state.data["profile"+state.step]=await parseDoc(text, s.input);}
+    catch(e){alert("Parse 失敗: "+e.message); btn.removeAttribute("aria-busy"); btn.disabled=false; return;}
+    btn.removeAttribute("aria-busy"); btn.disabled=false;
+  }
+  state.step++; render();});
+$('button[data-act="back"]').addEventListener("click",()=>{state.step--; render();});
+document.querySelectorAll(".wf03__steps li").forEach(li=>li.addEventListener("click",()=>{
+  const n=+li.dataset.step;
+  if(li.classList.contains("is-reached") && n!==state.step){state.step=n; render();}}));
+render();
+</script></body></html>
