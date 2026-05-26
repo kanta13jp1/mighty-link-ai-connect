@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Careers — Mighty-Link Inc. / 判断インフラを共に作る</title>
+<meta name="description" content="Mighty-Link Inc. 採用ページ。AI による判断インフラ Mighty Skill-Bridge を一緒に作るエンジニア・プロダクト人材を募集しています。">
+<style>
+  :root{
+    --bg:#0A0B0F; --panel:#11131A; --line:rgba(255,255,255,0.10); --line-strong:rgba(255,255,255,0.22);
+    --text:#F7F7F2; --muted:#9CA0AE; --accent:#8BDCFF; --accent2:#BAFF66; --warn:#FF9F66;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);
+       font-family:"Inter","Noto Sans JP","Yu Gothic UI",sans-serif;line-height:1.6;
+       -webkit-font-smoothing:antialiased;font-size:15px}
+  a{color:inherit}
+
+  /* ===== Topbar (sticky + blur, matches root demo) ===== */
+  .topbar{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;
+          gap:22px;min-height:72px;padding:16px 32px;border-bottom:1px solid var(--line);
+          background:rgba(10,11,15,0.58);backdrop-filter:blur(18px);
+          transition:min-height .22s ease,padding .22s ease,background .22s ease,border-color .22s ease}
+  .topbar.scrolled{min-height:56px;padding-top:10px;padding-bottom:10px;
+                    background:rgba(10,11,15,0.92);border-color:rgba(255,255,255,0.22)}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand-mark{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line-strong);
+              border-radius:8px;background:linear-gradient(135deg,rgba(139,220,255,0.26),rgba(186,255,102,0.16));
+              font-weight:900}
+  .brand-text strong{font-size:18px;display:block;line-height:1.1}
+  .brand-text span{margin-top:3px;color:var(--muted);font-size:12px;display:block}
+  .nav-links{display:flex;gap:clamp(14px,2vw,32px);font-size:14px;font-weight:700}
+  .nav-links a{color:rgba(247,247,242,0.72);text-decoration:none;transition:color .18s}
+  .nav-links a:hover,.nav-links a.is-active{color:var(--text)}
+  .topbar .cta{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0A0B0F;
+               text-decoration:none;font-weight:800;padding:10px 18px;border-radius:8px;font-size:13px;
+               letter-spacing:.02em}
+  @media (max-width:720px){.nav-links{display:none}}
+
+  /* ===== Generic reveal ===== */
+  .fade-in-on-scroll{opacity:0;transform:translateY(24px);
+                     transition:opacity .6s ease,transform .6s ease;will-change:opacity,transform}
+  .fade-in-on-scroll.is-visible{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.fade-in-on-scroll{opacity:1;transform:none;transition:none}}
+
+  /* ===== Hero ===== */
+  .hero{position:relative;padding:clamp(72px,12vw,140px) clamp(20px,5vw,64px) clamp(64px,10vw,120px);
+        overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(900px 540px at 18% 20%,rgba(139,220,255,0.18),transparent 60%),
+               radial-gradient(800px 600px at 84% 70%,rgba(186,255,102,0.10),transparent 60%)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px;opacity:.6}
+  .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 11px/1 "JetBrains Mono",monospace;
+           letter-spacing:.22em;text-transform:uppercase;color:var(--accent);padding:8px 12px;
+           border:1px solid rgba(139,220,255,0.45);border-radius:999px;margin-bottom:24px}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);
+                box-shadow:0 0 12px var(--accent2);animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero h1{font-size:clamp(40px,7vw,84px);line-height:1.04;letter-spacing:-.025em;margin:0 0 24px;font-weight:800;max-width:18ch}
+  .hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent) 0%,var(--accent2) 100%);
+              -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .lede{color:var(--muted);font-size:clamp(16px,1.4vw,19px);max-width:60ch;margin:0 0 36px;line-height:1.7}
+  .hero .actions{display:flex;gap:12px;flex-wrap:wrap}
+  .hero .actions a{padding:14px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px}
+  .hero .actions .primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0A0B0F;
+                           box-shadow:0 12px 32px rgba(139,220,255,0.22)}
+  .hero .actions .ghost{background:rgba(255,255,255,0.05);color:var(--text);border:1px solid var(--line-strong)}
+  .hero-meta{margin-top:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:880px;
+             border-top:1px solid var(--line);padding-top:24px}
+  @media (max-width:720px){.hero-meta{grid-template-columns:1fr 1fr}}
+  .hero-meta dt{color:var(--muted);font:600 11px/1 "JetBrains Mono",monospace;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
+  .hero-meta dd{margin:0;font-weight:700}
+
+  /* ===== Section base ===== */
+  section.block{padding:clamp(64px,10vw,120px) clamp(20px,5vw,64px);border-bottom:1px solid var(--line);position:relative}
+  .block-inner{max-width:1100px;margin:0 auto}
+  .block-head{margin-bottom:48px;max-width:760px}
+  .block-head .kicker{font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+  .block-head h2{font-size:clamp(28px,4vw,52px);line-height:1.1;letter-spacing:-.015em;margin:0 0 14px;font-weight:800}
+  .block-head p{color:var(--muted);font-size:16px;margin:0;line-height:1.75;max-width:60ch}
+
+  /* ===== Why us pillars ===== */
+  .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media (max-width:900px){.pillars{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.pillars{grid-template-columns:1fr}}
+  .pillar{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:18px;padding:26px 22px;
+          transition:border-color .18s ease,transform .18s ease}
+  .pillar:hover{border-color:rgba(139,220,255,0.55);transform:translateY(-2px)}
+  .pillar .num{font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.18em;color:var(--accent);margin-bottom:14px;display:block}
+  .pillar h3{margin:0 0 10px;font-size:19px;letter-spacing:-.005em}
+  .pillar p{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+
+  /* ===== Product highlight ===== */
+  .product{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media (max-width:900px){.product{grid-template-columns:1fr}}
+  .product .copy h3{font-size:24px;margin:0 0 14px;letter-spacing:-.01em}
+  .product .copy p{color:var(--muted);font-size:15px;margin:0 0 18px}
+  .product .copy ul{padding:0;margin:0 0 22px;list-style:none}
+  .product .copy li{padding:8px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted);display:flex;gap:10px}
+  .product .copy li::before{content:"●";color:var(--accent);margin-top:1px}
+  .product .panel{background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+                   border:1px solid var(--line);border-radius:20px;padding:32px;position:relative;overflow:hidden}
+  .product .panel::after{content:"";position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(139,220,255,.6),transparent)}
+  .product .panel .big{font-size:96px;font-weight:800;letter-spacing:-.04em;line-height:1;text-align:center;
+                        background:linear-gradient(180deg,#FFFFFF 30%,var(--accent) 100%);
+                        -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px}
+  .product .panel .big small{font-size:14px;font-weight:600;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;display:block;margin-top:6px}
+  .product .panel .axes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px}
+  .product .panel .axes div{padding:10px;background:rgba(255,255,255,0.04);border-radius:10px;text-align:center;font-size:12px;color:var(--muted)}
+  .product .panel .axes div b{display:block;font-size:22px;font-weight:800;color:var(--accent);margin-bottom:4px}
+
+  /* ===== Roles ===== */
+  .roles{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media (max-width:720px){.roles{grid-template-columns:1fr}}
+  .role{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:18px;padding:28px 26px;
+        transition:border-color .18s ease,transform .18s ease}
+  .role:hover{border-color:rgba(186,255,102,0.5);transform:translateY(-2px)}
+  .role .tag{display:inline-block;font:700 10px/1 "JetBrains Mono",monospace;letter-spacing:.22em;text-transform:uppercase;
+              padding:5px 10px;border-radius:6px;background:rgba(186,255,102,0.14);color:var(--accent2);margin-bottom:14px}
+  .role h3{margin:0 0 10px;font-size:20px;letter-spacing:-.005em}
+  .role p{margin:0 0 16px;color:var(--muted);font-size:14px;line-height:1.7}
+  .role .meta{display:flex;gap:14px;flex-wrap:wrap;font:600 12px/1 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:.05em}
+  .role .meta span::before{content:"·  ";color:var(--accent)}
+  .role .meta span:first-child::before{content:""}
+
+  /* ===== Process ===== */
+  .process{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:step}
+  @media (max-width:720px){.process{grid-template-columns:1fr 1fr}}
+  @media (max-width:480px){.process{grid-template-columns:1fr}}
+  .step{counter-increment:step;background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:16px;
+        padding:22px 20px;position:relative}
+  .step::before{content:counter(step,decimal-leading-zero);position:absolute;top:14px;right:18px;
+                 font:800 22px/1 "JetBrains Mono",monospace;color:rgba(139,220,255,0.32);letter-spacing:-.02em}
+  .step h4{margin:0 0 8px;font-size:16px;letter-spacing:-.005em}
+  .step p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
+
+  /* ===== Tech stack ===== */
+  .stack{display:flex;flex-wrap:wrap;gap:8px}
+  .stack span{font:600 12px/1 "JetBrains Mono",monospace;letter-spacing:.08em;
+               padding:8px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--line);
+               border-radius:6px;color:var(--muted)}
+  .stack span b{color:var(--accent);font-weight:700;margin-right:6px}
+
+  /* ===== Voices ===== */
+  .voices{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media (max-width:720px){.voices{grid-template-columns:1fr}}
+  .voice{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:18px;padding:26px 24px}
+  .voice .quote{font-size:17px;line-height:1.6;margin:0 0 18px;color:var(--text)}
+  .voice .quote::before{content:"\201C";color:var(--accent);font-size:32px;line-height:0;margin-right:6px}
+  .voice .who{display:flex;align-items:center;gap:12px;border-top:1px solid var(--line);padding-top:14px}
+  .voice .who .ava{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+                    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0A0B0F;font-weight:800;font-size:13px;letter-spacing:-.02em}
+  .voice .who div b{display:block;font-size:14px}
+  .voice .who div span{display:block;font-size:12px;color:var(--muted)}
+
+  /* ===== FAQ ===== */
+  .faq{display:flex;flex-direction:column;gap:6px}
+  .faq details{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:14px;padding:0 20px;transition:border-color .18s}
+  .faq details[open]{border-color:rgba(139,220,255,0.45)}
+  .faq summary{cursor:pointer;padding:18px 0;font-weight:700;font-size:15px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";color:var(--accent);font:700 22px/1 "JetBrains Mono",monospace;transition:transform .18s}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.75}
+
+  /* ===== Apply CTA ===== */
+  .apply{padding:clamp(72px,12vw,140px) clamp(20px,5vw,64px);text-align:center;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .apply::before{content:"";position:absolute;inset:0;background:
+    radial-gradient(700px 480px at 50% 0%,rgba(139,220,255,0.18),transparent 60%)}
+  .apply > *{position:relative;z-index:1}
+  .apply h2{font-size:clamp(32px,5vw,64px);line-height:1.1;letter-spacing:-.02em;margin:0 0 18px;font-weight:800}
+  .apply p{color:var(--muted);font-size:17px;max-width:48ch;margin:0 auto 32px}
+  .apply .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .apply .actions a{padding:16px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px}
+  .apply .actions .primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0A0B0F;
+                            box-shadow:0 12px 32px rgba(139,220,255,0.28)}
+  .apply .actions .ghost{background:rgba(255,255,255,0.05);color:var(--text);border:1px solid var(--line-strong)}
+
+  /* ===== Footer ===== */
+  footer{padding:48px clamp(20px,5vw,64px) 32px;color:var(--muted);font-size:13px}
+  .foot-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;
+              padding-bottom:32px;border-bottom:1px solid var(--line)}
+  @media (max-width:720px){.foot-grid{grid-template-columns:1fr 1fr}}
+  .foot-grid h5{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--text);margin:0 0 12px}
+  .foot-grid a{display:block;color:var(--muted);text-decoration:none;padding:4px 0;font-size:13px}
+  .foot-grid a:hover{color:var(--accent)}
+  .foot-bottom{max-width:1100px;margin:18px auto 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px}
+</style></head><body>
+<header class="topbar">
+  <a class="brand" href="../../" style="text-decoration:none;color:inherit">
+    <span class="brand-mark">M</span>
+    <span class="brand-text"><strong>Mighty-Link</strong><span>判断インフラを共に作る</span></span>
+  </a>
+  <nav class="nav-links" aria-label="Recruit sections">
+    <a href="#why">Why us</a>
+    <a href="#product">Product</a>
+    <a href="#roles">Roles</a>
+    <a href="#process">Process</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <a class="cta" href="#apply">エントリー →</a>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="dot"></span>Now Hiring · 2026 通年募集</div>
+    <h1>判断インフラを、<br><em>一緒に</em>作る人を探しています。</h1>
+    <p class="lede">Mighty-Link は、配属・採用・評価という「人を動かす判断」を、AI と 4 軸の文脈推論で
+      静かに速くするスタートアップです。プロダクトは現在 preview、6/2 に経営判断、2026 H2 で本番展開予定。
+      入社の手前で、私たちの考え方・作り方・チームをこの 1 枚で見てください。</p>
+    <div class="actions">
+      <a class="primary" href="#apply">▶ エントリーする</a>
+      <a class="ghost" href="../../">プロダクトを見る →</a>
+    </div>
+    <dl class="hero-meta">
+      <div><dt>Stage</dt><dd>Preview → 本番</dd></div>
+      <div><dt>Team</dt><dd>14 名 / 寛太 + 13</dd></div>
+      <div><dt>Stack</dt><dd>Python / FastAPI / Gemini</dd></div>
+      <div><dt>働き方</dt><dd>東京 + リモート週 2-3</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section id="why" class="block fade-in-on-scroll">
+  <div class="block-inner">
+    <div class="block-head">
+      <div class="kicker">Why Mighty-Link</div>
+      <h2>静かな道具で、判断の品質を 1 段上げる。</h2>
+      <p>派手な自動化ではなく、判断者の思考を支える道具を作っています。AI は判断を奪わず、視点を増やす。
+        この姿勢を 4 つの軸に分解して、設計と評価に貫いています。</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="num">01 / MISSION</span>
+        <h3>「合う・合わない」を、感覚から数字へ。</h3>
+        <p>SES と人事の現場で長年放置されてきた曖昧さを、4 軸スコアと根拠付きで返す。</p></div>
+      <div class="pillar"><span class="num">02 / TECH</span>
+        <h3>quota 枯渇でも止まらない。</h3>
+        <p>Gemini live と決定的 fallback を同一スキーマで両立。信頼性を運用前提で設計。</p></div>
+      <div class="pillar"><span class="num">03 / TEAM</span>
+        <h3>静かに、確かに進める。</h3>
+        <p>会議より docs、雰囲気より証跡。決まったことは Sheets と Calendar に即反映。</p></div>
+      <div class="pillar"><span class="num">04 / GROWTH</span>
+        <h3>3 週間で、効く設計を。</h3>
+        <p>配属直後 3 週の伸びしろを week 1/2/3 ロードマップに落とす — 自分の成長にも適用。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="product" class="block fade-in-on-scroll">
+  <div class="block-inner">
+    <div class="block-head">
+      <div class="kicker">What we build</div>
+      <h2>Mighty Skill-Bridge — 4 軸の判断インフラ。</h2>
+      <p>主力プロダクトは AI フィット診断 SaaS。経歴と案件を入力すると、Skill / Culture / Growth / Performing
+        の 4 軸でスコア化し、推奨質問と 3 週間ロードマップまで一度に返します。</p>
+    </div>
+    <div class="product">
+      <div class="copy">
+        <h3>preview を、自分で触れます。</h3>
+        <p>公開デモから即試せます。サンプル経歴 + サンプル案件で、約 3 秒で結果が返る挙動を体験してください。</p>
+        <ul>
+          <li>FastAPI + vanilla JS の薄いスタック (前処理は徹底的に削る方針)</li>
+          <li>Gemini multimodal で PDF / 画像も直接受ける構成</li>
+          <li>decision-traceable: 全推論に audit log + 4 軸内訳が残る</li>
+          <li>fallback path は本物の本番に置ける品質で書く</li>
+        </ul>
+        <p><a href="../../" style="color:var(--accent);font-weight:700">▶ 公開デモを開く</a></p>
+      </div>
+      <div class="panel">
+        <div class="big">88<small>SAMPLE FINAL SCORE</small></div>
+        <div class="axes">
+          <div><b>88</b>Skill</div><div><b>82</b>Culture</div>
+          <div><b>75</b>Growth</div><div><b>90</b>Performing</div>
+        </div>
+        <p style="margin:18px 0 0;font-size:12px;color:var(--muted);text-align:center">
+          実 API を 4 軸推論で叩いた snapshot · 詳細は demo へ</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roles" class="block fade-in-on-scroll">
+  <div class="block-inner">
+    <div class="block-head">
+      <div class="kicker">Open roles</div>
+      <h2>募集中のポジション。</h2>
+      <p>当面はエンジニア中心。プロダクト判断と運用に近い距離で動ける方を歓迎します。
+        各ロール、まずはカジュアル面談から OK です。</p>
+    </div>
+    <div class="roles">
+      <div class="role">
+        <span class="tag">Senior Engineer</span>
+        <h3>Backend / AI Pipeline</h3>
+        <p>Gemini live と fallback の同一スキーマ設計、audit log、quota meter。
+          FastAPI を薄く保ちながら、判断品質を支える本体を磨きます。</p>
+        <div class="meta"><span>Python 5y+</span><span>Tokyo + remote</span><span>~ 900 万 / 年</span></div>
+      </div>
+      <div class="role">
+        <span class="tag">Senior Engineer</span>
+        <h3>Frontend / UI</h3>
+        <p>vanilla JS の single-file 公開デモ、社長向け説明資料の動画 UI、scroll 体験。
+          Build step を増やさない設計嗜好を共有できる方歓迎。</p>
+        <div class="meta"><span>vanilla JS / React</span><span>Tokyo + remote</span><span>~ 850 万 / 年</span></div>
+      </div>
+      <div class="role">
+        <span class="tag">Product</span>
+        <h3>Product Manager / Decision Design</h3>
+        <p>「判断インフラ」の市場検証、SES / 大手 HR / 経営層へのフィードバック収集、
+          4 軸の重み設計やロードマップ更新。docs ファーストで動ける方。</p>
+        <div class="meta"><span>HR / SaaS 経験</span><span>Tokyo</span><span>~ 800 万 / 年</span></div>
+      </div>
+      <div class="role">
+        <span class="tag">Engineer / Open</span>
+        <h3>Spec-fit Engineer (オープン枠)</h3>
+        <p>上記に当てはまらないが、「判断インフラ」「決定的 fallback」「audit log 設計」に
+          強く共鳴する方の自由提案枠。役割は入社後に一緒に削り出します。</p>
+        <div class="meta"><span>any stack</span><span>flexible</span><span>面談で決定</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="block fade-in-on-scroll">
+  <div class="block-inner">
+    <div class="block-head">
+      <div class="kicker">Hiring process</div>
+      <h2>4 ステップ、最短 2 週間。</h2>
+      <p>カジュアル面談からスタート、技術選考は実際の codebase を見ながら対話で進めます。
+        書類だけで判断しません。</p>
+    </div>
+    <div class="process">
+      <div class="step"><h4>カジュアル面談</h4><p>30 分、Mighty の方針・あなたの興味を相互理解。質問だけでも OK。</p></div>
+      <div class="step"><h4>技術 / プロダクト対話</h4><p>60 分、公開リポジトリの設計・判断軸を題材に対話。コーディング試験はなし。</p></div>
+      <div class="step"><h4>1 日 trial</h4><p>有給 1 日、現状の課題に小さく PR or docs PR で参加してもらいます。</p></div>
+      <div class="step"><h4>オファー / 入社</h4><p>条件提示 → 入社日調整。配属直後 3 週間は roadmap 付きでサポート。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="stack" class="block fade-in-on-scroll">
+  <div class="block-inner">
+    <div class="block-head">
+      <div class="kicker">Tech stack</div>
+      <h2>薄く、確かに、止まらない。</h2>
+      <p>必要な道具だけ、本物を選ぶ。フロントエンドは build step を増やさず、バックエンドは
+        Gemini と決定的 fallback を同一スキーマで両立。</p>
+    </div>
+    <div class="stack">
+      <span><b>Backend</b>Python 3.12</span>
+      <span><b>API</b>FastAPI</span>
+      <span><b>AI</b>Gemini 2.x multimodal</span>
+      <span><b>Fallback</b>deterministic BM25 + rules</span>
+      <span><b>Frontend</b>vanilla JS / single-file</span>
+      <span><b>Data</b>Google Sheets / Calendar / NotebookLM</span>
+      <span><b>CI</b>GitHub Actions / Pages</span>
+      <span><b>Demo</b>Seedance video pipeline</span>
+      <span><b>Docs</b>markdown + audit-traceable PR</span>
+      <span><b>Workflow</b>3-tool AI (Claude / Codex / Antigravity)</span>
+    </div>
+  </div>
+</section>
+
+<section id="voices" class="block fade-in-on-scroll">
+  <div class="block-inner">
+    <div class="block-head">
+      <div class="kicker">Team voices</div>
+      <h2>このチームの、空気。</h2>
+      <p>会議の量より docs の質、雰囲気より証跡 — そんな働き方を選んだメンバーの声です。</p>
+    </div>
+    <div class="voices">
+      <div class="voice">
+        <p class="quote">判断会議の所要時間が 30 分から 3 分になった。<br>
+          しかも納得感は上がっている、というのが何より気持ちいい。</p>
+        <div class="who"><span class="ava">HR</span>
+          <div><b>HR Ops Lead</b><span>大手 SIer 出身 / 内部 PoC 担当</span></div></div>
+      </div>
+      <div class="voice">
+        <p class="quote">fallback まで含めて「本物の品質」で書くこの方針が好きで、<br>
+          普段の自分の設計の癖も矯正されていく感じがある。</p>
+        <div class="who"><span class="ava">SRE</span>
+          <div><b>Backend Engineer</b><span>元 SaaS 基盤 / Python 8 年</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="block fade-in-on-scroll">
+  <div class="block-inner">
+    <div class="block-head">
+      <div class="kicker">FAQ</div>
+      <h2>よくある質問。</h2>
+      <p>面談で頻出する質問のうち、書ける範囲で先にお返しします。残りは面談で。</p>
+    </div>
+    <div class="faq">
+      <details><summary>リモート可ですか?</summary><p>週 2-3 リモート可。判断のスピードを保つ目的でオフィス日も大事にしています。</p></details>
+      <details><summary>副業・複業は可能ですか?</summary><p>本業の品質と顧客情報の取扱いに支障がない範囲で OK。事前共有 + 業務契約の整備が前提です。</p></details>
+      <details><summary>給与は応相談ですか?</summary><p>Roles 欄の数字はレンジの中央値。経験・実績・市場感に応じて個別に対話します。</p></details>
+      <details><summary>未経験/異業種からでも応募できますか?</summary><p>「判断インフラ」というテーマへの共鳴と、自分で docs を残せる思考があれば歓迎します。</p></details>
+      <details><summary>選考にかかる時間は?</summary><p>カジュアル面談 → オファーまで最短 2 週間。trial の有給日程を考慮して進めます。</p></details>
+      <details><summary>面接でコーディング試験はありますか?</summary><p>ありません。公開リポジトリの設計を題材に対話、必要なら 1 日 trial で実装をご一緒します。</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="apply" class="apply fade-in-on-scroll">
+  <h2>判断を、<br>道具で速くする側に。</h2>
+  <p>まずは 30 分のカジュアル面談から。<br>
+    エントリーは下記からメール 1 通でかまいません。</p>
+  <div class="actions">
+    <a class="primary" href="mailto:careers@ml-mightylink.com?subject=Mighty-Link%20Careers%20Entry&body=お名前%3A%0A興味のあるロール%3A%0A自己紹介%2FURL%3A%0A">▶ careers@ml-mightylink.com</a>
+    <a class="ghost" href="../../">プロダクトを見る</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <h5>Mighty-Link Inc.</h5>
+      <p style="margin:0;line-height:1.7">判断インフラを共に作る。<br>
+        東京 · est. 2026 · preview release toward 2026 H2.</p>
+    </div>
+    <div><h5>Recruit</h5>
+      <a href="#roles">募集ロール</a>
+      <a href="#process">選考フロー</a>
+      <a href="#faq">FAQ</a>
+      <a href="#apply">エントリー</a>
+    </div>
+    <div><h5>Product</h5>
+      <a href="../../">公開デモ</a>
+      <a href="../wireframes/index.html">UI Wireframes</a>
+      <a href="../landing-pages/index.html">LP Design Tastes</a>
+    </div>
+    <div><h5>Contact</h5>
+      <a href="mailto:careers@ml-mightylink.com">careers@ml-mightylink.com</a>
+      <a href="https://github.com/kanta13jp1/mighty-link-ai-connect">GitHub</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Mighty-Link Inc.</span>
+    <span>Recruit LP · preview build</span>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener("scroll",()=>{
+    document.querySelector(".topbar").classList.toggle("scrolled",window.scrollY>18);
+  },{passive:true});
+
+  (function(){
+    const targets=document.querySelectorAll(".fade-in-on-scroll");
+    if(!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches){
+      targets.forEach(el=>el.classList.add("is-visible")); return;
+    }
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("is-visible");io.unobserve(e.target);}});
+    },{rootMargin:"0px 0px -80px 0px",threshold:0.12});
+    targets.forEach(el=>io.observe(el));
+  })();
+
+  // active nav highlight on scroll
+  (function(){
+    const links=document.querySelectorAll('.nav-links a[href^="#"]');
+    const map={};
+    links.forEach(a=>{const id=a.getAttribute("href").slice(1);const el=document.getElementById(id);if(el)map[id]={a,el};});
+    function update(){
+      let cur=null,curTop=-Infinity;
+      Object.values(map).forEach(({el})=>{
+        const t=el.getBoundingClientRect().top;
+        if(t<140 && t>curTop){curTop=t;cur=el.id;}
+      });
+      Object.values(map).forEach(({a,el})=>a.classList.toggle("is-active",el.id===cur));
+    }
+    addEventListener("scroll",update,{passive:true}); update();
+  })();
+</script>
+</body></html>
