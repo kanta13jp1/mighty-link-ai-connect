@@ -59,28 +59,31 @@
         }
 
         .topbar {
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 30;
+            left: 0;
+            width: 100%;
+            z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 22px;
-            min-height: 76px;
-            padding: 18px 32px;
-            border-bottom: 1px solid var(--line);
-            background: rgba(3, 3, 3, 0.58);
-            backdrop-filter: blur(18px);
-            transition: min-height 0.22s ease, padding 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+            min-height: 96px;
+            padding: 40px 110px 16px;
+            border-bottom: 1px solid transparent;
+            background: transparent;
+            backdrop-filter: none;
+            transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .topbar.scrolled {
-            min-height: 58px;
-            padding-top: 11px;
-            padding-bottom: 11px;
-            border-color: rgba(255, 255, 255, 0.2);
-            background: rgba(3, 3, 3, 0.9);
+            min-height: 64px;
+            padding: 16px 110px;
+            border-color: rgba(255, 255, 255, 0.08);
+            background: rgba(24, 25, 27, 0.88);
+            backdrop-filter: blur(24px);
         }
+
 
         .brand {
             display: flex;
@@ -1338,14 +1341,13 @@
             <a href="#top">Home</a>
             <a href="#models">Models</a>
             <a href="#knowledge-flow-demo">Blog & Publication</a>
-            <a href="exports/wireframes/index.html">Sample WF</a>
-            <a href="exports/landing-pages/index.html">Sample LP</a>
-            <a href="exports/recruit/index.html">Careers</a>
             <a href="#join-us">Join Us</a>
         </nav>
         <div class="topbar-tools">
             <div class="language-switch" aria-label="Language">
-                <a href="#top" aria-current="true">EN</a>
+                <a href="#top" aria-current="true" class="active">EN</a>
+                <span>/</span>
+                <a href="#top">中文</a>
                 <span>/</span>
                 <a href="#top">JP</a>
             </div>
@@ -1679,32 +1681,44 @@
                             <span>Mighty-Link AI Connect</span>
                         </span>
                     </a>
-                    <span>Advancing project intelligence, in service of better teams.</span>
-                    <span>Copyright © 2026 Mighty-Link</span>
+                    <span>Advancing the frontier of intelligence, in service of humanity.</span>
+                    <span>Copyright © 2026 Mighty-Link / Bytedance Seed</span>
+                    <a href="mailto:seed.feedback@bytedance.com" style="color:var(--muted); font-size:12px; margin-top: 8px; display:inline-block;">Contact us : seed.feedback@bytedance.com</a>
                 </div>
                 <div class="footer-column">
                     <h3>Models</h3>
-                    <a href="#top">Seedance Video</a>
-                    <a href="#top">AI Fit Radar</a>
-                    <a href="#knowledge-flow-demo">Knowledge Flow</a>
-                    <a href="exports/wireframes/index.html">UI Wireframes (20 patterns)</a>
-                    <a href="exports/landing-pages/index.html">LP Design Tastes (20 patterns)</a>
+                    <a href="#models">Seed2.0</a>
+                    <a href="#models">Seedance 2.0</a>
+                    <a href="#models">Seedream 5.0 Lite</a>
+                    <a href="#models">Seeduplex</a>
+                    <a href="#models">Seed GR-RL</a>
+                    <a href="exports/wireframes/index.html" style="margin-top:12px; color:var(--blue);">UI Wireframes (20 patterns)</a>
+                    <a href="exports/landing-pages/index.html" style="color:var(--green);">LP Design Tastes (20 patterns)</a>
                 </div>
                 <div class="footer-column">
                     <h3>Teams</h3>
-                    <a href="exports/recruit/index.html">Careers (採用ページ)</a>
-                    <a href="#join-us">Engineering</a>
-                    <a href="#join-us">Project</a>
-                    <a href="admin">Operations</a>
+                    <a href="#join-us">LLM</a>
+                    <a href="#join-us">Infrastructures</a>
+                    <a href="#join-us">Vision</a>
+                    <a href="#join-us">Speech</a>
+                    <a href="#join-us">Multimodal Interaction & World Model</a>
+                    <a href="#join-us">AI for Science</a>
+                    <a href="#join-us">Robotics</a>
+                    <a href="#join-us">Responsible AI</a>
+                    <a href="exports/recruit/index.html" style="margin-top:12px; color:var(--rose);">Careers (採用ページ)</a>
                 </div>
                 <div class="footer-column">
                     <h3>Learn More</h3>
                     <a href="docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md">Pre-share memo</a>
                     <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.md">Knowledge flow</a>
                     <a href="docs/WBS.md">WBS</a>
+                    <a href="#models">Blog</a>
+                    <a href="#models">Seed Edge</a>
+                    <a href="#models">Seed Campus Recruitment</a>
                 </div>
             </div>
         </footer>
+
     </main>
 
     <script>

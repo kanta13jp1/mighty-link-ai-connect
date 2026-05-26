@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-05-23 21:18:47 UTC+09:00
+Generated: 2026-05-26 19:53:20 UTC+09:00
 
 ## Purpose
 
@@ -11,12 +11,12 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 ## Current WBS Snapshot
 
 - Total tasks: 96
-- Done: 74
+- Done: 75
 - In progress: 4
-- Not started: 18
-- Completion rate: 77%
+- Not started: 17
+- Completion rate: 78%
 - CEO presentation phase tasks: 81
-- CEO presentation phase done: 63
+- CEO presentation phase done: 64
 
 ## Knowledge Flow Tasks
 
@@ -24,7 +24,7 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 - T617: NotebookLM連携 / 社長説明用のNotebookLM投入資料パックと利用シーン整理 / 完了 / 2026-05-21 - 2026-05-21
 - T618: Slack連携 / 進捗通知・レビュー依頼・決定ログ共有のSlack運用設計 / 未着手 / 2026-05-24 - 2026-05-25
 - T619: Notion連携 / 仕様・議事録・意思決定DB・バックログ管理のNotion運用設計 / 未着手 / 2026-05-25 - 2026-05-26
-- T620: Obsidian連携 / ローカルナレッジ・ADR・プロンプト資産のObsidian運用設計 / 未着手 / 2026-05-26 - 2026-05-27
+- T620: Obsidian連携 / ローカルナレッジ・ADR・プロンプト資産のObsidian運用設計 / 完了 / 2026-05-26 - 2026-05-27
 - T621: 連携デモ導線 / 4ツール連携を社長へ見せる説明順・画面遷移・価値訴求整理 / 完了 / 2026-05-21 - 2026-05-21
 - T622: 権限・情報管理 / NotebookLM/Slack/Notion/Obsidian利用時の権限・機密情報ルール整理 / 未着手 / 2026-05-27 - 2026-05-28
 - T623: 連携採用判断 / 6/2で決める連携ツール優先順位・導入範囲・責任分担の確認リスト作成 / 完了 / 2026-05-21 - 2026-05-21
@@ -122,6 +122,16 @@ python scripts/verify_google_workspace_account.py
 - [6/2 社長打ち合わせ 運用・体制・リスク・費用感 論点](docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) - T606 deliverable
 - [6/2 決定後ロードマップ枠](docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md) - T615 deliverable
 - [6/2 社長 事前共有メモ + 当日アジェンダ短文](docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md) - T614 deliverable
+- [6/2 社長プレゼン Canva / Figma リデザイン手順 + 8 枚コピペカード](docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md) - T658-extend (手動版)
+- [Canva / Figma MCP セットアップ + 自動化フロー](docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md) - T658-mcp-extend (自動化版、推奨)
+- [Figma Slides: Mighty Skill-Bridge CEO Brief 2026-06-02](https://www.figma.com/slides/PAQWzAUPoPTy3ibLcOmPDC) - 2026-05-24 Figma MCP で 9 slides 自動生成、当日プレゼン用第一候補
+- [Branded PPTX on Drive: CEO Presentation Deck 2026-06-02 (Branded)](https://docs.google.com/presentation/d/1myH1m8TKiukdxR7F_EertJ1102CfglBC/edit?usp=drivesdk) - 2026-05-24 アップロード、PowerPoint フォールバック
+- [UI Wireframes — Live Catalog (10 動くプロト)](exports/wireframes/index.html) - 2026-05-24 materialize、ローカル `python src/app.py` 起動後 `http://localhost:8000/exports/wireframes/` で 10 WF をブラウザ確認可能
+- [UI Wireframes — Implementation-Ready Spec Pack](docs/wireframes/README.md) - 2026-05-24 生成、10 WF を AI に渡して即実装できる spec md x10 + 機械可読 JSON。社長 6/2 判断後の AI 実装着手用
+- [UI Wireframes — 10 Patterns (Canva, Branded — Drive)](https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit?usp=drivesdk) - 2026-05-24 Canva MCP 生成、cyber palette フルカラー版、社長判断材料の第一候補
+- [UI Wireframes — 10 Patterns (Canva — edit)](https://www.canva.com/d/Mft5giDcMgir88Y) / [view](https://www.canva.com/d/lLCcnCJnbJE9Xsa) - Canva 上で 12 ページを編集可能
+- [UI Wireframes — 10 Patterns (greyscale, Drive)](https://docs.google.com/presentation/d/1qTdOWsLhUf0GzVDkztiuuLczcYkQuQfo/edit?usp=drivesdk) - 2026-05-24 python-pptx 生成、印刷向け greyscale 版
+- [UI Wireframes Companion (Figma file)](https://www.figma.com/design/aiQt3c1Cenru4x6GMcLuL5) - Figma 上で 10 パターンを編集可能 (MCP rate limit 解除後に同内容を流し込み予定)
 - [6/2 社長プレゼン 最終レビュー チェックリスト](docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) - T663 deliverable
 - [Sheets 追加タブ スキーマ (課題管理表 / QA 表)](docs/SHEETS_TRACKERS_SCHEMA.md)
 - [開発ナレッジ連携フロー手順書](docs/DEVELOPMENT_KNOWLEDGE_FLOW.md)
@@ -170,75 +180,15 @@ python scripts/verify_google_workspace_account.py
 - [CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md): 開発体制・運用責任分担・リスク R9-R13・費用感 12 Q-OPS (T606 deliverable)。
 - [CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md](CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md): 方向性 A/B/C/D 別の Phase 7 WBS テンプレ + 共通 Phase 7-common + 議事録 → WBS 反映手順 (T615 deliverable)。
 - [CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md](CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md): 社長への事前共有メモ (長文 / 短文 / 当日アジェンダ短文) + 送付前チェックリスト (T614 deliverable)。
+- [CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md](CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md): Canva PPTX import + Figma 代替パス + 8 枚コピペカード + Mighty Skill-Bridge ブランドカラー (T658-extend、手動版)。
+- [MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md](MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md): Canva MCP + Figma MCP セットアップ + 自動化プロンプト + プラン別機能マトリクス (T658-mcp-extend、自動化版、推奨)。
+- **Figma Slides ファイル (2026-05-24 自動生成)**: [Mighty Skill-Bridge CEO Brief 2026-06-02](https://www.figma.com/slides/PAQWzAUPoPTy3ibLcOmPDC) — Figma MCP `use_figma` で 9 slides (1 cover + 8 content) を Mighty Skill-Bridge brand colors + デモスクショ埋め込みで自動生成。当日の社長プレゼン用第一候補。
+- **Branded PPTX on Google Drive (2026-05-24 アップロード)**: [Mighty Skill-Bridge CEO Presentation Deck 2026-06-02 (Branded)](https://docs.google.com/presentation/d/1myH1m8TKiukdxR7F_EertJ1102CfglBC/edit?usp=drivesdk) — `_branded.pptx` (Seedance cyber theme + デモスクショ embed) を k-umezawa@ml-mightylink.com 所有で Drive アップロード済。Figma が使えない / PowerPoint で操作したい場合のフォールバック。
+- **UI Wireframes — Implementation-Ready Spec Pack (2026-05-24 生成、AI 実装着手用)**: [docs/wireframes/README.md](wireframes/README.md) — 10 WF を AI に渡して即実装できる spec md x10 (各 13 セクション: Identity / ASCII Layout / Component Tree / State Machine / Data Flow / Tokens / Interaction / A11y / Responsive / Out of Scope / Acceptance / LLM Prompt / Starter Snippet) + [exports/wireframes/wireframes_spec.json](../exports/wireframes/wireframes_spec.json) (機械可読版)。社長 6/2 判断後、`@docs/wireframes/WF-XX_*.md を実装` プロンプトで AI が `static/wireframes/wf-XX.html` を生成可能。
+- **UI Wireframes — 10 Patterns (Canva, Branded — 2026-05-24 生成、第一候補)**: [Canva 版 PPTX on Drive](https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit?usp=drivesdk) / Canva 編集: <https://www.canva.com/d/Mft5giDcMgir88Y> / Canva 閲覧: <https://www.canva.com/d/lLCcnCJnbJE9Xsa> — Canva MCP (HANDOFF-26/27) 経由で 12 ページ (Cover + 10 patterns + Next Steps)、Mighty cyber palette 適用、WF-NN バッジ + 💡 Rationale prefix 付きフルカラー版。社長 UI 方向性判断の第一候補。
+- **UI Wireframes — 10 Patterns (greyscale — 2026-05-24 生成、印刷用フォールバック)**: [python-pptx 版 PPTX on Drive](https://docs.google.com/presentation/d/1qTdOWsLhUf0GzVDkztiuuLczcYkQuQfo/edit?usp=drivesdk) — 同じ 10 パターン (Vertical Hero / Split Form / Step Wizard / Chat / DnD / Kanban / Comparison / Dashboard / Inline Live / Search Catalog) の greyscale wireframe 版。Figma companion: <https://www.figma.com/design/aiQt3c1Cenru4x6GMcLuL5> (Starter plan rate limit 解除後に同内容を MCP で構築予定)。
 - [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md): 6/1 21:00 JST Final Review 用 35 項目 checklist (T663 deliverable)。
-- [SHEETS_TRACKERS_SCHEMA.md](SHEETS_TRACKERS_SCHEMA.md): 課題管理表 + QA表の Sheets スキーマと運用フロー。
-- [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md): 3-tool 体制 (Antigravity+Gemini / Codex / Claude Code) と handoff 規約。
-- [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md): NotebookLM / Slack / Notion / Obsidian 連携の開発フロー候補。
-- [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md): CLI/MCPで実施した連携証跡、GitHub Issues、Project権限課題。
-- [WBS.md](WBS.md): WBS詳細とフェーズ別スケジュール。
-
-## 推奨プレゼン構成
-
-1. 今日決めたいこと
-2. 現在の到達点
-3. 公開デモの確認
-4. Google Sheets / Calendar / WBS 管理体制
-5. 6/2時点で決めないことと、決めるべきこと
-6. サービス内容の選択肢と論点
-7. リスク・運用・費用感の確認
-8. デモ障害時のバックアップ導線
-9. NotebookLM / Slack / Notion / Obsidian の開発フロー候補
-10. 決定後の次アクション
-
-## デモ導線
-
-1. 公開URLを開く: `https://kanta13jp1.github.io/mighty-link-ai-connect/`
-2. UIが README fallback ではなく、Seedance API動画デモに刷新された Mighty Skill-Bridge のデモ画面であることを確認する。
-3. サンプル経歴書と案件票を読み込み、フィット分析の流れを説明する。
-4. Google Sheets の `Mighty-Link WBS`, `WBS Summary`, `WBS Timeline` を見せる。
-5. Google Calendar の `Mighty Skill-Bridge 開発計画` を見せる。
-6. 画面の「開発ナレッジ連携デモ」で、NotebookLM/Slack/Notion/Obsidian成果物を見せる。
-7. Google Docs化したNotebookLM source pack、Notion証跡ページ、GitHub Issues #1-#11/#13/#14/#16 を開く。
-8. NotebookLM Presentation Brief を開き、プレゼン資料のたたき台作成はNotebookLMで進める方針を説明する。
-9. GitHub Projectは `read:project` / `project` スコープ復旧後に配置することを説明する。
-10. 6/2以降、社長決定事項をWBSへ即反映できることを説明する。
-
-## 6/2で決める事項
-
-- このプロトタイプを何のサービスとして育てるか。
-- 最初に見せるべき顧客・社内利用者・利用シーン。
-- 次に作るべき機能の優先順位。
-- Google Workspace連携をどこまで正式運用に寄せるか。
-- NotebookLM / Slack / Notion / Obsidian を、6/2以降の開発フローへどの優先順位で組み込むか。
-- 社長レビュー後の開発スケジュールと責任分担。
-
-## 6/2までは決め打ちしない事項
-
-- 正式サービス名
-- 課金モデル
-- 本番運用範囲
-- 外部公開範囲
-- 最終的な機能セット
-- 営業資料・告知文の確定版
-- Slack / Notion への自動投稿や外部連携APIの本実装
-- NotebookLM / Obsidian への正式な投入範囲
-
-## 想定質問と回答方針
-
-| 質問 | 回答方針 |
-| --- | --- |
-| これは何のサービスになるのか | 6/2で決める前提。現在は判断材料として、AIマッチング、WBS管理、Google連携、公開デモ保護の到達点を提示する。 |
-| どこまで本物のAIなのか | Gemini quota中でも止まらない deterministic fallback を実装済み。Gemini復帰後に structured context を渡す設計にしている。 |
-| 公開URLは安全か | root `index.html` の消失を防ぐ Public Demo Guard と GitHub Actions を追加済み。push後も公開URL検証を行う。 |
-| WBSは管理しやすいか | CATS型を参考に、階層WBS・集計・タイムラインの3タブ構成へ改善済み。 |
-| 打ち合わせ後すぐ何ができるか | 決定事項を `data/WBS.tsv`、Google Sheets、Google Calendar、作業ログへ即反映できる。 |
-| NotebookLMやNotionは必須なのか | 必須ではない。6/2時点では、資料要約・議事録・通知・知識管理を速くする候補として比較し、採用/保留/後回しを社長判断に委ねる。 |
-
-**フル版**: 想定 QA 22 件 + 保留フロー + 機材チェックリストは [CEO_PRESENTATION_QA_PACK_2026-06-02.md](CEO_PRESENTATION_QA_PACK_2026-06-02.md) (T607 deliverable) を参照。本表は導入用 simplified 版。
-
-## Risks & Blockers (2026-05-22 時点)
-
-3-t
+- [SHEETS_TRACKERS_SCHEMA.md](SHEETS_TRACKERS_SCHEMA.md): 課題管理表 + QA表
 
 ## Source: docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md
 

@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-05-23 21:18:47 UTC+09:00
+Generated: 2026-05-26 19:53:20 UTC+09:00
 
 ## How to use this in NotebookLM
 
@@ -37,12 +37,12 @@ and which development knowledge-flow tools should become official.
 ## WBS Snapshot
 
 - Total tasks: 96
-- Done: 74
+- Done: 75
 - In progress: 4
-- Not started: 18
-- Completion rate: 77%
+- Not started: 17
+- Completion rate: 78%
 - CEO presentation phase tasks: 81
-- CEO presentation phase done: 63
+- CEO presentation phase done: 64
 
 ## Latest Knowledge-flow / CEO-demo Tasks
 

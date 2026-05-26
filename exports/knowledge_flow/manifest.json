@@ -1,15 +1,15 @@
 {
-  "generated_at_jst": "2026-05-23T21:18:47+09:00",
+  "generated_at_jst": "2026-05-26T19:53:20+09:00",
   "summary": {
     "total": 96,
-    "done": 74,
+    "done": 75,
     "active": 4,
-    "todo": 18,
-    "completion_rate": 77,
+    "todo": 17,
+    "completion_rate": 78,
     "phase6_total": 81,
-    "phase6_done": 63,
+    "phase6_done": 64,
     "phase6_active": 4,
-    "phase6_todo": 14
+    "phase6_todo": 13
   },
   "artifacts": [
     "exports/knowledge_flow/notebooklm_source_pack.md",
@@ -31,6 +31,7 @@
     "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.md",
     "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.json",
     "exports/knowledge_flow/obsidian_vault/Mighty Skill-Bridge Home.md",
+    "exports/knowledge_flow/obsidian_vault/Rules/Boundary Rule.md",
     "exports/knowledge_flow/obsidian_vault/ADR/ADR-0001-knowledge-flow.md",
     "exports/knowledge_flow/obsidian_vault/Meetings/2026-06-02 CEO Meeting.md",
     "exports/knowledge_flow/obsidian_vault/Prompts/NotebookLM Source Prompt.md",

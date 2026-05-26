@@ -341,6 +341,7 @@ def build_obsidian_vault(summary: dict) -> None:
 
 - [[Meetings/2026-06-02 CEO Meeting]]
 - [[ADR/ADR-0001-knowledge-flow]]
+- [[Rules/Boundary Rule]]
 - [[Prompts/NotebookLM Source Prompt]]
 - [[Prompts/NotebookLM Agent Brief Prompt]]
 
@@ -357,6 +358,31 @@ Keep private thoughts here. Promote only approved notes back to `docs/` and WBS.
 - CEO PowerPoint deck: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx`
 """,
     )
+    write_text(
+        OBSIDIAN_DIR / "Rules" / "Boundary Rule.md",
+        """# Boundary Rule: Personal Notes vs Official Docs
+
+This rule establishes a strict boundary to distinguish between local developer thoughts/notes and official project repositories.
+
+## 1. Local Developer Vault (Obsidian)
+- **Scope:** Rough designs, unreviewed prompts, personal meeting notes, personal ideas, experimental settings.
+- **Audience:** Individual developer or private development session.
+- **Rule:** May contain rough language, unchecked hypotheses, and raw logs. Strictly gitignored from the production repository (under `exports/knowledge_flow/obsidian_vault` for demo purposes only).
+
+## 2. Official Documentation (docs/)
+- **Scope:** Design decisions (ADR), approved specifications, setup guides, WBS schedules, and target roadmaps.
+- **Audience:** CEO, Stakeholders, full dev team.
+- **Rule:** Must be clean, verified, and free of any credentials or private data. Updated exclusively via intentional git commits to the `docs/` directory.
+
+## 3. Promotion Process
+When a design, prompt, or architectural plan transitions from experimental to official:
+1. Refine the note to be descriptive, clean, and complete.
+2. Port it to the appropriate file under the [docs/](file:///docs/) directory.
+3. Update [docs/WBS.md](file:///docs/WBS.md) and [data/WBS.tsv](file:///data/WBS.tsv) to sync schedules and deliverables.
+4. Commit intentionally and push.
+""",
+    )
+
     write_text(
         OBSIDIAN_DIR / "ADR" / "ADR-0001-knowledge-flow.md",
         """# ADR-0001: Knowledge Flow Demo Before CEO Decision
@@ -537,6 +563,7 @@ def generate() -> dict:
         EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02.md",
         EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02.json",
         OBSIDIAN_DIR / "Mighty Skill-Bridge Home.md",
+        OBSIDIAN_DIR / "Rules" / "Boundary Rule.md",
         OBSIDIAN_DIR / "ADR" / "ADR-0001-knowledge-flow.md",
         OBSIDIAN_DIR / "Meetings" / "2026-06-02 CEO Meeting.md",
         OBSIDIAN_DIR / "Prompts" / "NotebookLM Source Prompt.md",

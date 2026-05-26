@@ -3,14 +3,15 @@
 ## Current Status
 
 - WBS total: 96
-- Done: 74
+- Done: 75
 - In progress: 4
-- Completion: 77%
+- Completion: 78%
 
 ## Key Notes
 
 - [[Meetings/2026-06-02 CEO Meeting]]
 - [[ADR/ADR-0001-knowledge-flow]]
+- [[Rules/Boundary Rule]]
 - [[Prompts/NotebookLM Source Prompt]]
 - [[Prompts/NotebookLM Agent Brief Prompt]]
 
