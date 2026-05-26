@@ -65,3 +65,4 @@ python scripts/verify_google_workspace_account.py
 - [6/2 社長デモ向け 連携実施証跡](docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md)
 - [プロジェクト構成方針](docs/PROJECT_STRUCTURE.md)
 - [WBS 同期ガイド](docs/WBS_SYNC_GUIDE.md)
+- [シーケンス図集 (Mermaid)](docs/SEQUENCE_DIAGRAMS.md) - 2026-05-26 新規。AI フィット診断 / Mock fallback / 3-tool 開発フロー / 採用 LP エントリー の 4 パターン
