@@ -66,3 +66,4 @@ python scripts/verify_google_workspace_account.py
 - [プロジェクト構成方針](docs/PROJECT_STRUCTURE.md)
 - [WBS 同期ガイド](docs/WBS_SYNC_GUIDE.md)
 - [シーケンス図集 (Mermaid)](docs/SEQUENCE_DIAGRAMS.md) - 2026-05-26 新規。AI フィット診断 / Mock fallback / 3-tool 開発フロー / 採用 LP エントリー の 4 パターン
+- [シーケンス図 HTML 版 (インタラクティブ)](exports/sequence-diagrams/index.html) - 同 4 図を Mermaid runtime で描画する HTML。公開デモから「Architecture」リンクで遷移

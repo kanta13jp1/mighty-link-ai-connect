@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mighty Skill-Bridge — Sequence Diagrams (Mermaid)</title>
+<meta name="description" content="Mighty Skill-Bridge プロジェクトの主要 4 フローを Mermaid sequence diagram で図化したインタラクティブなドキュメント。">
+<style>
+  :root{
+    --bg:#0A0B0F; --panel:#11131A; --line:rgba(255,255,255,0.10); --line-strong:rgba(255,255,255,0.22);
+    --text:#F7F7F2; --muted:#9CA0AE; --accent:#8BDCFF; --accent2:#BAFF66; --warn:#FF9F66;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);
+       font-family:"Inter","Noto Sans JP","Yu Gothic UI",sans-serif;line-height:1.65;font-size:15px}
+
+  /* topbar */
+  .topbar{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;
+          gap:22px;min-height:64px;padding:14px 32px;border-bottom:1px solid var(--line);
+          background:rgba(10,11,15,.7);backdrop-filter:blur(18px)}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+  .brand-mark{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line-strong);
+              border-radius:8px;background:linear-gradient(135deg,rgba(139,220,255,.26),rgba(186,255,102,.16));
+              font-weight:900}
+  .brand-text strong{font-size:16px;display:block;line-height:1.1}
+  .brand-text span{font-size:11px;color:var(--muted);display:block;margin-top:3px}
+  .nav-links{display:flex;gap:clamp(12px,2vw,28px);font-size:13px;font-weight:700}
+  .nav-links a{color:rgba(247,247,242,0.72);text-decoration:none;transition:color .18s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-links a.is-active{color:var(--accent)}
+  @media (max-width:720px){.nav-links{display:none}}
+  .topbar .back{color:var(--accent);text-decoration:none;font-weight:700;font-size:13px}
+
+  /* hero */
+  .hero{padding:clamp(48px,8vw,96px) clamp(20px,5vw,64px) clamp(32px,5vw,56px);max-width:1200px;margin:0 auto;border-bottom:1px solid var(--line)}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 11px/1 "JetBrains Mono",monospace;
+           letter-spacing:.22em;text-transform:uppercase;color:var(--accent);padding:8px 12px;
+           border:1px solid rgba(139,220,255,0.45);border-radius:999px;margin-bottom:20px}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px var(--accent2)}
+  .hero h1{font-size:clamp(34px,5vw,58px);line-height:1.1;letter-spacing:-.02em;margin:0 0 18px;font-weight:800}
+  .hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--accent) 0%,var(--accent2) 100%);
+              -webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--muted);font-size:16px;max-width:64ch;margin:0 0 22px;line-height:1.75}
+  .hero .meta{display:flex;gap:18px;flex-wrap:wrap;font:600 12px/1.6 "JetBrains Mono",monospace;letter-spacing:.05em;color:var(--muted)}
+  .hero .meta span b{color:var(--accent);margin-right:6px}
+
+  /* table of contents */
+  .toc{max-width:1200px;margin:0 auto;padding:clamp(32px,5vw,56px) clamp(20px,5vw,64px);border-bottom:1px solid var(--line)}
+  .toc h2{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin:0 0 18px;font-weight:700}
+  .toc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media (max-width:900px){.toc-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.toc-grid{grid-template-columns:1fr}}
+  .toc-card{background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:14px;padding:18px;
+            text-decoration:none;color:inherit;transition:border-color .15s,transform .15s;display:block}
+  .toc-card:hover{border-color:rgba(139,220,255,.55);transform:translateY(-2px)}
+  .toc-card .num{font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.18em;color:var(--accent);margin-bottom:8px;display:block}
+  .toc-card h3{font-size:15px;margin:0 0 6px;letter-spacing:-.005em}
+  .toc-card p{font-size:12.5px;color:var(--muted);margin:0;line-height:1.55}
+
+  /* diagram sections */
+  section.diagram{padding:clamp(56px,8vw,96px) clamp(20px,5vw,64px);border-bottom:1px solid var(--line);max-width:1280px;margin:0 auto;scroll-margin-top:84px}
+  .diagram-head{margin-bottom:28px}
+  .diagram-head .kicker{font:700 11px/1 "JetBrains Mono",monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;display:inline-block}
+  .diagram-head h2{font-size:clamp(24px,3.4vw,40px);line-height:1.15;letter-spacing:-.015em;margin:0 0 12px;font-weight:800}
+  .diagram-head blockquote{margin:0;padding:14px 18px;background:rgba(139,220,255,0.07);border-left:3px solid var(--accent);
+                            border-radius:0 10px 10px 0;color:var(--text);font-size:14px;line-height:1.75}
+
+  .mermaid-wrap{background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));
+                border:1px solid var(--line);border-radius:18px;padding:clamp(16px,3vw,28px);overflow-x:auto;position:relative}
+  .mermaid-wrap::before{content:"// MERMAID — interactive sequence";position:absolute;top:10px;left:18px;
+                         font:600 10px/1 "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--muted);opacity:.6}
+  .mermaid{font:14px/1.45 "Inter",sans-serif;min-height:120px;display:flex;justify-content:center;align-items:flex-start;padding-top:24px}
+  .mermaid svg{max-width:100%;height:auto}
+
+  /* memo / footer */
+  section.memo{padding:clamp(48px,7vw,80px) clamp(20px,5vw,64px);border-bottom:1px solid var(--line);max-width:1100px;margin:0 auto}
+  section.memo h2{font-size:22px;margin:0 0 16px;letter-spacing:-.01em}
+  section.memo ul{padding-left:1.3em;margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.85}
+  section.memo ul ul{margin-top:6px}
+  section.memo li b{color:var(--text)}
+  section.memo a{color:var(--accent);text-decoration:none}
+  section.memo a:hover{text-decoration:underline}
+
+  footer{padding:32px clamp(20px,5vw,64px);color:var(--muted);font-size:12.5px;max-width:1100px;margin:0 auto;
+         display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  footer a{color:var(--muted);text-decoration:none}
+  footer a:hover{color:var(--accent)}
+</style>
+</head><body>
+
+<header class="topbar">
+  <a class="brand" href="../../">
+    <span class="brand-mark">M</span>
+    <span class="brand-text"><strong>Mighty Skill-Bridge</strong><span>Sequence Diagrams · Architecture</span></span>
+  </a>
+  <nav class="nav-links">
+    <a href="#p1">① 診断フロー</a>
+    <a href="#p2">② Mock</a>
+    <a href="#p3">③ 開発フロー</a>
+    <a href="#p4">④ 採用 LP</a>
+  </nav>
+  <a class="back" href="../../">← 公開デモへ戻る</a>
+</header>
+
+<section class="hero">
+  <div class="eyebrow"><span class="dot"></span>Architecture Reference · 4 Flows</div>
+  <h1>動作と関係者を、<em>1 枚</em>で説明する。</h1>
+  <p>Mighty Skill-Bridge プロジェクトの主要 4 フローを Mermaid sequence diagram で図化しました。
+    SaaS / SSO 系プロジェクトで一般的なシーケンス図と同形式 (フェーズ色分け + autonumber + 並列/分岐表記)
+    で、関係者向けに「誰が・いつ・何を呼ぶか」を一望できます。</p>
+  <div class="meta">
+    <span><b>Source</b>docs/SEQUENCE_DIAGRAMS.md</span>
+    <span><b>Render</b>Mermaid 11.x (CDN)</span>
+    <span><b>Theme</b>Mighty cyber</span>
+    <span><b>Updated</b>2026-05-26</span>
+  </div>
+</section>
+
+<section class="toc">
+  <h2>Index</h2>
+  <div class="toc-grid">
+    <a class="toc-card" href="#p1"><span class="num">PATTERN 01</span>
+      <h3>AI フィット診断フロー</h3><p>User → FastAPI → Gemini live / fallback、parse 並列 + match 直列</p></a>
+    <a class="toc-card" href="#p2"><span class="num">PATTERN 02</span>
+      <h3>Mock フォールバック</h3><p>公開 Pages 環境で `_mock.js` が `/api/*` 404 検出 → mock 切替</p></a>
+    <a class="toc-card" href="#p3"><span class="num">PATTERN 03</span>
+      <h3>3-tool 開発フロー</h3><p>Claude / Codex / Antigravity + main→master + Sheets/Calendar sync</p></a>
+    <a class="toc-card" href="#p4"><span class="num">PATTERN 04</span>
+      <h3>採用 LP エントリー</h3><p>求人媒体 → LP → 公開デモ体験 → mailto → カジュアル面談</p></a>
+  </div>
+</section>
+
+<section id="p1" class="diagram">
+  <div class="diagram-head">
+    <span class="kicker">Pattern 01 · AI Fit Diagnosis</span>
+    <h2>AI フィット診断フロー (ローカル `python src/app.py`)</h2>
+    <blockquote>ローカル起動時の本物 Gemini パス。経歴 + 案件 → 4 軸スコア + 推奨質問 + 3 週ロードマップ。</blockquote>
+  </div>
+  <div class="mermaid-wrap"><pre class="mermaid">
+sequenceDiagram
+    autonumber
+    participant User as User<br/>(ブラウザ)
+    participant Root as 公開デモ<br/>(http://localhost:8000/)
+    participant API as FastAPI<br/>(src/app.py)
+    participant Gemini as Gemini API<br/>(2.x multimodal)
+    participant Audit as Audit Log<br/>(exports/audit/)
+    participant Fallback as Deterministic<br/>Fallback (BM25 + rules)
+
+    rect rgb(36, 56, 92)
+        Note over User,Root: ① フェーズ1: 公開デモ初期表示
+        User->>Root: GET / (公開デモアクセス)
+        Root-->>User: index.html (hero / 4-pillar / Step1 入力 UI)
+        User->>User: Step1 経歴 + 案件を貼り付け<br/>or Load Sample x2 でサンプル投入
+    end
+
+    rect rgb(36, 80, 56)
+        Note over User,Audit: ② フェーズ2: 並列 parse (経歴 + 案件)
+        User->>API: POST /api/parse (engineer, text)
+        User->>API: POST /api/parse (job, text) — 並列
+        par engineer parse
+            API->>Gemini: prompt = parse engineer doc<br/>(structured extract)
+            Gemini-->>API: parsed_text + structured profile
+        and job parse
+            API->>Gemini: prompt = parse job doc
+            Gemini-->>API: parsed_text + structured profile
+        end
+        API->>Audit: append_external_api_event<br/>(operation=parse, billable=true)
+        API-->>User: 2x { parsed_text, structured, audit }
+    end
+
+    rect rgb(90, 70, 30)
+        Note over User,Fallback: ③ フェーズ3: 4 軸 match + ロードマップ生成
+        User->>API: POST /api/match { engineer_content, job_content }
+        alt Gemini quota 内
+            API->>Gemini: prompt = JSON schema 強制<br/>(final_score, scores{4軸}, summary, qa[], roadmap_week1/2/3)
+            Gemini-->>API: JSON 応答
+        else Gemini quota 枯渇 or live error
+            API->>Fallback: build_fallback_match(engineer, job)
+            Fallback-->>API: 同一スキーマ (live と差異なし)
+            Note over API: 上流クライアントは live/fallback を意識しない
+        end
+        API->>Audit: append_external_api_event<br/>(operation=match, outcome=success/blocked)
+        API-->>User: { final_score, scores, summary, qa, roadmap }
+        User->>User: radar chart + gauge + QA accordion 描画
+    end
+  </pre></div>
+</section>
+
+<section id="p2" class="diagram">
+  <div class="diagram-head">
+    <span class="kicker">Pattern 02 · Mock Fallback</span>
+    <h2>公開 Pages の Mock フォールバック (バックエンドなし環境)</h2>
+    <blockquote>GitHub Pages から WF / LP / Recruit カタログにアクセスした場合の動作。`_mock.js` が `/api/*` の 404 を検出して固定 hash mock 応答に切り替える。</blockquote>
+  </div>
+  <div class="mermaid-wrap"><pre class="mermaid">
+sequenceDiagram
+    autonumber
+    participant User as User<br/>(ブラウザ)
+    participant Pages as GitHub Pages<br/>(kanta13jp1.github.io/<br/>mighty-link-ai-connect/)
+    participant WF as WF Demo<br/>(exports/wireframes/wf-XX.html)
+    participant Mock as _mock.js<br/>(fetch monkey-patch)
+    participant Banner as デモバナー<br/>(DOM 赤帯)
+
+    rect rgb(36, 56, 92)
+        Note over User,Pages: ① フェーズ1: WF/LP カタログから WF 起動
+        User->>Pages: GET /exports/wireframes/wf-03.html
+        Pages-->>User: HTML + script src="_mock.js"
+        User->>Mock: スクリプト実行<br/>(window.fetch を上書き)
+    end
+
+    rect rgb(110, 38, 50)
+        Note over User,Banner: ② フェーズ2: 実 API の存在確認 → mock 切替
+        User->>Mock: GET /api/health (起動時 health check)
+        Mock->>Pages: REAL_FETCH("/api/health")
+        Pages-->>Mock: HTTP 404 (Pages は静的のみ)
+        Mock->>Banner: showBanner()<br/>"🧪 デモモード: バックエンド未接続"
+        Banner-->>User: 赤帯バナー表示
+    end
+
+    rect rgb(90, 70, 30)
+        Note over User,Mock: ③ フェーズ3: WF 操作 → mock 応答で動作
+        User->>WF: 経歴 + 案件を入力 → Analyze
+        WF->>Mock: fetch("/api/parse", { engineer })
+        Mock->>Pages: REAL_FETCH (404)
+        Mock->>Mock: fakeRoute("/api/parse")<br/>= mockParse(text, doc_type)
+        Mock-->>WF: { parsed_text: "[MOCK]...", audit: fallback }
+        WF->>Mock: fetch("/api/match", { engineer, job })
+        Mock->>Mock: fakeRoute("/api/match")<br/>= mockMatch(seed=hash(eng+job))
+        Mock-->>WF: { final_score, scores{4軸}, summary, qa, roadmap }
+        WF-->>User: スコア・サマリ・ロードマップ描画<br/>(固定 hash で再現性ある mock データ)
+    end
+
+    Note over User,Banner: 注: ローカル python src/app.py 起動時は<br/>/api/health が 200 → mock は no-op pass-through<br/>= 本物の Gemini が動く
+  </pre></div>
+</section>
+
+<section id="p3" class="diagram">
+  <div class="diagram-head">
+    <span class="kicker">Pattern 03 · Dev Workflow</span>
+    <h2>開発フロー (3-tool AI 体制 + WBS / Sheets / Calendar 同期)</h2>
+    <blockquote>Claude Code (architect/docs/UI) / VSCode + Codex (実装/sync scripts) / Antigravity + Gemini (frontend polish/demo video) の 3-tool 並走。WBS / 課題管理表 / QA表 の 3 タブを Google Sheets に同期、Calendar に WBS イベントを反映 (完了は自動削除)。</blockquote>
+  </div>
+  <div class="mermaid-wrap"><pre class="mermaid">
+sequenceDiagram
+    autonumber
+    participant Dev as 開発者<br/>(寛太)
+    participant Claude as Claude Code<br/>(architect/docs)
+    participant Codex as VSCode + Codex<br/>(実装/PR)
+    participant Antig as Antigravity + Gemini<br/>(polish/demo)
+    participant Repo as GitHub Repo<br/>(mighty-link-ai-connect)
+    participant Sheets as Google Sheets<br/>(WBS + Issues + QA)
+    participant Cal as Google Calendar<br/>(Mighty Skill-Bridge)
+    participant Pages as GitHub Pages<br/>(公開デモ URL)
+
+    rect rgb(36, 56, 92)
+        Note over Dev,Antig: ① フェーズ1: タスク振り分け (3-tool ルール)
+        Dev->>Claude: docs / triage / UI design task<br/>(例: HANDOFF-36 採用 LP)
+        Claude-->>Dev: PR 作成 → squash merge<br/>([claude] commit prefix)
+        Dev->>Codex: 実装 / sync スクリプト編集<br/>(例: data/WBS.tsv の flip)
+        Codex-->>Dev: scoped PR → merge ([codex])
+        Dev->>Antig: frontend polish / demo video<br/>(Gemini quota 内)
+        Antig-->>Dev: 視覚 polish PR ([antigravity])
+    end
+
+    rect rgb(36, 80, 56)
+        Note over Dev,Pages: ② フェーズ2: main → master → Pages 反映
+        Dev->>Repo: git push origin feat/XXX
+        Repo->>Repo: PR squash-merge to main
+        Dev->>Repo: git push origin main:master
+        Repo->>Pages: GitHub Pages 自動ビルド (master)
+        Pages-->>Dev: 公開 URL 反映 (1-2 分)
+        Dev->>Repo: python scripts/verify_public_demo.py --url Pages_URL
+        Repo-->>Dev: REQUIRED_MARKERS 確認 + 200 OK
+    end
+
+    rect rgb(90, 70, 30)
+        Note over Dev,Cal: ③ フェーズ3: Sheets + Calendar 同期 (毎セッション末)
+        Dev->>Sheets: python scripts/sync_wbs_to_sheets.py
+        Note over Sheets: WBS / 課題管理表 / QA表 の 3 タブ更新<br/>(同一 OAuth で 3 タブ同時)
+        Sheets-->>Dev: 完了 (109 WBS + 55 issues + 48 QA など)
+        Dev->>Cal: python scripts/sync_wbs_to_calendar.py
+        Note over Cal: WBS の ステータス==完了 行 →<br/>該当 Calendar event を DELETE<br/>(タイトル一致で照合)
+        Cal-->>Dev: Active: 13, Updated: 13,<br/>Deleted completed: N
+        Dev->>Repo: data/issues_tracker.tsv に<br/>HANDOFF-XX 追記 (resolved)
+    end
+  </pre></div>
+</section>
+
+<section id="p4" class="diagram">
+  <div class="diagram-head">
+    <span class="kicker">Pattern 04 · Recruit Entry</span>
+    <h2>採用 LP エントリーフロー (HANDOFF-36 で新設)</h2>
+    <blockquote>掲載型採用前提の 1 枚 LP。エントリー前に弊社特徴を伝え、`careers@ml-mightylink.com` mailto で接点を作る。Workspace ドメインの社内アドレスで受信。</blockquote>
+  </div>
+  <div class="mermaid-wrap"><pre class="mermaid">
+sequenceDiagram
+    autonumber
+    participant Cand as 候補者<br/>(社外エンジニア)
+    participant SNS as 求人媒体<br/>(Wantedly / X / 紹介)
+    participant LP as 採用 LP<br/>(exports/recruit/index.html)
+    participant Demo as 公開デモ<br/>(root index.html)
+    participant Mail as 候補者のメーラー
+    participant Inbox as careers@<br/>ml-mightylink.com<br/>(Workspace)
+    participant HR as 採用担当<br/>(寛太 + サポート)
+
+    rect rgb(36, 56, 92)
+        Note over Cand,LP: ① フェーズ1: LP 到達 + 自己理解
+        Cand->>SNS: 求人情報を見る
+        SNS-->>Cand: LP URL リンクをクリック
+        Cand->>LP: GET /exports/recruit/index.html
+        LP-->>Cand: Hero (採用 eyebrow + メイン CTA)
+        Cand->>LP: scroll → Why us 4-pillar
+        LP->>LP: IntersectionObserver で fade-in
+        Cand->>LP: scroll → Product highlight
+        LP-->>Cand: Skill-Bridge への動線 + サンプル score panel
+    end
+
+    rect rgb(36, 80, 56)
+        Note over Cand,Demo: ② フェーズ2: プロダクト体験 (任意)
+        Cand->>LP: "プロダクトを見る" CTA クリック
+        LP-->>Cand: ../../ (= root index.html) へ遷移
+        Cand->>Demo: 公開デモで AI フィット診断を体験
+        Note over Demo: パターン2 (Mock フォールバック)<br/>= バナー赤帯 + 固定 hash mock が動作
+        Demo-->>Cand: 4 軸スコア + サマリ + roadmap 確認
+        Cand->>LP: ブラウザ Back で LP へ戻る
+        Cand->>LP: Roles → Process → FAQ を確認
+    end
+
+    rect rgb(90, 70, 30)
+        Note over Cand,HR: ③ フェーズ3: エントリー (mailto) → カジュアル面談
+        Cand->>LP: "▶ careers@ml-mightylink.com" クリック<br/>(Apply CTA mailto link)
+        LP->>Mail: mailto:careers@... 起動<br/>(subject / body プリフィル)
+        Mail-->>Cand: 候補者のメーラーに自動作成<br/>(お名前 / 興味ロール / 自己紹介 URL の空欄)
+        Cand->>Inbox: 必須欄を埋めて送信
+        Inbox->>HR: Workspace 受信 (k-umezawa@ml-mightylink.com 配下)
+        HR->>Cand: 24h 以内に返信 (カジュアル面談 30 分の日程調整)
+        Note over Cand,HR: その後の 4-step process:<br/>カジュアル面談 → 技術対話 → 1 日 trial → オファー<br/>(最短 2 週間で完了)
+    end
+  </pre></div>
+</section>
+
+<section class="memo">
+  <h2>メモ</h2>
+  <ul>
+    <li><b>編集方針</b>: 各図は <b>1 画面 1 シナリオ</b>で完結。フェーズ番号 (①/②/③) でストーリーを区切り、関係者+システムを縦軸、時系列を縦方向に並べる。<code>rect rgb()</code> でフェーズの色分け。</li>
+    <li><b>Mermaid CDN 描画</b>: 本ページは <code>unpkg.com/mermaid@11/dist/mermaid.min.js</code> をランタイム読み込み。テーマは <code>dark</code> を強制適用。</li>
+    <li><b>更新トリガ</b>: API endpoint 追加 / 認証フロー変更 / 開発フロー再編 が起きたら本書を更新。古いシーケンスは <b>物理削除</b>で運用。</li>
+    <li><b>関連 docs</b>:
+      <ul>
+        <li><a href="https://github.com/kanta13jp1/mighty-link-ai-connect/blob/main/docs/SEQUENCE_DIAGRAMS.md">docs/SEQUENCE_DIAGRAMS.md</a> (Markdown 原本)</li>
+        <li><a href="https://github.com/kanta13jp1/mighty-link-ai-connect/blob/main/docs/MULTI_AI_WORKFLOW.md">MULTI_AI_WORKFLOW.md</a> — 3-tool 体制の handoff 規約</li>
+        <li><a href="https://github.com/kanta13jp1/mighty-link-ai-connect/blob/main/docs/BACKEND_AI_PIPELINE.md">BACKEND_AI_PIPELINE.md</a> — Gemini live / fallback 設計</li>
+        <li><a href="https://github.com/kanta13jp1/mighty-link-ai-connect/blob/main/docs/SHEETS_TRACKERS_SCHEMA.md">SHEETS_TRACKERS_SCHEMA.md</a> — Sheets 3 タブのスキーマ</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<footer>
+  <span>© 2026 Mighty-Link Inc. · Sequence Diagrams</span>
+  <span><a href="../../">← 公開デモへ戻る</a> · <a href="../wireframes/index.html">WF (20)</a> · <a href="../landing-pages/index.html">LP (20)</a> · <a href="../recruit/index.html">Recruit</a></span>
+</footer>
+
+<script src="https://unpkg.com/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#11131A',
+      primaryTextColor: '#F7F7F2',
+      primaryBorderColor: '#8BDCFF',
+      lineColor: '#8BDCFF',
+      secondaryColor: '#1a1d2c',
+      tertiaryColor: '#11131A',
+      noteBkgColor: '#1a2030',
+      noteTextColor: '#F7F7F2',
+      noteBorderColor: '#8BDCFF',
+      actorBkg: '#11131A',
+      actorBorder: '#8BDCFF',
+      actorTextColor: '#F7F7F2',
+      signalColor: '#BAFF66',
+      signalTextColor: '#F7F7F2',
+      sequenceNumberColor: '#0A0B0F'
+    },
+    sequence: {
+      mirrorActors: false,
+      showSequenceNumbers: true,
+      actorMargin: 80,
+      width: 180,
+      diagramMarginX: 30,
+      diagramMarginY: 16,
+      boxMargin: 12
+    }
+  });
+
+  // active TOC link on scroll
+  (function(){
+    const links=document.querySelectorAll('.nav-links a[href^="#"]');
+    const map={};
+    links.forEach(a=>{const id=a.getAttribute("href").slice(1);const el=document.getElementById(id);if(el)map[id]={a,el};});
+    function update(){
+      let cur=null,curTop=-Infinity;
+      Object.values(map).forEach(({el})=>{
+        const t=el.getBoundingClientRect().top;
+        if(t<140 && t>curTop){curTop=t;cur=el.id;}
+      });
+      Object.values(map).forEach(({a,el})=>a.classList.toggle("is-active",el.id===cur));
+    }
+    addEventListener("scroll",update,{passive:true});
+    update();
+  })();
+</script>
+</body></html>
