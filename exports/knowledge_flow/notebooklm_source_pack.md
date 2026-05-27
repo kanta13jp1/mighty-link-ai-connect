@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-05-26 19:53:20 UTC+09:00
+Generated: 2026-05-27 12:46:32 UTC+09:00
 
 ## Purpose
 
@@ -10,13 +10,13 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 
 ## Current WBS Snapshot
 
-- Total tasks: 96
-- Done: 75
+- Total tasks: 98
+- Done: 77
 - In progress: 4
 - Not started: 17
-- Completion rate: 78%
-- CEO presentation phase tasks: 81
-- CEO presentation phase done: 64
+- Completion rate: 79%
+- CEO presentation phase tasks: 83
+- CEO presentation phase done: 66
 
 ## Knowledge Flow Tasks
 
@@ -138,6 +138,8 @@ python scripts/verify_google_workspace_account.py
 - [6/2 社長デモ向け 連携実施証跡](docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md)
 - [プロジェクト構成方針](docs/PROJECT_STRUCTURE.md)
 - [WBS 同期ガイド](docs/WBS_SYNC_GUIDE.md)
+- [シーケンス図集 (Mermaid)](docs/SEQUENCE_DIAGRAMS.md) - 2026-05-26 新規。AI フィット診断 / Mock fallback / 3-tool 開発フロー / 採用 LP エントリー の 4 パターン
+- [シーケンス図 HTML 版 (インタラクティブ)](exports/sequence-diagrams/index.html) - 同 4 図を Mermaid runtime で描画する HTML。公開デモから「Architecture」リンクで遷移
 
 ## Source: docs/CEO_PRESENTATION_PREP_2026-06-02.md
 
