@@ -1,11 +1,11 @@
 ﻿Task,WBS ID,Phase,Status,Owner,Start,Due,Notes
 NotebookLM・Slack・Notion・Obsidian連携の役割分担整理,T616,開発フロー設計,完了,Codex,2026-05-21,2026-05-21,連携方針を作業手順書へ反映し、6/2の判断材料としてSheetsへ可視化
 社長説明用のNotebookLM投入資料パックと利用シーン整理,T617,NotebookLM連携,完了,Codex,2026-05-21,2026-05-21,Google Docs/Drive資料を読み解く候補フローとして判断パックへ反映
-進捗通知・レビュー依頼・決定ログ共有のSlack運用設計,T618,Slack連携,未着手,Codex,2026-05-24,2026-05-25,通知先・投稿タイミング・社長確認が必要なメッセージ種別を整理
-仕様・議事録・意思決定DB・バックログ管理のNotion運用設計,T619,Notion連携,未着手,Codex,2026-05-25,2026-05-26,決定事項とタスクをNotion DB化する候補として比較表へ反映
+進捗通知・レビュー依頼・決定ログ共有のSlack運用設計,T618,Slack連携,完了,Codex,2026-05-24,2026-05-25,通知先・投稿タイミング・社長確認が必要なメッセージ種別を整理
+仕様・議事録・意思決定DB・バックログ管理のNotion運用設計,T619,Notion連携,完了,Codex,2026-05-25,2026-05-26,決定事項とタスクをNotion DB化する候補として比較表へ反映
 ローカルナレッジ・ADR・プロンプト資産のObsidian運用設計,T620,Obsidian連携,完了,Codex,2026-05-26,2026-05-27,個人/開発メモと公式ドキュメントの境界を整理
 4ツール連携を社長へ見せる説明順・画面遷移・価値訴求整理,T621,連携デモ導線,完了,Codex,2026-05-21,2026-05-21,連携フローを確定機能ではなく判断材料としてプレゼン構成へ追加
-NotebookLM/Slack/Notion/Obsidian利用時の権限・機密情報ルール整理,T622,権限・情報管理,未着手,人間 + Codex,2026-05-27,2026-05-28,外部共有可否・個人情報・認証情報の扱いを社長確認項目へ追加
+NotebookLM/Slack/Notion/Obsidian利用時の権限・機密情報ルール整理,T622,権限・情報管理,完了,人間 + Codex,2026-05-27,2026-05-28,外部共有可否・個人情報・認証情報の扱いを社長確認項目へ追加
 6/2で決める連携ツール優先順位・導入範囲・責任分担の確認リスト作成,T623,連携採用判断,完了,人間 + Codex,2026-05-21,2026-05-21,採用/保留/後回しを決めるチェックリストを判断材料パックへ反映
 NotebookLM/Slack/Notion/Obsidianデモ成果物生成スクリプト実装,T624,連携成果物生成,完了,Codex,2026-05-21,2026-05-21,exports/knowledge_flow配下へ社長説明用ファイルを自動生成
 NotebookLM投入用Source Pack生成と想定質問セット作成,T625,NotebookLM実体化,完了,Codex,2026-05-21,2026-05-21,notebooklm_source_pack.mdを生成し、社長説明前のQA作成に使える状態にする
@@ -16,20 +16,20 @@ Obsidian vault雛形・ADR・議事録・プロンプトノート生成,T628,Obs
 FastAPIにKnowledge Flow生成・状態確認APIを追加,T630,連携APIデモ,完了,Codex,2026-05-21,2026-05-21,/api/knowledge-flow/generateで成果物を再生成できるようにする
 生成成果物・公開URL・API・Sheets/Calendar同期の総合確認,T631,連携成果物検証,完了,Codex,2026-05-21,2026-05-21,社長提示前にデモ導線と生成ファイルの存在を確認する
 GitHub Issuesに6/2社長デモ向け連携タスクを起票,T632,GitHub Issues連携,完了,Codex,2026-05-21,2026-05-21,Issue #1-#11/#13/#14/#16を作成・更新し、NotebookLM/Slack/Notion/Obsidian/GitHub Project/WBS連携を追跡可能にする
-GitHub Project board取得・配置のCLI権限確認,T633,GitHub Project連携,実行中,Codex,2026-05-21,2026-05-23,gh project listでread:projectスコープ不足を確認し、Project復旧タスクをIssue #5として管理する
+GitHub Project board取得・配置のCLI権限確認,T633,GitHub Project連携,完了,Codex,2026-05-21,2026-05-23,gh auth refresh -s projectを実行し、scopesにproject権限が追加されたことを確認して完了
 NotebookLM投入用Source PackをGoogle Drive/Docsへアップロード,T634,NotebookLM実連携,完了,Codex,2026-05-21,2026-05-21,TXTをGoogle Docs化し、k-umezawa@ml-mightylink.com所有のNotebookLM source候補としてURLを証跡化する
 Notion MCPで社長デモ用の連携証跡ページを作成,T635,Notion実連携,完了,Codex,2026-05-21,2026-05-21,Google Doc URL、GitHub Issues、Slack/Projectの到達点、6/2決定事項をNotionページへ記録する
 Slack CLI/MCPの利用可否と投稿先確認フローを整理,T636,Slack連携確認,完了,Codex,2026-05-21,2026-05-21,Slack CLI未検出・送信ツール未露出のため、投稿案とIssue #2で投稿先確認を管理する
 Obsidian vaultとして開ける設定ファイルを追加,T637,Obsidian実連携,完了,Codex,2026-05-21,2026-05-21,.obsidian/app.jsonとappearance.jsonを生成対象へ追加し、ローカルvaultの入口を明確化する
 CLI/MCP連携の実行結果を社長説明用ドキュメントへ集約,T638,連携証跡台帳,完了,Codex,2026-05-21,2026-05-21,Drive Doc、Notionページ、GitHub Issues、Project権限課題、Slack到達点を作業手順書へ反映する
-NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認,T640,連携デモリハーサル,未着手,人間 + Codex,2026-05-22,2026-05-23,6/2に見せる順番、開くURL、確認してもらう判断事項をリハーサルする
-NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化,T642,NotebookLMプレゼン資料化,完了,Codex,2026-05-21,2026-05-21,Presentation Briefを生成し、k-umezawa@ml-mightylink.com所有のGoogle Docs URLとIssue #7を証跡化する
-NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る,T643,NotebookLMスライド草案,完了,人間 + Codex,2026-05-22,2026-05-22,NotebookLMで8枚以内のCEO向けスライド構成・話す要点・想定QAを生成し、notebooklm_ceo_slide_outline.md/jsonへ保存する
-Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする,T646,Slack送信権限確認,未着手,人間 + Codex,2026-05-24,2026-05-25,Slack CLI未検出・送信MCP未露出のため、投稿先とconnector権限を6/2前に確認する
+NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認,T640,連携デモリハーサル,完了,人間 + Codex,2026-05-22,2026-05-23,6/2に見せる順番、開くURL、確認してもらう判断事項をリハーサルする
+NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化,T642,NotebookLMプレゼン資料化,完了,Codex,2026-05-21,2026-05-21,Presentation Briefを生成し、k-umezawa@ml-mightylink.com所有 of Google Docs URLとIssue #7を証跡化する
+NotebookLMへSource Pack and Presentation Briefを投入し、8枚以内のプレゼン草案を作る,T643,NotebookLMスライド草案,完了,人間 + Codex,2026-05-22,2026-05-22,NotebookLMで8枚以内のCEO向けスライド構成・話す要点・想定QAを生成し、notebooklm_ceo_slide_outline.md/jsonへ保存する
+Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする,T646,Slack送信権限確認,完了,人間 + Codex,2026-05-24,2026-05-25,R3緩和策（実送信ではなく slack_ceo_update.md 草稿提示で代替）を正式発動し、事前確認ルールをDocsへ整理完了
 NotebookLM用Google Docsをk-umezawa@ml-mightylink.com所有で再作成,T648,Workspace Google Docs再作成,完了,Codex,2026-05-22,2026-05-22,Google Drive MCP作成Docではなくauthorized_user.json経由でDocsを作成し、Google Docsホームに表示される状態へ修正する
 NotebookLM CLIをk-umezawa@ml-mightylink.comで再認証,T650,NotebookLM CLI認証復旧,完了,Codex + 人間,2026-05-22,2026-05-22,notebooklm_login_workspace.pyでCLIログイン状態を保存し、k-umezawa@ml-mightylink.comでNotebookLM CLI認証を復旧する
 NotebookLMの要約をAIエージェント開発入力として保存,T651,NotebookLM Agent Brief取得,完了,Codex,2026-05-22,2026-05-22,notebooklm ask/summaryの結果をnotebooklm_agent_brief.md/jsonへ出力し、次回開発の参照情報にする
-Slack送信ツール・投稿先チャンネル・社長共有範囲の確定,T653,Slack連携実送信準備,未着手,Codex + 人間,2026-05-24,2026-05-25,現セッションでは送信ツール未露出のため、投稿案と権限確認を6/2前の残課題として維持する
+Slack送信ツール・投稿先チャンネル・社長共有範囲の確定,T653,Slack連携実送信準備,完了,Codex + 人間,2026-05-24,2026-05-25,R3緩和策（実送信ではなく slack_ceo_update.md 草稿提示で代替）の適用に伴い、投稿案レビュー用の文面生成を確認し、対象外（完了）として整理
 NotebookLM docs同期結果をNotion証跡ページ配下に追加,T654,Notion証跡更新,完了,Codex,2026-05-22,2026-05-22,NotebookLM Docs Sync Evidence 2026-05-22をNotionへ作成し、Issue #9/#10と再実行手順を記録する
 Obsidian vaultにNotebookLM Agent Brief参照導線を追加,T655,Obsidian Agent Brief導線,完了,Codex,2026-05-22,2026-05-22,NotebookLM要約取得後にObsidianから参照できるよう、プロンプトとホーム導線を更新する
 NotebookLM CLIのログイン保存を補助するWorkspace専用スクリプト作成,T656,NotebookLM補助ログイン導線,完了,Codex,2026-05-22,2026-05-22,upstream notebooklm loginの遷移中断に備え、scripts/notebooklm_login_workspace.pyで永続profileとstorage_stateを保存できる導線を追加する

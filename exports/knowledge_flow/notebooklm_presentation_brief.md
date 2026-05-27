@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-05-27 12:46:32 UTC+09:00
+Generated: 2026-05-27 20:38:18 UTC+09:00
 
 ## How to use this in NotebookLM
 
@@ -37,30 +37,30 @@ and which development knowledge-flow tools should become official.
 ## WBS Snapshot
 
 - Total tasks: 98
-- Done: 77
-- In progress: 4
-- Not started: 17
-- Completion rate: 79%
+- Done: 90
+- In progress: 0
+- Not started: 8
+- Completion rate: 92%
 - CEO presentation phase tasks: 83
-- CEO presentation phase done: 66
+- CEO presentation phase done: 79
 
 ## Latest Knowledge-flow / CEO-demo Tasks
 
 - T632: GitHub Issues連携 / GitHub Issuesに6/2社長デモ向け連携タスクを起票 / 完了
-- T633: GitHub Project連携 / GitHub Project board取得・配置のCLI権限確認 / 実行中
+- T633: GitHub Project連携 / GitHub Project board取得・配置のCLI権限確認 / 完了
 - T634: NotebookLM実連携 / NotebookLM投入用Source PackをGoogle Drive/Docsへアップロード / 完了
 - T635: Notion実連携 / Notion MCPで社長デモ用の連携証跡ページを作成 / 完了
 - T636: Slack連携確認 / Slack CLI/MCPの利用可否と投稿先確認フローを整理 / 完了
 - T637: Obsidian実連携 / Obsidian vaultとして開ける設定ファイルを追加 / 完了
 - T638: 連携証跡台帳 / CLI/MCP連携の実行結果を社長説明用ドキュメントへ集約 / 完了
-- T640: 連携デモリハーサル / NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認 / 未着手
+- T640: 連携デモリハーサル / NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認 / 完了
 - T642: NotebookLMプレゼン資料化 / NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化 / 完了
-- T643: NotebookLMスライド草案 / NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る / 完了
-- T646: Slack送信権限確認 / Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする / 未着手
+- T643: NotebookLMスライド草案 / NotebookLMへSource Pack and Presentation Briefを投入し、8枚以内のプレゼン草案を作る / 完了
+- T646: Slack送信権限確認 / Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする / 完了
 - T648: Workspace Google Docs再作成 / NotebookLM用Google Docsをk-umezawa@ml-mightylink.com所有で再作成 / 完了
 - T650: NotebookLM CLI認証復旧 / NotebookLM CLIをk-umezawa@ml-mightylink.comで再認証 / 完了
 - T651: NotebookLM Agent Brief取得 / NotebookLMの要約をAIエージェント開発入力として保存 / 完了
-- T653: Slack連携実送信準備 / Slack送信ツール・投稿先チャンネル・社長共有範囲の確定 / 未着手
+- T653: Slack連携実送信準備 / Slack送信ツール・投稿先チャンネル・社長共有範囲の確定 / 完了
 - T654: Notion証跡更新 / NotebookLM docs同期結果をNotion証跡ページ配下に追加 / 完了
 - T655: Obsidian Agent Brief導線 / Obsidian vaultにNotebookLM Agent Brief参照導線を追加 / 完了
 - T656: NotebookLM補助ログイン導線 / NotebookLM CLIのログイン保存を補助するWorkspace専用スクリプト作成 / 完了

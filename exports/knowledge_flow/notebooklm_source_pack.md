@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-05-27 12:46:32 UTC+09:00
+Generated: 2026-05-27 20:38:18 UTC+09:00
 
 ## Purpose
 
@@ -11,22 +11,22 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 ## Current WBS Snapshot
 
 - Total tasks: 98
-- Done: 77
-- In progress: 4
-- Not started: 17
-- Completion rate: 79%
+- Done: 90
+- In progress: 0
+- Not started: 8
+- Completion rate: 92%
 - CEO presentation phase tasks: 83
-- CEO presentation phase done: 66
+- CEO presentation phase done: 79
 
 ## Knowledge Flow Tasks
 
 - T616: 開発フロー設計 / NotebookLM・Slack・Notion・Obsidian連携の役割分担整理 / 完了 / 2026-05-21 - 2026-05-21
 - T617: NotebookLM連携 / 社長説明用のNotebookLM投入資料パックと利用シーン整理 / 完了 / 2026-05-21 - 2026-05-21
-- T618: Slack連携 / 進捗通知・レビュー依頼・決定ログ共有のSlack運用設計 / 未着手 / 2026-05-24 - 2026-05-25
-- T619: Notion連携 / 仕様・議事録・意思決定DB・バックログ管理のNotion運用設計 / 未着手 / 2026-05-25 - 2026-05-26
+- T618: Slack連携 / 進捗通知・レビュー依頼・決定ログ共有のSlack運用設計 / 完了 / 2026-05-24 - 2026-05-25
+- T619: Notion連携 / 仕様・議事録・意思決定DB・バックログ管理のNotion運用設計 / 完了 / 2026-05-25 - 2026-05-26
 - T620: Obsidian連携 / ローカルナレッジ・ADR・プロンプト資産のObsidian運用設計 / 完了 / 2026-05-26 - 2026-05-27
 - T621: 連携デモ導線 / 4ツール連携を社長へ見せる説明順・画面遷移・価値訴求整理 / 完了 / 2026-05-21 - 2026-05-21
-- T622: 権限・情報管理 / NotebookLM/Slack/Notion/Obsidian利用時の権限・機密情報ルール整理 / 未着手 / 2026-05-27 - 2026-05-28
+- T622: 権限・情報管理 / NotebookLM/Slack/Notion/Obsidian利用時の権限・機密情報ルール整理 / 完了 / 2026-05-27 - 2026-05-28
 - T623: 連携採用判断 / 6/2で決める連携ツール優先順位・導入範囲・責任分担の確認リスト作成 / 完了 / 2026-05-21 - 2026-05-21
 - T624: 連携成果物生成 / NotebookLM/Slack/Notion/Obsidianデモ成果物生成スクリプト実装 / 完了 / 2026-05-21 - 2026-05-21
 - T625: NotebookLM実体化 / NotebookLM投入用Source Pack生成と想定質問セット作成 / 完了 / 2026-05-21 - 2026-05-21
@@ -37,20 +37,20 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 - T630: 連携APIデモ / FastAPIにKnowledge Flow生成・状態確認APIを追加 / 完了 / 2026-05-21 - 2026-05-21
 - T631: 連携成果物検証 / 生成成果物・公開URL・API・Sheets/Calendar同期の総合確認 / 完了 / 2026-05-21 - 2026-05-21
 - T632: GitHub Issues連携 / GitHub Issuesに6/2社長デモ向け連携タスクを起票 / 完了 / 2026-05-21 - 2026-05-21
-- T633: GitHub Project連携 / GitHub Project board取得・配置のCLI権限確認 / 実行中 / 2026-05-21 - 2026-05-23
+- T633: GitHub Project連携 / GitHub Project board取得・配置のCLI権限確認 / 完了 / 2026-05-21 - 2026-05-23
 - T634: NotebookLM実連携 / NotebookLM投入用Source PackをGoogle Drive/Docsへアップロード / 完了 / 2026-05-21 - 2026-05-21
 - T635: Notion実連携 / Notion MCPで社長デモ用の連携証跡ページを作成 / 完了 / 2026-05-21 - 2026-05-21
 - T636: Slack連携確認 / Slack CLI/MCPの利用可否と投稿先確認フローを整理 / 完了 / 2026-05-21 - 2026-05-21
 - T637: Obsidian実連携 / Obsidian vaultとして開ける設定ファイルを追加 / 完了 / 2026-05-21 - 2026-05-21
 - T638: 連携証跡台帳 / CLI/MCP連携の実行結果を社長説明用ドキュメントへ集約 / 完了 / 2026-05-21 - 2026-05-21
-- T640: 連携デモリハーサル / NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認 / 未着手 / 2026-05-22 - 2026-05-23
+- T640: 連携デモリハーサル / NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認 / 完了 / 2026-05-22 - 2026-05-23
 - T642: NotebookLMプレゼン資料化 / NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化 / 完了 / 2026-05-21 - 2026-05-21
-- T643: NotebookLMスライド草案 / NotebookLMへSource PackとPresentation Briefを投入し、8枚以内のプレゼン草案を作る / 完了 / 2026-05-22 - 2026-05-22
-- T646: Slack送信権限確認 / Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする / 未着手 / 2026-05-24 - 2026-05-25
+- T643: NotebookLMスライド草案 / NotebookLMへSource Pack and Presentation Briefを投入し、8枚以内のプレゼン草案を作る / 完了 / 2026-05-22 - 2026-05-22
+- T646: Slack送信権限確認 / Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする / 完了 / 2026-05-24 - 2026-05-25
 - T648: Workspace Google Docs再作成 / NotebookLM用Google Docsをk-umezawa@ml-mightylink.com所有で再作成 / 完了 / 2026-05-22 - 2026-05-22
 - T650: NotebookLM CLI認証復旧 / NotebookLM CLIをk-umezawa@ml-mightylink.comで再認証 / 完了 / 2026-05-22 - 2026-05-22
 - T651: NotebookLM Agent Brief取得 / NotebookLMの要約をAIエージェント開発入力として保存 / 完了 / 2026-05-22 - 2026-05-22
-- T653: Slack連携実送信準備 / Slack送信ツール・投稿先チャンネル・社長共有範囲の確定 / 未着手 / 2026-05-24 - 2026-05-25
+- T653: Slack連携実送信準備 / Slack送信ツール・投稿先チャンネル・社長共有範囲の確定 / 完了 / 2026-05-24 - 2026-05-25
 - T654: Notion証跡更新 / NotebookLM docs同期結果をNotion証跡ページ配下に追加 / 完了 / 2026-05-22 - 2026-05-22
 - T655: Obsidian Agent Brief導線 / Obsidian vaultにNotebookLM Agent Brief参照導線を追加 / 完了 / 2026-05-22 - 2026-05-22
 - T656: NotebookLM補助ログイン導線 / NotebookLM CLIのログイン保存を補助するWorkspace専用スクリプト作成 / 完了 / 2026-05-22 - 2026-05-22
