@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mighty Skill-Bridge API Guard</title>
+    <link rel="icon" href="../favicon.ico" sizes="any">
+    <style>
+        :root { color-scheme: dark; --bg:#070807; --panel:#111312; --line:#2a2f2b; --text:#f3f5ef; --muted:#a6ada4; --ok:#9df56d; --warn:#ffd166; --bad:#ff7d7d; --blue:#8bdcff; }
+        * { box-sizing: border-box; }
+        body { margin:0; font-family: "Segoe UI", "Noto Sans JP", sans-serif; background: var(--bg); color: var(--text); }
+        header { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:18px 24px; border-bottom:1px solid var(--line); background:#050605; position:sticky; top:0; }
+        main { max-width:1180px; margin:0 auto; padding:24px; display:grid; gap:18px; }
+        h1 { margin:0; font-size:22px; }
+        h2 { margin:0 0 12px; font-size:16px; color:var(--muted); font-weight:700; }
+        .grid { display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:14px; }
+        .card { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:16px; }
+        .metric { font-size:32px; font-weight:800; line-height:1; }
+        .label { color:var(--muted); font-size:13px; margin-top:8px; }
+        .state { display:inline-flex; align-items:center; padding:5px 10px; border:1px solid var(--line); border-radius:999px; font-size:13px; color:var(--muted); }
+        .closed { color:var(--ok); border-color:rgba(157,245,109,.35); }
+        .open { color:var(--bad); border-color:rgba(255,125,125,.35); }
+        table { width:100%; border-collapse:collapse; font-size:13px; }
+        th, td { text-align:left; padding:9px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+        th { color:var(--muted); font-weight:600; }
+        code { color:var(--blue); }
+        a { color:var(--blue); text-decoration:none; }
+        .muted { color:var(--muted); }
+        .toolbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+        button, .button { border:1px solid var(--line); border-radius:7px; padding:9px 12px; background:#191c1a; color:var(--text); cursor:pointer; font-weight:700; }
+        button:hover, .button:hover { border-color:var(--blue); }
+        @media (max-width: 860px) { .grid { grid-template-columns:1fr; } header { align-items:flex-start; flex-direction:column; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>External API Guard</h1>
+            <div class="muted">Mighty Skill-Bridge local billing safety dashboard</div>
+        </div>
+        <div class="toolbar">
+            <a class="button" href="../">Demo</a>
+            <a class="button" href="../api/admin/usage/export" id="export-btn">Export JSONL</a>
+            <button onclick="loadUsage()">Refresh</button>
+        </div>
+    </header>
+    <main>
+        <section class="grid" id="cards"></section>
+        <section class="card">
+            <h2>Circuit Breakers</h2>
+            <div id="breakers"></div>
+        </section>
+        <section class="card">
+            <h2>Saved Seedance Video</h2>
+            <div id="saved-video" class="muted"></div>
+        </section>
+        <section class="card">
+            <h2>Recent Events</h2>
+            <div class="muted" style="margin-bottom:10px;">Prompts and API keys are not stored. Signed video URLs are not stored in this ledger.</div>
+            <table>
+                <thead><tr><th>Time</th><th>Provider</th><th>Operation</th><th>Outcome</th><th>Billable</th><th>Tokens</th><th>Task</th><th>Reason</th></tr></thead>
+                <tbody id="events"></tbody>
+            </table>
+        </section>
+        <section class="card muted" id="note"></section>
+    </main>
+    <script>
+        const fmt = (value) => value === null || value === undefined ? "-" : value;
+        function stateClass(value) { return value === "closed" ? "closed" : "open"; }
+
+        function getMockUsageData() {
+            const today = new Date().toISOString().split('T')[0];
+            return {
+                "status": "success",
+                "day": today,
+                "usage_log": "data/external_api_usage.jsonl",
+                "providers": {
+                    "seedance_api": {
+                        "total_events": 14,
+                        "today_events": 2,
+                        "today_billable_calls": 1,
+                        "today_blocked_calls": 0,
+                        "today_reported_total_tokens": 12400
+                    },
+                    "gemini_api": {
+                        "total_events": 168,
+                        "today_events": 12,
+                        "today_billable_calls": 12,
+                        "today_blocked_calls": 0,
+                        "today_reported_total_tokens": 84320
+                    }
+                },
+                "circuit_breakers": {
+                    "seedance_generation_create": {
+                        "enabled": true,
+                        "configured": true,
+                        "daily_call_limit": 1,
+                        "today_billable_calls": 1,
+                        "today_reported_total_tokens": 12400,
+                        "daily_reported_token_limit": 50000,
+                        "state": "open"
+                    },
+                    "gemini_parse": {
+                        "enabled": true,
+                        "daily_call_limit": 20,
+                        "today_billable_calls": 6,
+                        "today_reported_total_tokens": 42160,
+                        "state": "closed"
+                    },
+                    "gemini_match": {
+                        "enabled": true,
+                        "daily_call_limit": 20,
+                        "today_billable_calls": 6,
+                        "today_reported_total_tokens": 42160,
+                        "state": "closed"
+                    }
+                },
+                "seedance_saved_default": {
+                    "provider": "seedance_api",
+                    "model": "seedance-1-0-pro",
+                    "task_id": "task_seedance_mock_7a9f8b",
+                    "video": "exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4",
+                    "backup_video": "exports/seedance_demo/mighty_skill_bridge_procedural_fallback.mp4"
+                },
+                "recent_events": [
+                    {
+                        "timestamp": new Date(Date.now() - 3600000 * 2).toISOString(),
+                        "provider": "seedance_api",
+                        "operation": "generation_create",
+                        "outcome": "success",
+                        "billable": true,
+                        "reported_total_tokens": 12400,
+                        "task_id": "task_seedance_mock_7a9f8b",
+                        "reason": "Seedance brand video generated successfully"
+                    },
+                    {
+                        "timestamp": new Date(Date.now() - 3600000 * 3).toISOString(),
+                        "provider": "gemini_api",
+                        "operation": "match",
+                        "outcome": "success",
+                        "billable": true,
+                        "reported_total_tokens": 6800,
+                        "task_id": "task_gemini_match_4920fd",
+                        "reason": "Fit matching calculated successfully (佐藤 賢太 x AIエージェント)"
+                    },
+                    {
+                        "timestamp": new Date(Date.now() - 3600000 * 3.1).toISOString(),
+                        "provider": "gemini_api",
+                        "operation": "parse",
+                        "outcome": "success",
+                        "billable": true,
+                        "reported_total_tokens": 4120,
+                        "task_id": "task_gemini_parse_b2940a",
+                        "reason": "Profile parsed successfully (佐藤 賢太)"
+                    }
+                ],
+                "usage_note": "Demo View: Active static preview with simulated mock data. Run python src/app.py locally to trace real token budgets."
+            };
+        }
+
+        let isMockMode = false;
+        function showDemoBanner() {
+            if (document.getElementById("demo-banner")) return;
+            const banner = document.createElement("div");
+            banner.id = "demo-banner";
+            banner.style.background = "#ff7d7d";
+            banner.style.color = "#070807";
+            banner.style.textAlign = "center";
+            banner.style.padding = "8px";
+            banner.style.fontWeight = "bold";
+            banner.style.fontSize = "13px";
+            banner.style.position = "sticky";
+            banner.style.top = "0";
+            banner.style.zIndex = "1000";
+            banner.innerHTML = "⚠️ GitHub Pages Demo Mode: Displaying simulated local billing usage ledger. Connect locally to view real-time API logs.";
+            document.body.insertBefore(banner, document.body.firstChild);
+            
+            // Adjust paths for static pages
+            document.getElementById("export-btn").href = "#";
+            document.getElementById("export-btn").style.opacity = "0.5";
+            document.getElementById("export-btn").onclick = (e) => {
+                e.preventDefault();
+                alert("JSONL Export is only available when running FastAPI locally.");
+            };
+        }
+
+        function renderData(data) {
+            const seedance = data.providers.seedance_api;
+            const gemini = data.providers.gemini_api;
+            document.getElementById("cards").innerHTML = `
+                <div class="card"><div class="metric">${seedance.today_billable_calls}</div><div class="label">Seedance billable calls today</div></div>
+                <div class="card"><div class="metric">${gemini.today_billable_calls}</div><div class="label">Gemini billable calls today</div></div>
+                <div class="card"><div class="metric">${seedance.today_reported_total_tokens + gemini.today_reported_total_tokens}</div><div class="label">Provider-reported tokens today</div></div>
+            `;
+            const breakerRows = Object.entries(data.circuit_breakers).map(([name, breaker]) => `
+                <tr>
+                    <td><code>${name}</code></td>
+                    <td><span class="state ${stateClass(breaker.state || (breaker.enabled ? "closed" : "open"))}">${breaker.state || (breaker.enabled ? "enabled" : "disabled")}</span></td>
+                    <td>${fmt(breaker.today_billable_calls)} / ${fmt(breaker.daily_call_limit)}</td>
+                    <td>${fmt(breaker.today_reported_total_tokens)} / ${fmt(breaker.daily_reported_token_limit)}</td>
+                </tr>
+            `).join("");
+            document.getElementById("breakers").innerHTML = `<table><thead><tr><th>Name</th><th>State</th><th>Calls</th><th>Reported tokens</th></tr></thead><tbody>${breakerRows}</tbody></table>`;
+            
+            const saved = data.seedance_saved_default || {};
+            const videoPath = isMockMode ? `../${saved.video}` : `/${saved.video}`;
+            document.getElementById("saved-video").innerHTML = `
+                <div>Provider: <code>${fmt(saved.provider)}</code></div>
+                <div>Model: <code>${fmt(saved.model)}</code></div>
+                <div>Task: <code>${fmt(saved.task_id)}</code></div>
+                <div>Video: <a href="${videoPath}" download>${fmt(saved.video)}</a></div>
+                <div>Backup: <code>${fmt(saved.backup_video)}</code></div>
+            `;
+            document.getElementById("events").innerHTML = data.recent_events.map((event) => `
+                <tr>
+                    <td>${fmt(event.timestamp)}</td>
+                    <td>${fmt(event.provider)}</td>
+                    <td>${fmt(event.operation)}</td>
+                    <td>${fmt(event.outcome)}</td>
+                    <td>${event.billable ? "yes" : "no"}</td>
+                    <td>${fmt(event.reported_total_tokens)}</td>
+                    <td><code>${fmt(event.task_id)}</code></td>
+                    <td>${fmt(event.reason)}</td>
+                </tr>
+            `).join("") || `<tr><td colspan="8" class="muted">No local usage events yet.</td></tr>`;
+            document.getElementById("note").textContent = data.usage_note;
+        }
+
+        async function loadUsage() {
+            try {
+                const response = await fetch("../api/admin/usage");
+                if (!response.ok) throw new Error("API not available");
+                const data = await response.json();
+                isMockMode = false;
+                renderData(data);
+            } catch (err) {
+                isMockMode = true;
+                const mockData = getMockUsageData();
+                renderData(mockData);
+                showDemoBanner();
+            }
+        }
+        loadUsage();
+    </script>
+</body>
+</html>
