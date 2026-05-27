@@ -162,6 +162,12 @@
             font-size: 14px;
         }
 
+        .language-switch a.active {
+            color: var(--blue) !important;
+            text-shadow: 0 0 10px rgba(139, 220, 255, 0.5);
+            font-weight: 900;
+        }
+
         .mobile-menu {
             display: none;
             width: 38px;
@@ -746,7 +752,9 @@
             }
 
             .language-switch {
-                display: none;
+                display: inline-flex;
+                font-size: 11px;
+                gap: 5px;
             }
 
             .mobile-menu {
@@ -1345,11 +1353,13 @@
         </nav>
         <div class="topbar-tools">
             <div class="language-switch" aria-label="Language">
-                <a href="#top" aria-current="true" class="active">EN</a>
+                <a href="#top" class="active" onclick="switchLanguage(this)">EN</a>
                 <span>/</span>
-                <a href="#top">中文</a>
+                <a href="#top" onclick="switchLanguage(this)">中文</a>
                 <span>/</span>
-                <a href="#top">JP</a>
+                <a href="#top" onclick="switchLanguage(this)">KO</a>
+                <span>/</span>
+                <a href="#top" onclick="switchLanguage(this)">JP</a>
             </div>
             <div class="status-strip" aria-live="polite">
                 <span class="status-dot"></span>
@@ -1681,9 +1691,10 @@
                             <span>Mighty-Link AI Connect</span>
                         </span>
                     </a>
-                    <span>Advancing the frontier of intelligence, in service of humanity.</span>
-                    <span>Copyright © 2026 Mighty-Link / Bytedance Seed</span>
-                    <a href="mailto:seed.feedback@bytedance.com" style="color:var(--muted); font-size:12px; margin-top: 8px; display:inline-block;">Contact us : seed.feedback@bytedance.com</a>
+                    <span>Advancing project intelligence, in service of better teams.</span>
+                    <span>Copyright © 2026 Mighty-Link</span>
+                    <a href="mailto:careers@ml-mightylink.com" style="color:var(--muted); font-size:12px; margin-top: 8px; display:inline-block;">Contact us : careers@ml-mightylink.com</a>
+                    <a href="#top" style="color:var(--muted); font-size:11px; margin-top: 4px; display:inline-block;">Disclaimer</a>
                 </div>
                 <div class="footer-column">
                     <h3>Models</h3>
@@ -1692,30 +1703,29 @@
                     <a href="#models">Seedream 5.0 Lite</a>
                     <a href="#models">Seeduplex</a>
                     <a href="#models">Seed GR-RL</a>
-                    <a href="exports/wireframes/index.html" style="margin-top:12px; color:var(--blue);">UI Wireframes (20 patterns)</a>
-                    <a href="exports/landing-pages/index.html" style="color:var(--green);">LP Design Tastes (20 patterns)</a>
+                    <a href="exports/wireframes/index.html" style="margin-top:16px; color:var(--blue); font-weight: 700;">Mighty UI Wireframes (20 patterns)</a>
+                    <a href="exports/landing-pages/index.html" style="color:var(--green); font-weight: 700;">Mighty LP Design Tastes (20 patterns)</a>
                 </div>
                 <div class="footer-column">
-                    <h3>Teams</h3>
-                    <a href="#join-us">LLM</a>
-                    <a href="#join-us">Infrastructures</a>
-                    <a href="#join-us">Vision</a>
-                    <a href="#join-us">Speech</a>
-                    <a href="#join-us">Multimodal Interaction & World Model</a>
-                    <a href="#join-us">AI for Science</a>
-                    <a href="#join-us">Robotics</a>
-                    <a href="#join-us">Responsible AI</a>
-                    <a href="exports/recruit/index.html" style="margin-top:12px; color:var(--rose);">Careers (採用ページ)</a>
+                    <h3>Directions</h3>
+                    <a href="#top">LLM</a>
+                    <a href="#top">Infrastructures</a>
+                    <a href="#top">Vision</a>
+                    <a href="#top">Speech</a>
+                    <a href="#top">Multimodal Interaction &amp; World Model</a>
+                    <a href="#top">AI for Science</a>
+                    <a href="#top">Robotics</a>
+                    <a href="#top">Responsible AI</a>
+                    <a href="exports/recruit/index.html" style="margin-top:16px; color:var(--rose); font-weight: 700;">Mighty Careers (採用ページ)</a>
                 </div>
                 <div class="footer-column">
                     <h3>Learn More</h3>
-                    <a href="docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md">Pre-share memo</a>
-                    <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.md">Knowledge flow</a>
-                    <a href="docs/WBS.md">WBS</a>
-                    <a href="exports/sequence-diagrams/index.html" style="color:var(--blue);">Architecture (シーケンス図)</a>
-                    <a href="#models">Blog</a>
+                    <a href="#knowledge-flow-demo">Blog</a>
                     <a href="#models">Seed Edge</a>
-                    <a href="#models">Seed Campus Recruitment</a>
+                    <a href="exports/recruit/index.html">Seed Campus Recruitment</a>
+                    <a href="exports/sequence-diagrams/index.html" style="margin-top:16px; color:var(--blue); font-weight: 700;">Mighty Architecture (シーケンス図)</a>
+                    <a href="docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md" style="font-weight: 700;">Mighty Pre-share Memo</a>
+                    <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.md" style="font-weight: 700;">Mighty Knowledge Flow</a>
                 </div>
             </div>
         </footer>
@@ -1751,6 +1761,17 @@
             const links = document.querySelector(".nav-links");
             if (!links) return;
             links.scrollIntoView({behavior: "smooth", block: "nearest", inline: "start"});
+        }
+
+        function switchLanguage(el) {
+            const switcher = el.closest(".language-switch");
+            if (!switcher) return;
+            switcher.querySelectorAll("a").forEach(a => {
+                a.classList.remove("active");
+                a.removeAttribute("aria-current");
+            });
+            el.classList.add("active");
+            el.setAttribute("aria-current", "true");
         }
 
         function setVideoSource(url) {
