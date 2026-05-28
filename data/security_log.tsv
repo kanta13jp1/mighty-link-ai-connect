@@ -1,0 +1,4 @@
+脆弱性ID	重要度	対象ファイル	検知された問題	Code Mender修正内容	ステータス	検知日時	修正完了日時
+SEC-001	HIGH	src/app.py	ハードコードされた認証情報の露出リスク	環境変数からの読み込みに修正し、authorized_user.jsonパスを隔離	FIXED	2026-05-28 10:00	2026-05-28 10:05
+SEC-002	MED	index.html	外部スクリプト(CDN)読み込み時の整合性検証(SRI)不足	integrity属性とcrossorigin属性を追加	FIXED	2026-05-28 10:10	2026-05-28 10:12
+SEC-003	LOW	scripts/sync_wbs_to_calendar.py	例外処理における詳細情報の意図しない標準出力露出	機密情報を除外したエラーハンドリングとロギングへ修正	FIXED	2026-05-28 10:15	2026-05-28 10:18

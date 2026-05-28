@@ -1,0 +1,7 @@
+テストID	機能カテゴリ	テスト項目	確認内容	ステータス	実行エンジン	合格率	バグ率	実行日時
+TEST-001	UI/UX	ドラッグ＆ドロップ画面	サンプル経歴書のアップロードと読み込み	PASS	Browser Agent	100%	0%	2026-05-28 12:00
+TEST-002	UI/UX	レーダーチャート描画	4軸スコアに基づくチャートの正常描画	PASS	Browser Agent	100%	0%	2026-05-28 12:05
+TEST-003	API	マッチング処理	/api/match の応答速度と4軸スコア出力確認	PASS	Browser Agent	100%	0%	2026-05-28 12:10
+TEST-004	API	ナレッジ連携	/api/knowledge-flow/generate 成果物生成確認	PASS	Browser Agent	100%	0%	2026-05-28 12:15
+TEST-005	CI/CD	デモ保護ガード	verify_public_demo.py によるUIマーカー検証	PASS	Browser Agent	100%	0%	2026-05-28 12:20
+TEST-006	UI/UX	管理者ダッシュボード	ヘッダー/フッターの /admin リンク正常遷移確認	PASS	Browser Agent	100%	0%	2026-05-28 12:25

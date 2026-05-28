@@ -57,12 +57,16 @@ AUTHORIZED_USER_FILE = os.path.join(PROJECT_ROOT, "authorized_user.json")
 TSV_FILE = os.path.join(DATA_DIR, "WBS.tsv")
 ISSUES_TSV_FILE = os.path.join(DATA_DIR, "issues_tracker.tsv")
 QA_TSV_FILE = os.path.join(DATA_DIR, "qa_tracker.tsv")
+TEST_TSV_FILE = os.path.join(DATA_DIR, "test_results.tsv")
+SECURITY_TSV_FILE = os.path.join(DATA_DIR, "security_log.tsv")
 USER_EMAIL = "k-umezawa@ml-mightylink.com"
 WBS_SHEET_NAME = "Mighty-Link WBS"
 SUMMARY_SHEET_NAME = "WBS Summary"
 TIMELINE_SHEET_NAME = "WBS Timeline"
 ISSUES_SHEET_NAME = "課題管理表"
 QA_SHEET_NAME = "QA表"
+TEST_SHEET_NAME = "テスト結果"
+SECURITY_SHEET_NAME = "セキュリティ"
 DATA_START_ROW = 8
 
 # Mighty-Link Color Palette (Normalized to 0.0 - 1.0 for Sheets API)
@@ -1055,9 +1059,18 @@ def apply_tracker_styles(sh, worksheet, num_rows, num_cols, tracker_type):
     if tracker_type == "issues":
         col_widths = [90, 110, 80, 110, 260, 300, 360, 120, 105, 105, 145, 260, 110, 320, 105]
         date_cols = [(8, 10), (14, 15)]
-    else:
+    elif tracker_type == "qa":
         col_widths = [95, 130, 300, 380, 320, 120, 260, 150, 100, 105]
         date_cols = [(9, 10)]
+    elif tracker_type == "test":
+        col_widths = [90, 110, 160, 300, 85, 120, 80, 80, 145]
+        date_cols = []
+    elif tracker_type == "security":
+        col_widths = [90, 100, 180, 300, 350, 90, 145, 145]
+        date_cols = []
+    else:
+        col_widths = [120] * num_cols
+        date_cols = []
 
     apply_simple_table_styles(
         sh,
@@ -1084,12 +1097,24 @@ def apply_tracker_styles(sh, worksheet, num_rows, num_cols, tracker_type):
             add_text_conditional(sheet_id, data_start, num_rows, 3, "wont_fix", COLORS["status_todo"]),
             add_text_conditional(sheet_id, data_start, num_rows, 3, "deferred", COLORS["phase_bg"]),
         ])
-    else:
+    elif tracker_type == "qa":
         requests.extend([
             add_text_conditional(sheet_id, data_start, num_rows, 8, "保留中", COLORS["status_working"]),
             add_text_conditional(sheet_id, data_start, num_rows, 8, "回答済", COLORS["status_done"]),
             add_text_conditional(sheet_id, data_start, num_rows, 8, "想定済", COLORS["white"]),
             add_text_conditional(sheet_id, data_start, num_rows, 8, "解決不要", COLORS["status_todo"]),
+        ])
+    elif tracker_type == "test":
+        requests.extend([
+            add_text_conditional(sheet_id, data_start, num_rows, 4, "PASS", COLORS["status_done"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 4, "FAIL", COLORS["status_alert"]),
+        ])
+    elif tracker_type == "security":
+        requests.extend([
+            add_text_conditional(sheet_id, data_start, num_rows, 1, "HIGH", COLORS["status_alert"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 1, "MED", COLORS["status_working"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 1, "LOW", COLORS["status_todo"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 5, "FIXED", COLORS["status_done"]),
         ])
     if requests:
         sh.batch_update({"requests": requests})
@@ -1107,7 +1132,14 @@ def main():
         print("[*] Found OAuth 2.0 client credentials. Launching Browser Authentication...")
         try:
             # Performs local OAuth authentication. Spawns browser on first run, saves authorized_user.json
+            scopes = [
+                "https://www.googleapis.com/auth/spreadsheets",
+                "https://www.googleapis.com/auth/drive",
+                "https://www.googleapis.com/auth/calendar",
+                "https://www.googleapis.com/auth/calendar.events"
+            ]
             client = gspread.oauth(
+                scopes=scopes,
                 credentials_filename=CLIENT_SECRET_FILE,
                 authorized_user_filename=AUTHORIZED_USER_FILE
             )
@@ -1214,6 +1246,8 @@ def main():
     timeline_values, timeline_meta = build_timeline_sheet(task_rows)
     issue_source_rows = load_tracker_data(ISSUES_TSV_FILE)
     qa_source_rows = load_tracker_data(QA_TSV_FILE)
+    test_source_rows = load_tracker_data(TEST_TSV_FILE)
+    security_source_rows = load_tracker_data(SECURITY_TSV_FILE)
     issue_values = build_tracker_sheet(
         "Mighty-Link 課題管理表",
         "6/2社長プレゼン準備と開発運用で発生した課題・ブロッカーを管理",
@@ -1224,6 +1258,16 @@ def main():
         "社長・顧客からの想定質問、保留時対応、回答状況を管理",
         qa_source_rows,
     )
+    test_values = build_tracker_sheet(
+        "Mighty-Link テスト実行結果",
+        "Browser Agentによる自律UI/UXテストおよび機能検証ログ",
+        test_source_rows,
+    )
+    security_values = build_tracker_sheet(
+        "Mighty-Link セキュリティ・監査ログ",
+        "Code Menderによる自律脆弱性自動修正およびコード監査ログ",
+        security_source_rows,
+    )
 
     wbs_rows = max(len(enhanced_values) + 20, 120)
     wbs_cols = len(ENHANCED_HEADERS)
@@ -1233,6 +1277,8 @@ def main():
     timeline_sheet = ensure_worksheet(sh, TIMELINE_SHEET_NAME, rows=max(len(timeline_values) + 20, 80), cols=timeline_cols)
     issue_sheet = None
     qa_sheet = None
+    test_sheet = None
+    security_sheet = None
     if issue_values:
         issue_sheet = ensure_worksheet(
             sh,
@@ -1247,6 +1293,20 @@ def main():
             rows=max(len(qa_values) + 20, 90),
             cols=len(qa_values[0]),
         )
+    if test_values:
+        test_sheet = ensure_worksheet(
+            sh,
+            TEST_SHEET_NAME,
+            rows=max(len(test_values) + 20, 80),
+            cols=len(test_values[0]),
+        )
+    if security_values:
+        security_sheet = ensure_worksheet(
+            sh,
+            SECURITY_SHEET_NAME,
+            rows=max(len(security_values) + 20, 80),
+            cols=len(security_values[0]),
+        )
 
     # Remove default Sheet1 if present to keep the workbook clean.
     try:
@@ -1256,6 +1316,10 @@ def main():
             protected_sheet_ids.append(issue_sheet.id)
         if qa_sheet:
             protected_sheet_ids.append(qa_sheet.id)
+        if test_sheet:
+            protected_sheet_ids.append(test_sheet.id)
+        if security_sheet:
+            protected_sheet_ids.append(security_sheet.id)
         if default_sheet.id not in protected_sheet_ids:
             sh.del_worksheet(default_sheet)
     except Exception:
@@ -1270,11 +1334,19 @@ def main():
         issue_sheet.update(values=issue_values, range_name="A1", value_input_option="USER_ENTERED")
     if qa_sheet:
         qa_sheet.update(values=qa_values, range_name="A1", value_input_option="USER_ENTERED")
+    if test_sheet:
+        test_sheet.update(values=test_values, range_name="A1", value_input_option="USER_ENTERED")
+    if security_sheet:
+        security_sheet.update(values=security_values, range_name="A1", value_input_option="USER_ENTERED")
     print(f"[+] Successfully wrote {len(wbs_data)} source rows into {len(enhanced_values)} hierarchical WBS display rows.")
     if issue_values:
         print(f"[+] Successfully wrote {max(len(issue_values) - 4, 0)} issue tracker rows into '{ISSUES_SHEET_NAME}'.")
     if qa_values:
         print(f"[+] Successfully wrote {max(len(qa_values) - 4, 0)} QA tracker rows into '{QA_SHEET_NAME}'.")
+    if test_values:
+        print(f"[+] Successfully wrote {max(len(test_values) - 4, 0)} test tracker rows into '{TEST_SHEET_NAME}'.")
+    if security_values:
+        print(f"[+] Successfully wrote {max(len(security_values) - 4, 0)} security tracker rows into '{SECURITY_SHEET_NAME}'.")
 
     # 5. Apply Professional Styles (CATS-inspired WBS Design)
     try:
@@ -1285,6 +1357,10 @@ def main():
             apply_tracker_styles(sh, issue_sheet, len(issue_values), len(issue_values[0]), "issues")
         if qa_sheet:
             apply_tracker_styles(sh, qa_sheet, len(qa_values), len(qa_values[0]), "qa")
+        if test_sheet:
+            apply_tracker_styles(sh, test_sheet, len(test_values), len(test_values[0]), "test")
+        if security_sheet:
+            apply_tracker_styles(sh, security_sheet, len(security_values), len(security_values[0]), "security")
         print("[+] CATS-like hierarchy, summary, timeline, tracker tabs, filters, freeze panes, and status colors applied.")
     except Exception as e:
         print(f"[!] Warning while setting styles/dimensions: {e}")
