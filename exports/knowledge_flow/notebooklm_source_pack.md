@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-05-28 23:15:02 UTC+09:00
+Generated: 2026-05-29 00:23:31 UTC+09:00
 
 ## Purpose
 
@@ -11,12 +11,12 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 ## Current WBS Snapshot
 
 - Total tasks: 98
-- Done: 93
+- Done: 98
 - In progress: 0
-- Not started: 5
-- Completion rate: 95%
+- Not started: 0
+- Completion rate: 100%
 - CEO presentation phase tasks: 83
-- CEO presentation phase done: 80
+- CEO presentation phase done: 83
 
 ## Knowledge Flow Tasks
 
@@ -58,7 +58,7 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 - T658: NotebookLM PowerPoint化 / NotebookLM CLIで取得したCEO Slide Outlineを社長説明用PowerPointへ変換 / 完了 / 2026-05-22 - 2026-05-22
 - T660: Notion PPTX証跡更新 / Notion MCPでPPTX生成・Drive共有・残課題を証跡ページへ記録 / 完了 / 2026-05-22 - 2026-05-22
 - T662: Slack MCP/CLI到達性証跡 / Slack CLIと送信MCPの利用可否を確認し、投稿案と残課題を整理 / 完了 / 2026-05-22 - 2026-05-22
-- T663: 6/2資料最終パックレビュー / PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認 / 未着手 / 2026-05-30 - 2026-06-01
+- T663: 6/2資料最終パックレビュー / PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認 / 完了 / 2026-05-30 - 2026-06-01
 - T664: 三ツール開発フロー整備 / Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定 / 完了 / 2026-05-22 - 2026-05-22
 
 ## Recommended NotebookLM Questions

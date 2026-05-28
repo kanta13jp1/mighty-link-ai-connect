@@ -59,6 +59,7 @@ ISSUES_TSV_FILE = os.path.join(DATA_DIR, "issues_tracker.tsv")
 QA_TSV_FILE = os.path.join(DATA_DIR, "qa_tracker.tsv")
 TEST_TSV_FILE = os.path.join(DATA_DIR, "test_results.tsv")
 SECURITY_TSV_FILE = os.path.join(DATA_DIR, "security_log.tsv")
+DEPLOY_TSV_FILE = os.path.join(DATA_DIR, "deploy_log.tsv")
 USER_EMAIL = "k-umezawa@ml-mightylink.com"
 WBS_SHEET_NAME = "Mighty-Link WBS"
 SUMMARY_SHEET_NAME = "WBS Summary"
@@ -67,6 +68,7 @@ ISSUES_SHEET_NAME = "課題管理表"
 QA_SHEET_NAME = "QA表"
 TEST_SHEET_NAME = "テスト結果"
 SECURITY_SHEET_NAME = "セキュリティ"
+DEPLOY_SHEET_NAME = "デプロイ結果"
 DATA_START_ROW = 8
 
 # Mighty-Link Color Palette (Normalized to 0.0 - 1.0 for Sheets API)
@@ -1068,6 +1070,9 @@ def apply_tracker_styles(sh, worksheet, num_rows, num_cols, tracker_type):
     elif tracker_type == "security":
         col_widths = [90, 100, 180, 300, 350, 90, 145, 145]
         date_cols = []
+    elif tracker_type == "deploy":
+        col_widths = [90, 120, 350, 120, 140, 145]
+        date_cols = []
     else:
         col_widths = [120] * num_cols
         date_cols = []
@@ -1115,6 +1120,11 @@ def apply_tracker_styles(sh, worksheet, num_rows, num_cols, tracker_type):
             add_text_conditional(sheet_id, data_start, num_rows, 1, "MED", COLORS["status_working"]),
             add_text_conditional(sheet_id, data_start, num_rows, 1, "LOW", COLORS["status_todo"]),
             add_text_conditional(sheet_id, data_start, num_rows, 5, "FIXED", COLORS["status_done"]),
+        ])
+    elif tracker_type == "deploy":
+        requests.extend([
+            add_text_conditional(sheet_id, data_start, num_rows, 3, "SUCCESS", COLORS["status_done"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 3, "FAILED", COLORS["status_alert"]),
         ])
     if requests:
         sh.batch_update({"requests": requests})
@@ -1248,6 +1258,7 @@ def main():
     qa_source_rows = load_tracker_data(QA_TSV_FILE)
     test_source_rows = load_tracker_data(TEST_TSV_FILE)
     security_source_rows = load_tracker_data(SECURITY_TSV_FILE)
+    deploy_source_rows = load_tracker_data(DEPLOY_TSV_FILE)
     issue_values = build_tracker_sheet(
         "Mighty-Link 課題管理表",
         "6/2社長プレゼン準備と開発運用で発生した課題・ブロッカーを管理",
@@ -1267,6 +1278,11 @@ def main():
         "Mighty-Link セキュリティ・監査ログ",
         "Code Menderによる自律脆弱性自動修正およびコード監査ログ",
         security_source_rows,
+    )
+    deploy_values = build_tracker_sheet(
+        "Mighty-Link デプロイ実行結果",
+        "GitHub Pagesおよびローカル環境へのデプロイ実行ログ",
+        deploy_source_rows,
     )
 
     wbs_rows = max(len(enhanced_values) + 20, 120)
@@ -1307,6 +1323,14 @@ def main():
             rows=max(len(security_values) + 20, 80),
             cols=len(security_values[0]),
         )
+    deploy_sheet = None
+    if deploy_values:
+        deploy_sheet = ensure_worksheet(
+            sh,
+            DEPLOY_SHEET_NAME,
+            rows=max(len(deploy_values) + 20, 80),
+            cols=len(deploy_values[0]),
+        )
 
     # Remove default Sheet1 if present to keep the workbook clean.
     try:
@@ -1320,6 +1344,8 @@ def main():
             protected_sheet_ids.append(test_sheet.id)
         if security_sheet:
             protected_sheet_ids.append(security_sheet.id)
+        if deploy_sheet:
+            protected_sheet_ids.append(deploy_sheet.id)
         if default_sheet.id not in protected_sheet_ids:
             sh.del_worksheet(default_sheet)
     except Exception:
@@ -1338,6 +1364,8 @@ def main():
         test_sheet.update(values=test_values, range_name="A1", value_input_option="USER_ENTERED")
     if security_sheet:
         security_sheet.update(values=security_values, range_name="A1", value_input_option="USER_ENTERED")
+    if deploy_sheet:
+        deploy_sheet.update(values=deploy_values, range_name="A1", value_input_option="USER_ENTERED")
     print(f"[+] Successfully wrote {len(wbs_data)} source rows into {len(enhanced_values)} hierarchical WBS display rows.")
     if issue_values:
         print(f"[+] Successfully wrote {max(len(issue_values) - 4, 0)} issue tracker rows into '{ISSUES_SHEET_NAME}'.")
@@ -1347,6 +1375,8 @@ def main():
         print(f"[+] Successfully wrote {max(len(test_values) - 4, 0)} test tracker rows into '{TEST_SHEET_NAME}'.")
     if security_values:
         print(f"[+] Successfully wrote {max(len(security_values) - 4, 0)} security tracker rows into '{SECURITY_SHEET_NAME}'.")
+    if deploy_values:
+        print(f"[+] Successfully wrote {max(len(deploy_values) - 4, 0)} deploy tracker rows into '{DEPLOY_SHEET_NAME}'.")
 
     # 5. Apply Professional Styles (CATS-inspired WBS Design)
     try:
@@ -1361,6 +1391,8 @@ def main():
             apply_tracker_styles(sh, test_sheet, len(test_values), len(test_values[0]), "test")
         if security_sheet:
             apply_tracker_styles(sh, security_sheet, len(security_values), len(security_values[0]), "security")
+        if deploy_sheet:
+            apply_tracker_styles(sh, deploy_sheet, len(deploy_values), len(deploy_values[0]), "deploy")
         print("[+] CATS-like hierarchy, summary, timeline, tracker tabs, filters, freeze panes, and status colors applied.")
     except Exception as e:
         print(f"[!] Warning while setting styles/dimensions: {e}")

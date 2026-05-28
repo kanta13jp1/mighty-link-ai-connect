@@ -37,5 +37,5 @@ NotebookLMからCEO向け8枚以内のプレゼン草案を取得して保存,T6
 NotebookLM CLIで取得したCEO Slide Outlineを社長説明用PowerPointへ変換,T658,NotebookLM PowerPoint化,完了,Codex,2026-05-22,2026-05-22,exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptxを生成し、NotebookLM由来の構成を社長説明で開ける成果物にする
 Notion MCPでPPTX生成・Drive共有・残課題を証跡ページへ記録,T660,Notion PPTX証跡更新,完了,Codex,2026-05-22,2026-05-22,社長に見せる連携証跡として、PowerPoint成果物、NotebookLM notebook、Slack/Project制約、次アクションをNotionへ残す
 Slack CLIと送信MCPの利用可否を確認し、投稿案と残課題を整理,T662,Slack MCP/CLI到達性証跡,完了,Codex,2026-05-22,2026-05-22,ローカルslack CLI未検出、送信MCP未露出を確認し、実送信は投稿先・権限確認後の残課題としてIssue #2/T653に集約する
-PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認,T663,6/2資料最終パックレビュー,未着手,人間 + Codex,2026-05-30,2026-06-01,社長打ち合わせ前に公開URL・PPTX・Google Drive資料・WBS同期・残課題の見せ方を最終確認する
+PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認,T663,6/2資料最終パックレビュー,完了,人間 + Codex,2026-05-30,2026-06-01,社長打ち合わせ前に公開URL・PPTX・Google Drive資料・WBS同期・残課題の見せ方を最終確認する
 Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定,T664,三ツール開発フロー整備,完了,Codex,2026-05-22,2026-05-22,公式Docs確認、WBS 1件完了、Sheets課題管理表・QA表同期、commit/push/main/master反映までのセッションゲートをAGENTS.md/CLAUDE.md/手順書に反映する

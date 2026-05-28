@@ -68,6 +68,11 @@ DOC_SOURCES = [
         "title": "Mighty Skill-Bridge NotebookLM CEO Slide Outline 2026-06-02 (Workspace)",
         "source": EXPORT_DIR / "notebooklm_ceo_slide_outline.md",
     },
+    {
+        "key": "press_release_sns",
+        "title": "Mighty Skill-Bridge プレスリリース・SNS告知文 2026-06-02 (Workspace Docs)",
+        "source": EXPORT_DIR / "press_release_sns.md",
+    },
 ]
 
 FILE_SOURCES = [
