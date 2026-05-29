@@ -104,19 +104,19 @@ gantt
 | **T682** | 6. 社長プレゼン準備 | Seedance UI刷新 | 極限のSeedance風UI再現と4言語（EN, 中文, KO, JP）スクロールアニメーション polish | AIエージェント | Antigravity + Gemini | WBS/Timeline/課題管理表/QA表と自動同期し、完了タスクのカレンダーイベントを削除 |
 | **T683** | 6. 社長プレゼン準備 | Admin Dashboard Link | デモ画面から管理者ダッシュボード（/admin）へ直接遷移できるリンクをヘッダーとフッター（Learn More）に実装し、FastAPI/静的環境での親和性を高める | AIエージェント | Antigravity + Gemini | ヘッダーとフッターに/adminリンクを追加し、静的ホスティング（GitHub Pages）用にモックデータへ切り替わる admin/index.html を新設して404を解消 |
 | **T684** | 6. 社長プレゼン準備 | インフラ | requirements.txt 依存ドリフトの監視・freeze | Claude+Codex | VSCode + Claude Code | dependencyのfreezeとupgrade禁止期間の運用監視 |
-| **T685** | 6. 社長プレゼン準備 | コンプライアンス | 個人情報同意書テンプレート作成とクローズド運用設計 | 人間+Claude | VSCode + Claude Code | 社長承認後の同意書テンプレート整備と運用ルールの策定 |
-| **T686** | 6. 社長プレゼン準備 | セキュリティ | デモ環境へのbasic authまたはIP制限の導入設計 | Codex | VSCode + Codex | 社長承認後のデモ環境認証/アクセス制限実装 |
-| **T687** | 6. 社長プレゼン準備 | コスト | 3 AIツール並走時のquotaメーター監視と超過レポート設計 | Codex | VSCode + Codex | 社長承認後のコスト上限設定および優先laneポリシー決定 |
+| **T685** | 7. 次期開発・運用 | コンプライアンス | 個人情報同意書テンプレート作成とクローズド運用設計 | 人間+Claude | VSCode + Claude Code | 社長承認後の同意書テンプレート整備と運用ルールの策定 |
+| **T686** | 7. 次期開発・運用 | セキュリティ | デモ環境へのbasic authまたはIP制限の導入設計 | Codex | VSCode + Codex | 社長承認後のデモ環境認証/アクセス制限実装 |
+| **T687** | 7. 次期開発・運用 | コスト | 3 AIツール並走時のquotaメーター監視と超過レポート設計 | Codex | VSCode + Codex | 社長承認後のコスト上限設定および優先laneポリシー決定 |
 | **T688** | 6. 社長プレゼン準備 | コスト | Antigravity 2.0 Managed Agents料金・利用条件 of 確認と監視 | Codex+Claude | VSCode + Codex | 公式情報に基づくManaged Agents料金監視体制の整備 |
-| **T689** | 6. 社長プレゼン準備 | インフラ | 3-tool体制開発手順書による属人性軽減と再現性確保 | Claude | VSCode + Claude Code | マルチAIワークフロー手順書の継続更新と属人性排除 |
+| **T689** | 7. 次期開発・運用 | インフラ | 3-tool体制開発手順書による属人性軽減と再現性確保 | Claude | VSCode + Claude Code | マルチAIワークフロー手順書の継続更新と属人性排除 |
 | **T690** | 6. 社長プレゼン準備 | インフラ | Codexセッション設定のリポジトリレベル固定化(.codex/config.toml) | Codex | VSCode + Codex | 設定ファイルの適用によるセッションドリフト防止 |
-| **T691** | 6. 社長プレゼン準備 | インフラ | NotebookLM同期スクリプトへのGemini explicit context caching導入検証 | Codex | VSCode + Codex | Google公式caching docsに沿ったTTL指定によるコスト削減PoC |
-| **T692** | 6. 社長プレゼン準備 | インフラ | Codex skills機能による定型運用コマンド(3 skills)のリポジトリレベルパッケージ化 | Codex | VSCode + Codex | 1 job = 1 skill 規則に従った自動化パッケージ整備 |
+| **T691** | 7. 次期開発・運用 | インフラ | NotebookLM同期スクリプトへのGemini explicit context caching導入検証 | Codex | VSCode + Codex | Google公式caching docsに沿ったTTL指定によるコスト削減PoC |
+| **T692** | 7. 次期開発・運用 | インフラ | Codex skills機能による定型運用コマンド(3 skills)のリポジトリレベルパッケージ化 | Codex | VSCode + Codex | 1 job = 1 skill 規則に従った自動化パッケージ整備 |
 | **T693** | 6. 社長プレゼン準備 | インフラ | Antigravity CLIの機能評価と動作検証 | Antigravity | Antigravity + Gemini | Google公式Docsに基づくCLI実機検証と可否判断 |
 | **T694** | 6. 社長プレゼン準備 | ドキュメント | 主要docs内のmarkdownlint指摘事項(22件)の一括自動修正 | Codex | VSCode + Codex | markdownlint --fixによる構造不整合の一括解消 |
-| **T695** | 6. 社長プレゼン準備 | 連携 | Antigravity hooks機能によるsyncスクリプト自動起動の可否検証 | Codex+Antigravity | VSCode + Codex | 自動化トリガーのPoCとマルチAI自動同期パイプライン整備 |
-| **T696** | 6. 社長プレゼン準備 | インフラ | PPTX生成スクリプトへのCanvaインポート用ミニマルスタイル追加 | Codex | VSCode + Codex | --style canva-exportオプションによるCanva向け平滑PPTX生成 |
-| **T697** | 6. 社長プレゼン準備 | インフラ | Playwrightによるデモ画面スクショ自動取得スクリプトの実装 | Codex | VSCode + Codex | 複数画面の定期自動キャプチャによるスライド素材作成自動化 |
+| **T695** | 7. 次期開発・運用 | 連携 | Antigravity hooks機能によるsyncスクリプト自動起動の可否検証 | Codex+Antigravity | VSCode + Codex | 自動化トリガーのPoCとマルチAI自動同期パイプライン整備 |
+| **T696** | 7. 次期開発・運用 | インフラ | PPTX生成スクリプトへのCanvaインポート用ミニマルスタイル追加 | Codex | VSCode + Codex | --style canva-exportオプションによるCanva向け平滑PPTX生成 |
+| **T697** | 7. 次期開発・運用 | インフラ | Playwrightによるデモ画面スクショ自動取得スクリプトの実装 | Codex | VSCode + Codex | 複数画面の定期自動キャプチャによるスライド素材作成自動化 |
 | **T698** | 6. 社長プレゼン準備 | インフラ | Figma MCPを用いたワイヤーフレーム(10/20パターン)の自動流し込み | Claude Code | VSCode + Claude Code | Figma API/MCP連携によるワイヤーフレームフレーム一括構築 |
 
 ---
