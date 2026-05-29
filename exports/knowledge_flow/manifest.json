@@ -1,15 +1,15 @@
 {
-  "generated_at_jst": "2026-05-29T00:23:31+09:00",
+  "generated_at_jst": "2026-05-29T23:25:42+09:00",
   "summary": {
-    "total": 98,
-    "done": 98,
+    "total": 113,
+    "done": 99,
     "active": 0,
-    "todo": 0,
-    "completion_rate": 100,
-    "phase6_total": 83,
-    "phase6_done": 83,
+    "todo": 14,
+    "completion_rate": 88,
+    "phase6_total": 98,
+    "phase6_done": 84,
     "phase6_active": 0,
-    "phase6_todo": 0
+    "phase6_todo": 14
   },
   "artifacts": [
     "exports/knowledge_flow/notebooklm_source_pack.md",

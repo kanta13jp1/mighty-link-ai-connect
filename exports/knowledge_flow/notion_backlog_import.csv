@@ -39,3 +39,5 @@ Notion MCPでPPTX生成・Drive共有・残課題を証跡ページへ記録,T66
 Slack CLIと送信MCPの利用可否を確認し、投稿案と残課題を整理,T662,Slack MCP/CLI到達性証跡,完了,Codex,2026-05-22,2026-05-22,ローカルslack CLI未検出、送信MCP未露出を確認し、実送信は投稿先・権限確認後の残課題としてIssue #2/T653に集約する
 PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認,T663,6/2資料最終パックレビュー,完了,人間 + Codex,2026-05-30,2026-06-01,社長打ち合わせ前に公開URL・PPTX・Google Drive資料・WBS同期・残課題の見せ方を最終確認する
 Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定,T664,三ツール開発フロー整備,完了,Codex,2026-05-22,2026-05-22,公式Docs確認、WBS 1件完了、Sheets課題管理表・QA表同期、commit/push/main/master反映までのセッションゲートをAGENTS.md/CLAUDE.md/手順書に反映する
+NotebookLM同期スクリプトへのGemini explicit context caching導入検証,T691,インフラ,未着手,Codex,2026-05-22,2026-06-09,Google公式caching docsに沿ったTTL指定によるコスト削減PoC
+Antigravity hooks機能によるsyncスクリプト自動起動の可否検証,T695,連携,未着手,Codex+Antigravity,2026-05-22,2026-06-09,自動化トリガーのPoCとマルチAI自動同期パイプライン整備

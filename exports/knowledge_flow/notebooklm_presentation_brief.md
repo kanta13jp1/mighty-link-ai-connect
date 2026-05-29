@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-05-29 00:23:31 UTC+09:00
+Generated: 2026-05-29 23:25:42 UTC+09:00
 
 ## How to use this in NotebookLM
 
@@ -36,18 +36,16 @@ and which development knowledge-flow tools should become official.
 
 ## WBS Snapshot
 
-- Total tasks: 98
-- Done: 98
+- Total tasks: 113
+- Done: 99
 - In progress: 0
-- Not started: 0
-- Completion rate: 100%
-- CEO presentation phase tasks: 83
-- CEO presentation phase done: 83
+- Not started: 14
+- Completion rate: 88%
+- CEO presentation phase tasks: 98
+- CEO presentation phase done: 84
 
 ## Latest Knowledge-flow / CEO-demo Tasks
 
-- T632: GitHub Issues連携 / GitHub Issuesに6/2社長デモ向け連携タスクを起票 / 完了
-- T633: GitHub Project連携 / GitHub Project board取得・配置のCLI権限確認 / 完了
 - T634: NotebookLM実連携 / NotebookLM投入用Source PackをGoogle Drive/Docsへアップロード / 完了
 - T635: Notion実連携 / Notion MCPで社長デモ用の連携証跡ページを作成 / 完了
 - T636: Slack連携確認 / Slack CLI/MCPの利用可否と投稿先確認フローを整理 / 完了
@@ -70,6 +68,8 @@ and which development knowledge-flow tools should become official.
 - T662: Slack MCP/CLI到達性証跡 / Slack CLIと送信MCPの利用可否を確認し、投稿案と残課題を整理 / 完了
 - T663: 6/2資料最終パックレビュー / PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認 / 完了
 - T664: 三ツール開発フロー整備 / Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定 / 完了
+- T691: インフラ / NotebookLM同期スクリプトへのGemini explicit context caching導入検証 / 未着手
+- T695: 連携 / Antigravity hooks機能によるsyncスクリプト自動起動の可否検証 / 未着手
 
 ## Recommended Slide Story
 
