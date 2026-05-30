@@ -287,6 +287,111 @@ SCHEDULE_EVENTS = [
         "end_time": "2026-06-02T14:00:00",
         "time_zone": "Asia/Tokyo",
         "is_all_day": False
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】requirements.txt 依存ドリフトの監視・freeze",
+        "description": "dependencyのfreezeとupgrade禁止期間の運用監視。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-05-31",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】フェーズ7: 個人情報同意書テンプレート作成と運用設計",
+        "description": "社長承認後の同意書テンプレート整備と運用ルールの策定。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-06-17",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】フェーズ7: デモ環境アクセス制限(basic auth/IP制限)導入設計",
+        "description": "社長承認後のデモ環境認証/アクセス制限実装。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-06-10",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】フェーズ7: 3 AIツール並走quotaメーター監視設計",
+        "description": "社長承認後のコスト上限設定および優先laneポリシー決定。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-06-17",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】Antigravity 2.0 Managed Agents料金・利用条件確認",
+        "description": "公式情報に基づくManaged Agents料金監視体制の整備。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-05-31",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】フェーズ7: 3-tool体制開発手順書による属人性軽減と再現性確保",
+        "description": "マルチAIワークフロー手順書の継続更新と属人性排除。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-06-03",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】Codexセッション設定リポジトリレベル固定化",
+        "description": "設定ファイルの適用によるセッションドリフト防止。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-05-31",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】フェーズ7: NotebookLM同期スクリプトGemini context caching導入検証",
+        "description": "Google公式caching docsに沿ったTTL指定によるコスト削減PoC。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-06-10",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】フェーズ7: Codex skills定型運用コマンドパッケージ化",
+        "description": "1 job = 1 skill 規則に従った自動化パッケージ整備。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-06-17",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】Antigravity CLI機能評価と動作検証",
+        "description": "Google公式Docsに基づくCLI実機検証と可否判断。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-05-31",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】主要docs内markdownlint指摘事項一括自動修正",
+        "description": "markdownlint --fixによる構造不整合の一括解消。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-05-31",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】フェーズ7: Antigravity hooks自動起動可否検証",
+        "description": "自動化トリガーのPoCとマルチAI自動同期パイプライン整備。",
+        "start_date": "2026-05-22",
+        "end_date": "2026-06-10",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】フェーズ7: Canvaインポート用PPTXミニマルスタイル追加",
+        "description": "--style canva-exportオプションによるCanva向け平滑PPTX生成。",
+        "start_date": "2026-05-23",
+        "end_date": "2026-06-10",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】フェーズ7: Playwrightによるデモ画面スクショ自動取得スクリプト実装",
+        "description": "複数画面の定期自動キャプチャによるスライド素材作成自動化。",
+        "start_date": "2026-05-23",
+        "end_date": "2026-06-10",
+        "is_all_day": True
+    },
+    {
+        "summary": "【Mighty Skill-Bridge】Figma MCPを用いたワイヤーフレーム自動流し込み",
+        "description": "Figma API/MCP連携によるワイヤーフレームフレーム一括構築。",
+        "start_date": "2026-05-24",
+        "end_date": "2026-05-31",
+        "is_all_day": True
     }
 ]
 
@@ -316,6 +421,21 @@ EVENT_WBS_IDS_BY_INDEX = {
     23: ["T659", "T660"],
     24: ["T664"],
     25: ["T665"],
+    26: ["T684"],
+    27: ["T685"],
+    28: ["T686"],
+    29: ["T687"],
+    30: ["T688"],
+    31: ["T689"],
+    32: ["T690"],
+    33: ["T691"],
+    34: ["T692"],
+    35: ["T693"],
+    36: ["T694"],
+    37: ["T695"],
+    38: ["T696"],
+    39: ["T697"],
+    40: ["T698"],
 }
 
 COMPLETED_STATUS = "完了"
