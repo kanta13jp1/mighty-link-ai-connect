@@ -55,7 +55,7 @@
   - **リスク登録・triage**: blocker の優先順位付け、人間ブロックの切り出し
   - **PR レビュー**: Codex / Antigravity の PR を 3rd party 視点で review
   - **memory / knowledge management**: `MEMORY.md` / Obsidian vault / NotebookLM のメタ運用
-- **制約**: 
+- **制約**:
   - `data/WBS.tsv` への直接書き込み禁止 (Codex のみ)。提案は PR コメントで。
   - `scripts/*.py` / `src/*` への大規模変更は原則しない (Codex/Antigravity のレーン)
   - Gemini API を直接叩かない
@@ -383,8 +383,8 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-05-22 | Codex | Light refresh 7th pass: Amazon/Apple/Obsidian/Unityを公式Docs確認範囲へ追加し、Seedance動画UI刷新とT667完了を反映 |
 | 2026-05-23 | Codex | Light refresh: Seedance公式ページのナビ/フッター/スクロール構造をMighty独自UIへ反映し、T676完了を記録 |
 
-
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
+
 本プロジェクトでは、3-tool体制の並走および将来的な Google Vertex AI Agent Builder (Managed Agents) の導入に備え、以下のコスト管理ポリシーを適用しています。
 
 - **料金ポリシー原本**: [docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md](ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md)

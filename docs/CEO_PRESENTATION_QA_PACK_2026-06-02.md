@@ -49,6 +49,7 @@
 **関連論点**: [D-2 対象ユーザー](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-2-対象ユーザー-フェルソナ)
 
 **回答方針**: A (社内利用者) / B (既存顧客) / C (見込み顧客) / D (A+B 併用) の 4 択を提示。サービス方向性により推奨が変わる旨を補足:
+
 - 方向性 A (AI フィット診断) → 社内営業 + 人材担当が最初
 - 方向性 B (PM 支援) → 経営陣 / PM 層
 - 方向性 C (PoC 構築) → 既存顧客 / 見込み顧客の開発責任者
@@ -62,6 +63,7 @@
 **関連論点**: D-1 (補足質問)
 
 **回答方針**: マイティ・リンクのコアビジョン「人 × ビジネス × テクノロジーを力強く繋ぐ」を体現する点 (README.md, ANTIGRAVITY_GUIDE.md:5) を軸に、以下の差別化軸を提示:
+
 1. **マルチモーダル評価** — Gemini APIの現行マルチモーダル対応モデルで経歴書 PDF + ポートフォリオ画像 + 動画を一体評価 ([requirements.md:12, 28-37](requirements.md))
 2. **4 軸スコアリング** — Skill / Culture / Growth / Performing で単純キーワードマッチを超える
 3. **Workspace ネイティブ統合** — Sheets / Calendar / Drive と本日確認できるレベルの実連携
@@ -75,6 +77,7 @@
 **関連論点**: [D-3 最優先機能](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-3-最優先機能-62--616-の-2-週間で作るもの)
 
 **回答方針**: 「**社内パイロットなら 6/16 (2 週間後) から開始可能**」と明示。3 つの段階を提示:
+
 - 6/16: 社内パイロット
 - 7/14: 既存顧客 3 社へのクローズドベータ
 - 9/1: 限定的な公開 (方向性により変動)
@@ -100,6 +103,7 @@
 **関連論点**: [D-4 AI エンジン選定方針](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-4-ai-エンジン選定方針-2026-05-22-新規論点)
 
 **回答方針**: 「**開発体制では既に 3-tool 並走中**」と説明 ([MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md)):
+
 - Antigravity + Gemini (主開発)
 - VSCode + Codex / GPT-5.5 (実装 PR / sync スクリプト)
 - VSCode + Claude Code (architect / docs / 調停)
@@ -137,6 +141,7 @@
 **関連論点**: [O-2 課金モデル仮説](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#o-2-課金モデル仮説)
 
 **回答方針**: **現状 = ほぼゼロ** (Google AI Pro / Ultra アカウントの baseline quota 内、Workspace は既存契約)。本格運用時の見積は方向性により以下のレンジ:
+
 - 方向性 A (AI 診断): 月 ¥10,000-¥50,000 (Gemini API + Drive 容量)
 - 方向性 B (PM 支援): 月 ¥5,000-¥30,000 (Workspace 中心、AI 使用控えめ)
 - 方向性 C (PoC 構築): 月 ¥30,000-¥150,000 (案件数に比例)
@@ -160,6 +165,7 @@
 **関連論点**: 関連 D-2 / O-4 / [運用論点 T606](CEO_PRESENTATION_PREP_2026-06-02.md)
 
 **回答方針**: 「**現状の WBS 更新者は寛太 + Codex レーン**」と明示。3-tool 体制下で:
+
 - WBS.tsv 書き込み = Codex のみ ([MULTI_AI_WORKFLOW.md 競合解決ルール](MULTI_AI_WORKFLOW.md))
 - Sheets 同期 = `python scripts/sync_wbs_to_sheets.py` (自動化済)
 - 進捗確認 = 社長は Sheets / Calendar を見るだけで良い
@@ -185,6 +191,7 @@
 **関連論点**: [T622 権限・情報管理](CEO_PRESENTATION_PREP_2026-06-02.md), 関連 [D-5 公開範囲](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-5-公開範囲)
 
 **回答方針**: 4 重防御を即座に提示:
+
 1. **公開 URL は限定共有** (社長共有 URL のみ、外部公開禁止)
 2. **OAuth は Workspace アカウント `k-umezawa@ml-mightylink.com` 固定** ([T647 完了](data/WBS.tsv), `python scripts/verify_google_workspace_account.py` で検証)
 3. **認証情報マスキング有効** (ANTIGRAVITY_GUIDE.md:61-62 Credential Masking)
@@ -199,6 +206,7 @@
 **関連論点**: [F-1 / F-2 バックアップ](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md), [T613 デモバックアップ](data/WBS.tsv)
 
 **回答方針**: 「**5 重のバックアップ導線を準備済**」と即答 ([DECISION_PACK デモ障害時の代替導線](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md#デモ障害時の代替導線)):
+
 1. ローカル `python src/app.py` で起動
 2. `data/WBS.tsv` を直接見せる
 3. `exports/mighty_development_plan.ics` で Calendar 内容説明
@@ -268,6 +276,7 @@
 **関連論点**: [T615 決定後ロードマップ枠](data/WBS.tsv), [O-1 WBS UI 内製化](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#o-1-wbs-ui-内製化)
 
 **回答方針**: 「**方向性別に 3 つのロードマップ枠を準備済**」(T615 は次セッション完遂予定)。
+
 - 方向性 A → AI スコア根拠 UI + 案件ストック管理
 - 方向性 B → WBS UI 内製化 + Sheets 進捗自動取り込み
 - 方向性 C → 顧客名差し替えテンプレート機能
@@ -308,6 +317,7 @@
 4. **6/9 までに回答**: Codex レーンが事実関係を調査、Claude Code が回答を docs 化、寛太から社長へ送付。
 
 **禁止事項**:
+
 - 即興で見立てを答えて後で訂正する (信頼コスト大)
 - 「持ち帰り検討します」とだけ言って期日を切らない (フォローアップ抜け)
 

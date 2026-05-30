@@ -10,22 +10,30 @@
 Managed Agents の実行コストは、以下の複数の課金次元（Billing Dimensions）の合算によって pay-as-you-go（従量課金）で計算されます。
 
 ### ① Agent Engine Runtime (コンピューティング & メモリ)
+
 エージェントがアクティブに稼働・処理しているランタイム時間（Active vCPU-hour）に対して課金されます。**アイドル状態（待機時）は課金されません**。
+
 - **vCPU 料金**: `$0.0864` / vCPU-hour
 - **メモリ料金**: `$0.0090` / GB-hour
 
 ### ② Sessions & Memory Bank (セッション追跡 & 長期記憶)
+
 エージェントが会話履歴（Session）を維持したり、長期記憶（Memory Bank）へイベントを格納・検索するたびに課金されます。
+
 - **セッションイベント料金**: `$0.25` / 1,000 events
 
 ### ③ Vertex AI Search (グラウンディング & ドキュメント検索)
+
 ドキュメント（経歴書、docs、仕様書）を読み込んで回答を生成（RAG/Grounding）する検索クエリ数に応じて課金されます。
+
 - **Standard Search (標準検索)**: `$1.50` / 1,000 queries
 - **Enterprise Search (生成要約付き)**: `$4.00` / 1,000 queries
 - **Conversational Queries (会話型RAG)**: `$6.00` / 1,000 requests
 
 ### ④ Foundation Model Tokens (Gemini モデル使用料)
+
 エージェントの内部思考やプロンプト処理に使用される Gemini 3.1 Pro などのトークン使用料です（Gemini API 料金に準拠）。
+
 - **Gemini 3.1 Pro (入力)**: `$0.00125` / 1,000 tokens (128k context)
 - **Gemini 3.1 Pro (出力)**: `$0.00375` / 1,000 tokens
 
@@ -59,7 +67,9 @@ Managed Agents の実行コストは、以下の複数の課金次元（Billing 
 | **合計想定コスト** | - | - | **$47.40** / 月 (約 7,110円) |
 
 ### 🚨 監視アラート (Tier Switch) しきい値
+
 Express Mode の終了時、または Enterprise への正式採用に伴う課金開始の際、予期せぬ超過を防ぐための監視ルールを適用します。
+
 1. **日次予算アラート (GCP Billing Alert)**: プロジェクト全体で **1日あたり $5.00**、または**月間 $100.00** に到達した時点で自動メール通知および API 遮断（サーキットブレーカー）。
 2. **セクションイベント限界値**: 1つの会話セッション中の履歴記憶イベントが **50件** を超えた場合、自動的に古いコンテキストを要約し、Session API 課金トークンを抑制。
 

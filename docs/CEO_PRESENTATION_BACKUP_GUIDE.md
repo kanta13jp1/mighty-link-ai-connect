@@ -9,12 +9,15 @@
 もし GitHub Pages にデプロイされた公開URL [https://kanta13jp1.github.io/mighty-link-ai-connect/](https://kanta13jp1.github.io/mighty-link-ai-connect/) がネットワーク切断等の理由で開けない場合、ローカル環境でモックアップサーバーを即座に起動してデモを継続します。
 
 ### ■ ローカル起動コマンド
+
 1. リポジトリのルートディレクトリで、PowerShellを開きます。
 2. 以下のコマンドを実行して、AIモックを強制した状態でローカルサーバーを起動します。
+
    ```powershell
    $env:AI_FORCE_MOCK="1"
    python src/app.py
    ```
+
    *(※ Linux/macOS等の bash 環境の場合は `AI_FORCE_MOCK=1 python src/app.py` を実行)*
 3. 起動後、ブラウザで [http://127.0.0.1:8000/](http://127.0.0.1:8000/) にアクセスします。
 4. これにより、完全にローカルかつ無停止で Seedance風 UI デモが正常動作します。
@@ -37,6 +40,7 @@ PCやサーバーの機能が完全に停止している、あるいはローカ
 Google Calendar APIの不具合やネットワーク規制により、開発計画カレンダー（Googleカレンダー）が同期されない、または表示されない場合、ローカルに書き出されているICSファイルから手動でカレンダーを復旧・再現します。
 
 ### ■ ICS手動インポート手順
+
 1. パソコンで [Google カレンダー](https://calendar.google.com/) を開きます。
 2. 右上の設定アイコン（歯車マーク） ➔ **[設定]** をクリックします。
 3. 左側のメニューで **[インポート / エクスポート]** をクリックします。

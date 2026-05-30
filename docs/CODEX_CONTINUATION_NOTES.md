@@ -288,9 +288,9 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 
 連携URL:
 
-- Google Docs: https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit
-- Notion: https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951
-- GitHub Issues: https://github.com/kanta13jp1/mighty-link-ai-connect/issues
+- Google Docs: <https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit>
+- Notion: <https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951>
+- GitHub Issues: <https://github.com/kanta13jp1/mighty-link-ai-connect/issues>
 
 残タスク:
 
@@ -315,7 +315,7 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 
 - `scripts/generate_knowledge_flow_demo.py` に `notebooklm_presentation_brief.md` / `.txt` 生成を追加。
 - Google Drive MCPで `exports/knowledge_flow/notebooklm_presentation_brief.txt` をGoogle Docsへ変換。
-- Presentation Brief URL: https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit
+- Presentation Brief URL: <https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit>
 - GitHub Issue #7 `NotebookLMでプレゼン資料たたき台を作成する` を起票。
 - `gh auth refresh -h github.com -s read:project -s project` を再試行したが、2分でタイムアウト。
 - GitHub Issue #8 `GitHub Project OAuthスコープ復旧を完了する` を起票。
@@ -375,8 +375,8 @@ Google DocsホームでNotebookLM用資料が `k-umezawa@ml-mightylink.com` 側�
 
 Workspace Google Docs:
 
-- Source Pack: https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit
-- Presentation Brief: https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit
+- Source Pack: <https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit>
+- Presentation Brief: <https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit>
 
 同期・検証:
 
@@ -410,9 +410,9 @@ AIエージェントがNotebookLMから要約された設計情報・ロード�
 
 - NotebookLM docs manifest: `exports/knowledge_flow/notebooklm_docs_manifest.json`
 - NotebookLM CLI next steps: `exports/knowledge_flow/notebooklm_cli_next_steps.md`
-- Notion: https://www.notion.so/3671d736b9db8164b46dc143befa29eb
-- GitHub Issue #9: https://github.com/kanta13jp1/mighty-link-ai-connect/issues/9
-- GitHub Issue #10: https://github.com/kanta13jp1/mighty-link-ai-connect/issues/10
+- Notion: <https://www.notion.so/3671d736b9db8164b46dc143befa29eb>
+- GitHub Issue #9: <https://github.com/kanta13jp1/mighty-link-ai-connect/issues/9>
+- GitHub Issue #10: <https://github.com/kanta13jp1/mighty-link-ai-connect/issues/10>
 
 同期・検証:
 

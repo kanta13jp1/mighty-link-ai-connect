@@ -5,14 +5,17 @@
 - 決定されたサービス方向性: A
 
 ## 決定事項
+
 1. サービス方向性は「A: AIフィット診断支援」とする。
 2. 認証層はベーシック認証を最優先で導入する。
 
 ## 保留事項・宿題 (新規課題)
+
 - [ ] [compliance][HIGH] 経歴書のマスキング法務合意確認 ・ 個人情報漏洩のリスク ・ 外部のコンプラ専門弁護士とNDA付きでリーガルレビューを行う (オーナー:人間+Claude, WBS:T710, Docs:docs/requirements.md)
 - [ ] [cost][MED] APIコストの月額制限の検証 ・ 予算超過による実稼働停止リスク ・ Daily usage ledgersからGemini API制限閾値と通知フラグをテスト環境で調整する (オーナー:Codex, WBS:T707, Docs:docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md)
 
 ## 質疑応答 (新規QA)
+
 - Q: 複数エンジニアのスキルgapを可視化する際、3人以上の同時比較は可能か？
 - A: [回答方針] UIの視認性から最大5名までの横並び比較に対応する。[保留時の対応] 3人以上はタブ切り替え表示に切り替える。[カテゴリ] service-direction [Docs] docs/wireframes/README.md
 - Q: AI診断の合格基準（スコアリング）のアルゴリズムは社長側で編集できるか？

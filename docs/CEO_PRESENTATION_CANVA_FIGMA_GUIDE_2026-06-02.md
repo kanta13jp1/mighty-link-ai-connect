@@ -11,7 +11,7 @@
 
 [exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx](../exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx) (NotebookLM CLI + python-pptx 自動生成、8 枚) を、Canva (推奨) または Figma のテンプレートを使って **デザイン的に作り直す** ための完全手順書。
 
-ユーザー (kanta13jp@gmail.com) が 2026-05-23 に「FigmaかCanvaのTemplateで作成し直すことはできますか？」と要望。本書は (1) Canva PPTX import + テンプレート適用フロー、(2) Figma Slides 代替パス、(3) **全 8 枚のコピペ専用カード** を提供し、社長プレゼン当日のクオリティを劇的に高める。
+ユーザー (<kanta13jp@gmail.com>) が 2026-05-23 に「FigmaかCanvaのTemplateで作成し直すことはできますか？」と要望。本書は (1) Canva PPTX import + テンプレート適用フロー、(2) Figma Slides 代替パス、(3) **全 8 枚のコピペ専用カード** を提供し、社長プレゼン当日のクオリティを劇的に高める。
 
 Claude Code は実際に Canva/Figma を直接操作しないため、**人間 (寛太) または Antigravity Browser Agent** が本書に従って差し替えを実行する handoff 形式とする (HANDOFF-14)。
 
@@ -39,7 +39,7 @@ Claude Code は実際に Canva/Figma を直接操作しないため、**人間 (
 | Step | アクション | 所要 |
 | --- | --- | --- |
 | 1 | [exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx](../exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx) をローカル PC にダウンロード | 1 分 |
-| 2 | Canva (https://www.canva.com/) を開き、`k-umezawa@ml-mightylink.com` (or `kanta13jp@gmail.com`) でログイン | 1 分 |
+| 2 | Canva (<https://www.canva.com/>) を開き、`k-umezawa@ml-mightylink.com` (or `kanta13jp@gmail.com`) でログイン | 1 分 |
 | 3 | トップ右上の「アップロード」→「メディアをアップロード」で PPTX ファイルをドラッグ＆ドロップ | 2 分 |
 | 4 | インポート完了後、自動でプレゼン編集画面に遷移。8 枚のスライド全てがテキスト保持で取り込まれていることを確認 | 1 分 |
 | 5 | 左サイドバー「テンプレート」タブで以下キーワード検索: `dark technology AI`、`サイバー`、`ネオン プレゼン`、`tech startup pitch` | 3 分 |
@@ -92,13 +92,13 @@ Canva ではなく Figma を選ぶ理由:
 
 - **より細かいデザイン制御** — Auto Layout / Constraints / Variants
 - **既存の Figma デザインシステム流用** — マイティ・リンクが Figma を使っている場合
-- **2026 リリースの Figma Slides** — Figma がプレゼン専用機能を出した (https://www.figma.com/slides/)
+- **2026 リリースの Figma Slides** — Figma がプレゼン専用機能を出した (<https://www.figma.com/slides/>)
 
 ### 手順
 
 | Step | アクション |
 | --- | --- |
-| 1 | Figma (https://www.figma.com/) を開き、ログイン |
+| 1 | Figma (<https://www.figma.com/>) を開き、ログイン |
 | 2 | 「+ Create new」→「Figma Slides」 (or プレゼンテンプレート) で新規作成 |
 | 3 | 上記「2. Mighty Skill-Bridge ブランドカラー設定」を Styles に登録 |
 | 4 | 後述「8 枚コピペカード」の各スライドを Figma フレームに転記 |
@@ -114,6 +114,7 @@ Canva ではなく Figma を選ぶ理由:
 ## 5. 8 枚コピペ専用カード (Canva / Figma にそのまま貼る)
 
 各カードは:
+
 - **スライドタイトル** (h1 相当)
 - **要点 3 つ** (箇条書き)
 - **話すメモ** (寛太がスピーカーノートに入れる)
@@ -129,6 +130,7 @@ Canva ではなく Figma を選ぶ理由:
 **Title**: 本日決めたいこと — 方針・優先順位・次アクション
 
 **Key Points** (3 つ):
+
 - 実際の企画・サービス内容の最終決定ではなく、**今後の方向性と優先順位、次アクション**を決める場
 - 現在までのプロトタイプと開発基盤の **「実際にやった状態」** を共有
 - 決定事項を打ち合わせ直後に **WBS / Sheets / Calendar へ即時反映** することの合意
@@ -137,6 +139,7 @@ Canva ではなく Figma を選ぶ理由:
 > 本日は最終的なサービス内容の発表ではなく、社長に今後の方向性を決めていただくための判断材料と、開発基盤の到達点を見ていただく場として設定しました。本日の決定事項は、そのままシステムへ即時反映できる準備を整えています。
 
 **見せる証跡**:
+
 - 本日のアジェンダ (PRESHARE_MEMO 当日アジェンダ短文の引用)
 
 **社長への質問**:
@@ -151,6 +154,7 @@ Canva ではなく Figma を選ぶ理由:
 **Title**: 現在の到達点と公開デモ — Seedance シネマティック UI 完成
 
 **Key Points**:
+
 - **縦統合型シネマティックダッシュボードへ刷新した UI** で、Seedance API 生成の最上部ブランドループ動画 + 非同期化された下部動画プレビューを実装
 - 動画生成の非同期待機・ブラウザ側ポーリング対応、外部 API 課金へのガード機能 (管理ダッシュボード `/admin`) の実装
 - AI 制限時のフォールバック + 公開 URL 保護 (Public Demo Guard) + Favicon / Chrome DevTools 対応など開発環境の洗練も完了
@@ -159,6 +163,7 @@ Canva ではなく Figma を選ぶ理由:
 > 実際に公開 URL で動くデモをご覧ください。Seedance 風の縦統合型シネマティック UI に刷新し、Seedance API で生成したブランドループ動画を配置しました。経歴書と案件票からフィット診断を行い、非同期での動画生成や意図しない外部 API への課金ガード、AI 制限時のフォールバック設計も備えており、デモ環境の安定性が向上しています。
 
 **見せる証跡**:
+
 - 公開 URL: `https://kanta13jp1.github.io/mighty-link-ai-connect/`
 - 外部 API 利用ダッシュボード: `http://127.0.0.1:8000/admin`
 
@@ -174,6 +179,7 @@ Canva ではなく Figma を選ぶ理由:
 **Title**: Google Workspace 連携 — 5 タブ Sheets + Calendar アクションビュー
 
 **Key Points**:
+
 - WBS / サマリーに加え、**遅延タスクや期限間近の予定を色で可視化するガントチャート風 WBS Timeline**、「課題管理表」「QA 表」を含む **計 5 タブ Sheets 一括自動生成**
 - Google Calendar 連携で **完了済みイベントを自動削除**しアクションビューとして運用
 - OAuth アカウント検証 (`k-umezawa@ml-mightylink.com`) によるセキュアな API 連携固定
@@ -182,6 +188,7 @@ Canva ではなく Figma を選ぶ理由:
 > 開発の進捗や発生した課題・QA は、遅延が一目でわかるガントチャート風のタイムラインを含む Google スプレッドシートの 5 タブに自動同期されます。カレンダーは完了した予定が自動で削除されるため、これからやるべきアクションが明確になります。これにより経営報告と進捗管理が大幅に高速化されます。
 
 **見せる証跡**:
+
 - Google Sheets ID: `1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8`
 - Google Calendar: `Mighty Skill-Bridge 開発計画`
 
@@ -197,6 +204,7 @@ Canva ではなく Figma を選ぶ理由:
 **Title**: 開発ナレッジ連携 — NotebookLM / Notion / GitHub / Slack / Obsidian
 
 **Key Points**:
+
 - NotebookLM での資料要約・プレゼン作成 (**本説明用の PPTX も自動生成して Drive 共有済み**)
 - Notion での連携証跡ページ作成 + GitHub Issues でのタスク管理
 - Slack 投稿案、Obsidian ローカル vault 等の連携成果物生成
@@ -205,6 +213,7 @@ Canva ではなく Figma を選ぶ理由:
 > 開発中の知識や議事録を NotebookLM や Notion 等に連携する仕組みを実際に作りました。実は、このプレゼンの構成案や PPTX 資料自体も NotebookLM に入力資料を読み込ませて自動で作成しています。**さらに本日の差し替えバージョンは Canva のプレミアムテンプレートで再デザインしています。**
 
 **見せる証跡**:
+
 - 自動生成 PPTX (Drive): `https://docs.google.com/presentation/d/1XGHnQHBpJyyhh_Y3I2lq2UThPRC-2dcL/edit`
 - Notion 証跡ページ: `https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951`
 
@@ -220,6 +229,7 @@ Canva ではなく Figma を選ぶ理由:
 **Title**: サービス方向性 3 択 — A / B / C のどれを育てるか
 
 **Key Points**:
+
 - **方向性 A**: AI フィット診断支援 (想定対象: 営業 / 人材担当 / エンジニア)
 - **方向性 B**: Workspace 連携型 PM 支援 (想定対象: 経営 / PM / 現場責任者)
 - **方向性 C**: AI PoC 高速構築支援 (想定対象: 新規事業 / 営業企画 / 開発責任者)
@@ -228,6 +238,7 @@ Canva ではなく Figma を選ぶ理由:
 > 現在のプロトタイプをどのサービスとして育てるかの選択肢です。デモでお見せしたマッチング推しなら A 案、WBS 同期推しなら B 案、開発の速さや AI 基盤推しなら C 案になります。即決が難しければ「D: 保留」で 5-7 営業日以内に追加面談で確定する選択肢もあります。
 
 **見せる証跡**:
+
 - [判断マトリクス表](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md#判断マトリクス) (DECISION_PACK の表をスクショ or 引用)
 
 **社長への質問**:
@@ -242,6 +253,7 @@ Canva ではなく Figma を選ぶ理由:
 **Title**: 運用・リスク — 公開範囲 / 個人情報 / 共有範囲
 
 **Key Points**:
+
 - プロトタイプの公開 URL の許容範囲の確認 (外部公開時は認証層の追加)
 - 個人情報 (経歴書等) の取り扱いと法務確認の要否
 - Slack や Notion へ流す情報の共有範囲の設定
@@ -250,6 +262,7 @@ Canva ではなく Figma を選ぶ理由:
 > 今後の開発と運用を進めるにあたり、情報の公開範囲やセキュリティルールを決めたいと思います。個人情報を取り扱う場合の法務確認の要否や、公開 URL への認証層追加のボーダーラインの確認です。
 
 **見せる証跡**:
+
 - Slack 進捗投稿案: [exports/knowledge_flow/slack_ceo_update.md](../exports/knowledge_flow/slack_ceo_update.md)
 - リスク登録: [data/issues_tracker.tsv](../data/issues_tracker.tsv) (R9 個人情報 / R10 公開 URL 認証層)
 
@@ -265,6 +278,7 @@ Canva ではなく Figma を選ぶ理由:
 **Title**: 6/2 以降の優先機能 + 3-tool 開発体制
 
 **Key Points**:
+
 - 最初の 2 週間で実装する **最優先機能** の決定
 - **3-tool 体制** (Antigravity / Codex / Claude Code) における API 月額コスト上限
 - 寛太の関与度とチーム拡大 (顧客 3 社同時パイロット時などの追加採用シナリオ)
@@ -273,6 +287,7 @@ Canva ではなく Figma を選ぶ理由:
 > 決定した方向性に向けて、今後の 2 週間でどこにリソースを集中するかをすり合わせたいと思います。また、AI ツールを 3 つ並走させる現在の開発体制のコスト上限や追加採用の基準についても決めさせてください。
 
 **見せる証跡**:
+
 - WBS 上の「決定後ロードマップ枠」: [CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md](CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md) (T615)
 
 **社長への質問**:
@@ -287,6 +302,7 @@ Canva ではなく Figma を選ぶ理由:
 **Title**: 次アクション — 議事録 → WBS / Calendar / 課題管理表へ即時反映
 
 **Key Points**:
+
 - 本日の **決定事項と保留事項** の整理
 - 決定された **Phase 7 の WBS、Google Calendar、課題管理表等への即時反映** の実施
 - **次回レビュー日** の設定 (隔週 30 分定例化の確認)
@@ -295,6 +311,7 @@ Canva ではなく Figma を選ぶ理由:
 > 本日決まったサービス方針や優先順位は、この議事録テンプレートに入力し、打ち合わせ直後にすぐ Phase 7 の WBS やカレンダー、課題管理表等のシステムへ即時反映させます。Codex レーンが [POST_DECISION_ROADMAP](CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md) の対応セクションを `data/WBS.tsv` に flip するだけで Phase 7 が立ち上がります。
 
 **見せる証跡**:
+
 - 議事録テンプレート: [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md 議事録テンプレート](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md#議事録テンプレート)
 - Notion 用意思決定 DB インポート CSV: [exports/knowledge_flow/notion_decision_log.csv](../exports/knowledge_flow/notion_decision_log.csv)
 
@@ -316,7 +333,7 @@ Canva ではなく Figma を選ぶ理由:
 - [ ] 各スライドの「社長への質問」がスライド下部に強調表示されていることを確認
 - [ ] スピーカーノートに各スライドの「話すメモ」を貼り付け
 - [ ] エクスポート: `mighty_skill_bridge_ceo_presentation_2026-06-02_canva.pptx` + `mighty_skill_bridge_ceo_presentation_2026-06-02_canva.pdf` を `exports/knowledge_flow/` に保存
-- [ ] Google Drive にアップロード (k-umezawa@ml-mightylink.com 所有) → URL を `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.json` の `canva_drive_url` フィールドに追加 (Codex に依頼)
+- [ ] Google Drive にアップロード (<k-umezawa@ml-mightylink.com> 所有) → URL を `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.json` の `canva_drive_url` フィールドに追加 (Codex に依頼)
 - [ ] [FINAL_REVIEW_CHECKLIST B-1 〜 B-6](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) に項目 B-7 (Canva 版 PPTX が Drive で開ける) を追加
 
 ---

@@ -107,7 +107,7 @@
 | 項目 | 月額 | 備考 |
 | --- | --- | --- |
 | Google AI Pro / Ultra (Gemini) | 既存契約に含む | quota refresh 5/27 18:48 |
-| Google Workspace (Sheets / Calendar / Drive) | 既存契約に含む | k-umezawa@ml-mightylink.com |
+| Google Workspace (Sheets / Calendar / Drive) | 既存契約に含む | <k-umezawa@ml-mightylink.com> |
 | GitHub | ¥0 (Free tier) | private repo |
 | Anthropic Claude (Claude Code) | ¥0 (1M context 期間利用中) | プロモ枠 |
 | OpenAI Codex CLI | ¥0 (ChatGPT plan 利用) | 既存 ChatGPT 契約に含む |

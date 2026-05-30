@@ -44,6 +44,7 @@ Canva v2 deck: <https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQ
 | **public demo guard** | `python scripts/verify_public_demo.py` を CI で実行 |
 
 実装時の **強い制約** (現プロト準拠):
+
 - 新 build step (webpack/vite) 追加禁止 — single HTML + CDN script のみ
 - 新 framework (React/Vue) 追加禁止 — vanilla JS
 - `src/index.html` と root `index.html` は必ず双方更新 ([scripts/render_seedance_video_demo_ui.py](../../scripts/render_seedance_video_demo_ui.py) を流用)
