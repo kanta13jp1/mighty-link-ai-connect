@@ -301,7 +301,7 @@ feat/<tool>-<wbs-id>-<slug>
 - [ ] `.codex/config.toml` で sandbox / approval / model を固定
 - [ ] `scripts/sync_docs_to_notebooklm.py` に Gemini explicit context caching を導入 (1-hour TTL)
 - [ ] Codex skills: `/sync-wbs`, `/sync-notebooklm`, `/verify-demo` を packaging
-- [ ] Antigravity 復帰後 (5/27) に Antigravity CLI 評価 (旧 Gemini CLI からの移行)
+- [x] Antigravity 復帰後 (5/27) に Antigravity CLI 評価 (旧 Gemini CLI からの移行) — [docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md](ANTIGRAVITY_CLI_EVALUATION_REPORT.md) にて完了
 
 ### Light refresh (2026-05-22 2nd pass / 24h 以内差分のみ)
 
