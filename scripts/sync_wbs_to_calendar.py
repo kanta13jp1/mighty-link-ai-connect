@@ -628,7 +628,7 @@ def find_existing_event(headers, calendar_id, ev, desired_event):
         "singleEvents": "true",
         "orderBy": "startTime",
         "timeMin": "2026-05-19T00:00:00+09:00",
-        "timeMax": "2026-06-04T23:59:59+09:00"
+        "timeMax": "2026-06-25T23:59:59+09:00"
     }
     res = requests.get(list_url, headers=headers, params=params)
     if res.status_code != 200:
@@ -670,7 +670,7 @@ def remove_events_by_summary(headers, calendar_id, summaries, reason):
             "q": summary,
             "singleEvents": "true",
             "timeMin": "2026-05-19T00:00:00+09:00",
-            "timeMax": "2026-06-04T23:59:59+09:00",
+            "timeMax": "2026-06-25T23:59:59+09:00",
         }
         res = requests.get(list_url, headers=headers, params=params)
         if res.status_code != 200:
