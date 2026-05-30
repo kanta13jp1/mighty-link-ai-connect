@@ -284,7 +284,7 @@ feat/<tool>-<wbs-id>-<slug>
 - **GPT-5.5** (2026-04-23 launch) + **GPT-5.5 Pro** が現行モデル。Codex CLI 最新は 0.133.0 (2026-05)。
 - **AGENTS.md** = レポジトリルートに置く Codex 用設定 (review behavior、coding rules)。
   - **本プロジェクトへの impact**: `AGENTS.md` 新規作成を Codex レーンに依頼推奨。内容は MULTI_AI_WORKFLOW の Codex セクションを抜粋 + `code_review.md` 参照 + `data/WBS.tsv` 排他書き込み規約。
-- **layered config**: `~/.codex/config.toml` (personal) + `.codex/config.toml` (repo) + CLI flag (一時)。本プロジェクトはまだ未導入 → 6/2 後に `.codex/config.toml` で `model` / `sandbox_mode` / `approval_policy` を固定化検討。
+- **layered config**: `~/.codex/config.toml` (personal) + `.codex/config.toml` (repo) + CLI flag (一時)。T690にてリポジトリレベルの `.codex/config.toml` を新規作成し、`model` / `sandbox_mode` / `approval_policy` を完全に固定化。
 - **Skills を 2-3 use case に scope する**。本プロジェクトでは Codex の sync スクリプトを skill 化候補 (`/sync-wbs`, `/sync-notebooklm`)。
 - **`/review` slash command** で PR を auto レビュー可。GitHub Cloud 接続で `@Codex` mention にも対応。本プロジェクトでは 6/2 後の運用安定後に検討。
 - **「One thread per coherent unit of work」**: 1 Codex セッション = 1 コヒーレントタスク。本プロジェクトの Codex セッションは 1 WBS タスク粒度で thread を分ける運用を継続。
@@ -298,7 +298,7 @@ feat/<tool>-<wbs-id>-<slug>
 ### 次セッションで適用候補 (Codex レーンへ handoff)
 
 - [x] `AGENTS.md` 新規作成 (Codex 用) — T664で完了
-- [ ] `.codex/config.toml` で sandbox / approval / model を固定
+- [x] `.codex/config.toml` で sandbox / approval / model を固定 (T690で完了)
 - [ ] `scripts/sync_docs_to_notebooklm.py` に Gemini explicit context caching を導入 (1-hour TTL)
 - [ ] Codex skills: `/sync-wbs`, `/sync-notebooklm`, `/verify-demo` を packaging
 - [x] Antigravity 復帰後 (5/27) に Antigravity CLI 評価 (旧 Gemini CLI からの移行) — [docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md](ANTIGRAVITY_CLI_EVALUATION_REPORT.md) にて完了

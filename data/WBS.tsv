@@ -103,7 +103,7 @@ T686	7. 次期開発・運用	セキュリティ	デモ環境へのbasic authま
 T687	7. 次期開発・運用	コスト	3 AIツール並走時のquotaメーター監視と超過レポート設計	Codex	VSCode + Codex	社長承認後のコスト上限設定および優先laneポリシー決定	未着手	2026-06-09	2026-06-10
 T688	6. 社長プレゼン準備	コスト	Antigravity 2.0 Managed Agents料金・利用条件の確認と監視	Codex+Claude	VSCode + Codex	公式情報に基づくManaged Agents料金監視体制の整備	完了	2026-05-24	2026-05-25
 T689	7. 次期開発・運用	インフラ	3-tool体制開発手順書による属人性軽減と再現性確保	Claude	VSCode + Claude Code	マルチAIワークフロー手順書の継続更新と属人性排除	完了	2026-05-22	2026-06-02
-T690	6. 社長プレゼン準備	インフラ	Codexセッション設定のリポジトリレベル固定化(.codex/config.toml)	Codex	VSCode + Codex	設定ファイルの適用によるセッションドリフト防止	未着手	2026-05-26	2026-05-27
+T690	6. 社長プレゼン準備	インフラ	Codexセッション設定のリポジトリレベル固定化(.codex/config.toml)	Codex	VSCode + Codex	設定ファイルの適用によるセッションドリフト防止	完了	2026-05-26	2026-05-27
 T691	7. 次期開発・運用	インフラ	NotebookLM同期スクリプトへのGemini explicit context caching導入検証	Codex	VSCode + Codex	Google公式caching docsに沿ったTTL指定によるコスト削減PoC	未着手	2026-06-11	2026-06-11
 T692	7. 次期開発・運用	インフラ	Codex skills機能による定型運用コマンド(3 skills)のリポジトリレベルパッケージ化	Codex	VSCode + Codex	1 job = 1 skill 規則に従った自動化パッケージ整備	未着手	2026-06-12	2026-06-12
 T693	6. 社長プレゼン準備	インフラ	Antigravity CLIの機能評価と動作検証	Antigravity	Antigravity + Gemini	Google公式Docsに基づくCLI実機検証と可否判断	完了	2026-05-28	2026-05-28

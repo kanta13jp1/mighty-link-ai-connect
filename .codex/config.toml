@@ -1,0 +1,22 @@
+# Mighty-Link AI Connect: Codex CLI Repository Configuration
+# Task ID: T690
+
+# Enforces sandbox restrictions for secure operations within the workspace
+sandbox_mode = "workspace-write"
+
+# Requires user approval for operations outside the sandbox boundaries
+approval_policy = "on-request"
+
+# Primary LLM model assigned to the Codex development lane
+model = "gpt-5.5-pro"
+
+[sandbox_workspace_write]
+# Define specific writable roots to restrict file edits to the workspace
+writable_roots = [
+  "./src",
+  "./scripts",
+  "./docs",
+  "./data",
+  "./exports",
+  "./admin"
+]
