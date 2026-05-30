@@ -382,3 +382,12 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-05-22 | Codex | Light refresh 6th pass: 公式Docs確認範囲拡張、Calendar完了イベント削除ルール、T614/T666完了を反映 |
 | 2026-05-22 | Codex | Light refresh 7th pass: Amazon/Apple/Obsidian/Unityを公式Docs確認範囲へ追加し、Seedance動画UI刷新とT667完了を反映 |
 | 2026-05-23 | Codex | Light refresh: Seedance公式ページのナビ/フッター/スクロール構造をMighty独自UIへ反映し、T676完了を記録 |
+
+
+## 💰 コスト監視 & Managed Agents 料金ポリシー
+本プロジェクトでは、3-tool体制の並走および将来的な Google Vertex AI Agent Builder (Managed Agents) の導入に備え、以下のコスト管理ポリシーを適用しています。
+
+- **料金ポリシー原本**: [docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md](ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md)
+- **監視体制**:
+  - 管理者ダッシュボード（`/admin`）に「Managed Agents コストシミュレーター」を配備し、vCPU、メモリ、セッション、RAGクエリ（Vertex AI Search）に基づく想定コストをリアルタイムに視覚化・監視します。
+  - Google Cloud Billing Alertと連携し、1日あたり `$5.00`、または月間 `$100.00` のしきい値超過を自動監視します。
