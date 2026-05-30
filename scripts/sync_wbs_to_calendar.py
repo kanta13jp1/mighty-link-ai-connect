@@ -382,8 +382,8 @@ SCHEDULE_EVENTS = [
     {
         "summary": "【Mighty Skill-Bridge】フェーズ7: Playwrightによるデモ画面スクショ自動取得スクリプト実装",
         "description": "複数画面の定期自動キャプチャによるスライド素材作成自動化。",
-        "start_date": "2026-06-15",
-        "end_date": "2026-06-17",
+        "start_date": "2026-06-16",
+        "end_date": "2026-06-18",
         "is_all_day": True
     },
     {
