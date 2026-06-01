@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-05-30 22:39:22 UTC+09:00
+Generated: 2026-06-02 03:28:06 UTC+09:00
 
 ## Purpose
 
@@ -11,10 +11,10 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 ## Current WBS Snapshot
 
 - Total tasks: 113
-- Done: 104
+- Done: 105
 - In progress: 0
-- Not started: 9
-- Completion rate: 92%
+- Not started: 8
+- Completion rate: 93%
 - CEO presentation phase tasks: 89
 - CEO presentation phase done: 88
 
@@ -60,7 +60,7 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 - T662: Slack MCP/CLI到達性証跡 / Slack CLIと送信MCPの利用可否を確認し、投稿案と残課題を整理 / 完了 / 2026-05-22 - 2026-05-22
 - T663: 6/2資料最終パックレビュー / PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認 / 完了 / 2026-05-30 - 2026-06-01
 - T664: 三ツール開発フロー整備 / Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定 / 完了 / 2026-05-22 - 2026-05-22
-- T691: インフラ / NotebookLM同期スクリプトへのGemini explicit context caching導入検証 / 未着手 / 2026-06-11 - 2026-06-11
+- T691: インフラ / NotebookLM同期スクリプトへのGemini explicit context caching導入検証 / 完了 / 2026-06-11 - 2026-06-11
 - T695: 連携 / Antigravity hooks機能によるsyncスクリプト自動起動の可否検証 / 未着手 / 2026-06-13 - 2026-06-13
 
 ## Recommended NotebookLM Questions

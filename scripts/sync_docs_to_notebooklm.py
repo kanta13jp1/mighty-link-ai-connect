@@ -28,6 +28,13 @@ import sys
 from pathlib import Path
 from typing import Any
 
+try:
+    from google import genai
+    from google.genai import types as genai_types
+except ImportError:
+    genai = None
+    genai_types = None
+
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
@@ -560,6 +567,66 @@ After re-authentication, this file will be replaced by a NotebookLM-generated
         )
 
 
+def sync_gemini_context_cache(google_docs: dict[str, Any]) -> dict[str, Any]:
+    """PoC function to create and refresh a Gemini Context Cache using all the project docs.
+    
+    If GEMINI_API_KEY is not present or google-genai is not installed, it gracefully skips.
+    Otherwise, it combines all discoverable documents into a single rich text block,
+    creates an explicit Gemini Context Cache with 1-hour TTL, and returns the metadata.
+    """
+    if not genai or not genai_types:
+        return {"status": "skipped", "reason": "google-genai library is not installed"}
+
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        return {"status": "skipped", "reason": "GEMINI_API_KEY environment variable is not set"}
+
+    try:
+        client = genai.Client(api_key=api_key)
+        
+        # Discover all docs and compile their contents
+        combined_contents = []
+        for path in discover_docs():
+            content = build_google_doc_content(path)
+            combined_contents.append(content)
+        
+        combined_text = "\n\n=== FILE SPLITTER ===\n\n".join(combined_contents)
+        
+        # Check if cache size is sufficient (Gemini Context Caching requires minimum 32k tokens)
+        char_count = len(combined_text)
+        print(f"[*] Compiling {len(discover_docs())} docs for context caching. Total characters: {char_count}")
+        
+        # We will create the cache using gemini-1.5-flash-002 as the cost-effective PoC model
+        model_name = "gemini-1.5-flash-002"
+        ttl_seconds = 3600
+        
+        print(f"[*] Creating explicit Gemini Context Cache with {model_name}...")
+        cache = client.caches.create(
+            model=model_name,
+            config=genai_types.CreateCachedContentConfig(
+                contents=[combined_text],
+                display_name=NOTEBOOK_TITLE,
+                ttl=f"{ttl_seconds}s"
+            )
+        )
+        
+        print(f"[+] Explicit Gemini Context Cache created successfully: {cache.name}")
+        
+        return {
+            "status": "ready",
+            "cache_name": cache.name,
+            "display_name": cache.display_name,
+            "model": cache.model,
+            "ttl_seconds": ttl_seconds,
+            "created_time": cache.create_time.isoformat() if hasattr(cache.create_time, "isoformat") else str(cache.create_time),
+            "expire_time": cache.expire_time.isoformat() if hasattr(cache.expire_time, "isoformat") else str(cache.expire_time),
+            "total_tokens_poc": "active"
+        }
+    except Exception as e:
+        print(f"[-] Gemini Context Cache PoC failed: {e}")
+        return {"status": "failed", "error": str(e)}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Sync docs/ Google Docs and NotebookLM sources.")
     parser.add_argument(
@@ -577,11 +644,15 @@ def main() -> None:
         previous,
     )
 
+    # Run the Gemini explicit context caching PoC (T691)
+    gemini_cache = sync_gemini_context_cache(google_docs)
+
     manifest = {
         "generated_at_jst": jst_now().isoformat(timespec="seconds"),
         "account": EXPECTED_GOOGLE_ACCOUNT,
         "google_docs": google_docs,
         "notebooklm": notebooklm,
+        "gemini_context_cache": gemini_cache,
     }
     write_json(MANIFEST_PATH, manifest)
     write_next_steps(manifest)
@@ -589,6 +660,9 @@ def main() -> None:
     print("[+] docs/ Google Docs sync complete.")
     print(f"[*] Synced docs: {len(google_docs)}")
     print(f"[*] NotebookLM status: {notebooklm.get('status')}")
+    print(f"[*] Gemini Context Cache status: {gemini_cache.get('status')}")
+    if gemini_cache.get("cache_name"):
+        print(f"[*] Gemini Context Cache name: {gemini_cache['cache_name']}")
     print(f"[*] Manifest: {relative(MANIFEST_PATH)}")
     print(f"[*] Next steps: {relative(NEXT_STEPS_PATH)}")
     if notebooklm.get("agent_brief"):

@@ -1,12 +1,12 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-05-30T20:55:31+09:00
+Generated: 2026-06-01T07:46:23+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- NotebookLM CLI status: `ready`
+- NotebookLM CLI status: `skipped`
 
 ## Google Docs Synced From docs/
 
@@ -39,19 +39,9 @@ Generated: 2026-05-30T20:55:31+09:00
 - `docs/WBS.md`: https://docs.google.com/document/d/16s5eoPSBLInfS6Kr9Hj4Qgc3y4QXjyjNSbojvZNxBuQ/edit?usp=drivesdk
 - `docs/WBS_SYNC_GUIDE.md`: https://docs.google.com/document/d/1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY/edit?usp=drivesdk
 
-## NotebookLM Sync Result
-
-NotebookLM CLI is authenticated and the docs source set has been synced.
-
-- Notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
-- Agent brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
-- Agent brief JSON: `exports/knowledge_flow/notebooklm_agent_brief.json`
-- CEO slide outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
-- CEO slide outline JSON: `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
-
 ## Re-authentication
 
-If NotebookLM authentication expires later, run:
+NotebookLM CLI currently needs browser re-authentication before sources can be added to NotebookLM.
 
 ```powershell
 python scripts/notebooklm_login_workspace.py
@@ -59,3 +49,20 @@ python scripts/sync_docs_to_notebooklm.py
 ```
 
 During browser login, select `k-umezawa@ml-mightylink.com`.
+
+## Last CLI Error
+
+```text
+
+```
+
+## Agent Retrieval Command
+
+After authentication, the script will add the Drive docs as NotebookLM sources and write:
+
+- `exports/knowledge_flow/notebooklm_agent_brief.md`
+- `exports/knowledge_flow/notebooklm_agent_brief.json`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
+
+These files are the agent-facing design and roadmap summary for subsequent Codex work.
