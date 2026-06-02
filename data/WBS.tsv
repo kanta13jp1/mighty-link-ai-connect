@@ -113,5 +113,19 @@ T696	7. 次期開発・運用	インフラ	PPTX生成スクリプトへのCanva�
 T697	7. 次期開発・運用	インフラ	Playwrightによるデモ画面スクショ自動取得スクリプトの実装	Codex	VSCode + Codex	複数画面の定期自動キャプチャによるスライド素材作成自動化	未着手	2026-06-16	2026-06-17
 T698	6. 社長プレゼン準備	インフラ	Figma MCPを用いたワイヤーフレーム(10/20パターン)の自動流し込み	Claude Code	VSCode + Claude Code	Figma API/MCP連携によるワイヤーフレームフレーム一括構築	未着手	2026-05-30	2026-05-30
 T699	6. 社長プレゼン準備	コーポレート連携	MightyLINKコーポレートサイトのデモミラーページ追加とメインUI統合	AIエージェント	Antigravity + Gemini	exports/mighty-link-hp/index.htmlの新設とヘッダーナビへのリンク統合	完了	2026-06-02	2026-06-02
-T700	6. 社長プレゼン準備	コーポレート連携	MightyLINKコーポレートサイト全サブページのミラーリングとプライバシーポリシー新規追加	AIエージェント	Antigravity + Gemini	サブページ(company/business/recruit/contact/grape/privacy)の新設と相対リンク変換	完了	2026-06-02	2026-06-02
-T701	6. 社長プレゼン準備	コーポレート連携	WordPressカスタムテーマ用プライバシーポリシーPHPテンプレート作成と反映支援	AIエージェント	Antigravity + Gemini	page-privacy.phpの新規作成および本番footer.phpへの適用手順策定	完了	2026-06-02	2026-06-02
+T701	7. 決定後実行	共通管理	6/2 議事録 docs 化 + Notion 投入	Claude	VSCode + Claude Code	`docs/CEO_MEETING_MINUTES_2026-06-02.md` 起票	未着手	2026-06-02	2026-06-03
+T702	7. 決定後実行	共通管理	決定事項を WBS Phase 7 へ反映	Codex	VSCode + Codex	本書の対応セクションを `data/WBS.tsv` へ flip	未着手	2026-06-03	2026-06-03
+T703	7. 決定後実行	共通管理	Phase 7 用 Calendar イベント起票	Codex	VSCode + Codex	`sync_wbs_to_calendar.py` 実行	未着手	2026-06-03	2026-06-04
+T704	7. 決定後実行	共通管理	NotebookLM に Phase 7 docs を投入	Codex	VSCode + Codex	`sync_docs_to_notebooklm.py` 再実行	未着手	2026-06-04	2026-06-05
+T705	7. 決定後実行	共通管理	6/16 定例レビュー Calendar 招待作成 (Q-OPS-04 が YES の場合)	人間	Gemini API 現行モデル	隔週 30 分枠	未着手	2026-06-03	2026-06-04
+T706	7. 決定後実行	共通管理	R9 法務確認 (方向性 A 選択時) / R10 認証層 PoC (方向性 A/C 選択時)	人間 + Codex	VSCode + Codex	[OPS_DISCUSSION Q-OPS-07/08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) 参照	未着手	2026-06-03	2026-06-09
+T707	7. 決定後実行	共通管理	R11 月額コスト実測レポート 1 週目	Codex	VSCode + Codex	`docs/COST_REPORT_2026-06.md` 新規	未着手	2026-06-03	2026-06-09
+T708	7. 決定後実行	共通管理	サービス方向性決定の Slack/Notion/メール通知 (採用ツール次第)	Claude + 人間	VSCode + Claude Code	D-6 採用判断後の通知運用	未着手	2026-06-02	2026-06-03
+T710	7. 決定後実行	AIフィット診断	利用同意書テンプレ起票 (R9 対応)	人間 + Claude	VSCode + Claude Code	個人情報 / コンプラ法務確認	未着手	2026-06-03	2026-06-09
+T711	7. 決定後実行	AIフィット診断	社内パイロット参加者の選定・依頼	人間	Gemini API 現行モデル	人材担当 1 名 / 営業 1 名	未着手	2026-06-03	2026-06-06
+T712	7. 決定後実行	AIフィット診断	AI スコア根拠の UI 化 (`matched_skills` / `missing_skills` / 4 軸根拠を視覚化)	Antigravity (UI) + Codex (API)	VSCode + Codex	[QA-07 D-3 選択肢 A](CEO_PRESENTATION_QA_PACK_2026-06-02.md#qa-07)	未着手	2026-06-03	2026-06-13
+T713	7. 決定後実行	AIフィット診断	サンプル経歴書 5 件 / サンプル案件票 5 件を Workspace に準備	人間	Gemini API 現行モデル	個人情報マスキング済を使用	未着手	2026-06-03	2026-06-09
+T714	7. 決定後実行	AIフィット診断	案件候補ストック管理 UI (複数案件 × 複数エンジニアの突合ビュー)	Antigravity	Antigravity 2.0	[D-3 選択肢 B](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-3-最優先機能-62--616-の-2-週間で作るもの)	未着手	2026-06-09	2026-06-13
+T715	7. 決定後実行	AIフィット診断	公開 URL 認証層 (basic auth) 実装 (R10 対応)	Codex	VSCode + Codex	[Q-OPS-08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md)	未着手	2026-06-03	2026-06-09
+T716	7. 決定後実行	AIフィット診断	パイロット結果サマリ docs 化	Claude	VSCode + Claude Code	`docs/PILOT_REPORT_2026-06-16.md` 新規	未着手	2026-06-13	2026-06-16
+T717	7. 決定後実行	AIフィット診断	6/16 定例レビュー 用ダッシュボード起票	Codex	VSCode + Codex	Sheets `パイロット集計` タブ	未着手	2026-06-13	2026-06-16
