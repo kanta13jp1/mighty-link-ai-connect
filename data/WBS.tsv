@@ -105,7 +105,7 @@ T688	6. 社長プレゼン準備	コスト	Antigravity 2.0 Managed Agents料金�
 T689	7. 次期開発・運用	インフラ	3-tool体制開発手順書による属人性軽減と再現性確保	Claude	VSCode + Claude Code	マルチAIワークフロー手順書の継続更新と属人性排除	完了	2026-05-22	2026-06-02
 T690	6. 社長プレゼン準備	インフラ	Codexセッション設定のリポジトリレベル固定化(.codex/config.toml)	Codex	VSCode + Codex	設定ファイルの適用によるセッションドリフト防止	完了	2026-05-26	2026-05-27
 T691	7. 次期開発・運用	インフラ	NotebookLM同期スクリプトへのGemini explicit context caching導入検証	Codex	VSCode + Codex	Google公式caching docsに沿ったTTL指定によるコスト削減PoC	完了	2026-06-11	2026-06-11
-T692	7. 次期開発・運用	インフラ	Codex skills機能による定型運用コマンド(3 skills)のリポジトリレベルパッケージ化	Codex	VSCode + Codex	1 job = 1 skill 規則に従った自動化パッケージ整備	未着手	2026-06-12	2026-06-12
+T692	7. 次期開発・運用	インフラ	Codex skills機能による定型運用コマンド(3 skills)のリポジトリレベルパッケージ化	Codex	VSCode + Codex	1 job = 1 skill 規則に従った自動化パッケージ整備	完了	2026-06-12	2026-06-12
 T693	6. 社長プレゼン準備	インフラ	Antigravity CLIの機能評価と動作検証	Antigravity	Antigravity + Gemini	Google公式Docsに基づくCLI実機検証と可否判断	完了	2026-05-28	2026-05-28
 T694	6. 社長プレゼン準備	ドキュメント	主要docs内のmarkdownlint指摘事項(22件)の一括自動修正	Codex	VSCode + Codex	markdownlint --fixによる構造不整合の一括解消	完了	2026-05-29	2026-05-29
 T695	7. 次期開発・運用	連携	Antigravity hooks機能によるsyncスクリプト自動起動の可否検証	Codex+Antigravity	VSCode + Codex	自動化トリガーのPoCとマルチAI自動同期パイプライン整備	未着手	2026-06-13	2026-06-13
