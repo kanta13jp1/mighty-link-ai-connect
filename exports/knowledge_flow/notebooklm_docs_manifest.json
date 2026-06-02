@@ -1,5 +1,5 @@
 {
-  "generated_at_jst": "2026-06-02T19:45:51+09:00",
+  "generated_at_jst": "2026-06-02T19:55:00+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "google_docs": {
     "docs_antigravity_cli_evaluation_report_md": {
@@ -16,7 +16,7 @@
         }
       ],
       "createdTime": "2026-05-30T06:29:26.117Z",
-      "modifiedTime": "2026-06-02T10:44:35.788Z"
+      "modifiedTime": "2026-06-02T10:53:43.481Z"
     },
     "docs_antigravity_guide_md": {
       "source": "docs/ANTIGRAVITY_GUIDE.md",
@@ -32,7 +32,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:05.145Z",
-      "modifiedTime": "2026-06-02T10:44:38.640Z"
+      "modifiedTime": "2026-06-02T10:53:46.508Z"
     },
     "docs_antigravity_managed_agents_cost_policy_md": {
       "source": "docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md",
@@ -48,7 +48,7 @@
         }
       ],
       "createdTime": "2026-05-30T06:29:32.244Z",
-      "modifiedTime": "2026-06-02T10:44:41.712Z"
+      "modifiedTime": "2026-06-02T10:53:49.453Z"
     },
     "docs_backend_ai_pipeline_md": {
       "source": "docs/BACKEND_AI_PIPELINE.md",
@@ -64,7 +64,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:08.445Z",
-      "modifiedTime": "2026-06-02T10:44:44.609Z"
+      "modifiedTime": "2026-06-02T10:53:55.088Z"
     },
     "docs_ceo_presentation_backup_guide_md": {
       "source": "docs/CEO_PRESENTATION_BACKUP_GUIDE.md",
@@ -80,7 +80,7 @@
         }
       ],
       "createdTime": "2026-05-28T15:32:31.318Z",
-      "modifiedTime": "2026-06-02T10:44:47.245Z"
+      "modifiedTime": "2026-06-02T10:53:57.856Z"
     },
     "docs_ceo_presentation_canva_figma_guide_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md",
@@ -96,7 +96,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:15:37.750Z",
-      "modifiedTime": "2026-06-02T10:44:50.105Z"
+      "modifiedTime": "2026-06-02T10:54:00.906Z"
     },
     "docs_ceo_presentation_decision_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md",
@@ -112,7 +112,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:11.504Z",
-      "modifiedTime": "2026-06-02T10:44:52.896Z"
+      "modifiedTime": "2026-06-02T10:54:03.771Z"
     },
     "docs_ceo_presentation_discussion_points_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md",
@@ -128,7 +128,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:10.521Z",
-      "modifiedTime": "2026-06-02T10:44:55.724Z"
+      "modifiedTime": "2026-06-02T10:54:06.568Z"
     },
     "docs_ceo_presentation_final_review_checklist_md": {
       "source": "docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md",
@@ -144,7 +144,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:13.734Z",
-      "modifiedTime": "2026-06-02T10:44:58.457Z"
+      "modifiedTime": "2026-06-02T10:54:09.354Z"
     },
     "docs_ceo_presentation_ops_discussion_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md",
@@ -160,7 +160,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:16.975Z",
-      "modifiedTime": "2026-06-02T10:45:01.456Z"
+      "modifiedTime": "2026-06-02T10:54:12.355Z"
     },
     "docs_ceo_presentation_post_decision_roadmap_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
@@ -176,7 +176,7 @@
         }
       ],
       "createdTime": "2026-05-22T01:55:28.832Z",
-      "modifiedTime": "2026-06-02T10:45:04.280Z"
+      "modifiedTime": "2026-06-02T10:54:14.997Z"
     },
     "docs_ceo_presentation_prep_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PREP_2026-06-02.md",
@@ -192,7 +192,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:13.861Z",
-      "modifiedTime": "2026-06-02T10:45:07.109Z"
+      "modifiedTime": "2026-06-02T10:54:17.639Z"
     },
     "docs_ceo_presentation_preshare_memo_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md",
@@ -208,7 +208,7 @@
         }
       ],
       "createdTime": "2026-05-22T04:29:57.435Z",
-      "modifiedTime": "2026-06-02T10:45:09.853Z"
+      "modifiedTime": "2026-06-02T10:54:20.262Z"
     },
     "docs_ceo_presentation_qa_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md",
@@ -224,7 +224,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:23.139Z",
-      "modifiedTime": "2026-06-02T10:45:13.033Z"
+      "modifiedTime": "2026-06-02T10:54:23.018Z"
     },
     "docs_codex_continuation_notes_md": {
       "source": "docs/CODEX_CONTINUATION_NOTES.md",
@@ -240,7 +240,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:17.070Z",
-      "modifiedTime": "2026-06-02T10:45:16.143Z"
+      "modifiedTime": "2026-06-02T10:54:25.593Z"
     },
     "docs_database_md": {
       "source": "docs/database.md",
@@ -256,7 +256,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:20.169Z",
-      "modifiedTime": "2026-06-02T10:45:19.119Z"
+      "modifiedTime": "2026-06-02T10:54:28.618Z"
     },
     "docs_development_knowledge_flow_md": {
       "source": "docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
@@ -272,7 +272,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:23.586Z",
-      "modifiedTime": "2026-06-02T10:45:22.038Z"
+      "modifiedTime": "2026-06-02T10:54:31.020Z"
     },
     "docs_google_workspace_migration_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
@@ -288,7 +288,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:26.826Z",
-      "modifiedTime": "2026-06-02T10:45:24.759Z"
+      "modifiedTime": "2026-06-02T10:54:34.162Z"
     },
     "docs_integration_demo_evidence_2026_06_02_md": {
       "source": "docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md",
@@ -304,7 +304,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:30.369Z",
-      "modifiedTime": "2026-06-02T10:45:27.573Z"
+      "modifiedTime": "2026-06-02T10:54:37.236Z"
     },
     "docs_mcp_canva_figma_setup_guide_2026_06_02_md": {
       "source": "docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md",
@@ -320,7 +320,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:16:25.443Z",
-      "modifiedTime": "2026-06-02T10:45:30.398Z"
+      "modifiedTime": "2026-06-02T10:54:40.046Z"
     },
     "docs_multi_ai_workflow_md": {
       "source": "docs/MULTI_AI_WORKFLOW.md",
@@ -336,7 +336,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:39.743Z",
-      "modifiedTime": "2026-06-02T10:45:33.303Z"
+      "modifiedTime": "2026-06-02T10:54:42.762Z"
     },
     "docs_project_structure_md": {
       "source": "docs/PROJECT_STRUCTURE.md",
@@ -352,7 +352,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:33.155Z",
-      "modifiedTime": "2026-06-02T10:45:36.092Z"
+      "modifiedTime": "2026-06-02T10:54:45.485Z"
     },
     "docs_requirements_md": {
       "source": "docs/requirements.md",
@@ -368,7 +368,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:35.726Z",
-      "modifiedTime": "2026-06-02T10:45:38.902Z"
+      "modifiedTime": "2026-06-02T10:54:48.067Z"
     },
     "docs_sequence_diagrams_md": {
       "source": "docs/SEQUENCE_DIAGRAMS.md",
@@ -384,7 +384,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:16:37.218Z",
-      "modifiedTime": "2026-06-02T10:45:41.629Z"
+      "modifiedTime": "2026-06-02T10:54:50.961Z"
     },
     "docs_setup_guide_md": {
       "source": "docs/SETUP_GUIDE.md",
@@ -400,7 +400,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:39.055Z",
-      "modifiedTime": "2026-06-02T10:45:44.422Z"
+      "modifiedTime": "2026-06-02T10:54:53.828Z"
     },
     "docs_sheets_trackers_schema_md": {
       "source": "docs/SHEETS_TRACKERS_SCHEMA.md",
@@ -416,7 +416,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:50.427Z",
-      "modifiedTime": "2026-06-02T10:45:47.304Z"
+      "modifiedTime": "2026-06-02T10:54:56.879Z"
     },
     "docs_wbs_md": {
       "source": "docs/WBS.md",
@@ -432,7 +432,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-06-02T10:45:50.090Z"
+      "modifiedTime": "2026-06-02T10:54:59.769Z"
     },
     "docs_wbs_sync_guide_md": {
       "source": "docs/WBS_SYNC_GUIDE.md",
@@ -448,7 +448,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:44.871Z",
-      "modifiedTime": "2026-06-02T10:45:53.035Z"
+      "modifiedTime": "2026-06-02T10:55:02.491Z"
     }
   },
   "notebooklm": {

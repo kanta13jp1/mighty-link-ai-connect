@@ -1,6 +1,6 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-06-02T19:45:51+09:00
+Generated: 2026-06-02T19:55:00+09:00
 Status: `skipped`
 
 NotebookLM CLI is not ready yet, so this file is a placeholder.

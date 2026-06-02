@@ -113,10 +113,10 @@ T696	7. 次期開発・運用	インフラ	PPTX生成スクリプトへのCanva�
 T697	7. 次期開発・運用	インフラ	Playwrightによるデモ画面スクショ自動取得スクリプトの実装	Codex	VSCode + Codex	複数画面の定期自動キャプチャによるスライド素材作成自動化	未着手	2026-06-16	2026-06-17
 T698	6. 社長プレゼン準備	インフラ	Figma MCPを用いたワイヤーフレーム(10/20パターン)の自動流し込み	Claude Code	VSCode + Claude Code	Figma API/MCP連携によるワイヤーフレームフレーム一括構築	未着手	2026-05-30	2026-05-30
 T699	6. 社長プレゼン準備	コーポレート連携	MightyLINKコーポレートサイトのデモミラーページ追加とメインUI統合	AIエージェント	Antigravity + Gemini	exports/mighty-link-hp/index.htmlの新設とヘッダーナビへのリンク統合	完了	2026-06-02	2026-06-02
-T701	7. 決定後実行	共通管理	6/2 議事録 docs 化 + Notion 投入	Claude	VSCode + Claude Code	`docs/CEO_MEETING_MINUTES_2026-06-02.md` 起票	未着手	2026-06-02	2026-06-03
-T702	7. 決定後実行	共通管理	決定事項を WBS Phase 7 へ反映	Codex	VSCode + Codex	本書の対応セクションを `data/WBS.tsv` へ flip	未着手	2026-06-03	2026-06-03
-T703	7. 決定後実行	共通管理	Phase 7 用 Calendar イベント起票	Codex	VSCode + Codex	`sync_wbs_to_calendar.py` 実行	未着手	2026-06-03	2026-06-04
-T704	7. 決定後実行	共通管理	NotebookLM に Phase 7 docs を投入	Codex	VSCode + Codex	`sync_docs_to_notebooklm.py` 再実行	未着手	2026-06-04	2026-06-05
+T701	7. 決定後実行	共通管理	6/2 議事録 docs 化 + Notion 投入	Claude	VSCode + Claude Code	`docs/CEO_MEETING_MINUTES_2026-06-02.md` 起票	完了	2026-06-02	2026-06-03
+T702	7. 決定後実行	共通管理	決定事項を WBS Phase 7 へ反映	Codex	VSCode + Codex	本書の対応セクションを `data/WBS.tsv` へ flip	完了	2026-06-03	2026-06-03
+T703	7. 決定後実行	共通管理	Phase 7 用 Calendar イベント起票	Codex	VSCode + Codex	`sync_wbs_to_calendar.py` 実行	完了	2026-06-03	2026-06-04
+T704	7. 決定後実行	共通管理	NotebookLM に Phase 7 docs を投入	Codex	VSCode + Codex	`sync_docs_to_notebooklm.py` 再実行	完了	2026-06-04	2026-06-05
 T705	7. 決定後実行	共通管理	6/16 定例レビュー Calendar 招待作成 (Q-OPS-04 が YES の場合)	人間	Gemini API 現行モデル	隔週 30 分枠	未着手	2026-06-03	2026-06-04
 T706	7. 決定後実行	共通管理	R9 法務確認 (方向性 A 選択時) / R10 認証層 PoC (方向性 A/C 選択時)	人間 + Codex	VSCode + Codex	[OPS_DISCUSSION Q-OPS-07/08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) 参照	未着手	2026-06-03	2026-06-09
 T707	7. 決定後実行	共通管理	R11 月額コスト実測レポート 1 週目	Codex	VSCode + Codex	`docs/COST_REPORT_2026-06.md` 新規	未着手	2026-06-03	2026-06-09
@@ -136,5 +136,6 @@ T733	7. 決定後実行	品質検証	Playwright等によるUI自動テストお�
 T734	7. 決定後実行	インフラ設計	GitHub Actionsを用いた自動ビルド・テスト・デプロイCI/CDパイプライン構築	Codex	VSCode + Codex	GitHub Actions workflow YAML作成	未着手	2026-06-08	2026-06-10
 T735	7. 決定後実行	リリース	本番プロダクション環境への初版リリースデプロイおよび受入手動テスト実施	人間 + AI	Gemini API 現行モデル	リリースアナウンスおよびリリースログ記録	未着手	2026-06-13	2026-06-15
 T736	7. 決定後実行	運用保守	API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用	Codex	VSCode + Codex	daily usage ledger監査およびアラート設定	未着手	2026-06-13	2026-06-16
-T737	7. 決定後実行	運用保守	デイリー作業レポート（WBS/進捗状況）のGmail/Slack自動送信機能の実装	Codex	VSCode + Codex	send_daily_report.py自動送信設定	未着手	2026-06-03	2026-06-06
+T737	7. 決定後実行	運用保守	デイリー作業レポート（WBS/進捗状況）のGmail/Slack自動送信機能の実装	Codex	VSCode + Codex	send_daily_report.py自動送信設定	完了	2026-06-03	2026-06-06
+
 
