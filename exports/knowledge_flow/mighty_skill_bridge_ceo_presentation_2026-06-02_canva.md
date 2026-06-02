@@ -1,10 +1,10 @@
 # Mighty Skill-Bridge CEO Presentation Deck
 
-Generated: 2026-06-02T14:36:11+09:00
+Generated: 2026-06-02T14:35:48+09:00
 
 ## Output
 
-- PPTX: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx`
+- PPTX: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02_canva.pptx`
 - Google Drive: https://docs.google.com/presentation/d/1XGHnQHBpJyyhh_Y3I2lq2UThPRC-2dcL/edit?usp=drivesdk&ouid=117190324786156797159&rtpof=true&sd=true
 - Generator: `scripts/generate_ceo_presentation_deck.py`
 - NotebookLM outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`

@@ -50,6 +50,7 @@ COLORS = {
 }
 
 FONT = "Yu Gothic"
+CANVA_EXPORT = False
 
 
 def jst_now() -> dt.datetime:
@@ -86,6 +87,9 @@ def add_text(
     valign: MSO_ANCHOR = MSO_ANCHOR.TOP,
     margin: float = 0.06,
 ):
+    if CANVA_EXPORT:
+        if color == COLORS["white"]:
+            color = COLORS["ink"]
     box = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
     frame = box.text_frame
     frame.clear()
@@ -138,6 +142,8 @@ def add_rect(
     line: RGBColor | None = None,
     radius: bool = False,
 ):
+    if CANVA_EXPORT:
+        return None
     shape_type = MSO_AUTO_SHAPE_TYPE.ROUNDED_RECTANGLE if radius else MSO_AUTO_SHAPE_TYPE.RECTANGLE
     shape = slide.shapes.add_shape(shape_type, Inches(x), Inches(y), Inches(w), Inches(h))
     shape.fill.solid()
@@ -472,6 +478,21 @@ Generated: {jst_now().isoformat(timespec="seconds")}
 
 
 def main() -> None:
+    import argparse
+    parser = argparse.ArgumentParser(description="Generate CEO presentation PPTX.")
+    parser.add_argument("--style", type=str, default="default", choices=["default", "canva-export"],
+                        help="Theme/style for slide generation. 'canva-export' generates a flat minimalist deck.")
+    args = parser.parse_args()
+
+    global CANVA_EXPORT
+    CANVA_EXPORT = (args.style == "canva-export")
+
+    global PPTX_FILE, SUMMARY_FILE, MANIFEST_FILE
+    if CANVA_EXPORT:
+        PPTX_FILE = EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02_canva.pptx"
+        SUMMARY_FILE = EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02_canva.md"
+        MANIFEST_FILE = EXPORT_DIR / "mighty_skill_bridge_ceo_presentation_2026-06-02_canva.json"
+
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
     manifest = load_json(EXPORT_DIR / "manifest.json")
     docs_manifest = load_json(EXPORT_DIR / "notebooklm_docs_manifest.json")
