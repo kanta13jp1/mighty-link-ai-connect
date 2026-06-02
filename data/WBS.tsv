@@ -117,7 +117,8 @@ T701	7. 決定後実行	共通管理	6/2 議事録 docs 化 + Notion 投入	Clau
 T702	7. 決定後実行	共通管理	決定事項を WBS Phase 7 へ反映	Codex	VSCode + Codex	本書の対応セクションを `data/WBS.tsv` へ flip	完了	2026-06-03	2026-06-03
 T703	7. 決定後実行	共通管理	Phase 7 用 Calendar イベント起票	Codex	VSCode + Codex	`sync_wbs_to_calendar.py` 実行	完了	2026-06-03	2026-06-04
 T704	7. 決定後実行	共通管理	NotebookLM に Phase 7 docs を投入	Codex	VSCode + Codex	`sync_docs_to_notebooklm.py` 再実行	完了	2026-06-04	2026-06-05
-T705	7. 決定後実行	共通管理	6/16 定例レビュー Calendar 招待作成 (Q-OPS-04 が YES の場合)	人間	Gemini API 現行モデル	隔週 30 分枠	未着手	2026-06-03	2026-06-04
+T705	7. 決定後実行	共通管理	6/16 定例レビュー Calendar 招待作成 (Q-OPS-04 が YES の場合)	人間	Gemini API 現行モデル	隔週 30 分枠	完了	2026-06-03	2026-06-04
+
 T706	7. 決定後実行	共通管理	R9 法務確認 (方向性 A 選択時) / R10 認証層 PoC (方向性 A/C 選択時)	人間 + Codex	VSCode + Codex	[OPS_DISCUSSION Q-OPS-07/08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) 参照	未着手	2026-06-03	2026-06-09
 T707	7. 決定後実行	共通管理	R11 月額コスト実測レポート 1 週目	Codex	VSCode + Codex	`docs/COST_REPORT_2026-06.md` 新規	未着手	2026-06-03	2026-06-09
 T708	7. 決定後実行	共通管理	サービス方向性決定の Slack/Notion/メール通知 (採用ツール次第)	Claude + 人間	VSCode + Claude Code	D-6 採用判断後の通知運用	完了	2026-06-02	2026-06-03

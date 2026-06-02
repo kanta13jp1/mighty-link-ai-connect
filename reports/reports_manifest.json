@@ -10,5 +10,14 @@
     "name": "Mighty Skill-Bridge Service Direction Decision Notification",
     "url": "https://docs.google.com/document/d/1VGAz0IuP2bDx0RlsApBRSy002fqPSA6hl3kZR4i7IK4/edit?usp=drivesdk",
     "updated_at": "2026-06-02T11:01:43.842Z"
+  },
+  "recurrent_calendar_invite": {
+    "id": "43gidjomv2f9gkr68ev8m8vvus",
+    "summary": "【定例】Mighty Skill-Bridge 開発レビューミーティング",
+    "recurrence": [
+      "RRULE:FREQ=WEEKLY;COUNT=10;INTERVAL=2"
+    ],
+    "url": "https://www.google.com/calendar/event?eid=NDNnaWRqb212MmY5Z2tyNjhldjhtOHZ2dXNfMjAyNjA2MTdUMDgzMDAwWiBjXzE0OGU5YTFiZTYwOTgyZGFiMTc5MmE1ZjVkYThkNjRkZWFlZWUzMjViMzk1MTc2NWFiMmZiZDNkMDU2MWVjMDJAZw",
+    "updated_at": "2026-06-02T11:09:16.051Z"
   }
 }
