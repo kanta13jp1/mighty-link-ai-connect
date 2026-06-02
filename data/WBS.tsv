@@ -129,3 +129,10 @@ T714	7. 決定後実行	AIフィット診断	案件候補ストック管理 UI (
 T715	7. 決定後実行	AIフィット診断	公開 URL 認証層 (basic auth) 実装 (R10 対応)	Codex	VSCode + Codex	[Q-OPS-08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md)	未着手	2026-06-03	2026-06-09
 T716	7. 決定後実行	AIフィット診断	パイロット結果サマリ docs 化	Claude	VSCode + Claude Code	`docs/PILOT_REPORT_2026-06-16.md` 新規	未着手	2026-06-13	2026-06-16
 T717	7. 決定後実行	AIフィット診断	6/16 定例レビュー 用ダッシュボード起票	Codex	VSCode + Codex	Sheets `パイロット集計` タブ	未着手	2026-06-13	2026-06-16
+T730	7. 決定後実行	インフラ設計	ホスティング先（お名前.com/GitHub Pages/クラウド）およびDBインフラの最終選定調査	人間 + Codex	VSCode + Codex	社長への技術選定報告ドキュメント起票	未着手	2026-06-03	2026-06-05
+T731	7. 決定後実行	バックエンド開発	AI適性状況診断および勤務表自動解析バックエンドAPIの本格実装	Codex	VSCode + Codex	FastAPI / Gemini API連携コード構築	未着手	2026-06-05	2026-06-12
+T732	7. 決定後実行	インフラ設計	外部APIシークレット管理およびBasic Authによるセキュリティ環境構築	Codex	VSCode + Codex	環境変数およびアクセス制限設定	未着手	2026-06-04	2026-06-06
+T733	7. 決定後実行	品質検証	Playwright等によるUI自動テストおよびAPI単体テストの実装・実行	AIエージェント	Antigravity 2.0	テストカバレッジ・バグトラッカー連携	未着手	2026-06-09	2026-06-13
+T734	7. 決定後実行	インフラ設計	GitHub Actionsを用いた自動ビルド・テスト・デプロイCI/CDパイプライン構築	Codex	VSCode + Codex	GitHub Actions workflow YAML作成	未着手	2026-06-08	2026-06-10
+T735	7. 決定後実行	リリース	本番プロダクション環境への初版リリースデプロイおよび受入手動テスト実施	人間 + AI	Gemini API 現行モデル	リリースアナウンスおよびリリースログ記録	未着手	2026-06-13	2026-06-15
+T736	7. 決定後実行	運用保守	API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用	Codex	VSCode + Codex	daily usage ledger監査およびアラート設定	未着手	2026-06-13	2026-06-16

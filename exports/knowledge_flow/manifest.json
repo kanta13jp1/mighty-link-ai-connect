@@ -1,13 +1,13 @@
 {
-  "generated_at_jst": "2026-06-02T17:09:49+09:00",
+  "generated_at_jst": "2026-06-02T19:17:38+09:00",
   "summary": {
-    "total": 116,
-    "done": 110,
+    "total": 137,
+    "done": 108,
     "active": 0,
-    "todo": 6,
-    "completion_rate": 95,
-    "phase6_total": 92,
-    "phase6_done": 91,
+    "todo": 29,
+    "completion_rate": 79,
+    "phase6_total": 90,
+    "phase6_done": 89,
     "phase6_active": 0,
     "phase6_todo": 1
   },
