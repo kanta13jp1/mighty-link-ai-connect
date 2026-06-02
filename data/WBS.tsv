@@ -119,7 +119,7 @@ T703	7. 決定後実行	共通管理	Phase 7 用 Calendar イベント起票	Cod
 T704	7. 決定後実行	共通管理	NotebookLM に Phase 7 docs を投入	Codex	VSCode + Codex	`sync_docs_to_notebooklm.py` 再実行	完了	2026-06-04	2026-06-05
 T705	7. 決定後実行	共通管理	6/16 定例レビュー Calendar 招待作成 (Q-OPS-04 が YES の場合)	人間	Gemini API 現行モデル	隔週 30 分枠	完了	2026-06-03	2026-06-04
 
-T706	7. 決定後実行	共通管理	R9 法務確認 (方向性 A 選択時) / R10 認証層 PoC (方向性 A/C 選択時)	人間 + Codex	VSCode + Codex	[OPS_DISCUSSION Q-OPS-07/08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) 参照	未着手	2026-06-03	2026-06-09
+T706	7. 決定後実行	共通管理	R9 法務確認 (方向性 A 選択時) / R10 認証層 PoC (方向性 A/C 選択時)	人間 + Codex	VSCode + Codex	[OPS_DISCUSSION Q-OPS-07/08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) 参照	完了	2026-06-03	2026-06-09
 T707	7. 決定後実行	共通管理	R11 月額コスト実測レポート 1 週目	Codex	VSCode + Codex	`docs/COST_REPORT_2026-06.md` 新規	未着手	2026-06-03	2026-06-09
 T708	7. 決定後実行	共通管理	サービス方向性決定の Slack/Notion/メール通知 (採用ツール次第)	Claude + 人間	VSCode + Claude Code	D-6 採用判断後の通知運用	完了	2026-06-02	2026-06-03
 
@@ -129,7 +129,7 @@ T711	7. 決定後実行	AIフィット診断	社内パイロット参加者の�
 T712	7. 決定後実行	AIフィット診断	AI スコア根拠の UI 化 (`matched_skills` / `missing_skills` / 4 軸根拠を視覚化)	Antigravity (UI) + Codex (API)	VSCode + Codex	[QA-07 D-3 選択肢 A](CEO_PRESENTATION_QA_PACK_2026-06-02.md#qa-07)	未着手	2026-06-03	2026-06-13
 T713	7. 決定後実行	AIフィット診断	サンプル経歴書 5 件 / サンプル案件票 5 件を Workspace に準備	人間	Gemini API 現行モデル	個人情報マスキング済を使用	未着手	2026-06-03	2026-06-09
 T714	7. 決定後実行	AIフィット診断	案件候補ストック管理 UI (複数案件 × 複数エンジニアの突合ビュー)	Antigravity	Antigravity 2.0	[D-3 選択肢 B](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-3-最優先機能-62--616-の-2-週間で作るもの)	未着手	2026-06-09	2026-06-13
-T715	7. 決定後実行	AIフィット診断	公開 URL 認証層 (basic auth) 実装 (R10 対応)	Codex	VSCode + Codex	[Q-OPS-08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md)	未着手	2026-06-03	2026-06-09
+T715	7. 決定後実行	AIフィット診断	公開 URL 認証層 (basic auth) 実装 (R10 対応)	Codex	VSCode + Codex	[Q-OPS-08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md)	完了	2026-06-03	2026-06-09
 T716	7. 決定後実行	AIフィット診断	パイロット結果サマリ docs 化	Claude	VSCode + Claude Code	`docs/PILOT_REPORT_2026-06-16.md` 新規	未着手	2026-06-13	2026-06-16
 T717	7. 決定後実行	AIフィット診断	6/16 定例レビュー 用ダッシュボード起票	Codex	VSCode + Codex	Sheets `パイロット集計` タブ	未着手	2026-06-13	2026-06-16
 T730	7. 決定後実行	インフラ設計	ホスティング先（お名前.com/GitHub Pages/クラウド）およびDBインフラの最終選定調査	人間 + Codex	VSCode + Codex	社長への技術選定報告ドキュメント起票	未着手	2026-06-03	2026-06-05

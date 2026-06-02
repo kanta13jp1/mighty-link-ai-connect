@@ -24,6 +24,8 @@ import uuid
 import requests
 import subprocess
 import time
+import base64
+import secrets
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -49,9 +51,10 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends, Request, status
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from pydantic import BaseModel
 
 # Try loading optional libraries for Sheets & Gemini
@@ -121,8 +124,76 @@ GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-1.5-flash")
 GEMINI_DAILY_CALL_LIMIT = env_int("GEMINI_DAILY_CALL_LIMIT", 20, 0, 10000)
 GEMINI_DAILY_REPORTED_TOKEN_LIMIT = env_int("GEMINI_DAILY_REPORTED_TOKEN_LIMIT", 100000, 0, 1_000_000_000)
 
+# Basic authentication configuration
+BASIC_AUTH_USERNAME = os.environ.get("BASIC_AUTH_USERNAME", "admin")
+BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD", "mighty-link-pass")
+
+security = HTTPBasic()
+
+
+def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
+    correct_username = secrets.compare_digest(credentials.username, BASIC_AUTH_USERNAME)
+    correct_password = secrets.compare_digest(credentials.password, BASIC_AUTH_PASSWORD)
+    if not (correct_username and correct_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return credentials.username
+
+
+# Custom StaticFiles subclass to enforce Basic Authentication
+class BasicAuthStaticFiles(StaticFiles):
+    def __init__(self, *args, username: str = "admin", password: str = "mighty-link-pass", **kwargs):
+        super().__init__(*args, **kwargs)
+        self.username = username
+        self.password = password
+
+    async def __call__(self, scope, receive, send):
+        request = Request(scope, receive)
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            await self._unauthorized(send)
+            return
+
+        try:
+            auth_type, credentials = auth_header.split(" ")
+            if auth_type.lower() != "basic":
+                await self._unauthorized(send)
+                return
+            
+            decoded = base64.b64decode(credentials).decode("utf-8")
+            username, password = decoded.split(":", 1)
+            correct_username = secrets.compare_digest(username, self.username)
+            correct_password = secrets.compare_digest(password, self.password)
+            if not (correct_username and correct_password):
+                await self._unauthorized(send)
+                return
+        except Exception:
+            await self._unauthorized(send)
+            return
+
+        await super().__call__(scope, receive, send)
+
+    async def _unauthorized(self, send):
+        response_headers = [
+            (b"content-type", b"text/plain; charset=utf-8"),
+            (b"www-authenticate", b'Basic realm="Mighty-Link Demo exports"'),
+        ]
+        await send({
+            "type": "http.response.start",
+            "status": 401,
+            "headers": response_headers,
+        })
+        await send({
+            "type": "http.response.body",
+            "body": b"Unauthorized",
+        })
+
+
 os.makedirs(EXPORTS_DIR, exist_ok=True)
-app.mount("/exports", StaticFiles(directory=EXPORTS_DIR), name="exports")
+app.mount("/exports", BasicAuthStaticFiles(directory=EXPORTS_DIR, username=BASIC_AUTH_USERNAME, password=BASIC_AUTH_PASSWORD), name="exports")
 
 
 def deterministic_uuid4(seed: str) -> str:
@@ -1095,7 +1166,7 @@ async def health_check():
 
 
 @app.get("/api/audit/recent")
-async def recent_audit_events(limit: int = 20):
+async def recent_audit_events(limit: int = 20, username: str = Depends(verify_credentials)):
     """Returns recent local AI audit events without raw document bodies."""
     return {
         "status": "success",
@@ -1292,24 +1363,24 @@ ADMIN_DASHBOARD_HTML = """<!DOCTYPE html>
 
 
 @app.get("/admin", response_class=HTMLResponse)
-async def admin_dashboard():
+async def admin_dashboard(username: str = Depends(verify_credentials)):
     """Local-only external API usage and circuit-breaker dashboard."""
     return HTMLResponse(content=ADMIN_DASHBOARD_HTML)
 
 
 @app.get("/api/admin/usage")
-async def admin_usage():
+async def admin_usage(username: str = Depends(verify_credentials)):
     return build_external_api_usage_summary()
 
 
 @app.get("/admin/usage")
-async def admin_usage_alias():
+async def admin_usage_alias(username: str = Depends(verify_credentials)):
     """Human-friendly alias for users who type /admin/usage in the browser."""
     return build_external_api_usage_summary()
 
 
 @app.get("/api/admin/usage/export", response_class=PlainTextResponse)
-async def admin_usage_export():
+async def admin_usage_export(username: str = Depends(verify_credentials)):
     if not os.path.exists(EXTERNAL_API_USAGE_LOG_FILE):
         return PlainTextResponse("", media_type="application/jsonl")
     with open(EXTERNAL_API_USAGE_LOG_FILE, "r", encoding="utf-8") as f:
@@ -1322,7 +1393,8 @@ async def managed_agents_cost_simulation(
     sessions: int = 10000,
     queries: int = 5000,
     input_tokens_million: float = 10.0,
-    output_tokens_million: float = 2.0
+    output_tokens_million: float = 2.0,
+    username: str = Depends(verify_credentials)
 ):
     """
     Managed Agents (Vertex AI Agent Builder) cost estimation simulator.
