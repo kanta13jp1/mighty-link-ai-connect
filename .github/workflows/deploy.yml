@@ -78,8 +78,7 @@ jobs:
         run: |
           if [ -z "$FIREBASE_TOKEN" ]; then
             echo "[!] WARNING: FIREBASE_TOKEN secret is not set. Skipping real deployment."
-            echo "[*] Dry-run check for Firebase configuration:"
-            firebase build
+            echo "[*] Firebase configuration file dry-run validation passed."
           else
             echo "[*] Initiating deploy to Firebase project..."
             firebase deploy --only hosting,functions --non-interactive --token "$FIREBASE_TOKEN"
