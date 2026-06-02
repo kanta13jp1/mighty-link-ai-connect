@@ -120,6 +120,7 @@ gantt
 | **T698** | 6. 社長プレゼン準備 | インフラ | Figma MCPを用いたワイヤーフレーム(10/20パターン)の自動流し込み | Claude Code | VSCode + Claude Code | Figma API/MCP連携によるワイヤーフレームフレーム一括構築 |
 | **T699** | 6. 社長プレゼン準備 | コーポレート連携 | MightyLINKコーポレートサイトのデモミラーページ追加とメインUI統合 | AIエージェント | Antigravity + Gemini | exports/mighty-link-hp/index.htmlの新設とヘッダーナビへのリンク統合 |
 | **T700** | 6. 社長プレゼン準備 | コーポレート連携 | MightyLINKコーポレートサイト全サブページのミラーリングとプライバシーポリシー新規追加 | AIエージェント | Antigravity + Gemini | サブページ(company/business/recruit/contact/grape/privacy)の新設と相対リンク変換 |
+| **T701** | 6. 社長プレゼン準備 | コーポレート連携 | WordPressカスタムテーマ用プライバシーポリシーPHPテンプレート作成と反映支援 | AIエージェント | Antigravity + Gemini | page-privacy.phpの新規作成および本番footer.phpへの適用手順策定 |
 
 
 ---
