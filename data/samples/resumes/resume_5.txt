@@ -1,0 +1,28 @@
+【エンジニア氏名】匿名候補者 E (モバイルアプリ開発者)
+【経験年数】4年
+【現在の職種】iOS/Androidアプリエンジニア / モバイルデベロッパー
+【技術志向】Flutterを用いたシングルコードでの美しいUI開発、ネイティブ固有機能（Swift/Kotlin）の連携、およびFirebaseをバックエンドとした俊敏なアプリ開発。
+
+■ 職務要約
+ベンチャー企業で4年の経験を持つモバイルアプリ開発者。Flutterを用いたiOS/Androidクロスプラットフォームアプリ開発を得意としており、ストア申請（App Store / Google Play）から公開、プッシュ通知や決済機能の実装まで一連のライフサイクルに深い理解があります。Firebaseを活用したスピーディーなバックエンド連携の実装経験も豊富です。
+
+■ 主要スキル
+- フレームワーク: Flutter, React Native
+- 言語: Dart, Swift, Kotlin, JavaScript
+- バックエンド/BaaS: Firebase (Auth, Firestore, Cloud Functions, Messaging), Supabase
+- モバイル技術: StoreKit, Google Play Billing, Push Notifications (FCM)
+- 開発ツール・手法: Git, Bitrise (CI/CD for Mobile), Fastlane, Xcode, Android Studio
+
+■ 職務経歴
+1. アプリベンチャーズ株式会社 (2022年4月 〜 現在)
+   - 役割: リードモバイルエンジニア
+   - 業務内容: Flutterを用いたC向けSNS健康管理アプリ「Mighty-Health」の新規立ち上げ、機能拡充。
+   - 成果: iOS/Android両ストア向けに1コードで配信。ストアレビュー評価を 3.2 から 4.6 に向上させ、ダウンロード数30万件突破に貢献。
+
+2. モバイルファクトリー株式会社 (2020年4月 〜 2022年3月)
+   - 役割: iOSアプリ開発者
+   - 業務内容: Swiftを用いた位置情報ゲームアプリの機能開発、Objective-CからSwiftへのコード移行。
+   - 成果: ゲームアプリのパフォーマンスチューニングを行い、クラッシュ率を0.1%以下に低減。
+
+■ キャリア志向・アピールポイント
+フロントエンドUIのインタラクション設計とユーザー体験に強いこだわりがあります。BaaS（Firebase/Supabase）によるアジャイルな小規模開発が最も得意であり、1日1時間のスピード感を保ちつつ、MVPや実証実験（PoC）アプリを立ち上げて市場に届ける新規事業チームを求めています。

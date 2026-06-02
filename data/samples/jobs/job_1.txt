@@ -1,0 +1,30 @@
+【案件名】AI適性状況診断ツール開発リードエンジニア
+【募集企業】スタートアップ企業「Mighty-Link」 (急成長・アジャイル重視)
+【勤務地】フルリモート (日本国内)
+【想定年収/月単価】80万円 〜 110万円 / 月
+
+■ プロジェクト概要
+既存の勤怠管理システムと連携し、従業員向けのAI診断および多次元フィット（スキル、カルチャー、成長志向、即戦力度）を評価する新規プロダクト「Mighty Skill-Bridge」の本格開発を担当していただきます。
+持続可能な小規模開発体制のもと、1日のうち短時間で最大のバリューを出す「ゼロOps」なサーバーレス環境（Firebase ＆ Supabase）でアーキテクチャの構築および機能実装を進めています。
+
+■ 業務内容
+- FastAPI (Python) を用いたバックエンドAPIの本格設計・実装
+- Google Gemini API (1.5/2.5 Flash) を用いた履歴書/案件票のパース・突合エンジンの構築
+- Google Workspace (Sheets, Calendar, Drive) と自動連携する各種バッチ・同期スクリプトの実装
+- Firebase (Hosting, Functions) および Supabase (PostgreSQL) を用いた本番インフラの構築
+
+■ 必須要件 (Mandatory)
+- Python (FastAPI または Django) を用いた実務経験 5年以上
+- React (TypeScript, Next.js) を用いたフロントエンドSPAの開発実務経験 3年以上
+- AWS、GCP、または Firebase を用いたコンテナ/サーバーレスインフラの構築経験
+- Git / GitHub Actions を用いたCI/CD自動テスト・デプロイ環境の設計経験
+
+■ 歓迎要件 (Preferred)
+- Google Workspace APIs (Sheets, Calendar, Drive) の連携開発実績
+- Supabase (PostgreSQL) または PostgreSQL データベースの運用経験
+- 5名〜8名規模の開発スクラムでテックリードを務めた経験
+
+■ 求める人物像・開発文化
+- 1日の短時間（1日1時間など）で効率的にタスクを完了させる、持続可能なスモール開発体制に共感できる方
+- 技術選定から実装まで、高い主体性とスピード感を持って行動できる方
+- 個人情報の匿名化やコンプライアンス（法務確認）に配慮した設計を重視できる方

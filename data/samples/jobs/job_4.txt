@@ -1,0 +1,30 @@
+【案件名】SaaSプラットフォームのAWSインフラコンテナ化およびDevOps自動化推進
+【募集企業】成長期SaaSプロダクト開発企業 (技術志向高め・開発効率重視)
+【勤務地】フルリモート (日本国内)
+【想定年収/月単価】85万円 〜 105万円 / 月
+
+■ プロジェクト概要
+成長中の自社SaaSプロダクト「Mighty-Cloud」のインフラ基盤を、従来のAWS VM（EC2）主体の構成から、Kubernetes（EKS）およびDockerを用いた完全コンテナオーケストレーション環境へとモダナイズするプロジェクトです。
+Terraformによるインフラの完全コード化（IaC）、GitHub ActionsとArgoCDを用いたGitOpsによるCI/CD自動化を推進し、開発者が1秒でも早く安全に本番リリースできる「プラットフォームエンジニアリング」を確立します。
+
+■ 業務内容
+- Terraform を用いたAWSマルチアカウントおよびネットワーク・セキュリティのコード定義
+- AWS VMベース環境から AWS EKS (Kubernetes) へのコンテナシステム移行設計・実行
+- GitHub Actions を用いたコンテナ自動ビルド・脆弱性スキャン・ArgoCD連携パイプラインの構築
+- Prometheus/Grafanaを用いたコンテナ可用性（SRE観点）の監視・可観測性（Observability）強化
+
+■ 必須要件 (Mandatory)
+- AWS (EC2, ECS, VPC, RDS, IAM) を用いたクラウドインフラの構築・運用実務経験 4年以上
+- Terraform を用いた Infrastructure as Code (IaC) の実務運用経験
+- Docker を用いたコンテナ定義、マルチステージビルドによるイメージ最適化経験
+- GitHub Actions または Jenkins 等によるCI/CDパイプライン自動化の実装経験
+
+■ 歓迎要件 (Preferred)
+- Kubernetes の運用経験、マニフェスト設計（Helm 含む）、ArgoCD等のGitOpsツール実績
+- Go言語を用いた簡単なCI/CD補助スクリプトまたは内部ツールの実装力
+- AWS認定プロフェッショナル（Solutions Architect Pro等）またはCKA（Certified Kubernetes Administrator）
+
+■ 求める人物像・開発文化
+- インフラは開発者を支える土台であると考え、開発者体験（DX）の向上に情熱を持てる方
+- 「一度手動で行った操作は、必ず自動化・コード化する」という強い自動化マインドを持つ方
+- マイクロサービスのセキュリティやネットワーク境界の管理に深い配慮ができる方
