@@ -1,0 +1,36 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "venv/**",
+      "tests/**",
+      ".git/**",
+      ".github/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "function": "api"
+      },
+      {
+        "source": "/admin/**",
+        "function": "api"
+      },
+      {
+        "source": "/exports/**",
+        "function": "api"
+      }
+    ]
+  },
+  "functions": [
+    {
+      "source": ".",
+      "codeconfig": {
+        "runtime": "python311"
+      }
+    }
+  ]
+}
