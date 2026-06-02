@@ -2049,8 +2049,53 @@ async def sync_to_sheets(req: SyncRequest):
     client = None
     auth_mode = None
     
-    # 1. OAuth 2.0 Auth Check
-    if os.path.exists(CLIENT_SECRET_FILE):
+    # 1. Google Workspace Service Account directly from Environment Variable (Best Practice for Serverless)
+    service_account_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
+    if service_account_json:
+        try:
+            scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
+            info = json.loads(service_account_json)
+            creds = ServiceCredentials.from_service_account_info(info, scopes=scopes)
+            client = gspread.authorize(creds)
+            auth_mode = "Service Account (Env)"
+            print("[+] Authenticated Google Sheets via GOOGLE_SERVICE_ACCOUNT_JSON environment variable.")
+        except Exception as e:
+            print(f"[-] GOOGLE_SERVICE_ACCOUNT_JSON environment auth failed: {e}")
+
+    # 2. Google Workspace OAuth 2.0 from Environment Variables
+    client_secret_env = os.environ.get("GOOGLE_CLIENT_SECRET_JSON")
+    authorized_user_env = os.environ.get("GOOGLE_AUTHORIZED_USER_JSON")
+    if not client and client_secret_env and authorized_user_env:
+        try:
+            temp_secret_path = os.path.join(PROJECT_ROOT, "temp_client_secret.json")
+            temp_user_path = os.path.join(PROJECT_ROOT, "temp_authorized_user.json")
+            
+            with open(temp_secret_path, "w", encoding="utf-8") as f:
+                f.write(client_secret_env)
+            with open(temp_user_path, "w", encoding="utf-8") as f:
+                f.write(authorized_user_env)
+                
+            try:
+                client = gspread.oauth(
+                    credentials_filename=temp_secret_path,
+                    authorized_user_filename=temp_user_path
+                )
+                assert_expected_google_account(credentials_from_gspread_client(client), USER_EMAIL)
+                auth_mode = "OAuth 2.0 (Env)"
+                print("[+] Authenticated Google Sheets via OAuth environment variables.")
+            finally:
+                if os.path.exists(temp_secret_path):
+                    os.remove(temp_secret_path)
+                if os.path.exists(temp_user_path):
+                    os.remove(temp_user_path)
+        except GoogleWorkspaceAccountError as e:
+            print(f"[-] OAuth Env account verification failed: {e}")
+            return {"status": "error", "message": str(e)}
+        except Exception as e:
+            print(f"[-] OAuth Env authentication failed: {e}")
+
+    # 3. OAuth 2.0 File-based Fallback
+    if not client and os.path.exists(CLIENT_SECRET_FILE):
         try:
             client = gspread.oauth(
                 credentials_filename=CLIENT_SECRET_FILE,
@@ -2064,7 +2109,7 @@ async def sync_to_sheets(req: SyncRequest):
         except Exception as e:
             print(f"[-] OAuth 2.0 authentication failed in API: {e}")
 
-    # 2. Service Account Fallback
+    # 4. Service Account File-based Fallback
     if not client and os.path.exists(CREDENTIALS_FILE):
         try:
             scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
