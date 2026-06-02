@@ -143,6 +143,8 @@ gantt
 | **T734** | 7. 決定後実行 | インフラ設計 | GitHub Actionsを用いた自動ビルド・テスト・デプロイCI/CDパイプライン構築 | Codex | VSCode + Codex | GitHub Actions workflow YAML作成 |
 | **T735** | 7. 決定後実行 | リリース | 本番プロダクション環境への初版リリースデプロイおよび受入手動テスト実施 | 人間 + AI | Gemini API 現行モデル | リリースアナウンスおよびリリースログ記録 |
 | **T736** | 7. 決定後実行 | 運用保守 | API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用 | Codex | VSCode + Codex | daily usage ledger監査およびアラート設定 |
+| **T737** | 7. 決定後実行 | 運用保守 | デイリー作業レポート（WBS/進捗状況）のGmail/Slack自動送信機能の実装 | Codex | VSCode + Codex | send_daily_report.py自動送信設定 |
+
 
 
 ---
