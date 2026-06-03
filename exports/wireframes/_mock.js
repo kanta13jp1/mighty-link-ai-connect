@@ -90,6 +90,33 @@
       try { data = JSON.parse(body); } catch (_) {}
       return mkResp(mockMatch(data.engineer_content || "", data.job_content || ""));
     }
+    if (path === "/api/jobs") {
+      return mkResp({
+        status: "success",
+        jobs: [
+          { id: 1, title: "FastAPIバックエンド開発", company: "Mighty Link", company_culture: "アジャイルでスピード重視、自律的な学習能力を推奨" },
+          { id: 2, title: "Next.jsフロントエンド刷新", company: "Mighty Link", company_culture: "UIデザインとUXパフォーマンスにこだわり、モダンなスタイリングを推奨" },
+          { id: 3, title: "Python機械学習エンジニア", company: "Mighty Link", company_culture: "データドリブンなアプローチ、研究開発とビジネス価値の調和を重視" }
+        ]
+      });
+    }
+    if (path === "/api/engineers") {
+      return mkResp({
+        status: "success",
+        engineers: [
+          { id: 1, name: "佐藤 健一", parsed_skills: { skills: ["Python", "FastAPI", "Django", "PostgreSQL", "Docker", "AWS"] } },
+          { id: 2, name: "鈴木 美咲", parsed_skills: { skills: ["JavaScript", "React", "Next.js", "TailwindCSS", "Figma", "TypeScript"] } },
+          { id: 3, name: "高橋 翔太", parsed_skills: { skills: ["Go", "Gin", "gRPC", "MySQL", "Kubernetes", "GCP"] } },
+          { id: 4, name: "渡辺 裕子", parsed_skills: { skills: ["Python", "PyTorch", "TensorFlow", "FastAPI", "Docker", "scikit-learn"] } }
+        ]
+      });
+    }
+    if (path === "/api/matches") {
+      return mkResp({
+        status: "success",
+        matches: []
+      });
+    }
     if (path === "/api/audit/recent") return mkResp(mockAudit());
     if (path === "/api/admin/usage") return mkResp(mockUsage());
     return new Response("not found", { status: 404 });

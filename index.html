@@ -508,6 +508,336 @@
         }
 
         /* ==========================================================================
+           Step 2.5: Multiple Candidates Comparison Board (案件候補比較ボード) Styles
+           ========================================================================== */
+        .comparison-section {
+            width: min(1512px, 100%);
+            margin: 64px auto 0;
+            padding: 0 32px;
+            display: block;
+        }
+
+        .comparison-section .step-kicker {
+            color: var(--blue);
+            background: rgba(139, 220, 255, 0.06);
+            border-color: rgba(139, 220, 255, 0.22);
+            margin-bottom: 16px;
+        }
+
+        .comparison-container {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 30px 60px var(--shadow);
+            margin-top: 24px;
+        }
+
+        .comparison-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .control-label {
+            font-size: 14px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper select {
+            background: var(--panel-strong);
+            color: var(--text);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            min-width: 280px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            appearance: none;
+        }
+
+        .select-wrapper select:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 10px rgba(139, 220, 255, 0.2);
+        }
+
+        /* custom arrow indicator for select */
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 10px;
+            color: var(--muted);
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .control-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-btn {
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+
+        .action-btn.primary-btn {
+            background: linear-gradient(135deg, var(--blue), var(--green));
+            color: #030303;
+        }
+
+        .action-btn.primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 220, 255, 0.4);
+        }
+
+        .action-btn.secondary-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            border: 1px solid var(--line);
+        }
+
+        .action-btn.secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .comparison-table th {
+            background: rgba(255, 255, 255, 0.03);
+            font-weight: 600;
+            color: var(--muted);
+            user-select: none;
+        }
+
+        .comparison-table th.sortable {
+            cursor: pointer;
+        }
+
+        .comparison-table th.sortable:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .sort-indicator {
+            font-size: 10px;
+            color: var(--blue);
+        }
+
+        .comparison-table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+        .comparison-table tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .fit-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .fit-badge.fit-high {
+            background: rgba(186, 255, 102, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(186, 255, 102, 0.3);
+        }
+
+        .fit-badge.fit-med {
+            background: rgba(255, 209, 102, 0.15);
+            color: var(--yellow);
+            border: 1px solid rgba(255, 209, 102, 0.3);
+        }
+
+        .fit-badge.fit-low {
+            background: rgba(255, 108, 171, 0.15);
+            color: var(--rose);
+            border: 1px solid rgba(255, 108, 171, 0.3);
+        }
+
+        .score-cell {
+            font-weight: 600;
+            font-family: monospace;
+            font-size: 15px;
+        }
+
+        .action-link {
+            color: var(--blue);
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .action-link:hover {
+            color: var(--green);
+            text-decoration: underline;
+        }
+
+        .action-separator {
+            color: var(--line);
+            margin: 0 8px;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--panel-strong);
+            border: 1px solid var(--line-strong);
+            border-radius: 16px;
+            padding: 32px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text);
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            color: var(--text);
+            padding: 10px 14px;
+            outline: none;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--blue);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .modal-btn {
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .modal-btn.confirm-btn {
+            background: var(--blue);
+            color: #030303;
+        }
+
+        .modal-btn.confirm-btn:hover {
+            background: var(--green);
+        }
+
+        .modal-btn.cancel-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+        }
+
+        .modal-btn.cancel-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ==========================================================================
            Step 3: AI Story Video Lab (動画生成プレビュー) 用スタイル
            ========================================================================== */
         .video-section {
@@ -1726,6 +2056,77 @@
         </section>
 
         <!-- ==========================================================================
+             Step 2.5: Multiple Candidates Comparison Board (案件候補比較ボード)
+             ========================================================================== -->
+        <section id="comparison-section" class="comparison-section fade-in-on-scroll" aria-label="Multiple Candidates Comparison Board">
+            <div class="step-kicker">Step 2.5</div>
+            <div class="section-title-wrapper" style="text-align: center; margin-bottom: 24px;">
+                <h2 class="section-title" style="font-size: 32px; font-weight: 800; letter-spacing: -0.5px;">Multiple Candidates Comparison Board <span class="accent-text" style="background: linear-gradient(135deg, var(--blue), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">案件候補比較ボード</span></h2>
+                <p class="section-subtitle" style="color: var(--muted); margin-top: 8px; font-size: 15px;">複数案件とストック候補エンジニアの多次元フィットスコアを一覧で突合・比較します。</p>
+            </div>
+            
+            <div class="comparison-container">
+                <div class="comparison-controls">
+                    <div class="control-group">
+                        <label for="comparison-job-select" class="control-label">対象案件の選択:</label>
+                        <div class="select-wrapper">
+                            <select id="comparison-job-select" onchange="updateComparisonBoard()">
+                                <!-- Loaded dynamically or falls back to mock -->
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="control-actions">
+                        <button class="action-btn secondary-btn" onclick="openAddCandidateModal()">
+                            <span class="btn-icon" style="font-size: 16px; font-weight: bold;">+</span> 候補者の追加
+                        </button>
+                        <button class="action-btn primary-btn" onclick="exportComparisonCSV()">
+                            <span class="btn-icon" style="font-size: 14px;">⬇</span> CSVエクスポート
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" onclick="sortComparison('name')">候補者氏名 <span class="sort-indicator" id="sort-name"></span></th>
+                                <th class="sortable" onclick="sortComparison('final_score')">総合マッチ度 <span class="sort-indicator" id="sort-final_score"></span></th>
+                                <th class="sortable" onclick="sortComparison('skill')">スキル適合 <span class="sort-indicator" id="sort-skill"></span></th>
+                                <th class="sortable" onclick="sortComparison('culture')">カルチャー適合 <span class="sort-indicator" id="sort-culture"></span></th>
+                                <th class="sortable" onclick="sortComparison('growth')">成長親和性 <span class="sort-indicator" id="sort-growth"></span></th>
+                                <th class="sortable" onclick="sortComparison('performing')">稼働安定性 <span class="sort-indicator" id="sort-performing"></span></th>
+                                <th>アクション</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-tbody">
+                            <!-- Dynamic rows loaded by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal for adding a candidate -->
+            <div id="add-candidate-modal" class="modal-overlay">
+                <div class="modal-content">
+                    <h3 class="modal-title">候補エンジニアの追加</h3>
+                    <div class="form-group">
+                        <label for="modal-candidate-name">氏名 (必須):</label>
+                        <input type="text" id="modal-candidate-name" placeholder="例: 鈴木 美咲">
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-candidate-skills">保有スキル・経歴要約 (任意):</label>
+                        <textarea id="modal-candidate-skills" rows="4" placeholder="例: React, TypeScript, Python, FastAPIを用いた開発経験3年..."></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="modal-btn cancel-btn" onclick="closeAddCandidateModal()">キャンセル</button>
+                        <button class="modal-btn confirm-btn" onclick="addCandidateFromModal()">追加する</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
              Step 3: AI Story Video Lab (動画生成プレビュー)
              ========================================================================== -->
         <section id="video-section" class="video-section">
@@ -2132,6 +2533,23 @@
             button.disabled = false;
             button.innerHTML = original;
 
+            // Auto-add candidate to the Comparison Board stock
+            try {
+                const engName = engineerText.split("\n")[0].replace("氏名: ", "").trim() || "新規エンジニア";
+                const alreadyExists = comparisonStock.find(c => c.name === engName);
+                if (!alreadyExists) {
+                    const nextId = comparisonStock.length > 0 ? Math.max(...comparisonStock.map(c => c.id)) + 1 : 1;
+                    comparisonStock.push({
+                        id: nextId,
+                        name: engName,
+                        skills: engineerText
+                    });
+                    updateComparisonBoard();
+                }
+            } catch (e) {
+                console.warn("Could not auto-add candidate to comparison stock:", e);
+            }
+
             // 滑らかにスクロールしてStep 2のレポートを見せる
             reportSection.scrollIntoView({ behavior: "smooth", block: "start" });
         }
@@ -2361,12 +2779,303 @@
                 .join("<br>");
         }
 
+        /* ==========================================================================
+           Step 2.5: Multiple Candidates Comparison Board (案件候補比較ボード) JS
+           ========================================================================== */
+        let comparisonStock = [
+            { id: 1, name: "佐藤 健一", skills: "Python, Django, FastAPI, PostgreSQL, Docker, AWS (S3, RDS), Git. 開発経験5年。アジャイル開発に精通。" },
+            { id: 2, name: "鈴木 美咲", skills: "HTML5, CSS3, JavaScript (ES6+), React, Redux, TailwindCSS, Next.js, Jest, Figma. フロントエンド開発経験3年。" },
+            { id: 3, name: "高橋 翔太", skills: "Go, Gin, gRPC, Protocol Buffers, MySQL, Redis, Kubernetes, GCP, Prometheus. マイクロサービス開発経験4年。" },
+            { id: 4, name: "渡辺 裕子", skills: "Python, PyTorch, TensorFlow, pandas, scikit-learn, SQL, Docker, FastAPI, Jupyter. 機械学習モデル開発経験3年。" }
+        ];
+
+        let windowComparisonJobs = [
+            { id: 1, title: "FastAPIバックエンド開発", company: "Mighty Link", company_culture: "アジャイルでスピード重視、自律的な学習能力を推奨" },
+            { id: 2, title: "Next.jsフロントエンド刷新", company: "Mighty Link", company_culture: "UIデザインとUXパフォーマンスにこだわり、モダンなスタイリングを推奨" },
+            { id: 3, title: "Python機械学習エンジニア", company: "Mighty Link", company_culture: "データドリブンなアプローチ、研究開発とビジネス価値の調和を重視" }
+        ];
+
+        let currentSortField = "";
+        let currentSortOrder = "desc";
+
+        async function initComparisonBoard() {
+            // Fetch jobs and engineers from real backend if possible
+            try {
+                const res = await fetch("/api/jobs");
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.status === "success" && data.jobs && data.jobs.length > 0) {
+                        windowComparisonJobs = data.jobs;
+                    }
+                }
+            } catch (e) {
+                console.warn("Could not fetch jobs, using mock jobs:", e);
+            }
+
+            try {
+                const res = await fetch("/api/engineers");
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.status === "success" && data.engineers && data.engineers.length > 0) {
+                        comparisonStock = data.engineers.map(eng => {
+                            let skillsStr = "";
+                            if (eng.parsed_skills) {
+                                if (Array.isArray(eng.parsed_skills.skills)) {
+                                    skillsStr = eng.parsed_skills.skills.join(", ");
+                                } else if (typeof eng.parsed_skills === "object") {
+                                    skillsStr = Object.keys(eng.parsed_skills).join(", ");
+                                }
+                            }
+                            return {
+                                id: eng.id,
+                                name: eng.name,
+                                skills: skillsStr || "No skills parsed yet"
+                            };
+                        });
+                    }
+                }
+            } catch (e) {
+                console.warn("Could not fetch engineers, using mock engineers:", e);
+            }
+
+            // Populate jobs select
+            const select = document.getElementById("comparison-job-select");
+            if (select) {
+                select.innerHTML = windowComparisonJobs.map(j => `<option value="${j.id}">${escapeHtml(j.company)} - ${escapeHtml(j.title)}</option>`).join("");
+            }
+
+            updateComparisonBoard();
+        }
+
+        function getMatchScore(engineer, job) {
+            const seed = engineer.name + "|" + job.title;
+            let h = 0;
+            for (let i = 0; i < seed.length; i++) { h = (h * 31 + seed.charCodeAt(i)) | 0; }
+            let score = 65 + Math.abs(h % 31); // 65..95
+            
+            const engSkills = (engineer.skills || "").toLowerCase();
+            const jobTitle = (job.title || "").toLowerCase();
+            
+            if (jobTitle.includes("fastapi") || jobTitle.includes("バックエンド") || jobTitle.includes("backend")) {
+                if (engSkills.includes("python") || engSkills.includes("fastapi") || engSkills.includes("go") || engSkills.includes("django")) {
+                    score = Math.min(98, score + 8);
+                }
+            } else if (jobTitle.includes("next.js") || jobTitle.includes("フロントエンド") || jobTitle.includes("frontend")) {
+                if (engSkills.includes("react") || engSkills.includes("next.js") || engSkills.includes("javascript") || engSkills.includes("typescript")) {
+                    score = Math.min(98, score + 8);
+                }
+            } else if (jobTitle.includes("機械学習") || jobTitle.includes("ml") || jobTitle.includes("python")) {
+                if (engSkills.includes("python") || engSkills.includes("pytorch") || engSkills.includes("tensorflow") || engSkills.includes("machine learning")) {
+                    score = Math.min(98, score + 8);
+                }
+            }
+            
+            const skillScore = Math.min(100, Math.max(50, score + (h % 5)));
+            const cultureScore = Math.min(100, Math.max(50, score - (h % 7)));
+            const growthScore = Math.min(100, Math.max(50, score + (h % 3)));
+            const performingScore = Math.min(100, Math.max(50, score - (h % 4)));
+            
+            return {
+                final_score: score,
+                skill: skillScore,
+                culture: cultureScore,
+                growth: growthScore,
+                performing: performingScore
+            };
+        }
+
+        function updateComparisonBoard() {
+            const select = document.getElementById("comparison-job-select");
+            if (!select) return;
+            const jobId = parseInt(select.value);
+            const activeJob = windowComparisonJobs.find(j => j.id === jobId) || windowComparisonJobs[0];
+            if (!activeJob) return;
+
+            // Compute scores for each stocked engineer against active job
+            let computedList = comparisonStock.map(eng => {
+                const metrics = getMatchScore(eng, activeJob);
+                return {
+                    ...eng,
+                    ...metrics
+                };
+            });
+
+            // Apply sort if any
+            if (currentSortField) {
+                computedList.sort((a, b) => {
+                    let valA = a[currentSortField];
+                    let valB = b[currentSortField];
+                    if (typeof valA === "string") {
+                        return currentSortOrder === "asc" ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                    } else {
+                        return currentSortOrder === "asc" ? valA - valB : valB - valA;
+                    }
+                });
+            }
+
+            // Render tbody
+            const tbody = document.getElementById("comparison-tbody");
+            if (!tbody) return;
+
+            if (computedList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--muted)">候補エンジニアが登録されていません。</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = computedList.map(item => {
+                let badgeClass = "fit-low";
+                if (item.final_score >= 85) badgeClass = "fit-high";
+                else if (item.final_score >= 75) badgeClass = "fit-med";
+
+                return `
+                    <tr>
+                        <td style="font-weight: 600;">${escapeHtml(item.name)}</td>
+                        <td><span class="fit-badge ${badgeClass}">${item.final_score}%</span></td>
+                        <td class="score-cell">${item.skill}%</td>
+                        <td class="score-cell">${item.culture}%</td>
+                        <td class="score-cell">${item.growth}%</td>
+                        <td class="score-cell">${item.performing}%</td>
+                        <td>
+                            <a class="action-link" onclick="loadCandidateToInputs('${escapeJs(item.name)}', '${escapeJs(item.skills)}', '${escapeJs(activeJob.title)}', '${escapeJs(activeJob.company)}')">詳細分析</a>
+                            <span class="action-separator">|</span>
+                            <a class="action-link" style="color: var(--rose)" onclick="removeCandidate(${item.id})">削除</a>
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        function removeCandidate(id) {
+            comparisonStock = comparisonStock.filter(eng => eng.id !== id);
+            updateComparisonBoard();
+        }
+
+        function sortComparison(field) {
+            if (currentSortField === field) {
+                currentSortOrder = currentSortOrder === "asc" ? "desc" : "asc";
+            } else {
+                currentSortField = field;
+                currentSortOrder = "desc";
+            }
+            
+            // Update sort UI indicators
+            document.querySelectorAll(".sort-indicator").forEach(el => el.textContent = "");
+            const indicator = document.getElementById(`sort-${field}`);
+            if (indicator) {
+                indicator.textContent = currentSortOrder === "asc" ? " ▲" : " ▼";
+            }
+            
+            updateComparisonBoard();
+        }
+
+        function openAddCandidateModal() {
+            document.getElementById("add-candidate-modal").classList.add("active");
+        }
+
+        function closeAddCandidateModal() {
+            document.getElementById("add-candidate-modal").classList.remove("active");
+            document.getElementById("modal-candidate-name").value = "";
+            document.getElementById("modal-candidate-skills").value = "";
+        }
+
+        function addCandidateFromModal() {
+            const nameInput = document.getElementById("modal-candidate-name");
+            const skillsInput = document.getElementById("modal-candidate-skills");
+            if (!nameInput) return;
+            const name = nameInput.value.trim();
+            if (!name) {
+                alert("氏名を入力してください。");
+                return;
+            }
+            const skills = skillsInput ? skillsInput.value.trim() : "";
+
+            const nextId = comparisonStock.length > 0 ? Math.max(...comparisonStock.map(c => c.id)) + 1 : 1;
+            comparisonStock.push({ id: nextId, name, skills });
+            
+            closeAddCandidateModal();
+            updateComparisonBoard();
+        }
+
+        function loadCandidateToInputs(name, skills, jobTitle, jobCompany) {
+            const engineerInput = document.getElementById("engineer-input");
+            const jobInput = document.getElementById("job-input");
+            
+            if (engineerInput && jobInput) {
+                engineerInput.value = `氏名: ${name}\n保有スキル・経歴の概要:\n${skills}`;
+                jobInput.value = `案件名: ${jobTitle}\n所属企業: ${jobCompany}\n詳細案件内容・求めるスキル概要:\n${jobTitle}案件です。アジャイルでスピード感を持って開発を進められる人材を求めています。`;
+                
+                buildPromptFromInputs();
+                
+                document.querySelector(".hero").scrollIntoView({ behavior: "smooth", block: "start" });
+                
+                // Auto trigger runAnalysis
+                runAnalysis();
+            }
+        }
+
+        function exportComparisonCSV() {
+            const select = document.getElementById("comparison-job-select");
+            const jobTitle = select ? select.options[select.selectedIndex].text : "job";
+            
+            let csvContent = "\ufeffCandidate Name,Final Compatibility Score,Skill Fit,Culture Fit,Growth Fit,Performing Fit\n";
+            
+            const rows = document.querySelectorAll("#comparison-tbody tr");
+            if (rows.length === 0 || rows[0].innerText.includes("登録されていません")) {
+                alert("エクスポートするデータがありません。");
+                return;
+            }
+            
+            rows.forEach(tr => {
+                const cells = tr.querySelectorAll("td");
+                if (cells.length >= 6) {
+                    const name = cells[0].innerText.trim();
+                    const final = cells[1].innerText.trim().replace("%", "");
+                    const skill = cells[2].innerText.trim().replace("%", "");
+                    const culture = cells[3].innerText.trim().replace("%", "");
+                    const growth = cells[4].innerText.trim().replace("%", "");
+                    const performing = cells[5].innerText.trim().replace("%", "");
+                    
+                    csvContent += `"${name}",${final},${skill},${culture},${growth},${performing}\n`;
+                }
+            });
+            
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+            const encodedUrl = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUrl);
+            link.setAttribute("download", `mighty_comparison_${jobTitle.replace(/[^a-zA-Z0-9ー-龠]/g, "_")}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function escapeJs(str) {
+            return (str || "")
+                .replace(/\\/g, '\\\\')
+                .replace(/'/g, "\\'")
+                .replace(/"/g, '\\"')
+                .replace(/\n/g, '\\n')
+                .replace(/\r/g, '\\r');
+        }
+
+        function escapeHtml(str) {
+            return (str || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
         window.addEventListener("DOMContentLoaded", () => {
             // Step 1 inputs start empty so users see the placeholder copy and
             // can experience the "Load Sample" buttons as a real onboarding step.
             // `runAnalysis()` still auto-loads samples if the user clicks
             // Analyze with empty fields, so direct Analyze use keeps working.
             setVideoSource(seedanceFallbackVideo);
+            
+            // Init comparison board
+            initComparisonBoard();
         });
 
         window.addEventListener("scroll", () => {
