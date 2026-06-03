@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "hooks": [
+    {
+      "name": "wbs-sheets-calendar-sync",
+      "description": "Trigger WBS synchronization to Google Sheets and Calendar when WBS.tsv is modified",
+      "events": [
+        "file:modified"
+      ],
+      "filters": {
+        "paths": [
+          "data/WBS.tsv"
+        ]
+      },
+      "command": "python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8 && python scripts/sync_wbs_to_calendar.py"
+    },
+    {
+      "name": "docs-notebooklm-sync",
+      "description": "Trigger document sync to Google Drive and NotebookLM when any document in docs/ changes",
+      "events": [
+        "file:modified",
+        "file:created"
+      ],
+      "filters": {
+        "paths": [
+          "docs/*.md"
+        ]
+      },
+      "command": "python scripts/sync_docs_to_notebooklm.py && python scripts/generate_ceo_presentation_deck.py && python scripts/upload_notebooklm_docs_to_drive.py"
+    }
+  ]
+}
