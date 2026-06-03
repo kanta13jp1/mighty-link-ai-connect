@@ -1,6 +1,6 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-03T11:13:14+09:00
+Generated: 2026-06-03T13:19:17+09:00
 
 ## Current Status
 
@@ -33,6 +33,7 @@ Generated: 2026-06-03T11:13:14+09:00
 - `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
 - `docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/1aFiRyJpftES9MXnSkTUKsaum_KCUt8UhS37p_3Ln15U/edit?usp=drivesdk
 - `docs/MULTI_AI_WORKFLOW.md`: https://docs.google.com/document/d/1WfBfLEpbTV6zcB4AuA4RbeXaJ99qw6h0UGq9D_1oJ_Q/edit?usp=drivesdk
+- `docs/PILOT_CLOSED_OPERATION_DESIGN.md`: https://docs.google.com/document/d/16xas5El8RUkWPEn91rjqvrCROLH3QP-NwqWNTdtuTPI/edit?usp=drivesdk
 - `docs/PILOT_CONSENT_TEMPLATE.md`: https://docs.google.com/document/d/1KExhc4UkexwUBTq--hMDmNpTA59oZFVz_c3yYl4UOBE/edit?usp=drivesdk
 - `docs/PILOT_PARTICIPANTS_SELECTION.md`: https://docs.google.com/document/d/1BLPG7uYbtU73fQh_tAg4cBBPin3BojMl9nWTDKdWb8w/edit?usp=drivesdk
 - `docs/PROJECT_STRUCTURE.md`: https://docs.google.com/document/d/1ACZgUCWCCSM6o7oNh9qsAIk5wfyq7mKsHCiyQxNsrcg/edit?usp=drivesdk
