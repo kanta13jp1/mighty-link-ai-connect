@@ -83,4 +83,13 @@ def test_ui_flow(fastapi_server):
         assert int(score_val) > 0
         print(f"[+] UI flow verified. Matching score: {score_val}%")
         
+        # 8. Verify that skills badges are populated in the DOM
+        matched_badges = page.locator("#matched-skills-container .matched-badge")
+        missing_badges = page.locator("#missing-skills-container .missing-badge")
+        page.wait_for_function("document.querySelectorAll('#matched-skills-container .matched-badge').length > 0")
+        
+        assert matched_badges.count() > 0
+        assert missing_badges.count() > 0
+        print(f"[+] Verified matched ({matched_badges.count()}) and missing ({missing_badges.count()}) skills badges are rendered successfully.")
+        
         browser.close()
