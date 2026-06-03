@@ -1,52 +1,74 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-06-03T01:55:21+09:00
-Status: `skipped`
+Generated: 2026-06-03T09:23:59+09:00
+Notebook: `a235db10-d2c5-4ee3-9621-89efbb59e74c`
 
-NotebookLM CLI is not ready yet, so this file is a placeholder.
+## Question
 
-## Required Action
+このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、
+Codex/AIエージェントが次に開発を進めるための要約を作ってください。
 
-```powershell
-notebooklm login
-python scripts/sync_docs_to_notebooklm.py
-```
+必ず以下を含めてください。
+1. 現在のプロダクト方向性で確定していること
+2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク
+3. 6/2で社長に決めてもらうべき事項
+4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提
+5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題
+6. WBSへ追加すべき次アクション
 
-During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
 
-## Synced Google Docs
+## NotebookLM Answer
 
-- `docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md`: https://docs.google.com/document/d/1bBNOphS-rJbJMWiYJGba-3ZGE-FEHqHrE4dDbKDPsew/edit?usp=drivesdk
-- `docs/ANTIGRAVITY_GUIDE.md`: https://docs.google.com/document/d/1d0SMuvOQXnGLxmNj7d1ktfWczSmxlWL0wblxlYDMH4E/edit?usp=drivesdk
-- `docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md`: https://docs.google.com/document/d/1eDY92cqtEk4ocGZCcAxRtHPlupia8UQNZi8OEY1bSto/edit?usp=drivesdk
-- `docs/BACKEND_AI_PIPELINE.md`: https://docs.google.com/document/d/1duxDhC6yjS-XlyWxse_XdaiRjq88cZz8aBCt0GRxUWg/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_BACKUP_GUIDE.md`: https://docs.google.com/document/d/1V0Pk334cGh22vH5YcXPepmIV8OHOFs1dtdgUQPa-VUY/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/17LQKJNaTJYn7ntsh3vIT4A1YqkkMDR_xRDNmuw__iKc/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`: https://docs.google.com/document/d/1XJeHY18JEEeaz4Dc28UHrOYbA7hhZ7ENfyI3TEGPnqc/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md`: https://docs.google.com/document/d/14JXVTEmE05KPl-8h0-3yUN72d_llc345dC-THSY6MP0/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md`: https://docs.google.com/document/d/1QIWGVC-S7xL9qQuO9VwQ8Cu72lBwdRWv-3VT-QfHHSk/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md`: https://docs.google.com/document/d/1JgVk67o0IC8JuUtlftMwPQY9cgeoMY4Q1lHJ2xHAkqI/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md`: https://docs.google.com/document/d/12H5nzd8jDRQU1eg33xNQgkoaEaodz4zQmjSTbaJWHkk/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_PREP_2026-06-02.md`: https://docs.google.com/document/d/1hIcqCfKtRPPVtXrKizMesGpI7j9VACrXgQicHy4XD6o/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md`: https://docs.google.com/document/d/1f46OjAqnCphcg24U--3ro8Om40RdydQpISIUlO9gRoY/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md`: https://docs.google.com/document/d/1fMHp994ApuoGJsVmyD2PpA_ILNzDsb5RSxomC1rmeew/edit?usp=drivesdk
-- `docs/CODEX_CONTINUATION_NOTES.md`: https://docs.google.com/document/d/1akLsJ_85jkqcH3aTaae8h5u1xmHGooJn5UlklHvQyfE/edit?usp=drivesdk
-- `docs/COST_REPORT_2026-06.md`: https://docs.google.com/document/d/1CNFK4rA_lhIileO29u0MuvXQca43qkDmSdSla7JdUMY/edit?usp=drivesdk
-- `docs/database.md`: https://docs.google.com/document/d/1WVp_vmYeiCZfFWbCpHNfmwGoUeBADuMjyLySBHrh9bI/edit?usp=drivesdk
-- `docs/DEVELOPMENT_KNOWLEDGE_FLOW.md`: https://docs.google.com/document/d/1SS44DK0H57KFdX4jHDucbYe6PRN2ofUllaaLr5zioYU/edit?usp=drivesdk
-- `docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1xb9e3AQt7uGSvQvu-D12CGqchlh5Z01FFn44Dkhza8I/edit?usp=drivesdk
-- `docs/HOSTING_AND_DATABASE_SELECTION.md`: https://docs.google.com/document/d/1ngrMIRYYAbR2jzpLGRSKKJBTcOPvwUSJ00MDeCbx8-Y/edit?usp=drivesdk
-- `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
-- `docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/1aFiRyJpftES9MXnSkTUKsaum_KCUt8UhS37p_3Ln15U/edit?usp=drivesdk
-- `docs/MULTI_AI_WORKFLOW.md`: https://docs.google.com/document/d/1WfBfLEpbTV6zcB4AuA4RbeXaJ99qw6h0UGq9D_1oJ_Q/edit?usp=drivesdk
-- `docs/PILOT_CONSENT_TEMPLATE.md`: https://docs.google.com/document/d/1KExhc4UkexwUBTq--hMDmNpTA59oZFVz_c3yYl4UOBE/edit?usp=drivesdk
-- `docs/PROJECT_STRUCTURE.md`: https://docs.google.com/document/d/1ACZgUCWCCSM6o7oNh9qsAIk5wfyq7mKsHCiyQxNsrcg/edit?usp=drivesdk
-- `docs/requirements.md`: https://docs.google.com/document/d/1G6XmZoa-LhnKuq4At6PVPJrr7IaT5XrP7IYYnwPKAPA/edit?usp=drivesdk
-- `docs/SEQUENCE_DIAGRAMS.md`: https://docs.google.com/document/d/1h7CFApE7fncMQT6W8gbSkuieOpf-x0IA15Hd0HEAiGY/edit?usp=drivesdk
-- `docs/SETUP_GUIDE.md`: https://docs.google.com/document/d/16DonChND2WzQFWDZ8aubajlZdVB1aVnMsXnYLXE7xUI/edit?usp=drivesdk
-- `docs/SHEETS_TRACKERS_SCHEMA.md`: https://docs.google.com/document/d/11uhVT03zDzAnXLVHrcZAQCwQ4z4e0PbFjBcOOOEdvU8/edit?usp=drivesdk
-- `docs/WBS.md`: https://docs.google.com/document/d/16s5eoPSBLInfS6Kr9Hj4Qgc3y4QXjyjNSbojvZNxBuQ/edit?usp=drivesdk
-- `docs/WBS_SYNC_GUIDE.md`: https://docs.google.com/document/d/1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY/edit?usp=drivesdk
+現在のプロダクト方向性やプレゼンに向けた準備状況、および次回アクションに関する要約は以下の通りです。
 
-After re-authentication, this file will be replaced by a NotebookLM-generated
-agent brief with design, roadmap, and next-action guidance.
+### 1. 現在のプロダクト方向性で確定していること
+*   **6/2までは実際の企画・サービス内容、課金モデル、本番運用範囲などは決め打ちしません**[1, 2]。
+*   現状のプロトタイプは、Seedance APIの動画デモ風UIを備え、Gemini APIのマルチモーダル解析を用いた**「エンジニアと案件の多次元AIフィットシミュレーター（Mighty Skill-Bridge）」**として構築されています[3-5]。
+*   本番インフラについては、社長の意思決定により、**ホスティングに「Firebase Hosting & Cloud Functions」、データベースに「Supabase (PostgreSQL)」**を採用するゼロOpsアーキテクチャ（初期固定費$0）で確定しています[6-8]。
+*   開発体制は「Antigravity+Gemini」「VSCode+Codex」「VSCode+Claude Code」の**3ツール並走体制**で確定しています[9]。
+
+### 2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク
+*   **Final Review (T663) の完遂**: 6/1 21:00 JSTまでに、公開URLの稼働、ローカルFastAPIのMock起動、WBS/カレンダー同期、バックアップ導線など、35項目のチェックリストをすべてPassさせます[10, 11]。
+*   **プレゼン資料のMCP自動化・美麗化**: Canva/FigmaのMCPを用いて、NotebookLM由来のスライド草案から8枚のプレゼン資料を自動生成・美麗化し、Google Driveへアップロードします (HANDOFF-14b, HANDOFF-17, HANDOFF-18)[12-14]。
+*   **デモバックアップの準備**: 公開URL障害時に備え、ローカル環境起動、スクリーンショット、代替用デモ動画などのフォールバック導線（F-1〜F-5）を確保します[15, 16]。
+*   **環境凍結**: 5/30 EODまでに `requirements.txt` の依存関係を凍結（freeze）します[17]。
+
+### 3. 6/2で社長に決めてもらうべき事項
+*   **サービス方向性**: プロトタイプをどのサービス（A: AIフィット診断, B: PM支援, C: PoC構築, D: 保留）として育てるか[18]。
+*   **最初の対象ユーザー**: 社内、既存顧客、見込み顧客のどれをターゲットにするか[19]。
+*   **最優先機能**: 6/16までの最初の2週間で実装すべき最優先機能[20]。
+*   **AIエンジンと予算**: AIエンジンの選定方針（Gemini一本か複数並走か）と、月額コスト上限（¥10,000 / ¥30,000 / ¥50,000）[21-23]。
+*   **公開範囲とセキュリティ**: デモの公開範囲（社長のみ/社内/外部）、Basic Auth等の認証層追加の要否、および個人情報取り扱いの法務確認時期[22-25]。
+*   **連携ツール採用**: NotebookLM、Slack、Notion、Obsidianの正式導入の優先順位と運用範囲[24, 26]。
+
+### 4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提
+*   **フォールバックの維持**: Gemini APIのクォータ制限時でも動作するよう、`AI_FORCE_MOCK=1` による「deterministic fallback (決定論的フォールバック)」パイプラインを必ず維持します[27-30]。
+*   **WBSとSheets更新の排他制御**: スプレッドシートや `data/WBS.tsv` への書き込み権限はCodexレーンに限定し、Google Sheets APIの `batchUpdate` を用いて一括更新を行います[31-35]。
+*   **データベーススキーマ**: Supabase (PostgreSQL) への移行を見据え、`engineers`、`jobs`、`match_results` のテーブル定義に従って実装します[8, 36-44]。
+*   **監査ログとプライバシー**: AI判定根拠は原文全文を保存せず、`data/audit/ai_audit.jsonl` にローカル保存し、Git管理から除外します[45]。
+*   **課金ガード**: 外部API (Seedance, Gemini) には `GEMINI_DAILY_CALL_LIMIT` や `SEEDANCE_DAILY_GENERATION_LIMIT` といったサーキットブレーカーを設け、意図せぬ課金を防ぎます[46, 47]。
+*   **認証情報の分離**: Workspace連携アカウントは `k-umezawa@ml-mightylink.com` で固定し、OAuthの認証JSONファイルなどはGitリポジトリにコミットしません[48-50]。
+
+### 5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題
+*   **NotebookLM**: 22件のドキュメントの投入と要約取得は完了していますが、CLIの認証が切れやすいため定期的な再認証が必要です。正式な社内フローとして採用するかは社長判断待ちです[24, 51-53]。
+*   **Slack**: ローカルCLIが未検出かつ送信MCP未露出のため、実際の自動送信は行えず投稿草案の提示に留まっています（リスクR3）。送信先チャンネルと共有範囲の決定も必要です[54-56]。
+*   **Notion**: MCPでの証跡ページ作成には成功していますが、公式の議事録や意思決定DBとして正式運用するかは6/2の決定に依存します[57, 58]。
+*   **Obsidian**: ローカルのvault雛形は作成済みですが、個人メモとして限定するか公式化フローに乗せるかのルール合意が必要です[59, 60]。
+*   **GitHub Project**: `read:project` のOAuthスコープ不足エラーが継続しており、CLIからボード操作ができない状態です（リスクR2）。5/27までに未解決の場合、6/2デモからはProjectボードを除外します[54, 61, 62]。
+*   **GitHub Issues**: タスク管理として多数起票済みですが、Projectの権限不足によりボードへの配置が滞っています[62-64]。
+
+### 6. WBSへ追加すべき次アクション
+社長プレゼン終了直後に、以下のタスクをWBS（Phase 7）として起票・反映します。
+
+**全方向性共通の即着手タスク（Phase 7-common）**
+*   T701〜T708: 6/2議事録のDocs/Notion化、WBSやカレンダーへの即時反映、NotebookLMへの追加投入、法務確認、コスト実測レポートの作成など[65-68]。
+*   インフラ確定に伴うタスク: T731（Supabaseバックエンド接続PoC）、T732（Firebase/Supabaseシークレット管理）、T734（GitHub Actions CI/CD構築）など[69-71]。
+
+**6/2で決定した「サービス方向性」に応じたタスク（1つを選択して追加）**[72-74]
+*   **方向性A（AIフィット診断）の場合**: T710〜T717。利用同意書テンプレ作成、社内パイロット参加者選定、AIスコア根拠のUI化、Basic Auth実装など[75, 76]。
+*   **方向性B（PM支援）の場合**: T720〜T726。WBS UIの内製化、Sheets双方向同期、社長向け週次レポートの自動生成など[31, 77]。
+*   **方向性C（PoC構築）の場合**: T730〜T736。PoCテンプレート機能、業界別サンプルデータ準備、顧客別サブパス付き認証の実装など[78, 79]。
+
+## Notebook Summary
+
+NotebookLM summary command return code: `0`

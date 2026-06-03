@@ -542,3 +542,17 @@ Normal demos should keep billing calls disabled:
 ```powershell
 $env:SEEDANCE_API_ENABLED = ""
 ```
+
+## 2026-06-03 Firebase CI/CD credentials
+
+GitHub Actions deploys Firebase Hosting and Functions through `.github/workflows/deploy.yml`.
+The workflow now prefers Firebase CLI Application Default Credentials, matching the current Firebase CLI guidance, and only falls back to `FIREBASE_TOKEN` for legacy compatibility.
+
+Repository configuration:
+
+- Variable `FIREBASE_PROJECT_ID`: Firebase project ID. Defaults to `mighty-link-ai-connect` when unset.
+- Secret `FIREBASE_SERVICE_ACCOUNT_JSON`: full JSON key for a service account allowed to deploy Firebase Hosting and Functions.
+- Secret `FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT`: also accepted for compatibility with the default Firebase Hosting GitHub integration naming pattern.
+- Secret `FIREBASE_TOKEN`: legacy fallback. If this is present but the token owner cannot access the target Firebase project, CI fails with `Failed to get Firebase project`.
+
+If the deploy log says the project cannot be accessed, first confirm that the Firebase project exists with exactly the same ID as `FIREBASE_PROJECT_ID`, then confirm the service account or legacy token user has deploy permission for that project.

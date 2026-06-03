@@ -61,12 +61,31 @@ jobs:
 
       - name: Deploy to Firebase Hosting & Functions
         env:
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID || 'mighty-link-ai-connect' }}
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON || secrets.FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          if [ -z "$FIREBASE_TOKEN" ]; then
-            echo "[!] WARNING: FIREBASE_TOKEN secret is not set. Skipping real deployment."
-            echo "[*] Firebase configuration file dry-run validation passed."
+          set -euo pipefail
+
+          AUTH_FLAGS=()
+
+          if [ -n "${FIREBASE_SERVICE_ACCOUNT_JSON:-}" ]; then
+            echo "[*] Using Firebase service account credentials via Application Default Credentials."
+            FIREBASE_CREDENTIALS_FILE="$RUNNER_TEMP/firebase-service-account.json"
+            printf '%s' "$FIREBASE_SERVICE_ACCOUNT_JSON" > "$FIREBASE_CREDENTIALS_FILE"
+            chmod 600 "$FIREBASE_CREDENTIALS_FILE"
+            export GOOGLE_APPLICATION_CREDENTIALS="$FIREBASE_CREDENTIALS_FILE"
+          elif [ -n "${FIREBASE_TOKEN:-}" ]; then
+            echo "[!] WARNING: FIREBASE_TOKEN is legacy. Prefer FIREBASE_SERVICE_ACCOUNT_JSON with Application Default Credentials."
+            AUTH_FLAGS=(--token "$FIREBASE_TOKEN")
           else
-            echo "[*] Initiating deploy to Firebase project..."
-            firebase deploy --only hosting,functions --non-interactive --token "$FIREBASE_TOKEN"
+            echo "[!] WARNING: Firebase credentials are not set. Skipping real deployment."
+            echo "[*] Firebase configuration file dry-run validation passed."
+            exit 0
+          fi
+
+          echo "[*] Initiating deploy to Firebase project: $FIREBASE_PROJECT_ID"
+          if ! firebase deploy --project "$FIREBASE_PROJECT_ID" --only hosting,functions --non-interactive "${AUTH_FLAGS[@]}"; then
+            echo "::error title=Firebase deploy failed::Could not deploy to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists in Firebase, set repository variable FIREBASE_PROJECT_ID if the real project ID differs, and grant the service account or FIREBASE_TOKEN user deploy permissions."
+            exit 2
           fi
