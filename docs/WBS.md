@@ -145,6 +145,14 @@ gantt
 | **T736** | 7. 決定後実行 | 運用保守 | API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用 | Codex | VSCode + Codex | daily usage ledger監査およびアラート設定 |
 | **T737** | 7. 決定後実行 | 運用保守 | デイリー作業レポート（WBS/進捗状況）のGmail/Slack自動送信機能の実装 | Codex | VSCode + Codex | send_daily_report.py自動送信設定 |
 | **T738** | 7. 決定後実行 | インフラ | Firebase deploy auth preflight and ADC workflow hardening | Codex | VSCode + Codex | Firebase CI/CD deploy workflow now supports service account ADC, explicit FIREBASE_PROJECT_ID, configurable deploy targets, and Hosting-only default until Blaze/functions are enabled |
+| **T740** | 7. 決定後実行 | インフラ設計 | 本番ドメイン・DNS移行およびSSL証明書自動更新の適用 | 人間 + Codex | VSCode + Codex | カスタムドメインのDNS設定およびSSL証明書発行ステータス確認 |
+| **T741** | 7. 決定後実行 | 運用保守 | 本番環境データベースの自動日次バックアップ・リストア運用の設計および自動化スクリプト実装 | Codex | VSCode + Codex | 毎日午前3時の自動DBダンプ・GCS等外部ストレージ転送・世代管理（7世代）の検証 |
+| **T742** | 7. 決定後実行 | コンプライアンス | 個人情報保護法およびGDPRに準拠したユーザーデータ完全消去（退会）フローのバックエンド実装 | Claude + Codex | VSCode + Claude Code | 論理削除と物理削除（履歴データ完全クリア）の手順・トリガーAPI設計と実装 |
+| **T743** | 7. 決定後実行 | 運用保守 | 本番環境の死活監視（Uptime Monitoring）およびSentry等によるエラー通知・Slack連携アラート設定 | Codex | VSCode + Codex | 応答遅延・エラー率の上昇をトリガーとする管理者Slack通知フローテスト |
+| **T744** | 7. 決定後実行 | 運用保守 | ユーザー向け操作ガイド・FAQおよび管理者向けトラブルシューティング手順書の整備 | Claude + 人間 | VSCode + Claude Code | 管理者画面・一般ユーザー画面の主要ユースケース解説docs整備 |
+| **T745** | 7. 決定後実行 | バックエンド開発 | サービス利用規約およびプライバシーポリシー本番UIでの同意チェックボックス実装 | AIエージェント | Antigravity + Gemini | 会員登録・ログイン前の規約同意必須化およびチェック状態のバックエンド検証 |
+| **T746** | 7. 決定後実行 | リリース | 本番リリース判定（Go/No-Go）判断基準チェックリストの策定および関係者承認プロセスの確立 | 人間 | Gemini API 現行モデル | セキュリティ監査、負荷テスト、法令遵守状況の最終レビューシート同期 |
+
 
 
 
