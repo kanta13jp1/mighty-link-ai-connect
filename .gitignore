@@ -7,6 +7,9 @@ authorized_user.json
 __pycache__/
 *.pyc
 
+# Firebase local deploy cache
+.firebase/
+
 # Runtime audit logs
 data/audit/*.jsonl
 data/external_api_usage*.jsonl

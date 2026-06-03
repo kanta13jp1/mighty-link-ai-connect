@@ -61,6 +61,7 @@ from upload_notebooklm_docs_to_drive import (  # noqa: E402
 
 NOTEBOOK_TITLE = "Mighty Skill-Bridge Development Knowledge 2026-06-02"
 SOURCE_PREFIX = "Mighty Skill-Bridge docs"
+NOTEBOOKLM_COMMAND_TIMEOUT_SECONDS = int(os.environ.get("NOTEBOOKLM_COMMAND_TIMEOUT_SECONDS", "420"))
 
 AGENT_QUESTION = """\
 このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、
@@ -190,7 +191,7 @@ def run_notebooklm(args: list[str], *, check: bool = False) -> subprocess.Comple
         encoding="utf-8",
         errors="replace",
         capture_output=True,
-        timeout=180,
+        timeout=NOTEBOOKLM_COMMAND_TIMEOUT_SECONDS,
     )
     if check and completed.returncode != 0:
         raise RuntimeError(completed.stderr.strip() or completed.stdout.strip())

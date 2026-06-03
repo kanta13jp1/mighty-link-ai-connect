@@ -550,9 +550,9 @@ The workflow now prefers Firebase CLI Application Default Credentials, matching 
 
 Repository configuration:
 
-- Variable `FIREBASE_PROJECT_ID`: Firebase project ID. Defaults to `mighty-link-ai-connect` when unset.
+- Variable `FIREBASE_PROJECT_ID`: Firebase project ID. Defaults to `.firebaserc` / workflow value `mighty-link-ai-connect-d7fa2` when unset.
 - Secret `FIREBASE_SERVICE_ACCOUNT_JSON`: full JSON key for a service account allowed to deploy Firebase Hosting and Functions.
 - Secret `FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT`: also accepted for compatibility with the default Firebase Hosting GitHub integration naming pattern.
 - Secret `FIREBASE_TOKEN`: legacy fallback. If this is present but the token owner cannot access the target Firebase project, CI fails with `Failed to get Firebase project`.
 
-If the deploy log says the project cannot be accessed, first confirm that the Firebase project exists with exactly the same ID as `FIREBASE_PROJECT_ID`, then confirm the service account or legacy token user has deploy permission for that project.
+If the deploy log says the project cannot be accessed, first confirm that the Firebase project exists with exactly the same ID as `FIREBASE_PROJECT_ID` (currently `mighty-link-ai-connect-d7fa2`), then confirm the service account or legacy token user has deploy permission for that project.
