@@ -143,6 +143,244 @@ def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
     return credentials.username
 
 
+import sqlite3
+
+# Try to import psycopg2 for Supabase PostgreSQL support, but fallback gracefully to SQLite
+try:
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+    POSTGRES_AVAILABLE = True
+except ImportError:
+    POSTGRES_AVAILABLE = False
+
+DATABASE_URL = os.environ.get("SUPABASE_DB_URL", "").strip()
+
+def get_db_connection():
+    if DATABASE_URL and (DATABASE_URL.startswith("postgresql://") or DATABASE_URL.startswith("postgres://")) and POSTGRES_AVAILABLE:
+        try:
+            # We connect to Supabase/PostgreSQL
+            conn = psycopg2.connect(DATABASE_URL)
+            return conn, "postgres"
+        except Exception as e:
+            print(f"[-] Failed to connect to Supabase PostgreSQL: {e}. Falling back to SQLite.")
+    
+    # SQLite Fallback
+    db_path = os.path.join(DATA_DIR, "mighty.db")
+    conn = sqlite3.connect(db_path)
+    # Ensure row-factory is dictionary-like
+    conn.row_factory = sqlite3.Row
+    return conn, "sqlite"
+
+def init_db():
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        if db_type == "postgres":
+            # PostgreSQL DDL
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS engineers (
+                id SERIAL PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                resume_raw TEXT,
+                parsed_skills TEXT,
+                career_goals TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS jobs (
+                id SERIAL PRIMARY KEY,
+                title VARCHAR(255) NOT NULL,
+                company VARCHAR(100),
+                job_description TEXT,
+                parsed_requirements TEXT,
+                company_culture TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS match_results (
+                id SERIAL PRIMARY KEY,
+                engineer_id INTEGER REFERENCES engineers(id) ON DELETE CASCADE,
+                job_id INTEGER REFERENCES jobs(id) ON DELETE CASCADE,
+                fit_ratio REAL NOT NULL,
+                score_skill INTEGER,
+                score_culture INTEGER,
+                score_growth INTEGER,
+                score_performing INTEGER,
+                match_summary TEXT,
+                interview_questions TEXT,
+                analyzed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+        else:
+            # SQLite DDL
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS engineers (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name VARCHAR(100) NOT NULL,
+                resume_raw TEXT,
+                parsed_skills TEXT,
+                career_goals TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS jobs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title VARCHAR(255) NOT NULL,
+                company VARCHAR(100),
+                job_description TEXT,
+                parsed_requirements TEXT,
+                company_culture TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS match_results (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                engineer_id INTEGER,
+                job_id INTEGER,
+                fit_ratio REAL NOT NULL,
+                score_skill INTEGER,
+                score_culture INTEGER,
+                score_growth INTEGER,
+                score_performing INTEGER,
+                match_summary TEXT,
+                interview_questions TEXT,
+                analyzed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY(engineer_id) REFERENCES engineers(id) ON DELETE CASCADE,
+                FOREIGN KEY(job_id) REFERENCES jobs(id) ON DELETE CASCADE
+            );
+            """)
+        conn.commit()
+        print(f"[+] Database tables initialized successfully ({db_type}).")
+    except Exception as e:
+        print(f"[-] Database initialization error: {e}")
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.on_event("startup")
+def startup_db_init():
+    init_db()
+
+def db_insert_engineer(name: str, resume_raw: str, parsed_skills: dict, career_goals: dict) -> int:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        if db_type == "postgres":
+            cursor.execute(
+                "INSERT INTO engineers (name, resume_raw, parsed_skills, career_goals) VALUES (%s, %s, %s, %s) RETURNING id;",
+                (name, resume_raw, json.dumps(parsed_skills, ensure_ascii=False), json.dumps(career_goals, ensure_ascii=False))
+            )
+            inserted_id = cursor.fetchone()[0]
+        else:
+            cursor.execute(
+                "INSERT INTO engineers (name, resume_raw, parsed_skills, career_goals) VALUES (?, ?, ?, ?);",
+                (name, resume_raw, json.dumps(parsed_skills, ensure_ascii=False), json.dumps(career_goals, ensure_ascii=False))
+            )
+            inserted_id = cursor.lastrowid
+        conn.commit()
+        return inserted_id
+    except Exception as e:
+        print(f"[-] Database insert engineer failed: {e}")
+        return 0
+    finally:
+        cursor.close()
+        conn.close()
+
+def db_insert_job(title: str, company: str, job_description: str, parsed_requirements: dict, company_culture: dict) -> int:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        if db_type == "postgres":
+            cursor.execute(
+                "INSERT INTO jobs (title, company, job_description, parsed_requirements, company_culture) VALUES (%s, %s, %s, %s, %s) RETURNING id;",
+                (title, company, job_description, json.dumps(parsed_requirements, ensure_ascii=False), json.dumps(company_culture, ensure_ascii=False))
+            )
+            inserted_id = cursor.fetchone()[0]
+        else:
+            cursor.execute(
+                "INSERT INTO jobs (title, company, job_description, parsed_requirements, company_culture) VALUES (?, ?, ?, ?, ?);",
+                (title, company, job_description, json.dumps(parsed_requirements, ensure_ascii=False), json.dumps(company_culture, ensure_ascii=False))
+            )
+            inserted_id = cursor.lastrowid
+        conn.commit()
+        return inserted_id
+    except Exception as e:
+        print(f"[-] Database insert job failed: {e}")
+        return 0
+    finally:
+        cursor.close()
+        conn.close()
+
+def db_insert_match_result(engineer_id: int, job_id: int, fit_ratio: float, score_skill: int, score_culture: int, score_growth: int, score_performing: int, match_summary: str, interview_questions: list) -> int:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        if db_type == "postgres":
+            cursor.execute(
+                "INSERT INTO match_results (engineer_id, job_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, interview_questions) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id;",
+                (engineer_id, job_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, json.dumps(interview_questions, ensure_ascii=False))
+            )
+            inserted_id = cursor.fetchone()[0]
+        else:
+            cursor.execute(
+                "INSERT INTO match_results (engineer_id, job_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, interview_questions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                (engineer_id, job_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, json.dumps(interview_questions, ensure_ascii=False))
+            )
+            inserted_id = cursor.lastrowid
+        conn.commit()
+        return inserted_id
+    except Exception as e:
+        print(f"[-] Database insert match result failed: {e}")
+        return 0
+    finally:
+        cursor.close()
+        conn.close()
+
+def resolve_or_insert_engineer(content: str) -> int:
+    profile = build_profile(content, "engineer")
+    name = profile.title
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        if db_type == "postgres":
+            cursor.execute("SELECT id FROM engineers WHERE name = %s LIMIT 1;", (name,))
+        else:
+            cursor.execute("SELECT id FROM engineers WHERE name = ? LIMIT 1;", (name,))
+        row = cursor.fetchone()
+        if row:
+            return row[0] if db_type == "postgres" else row["id"]
+    except Exception as e:
+        print(f"[-] Database query in resolve_or_insert_engineer failed: {e}")
+    finally:
+        cursor.close()
+        conn.close()
+    return db_insert_engineer(name, content, profile.skills_by_category, {"strengths": profile.strengths, "risk_flags": profile.risk_flags})
+
+def resolve_or_insert_job(content: str) -> int:
+    profile = build_profile(content, "job")
+    title = profile.title
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        if db_type == "postgres":
+            cursor.execute("SELECT id FROM jobs WHERE title = %s LIMIT 1;", (title,))
+        else:
+            cursor.execute("SELECT id FROM jobs WHERE title = ? LIMIT 1;", (title,))
+        row = cursor.fetchone()
+        if row:
+            return row[0] if db_type == "postgres" else row["id"]
+    except Exception as e:
+        print(f"[-] Database query in resolve_or_insert_job failed: {e}")
+    finally:
+        cursor.close()
+        conn.close()
+    return db_insert_job(title, "Mighty-Link", content, {"mandatory": profile.all_skills, "preferred": []}, {"summary": profile.summary})
+
+
 # Custom StaticFiles subclass to enforce Basic Authentication
 class BasicAuthStaticFiles(StaticFiles):
     def __init__(self, *args, username: str = "admin", password: str = "mighty-link-pass", **kwargs):
@@ -1850,12 +2088,24 @@ async def parse_document(
                 "parse",
                 profile_audit_payload(local_profile, "gemini_live", "", source_text, file_name)
             )
+            # Save to database
+            db_id = 0
+            if doc_type == "engineer":
+                parsed_skills = local_profile.skills_by_category
+                career_goals = {"strengths": local_profile.strengths, "risk_flags": local_profile.risk_flags}
+                db_id = db_insert_engineer(local_profile.title, source_text, parsed_skills, career_goals)
+            else:
+                parsed_requirements = {"mandatory": local_profile.all_skills, "preferred": []}
+                company_culture = {"summary": local_profile.summary}
+                db_id = db_insert_job(local_profile.title, "Mighty-Link", source_text, parsed_requirements, company_culture)
+
             return {
                 "status": "success",
                 "ai_mode": "gemini_live",
                 "parsed_content": parsed_text,
                 "structured_profile": asdict(local_profile),
-                "audit_event_id": audit_event["event_id"]
+                "audit_event_id": audit_event["event_id"],
+                "db_id": db_id
             }
             
         except Exception as e:
@@ -1884,6 +2134,17 @@ async def parse_document(
         "parse",
         profile_audit_payload(profile, "deterministic_fallback", fallback_reason, source_text, file_name)
     )
+    
+    # Save to database
+    db_id = 0
+    if doc_type == "engineer":
+        parsed_skills = profile.skills_by_category
+        career_goals = {"strengths": profile.strengths, "risk_flags": profile.risk_flags}
+        db_id = db_insert_engineer(profile.title, source_text, parsed_skills, career_goals)
+    else:
+        parsed_requirements = {"mandatory": profile.all_skills, "preferred": []}
+        company_culture = {"summary": profile.summary}
+        db_id = db_insert_job(profile.title, "Mighty-Link", source_text, parsed_requirements, company_culture)
         
     print(f"[+] Deterministic parser fallback completed successfully.")
     return {
@@ -1892,7 +2153,8 @@ async def parse_document(
         "fallback_reason": fallback_reason,
         "parsed_content": parsed_content,
         "structured_profile": asdict(profile),
-        "audit_event_id": audit_event["event_id"]
+        "audit_event_id": audit_event["event_id"],
+        "db_id": db_id
     }
 
 
@@ -1994,8 +2256,24 @@ async def evaluate_matching(req: EvaluationRequest):
                 "prompt_digest": stable_digest(req.engineer_content + req.job_content),
                 **find_token_usage(getattr(response, "usage_metadata", None)),
             })
-            audit_event = write_audit_event("match", match_audit_payload(match_data))
-            match_data["audit_event_id"] = audit_event["event_id"]
+            # Resolve database records and save match result
+            eng_id = resolve_or_insert_engineer(req.engineer_content)
+            jb_id = resolve_or_insert_job(req.job_content)
+            
+            fit_ratio = float(match_data.get("final_score", 75)) / 100.0
+            scores = match_data.get("scores", {})
+            score_skill = scores.get("skill", 75)
+            score_culture = scores.get("culture", 75)
+            score_growth = scores.get("growth", 75)
+            score_performing = scores.get("performing", 75)
+            match_summary = match_data.get("summary", "")
+            interview_questions = match_data.get("qa", [])
+            
+            db_match_id = db_insert_match_result(
+                eng_id, jb_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, interview_questions
+            )
+            match_data["db_match_id"] = db_match_id
+
             print("[+] Gemini Evaluator completed successfully.")
             return match_data
             
@@ -2022,6 +2300,25 @@ async def evaluate_matching(req: EvaluationRequest):
     fallback_response = build_fallback_match(req.engineer_content, req.job_content, fallback_reason)
     audit_event = write_audit_event("match", match_audit_payload(fallback_response))
     fallback_response["audit_event_id"] = audit_event["event_id"]
+    
+    # Resolve database records and save match result
+    eng_id = resolve_or_insert_engineer(req.engineer_content)
+    jb_id = resolve_or_insert_job(req.job_content)
+    
+    fit_ratio = float(fallback_response.get("final_score", 75)) / 100.0
+    scores = fallback_response.get("scores", {})
+    score_skill = scores.get("skill", 75)
+    score_culture = scores.get("culture", 75)
+    score_growth = scores.get("growth", 75)
+    score_performing = scores.get("performing", 75)
+    match_summary = fallback_response.get("summary", "")
+    interview_questions = fallback_response.get("qa", [])
+    
+    db_match_id = db_insert_match_result(
+        eng_id, jb_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, interview_questions
+    )
+    fallback_response["db_match_id"] = db_match_id
+    
     print("[+] Deterministic evaluator fallback completed successfully.")
     return fallback_response
 
@@ -2309,6 +2606,133 @@ async def sync_to_sheets(req: SyncRequest):
     except Exception as e:
         print(f"[-] Sheets synchronization failed: {e}")
         return {"status": "error", "message": str(e)}
+
+
+@app.get("/api/engineers")
+async def list_engineers(username: str = Depends(verify_credentials)):
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT id, name, parsed_skills, career_goals, created_at FROM engineers ORDER BY id DESC;")
+        rows = cursor.fetchall()
+        engineers = []
+        for r in rows:
+            if db_type == "postgres":
+                engineers.append({
+                    "id": r[0],
+                    "name": r[1],
+                    "parsed_skills": json.loads(r[2]) if r[2] else {},
+                    "career_goals": json.loads(r[3]) if r[3] else {},
+                    "created_at": r[4].isoformat() if hasattr(r[4], "isoformat") else str(r[4])
+                })
+            else:
+                engineers.append({
+                    "id": r["id"],
+                    "name": r["name"],
+                    "parsed_skills": json.loads(r["parsed_skills"]) if r["parsed_skills"] else {},
+                    "career_goals": json.loads(r["career_goals"]) if r["career_goals"] else {},
+                    "created_at": r["created_at"]
+                })
+        return {"status": "success", "engineers": engineers}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.get("/api/jobs")
+async def list_jobs(username: str = Depends(verify_credentials)):
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT id, title, company, parsed_requirements, company_culture, created_at FROM jobs ORDER BY id DESC;")
+        rows = cursor.fetchall()
+        jobs = []
+        for r in rows:
+            if db_type == "postgres":
+                jobs.append({
+                    "id": r[0],
+                    "title": r[1],
+                    "company": r[2],
+                    "parsed_requirements": json.loads(r[3]) if r[3] else {},
+                    "company_culture": json.loads(r[4]) if r[4] else {},
+                    "created_at": r[5].isoformat() if hasattr(r[5], "isoformat") else str(r[5])
+                })
+            else:
+                jobs.append({
+                    "id": r["id"],
+                    "title": r["title"],
+                    "company": r["company"],
+                    "parsed_requirements": json.loads(r["parsed_requirements"]) if r["parsed_requirements"] else {},
+                    "company_culture": json.loads(r["company_culture"]) if r["company_culture"] else {},
+                    "created_at": r["created_at"]
+                })
+        return {"status": "success", "jobs": jobs}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.get("/api/matches")
+async def list_matches(username: str = Depends(verify_credentials)):
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        query = """
+            SELECT mr.id, mr.engineer_id, e.name as engineer_name, mr.job_id, j.title as job_title, j.company as company,
+                   mr.fit_ratio, mr.score_skill, mr.score_culture, mr.score_growth, mr.score_performing, mr.match_summary, mr.analyzed_at
+            FROM match_results mr
+            LEFT JOIN engineers e ON mr.engineer_id = e.id
+            LEFT JOIN jobs j ON mr.job_id = j.id
+            ORDER BY mr.id DESC;
+        """
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        matches = []
+        for r in rows:
+            if db_type == "postgres":
+                matches.append({
+                    "id": r[0],
+                    "engineer_id": r[1],
+                    "engineer_name": r[2] or "Unknown",
+                    "job_id": r[3],
+                    "job_title": r[4] or "Unknown",
+                    "company": r[5] or "Unknown",
+                    "fit_ratio": r[6],
+                    "scores": {
+                        "skill": r[7],
+                        "culture": r[8],
+                        "growth": r[9],
+                        "performing": r[10]
+                    },
+                    "match_summary": r[11],
+                    "analyzed_at": r[12].isoformat() if hasattr(r[12], "isoformat") else str(r[12])
+                })
+            else:
+                matches.append({
+                    "id": r["id"],
+                    "engineer_id": r["engineer_id"],
+                    "engineer_name": r["engineer_name"] or "Unknown",
+                    "job_id": r["job_id"],
+                    "job_title": r["job_title"] or "Unknown",
+                    "company": r["company"] or "Unknown",
+                    "fit_ratio": r["fit_ratio"],
+                    "scores": {
+                        "skill": r["score_skill"],
+                        "culture": r["score_culture"],
+                        "growth": r["score_growth"],
+                        "performing": r["score_performing"]
+                    },
+                    "match_summary": r["match_summary"],
+                    "analyzed_at": r["analyzed_at"]
+                })
+        return {"status": "success", "matches": matches}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+    finally:
+        cursor.close()
+        conn.close()
 
 
 if __name__ == "__main__":
