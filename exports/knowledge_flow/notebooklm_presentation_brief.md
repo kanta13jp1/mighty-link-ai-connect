@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-06-03 13:59:19 UTC+09:00
+Generated: 2026-06-03 20:36:49 UTC+09:00
 
 ## How to use this in NotebookLM
 
@@ -36,13 +36,13 @@ and which development knowledge-flow tools should become official.
 
 ## WBS Snapshot
 
-- Total tasks: 139
-- Done: 131
+- Total tasks: 151
+- Done: 134
 - In progress: 0
-- Not started: 8
-- Completion rate: 94%
+- Not started: 17
+- Completion rate: 89%
 - CEO presentation phase tasks: 90
-- CEO presentation phase done: 89
+- CEO presentation phase done: 90
 
 ## Latest Knowledge-flow / CEO-demo Tasks
 
@@ -68,7 +68,7 @@ and which development knowledge-flow tools should become official.
 - T663: 6/2資料最終パックレビュー / PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認 / 完了
 - T664: 三ツール開発フロー整備 / Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定 / 完了
 - T691: インフラ / NotebookLM同期スクリプトへのGemini explicit context caching導入検証 / 完了
-- T695: 連携 / Antigravity hooks機能によるsyncスクリプト自動起動の可否検証 / 未着手
+- T695: 連携 / Antigravity hooks機能によるsyncスクリプト自動起動の可否検証 / 完了
 - T699: コーポレート連携 / MightyLINKコーポレートサイトのデモミラーページ追加とメインUI統合 / 完了
 
 ## Recommended Slide Story
