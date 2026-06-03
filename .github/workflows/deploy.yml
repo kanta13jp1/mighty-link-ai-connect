@@ -59,8 +59,9 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Deploy to Firebase Hosting & Functions
+      - name: Deploy to Firebase
         env:
+          FIREBASE_DEPLOY_TARGETS: ${{ vars.FIREBASE_DEPLOY_TARGETS || 'hosting' }}
           FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID || 'mighty-link-ai-connect-d7fa2' }}
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON || secrets.FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
@@ -85,7 +86,8 @@ jobs:
           fi
 
           echo "[*] Initiating deploy to Firebase project: $FIREBASE_PROJECT_ID"
-          if ! firebase deploy --project "$FIREBASE_PROJECT_ID" --only hosting,functions --non-interactive "${AUTH_FLAGS[@]}"; then
-            echo "::error title=Firebase deploy failed::Could not deploy to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists in Firebase, set repository variable FIREBASE_PROJECT_ID if the real project ID differs, and grant the service account or FIREBASE_TOKEN user deploy permissions."
+          echo "[*] Deploy targets: $FIREBASE_DEPLOY_TARGETS"
+          if ! firebase deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_DEPLOY_TARGETS" --non-interactive "${AUTH_FLAGS[@]}"; then
+            echo "::error title=Firebase deploy failed::Could not deploy '$FIREBASE_DEPLOY_TARGETS' to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists, credentials have deploy permissions, and set FIREBASE_DEPLOY_TARGETS=hosting,functions only after the Firebase project is on the Blaze plan."
             exit 2
           fi

@@ -550,6 +550,7 @@ The workflow now prefers Firebase CLI Application Default Credentials, matching 
 
 Repository configuration:
 
+- Variable `FIREBASE_DEPLOY_TARGETS`: Firebase deploy targets. Defaults to `hosting`; use `hosting,functions` only after the Firebase project is upgraded to Blaze because Cloud Functions requires Artifact Registry/Cloud Build APIs.
 - Variable `FIREBASE_PROJECT_ID`: Firebase project ID. Defaults to `.firebaserc` / workflow value `mighty-link-ai-connect-d7fa2` when unset.
 - Secret `FIREBASE_SERVICE_ACCOUNT_JSON`: full JSON key for a service account allowed to deploy Firebase Hosting and Functions.
 - Secret `FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT`: also accepted for compatibility with the default Firebase Hosting GitHub integration naming pattern.
