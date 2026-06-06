@@ -135,7 +135,7 @@ T730_1	7. 決定後実行	インフラ設計	Firebase/Supabase システムア�
 T730_2	7. 決定後実行	インフラ設計	Firebase Auth & Supabase RLS セキュリティ設計	人間 + Codex	VSCode + Codex	セキュリティ設計ガイド docs 同期	完了	2026-06-07	2026-06-08
 T730_3	7. 決定後実行	インフラ設計	Supabase Database 物理設計とインデックス設計	Codex	VSCode + Codex	DB設計書へのインデックス構成追記	完了	2026-06-08	2026-06-09
 T731	7. 決定後実行	バックエンド開発	AI適性状況診断および勤務表自動解析バックエンドAPIの本格実装	Codex	VSCode + Codex	FastAPI / Gemini API連携コード構築	完了	2026-06-02	2026-06-12
-T731_1	7. 決定後実行	バックエンド開発	Supabase DBスキーマ定義および初期データスクリプト実装	Codex	VSCode + Codex	migration SQL の生成・保存	未着手	2026-06-09	2026-06-11
+T731_1	7. 決定後実行	バックエンド開発	Supabase DBスキーマ定義および初期データスクリプト実装	Codex	VSCode + Codex	migration SQL の生成・保存	完了	2026-06-09	2026-06-11
 T731_2	7. 決定後実行	バックエンド開発	Firebase Auth 連携によるユーザー認証ロジック実装	Codex	VSCode + Codex	認証エンドポイント API 実装	未着手	2026-06-11	2026-06-12
 T731_3	7. 決定後実行	バックエンド開発	Firebase Cloud Functions によるバックエンド API 実装	Codex	VSCode + Codex	Cloud Functions デプロイ用コード構成	未着手	2026-06-12	2026-06-13
 T731_4	7. 決定後実行	バックエンド開発	Supabase Client SDK を用いたデータ取得/更新機能実装	Codex	VSCode + Codex	クライアント側 API 接続実装	未着手	2026-06-13	2026-06-14
