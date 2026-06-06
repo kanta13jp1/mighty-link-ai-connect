@@ -131,7 +131,7 @@ T715	7. 決定後実行	AIフィット診断	公開 URL 認証層 (basic auth) �
 T716	7. 決定後実行	AIフィット診断	パイロット結果サマリ docs 化	Claude	VSCode + Claude Code	`docs/PILOT_REPORT_2026-06-16.md` 新規	完了	2026-06-13	2026-06-16
 T717	7. 決定後実行	AIフィット診断	6/16 定例レビュー 用ダッシュボード起票	Codex	VSCode + Codex	Sheets パイロット集計 タブ	完了	2026-06-06	2026-06-06
 T730	7. 決定後実行	インフラ設計	ホスティング先（お名前.com/GitHub Pages/クラウド）およびDBインフラの最終選定調査	人間 + Codex	VSCode + Codex	社長への技術選定報告ドキュメント起票	完了	2026-06-03	2026-06-05
-T730_1	7. 決定後実行	インフラ設計	Firebase/Supabase システムアーキテクチャ詳細設計	人間 + Codex	VSCode + Codex	システムアーキテクチャ設計書 docs 同期	未着手	2026-06-06	2026-06-07
+T730_1	7. 決定後実行	インフラ設計	Firebase/Supabase システムアーキテクチャ詳細設計	人間 + Codex	VSCode + Codex	システムアーキテクチャ設計書 docs 同期	完了	2026-06-06	2026-06-07
 T730_2	7. 決定後実行	インフラ設計	Firebase Auth & Supabase RLS セキュリティ設計	人間 + Codex	VSCode + Codex	セキュリティ設計ガイド docs 同期	未着手	2026-06-07	2026-06-08
 T730_3	7. 決定後実行	インフラ設計	Supabase Database 物理設計とインデックス設計	Codex	VSCode + Codex	DB設計書へのインデックス構成追記	未着手	2026-06-08	2026-06-09
 T731	7. 決定後実行	バックエンド開発	AI適性状況診断および勤務表自動解析バックエンドAPIの本格実装	Codex	VSCode + Codex	FastAPI / Gemini API連携コード構築	完了	2026-06-02	2026-06-12
