@@ -110,7 +110,7 @@ T693	6. 社長プレゼン準備	インフラ	Antigravity CLIの機能評価と�
 T694	6. 社長プレゼン準備	ドキュメント	主要docs内のmarkdownlint指摘事項(22件)の一括自動修正	Codex	VSCode + Codex	markdownlint --fixによる構造不整合の一括解消	完了	2026-05-29	2026-05-29
 T695	7. 次期開発・運用	連携	Antigravity hooks機能によるsyncスクリプト自動起動の可否検証	Codex+Antigravity	VSCode + Codex	自動化トリガーのPoCとマルチAI自動同期パイプライン整備	完了	2026-06-13	2026-06-13
 T696	7. 次期開発・運用	インフラ	PPTX生成スクリプトへのCanvaインポート用ミニマルスタイル追加	Codex	VSCode + Codex	--style canva-exportオプションによるCanva向け平滑PPTX生成	完了	2026-06-14	2026-06-15
-T697	7. 次期開発・運用	インフラ	Playwrightによるデモ画面スクショ自動取得スクリプトの実装	Codex	VSCode + Codex	複数画面の定期自動キャプチャによるスライド素材作成自動化	未着手	2026-06-16	2026-06-17
+T697	7. 次期開発・運用	インフラ	Playwrightによるデモ画面スクショ自動取得スクリプトの実装	Codex	VSCode + Codex	複数画面の定期自動キャプチャによるスライド素材作成自動化	完了	2026-06-16	2026-06-17
 T698	6. 社長プレゼン準備	インフラ	Figma MCPを用いたワイヤーフレーム(10/20パターン)の自動流し込み	Claude Code	VSCode + Claude Code	Figma API/MCP連携によるワイヤーフレームフレーム一括構築	完了	2026-05-30	2026-05-30
 T699	6. 社長プレゼン準備	コーポレート連携	MightyLINKコーポレートサイトのデモミラーページ追加とメインUI統合	AIエージェント	Antigravity + Gemini	exports/mighty-link-hp/index.htmlの新設とヘッダーナビへのリンク統合	完了	2026-06-02	2026-06-02
 T701	7. 決定後実行	共通管理	6/2 議事録 docs 化 + Notion 投入	Claude	VSCode + Claude Code	`docs/CEO_MEETING_MINUTES_2026-06-02.md` 起票	完了	2026-06-02	2026-06-03
