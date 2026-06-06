@@ -137,17 +137,28 @@ gantt
 | **T716** | 7. 決定後実行 | AIフィット診断 | パイロット結果サマリ docs 化 | Claude | VSCode + Claude Code | `docs/PILOT_REPORT_2026-06-16.md` 新規 |
 | **T717** | 7. 決定後実行 | AIフィット診断 | 6/16 定例レビュー 用ダッシュボード起票 | Codex | VSCode + Codex | Sheets `パイロット集計` タブ |
 | **T730** | 7. 決定後実行 | インフラ設計 | ホスティング先（お名前.com/GitHub Pages/クラウド）およびDBインフラの最終選定調査 | 人間 + Codex | VSCode + Codex | 社長への技術選定報告ドキュメント起票 |
+| **T730_1** | 7. 決定後実行 | インフラ設計 | Firebase/Supabase システムアーキテクチャ詳細設計 | 人間 + Codex | VSCode + Codex | システムアーキテクチャ設計書 docs 同期 |
+| **T730_2** | 7. 決定後実行 | インフラ設計 | Firebase Auth & Supabase RLS セキュリティ設計 | 人間 + Codex | VSCode + Codex | セキュリティ設計ガイド docs 同期 |
+| **T730_3** | 7. 決定後実行 | インフラ設計 | Supabase Database 物理設計とインデックス設計 | Codex | VSCode + Codex | DB設計書へのインデックス構成追記 |
 | **T731** | 7. 決定後実行 | バックエンド開発 | AI適性状況診断および勤務表自動解析バックエンドAPIの本格実装 | Codex | VSCode + Codex | FastAPI / Gemini API連携コード構築 |
+| **T731_1** | 7. 決定後実行 | バックエンド開発 | Supabase DBスキーマ定義および初期データスクリプト実装 | Codex | VSCode + Codex | migration SQL の生成・保存 |
+| **T731_2** | 7. 決定後実行 | バックエンド開発 | Firebase Auth 連携によるユーザー認証ロジック実装 | Codex | VSCode + Codex | 認証エンドポイント API 実装 |
+| **T731_3** | 7. 決定後実行 | バックエンド開発 | Firebase Cloud Functions によるバックエンド API 実装 | Codex | VSCode + Codex | Cloud Functions デプロイ用コード構成 |
+| **T731_4** | 7. 決定後実行 | バックエンド開発 | Supabase Client SDK を用いたデータ取得/更新機能実装 | Codex | VSCode + Codex | クライアント側 API 接続実装 |
 | **T732** | 7. 決定後実行 | インフラ設計 | 外部APIシークレット管理およびBasic Authによるセキュリティ環境構築 | Codex | VSCode + Codex | 環境変数およびアクセス制限設定 |
 | **T733** | 7. 決定後実行 | 品質検証 | Playwright等によるUI自動テストおよびAPI単体テストの実装・実行 | AIエージェント | Antigravity 2.0 | テストカバレッジ・バグトラッカー連携 |
+| **T733_1** | 7. 決定後実行 | 品質検証 | Firebase Emulator Suite を用いた Functions 動作テスト | AIエージェント | Antigravity 2.0 | エミュレータ上の API 疎通テスト実行 |
+| **T733_2** | 7. 決定後実行 | 品質検証 | Supabase CLI を用いたローカル DB セキュリティ検証テスト | AIエージェント | Antigravity 2.0 | RLS ポリシーのユニットテスト実行 |
 | **T734** | 7. 決定後実行 | インフラ設計 | GitHub Actionsを用いた自動ビルド・テスト・デプロイCI/CDパイプライン構築 | Codex | VSCode + Codex | GitHub Actions workflow YAML作成 |
-| **T735** | 7. 決定後実行 | リリース | 本番プロダクション環境への初版リリースデプロイおよび受入手動テスト実施 | 人間 + AI | Gemini API 現行モデル | リリースアナウンスおよびリリースログ記録 |
+| **T735** | 7. 決定後実行 | リリース | 本番プロダクション環境への初版リリースデプロイおよび受入手動テスト実施 | 人間 + AI | Gemini API 現行モデル | Release Announcement & Live Deployment |
+| **T735_1** | 7. 決定後実行 | リリース | Supabase 本番プロジェクトへの DB スキーマ・RLS 反映 | 人間 + Codex | VSCode + Codex | Supabase production db migration 実行 |
+| **T735_2** | 7. 決定後実行 | リリース | Firebase Hosting / Functions 本番デプロイと受入テスト | 人間 + AI | Gemini API 現行モデル | Hosting URL 疎通と本番受入テスト報告書作成 |
 | **T736** | 7. 決定後実行 | 運用保守 | API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用 | Codex | VSCode + Codex | daily usage ledger監査およびアラート設定 |
 | **T737** | 7. 決定後実行 | 運用保守 | デイリー作業レポート（WBS/進捗状況）のGmail/Slack自動送信機能の実装 | Codex | VSCode + Codex | send_daily_report.py自動送信設定 |
 | **T738** | 7. 決定後実行 | インフラ | Firebase deploy auth preflight and ADC workflow hardening | Codex | VSCode + Codex | Firebase CI/CD deploy workflow now supports service account ADC, explicit FIREBASE_PROJECT_ID, configurable deploy targets, and Hosting-only default until Blaze/functions are enabled |
 | **T740** | 7. 決定後実行 | インフラ設計 | 本番ドメイン・DNS移行およびSSL証明書自動更新の適用 | 人間 + Codex | VSCode + Codex | カスタムドメインのDNS設定およびSSL証明書発行ステータス確認 |
 | **T741** | 7. 決定後実行 | 運用保守 | 本番環境データベースの自動日次バックアップ・リストア運用の設計および自動化スクリプト実装 | Codex | VSCode + Codex | 毎日午前3時の自動DBダンプ・GCS等外部ストレージ転送・世代管理（7世代）の検証 |
-| **T742** | 7. 決定後実行 | コンプライアンス | 個人情報保護法およびGDPRに準拠したユーザーデータ完全消去（退会）フローのバックエンド実装 | Claude + Codex | VSCode + Claude Code | 論理削除と物理削除（履歴データ完全クリア）の手順・トリガーAPI設計と実装 |
+| **T742** | 7. 決定後実行 | コンプライアンス | 個人情報保護法およびGDPRに準拠したユーザーデータ完全消去（退会）フローのバックエンド実装 | Claude + Codex | VSCode + Claude Code | 各規制要求の遵守・データベース内物理消去機能の実装 |
 | **T743** | 7. 決定後実行 | 運用保守 | 本番環境の死活監視（Uptime Monitoring）およびSentry等によるエラー通知・Slack連携アラート設定 | Codex | VSCode + Codex | 応答遅延・エラー率の上昇をトリガーとする管理者Slack通知フローテスト |
 | **T744** | 7. 決定後実行 | 運用保守 | ユーザー向け操作ガイド・FAQおよび管理者向けトラブルシューティング手順書の整備 | Claude + 人間 | VSCode + Claude Code | 管理者画面・一般ユーザー画面の主要ユースケース解説docs整備 |
 | **T745** | 7. 決定後実行 | バックエンド開発 | サービス利用規約およびプライバシーポリシー本番UIでの同意チェックボックス実装 | AIエージェント | Antigravity + Gemini | 会員登録・ログイン前の規約同意必須化およびチェック状態のバックエンド検証 |
@@ -159,10 +170,15 @@ gantt
 | **T751** | 7. 決定後実行 | セキュリティ | サードパーティAPIキー（Gemini/OpenAI/Slack等）の年次有効期限ローテーション自動化運用の整備 | Codex + 人間 | VSCode + Codex | GCP/Slack/Notion認証キーの期限切れ自動検知・ローテーション作業ガイドの同期 |
 | **T752** | 7. 決定後実行 | フロントエンド | ユーザーオンボーディング / アカウント登録・アクティベーションフローの設計・実装 | Antigravity | Antigravity 2.0 | オンボーディングUI・初期セットアップウィザード開発 |
 | **T753** | 7. 決定後実行 | セキュリティ | API レートリミット制限およびDDoS緩和策の適用 | Codex | VSCode + Codex | Gemini API コール上限・認証アクセスレート制限実装 |
-| **T754** | 7. 決定後実行 | バックエンド開発 | Alembic/Flyway 等を用いたデータベースマイグレーション管理体制 of 整備 | Codex | VSCode + Codex | データベーススキーマ変更 of PostgreSQL/SQLite のバージョン履歴管理および運用整備 |
-| **T755** | 7. 決定後実行 | 運用保守 | テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボード of 構築 | Codex | VSCode + Codex | Prometheus/Sentry等によるリソース性能監視および障害アラート設定 |
-| **T756** | 7. 決定後実行 | コンプライアンス | 個人情報保護およびGDPRに基づくシステム監査ログ of 氏名マスキング・暗号化パイプライン実装 | Claude | VSCode + Claude Code | データベース及びアクセスログの暗号化・氏名マスクバッチの開発・適用 |
-| **T757** | 7. 決定後実行 | 運用保守 | 週次課金・コスト配分ダッシュボード of 構築およびアラートメール通知の実装 | Codex | VSCode + Codex | API/Infraコスト集計の自動バッチおよびSlack週次通知設定 |
+| **T754** | 7. 決定後実行 | バックエンド開発 | Alembic/Flyway 等を用いたデータベースマイグレーション管理体制の整備 | Codex | VSCode + Codex | データベーススキーマ変更 of PostgreSQL/SQLite のバージョン履歴管理および運用整備 |
+| **T755** | 7. 決定後実行 | 運用保守 | テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボードの構築 | Codex | VSCode + Codex | Prometheus/Sentry等によるリソース性能監視および障害アラート設定 |
+| **T756** | 7. 決定後実行 | コンプライアンス | 個人情報保護およびGDPRに基づくシステム監査ログの氏名マスキング・暗号化パイプライン実装 | Claude | VSCode + Claude Code | データベース及びアクセスログの暗号化・氏名マスクバッチの開発・適用 |
+| **T757** | 7. 決定後実行 | 運用保守 | 週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装 | Codex | VSCode + Codex | API/Infraコスト集計の自動バッチおよびSlack週次通知設定 |
+| **T758** | 7. 決定後実行 | データベース | Supabase (PostgreSQL) の行レベルセキュリティ(RLS)ポリシーの設計と適用 | Codex | VSCode + Codex | RLSの動作検証とポリシー定義 of SQL化 |
+| **T759** | 7. 決定後実行 | バックエンド開発 | Firebase Cloud Functions 経由での Supabase 接続のプール管理とパフォーマンス最適化 | Codex | VSCode + Codex | 接続プール管理設定のFastAPIへの組み込み |
+| **T760** | 7. 決定後実行 | 品質検証 | Firebase Emulator Suite と Supabase Local CLI を用いたローカル開発・テスト環境の構築 | Codex | VSCode + Codex | ローカルエミュレータによる統合テストの合格率検証 |
+| **T761** | 7. 決定後実行 | 運用保守 | Supabase ダッシュボードでのクエリパフォーマンス監視とインデックスのチューニング | Codex | VSCode + Codex | スロークエリ監視体制のドキュメント化 |
+| **T761_1** | 7. 決定後実行 | 運用保守 | Firebase & Supabase クォータ・エラー監視のアラート構築 | Codex | VSCode + Codex | Sentry / Google Cloud Monitoring 連携設定 |
 
 
 

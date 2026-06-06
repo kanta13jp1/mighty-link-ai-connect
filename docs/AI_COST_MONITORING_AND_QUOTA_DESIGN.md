@@ -55,7 +55,7 @@
 
 | 開発レーン | プロバイダー | 使用モデル/API | 消費トークン数/コール数 | 当月費用 (USD) | 備考 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Antigravity + Gemini** | Google AI | Gemini 2.5 Flash / Pro | XX,XXX tokens | $X.XX | 主作業環境 |
+| **Antigravity + Gemini** | Google AI | Gemini 1.5/2.0 Flash / Pro | XX,XXX tokens | $X.XX | 主作業環境 |
 | **VSCode + Codex** | OpenAI / Local | gpt-4o-mini | XX,XXX tokens | $X.XX | バックエンド / 同期 |
 | **VSCode + Claude Code** | Anthropic | claude-3-7-sonnet | XX,XXX tokens | $X.XX | 設計 / トリアージ |
 
