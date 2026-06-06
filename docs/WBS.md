@@ -122,6 +122,7 @@ gantt
 | **T700** | 6. 社長プレゼン準備 | コーポレート連携 | MightyLINKコーポレートサイト全サブページのミラーリングとプライバシーポリシー新規追加 | AIエージェント | Antigravity + Gemini | サブページ(company/business/recruit/contact/grape/privacy)の新設と相対リンク変換 |
 | **T701** | 7. 決定後実行 | 共通管理 | 6/2 議事録 docs 化 + Notion 投入 | Claude | VSCode + Claude Code | `docs/CEO_MEETING_MINUTES_2026-06-02.md` 起票 |
 | **T702** | 7. 決定後実行 | 共通管理 | 決定事項を WBS Phase 7 へ反映 | Codex | VSCode + Codex | 本書の対応セクションを `data/WBS.tsv` へ flip |
+| **T702_2** | 7. 決定後実行 | 共通管理 | 後段タスクの前倒しリスケジュール＆WBS更新 | Codex | VSCode + Codex | 未完了後段タスクのスケジュール前倒し引き直しとWBS更新 |
 | **T703** | 7. 決定後実行 | 共通管理 | Phase 7 用 Calendar イベント起票 | Codex | VSCode + Codex | `sync_wbs_to_calendar.py` 実行 |
 | **T704** | 7. 決定後実行 | 共通管理 | NotebookLM に Phase 7 docs を投入 | Codex | VSCode + Codex | `sync_docs_to_notebooklm.py` 再実行 |
 | **T705** | 7. 決定後実行 | 共通管理 | 6/16 定例レビュー Calendar 招待作成 (Q-OPS-04 が YES の場合) | 人間 | Gemini API 現行モデル | 隔週 30 分枠 |
