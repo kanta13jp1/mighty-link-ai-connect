@@ -47,9 +47,20 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push'
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud via WIF
+        if: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
+        uses: google-github-actions/auth@v2
+        with:
+          create_credentials_file: true
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
 
       - name: Set up Node.js (for Firebase CLI)
         uses: actions/setup-node@v4
@@ -70,7 +81,9 @@ jobs:
 
           AUTH_FLAGS=()
 
-          if [ -n "${FIREBASE_SERVICE_ACCOUNT_JSON:-}" ]; then
+          if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]; then
+            echo "[*] Using Google Application Default Credentials from Workload Identity Federation."
+          elif [ -n "${FIREBASE_SERVICE_ACCOUNT_JSON:-}" ]; then
             echo "[*] Using Firebase service account credentials via Application Default Credentials."
             FIREBASE_CREDENTIALS_FILE="$RUNNER_TEMP/firebase-service-account.json"
             printf '%s' "$FIREBASE_SERVICE_ACCOUNT_JSON" > "$FIREBASE_CREDENTIALS_FILE"
