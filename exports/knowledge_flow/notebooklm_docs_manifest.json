@@ -1,5 +1,5 @@
 {
-  "generated_at_jst": "2026-06-06T16:55:34+09:00",
+  "generated_at_jst": "2026-06-09T00:33:04+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "google_docs": {
     "docs_ai_cost_monitoring_and_quota_design_md": {
@@ -16,7 +16,7 @@
         }
       ],
       "createdTime": "2026-06-03T05:39:42.251Z",
-      "modifiedTime": "2026-06-06T07:53:26.247Z"
+      "modifiedTime": "2026-06-08T15:30:54.012Z"
     },
     "docs_antigravity_cli_evaluation_report_md": {
       "source": "docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md",
@@ -32,7 +32,7 @@
         }
       ],
       "createdTime": "2026-05-30T06:29:26.117Z",
-      "modifiedTime": "2026-06-06T07:53:29.793Z"
+      "modifiedTime": "2026-06-08T15:30:57.551Z"
     },
     "docs_antigravity_guide_md": {
       "source": "docs/ANTIGRAVITY_GUIDE.md",
@@ -48,7 +48,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:05.145Z",
-      "modifiedTime": "2026-06-06T07:53:32.918Z"
+      "modifiedTime": "2026-06-08T15:31:00.271Z"
     },
     "docs_antigravity_hooks_sync_poc_md": {
       "source": "docs/ANTIGRAVITY_HOOKS_SYNC_POC.md",
@@ -64,7 +64,7 @@
         }
       ],
       "createdTime": "2026-06-03T06:53:08.412Z",
-      "modifiedTime": "2026-06-06T07:53:35.980Z"
+      "modifiedTime": "2026-06-08T15:31:03.502Z"
     },
     "docs_antigravity_managed_agents_cost_policy_md": {
       "source": "docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md",
@@ -80,7 +80,7 @@
         }
       ],
       "createdTime": "2026-05-30T06:29:32.244Z",
-      "modifiedTime": "2026-06-06T07:53:38.842Z"
+      "modifiedTime": "2026-06-08T15:31:06.581Z"
     },
     "docs_backend_ai_pipeline_md": {
       "source": "docs/BACKEND_AI_PIPELINE.md",
@@ -96,7 +96,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:08.445Z",
-      "modifiedTime": "2026-06-06T07:53:41.956Z"
+      "modifiedTime": "2026-06-08T15:31:10.259Z"
     },
     "docs_ceo_presentation_backup_guide_md": {
       "source": "docs/CEO_PRESENTATION_BACKUP_GUIDE.md",
@@ -112,7 +112,7 @@
         }
       ],
       "createdTime": "2026-05-28T15:32:31.318Z",
-      "modifiedTime": "2026-06-06T07:53:44.973Z"
+      "modifiedTime": "2026-06-08T15:31:13.307Z"
     },
     "docs_ceo_presentation_canva_figma_guide_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md",
@@ -128,7 +128,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:15:37.750Z",
-      "modifiedTime": "2026-06-06T07:53:48.406Z"
+      "modifiedTime": "2026-06-08T15:31:16.796Z"
     },
     "docs_ceo_presentation_decision_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md",
@@ -144,7 +144,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:11.504Z",
-      "modifiedTime": "2026-06-06T07:53:51.505Z"
+      "modifiedTime": "2026-06-08T15:31:20.100Z"
     },
     "docs_ceo_presentation_discussion_points_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md",
@@ -160,7 +160,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:10.521Z",
-      "modifiedTime": "2026-06-06T07:53:54.823Z"
+      "modifiedTime": "2026-06-08T15:31:24.772Z"
     },
     "docs_ceo_presentation_final_review_checklist_md": {
       "source": "docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md",
@@ -176,7 +176,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:13.734Z",
-      "modifiedTime": "2026-06-06T07:53:58.326Z"
+      "modifiedTime": "2026-06-08T15:31:28.697Z"
     },
     "docs_ceo_presentation_ops_discussion_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md",
@@ -192,7 +192,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:16.975Z",
-      "modifiedTime": "2026-06-06T07:54:01.718Z"
+      "modifiedTime": "2026-06-08T15:31:31.834Z"
     },
     "docs_ceo_presentation_post_decision_roadmap_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
@@ -208,7 +208,7 @@
         }
       ],
       "createdTime": "2026-05-22T01:55:28.832Z",
-      "modifiedTime": "2026-06-06T07:54:04.952Z"
+      "modifiedTime": "2026-06-08T15:31:35.160Z"
     },
     "docs_ceo_presentation_prep_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PREP_2026-06-02.md",
@@ -224,7 +224,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:13.861Z",
-      "modifiedTime": "2026-06-06T07:54:08.008Z"
+      "modifiedTime": "2026-06-08T15:31:39.472Z"
     },
     "docs_ceo_presentation_preshare_memo_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md",
@@ -240,7 +240,7 @@
         }
       ],
       "createdTime": "2026-05-22T04:29:57.435Z",
-      "modifiedTime": "2026-06-06T07:54:11.941Z"
+      "modifiedTime": "2026-06-08T15:31:42.341Z"
     },
     "docs_ceo_presentation_qa_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md",
@@ -256,7 +256,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:23.139Z",
-      "modifiedTime": "2026-06-06T07:54:15.503Z"
+      "modifiedTime": "2026-06-08T15:31:45.458Z"
     },
     "docs_codex_continuation_notes_md": {
       "source": "docs/CODEX_CONTINUATION_NOTES.md",
@@ -272,7 +272,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:17.070Z",
-      "modifiedTime": "2026-06-06T07:54:19.026Z"
+      "modifiedTime": "2026-06-08T15:31:48.338Z"
     },
     "docs_cost_report_2026_06_md": {
       "source": "docs/COST_REPORT_2026-06.md",
@@ -288,7 +288,7 @@
         }
       ],
       "createdTime": "2026-06-02T15:27:49.024Z",
-      "modifiedTime": "2026-06-06T07:54:22.883Z"
+      "modifiedTime": "2026-06-08T15:31:51.960Z"
     },
     "docs_database_md": {
       "source": "docs/database.md",
@@ -304,7 +304,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:20.169Z",
-      "modifiedTime": "2026-06-06T07:54:26.975Z"
+      "modifiedTime": "2026-06-08T15:31:55.569Z"
     },
     "docs_demo_security_and_auth_design_md": {
       "source": "docs/DEMO_SECURITY_AND_AUTH_DESIGN.md",
@@ -320,7 +320,7 @@
         }
       ],
       "createdTime": "2026-06-03T05:02:20.581Z",
-      "modifiedTime": "2026-06-06T07:54:29.946Z"
+      "modifiedTime": "2026-06-08T15:31:58.418Z"
     },
     "docs_development_knowledge_flow_md": {
       "source": "docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
@@ -336,7 +336,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:23.586Z",
-      "modifiedTime": "2026-06-06T07:54:32.957Z"
+      "modifiedTime": "2026-06-08T15:32:02.520Z"
     },
     "docs_firebase_auth_supabase_rls_security_design_md": {
       "source": "docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md",
@@ -352,7 +352,7 @@
         }
       ],
       "createdTime": "2026-06-06T05:10:30.765Z",
-      "modifiedTime": "2026-06-06T07:54:35.858Z"
+      "modifiedTime": "2026-06-08T15:32:05.679Z"
     },
     "docs_firebase_supabase_system_architecture_md": {
       "source": "docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md",
@@ -368,7 +368,7 @@
         }
       ],
       "createdTime": "2026-06-06T02:47:52.808Z",
-      "modifiedTime": "2026-06-06T07:54:38.687Z"
+      "modifiedTime": "2026-06-08T15:32:09.012Z"
     },
     "docs_google_workspace_migration_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
@@ -384,7 +384,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:26.826Z",
-      "modifiedTime": "2026-06-06T07:54:42.112Z"
+      "modifiedTime": "2026-06-08T15:32:12.818Z"
     },
     "docs_hosting_and_database_selection_md": {
       "source": "docs/HOSTING_AND_DATABASE_SELECTION.md",
@@ -400,7 +400,7 @@
         }
       ],
       "createdTime": "2026-06-02T13:12:51.416Z",
-      "modifiedTime": "2026-06-06T07:54:45.397Z"
+      "modifiedTime": "2026-06-08T15:32:15.906Z"
     },
     "docs_integration_demo_evidence_2026_06_02_md": {
       "source": "docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md",
@@ -416,7 +416,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:30.369Z",
-      "modifiedTime": "2026-06-06T07:54:48.066Z"
+      "modifiedTime": "2026-06-08T15:32:18.620Z"
     },
     "docs_mcp_canva_figma_setup_guide_2026_06_02_md": {
       "source": "docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md",
@@ -432,7 +432,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:16:25.443Z",
-      "modifiedTime": "2026-06-06T07:54:51.361Z"
+      "modifiedTime": "2026-06-08T15:32:21.744Z"
     },
     "docs_multi_ai_workflow_md": {
       "source": "docs/MULTI_AI_WORKFLOW.md",
@@ -448,7 +448,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:39.743Z",
-      "modifiedTime": "2026-06-06T07:54:54.787Z"
+      "modifiedTime": "2026-06-08T15:32:24.770Z"
     },
     "docs_pilot_closed_operation_design_md": {
       "source": "docs/PILOT_CLOSED_OPERATION_DESIGN.md",
@@ -464,7 +464,7 @@
         }
       ],
       "createdTime": "2026-06-03T04:14:48.832Z",
-      "modifiedTime": "2026-06-06T07:54:58.031Z"
+      "modifiedTime": "2026-06-08T15:32:28.138Z"
     },
     "docs_pilot_consent_template_md": {
       "source": "docs/PILOT_CONSENT_TEMPLATE.md",
@@ -480,7 +480,7 @@
         }
       ],
       "createdTime": "2026-06-02T11:18:59.919Z",
-      "modifiedTime": "2026-06-06T07:55:01.121Z"
+      "modifiedTime": "2026-06-08T15:32:30.748Z"
     },
     "docs_pilot_participants_selection_md": {
       "source": "docs/PILOT_PARTICIPANTS_SELECTION.md",
@@ -496,7 +496,7 @@
         }
       ],
       "createdTime": "2026-06-03T02:08:51.666Z",
-      "modifiedTime": "2026-06-06T07:55:04.376Z"
+      "modifiedTime": "2026-06-08T15:32:34.240Z"
     },
     "docs_pilot_report_2026_06_16_md": {
       "source": "docs/PILOT_REPORT_2026-06-16.md",
@@ -512,7 +512,7 @@
         }
       ],
       "createdTime": "2026-06-06T01:45:30.668Z",
-      "modifiedTime": "2026-06-06T07:55:07.385Z"
+      "modifiedTime": "2026-06-08T15:32:36.900Z"
     },
     "docs_project_structure_md": {
       "source": "docs/PROJECT_STRUCTURE.md",
@@ -528,7 +528,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:33.155Z",
-      "modifiedTime": "2026-06-06T07:55:10.401Z"
+      "modifiedTime": "2026-06-08T15:32:39.302Z"
     },
     "docs_requirements_md": {
       "source": "docs/requirements.md",
@@ -544,7 +544,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:35.726Z",
-      "modifiedTime": "2026-06-06T07:55:13.122Z"
+      "modifiedTime": "2026-06-08T15:32:41.967Z"
     },
     "docs_sequence_diagrams_md": {
       "source": "docs/SEQUENCE_DIAGRAMS.md",
@@ -560,7 +560,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:16:37.218Z",
-      "modifiedTime": "2026-06-06T07:55:16.342Z"
+      "modifiedTime": "2026-06-08T15:32:45.068Z"
     },
     "docs_setup_guide_md": {
       "source": "docs/SETUP_GUIDE.md",
@@ -576,7 +576,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:39.055Z",
-      "modifiedTime": "2026-06-06T07:55:19.408Z"
+      "modifiedTime": "2026-06-08T15:32:48.191Z"
     },
     "docs_sheets_trackers_schema_md": {
       "source": "docs/SHEETS_TRACKERS_SCHEMA.md",
@@ -592,7 +592,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:50.427Z",
-      "modifiedTime": "2026-06-06T07:55:22.666Z"
+      "modifiedTime": "2026-06-08T15:32:51.027Z"
     },
     "docs_supabase_database_physical_and_index_design_md": {
       "source": "docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md",
@@ -608,7 +608,7 @@
         }
       ],
       "createdTime": "2026-06-06T05:39:27.159Z",
-      "modifiedTime": "2026-06-06T07:55:25.796Z"
+      "modifiedTime": "2026-06-08T15:32:54.131Z"
     },
     "docs_wbs_md": {
       "source": "docs/WBS.md",
@@ -624,7 +624,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-06-06T07:55:29.190Z"
+      "modifiedTime": "2026-06-08T15:32:57.019Z"
     },
     "docs_wbs_sync_guide_md": {
       "source": "docs/WBS_SYNC_GUIDE.md",
@@ -640,12 +640,14 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:44.871Z",
-      "modifiedTime": "2026-06-06T07:55:31.817Z"
+      "modifiedTime": "2026-06-08T15:33:00.114Z"
     }
   },
   "notebooklm": {
-    "status": "skipped",
-    "reason": "--drive-only"
+    "available": true,
+    "status": "auth_required",
+    "status_output": "Current Context                            \n+---------------------------------------------------------------------+\n| Property     | Value                                                |\n|--------------+------------------------------------------------------|\n| Notebook ID  | a235db10-d2c5-4ee3-9621-89efbb59e74c                 |\n| Title        | Mighty Skill-Bridge Development Knowledge 2026-06-02 |\n| Ownership    | Owner                                                |\n| Created      | 2026-06-03                                           |\n| Conversation | f81f883b-7af4-4978-8188-b18062992dbc                 |\n+---------------------------------------------------------------------+",
+    "error": "Authentication expired or invalid. Run 'notebooklm login' to re-authenticate."
   },
   "gemini_context_cache": {
     "status": "skipped",

@@ -54,7 +54,7 @@ if hasattr(sys.stderr, "reconfigure"):
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends, Request, status
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi.security import HTTPBasic, HTTPBasicCredentials, HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 
 # Try loading optional libraries for Sheets & Gemini
@@ -80,6 +80,68 @@ except ImportError:
     genai = None
     genai_types = None
     GEMINI_LIB_AVAILABLE = False
+
+# Firebase Admin SDK Initialization
+try:
+    import firebase_admin
+    from firebase_admin import credentials, auth
+    FIREBASE_ADMIN_AVAILABLE = True
+except ImportError:
+    FIREBASE_ADMIN_AVAILABLE = False
+
+if FIREBASE_ADMIN_AVAILABLE:
+    try:
+        firebase_admin.get_app()
+    except ValueError:
+        try:
+            firebase_admin.initialize_app()
+            print("[+] Firebase Admin SDK initialized with default credentials.")
+        except Exception as e:
+            try:
+                firebase_admin.initialize_app(credentials.BlankCredentials())
+                print("[+] Firebase Admin SDK initialized with Blank Credentials (local emulator mode).")
+            except Exception as ex:
+                print(f"[-] Failed to initialize Firebase Admin: {ex}")
+                FIREBASE_ADMIN_AVAILABLE = False
+
+security_bearer = HTTPBearer(auto_error=False)
+
+def get_current_user(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_bearer)) -> dict:
+    """Dependency to get the authenticated user from Firebase Auth ID Token.
+    
+    If MOCK_AUTH environment variable is 1, or Firebase Admin SDK is not available,
+    it returns a default mock user.
+    """
+    mock_user = {"uid": "user_9999", "email": "k-umezawa@ml-mightylink.com"}
+    
+    if env_flag("MOCK_AUTH", default=True):
+        return mock_user
+
+    if not FIREBASE_ADMIN_AVAILABLE:
+        return mock_user
+
+    if not credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing Authorization Header",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        
+    token = credentials.credentials
+    try:
+        decoded_token = auth.verify_id_token(token)
+        return {
+            "uid": decoded_token.get("uid"),
+            "email": decoded_token.get("email"),
+            "name": decoded_token.get("name", "User"),
+            "decoded_token": decoded_token
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"Invalid Authorization Token: {str(e)}",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
 # Initialize FastAPI App
 app = FastAPI(title="Mighty Skill-Bridge API Server")
@@ -1382,6 +1444,15 @@ async def serve_index():
         return HTMLResponse(content=content)
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="index.html not found in project workspace.")
+
+# API Auth User Information Endpoint
+@app.get("/api/auth/me")
+async def get_auth_me(current_user: dict = Depends(get_current_user)):
+    """Returns the authenticated user details from Firebase Auth."""
+    return {
+        "status": "success",
+        "user": current_user
+    }
 
 # API Health Check Endpoint
 @app.get("/api/health")
