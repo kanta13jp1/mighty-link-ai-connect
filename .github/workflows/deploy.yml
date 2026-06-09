@@ -78,11 +78,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Create Virtual Environment and Install Dependencies
+      - name: Install Python Dependencies Globally
         run: |
-          python -m venv venv
-          ./venv/bin/pip install --upgrade pip
-          ./venv/bin/pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
 
       - name: Deploy to Firebase
         env:
@@ -92,6 +91,9 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           set -euo pipefail
+
+          # 念のためvenvディレクトリが存在しないことを確実にする
+          rm -rf venv
 
           AUTH_FLAGS=()
 
@@ -116,7 +118,6 @@ jobs:
 
           echo "[*] Initiating deploy to Firebase project: $FIREBASE_PROJECT_ID"
           echo "[*] Deploy targets: $FIREBASE_DEPLOY_TARGETS"
-          source venv/bin/activate
           if ! firebase deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_DEPLOY_TARGETS" --non-interactive "${AUTH_FLAGS[@]}"; then
             echo "::error title=Firebase deploy failed::Could not deploy '$FIREBASE_DEPLOY_TARGETS' to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists, credentials have deploy permissions, and set FIREBASE_DEPLOY_TARGETS=hosting,functions only after the Firebase project is on the Blaze plan."
             exit 2
