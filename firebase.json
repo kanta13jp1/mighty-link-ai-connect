@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "mighty-link-ai-connect-d7fa2",
+    "site": "mighty-link-ai-connect-13d22",
     "public": ".",
     "ignore": [
       "firebase.json",

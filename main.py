@@ -8,6 +8,11 @@ It wraps the FastAPI application from `src.app` using `a2wsgi` to make it compat
 with the WSGI execution context expected by the Firebase functions runner.
 """
 
+import os
+# Ensure critical environment variables exist to prevent gspread import crash in sandbox environments
+if "APPDATA" not in os.environ:
+    os.environ["APPDATA"] = os.environ.get("USERPROFILE") or os.environ.get("HOME") or os.path.expanduser("~")
+
 from firebase_functions import https_fn
 from firebase_admin import initialize_app
 from src.app import app

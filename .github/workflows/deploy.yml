@@ -76,7 +76,7 @@ jobs:
       - name: Deploy to Firebase
         env:
           FIREBASE_DEPLOY_TARGETS: ${{ vars.FIREBASE_DEPLOY_TARGETS || 'hosting' }}
-          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID || 'mighty-link-ai-connect-d7fa2' }}
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID || 'mighty-link-ai-connect-13d22' }}
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON || secrets.FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
