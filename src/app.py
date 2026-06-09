@@ -104,6 +104,24 @@ if FIREBASE_ADMIN_AVAILABLE:
                 print(f"[-] Failed to initialize Firebase Admin: {ex}")
                 FIREBASE_ADMIN_AVAILABLE = False
 
+# Supabase Client SDK Integration (T731_4)
+try:
+    from supabase_client import (
+        is_supabase_configured,
+        get_engineers as sdk_get_engineers,
+        get_engineer as sdk_get_engineer,
+        insert_engineer as sdk_insert_engineer,
+        get_jobs as sdk_get_jobs,
+        get_job as sdk_get_job,
+        insert_job as sdk_insert_job,
+        get_match_results as sdk_get_match_results,
+        insert_match_result as sdk_insert_match_result,
+        get_supabase_client
+    )
+    SUPABASE_SDK_ACTIVE = is_supabase_configured()
+except ImportError:
+    SUPABASE_SDK_ACTIVE = False
+
 security_bearer = HTTPBearer(auto_error=False)
 
 def get_current_user(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_bearer)) -> dict:
@@ -328,6 +346,11 @@ def startup_db_init():
     init_db()
 
 def db_insert_engineer(name: str, resume_raw: str, parsed_skills: dict, career_goals: dict) -> int:
+    if SUPABASE_SDK_ACTIVE:
+        inserted_id = sdk_insert_engineer(name, resume_raw, parsed_skills, career_goals)
+        if inserted_id:
+            return inserted_id
+
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -353,6 +376,11 @@ def db_insert_engineer(name: str, resume_raw: str, parsed_skills: dict, career_g
         conn.close()
 
 def db_insert_job(title: str, company: str, job_description: str, parsed_requirements: dict, company_culture: dict) -> int:
+    if SUPABASE_SDK_ACTIVE:
+        inserted_id = sdk_insert_job(title, company, job_description, parsed_requirements, company_culture)
+        if inserted_id:
+            return inserted_id
+
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -378,6 +406,13 @@ def db_insert_job(title: str, company: str, job_description: str, parsed_require
         conn.close()
 
 def db_insert_match_result(engineer_id: int, job_id: int, fit_ratio: float, score_skill: int, score_culture: int, score_growth: int, score_performing: int, match_summary: str, interview_questions: list) -> int:
+    if SUPABASE_SDK_ACTIVE:
+        inserted_id = sdk_insert_match_result(
+            engineer_id, job_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, interview_questions
+        )
+        if inserted_id:
+            return inserted_id
+
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -405,6 +440,16 @@ def db_insert_match_result(engineer_id: int, job_id: int, fit_ratio: float, scor
 def resolve_or_insert_engineer(content: str) -> int:
     profile = build_profile(content, "engineer")
     name = profile.title
+    if SUPABASE_SDK_ACTIVE:
+        try:
+            client = get_supabase_client()
+            if client:
+                res = client.table("engineers").select("id").eq("name", name).limit(1).execute()
+                if res and res.data:
+                    return res.data[0].get("id", 0)
+        except Exception as e:
+            print(f"[-] Supabase SDK query in resolve_or_insert_engineer failed: {e}")
+
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -425,6 +470,16 @@ def resolve_or_insert_engineer(content: str) -> int:
 def resolve_or_insert_job(content: str) -> int:
     profile = build_profile(content, "job")
     title = profile.title
+    if SUPABASE_SDK_ACTIVE:
+        try:
+            client = get_supabase_client()
+            if client:
+                res = client.table("jobs").select("id").eq("title", title).limit(1).execute()
+                if res and res.data:
+                    return res.data[0].get("id", 0)
+        except Exception as e:
+            print(f"[-] Supabase SDK query in resolve_or_insert_job failed: {e}")
+
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -2681,6 +2736,22 @@ async def sync_to_sheets(req: SyncRequest):
 
 @app.get("/api/engineers")
 async def list_engineers(username: str = Depends(verify_credentials)):
+    if SUPABASE_SDK_ACTIVE:
+        try:
+            data = sdk_get_engineers()
+            engineers = []
+            for r in data:
+                engineers.append({
+                    "id": r.get("id"),
+                    "name": r.get("name"),
+                    "parsed_skills": json.loads(r.get("parsed_skills")) if isinstance(r.get("parsed_skills"), str) else (r.get("parsed_skills") or {}),
+                    "career_goals": json.loads(r.get("career_goals")) if isinstance(r.get("career_goals"), str) else (r.get("career_goals") or {}),
+                    "created_at": r.get("created_at")
+                })
+            return {"status": "success", "engineers": engineers}
+        except Exception as e:
+            print(f"[-] Supabase SDK list_engineers failed: {e}")
+
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -2713,6 +2784,23 @@ async def list_engineers(username: str = Depends(verify_credentials)):
 
 @app.get("/api/jobs")
 async def list_jobs(username: str = Depends(verify_credentials)):
+    if SUPABASE_SDK_ACTIVE:
+        try:
+            data = sdk_get_jobs()
+            jobs = []
+            for r in data:
+                jobs.append({
+                    "id": r.get("id"),
+                    "title": r.get("title"),
+                    "company": r.get("company"),
+                    "parsed_requirements": json.loads(r.get("parsed_requirements")) if isinstance(r.get("parsed_requirements"), str) else (r.get("parsed_requirements") or {}),
+                    "company_culture": json.loads(r.get("company_culture")) if isinstance(r.get("company_culture"), str) else (r.get("company_culture") or {}),
+                    "created_at": r.get("created_at")
+                })
+            return {"status": "success", "jobs": jobs}
+        except Exception as e:
+            print(f"[-] Supabase SDK list_jobs failed: {e}")
+
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -2747,6 +2835,38 @@ async def list_jobs(username: str = Depends(verify_credentials)):
 
 @app.get("/api/matches")
 async def list_matches(username: str = Depends(verify_credentials)):
+    if SUPABASE_SDK_ACTIVE:
+        try:
+            from supabase_client import get_supabase_client
+            client = get_supabase_client()
+            if client:
+                response = client.table("match_results").select(
+                    "id, engineer_id, job_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, analyzed_at, engineers(name), jobs(title, company)"
+                ).order("id", desc=True).execute()
+                if response and response.data:
+                    matches = []
+                    for r in response.data:
+                        matches.append({
+                            "id": r.get("id"),
+                            "engineer_id": r.get("engineer_id"),
+                            "engineer_name": r.get("engineers", {}).get("name") if r.get("engineers") else "Unknown",
+                            "job_id": r.get("job_id"),
+                            "job_title": r.get("jobs", {}).get("title") if r.get("jobs") else "Unknown",
+                            "company": r.get("jobs", {}).get("company") if r.get("jobs") else "Unknown",
+                            "fit_ratio": r.get("fit_ratio"),
+                            "scores": {
+                                "skill": r.get("score_skill"),
+                                "culture": r.get("score_culture"),
+                                "growth": r.get("score_growth"),
+                                "performing": r.get("score_performing")
+                            },
+                            "match_summary": r.get("match_summary"),
+                            "analyzed_at": r.get("analyzed_at")
+                        })
+                    return {"status": "success", "matches": matches}
+        except Exception as e:
+            print(f"[-] Supabase SDK list_matches failed: {e}")
+
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     try:

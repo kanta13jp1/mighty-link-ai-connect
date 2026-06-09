@@ -138,38 +138,38 @@ T731	7. 決定後実行	バックエンド開発	AI適性状況診断および�
 T731_1	7. 決定後実行	バックエンド開発	Supabase DBスキーマ定義および初期データスクリプト実装	Codex	VSCode + Codex	migration SQL の生成・保存	完了	2026-06-09	2026-06-11
 T731_2	7. 決定後実行	バックエンド開発	Firebase Auth 連携によるユーザー認証ロジック実装	Codex	VSCode + Codex	認証エンドポイント API 実装	完了	2026-06-11	2026-06-12
 T731_3	7. 決定後実行	バックエンド開発	Firebase Cloud Functions によるバックエンド API 実装	Codex	VSCode + Codex	Cloud Functions デプロイ用コード構成	完了	2026-06-09	2026-06-09
-T731_4	7. 決定後実行	バックエンド開発	Supabase Client SDK を用いたデータ取得/更新機能実装	Codex	VSCode + Codex	クライアント側 API 接続実装	未着手	2026-06-10	2026-06-11
+T731_4	7. 決定後実行	バックエンド開発	Supabase Client SDK を用いたデータ取得/更新機能実装	Codex	VSCode + Codex	クライアント側 API 接続実装	完了	2026-06-09	2026-06-09
 T732	7. 決定後実行	インフラ設計	外部APIシークレット管理およびBasic Authによるセキュリティ環境構築	Codex	VSCode + Codex	環境変数およびアクセス制限設定	完了	2026-06-04	2026-06-06
 T733	7. 決定後実行	品質検証	Playwright等によるUI自動テストおよびAPI単体テストの実装・実行	AIエージェント	Antigravity 2.0	テストカバレッジ・バグトラッカー連携	完了	2026-06-03	2026-06-13
-T733_1	7. 決定後実行	品質検証	Firebase Emulator Suite を用いた Functions 動作テスト	AIエージェント	Antigravity 2.0	エミュレータ上の API 疎通テスト実行	未着手	2026-06-11	2026-06-12
-T733_2	7. 決定後実行	品質検証	Supabase CLI を用いたローカル DB セキュリティ検証テスト	AIエージェント	Antigravity 2.0	RLS ポリシーのユニットテスト実行	未着手	2026-06-12	2026-06-13
+T733_1	7. 決定後実行	品質検証	Firebase Emulator Suite を用いた Functions 動作テスト	AIエージェント	Antigravity 2.0	エミュレータ上の API 疎通テスト実行	未着手	2026-06-09	2026-06-10
+T733_2	7. 決定後実行	品質検証	Supabase CLI を用いたローカル DB セキュリティ検証テスト	AIエージェント	Antigravity 2.0	RLS ポリシーのユニットテスト実行	未着手	2026-06-10	2026-06-11
 T734	7. 決定後実行	インフラ設計	GitHub Actionsを用いた自動ビルド・テスト・デプロイCI/CDパイプライン構築	Codex	VSCode + Codex	GitHub Actions workflow YAML作成	完了	2026-06-08	2026-06-10
 T735	7. 決定後実行	リリース	本番プロダクション環境への初版リリースデプロイおよび受入手動テスト実施	人間 + AI	Gemini API 現行モデル	リリースアナウンスおよびリリースログ記録	完了	2026-06-03	2026-06-15
-T735_1	7. 決定後実行	リリース	Supabase 本番プロジェクトへの DB スキーマ・RLS 反映	人間 + Codex	VSCode + Codex	Supabase production db migration 実行	未着手	2026-06-13	2026-06-14
-T735_2	7. 決定後実行	リリース	Firebase Hosting / Functions 本番デプロイと受入テスト	人間 + AI	Gemini API 現行モデル	Hosting URL 疎通と本番受入テスト報告書作成	未着手	2026-06-14	2026-06-15
-T736	7. 決定後実行	運用保守	API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用	Codex	VSCode + Codex	daily usage ledger監査およびアラート設定	未着手	2026-06-15	2026-06-16
+T735_1	7. 決定後実行	リリース	Supabase 本番プロジェクトへの DB スキーマ・RLS 反映	人間 + Codex	VSCode + Codex	Supabase production db migration 実行	未着手	2026-06-11	2026-06-12
+T735_2	7. 決定後実行	リリース	Firebase Hosting / Functions 本番デプロイと受入テスト	人間 + AI	Gemini API 現行モデル	Hosting URL 疎通と本番受入テスト報告書作成	未着手	2026-06-12	2026-06-13
+T736	7. 決定後実行	運用保守	API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用	Codex	VSCode + Codex	daily usage ledger監査およびアラート設定	未着手	2026-06-13	2026-06-14
 T737	7. 決定後実行	運用保守	デイリー作業レポート（WBS/進捗状況）のGmail/Slack自動送信機能の実装	Codex	VSCode + Codex	send_daily_report.py自動送信設定	完了	2026-06-03	2026-06-06
 T738	7. 決定後実行	インフラ	Firebase deploy auth preflight and ADC workflow hardening	Codex	VSCode + Codex	Firebase CI/CD deploy workflow now supports service account ADC, explicit FIREBASE_PROJECT_ID, configurable deploy targets, and Hosting-only default until Blaze/functions are enabled	完了	2026-06-03	2026-06-03
-T740	7. 決定後実行	インフラ設計	本番ドメイン・DNS移行およびSSL証明書自動更新の適用	人間 + Codex	VSCode + Codex	カスタムドメインのDNS設定およびSSL証明書発行ステータス確認	未着手	2026-06-16	2026-06-17
-T741	7. 決定後実行	運用保守	本番環境データベースの自動日次バックアップ・リストア運用の設計および自動化スクリプト実装	Codex	VSCode + Codex	毎日午前3時の自動DBダンプ・GCS等外部ストレージ転送・世代管理（7世代）の検証	未着手	2026-06-17	2026-06-18
-T742	7. 決定後実行	コンプライアンス	個人情報保護法およびGDPRに準拠したユーザーデータ完全消去（退会）フローのバックエンド実装	Claude + Codex	VSCode + Claude Code	論理削除と物理削除（履歴データ完全クリア）の手順・トリガーAPI設計と実装	未着手	2026-06-18	2026-06-19
-T743	7. 決定後実行	運用保守	本番環境の死活監視（Uptime Monitoring）およびSentry等によるエラー通知・Slack連携アラート設定	Codex	VSCode + Codex	応答遅延・エラー率の上昇をトリガーとする管理者Slack通知フローテスト	未着手	2026-06-19	2026-06-20
-T744	7. 決定後実行	運用保守	ユーザー向け操作ガイド・FAQおよび管理者向けトラブルシューティング手順書の整備	Claude + 人間	VSCode + Claude Code	管理者画面・一般ユーザー画面の主要ユースケース解説docs整備	未着手	2026-06-20	2026-06-21
-T745	7. 決定後実行	バックエンド開発	サービス利用規約およびプライバシーポリシー本番UIでの同意チェックボックス実装	AIエージェント	Antigravity + Gemini	会員登録・ログイン前の規約同意必須化およびチェック状態のバックエンド検証	未着手	2026-06-21	2026-06-22
-T746	7. 決定後実行	リリース	本番リリース判定（Go/No-Go）判断基準チェックリストの策定および関係者承認プロセスの確立	人間	Gemini API 現行モデル	セキュリティ監査、負荷テスト、法令遵守状況の最終レビューシート同期	未着手	2026-06-22	2026-06-23
-T747	7. 決定後実行	運用保守	定期脆弱性スキャンおよび依存パッケージパッチ適用の自動運用設定 (Dependabot/Weekly Vulnerability Scan) 	Codex	VSCode + Codex	GitHub Dependabotによる週次ライブラリ監査およびセキュリティパッチ自動PR作成の適用	未着手	2026-06-23	2026-06-24
-T748	7. 決定後実行	運用保守	本番サーバーのログローテーションおよびアクセスログの自動クリーンアップ・圧縮・保存設定	Codex	VSCode + Codex	Logrotate等を用いたディスク枯渇防止・過去ログの週次ローテートと世代圧縮自動化	未着手	2026-06-24	2026-06-25
-T749	7. 決定後実行	共通管理	本番インフラ障害におけるエスカレーション連絡網およびディザスタリカバリ（災害復旧）運用計画の策定	人間 + Claude	VSCode + Claude Code	障害検知時の緊急連絡ルート・復旧手順書・DRシナリオのdocs同期	未着手	2026-06-25	2026-06-26
-T750	7. 決定後実行	運用保守	定期パフォーマンスボトルネック診断およびDBインデックス最適化運用の設計	Codex	VSCode + Codex	スロークエリ検出・APIレスポンス性能モニタリングおよびインデックス再構成手順の自動化	未着手	2026-06-26	2026-06-27
-T751	7. 決定後実行	セキュリティ	サードパーティAPIキー（Gemini/OpenAI/Slack等）の年次有効期限ローテーション自動化運用の整備	Codex + 人間	VSCode + Codex	GCP/Slack/Notion認証キーの期限切れ自動検知・ローテーション作業ガイドの同期	未着手	2026-06-27	2026-06-28
-T752	7. 決定後実行	フロントエンド	ユーザーオンボーディング / アカウント登録・アクティベーションフローの設計・実装	Antigravity	Antigravity 2.0	オンボーディングUI・初期セットアップウィザード開発	未着手	2026-06-28	2026-06-29
-T753	7. 決定後実行	セキュリティ	API レートリミット制限およびDDoS緩和策の適用	Codex	VSCode + Codex	Gemini API コール上限・認証アクセスレート制限実装	未着手	2026-06-29	2026-06-30
-T754	7. 決定後実行	バックエンド開発	Alembic/Flyway 等を用いたデータベースマイグレーション管理体制の整備	Codex	VSCode + Codex	データベーススキーマ変更 of PostgreSQL/SQLite のバージョン履歴管理および運用整備	未着手	2026-06-30	2026-07-01
-T755	7. 決定後実行	運用保守	テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボードの構築	Codex	VSCode + Codex	Prometheus/Sentry等によるリソース性能監視および障害アラート設定	未着手	2026-07-01	2026-07-02
-T756	7. 決定後実行	コンプライアンス	個人情報保護およびGDPRに基づくシステム監査ログの氏名マスキング・暗号化パイプライン実装	Claude	VSCode + Claude Code	データベース及びアクセスログの暗号化・氏名マスクバッチの開発・適用	未着手	2026-07-02	2026-07-03
-T757	7. 決定後実行	運用保守	週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装	Codex	VSCode + Codex	API/Infraコスト集計の自動バッチおよびSlack週次通知設定	未着手	2026-07-03	2026-07-04
-T758	7. 決定後実行	データベース	Supabase (PostgreSQL) の行レベルセキュリティ(RLS)ポリシーの設計と適用	Codex	VSCode + Codex	RLSの動作検証とポリシー定義のSQL化	未着手	2026-07-04	2026-07-05
-T759	7. 決定後実行	バックエンド開発	Firebase Cloud Functions 経由での Supabase 接続のプール管理とパフォーマンス最適化	Codex	VSCode + Codex	接続プール管理設定のFastAPIへの組み込み	未着手	2026-07-05	2026-07-06
-T760	7. 決定後実行	品質検証	Firebase Emulator Suite と Supabase Local CLI を用いたローカル開発・テスト環境の構築	Codex	VSCode + Codex	ローカルエミュレータによる統合テストの合格率検証	未着手	2026-07-06	2026-07-07
-T761	7. 決定後実行	運用保守	Supabase ダッシュボードでのクエリパフォーマンス監視とインデックスのチューニング	Codex	VSCode + Codex	スロークエリ監視体制のドキュメント化	未着手	2026-07-07	2026-07-08
-T761_1	7. 決定後実行	運用保守	Firebase & Supabase クォータ・エラー監視のアラート構築	Codex	VSCode + Codex	Sentry / Google Cloud Monitoring 連携設定	未着手	2026-07-08	2026-07-09
+T740	7. 決定後実行	インフラ設計	本番ドメイン・DNS移行およびSSL証明書自動更新の適用	人間 + Codex	VSCode + Codex	カスタムドメインのDNS設定およびSSL証明書発行ステータス確認	未着手	2026-06-14	2026-06-15
+T741	7. 決定後実行	運用保守	本番環境データベースの自動日次バックアップ・リストア運用の設計および自動化スクリプト実装	Codex	VSCode + Codex	毎日午前3時の自動DBダンプ・GCS等外部ストレージ転送・世代管理（7世代）の検証	未着手	2026-06-15	2026-06-16
+T742	7. 決定後実行	コンプライアンス	個人情報保護法およびGDPRに準拠したユーザーデータ完全消去（退会）フローのバックエンド実装	Claude + Codex	VSCode + Claude Code	論理削除と物理削除（履歴データ完全クリア）の手順・トリガーAPI設計と実装	未着手	2026-06-16	2026-06-17
+T743	7. 決定後実行	運用保守	本番環境の死活監視（Uptime Monitoring）およびSentry等によるエラー通知・Slack連携アラート設定	Codex	VSCode + Codex	応答遅延・エラー率の上昇をトリガーとする管理者Slack通知フローテスト	未着手	2026-06-17	2026-06-18
+T744	7. 決定後実行	運用保守	ユーザー向け操作ガイド・FAQおよび管理者向けトラブルシューティング手順書の整備	Claude + 人間	VSCode + Claude Code	管理者画面・一般ユーザー画面の主要ユースケース解説docs整備	未着手	2026-06-18	2026-06-19
+T745	7. 決定後実行	バックエンド開発	サービス利用規約およびプライバシーポリシー本番UIでの同意チェックボックス実装	AIエージェント	Antigravity + Gemini	会員登録・ログイン前の規約同意必須化およびチェック状態のバックエンド検証	未着手	2026-06-19	2026-06-20
+T746	7. 決定後実行	リリース	本番リリース判定（Go/No-Go）判断基準チェックリストの策定および関係者承認プロセスの確立	人間	Gemini API 現行モデル	セキュリティ監査、負荷テスト、法令遵守状況の最終レビューシート同期	未着手	2026-06-20	2026-06-21
+T747	7. 決定後実行	運用保守	定期脆弱性スキャンおよび依存パッケージパッチ適用の自動運用設定 (Dependabot/Weekly Vulnerability Scan) 	Codex	VSCode + Codex	GitHub Dependabotによる週次ライブラリ監査およびセキュリティパッチ自動PR作成の適用	未着手	2026-06-21	2026-06-22
+T748	7. 決定後実行	運用保守	本番サーバーのログローテーションおよびアクセスログの自動クリーンアップ・圧縮・保存設定	Codex	VSCode + Codex	Logrotate等を用いたディスク枯渇防止・過去ログの週次ローテートと世代圧縮自動化	未着手	2026-06-22	2026-06-23
+T749	7. 決定後実行	共通管理	本番インフラ障害におけるエスカレーション連絡網およびディザスタリカバリ（災害復旧）運用計画の策定	人間 + Claude	VSCode + Claude Code	障害検知時の緊急連絡ルート・復旧手順書・DRシナリオのdocs同期	未着手	2026-06-23	2026-06-24
+T750	7. 決定後実行	運用保守	定期パフォーマンスボトルネック診断およびDBインデックス最適化運用の設計	Codex	VSCode + Codex	スロークエリ検出・APIレスポンス性能モニタリングおよびインデックス再構成手順の自動化	未着手	2026-06-24	2026-06-25
+T751	7. 決定後実行	セキュリティ	サードパーティAPIキー（Gemini/OpenAI/Slack等）の年次有効期限ローテーション自動化運用の整備	Codex + 人間	VSCode + Codex	GCP/Slack/Notion認証キーの期限切れ自動検知・ローテーション作業ガイドの同期	未着手	2026-06-25	2026-06-26
+T752	7. 決定後実行	フロントエンド	ユーザーオンボーディング / アカウント登録・アクティベーションフローの設計・実装	Antigravity	Antigravity 2.0	オンボーディングUI・初期セットアップウィザード開発	未着手	2026-06-26	2026-06-27
+T753	7. 決定後実行	セキュリティ	API レートリミット制限およびDDoS緩和策の適用	Codex	VSCode + Codex	Gemini API コール上限・認証アクセスレート制限実装	未着手	2026-06-27	2026-06-28
+T754	7. 決定後実行	バックエンド開発	Alembic/Flyway 等を用いたデータベースマイグレーション管理体制の整備	Codex	VSCode + Codex	データベーススキーマ変更 of PostgreSQL/SQLite のバージョン履歴管理および運用整備	未着手	2026-06-28	2026-06-29
+T755	7. 決定後実行	運用保守	テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボードの構築	Codex	VSCode + Codex	Prometheus/Sentry等によるリソース性能監視および障害アラート設定	未着手	2026-06-29	2026-06-30
+T756	7. 決定後実行	コンプライアンス	個人情報保護およびGDPRに基づくシステム監査ログの氏名マスキング・暗号化パイプライン実装	Claude	VSCode + Claude Code	データベース及びアクセスログの暗号化・氏名マスクバッチの開発・適用	未着手	2026-06-30	2026-07-01
+T757	7. 決定後実行	運用保守	週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装	Codex	VSCode + Codex	API/Infraコスト集計の自動バッチおよびSlack週次通知設定	未着手	2026-07-01	2026-07-02
+T758	7. 決定後実行	データベース	Supabase (PostgreSQL) の行レベルセキュリティ(RLS)ポリシーの設計と適用	Codex	VSCode + Codex	RLSの動作検証とポリシー定義のSQL化	未着手	2026-07-02	2026-07-03
+T759	7. 決定後実行	バックエンド開発	Firebase Cloud Functions 経由での Supabase 接続のプール管理とパフォーマンス最適化	Codex	VSCode + Codex	接続プール管理設定のFastAPIへの組み込み	未着手	2026-07-03	2026-07-04
+T760	7. 決定後実行	品質検証	Firebase Emulator Suite と Supabase Local CLI を用いたローカル開発・テスト環境の構築	Codex	VSCode + Codex	ローカルエミュレータによる統合テストの合格率検証	未着手	2026-07-04	2026-07-05
+T761	7. 決定後実行	運用保守	Supabase ダッシュボードでのクエリパフォーマンス監視とインデックスのチューニング	Codex	VSCode + Codex	スロークエリ監視体制のドキュメント化	未着手	2026-07-05	2026-07-06
+T761_1	7. 決定後実行	運用保守	Firebase & Supabase クォータ・エラー監視のアラート構築	Codex	VSCode + Codex	Sentry / Google Cloud Monitoring 連携設定	未着手	2026-07-06	2026-07-07
