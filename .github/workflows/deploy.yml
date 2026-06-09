@@ -73,6 +73,17 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
+      - name: Set up Python (for Firebase Functions SDK)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Create Virtual Environment and Install Dependencies
+        run: |
+          python -m venv venv
+          ./venv/bin/pip install --upgrade pip
+          ./venv/bin/pip install -r requirements.txt
+
       - name: Deploy to Firebase
         env:
           FIREBASE_DEPLOY_TARGETS: ${{ vars.FIREBASE_DEPLOY_TARGETS || 'hosting' }}
