@@ -116,6 +116,7 @@ jobs:
 
           echo "[*] Initiating deploy to Firebase project: $FIREBASE_PROJECT_ID"
           echo "[*] Deploy targets: $FIREBASE_DEPLOY_TARGETS"
+          source venv/bin/activate
           if ! firebase deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_DEPLOY_TARGETS" --non-interactive "${AUTH_FLAGS[@]}"; then
             echo "::error title=Firebase deploy failed::Could not deploy '$FIREBASE_DEPLOY_TARGETS' to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists, credentials have deploy permissions, and set FIREBASE_DEPLOY_TARGETS=hosting,functions only after the Firebase project is on the Blaze plan."
             exit 2
