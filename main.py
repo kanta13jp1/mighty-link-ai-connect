@@ -36,8 +36,19 @@ def api(req: https_fn.Request) -> https_fn.Response:
         headers_list = headers
         return lambda body_data: None
 
-    # Execute WSGI application using the request environment dict
-    body_iter = wsgi_app(req.environ, start_response)
+    # Copy and normalize WSGI environment to prevent routing drift in serverless environment
+    environ = req.environ.copy()
+    path_info = environ.get("PATH_INFO", "")
+    script_name = environ.get("SCRIPT_NAME", "")
+    
+    # If SCRIPT_NAME is defined (e.g. /api or /admin) but PATH_INFO doesn't include it,
+    # combine them to restore the full path for FastAPI's global routes.
+    if script_name and not path_info.startswith(script_name):
+        environ["PATH_INFO"] = script_name + path_info
+        environ["SCRIPT_NAME"] = ""
+
+    # Execute WSGI application using the normalized environment dict
+    body_iter = wsgi_app(environ, start_response)
     body = b"".join(body_iter)
     if hasattr(body_iter, "close"):
         body_iter.close()
