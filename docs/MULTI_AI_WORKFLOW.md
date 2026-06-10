@@ -374,6 +374,8 @@ feat/<tool>-<wbs-id>-<slug>
 - **fork 安全性の教訓**: ローカル（Flask dev server / Firebase Emulator / Windows）は fork しないため、この種の障害はローカルテスト・エミュレータテストでは検出できない。Functions デプロイ後は本番 URL で `/api/health` の疎通確認を必須とする。
 - **DB 接続の副次調査**: `SUPABASE_DB_URL` が direct 接続（`db.*.supabase.co` / DNS が IPv6 のみ）のため、IPv4 のみの Cloud Run からは到達不可。現状は SQLite `/tmp` フォールバックで稼働。恒久対応は Supavisor session pooler URL への切替（T795 起票）。
 - **CI ギャップ**: CI は T784 ゲートにより Hosting のみデプロイのため、コード修正が本番 API に自動反映されない。IAM 整備とゲート解除を T796 として起票。
+- **T795 完了（同日対応）**: pooler リージョンをダッシュボードなしで特定（候補リージョンへの接続テストで `aws-1-ap-southeast-1` のみ tenant 認識）。`SUPABASE_DB_URL` を transaction pooler（port 6543, sslmode=require）へ切替え、`USE_SUPABASE=true` を復元して再デプロイ。本番 `/api/db-test` で `direct_postgres_status=success` を確認し、SQLite `/tmp` フォールバックから PostgreSQL 永続化へ移行完了。`init_db` が作成する `engineers`/`jobs`/`match_results` には RLS を有効化（ポリシーなし = anon REST API からのアクセスを全拒否、postgres ロールはオーナーとしてバイパス）。
+- **T796 対応（CI Functions デプロイ恒久化）**: `.env` は gitignored のため、CI からの Functions デプロイは本番ランタイム環境変数を消去してしまう罠があった。`FIREBASE_FUNCTIONS_DOTENV` secret に .env を格納し、deploy.yml が functions デプロイ時に .env を復元する（secret 未設定なら fail-fast）よう修正。`FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true` を設定し、main push での自動デプロイを有効化。
 
 ---
 
@@ -425,6 +427,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-11 | Codex | T794完了: GitHub Project item-list/item-add/item-edit を復旧確認し、Issue #68/#69 を Project Done へ同期 |
 | 2026-06-11 | Codex | T788完了: Firebase Hosting preview channel と Supabase staging/prod分離のRunbook、検証スクリプト、テストを追加 |
 | 2026-06-11 | Claude Code | R44対応: 本番 /api 502 の根本原因（a2wsgi import時生成 × gunicorn fork）を特定・修正・手動デプロイ復旧。T795 (pooler URL)・T796 (CI Functions deploy 有効化) を起票 |
+| 2026-06-11 | Claude Code | T795完了: Supabase 接続を aws-1-ap-southeast-1 transaction pooler へ切替、本番 db-test success 確認、app テーブル RLS 有効化。T796: FIREBASE_FUNCTIONS_DOTENV secret + deploy.yml .env 復元でゲート解除 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 

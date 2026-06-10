@@ -325,6 +325,12 @@ def init_db():
                 analyzed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
             """)
+            # Supabase exposes public-schema tables through the anon REST API.
+            # Enabling RLS with no policies denies anon access entirely, while
+            # the app (table owner via the postgres role) bypasses RLS.
+            cursor.execute("ALTER TABLE engineers ENABLE ROW LEVEL SECURITY;")
+            cursor.execute("ALTER TABLE jobs ENABLE ROW LEVEL SECURITY;")
+            cursor.execute("ALTER TABLE match_results ENABLE ROW LEVEL SECURITY;")
         else:
             # SQLite DDL
             cursor.execute("""

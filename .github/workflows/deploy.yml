@@ -108,6 +108,7 @@ jobs:
           FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID || 'mighty-link-ai-connect-13d22' }}
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON || secrets.FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_FUNCTIONS_DOTENV: ${{ secrets.FIREBASE_FUNCTIONS_DOTENV }}
         run: |
           set -euo pipefail
 
@@ -141,6 +142,20 @@ jobs:
               echo "[*] FIREBASE_FUNCTIONS_DEPLOY_ENABLED is not true; overriding Firebase deploy targets to hosting."
             fi
             FIREBASE_DEPLOY_TARGETS="hosting"
+          fi
+
+          # .env is gitignored, but Firebase Functions reads runtime env vars from it
+          # at deploy time. Without this, a CI functions deploy would silently wipe
+          # USE_SUPABASE / SUPABASE_DB_URL from the production service (R44/T795).
+          if [ "$FUNCTIONS_DEPLOY_ENABLED" = "true" ]; then
+            if [ -n "${FIREBASE_FUNCTIONS_DOTENV:-}" ]; then
+              printf '%s\n' "$FIREBASE_FUNCTIONS_DOTENV" > .env
+              chmod 600 .env
+              echo "[*] Materialized functions runtime .env from FIREBASE_FUNCTIONS_DOTENV secret."
+            else
+              echo "::error title=Missing FIREBASE_FUNCTIONS_DOTENV::Functions deploy is enabled but the FIREBASE_FUNCTIONS_DOTENV secret is empty. Deploying functions without it would wipe production runtime env vars (USE_SUPABASE / SUPABASE_DB_URL)."
+              exit 3
+            fi
           fi
 
           echo "[*] Initiating deploy to Firebase project: $FIREBASE_PROJECT_ID"
