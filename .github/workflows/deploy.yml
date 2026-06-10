@@ -87,6 +87,14 @@ jobs:
 
       - name: Verify Python Environment and Source Imports
         run: |
+          # Create a wrapper directory to force Firebase CLI/scripts to use setup-python's Python version
+          mkdir -p "$RUNNER_TEMP/bin"
+          ln -sf "$(which python)" "$RUNNER_TEMP/bin/python"
+          ln -sf "$(which python)" "$RUNNER_TEMP/bin/python3"
+          ln -sf "$(which python)" "$RUNNER_TEMP/bin/python3.12"
+          ln -sf "$(which python)" "$RUNNER_TEMP/bin/python3.14"
+          export PATH="$RUNNER_TEMP/bin:$PATH"
+
           source venv/bin/activate
           echo "[*] Python executable: $(which python)"
           python --version
@@ -102,6 +110,14 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           set -euo pipefail
+
+          # Create a wrapper directory to force Firebase CLI/scripts to use setup-python's Python version
+          mkdir -p "$RUNNER_TEMP/bin"
+          ln -sf "$(which python)" "$RUNNER_TEMP/bin/python"
+          ln -sf "$(which python)" "$RUNNER_TEMP/bin/python3"
+          ln -sf "$(which python)" "$RUNNER_TEMP/bin/python3.12"
+          ln -sf "$(which python)" "$RUNNER_TEMP/bin/python3.14"
+          export PATH="$RUNNER_TEMP/bin:$PATH"
 
           # Activate virtual environment so Firebase CLI detects it
           source venv/bin/activate
