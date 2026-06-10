@@ -1,6 +1,7 @@
 {
-  "generated_at_jst": "2026-06-11T01:07:21+09:00",
-  "status": "auth_required",
-  "error": "Authentication expired or invalid. Run 'notebooklm login' to re-authenticate.",
-  "next_steps": "exports/knowledge_flow/notebooklm_cli_next_steps.md"
+  "notebook_id": "cd44c4ef-4c46-40b5-ace3-1b6904d29591",
+  "question": "6/2の社長打ち合わせで使う、8枚以内のプレゼン草案を作ってください。\n\n前提:\n- 実際の企画・サービス内容は6/2の打ち合わせで決定する\n- それまではプロトタイプ、WBS、Google Workspace同期、NotebookLM/Slack/Notion/Obsidian/GitHub連携の「実際にやった状態」を見せる\n- 社長に決めてもらう事項と、6/2後すぐにWBSへ反映する事項を明確にする\n\n出力形式:\n1. スライド番号とタイトル\n2. 各スライドの要点3つ以内\n3. 話すメモ\n4. 見せる証跡URL/ファイル\n5. 社長への質問\n",
+  "answer_returncode": 1,
+  "answer_stdout": "{\n  \"error\": true,\n  \"code\": \"ERROR\",\n  \"message\": \"Chat request timed out: \"\n}",
+  "answer_stderr": ""
 }
