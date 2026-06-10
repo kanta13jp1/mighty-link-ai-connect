@@ -94,20 +94,20 @@ def test_parse_and_database_persistence(client):
     job_db_id = res_data["db_id"]
     assert job_db_id > 0
 
-    # 3. Verify they are listed via authenticated endpoints
-    # Engineers list without auth
+    # 3. Verify they are listed (read-only list endpoints allow unauthenticated access)
+    # Engineers list without auth (optional auth endpoint: 200)
     response = client.get("/api/engineers")
-    assert response.status_code == 401
-
-    # Engineers list with auth
-    response = client.get("/api/engineers", auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD))
     assert response.status_code == 200
     eng_list = response.json()["engineers"]
     assert len(eng_list) > 0
     assert any(eng["id"] == eng_db_id for eng in eng_list)
 
-    # Jobs list with auth
-    response = client.get("/api/jobs", auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD))
+    # Engineers list with auth also works
+    response = client.get("/api/engineers", auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD))
+    assert response.status_code == 200
+
+    # Jobs list without auth (optional auth endpoint: 200)
+    response = client.get("/api/jobs")
     assert response.status_code == 200
     job_list = response.json()["jobs"]
     assert len(job_list) > 0
