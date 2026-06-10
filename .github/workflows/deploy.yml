@@ -78,13 +78,16 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Python Dependencies Globally
+      - name: Set up Python Virtual Environment and Install Dependencies
         run: |
+          python -m venv venv
+          source venv/bin/activate
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
       - name: Verify Python Environment and Source Imports
         run: |
+          source venv/bin/activate
           echo "[*] Python executable: $(which python)"
           python --version
           echo "[*] Pip version: $(pip --version)"
@@ -100,8 +103,8 @@ jobs:
         run: |
           set -euo pipefail
 
-          # 念のためvenvディレクトリが存在しないことを確実にする
-          rm -rf venv
+          # Activate virtual environment so Firebase CLI detects it
+          source venv/bin/activate
 
           AUTH_FLAGS=()
 
