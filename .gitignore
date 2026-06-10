@@ -27,3 +27,4 @@ venv/
 scratch/
 *.db
 *.log
+.env

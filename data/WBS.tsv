@@ -1,4 +1,4 @@
-﻿タスクID	大フェーズ	小フェーズ	タスク名	担当	実行エンジン	Sheets Live 連携アクション	ステータス	開始日	終了予定日
+タスクID	大フェーズ	小フェーズ	タスク名	担当	実行エンジン	Sheets Live 連携アクション	ステータス	開始日	終了予定日
 T101	1. 企画・設計	要件定義	requirements.md の策定	人間 + AI	Gemini API 現行モデル	完了時に Docs Live へ自動文書書き出し	完了	2026-05-20	2026-05-21
 T102	1. 企画・設計	DB設計	database.md とスキーマ設計	AIエージェント	Gemini API 現行モデル	テーブル定義をスプレッドシートへ自動同期	完了	2026-05-21	2026-05-22
 T201	2. フロント開発	UI/UX実装	PDF/画像ドラッグ＆ドロップ画面	AIエージェント	Antigravity 2.0	実装進捗を Sheets Live にリアルタイム反映	完了	2026-05-22	2026-05-23
@@ -145,7 +145,7 @@ T733_1	7. 決定後実行	品質検証	Firebase Emulator Suite を用いた Func
 T733_2	7. 決定後実行	品質検証	Supabase CLI を用いたローカル DB セキュリティ検証テスト	AIエージェント	Antigravity 2.0	RLS ポリシーのユニットテスト実行	完了	2026-06-09	2026-06-10
 T734	7. 決定後実行	インフラ設計	GitHub Actionsを用いた自動ビルド・テスト・デプロイCI/CDパイプライン構築	Codex	VSCode + Codex	GitHub Actions workflow YAML作成	完了	2026-06-08	2026-06-10
 T735	7. 決定後実行	リリース	本番プロダクション環境への初版リリースデプロイおよび受入手動テスト実施	人間 + AI	Gemini API 現行モデル	リリースアナウンスおよびリリースログ記録	完了	2026-06-03	2026-06-15
-T735_1	7. 決定後実行	リリース	Supabase 本番プロジェクトへの DB スキーマ・RLS 反映	人間 + Codex	VSCode + Codex	Supabase production db migration 実行	未着手	2026-06-11	2026-06-11
+T735_1	7. 決定後実行	リリース	Supabase 本番プロジェクトへの DB スキーマ・RLS 反映	人間 + Codex	VSCode + Codex	Supabase production db migration 実行	完了	2026-06-11	2026-06-11
 T735_2	7. 決定後実行	リリース	Firebase Hosting / Functions 本番デプロイと受入テスト	人間 + AI	Gemini API 現行モデル	Hosting URL 疎通と本番受入テスト報告書作成	完了	2026-06-10	2026-06-10
 T736	7. 決定後実行	運用保守	API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用	Codex	VSCode + Codex	`scripts/audit_external_api_usage.py`でdaily usage ledgerを監査し、Seedance/Geminiの閾値警告・遮断状態をJSONレポート化	完了	2026-06-10	2026-06-10
 T737	7. 決定後実行	運用保守	デイリー作業レポート（WBS/進捗状況）のGmail/Slack自動送信機能の実装	Codex	VSCode + Codex	send_daily_report.py自動送信設定	完了	2026-06-03	2026-06-06

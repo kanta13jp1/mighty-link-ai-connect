@@ -29,7 +29,17 @@
   "functions": [
     {
       "source": ".",
-      "runtime": "python312"
+      "runtime": "python312",
+      "ignore": [
+        "venv",
+        ".git",
+        ".github",
+        "scratch",
+        "node_modules",
+        "__pycache__",
+        "*.db",
+        "*.log"
+      ]
     }
   ]
 }

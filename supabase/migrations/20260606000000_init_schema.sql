@@ -2,7 +2,7 @@
 -- Supabase PostgreSQL Initial Migration
 
 -- 1. Helper function to extract Firebase User ID from request JWT
-CREATE OR REPLACE FUNCTION auth.firebase_uid()
+CREATE OR REPLACE FUNCTION public.firebase_uid()
 RETURNS text AS $$
   SELECT 
     coalesce(
@@ -97,31 +97,31 @@ ALTER TABLE public.usage_ledgers ENABLE ROW LEVEL SECURITY;
 -- Profiles
 CREATE POLICY "Allow individual read own profile" 
 ON public.profiles FOR SELECT 
-USING (auth.firebase_uid() = user_id);
+USING (public.firebase_uid() = user_id);
 
 CREATE POLICY "Allow individual update own profile" 
 ON public.profiles FOR UPDATE 
-USING (auth.firebase_uid() = user_id) 
-WITH CHECK (auth.firebase_uid() = user_id);
+USING (public.firebase_uid() = user_id) 
+WITH CHECK (public.firebase_uid() = user_id);
 
 CREATE POLICY "Allow individual insert own profile" 
 ON public.profiles FOR INSERT 
-WITH CHECK (auth.firebase_uid() = user_id);
+WITH CHECK (public.firebase_uid() = user_id);
 
 -- Matches
 CREATE POLICY "Allow individual read own matches" 
 ON public.matches FOR SELECT 
-USING (auth.firebase_uid() = user_id);
+USING (public.firebase_uid() = user_id);
 
 CREATE POLICY "Allow individual insert own matches" 
 ON public.matches FOR INSERT 
-WITH CHECK (auth.firebase_uid() = user_id);
+WITH CHECK (public.firebase_uid() = user_id);
 
 CREATE POLICY "Allow individual delete own matches" 
 ON public.matches FOR DELETE 
-USING (auth.firebase_uid() = user_id);
+USING (public.firebase_uid() = user_id);
 
 -- Usage Ledgers
 CREATE POLICY "Allow individual read own usage ledger" 
 ON public.usage_ledgers FOR SELECT 
-USING (auth.firebase_uid() = user_id);
+USING (public.firebase_uid() = user_id);

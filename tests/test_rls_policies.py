@@ -44,11 +44,11 @@ def test_owner_security_policies_enforced():
     # Normalize whitespace to make matching easier
     normalized_sql = " ".join(sql_content.split())
 
-    # We ensure that policies for tables containing user_id compare auth.firebase_uid()
+    # We ensure that policies for tables containing user_id compare public.firebase_uid()
     policy_checks = [
-        ("profiles", r"auth\.firebase_uid\(\)\s*=\s*user_id"),
-        ("matches", r"auth\.firebase_uid\(\)\s*=\s*user_id"),
-        ("usage_ledgers", r"auth\.firebase_uid\(\)\s*=\s*user_id")
+        ("profiles", r"public\.firebase_uid\(\)\s*=\s*user_id"),
+        ("matches", r"public\.firebase_uid\(\)\s*=\s*user_id"),
+        ("usage_ledgers", r"public\.firebase_uid\(\)\s*=\s*user_id")
     ]
 
     for table_name, check_regex in policy_checks:

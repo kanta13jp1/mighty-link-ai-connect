@@ -51,9 +51,9 @@ Supabase は、外部で署名されたカスタム JWT を検証する仕組み
 データベース層で Firebase Auth 由来の認証トークンからユーザー UID を安全に取得するため、以下の PostgreSQL ヘルパー関数を作成し、各 RLS ポリシーで利用します。
 
 ```sql
--- 関数: auth.firebase_uid()
+-- 関数: public.firebase_uid()
 -- クライアントから渡された JWT トークンのクレームから、Firebase のユーザーUID (sub) を抽出する
-CREATE OR REPLACE FUNCTION auth.firebase_uid()
+CREATE OR REPLACE FUNCTION public.firebase_uid()
 RETURNS text AS $$
   SELECT 
     coalesce(
@@ -78,18 +78,18 @@ ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 -- 自身のプロファイルの参照を許可
 CREATE POLICY "Allow individual read own profile" 
 ON public.profiles FOR SELECT 
-USING (auth.firebase_uid() = user_id);
+USING (public.firebase_uid() = user_id);
 
 -- 自身のプロファイルの更新を許可
 CREATE POLICY "Allow individual update own profile" 
 ON public.profiles FOR UPDATE 
-USING (auth.firebase_uid() = user_id) 
-WITH CHECK (auth.firebase_uid() = user_id);
+USING (public.firebase_uid() = user_id) 
+WITH CHECK (public.firebase_uid() = user_id);
 
 -- 自身のプロファイルの作成を許可
 CREATE POLICY "Allow individual insert own profile" 
 ON public.profiles FOR INSERT 
-WITH CHECK (auth.firebase_uid() = user_id);
+WITH CHECK (public.firebase_uid() = user_id);
 ```
 
 ### 3.2 案件シミュレーション結果テーブル (`matches`)
@@ -101,17 +101,17 @@ ALTER TABLE public.matches ENABLE ROW LEVEL SECURITY;
 -- 自身のシミュレーション結果の参照
 CREATE POLICY "Allow individual read own matches" 
 ON public.matches FOR SELECT 
-USING (auth.firebase_uid() = user_id);
+USING (public.firebase_uid() = user_id);
 
 -- 自身のシミュレーション結果の追加
 CREATE POLICY "Allow individual insert own matches" 
 ON public.matches FOR INSERT 
-WITH CHECK (auth.firebase_uid() = user_id);
+WITH CHECK (public.firebase_uid() = user_id);
 
 -- 自身のシミュレーション結果の削除 (論理削除は UPDATE なので、ここでは物理削除)
 CREATE POLICY "Allow individual delete own matches" 
 ON public.matches FOR DELETE 
-USING (auth.firebase_uid() = user_id);
+USING (public.firebase_uid() = user_id);
 ```
 
 ### 3.3 AI判定監査ログテーブル (`audits`)
@@ -133,7 +133,7 @@ ALTER TABLE public.usage_ledgers ENABLE ROW LEVEL SECURITY;
 -- 自身の利用メーターの参照のみ許可
 CREATE POLICY "Allow individual read own usage ledger" 
 ON public.usage_ledgers FOR SELECT 
-USING (auth.firebase_uid() = user_id);
+USING (public.firebase_uid() = user_id);
 
 -- INSERT / UPDATE / DELETE ポリシーは一般ユーザー向けには定義しない（service_role のみ許可）
 ```
