@@ -1,3 +1,4 @@
 デプロイID	環境	本番URL	デプロイステータス	実行トリガー	デプロイ完了日時
 DEP-001	GitHub Pages	https://kanta13jp1.github.io/mighty-link-ai-connect/	SUCCESS	push to main	2026-05-28 23:45
 DEP-002	Local Server	http://127.0.0.1:8000/	SUCCESS	python src/app.py	2026-05-28 23:50
+DEP-003	Firebase Hosting / Functions	https://mighty-link-ai-connect-13d22.web.app/	SUCCESS	push to master (CI run 27281062100)	2026-06-10 22:53

@@ -1,6 +1,6 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-06-10T22:47:28+09:00
+Generated: 2026-06-10T23:10:39+09:00
 Status: `auth_required`
 
 NotebookLM CLI is not ready yet, so this file is a placeholder.

@@ -47,6 +47,9 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push'
+    concurrency:
+      group: firebase-deploy-mighty-link-ai-connect-13d22
+      cancel-in-progress: false
     permissions:
       contents: read
       id-token: write
