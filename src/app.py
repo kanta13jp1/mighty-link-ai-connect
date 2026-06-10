@@ -209,9 +209,25 @@ BASIC_AUTH_USERNAME = os.environ.get("BASIC_AUTH_USERNAME", "admin")
 BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD", "mighty-link-pass")
 
 security = HTTPBasic()
+security_optional = HTTPBasic(auto_error=False)
 
 
 def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
+    correct_username = secrets.compare_digest(credentials.username, BASIC_AUTH_USERNAME)
+    correct_password = secrets.compare_digest(credentials.password, BASIC_AUTH_PASSWORD)
+    if not (correct_username and correct_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return credentials.username
+
+
+def verify_credentials_optional(credentials: Optional[HTTPBasicCredentials] = Depends(security_optional)):
+    """Read-only endpoints: allow unauthenticated access; validate if credentials are provided."""
+    if credentials is None:
+        return None
     correct_username = secrets.compare_digest(credentials.username, BASIC_AUTH_USERNAME)
     correct_password = secrets.compare_digest(credentials.password, BASIC_AUTH_PASSWORD)
     if not (correct_username and correct_password):
@@ -2735,7 +2751,7 @@ async def sync_to_sheets(req: SyncRequest):
 
 
 @app.get("/api/engineers")
-async def list_engineers(username: str = Depends(verify_credentials)):
+async def list_engineers(username: Optional[str] = Depends(verify_credentials_optional)):
     if SUPABASE_SDK_ACTIVE:
         try:
             data = sdk_get_engineers()
@@ -2783,7 +2799,7 @@ async def list_engineers(username: str = Depends(verify_credentials)):
         conn.close()
 
 @app.get("/api/jobs")
-async def list_jobs(username: str = Depends(verify_credentials)):
+async def list_jobs(username: Optional[str] = Depends(verify_credentials_optional)):
     if SUPABASE_SDK_ACTIVE:
         try:
             data = sdk_get_jobs()
