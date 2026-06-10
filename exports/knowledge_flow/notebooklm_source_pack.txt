@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-06-10 10:37:39 UTC+09:00
+Generated: 2026-06-10 13:57:49 UTC+09:00
 
 ## Purpose
 
@@ -10,11 +10,11 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 
 ## Current WBS Snapshot
 
-- Total tasks: 174
-- Done: 147
+- Total tasks: 183
+- Done: 148
 - In progress: 0
-- Not started: 27
-- Completion rate: 84%
+- Not started: 35
+- Completion rate: 81%
 - CEO presentation phase tasks: 90
 - CEO presentation phase done: 90
 
@@ -615,17 +615,23 @@ gantt
     title Mighty Skill-Bridge 開発スケジュール
     dateFormat  YYYY-MM-DD
     section フェーズ1: 企画・設計
-    要件定義 & DB設計          :active, a1, 2026-05-20, 2d
+    要件定義 & DB設計          :done, a1, 2026-05-20, 2d
     section フェーズ2: フロントエンド開発
-    UIコンポーネント実装        : b1, after a1, 3d
+    UIコンポーネント実装        :done, b1, after a1, 3d
     section フェーズ3: バックエンド & AI
-    Gemini API 連携 : c1, after b1, 3d
+    Gemini API 連携 :done, c1, after b1, 3d
     section フェーズ4: テスト & デバッグ
-    Browser Agent & Code Mender: d1, after c1, 2d
+    Browser Agent & Code Mender :done, d1, after c1, 2d
     section フェーズ5: 本番公開
-    CI/CDデプロイ & プレスリリース: e1, after d1, 2d
+    CI/CDデプロイ & プレスリリース :done, e1, after d1, 2d
     section フェーズ6: 社長プレゼン準備
-    6/2判断材料・デモ・連携フロー準備: f1, 2026-05-21, 13d
+    6/2判断材料・デモ・連携フロー準備 :done, f1, 2026-05-21, 13d
+    section フェーズ7: 決定後実行
+    Firebase/Supabase本番実装・パイロット :active, g1, 2026-06-02, 28d
+    section フェーズ8: 本番運用・品質管理
+    KPI/SLA・フィードバック・監査 : h1, 2026-07-06, 14d
+    section フェーズ9: 長期保守・拡張
+    多言語・モデル追従・負荷テスト : i1, 2026-07-14, 14d
 ```
 
 ---
@@ -664,8 +670,7 @@ gantt
 | **T611** | 6. 社長プレゼン準備 | 判断マトリクス | サービス方向性・対象ユーザー・優先機能の判断マトリクス作成 | Codex | VSCode + Codex | 6/2で決める選択肢を比較表として整理 |
 | **T612** | 6. 社長プレゼン準備 | 議事録テンプレート | 決定事項・保留事項・次アクション記録テンプレート作成 | Codex | VSCode + Codex | 打ち合わせ直後にWBS/Calendar/Gitへ反映できる議事録枠を準備 |
 | **T613** | 6. 社長プレゼン準備 | デモバックアップ | 公開URL障害時のローカル実行・スクリーンショット代替手順整理 | Codex | VSCode + Codex | Public Demo Guard結果と代替導線を本番前チェックリストへ反映 |
-| **T614** | 6. 社長プレゼン準備 | 事前送付メモ | 社長へ事前共有する確認ポイント・当日アジェンダ短文作成 | Claude Code | VSCode + Claude Code | `CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md` へ長文版・短文版・当日アジェンダ短文を整理済 |
-| **T615** | 6. 社長プレゼン準備 | 決定後ロードマップ枠 | 6/2決定内容別の次期WBS更新パターン準備 | Claude Code | VSCode + Claude Code | `CEO_PRESENTATION_
+| **T614** | 6. 社長プレゼン準備 | 事前送付メモ | 社長へ事
 
 ## Source: docs/SETUP_GUIDE.md
 
