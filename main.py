@@ -9,6 +9,7 @@ with the WSGI execution context expected by the Firebase functions runner.
 """
 
 import os
+import threading
 # Ensure critical environment variables exist to prevent gspread import crash in sandbox environments
 if "APPDATA" not in os.environ:
     os.environ["APPDATA"] = os.environ.get("USERPROFILE") or os.environ.get("HOME") or os.path.expanduser("~")
@@ -25,8 +26,23 @@ except ValueError:
     # Already initialized (e.g. during local tests)
     pass
 
-# Convert FastAPI (ASGI) application to WSGI
-wsgi_app = ASGIMiddleware(app)
+# Convert FastAPI (ASGI) to WSGI lazily, on the first request.
+# ASGIMiddleware starts a daemon thread running its asyncio event loop. The
+# production runtime (functions-framework -> gunicorn) imports this module in
+# the gunicorn master and then forks workers; threads do not survive fork, so
+# a loop created at import time has no running thread inside the worker and
+# every request blocks forever on run_coroutine_threadsafe(...).result().
+_wsgi_app = None
+_wsgi_lock = threading.Lock()
+
+
+def _get_wsgi_app():
+    global _wsgi_app
+    if _wsgi_app is None:
+        with _wsgi_lock:
+            if _wsgi_app is None:
+                _wsgi_app = ASGIMiddleware(app)
+    return _wsgi_app
 
 # Export the "api" function mapped in firebase.json
 @https_fn.on_request(invoker="public")
@@ -53,7 +69,7 @@ def api(req: https_fn.Request) -> https_fn.Response:
         environ["SCRIPT_NAME"] = ""
 
     # Execute WSGI application using the normalized environment dict
-    body_iter = wsgi_app(environ, start_response)
+    body_iter = _get_wsgi_app()(environ, start_response)
     body = b"".join(body_iter)
     if hasattr(body_iter, "close"):
         body_iter.close()

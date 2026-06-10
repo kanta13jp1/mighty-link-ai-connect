@@ -368,6 +368,13 @@ feat/<tool>-<wbs-id>-<slug>
 - **自動検証**: `scripts/verify_staging_environment_config.py` と `tests/test_staging_environment_config.py` を追加。secret値を出力せずに、Firebase preview channel名、Functions deploy opt-in、Supabase staging/prod credential分離をチェックできる。
 - **今回の WBS 完了単位**: `T788 ステージング環境（Firebase Hosting preview channel / Supabase 検証用プロジェクト）の構築と運用ルール整備`。前倒し完了としてWBS/Sheets/Calendar/GitHub Issue/Projectへ同期する。
 
+### Refresh (2026-06-11 / Claude Code 本番 502 障害対応セッション)
+
+- **本番障害 R44**: Hosting URL の `/api/*` が全て 502（Cloud Run 直 URL は 504）。原因は `main.py` が import 時に `a2wsgi.ASGIMiddleware` を生成していたこと。本番 runtime（functions-framework → gunicorn）はマスタープロセスで app をロードしてから worker を fork するため、a2wsgi のイベントループスレッドが worker に引き継がれず、全リクエストが永久ブロックしていた。初回リクエスト時の遅延生成に修正し、手動 `firebase deploy --only functions` で復旧。
+- **fork 安全性の教訓**: ローカル（Flask dev server / Firebase Emulator / Windows）は fork しないため、この種の障害はローカルテスト・エミュレータテストでは検出できない。Functions デプロイ後は本番 URL で `/api/health` の疎通確認を必須とする。
+- **DB 接続の副次調査**: `SUPABASE_DB_URL` が direct 接続（`db.*.supabase.co` / DNS が IPv6 のみ）のため、IPv4 のみの Cloud Run からは到達不可。現状は SQLite `/tmp` フォールバックで稼働。恒久対応は Supavisor session pooler URL への切替（T795 起票）。
+- **CI ギャップ**: CI は T784 ゲートにより Hosting のみデプロイのため、コード修正が本番 API に自動反映されない。IAM 整備とゲート解除を T796 として起票。
+
 ---
 
 ### Session gate (2026-05-22 Codex pass)
@@ -417,6 +424,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-11 | Codex | T786完了: GitHub Actions を Node 24 事前検証モードへ切替。checkout/setup-python/setup-node を v6、google-github-actions/auth を v3 へ更新 |
 | 2026-06-11 | Codex | T794完了: GitHub Project item-list/item-add/item-edit を復旧確認し、Issue #68/#69 を Project Done へ同期 |
 | 2026-06-11 | Codex | T788完了: Firebase Hosting preview channel と Supabase staging/prod分離のRunbook、検証スクリプト、テストを追加 |
+| 2026-06-11 | Claude Code | R44対応: 本番 /api 502 の根本原因（a2wsgi import時生成 × gunicorn fork）を特定・修正・手動デプロイ復旧。T795 (pooler URL)・T796 (CI Functions deploy 有効化) を起票 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 
