@@ -44,6 +44,23 @@
    * 万が一、エラーの無限ループや不正アクセスが発生した場合、APIが自動的に検知して Gemini API へのリクエストを遮断し、` deterministic_fallback_response`（決定論的ローカル高速モック）へ切り替えるロジックが正常に作動しています。
    * これにより、意図しない数万円規模のAPI高額請求リスクは **100% 技術的に排除** されています。
 
+### 2026-06-10 追記: T736 日次台帳監査の運用適用
+
+`scripts/audit_external_api_usage.py` を追加し、`data/external_api_usage.jsonl` から以下を日次で監査できるようにしました。
+
+- Seedance / Gemini の操作別課金対象呼び出し回数
+- ブロック済み呼び出し回数
+- プロバイダー応答に含まれる報告トークン数
+- 日次呼び出し上限・報告トークン上限に対する warning / critical 判定
+
+実行コマンド:
+
+```powershell
+python scripts/audit_external_api_usage.py --write-default-report
+```
+
+CIやリリース前ゲートでは `--fail-on-alert` を付与することで、閾値到達や壊れたJSONL行を検知した時点で非ゼロ終了できます。これにより、`/admin` の目視確認に加え、日次バッチ・GitHub Actions・手元検証で同じ台帳監査を再現できます。
+
 ---
 
 ## 4. 総評と社長への提言
@@ -56,4 +73,4 @@
   現状のままパイロット稼働（社員数十名＋サンプルデータ投入）を継続しても、Gemini APIの無料枠または微小な従量課金のみで収まります。次週のレポート（T708/T736）に向けて、Supabase接続時のコネクションコストやトラフィック料金の動向を引き続き監視します。
 
 ---
-*Created and audited as part of WBS Task T707.*
+*Created and audited as part of WBS Task T707. Updated for T736 daily ledger audit on 2026-06-10.*

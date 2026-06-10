@@ -189,7 +189,7 @@ gantt
 | **T735** | 7. 決定後実行 | リリース | 本番プロダクション環境への初版リリースデプロイおよび受入手動テスト実施 | 人間 + AI | Gemini API 現行モデル | リリースアナウンスおよびリリースログ記録 |
 | **T735_1** | 7. 決定後実行 | リリース | Supabase 本番プロジェクトへの DB スキーマ・RLS 反映 | 人間 + Codex | VSCode + Codex | Supabase production db migration 実行 |
 | **T735_2** | 7. 決定後実行 | リリース | Firebase Hosting / Functions 本番デプロイと受入テスト | 人間 + AI | Gemini API 現行モデル | Hosting URL 疎通と本番受入テスト報告書作成 |
-| **T736** | 7. 決定後実行 | 運用保守 | API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用 | Codex | VSCode + Codex | daily usage ledger監査およびアラート設定 |
+| **T736** | 7. 決定後実行 | 運用保守 | API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用 | Codex | VSCode + Codex | `scripts/audit_external_api_usage.py`でdaily usage ledgerを監査し、Seedance/Geminiの閾値警告・遮断状態をJSONレポート化 |
 | **T737** | 7. 決定後実行 | 運用保守 | デイリー作業レポート（WBS/進捗状況）のGmail/Slack自動送信機能の実装 | Codex | VSCode + Codex | send_daily_report.py自動送信設定 |
 | **T738** | 7. 決定後実行 | インフラ | Firebase deploy auth preflight and ADC workflow hardening | Codex | VSCode + Codex | Firebase CI/CD deploy workflow now supports service account ADC, explicit FIREBASE_PROJECT_ID, configurable deploy targets, and Hosting-only default until Blaze/functions are enabled |
 | **T740** | 7. 決定後実行 | インフラ設計 | 本番ドメイン・DNS移行およびSSL証明書自動更新の適用 | 人間 + Codex | VSCode + Codex | カスタムドメインのDNS設定およびSSL証明書発行ステータス確認 |
@@ -218,7 +218,7 @@ gantt
 | **T762** | 8. 本番運用・品質管理 | 品質管理 | サービス品質KPIおよびSLA（稼働率・レスポンスタイム・診断精度）の定義と計測基盤整備 | Claude + 人間 | VSCode + Claude Code | SLA99.5%・P95レスポンス3秒以内・診断精度評価基準をdocs同期 |
 | **T763** | 8. 本番運用・品質管理 | 運用保守 | ユーザーフィードバック収集フロー（Net Promoter Score / 診断結果評価ボタン）の設計・実装 | Antigravity + Claude | Antigravity + Gemini | 診断結果画面への「役に立ちましたか？」フィードバックUI追加とSupabase集計連携 |
 | **T764** | 8. 本番運用・品質管理 | 品質管理 | 月次品質レポート（診断精度・ユーザー満足度・コスト・インフラ稼働率）の定型化と自動生成 | Claude + Codex | VSCode + Claude Code | monthly_quality_report.py の実装と Google Docs 自動同期 |
-| **T765** | 8. 本番運用・品質管理 | コンプライアンス | 個人情報保護法第25条対応：第三者提供記録・開示請求対応手順書の整備 | Claude + 人間 | VSCode + Claude Code | 開示・訂正・削除・利用停止の4種対応手順書をdocs同期 |
+| **T765** | 8. 本番運用・品質管理 | コンプライアンス | 個人情報保護法第25条対応：第三者提供記録・開示請求対応手順書の整備 | Claude + 人間 | VSCode + Claude Code | `docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md` に第三者提供記録・開示/訂正/削除/利用停止請求対応手順とSLAを整理 |
 | **T766** | 8. 本番運用・品質管理 | セキュリティ | 四半期セキュリティ監査（静的解析・依存ライブラリ・RLSポリシー・シークレット漏洩検知）の実施手順整備 | Claude + Codex | VSCode + Claude Code | docs/SECURITY_AUDIT_RUNBOOK.md 新規作成・四半期スケジュール設定 |
 | **T767** | 8. 本番運用・品質管理 | 共通管理 | ステークホルダー向け月次進捗レポートおよびKPIダッシュボードの整備 | Claude + 人間 | VSCode + Claude Code | Notion/Google Sheets への月次サマリ自動投稿フロー設計 |
 | **T768** | 9. 長期保守・拡張 | フロントエンド | 多言語対応（i18n）設計と英語/中国語/韓国語UIの実装 | Antigravity | Antigravity + Gemini | i18nライブラリ選定・翻訳リソースファイル生成・4言語切替UIの実装 |
@@ -229,6 +229,15 @@ gantt
 | **T773** | 9. 長期保守・拡張 | 運用保守 | 年間を通したシステム稼働ログおよび監査ログのコールドストレージ退避・長期保存プロセスの自動化 | Codex | VSCode + Codex | Log Archiverスクリプトの実装およびGCSコールドストレージ転送設定 |
 | **T774** | 9. 長期保守・拡張 | 運用保守 | サービス終了（EOL）やデータ移行に備えたユーザーデータのセルフエクスポート機能の設計とPoC | Codex | VSCode + Codex | データエクスポートAPIおよびダウンロードUIのPoC実装 |
 | **T775** | 9. 長期保守・拡張 | インフラ | アクセス増加に伴うデータベース接続負荷分散（リードレプリカ・プールサイズ最適化）の設計と負荷テスト検証 | Codex | VSCode + Codex | リード分散シミュレーションと負荷テストレポートdocs同期 |
+| **T774** | 7. 決定後実行 | セキュリティ | docs/SECURITY_AUDIT_RUNBOOK.md 新規作成（四半期セキュリティ監査手順書） | Claude + Codex | VSCode + Claude Code | セキュリティ監査チェックリストのSheets連携 |
+| **T775** | 7. 決定後実行 | リリース | 本番リリース判定 Go/No-Go チェックリスト文書化と関係者承認フロー実装 | Claude + 人間 | VSCode + Claude Code | Go/No-Go判定結果のSheets記録 |
+| **T776** | 8. 本番運用・品質管理 | 収益化 | Stripe 決済統合の設計（有料プラン課金フロー・Webhook・領収書メール） | Codex | VSCode + Codex | Stripe Webhook受信ログのSheets同期 |
+| **T777** | 8. 本番運用・品質管理 | フロントエンド | 利用規約・プライバシーポリシー専用ページの実装とフッターリンク統合 | AIエージェント | Antigravity + Gemini | 規約ページURL公開確認のSheets記録 |
+| **T778** | 8. 本番運用・品質管理 | 品質管理 | SLA 計測基盤（稼働率・P95レスポンス・診断精度）の Supabase ビュー実装 | Codex | VSCode + Codex | SLA指標のSheets自動集計 |
+| **T779** | 9. 長期保守・拡張 | 運用保守 | GitHub Dependabot + Weekly Vulnerability Scan の自動PR設定 | Codex | VSCode + Codex | セキュリティパッチPR一覧のSheets連携 |
+| **T780** | 9. 長期保守・拡張 | バックエンド開発 | Gemini 2.5 Pro / Flash モデル移行テストと本番切り替え手順書 | Codex + Claude | VSCode + Codex | モデル移行ログのSheets記録 |
+| **T781** | 9. 長期保守・拡張 | 運用保守 | サービス終了（EOL）やデータ移行に備えたユーザーデータのセルフエクスポート機能の設計とPoC | Codex | VSCode + Codex | データエクスポートAPIおよびダウンロードUI of PoC実装 |
+| **T782** | 9. 長期保守・拡張 | インフラ | アクセス増加に伴うデータベース接続負荷分散（リードレプリカ・プールサイズ最適化）の設計と負荷テスト検証 | Codex | VSCode + Codex | リード分散シミュレーションと負荷テストレポートdocs同期 |
 
 ---
 

@@ -456,6 +456,14 @@ $env:GEMINI_DAILY_CALL_LIMIT = "20"
 $env:GEMINI_DAILY_REPORTED_TOKEN_LIMIT = "100000"
 ```
 
+Daily usage ledger audit (T736):
+
+```powershell
+python scripts/audit_external_api_usage.py --write-default-report
+```
+
+This reads `data/external_api_usage.jsonl`, checks the Seedance and Gemini daily call/token thresholds, prints warning or critical alerts, and writes `reports/daily_usage_audit_<date>.json`. To use it as a CI or pre-release gate, add `--fail-on-alert`.
+
 To intentionally generate a new Seedance video:
 
 ```powershell

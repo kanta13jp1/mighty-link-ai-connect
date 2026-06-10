@@ -1,0 +1,51 @@
+{
+  "status": "ok",
+  "day": "2026-06-10",
+  "ledger_events_for_day": 7,
+  "guards": {
+    "seedance_api:generation_create": {
+      "provider": "seedance_api",
+      "operation": "generation_create",
+      "events": 7,
+      "billable_calls": 0,
+      "blocked_calls": 7,
+      "exception_calls": 0,
+      "invalid_json_rows": 0,
+      "reported_total_tokens": 0,
+      "daily_call_limit": 1,
+      "daily_reported_token_limit": 0,
+      "state": "ok",
+      "message": "within daily limits"
+    },
+    "gemini_api:parse": {
+      "provider": "gemini_api",
+      "operation": "parse",
+      "events": 0,
+      "billable_calls": 0,
+      "blocked_calls": 0,
+      "exception_calls": 0,
+      "invalid_json_rows": 0,
+      "reported_total_tokens": 0,
+      "daily_call_limit": 20,
+      "daily_reported_token_limit": 100000,
+      "state": "ok",
+      "message": "within daily limits"
+    },
+    "gemini_api:match": {
+      "provider": "gemini_api",
+      "operation": "match",
+      "events": 0,
+      "billable_calls": 0,
+      "blocked_calls": 0,
+      "exception_calls": 0,
+      "invalid_json_rows": 0,
+      "reported_total_tokens": 0,
+      "daily_call_limit": 20,
+      "daily_reported_token_limit": 100000,
+      "state": "ok",
+      "message": "within daily limits"
+    }
+  },
+  "alerts": [],
+  "generated_at": "2026-06-10T13:33:02Z"
+}
