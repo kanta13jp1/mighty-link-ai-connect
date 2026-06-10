@@ -361,6 +361,13 @@ feat/<tool>-<wbs-id>-<slug>
 - **T794証跡Issue**: Issue #69 `[T794] GitHub Project item操作 OAuth read:project 再承認・同期復旧` を作成し、Project #1 に `item-add`、`item-edit` で Status=Done、Issue close まで完了。
 - **今回の WBS 完了単位**: `T794 GitHub Project item操作 OAuth read:project 再承認・同期復旧`。課題管理表 `R43` は resolved へ更新し、Sheets/Calendar/Project同期対象へ反映する。
 
+### Refresh (2026-06-11 / Codex Firebase/Supabase staging guard セッション)
+
+- **Firebase Hosting preview channel**: `STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md` を追加し、本番 live channel へ出す前に preview channel `staging` で確認する手順、`--expires 7d`、preview channel削除、Functions deploy opt-in の二重確認を明文化した。
+- **Supabase staging/prod分離**: Supabase Branching の persistent branch または検証用プロジェクトを staging 正本とし、ephemeral preview branch はPR向け短命検証に限定する。URL・anon key・JWT secret fingerprint・service role key の同一利用を禁止し、RLSでは `user_metadata` を認可判断に使わない。
+- **自動検証**: `scripts/verify_staging_environment_config.py` と `tests/test_staging_environment_config.py` を追加。secret値を出力せずに、Firebase preview channel名、Functions deploy opt-in、Supabase staging/prod credential分離をチェックできる。
+- **今回の WBS 完了単位**: `T788 ステージング環境（Firebase Hosting preview channel / Supabase 検証用プロジェクト）の構築と運用ルール整備`。前倒し完了としてWBS/Sheets/Calendar/GitHub Issue/Projectへ同期する。
+
 ---
 
 ### Session gate (2026-05-22 Codex pass)
@@ -409,6 +416,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-11 | Claude Code | Refresh: Node 24 切替期限 (T786起票)・Stripe Meters API・Supabase RLS user_metadata 禁忌を反映。T785 WBS整合性監査完了、WBS.md 自動生成化 (generate_wbs_md.py) |
 | 2026-06-11 | Codex | T786完了: GitHub Actions を Node 24 事前検証モードへ切替。checkout/setup-python/setup-node を v6、google-github-actions/auth を v3 へ更新 |
 | 2026-06-11 | Codex | T794完了: GitHub Project item-list/item-add/item-edit を復旧確認し、Issue #68/#69 を Project Done へ同期 |
+| 2026-06-11 | Codex | T788完了: Firebase Hosting preview channel と Supabase staging/prod分離のRunbook、検証スクリプト、テストを追加 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 

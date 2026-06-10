@@ -1,9 +1,9 @@
 {
-  "generated_at_jst": "2026-06-11T01:07:32+09:00",
+  "generated_at_jst": "2026-06-11T02:11:54+09:00",
   "account": "k-umezawa@ml-mightylink.com",
-  "notebook_id": "75521ea6-6b9b-47b2-9508-50050d8ab2d5",
+  "notebook_id": "cd44c4ef-4c46-40b5-ace3-1b6904d29591",
   "source_outline": "exports/knowledge_flow/notebooklm_ceo_slide_outline.md",
-  "source_count": 51,
+  "source_count": 52,
   "tooling": {
     "outline": "NotebookLM CLI",
     "pptx_generator": "python-pptx",

@@ -566,3 +566,21 @@ Repository configuration:
 - Secret `FIREBASE_TOKEN`: legacy fallback. If this is present but the token owner cannot access the target Firebase project, CI fails with `Failed to get Firebase project`.
 
 If the deploy log says the project cannot be accessed, first confirm that the Firebase project exists with exactly the same ID as `FIREBASE_PROJECT_ID` (currently `mighty-link-ai-connect-13d22`), then confirm the service account or legacy token user has deploy permission for that project. If the log says `Unable to set the invoker for the IAM policy`, keep `FIREBASE_FUNCTIONS_DEPLOY_ENABLED` unset/false until the service account has the required Functions/Cloud Run IAM permissions.
+
+## 2026-06-11 Firebase/Supabase staging guard (T788)
+
+本番反映前の確認は [STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md](STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md) を正とします。Firebase Hosting は preview channel `staging` を使い、Functions deploy は `FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true` と `ALLOW_STAGING_FUNCTIONS_DEPLOY=true` の両方が明示されるまで対象外にします。
+
+staging deploy または Supabase migration の前に、production と staging の混在がないことを確認します。
+
+```powershell
+python scripts/verify_staging_environment_config.py --fail-on-critical
+```
+
+JSONの監査ログが必要な場合:
+
+```powershell
+python scripts/verify_staging_environment_config.py --json --output reports/staging_environment_config.json
+```
+
+`SUPABASE_STAGING_URL` / `SUPABASE_PROD_URL`、anon key、JWT secret fingerprint、service role key は同一禁止です。raw secret は docs、WBS、Sheets、Git差分へ書かず、fingerprint だけを比較用に使います。
