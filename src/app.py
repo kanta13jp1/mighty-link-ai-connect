@@ -254,8 +254,8 @@ DATABASE_URL = os.environ.get("SUPABASE_DB_URL", "").strip()
 def get_db_connection():
     if DATABASE_URL and (DATABASE_URL.startswith("postgresql://") or DATABASE_URL.startswith("postgres://")) and POSTGRES_AVAILABLE:
         try:
-            # We connect to Supabase/PostgreSQL
-            conn = psycopg2.connect(DATABASE_URL)
+            # We connect to Supabase/PostgreSQL with a timeout to prevent startup hang
+            conn = psycopg2.connect(DATABASE_URL, connect_timeout=3)
             return conn, "postgres"
         except Exception as e:
             print(f"[-] Failed to connect to Supabase PostgreSQL: {e}. Falling back to SQLite.")
