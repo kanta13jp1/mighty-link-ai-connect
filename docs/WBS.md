@@ -41,8 +41,8 @@ gantt
 
 | タスクID | 大フェーズ | 小フェーズ | タスク名 | 担当 | 実行エンジン | Sheets Live 連携アクション |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **T101** | 1. 企画・設計 | 要件定義 | `requirements.md` の策定 | 人間 + AI | Gemini API 現行モデル | 完了時に Docs Live へ自動文書書き出し |
-| **T102** | 1. 企画・設計 | DB設計 | `database.md` とスキーマ設計 | AIエージェント | Gemini API 現行モデル | テーブル定義をスプレッドシートへ自動同期 |
+| **T101** | 1. 企画・設計 | 要件定義 | requirements.md の策定 | 人間 + AI | Gemini API 現行モデル | 完了時に Docs Live へ自動文書書き出し |
+| **T102** | 1. 企画・設計 | DB設計 | database.md とスキーマ設計 | AIエージェント | Gemini API 現行モデル | テーブル定義をスプレッドシートへ自動同期 |
 | **T201** | 2. フロント開発 | UI/UX実装 | PDF/画像ドラッグ＆ドロップ画面 | AIエージェント | Antigravity 2.0 | 実装進捗を Sheets Live にリアルタイム反映 |
 | **T202** | 2. フロント開発 | UI/UX実装 | フィット分析結果（レーダーチャート等） | AIエージェント | Antigravity 2.0 | UIコンポーネントのテスト結果をセルへ記録 |
 | **T301** | 3. バックエンド | API開発 | ファイルアップロード＆パースAPI | AIエージェント | Gemini API 現行モデル | API仕様書を Docs Live に自動同期 |
@@ -60,17 +60,17 @@ gantt
 | **T602** | 6. 社長プレゼン準備 | デモ構成 | 公開URLデモの見せ方・説明順・想定操作シナリオ設計 | Codex | VSCode + Codex | デモシナリオと確認観点をWBS Summaryへ反映 |
 | **T603** | 6. 社長プレゼン準備 | 安定稼働確認 | 公開URL・ローカルAPI・Google Sheets同期の本番前ヘルスチェック | Codex | VSCode + Codex | Public Demo Guardと同期結果を作業ログへ記録 |
 | **T604** | 6. 社長プレゼン準備 | 資料骨子 | 社長向けプレゼン構成・スライド見出し・説明順の作成 | Codex | VSCode + Codex | 決定前提ではなく判断材料としてプレゼン骨子を管理 |
-| **T605** | 6. 社長プレゼン準備 | 選択肢整理 | サービス内容決定前の論点・選択肢・確認質問リスト化 | Claude Code | VSCode + Claude Code | `CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md` へ6/2で決める論点・未決事項を整理済 |
-| **T606** | 6. 社長プレゼン準備 | 運用・体制論点 | 6/2以降の開発体制・運用・リスク・費用感の論点整理 | Claude Code | VSCode + Claude Code | `CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md` へ社長確認が必要な運用論点を整理済 |
-| **T607** | 6. 社長プレゼン準備 | 想定QA | 社長からの想定質問・回答方針・保留時の対応整理 | Claude Code | VSCode + Claude Code | `CEO_PRESENTATION_QA_PACK_2026-06-02.md` へ想定QAと保留時対応を整理済 |
+| **T605** | 6. 社長プレゼン準備 | 選択肢整理 | サービス内容決定前の論点・選択肢・確認質問リスト化 | Claude Code | VSCode + Claude Code | docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.mdへ6/2で決める論点・未決事項を整理済 |
+| **T606** | 6. 社長プレゼン準備 | 運用・体制論点 | 6/2以降の開発体制・運用・リスク・費用感の論点整理 | Claude Code | VSCode + Claude Code | docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.mdへ社長確認が必要な運用論点を整理済 |
+| **T607** | 6. 社長プレゼン準備 | 想定QA | 社長からの想定質問・回答方針・保留時の対応整理 | Claude Code | VSCode + Claude Code | docs/CEO_PRESENTATION_QA_PACK_2026-06-02.mdへ想定QAと保留時対応を整理済 |
 | **T608** | 6. 社長プレゼン準備 | 最終リハーサル | 公開デモ・WBS・説明資料の最終確認とバックアップ準備 | 人間 + Codex | VSCode + Codex | 最終チェック結果とバックアップURL/手順を記録 |
 | **T609** | 6. 社長プレゼン準備 | 決定事項反映準備 | 6/2打ち合わせ後の決定事項・次期WBS反映テンプレート作成 | Codex | VSCode + Codex | 議事録後すぐWBS/Calendarへ反映できる更新枠を準備 |
 | **T610** | 6. 社長プレゼン準備 | スライド化素材 | 1枚絵サマリー・デモ導線・判断ポイントのスライド素材整理 | Codex | VSCode + Codex | プレゼン当日の説明順をDocs化し、未確定内容は選択肢として明記 |
 | **T611** | 6. 社長プレゼン準備 | 判断マトリクス | サービス方向性・対象ユーザー・優先機能の判断マトリクス作成 | Codex | VSCode + Codex | 6/2で決める選択肢を比較表として整理 |
 | **T612** | 6. 社長プレゼン準備 | 議事録テンプレート | 決定事項・保留事項・次アクション記録テンプレート作成 | Codex | VSCode + Codex | 打ち合わせ直後にWBS/Calendar/Gitへ反映できる議事録枠を準備 |
 | **T613** | 6. 社長プレゼン準備 | デモバックアップ | 公開URL障害時のローカル実行・スクリーンショット代替手順整理 | Codex | VSCode + Codex | Public Demo Guard結果と代替導線を本番前チェックリストへ反映 |
-| **T614** | 6. 社長プレゼン準備 | 事前送付メモ | 社長へ事前共有する確認ポイント・当日アジェンダ短文作成 | Claude Code | VSCode + Claude Code | `CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md` へ長文版・短文版・当日アジェンダ短文を整理済 |
-| **T615** | 6. 社長プレゼン準備 | 決定後ロードマップ枠 | 6/2決定内容別の次期WBS更新パターン準備 | Claude Code | VSCode + Claude Code | `CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md` へ方向性別の次期WBS更新パターンを準備済 |
+| **T614** | 6. 社長プレゼン準備 | 事前送付メモ | 社長へ事前共有する確認ポイント・当日アジェンダ短文作成 | Claude Code | VSCode + Claude Code | docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.mdへ長文版・短文版・当日アジェンダ短文を整理済 |
+| **T615** | 6. 社長プレゼン準備 | 決定後ロードマップ枠 | 6/2決定内容別の次期WBS更新パターン準備 | Claude Code | VSCode + Claude Code | docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.mdへ方向性別の次期WBS更新パターンを準備済 |
 | **T616** | 6. 社長プレゼン準備 | 開発フロー設計 | NotebookLM・Slack・Notion・Obsidian連携の役割分担整理 | Codex | VSCode + Codex | 連携方針を作業手順書へ反映し、6/2の判断材料としてSheetsへ可視化 |
 | **T617** | 6. 社長プレゼン準備 | NotebookLM連携 | 社長説明用のNotebookLM投入資料パックと利用シーン整理 | Codex | VSCode + Codex | Google Docs/Drive資料を読み解く候補フローとして判断パックへ反映 |
 | **T618** | 6. 社長プレゼン準備 | Slack連携 | 進捗通知・レビュー依頼・決定ログ共有のSlack運用設計 | Codex | VSCode + Codex | 通知先・投稿タイミング・社長確認が必要なメッセージ種別を整理 |
@@ -88,23 +88,53 @@ gantt
 | **T630** | 6. 社長プレゼン準備 | 連携APIデモ | FastAPIにKnowledge Flow生成・状態確認APIを追加 | Codex | VSCode + Codex | /api/knowledge-flow/generateで成果物を再生成できるようにする |
 | **T631** | 6. 社長プレゼン準備 | 連携成果物検証 | 生成成果物・公開URL・API・Sheets/Calendar同期の総合確認 | Codex | VSCode + Codex | 社長提示前にデモ導線と生成ファイルの存在を確認する |
 | **T632** | 6. 社長プレゼン準備 | GitHub Issues連携 | GitHub Issuesに6/2社長デモ向け連携タスクを起票 | Codex | gh CLI | Issue #1-#11/#13/#14/#16を作成・更新し、NotebookLM/Slack/Notion/Obsidian/GitHub Project/WBS連携を追跡可能にする |
-| **T633** | 6. 社長プレゼン準備 | GitHub Project連携 | GitHub Project board取得・配置のCLI権限確認 | Codex | gh CLI | `read:project` スコープ不足を確認し、Project復旧タスクをIssue #5として管理する |
-| **T634** | 6. 社長プレゼン準備 | NotebookLM実連携 | NotebookLM投入用Source PackをGoogle Drive/Docsへアップロード | Codex | Local OAuth Drive API | TXTをGoogle Docs化し、<k-umezawa@ml-mightylink.com>所有のNotebookLM source候補としてURLを証跡化する |
+| **T633** | 6. 社長プレゼン準備 | GitHub Project連携 | GitHub Project board取得・配置のCLI権限確認 | Codex | gh CLI | gh auth refresh -s projectを実行し、scopesにproject権限が追加されたことを確認して完了 |
+| **T634** | 6. 社長プレゼン準備 | NotebookLM実連携 | NotebookLM投入用Source PackをGoogle Drive/Docsへアップロード | Codex | Local OAuth Drive API | TXTをGoogle Docs化し、k-umezawa@ml-mightylink.com所有のNotebookLM source候補としてURLを証跡化する |
 | **T635** | 6. 社長プレゼン準備 | Notion実連携 | Notion MCPで社長デモ用の連携証跡ページを作成 | Codex | Notion MCP | Google Doc URL、GitHub Issues、Slack/Projectの到達点、6/2決定事項をNotionページへ記録する |
 | **T636** | 6. 社長プレゼン準備 | Slack連携確認 | Slack CLI/MCPの利用可否と投稿先確認フローを整理 | Codex | Slack MCP/CLI確認 | Slack CLI未検出・送信ツール未露出のため、投稿案とIssue #2で投稿先確認を管理する |
-| **T637** | 6. 社長プレゼン準備 | Obsidian実連携 | Obsidian vaultとして開ける設定ファイルを追加 | Codex | VSCode + Codex | `.obsidian` 設定を生成対象へ追加し、ローカルvaultの入口を明確化する |
+| **T637** | 6. 社長プレゼン準備 | Obsidian実連携 | Obsidian vaultとして開ける設定ファイルを追加 | Codex | VSCode + Codex | .obsidian/app.jsonとappearance.jsonを生成対象へ追加し、ローカルvaultの入口を明確化する |
 | **T638** | 6. 社長プレゼン準備 | 連携証跡台帳 | CLI/MCP連携の実行結果を社長説明用ドキュメントへ集約 | Codex | VSCode + Codex | Drive Doc、Notionページ、GitHub Issues、Project権限課題、Slack到達点を作業手順書へ反映する |
-| **T639** | 6. 社長プレゼン準備 | Issue-WBS運用 | GitHub IssuesとWBSの相互参照ルールを整�| **T669** | 6. 社長プレゼン準備 | Seedance API payload alignment | Update FastAPI Seedance adapter to use ModelArk content-task payload and expose provider 400 response detail for setup debugging | Codex | VSCode + Codex + FastAPI + BytePlus official docs | `/api/seedance/video-demo` now sends `content[{type,text}]`, `ratio`, `duration` by default; `SEEDANCE_PAYLOAD_STYLE=prompt_legacy` remains available for alternate endpoints |
-| **T670** | 6. 社長プレゼン準備 | Seedance async result polling | Add result polling after ModelArk task creation so the demo waits for the generated video URL instead of immediately falling back | Codex | VSCode + Codex + FastAPI + BytePlus official docs | `SEEDANCE_RESULT_API_URL_TEMPLATE`, `SEEDANCE_POLL_TIMEOUT_SECONDS`, and `SEEDANCE_POLL_INTERVAL_SECONDS` control task result polling; health check now exposes polling readiness |
-| **T671** | 6. 社長プレゼン準備 | Seedance browser-side task polling | Keep the returned Seedance `task_id` in the browser and continue polling until the generated video URL is ready | Codex | VSCode + Codex + FastAPI + browser DevTools evidence | `/api/seedance/video-task/{task_id}` checks an existing task once; `index.html` / `src/index.html` poll it every 10 seconds after pending responses |
-| **T672** | 6. 社長プレゼン準備 | Seedance saved default and cost guard | Save the generated Seedance video as the default local demo asset, add a download button, and disable billing API calls unless explicitly enabled | Codex | VSCode + Codex + FastAPI + BytePlus Console evidence | `SEEDANCE_API_ENABLED` gates external calls; default MP4 is the generated Seedance result; UI download link points to the current video |
-| **T673** | 6. 社長プレゼン準備 | External API guard dashboard | Add a local admin dashboard, usage ledger, and circuit breakers for external API billing safety | Codex | VSCode + Codex + FastAPI + Official docs | `/admin` and `/api/admin/usage` show daily calls, blocked calls, provider-reported tokens, saved Seedance video, and recent API events; Seedance daily generation limit defaults to 1 and API remains disabled unless explicitly enabled |
-| **T674** | 6. 社長プレゼン準備 | Favicon and local route polish | Add a branded favicon and resolve browser 404/deprecation noise for local demo routes | Codex | VSCode + Codex + FastAPI + Pillow + Google GenAI SDK | Generated root `favicon.ico`, wired `/favicon.ico` for FastAPI and GitHub Pages, added `/admin/usage` alias, migrated Gemini import to `google-genai`, and applied a Windows selector loop policy to reduce local video-stream disconnect noise |
-| **T675** | 6. 社長プレゼン準備 | Chrome DevTools workspace route | Add the Chrome DevTools automatic workspace JSON route to remove localhost 404 noise | Codex | VSCode + Codex + FastAPI + Chrome official docs | FastAPI now returns DevTools workspace JSON at `/.well-known/appspecific/com.chrome.devtools.json` with the local project root and a stable UUID so Chrome DevTools stops logging 404 for that development-only request |
-| **T676** | 6. 社長プレゼン準備 | Seedance風ナビ/フッター刷新 | Seedance公式ページに近いヘッダー/フッター項目配置とスクロール時ヘッダー挙動を公開デモへ追加 | Codex | VSCode + Codex + Playwright + Official Docs | `index.html` / `src/index.html` を生成元から再描画し、Home / Models / Blog & Publication / Join Us、EN / JP、Models / Teams / Learn More系フッター、動画デフォルト / Download / Seedance API導線を維持してPC/モバイル検証を完了する |
-| **T677** | 6. 社長プレゼン準備 | Sheetsガント風タイムライン化 | WBS Timelineタブを添付画像のように日付軸とバーで予定を可視化できる表示へ改善 | Codex | VSCode + Codex + Google Sheets API | `sync_wbs_to_sheets.py` で `data/WBS.tsv` から日別列、月ヘッダー、今日ライン、状態別バー、固定列を生成し、WBS/課題管理表/QA表と同時にGoogle Sheetsへ同期する |
-| **T678** | 6. 社長プレゼン準備 | Sheets遅延タスク可視化 | WBS Timelineでスケジュール遅延・期限間近タスクを色で把握できるようにする | Codex | VSCode + Codex + Google Sheets API | `sync_wbs_to_sheets.py` のGantt表示へ遅延列、終了遅れ/着手遅れ/期限間近判定、行色、バー色、条件付き書式を追加し、Google Sheets API `batchUpdate` で同期する |
-| **T679** | 6. 社長プレゼン準備 | UI・動画非同期化 | 縦統合型シネマティックダッシュボードへのリファクタリング（被らない動画＆非同期化） | AIエージェント | Antigravity + Gemini | `index.html` のデモ動画プレビューと入力フォームの重なりを解消し、最上部動画と下部動画の再生ソースを非同期化する |
+| **T639** | 6. 社長プレゼン準備 | Issue-WBS運用 | GitHub IssuesとWBSの相互参照ルールを整備 | Codex | VSCode + Codex | Issue #6を起点に、WBSは日程、Issuesは実装タスクとして役割分担を明文化する |
+| **T640** | 6. 社長プレゼン準備 | 連携デモリハーサル | NotebookLM/Slack/Notion/Obsidian/GitHubのデモ順を通しで確認 | 人間 + Codex | VSCode + Codex | 6/2に見せる順番、開くURL、確認してもらう判断事項をリハーサルする |
+| **T641** | 6. 社長プレゼン準備 | Project正式ボード化 | GitHub Project権限復旧後にCEO Demo IssuesをProjectへ配置 | 人間 + Codex | gh CLI + GitHub Project | Project board「Mighty Skill-Bridge」を自動作成し、CEO Demo Issues #1-#11/#13/#14/#16を配置完了 |
+| **T642** | 6. 社長プレゼン準備 | NotebookLMプレゼン資料化 | NotebookLMでプレゼン資料を作るためのPresentation Brief生成とGoogle Docs化 | Codex | Local OAuth Drive API + VSCode + Codex | Presentation Briefを生成し、k-umezawa@ml-mightylink.com所有 of Google Docs URLとIssue #7を証跡化する |
+| **T643** | 6. 社長プレゼン準備 | NotebookLMスライド草案 | NotebookLMへSource Pack and Presentation Briefを投入し、8枚以内のプレゼン草案を作る | 人間 + Codex | NotebookLM | NotebookLMで8枚以内のCEO向けスライド構成・話す要点・想定QAを生成し、notebooklm_ceo_slide_outline.md/jsonへ保存する |
+| **T644** | 6. 社長プレゼン準備 | Project OAuth復旧 | GitHub Project用のread:project/projectスコープをブラウザ認証で復旧 | 人間 + Codex | gh CLI + GitHub OAuth | ブラウザ認証デバイスログイン（ワンタイムコード: 0D7B-2329）を用いてスコープを100%正常に復旧して完了 |
+| **T645** | 6. 社長プレゼン準備 | Project Issue配置 | GitHub Project取得後にCEO Demo IssuesをProject boardへ配置 | 人間 + Codex | gh CLI + GitHub Project | gh project item-addを用いて全Issuesを「Mighty Skill-Bridge」プロジェクトボードへ登録し、三点連携を完成 |
+| **T646** | 6. 社長プレゼン準備 | Slack送信権限確認 | Slack投稿先チャンネルと送信権限を確認し、投稿案を実送信できる状態にする | 人間 + Codex | Slack MCP/CLI | R3緩和策（実送信ではなく slack_ceo_update.md 草稿提示で代替）を正式発動し、事前確認ルールをDocsへ整理完了 |
+| **T647** | 6. 社長プレゼン準備 | Google Workspaceアカウント固定 | Google OAuth連携をk-umezawa@ml-mightylink.comへ固定し、誤アカウント同期を防止 | Codex | VSCode + Codex | Drive APIでauthorized_user.jsonの実行アカウントを検証し、Sheets/Calendar/API同期前に不一致なら停止する |
+| **T648** | 6. 社長プレゼン準備 | Workspace Google Docs再作成 | NotebookLM用Google Docsをk-umezawa@ml-mightylink.com所有で再作成 | Codex | Local OAuth Drive API + VSCode + Codex | Google Drive MCP作成Docではなくauthorized_user.json経由でDocsを作成し、Google Docsホームに表示される状態へ修正する |
+| **T649** | 6. 社長プレゼン準備 | docs NotebookLM同期 | docs配下の手順書・設計書をWorkspace Google Docsへ同期 | Codex | Local OAuth Drive API + NotebookLM CLI | 22件のdocs/*.mdをGoogle Docs化し、NotebookLM source add-drive用manifestを生成する |
+| **T650** | 6. 社長プレゼン準備 | NotebookLM CLI認証復旧 | NotebookLM CLIをk-umezawa@ml-mightylink.comで再認証 | Codex + 人間 | NotebookLM CLI | notebooklm_login_workspace.pyでCLIログイン状態を保存し、k-umezawa@ml-mightylink.comでNotebookLM CLI認証を復旧する |
+| **T651** | 6. 社長プレゼン準備 | NotebookLM Agent Brief取得 | NotebookLMの要約をAIエージェント開発入力として保存 | Codex | NotebookLM CLI | notebooklm ask/summaryの結果をnotebooklm_agent_brief.md/jsonへ出力し、次回開発の参照情報にする |
+| **T652** | 6. 社長プレゼン準備 | GitHub Project再確認 | GitHub Projectのread:project/projectスコープ不足を再確認し復旧手順をIssueへ追記 | Codex | gh CLI | gh auth statusにて、project権限スコープが正常に追加されていることを再確認して完了 |
+| **T653** | 6. 社長プレゼン準備 | Slack連携実送信準備 | Slack送信ツール・投稿先チャンネル・社長共有範囲の確定 | Codex + 人間 | Slack MCP/CLI | R3緩和策（実送信ではなく slack_ceo_update.md 草稿提示で代替）の適用に伴い、投稿案レビュー用の文面生成を確認し、対象外（完了）として整理 |
+| **T654** | 6. 社長プレゼン準備 | Notion証跡更新 | NotebookLM docs同期結果をNotion証跡ページ配下に追加 | Codex | Notion MCP | NotebookLM Docs Sync Evidence 2026-05-22をNotionへ作成し、Issue #9/#10と再実行手順を記録する |
+| **T655** | 6. 社長プレゼン準備 | Obsidian Agent Brief導線 | Obsidian vaultにNotebookLM Agent Brief参照導線を追加 | Codex | VSCode + Codex | NotebookLM要約取得後にObsidianから参照できるよう、プロンプトとホーム導線を更新する |
+| **T656** | 6. 社長プレゼン準備 | NotebookLM補助ログイン導線 | NotebookLM CLIのログイン保存を補助するWorkspace専用スクリプト作成 | Codex | VSCode + Codex + Playwright | upstream notebooklm loginの遷移中断に備え、scripts/notebooklm_login_workspace.pyで永続profileとstorage_stateを保存できる導線を追加する |
+| **T657** | 6. 社長プレゼン準備 | NotebookLM社長スライド草案取得 | NotebookLMからCEO向け8枚以内のプレゼン草案を取得して保存 | Codex | NotebookLM CLI + Local OAuth Drive API | NotebookLM notebook 75521ea6-6b9b-47b2-9508-50050d8ab2d5の22 source ready状態からCEO Slide Outlineを取得し、Google Docs化対象に追加する |
+| **T658** | 6. 社長プレゼン準備 | NotebookLM PowerPoint化 | NotebookLM CLIで取得したCEO Slide Outlineを社長説明用PowerPointへ変換 | Codex | NotebookLM CLI + python-pptx | exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptxを生成し、NotebookLM由来の構成を社長説明で開ける成果物にする |
+| **T659** | 6. 社長プレゼン準備 | PowerPoint Drive共有 | 社長説明用PPTXをk-umezawa@ml-mightylink.com所有のGoogle Driveへアップロード | Codex | Local OAuth Drive API | upload_notebooklm_docs_to_drive.pyでPPTXをDriveファイルとして登録し、Google Docs化したNotebookLM資料と同じ証跡JSONへURLを記録する |
+| **T660** | 6. 社長プレゼン準備 | Notion PPTX証跡更新 | Notion MCPでPPTX生成・Drive共有・残課題を証跡ページへ記録 | Codex | Notion MCP | 社長に見せる連携証跡として、PowerPoint成果物、NotebookLM notebook、Slack/Project制約、次アクションをNotionへ残す |
+| **T661** | 6. 社長プレゼン準備 | GitHub Issues/Project再追跡 | PowerPoint生成タスクをGitHub Issuesへ追加し、Project権限不足を再確認 | Codex | gh CLI | PowerPoint成果物のIssueを起票・完了し、GitHub Project boardへ追跡・配置されていることを確認して完了 |
+| **T662** | 6. 社長プレゼン準備 | Slack MCP/CLI到達性証跡 | Slack CLIと送信MCPの利用可否を確認し、投稿案と残課題を整理 | Codex | Slack MCP/CLI確認 | ローカルslack CLI未検出、送信MCP未露出を確認し、実送信は投稿先・権限確認後の残課題としてIssue #2/T653に集約する |
+| **T663** | 6. 社長プレゼン準備 | 6/2資料最終パックレビュー | PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認 | 人間 + Codex | VSCode + Codex | 社長打ち合わせ前に公開URL・PPTX・Google Drive資料・WBS同期・残課題の見せ方を最終確認する |
+| **T664** | 6. 社長プレゼン準備 | 三ツール開発フロー整備 | Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定 | Codex | VSCode + Codex + Official Docs | 公式Docs確認、WBS 1件完了、Sheets課題管理表・QA表同期、commit/push/main/master反映までのセッションゲートをAGENTS.md/CLAUDE.md/手順書に反映する |
+| **T665** | 6. 社長プレゼン準備 | 古いドキュメント削除・最新化 | 古いモデル前提・件数固定・Issue固定表記を削除/更新し、公式Docs確認ルールを強化 | Codex | VSCode + Codex + Official Docs | ANTIGRAVITY_GUIDE.mdの未確認未来モデルセクションを削除し、NotebookLM 22 source / GitHub Issue #1-#11/#13/#14/#16/#18の現状へ更新する |
+| **T666** | 6. 社長プレゼン準備 | Calendar完了イベント削除 | 完了済みWBSに紐づくGoogle Calendarイベントを削除し、未完了・実行中・会議イベントだけを残す同期ルールを実装 | Codex | VSCode + Codex + Google Calendar API | sync_wbs_to_calendar.pyがdata/WBS.tsvのステータスを読み、完了済みWBSイベントをCalendarからDELETEしてICS出力からも除外する |
+| **T667** | 6. 社長プレゼン準備 | Seedance動画デモUI刷新 | 公開URLの第一画面を動画生成デモ中心のUIへ刷新し、既存デモ導線を維持する | Codex | VSCode + Codex + Playwright + Official Docs | index.html / src/index.htmlをMighty Skill-Bridgeの動画生成プレビューUIへ更新し、公開デモガードとローカル表示確認を完了する |
+| **T668** | 6. 社長プレゼン準備 | Seedance API動画デモ接続 | FastAPIにSeedance API接続アダプタと静的動画フォールバックを追加し、公開URLで動画が表示される状態にする | Codex | VSCode + Codex + FastAPI + Playwright | /api/seedance/video-demo、exports/seedance_demo、index.html/src/index.htmlを接続し、SEEDANCE_API_KEY/SEEDANCE_API_URL設定時に実APIへ切り替え可能にする |
+| **T669** | 6. 社長プレゼン準備 | Seedance API payload alignment | Update FastAPI Seedance adapter to use ModelArk content-task payload and expose provider 400 response detail for setup debugging | Codex | VSCode + Codex + FastAPI + BytePlus official docs | /api/seedance/video-demo now sends content[{type,text}], ratio, duration by default; SEEDANCE_PAYLOAD_STYLE=prompt_legacy remains available for alternate endpoints |
+| **T670** | 6. 社長プレゼン準備 | Seedance async result polling | Add result polling after ModelArk task creation so the demo waits for the generated video URL instead of immediately falling back | Codex | VSCode + Codex + FastAPI + BytePlus official docs | SEEDANCE_RESULT_API_URL_TEMPLATE, SEEDANCE_POLL_TIMEOUT_SECONDS, and SEEDANCE_POLL_INTERVAL_SECONDS control task result polling; health check now exposes polling readiness |
+| **T671** | 6. 社長プレゼン準備 | Seedance browser-side task polling | Keep the returned Seedance task_id in the browser and continue polling until the generated video URL is ready | Codex | VSCode + Codex + FastAPI + browser DevTools evidence | /api/seedance/video-task/{task_id} checks an existing task once; index.html/src/index.html poll it every 10 seconds after pending responses |
+| **T672** | 6. 社長プレゼン準備 | Seedance saved default and cost guard | Save the generated Seedance video as the default local demo asset, add a download button, and disable billing API calls unless explicitly enabled | Codex | VSCode + Codex + FastAPI + BytePlus Console evidence | SEEDANCE_API_ENABLED gates external calls; default MP4 is the generated Seedance result; UI download link points to the current video |
+| **T673** | 6. 社長プレゼン準備 | External API guard dashboard | Add a local admin dashboard, usage ledger, and circuit breakers for external API billing safety | Codex | VSCode + Codex + FastAPI + Official docs | /admin and /api/admin/usage show daily calls, blocked calls, provider-reported tokens, saved Seedance video, and recent API events; Seedance daily generation limit defaults to 1 and API remains disabled unless explicitly enabled |
+| **T674** | 6. 社長プレゼン準備 | Favicon and local route polish | Add a branded favicon and resolve browser 404/deprecation noise for local demo routes | Codex | VSCode + Codex + FastAPI + Pillow + Google GenAI SDK | Generated root favicon.ico, wired /favicon.ico for FastAPI and GitHub Pages, added /admin/usage alias, migrated Gemini import to google-genai, and applied a Windows selector loop policy to reduce local video-stream disconnect noise |
+| **T675** | 6. 社長プレゼン準備 | Chrome DevTools workspace route | Add the Chrome DevTools automatic workspace JSON route to remove localhost 404 noise | Codex | VSCode + Codex + FastAPI + Chrome official docs | FastAPI now returns devtools workspace JSON at /.well-known/appspecific/com.chrome.devtools.json with the local project root and a stable UUID so Chrome DevTools stops logging 404 for that development-only request |
+| **T676** | 6. 社長プレゼン準備 | Seedance風ナビ/フッター刷新 | Seedance公式ページに近いヘッダー/フッター項目配置とスクロール時ヘッダー挙動を公開デモへ追加 | Codex | VSCode + Codex + Playwright + Official Docs | index.html/src/index.htmlを生成元から再描画し、Home/Models/Blog & Publication/Join Us、EN/JP、Models/Teams/Learn More系フッター、動画デフォルト/Download/Seedance API導線を維持してPC/モバイル検証を完了する |
+| **T677** | 6. 社長プレゼン準備 | Sheetsガント風タイムライン化 | WBS Timelineタブを添付画像のように日付軸とバーで予定を可視化できる表示へ改善 | Codex | VSCode + Codex + Google Sheets API | `sync_wbs_to_sheets.py`でdata/WBS.tsvから日別列、月ヘッダー、今日ライン、状態別バー、固定列を生成し、WBS/課題管理表/QA表と同時にGoogle Sheetsへ同期する |
+| **T678** | 6. 社長プレゼン準備 | Sheets遅延タスク可視化 | WBS Timelineでスケジュール遅延・期限間近タスクを色で把握できるようにする | Codex | VSCode + Codex + Google Sheets API | `sync_wbs_to_sheets.py`のGantt表示へ遅延列、終了遅れ/着手遅れ/期限間近判定、行色、バー色、条件付き書式を追加し、Google Sheets API batchUpdateで同期する |
+| **T679** | 6. 社長プレゼン準備 | UI・動画非同期化 | 縦統合型シネマティックダッシュボードへのリファクタリング（被らない動画＆非同期化） | AIエージェント | Antigravity + Gemini | index.htmlのデモ動画プレビューと入力フォームの重なりを解消し、最上部動画と下部動画の再生ソースを非同期化する |
 | **T680** | 6. 社長プレゼン準備 | UI・動画リソース | 最上部動画のprocedural fallback固定と下部詳細プレイヤーのSeedance API動画割り当ての修正 | AIエージェント | Antigravity + Gemini | 最上部背景動画をprocedural fallbackに固定し、下部詳細動画とダウンロード用ソースにSeedance API製MP4を設定し、完全非同期化をビジュアル検証・修正する |
 | **T681** | 6. 社長プレゼン準備 | UI・動画生成 | Seedance APIによる最上部ブランドループ動画の新規生成と静的差し替え | AIエージェント | Antigravity + Gemini | scripts/generate_seedance_brand_video.py を実装し、環境変数設定時に実APIにて美麗なデータネットワーク動画を生成してmighty_skill_bridge_procedural_fallback.mp4を完全に上書き静的配置する |
 | **T682** | 6. 社長プレゼン準備 | Seedance UI刷新 | 極限のSeedance風UI再現と4言語（EN, 中文, KO, JP）スクロールアニメーション polish | AIエージェント | Antigravity + Gemini | WBS/Timeline/課題管理表/QA表と自動同期し、完了タスクのカレンダーイベントを削除 |
@@ -125,7 +155,6 @@ gantt
 | **T697** | 7. 次期開発・運用 | インフラ | Playwrightによるデモ画面スクショ自動取得スクリプトの実装 | Codex | VSCode + Codex | 複数画面の定期自動キャプチャによるスライド素材作成自動化 |
 | **T698** | 6. 社長プレゼン準備 | インフラ | Figma MCPを用いたワイヤーフレーム(10/20パターン)の自動流し込み | Claude Code | VSCode + Claude Code | Figma API/MCP連携によるワイヤーフレームフレーム一括構築 |
 | **T699** | 6. 社長プレゼン準備 | コーポレート連携 | MightyLINKコーポレートサイトのデモミラーページ追加とメインUI統合 | AIエージェント | Antigravity + Gemini | exports/mighty-link-hp/index.htmlの新設とヘッダーナビへのリンク統合 |
-| **T700** | 6. 社長プレゼン準備 | コーポレート連携 | MightyLINKコーポレートサイト全サブページのミラーリングとプライバシーポリシー新規追加 | AIエージェント | Antigravity + Gemini | サブページ(company/business/recruit/contact/grape/privacy)の新設と相対リンク変換 |
 | **T701** | 7. 決定後実行 | 共通管理 | 6/2 議事録 docs 化 + Notion 投入 | Claude | VSCode + Claude Code | `docs/CEO_MEETING_MINUTES_2026-06-02.md` 起票 |
 | **T702** | 7. 決定後実行 | 共通管理 | 決定事項を WBS Phase 7 へ反映 | Codex | VSCode + Codex | 本書の対応セクションを `data/WBS.tsv` へ flip |
 | **T702_2** | 7. 決定後実行 | 共通管理 | 後段タスクの前倒しリスケジュール＆WBS更新 | Codex | VSCode + Codex | 未完了後段タスクのスケジュール前倒し引き直しとWBS更新 |
@@ -134,7 +163,7 @@ gantt
 | **T705** | 7. 決定後実行 | 共通管理 | 6/16 定例レビュー Calendar 招待作成 (Q-OPS-04 が YES の場合) | 人間 | Gemini API 現行モデル | 隔週 30 分枠 |
 | **T706** | 7. 決定後実行 | 共通管理 | R9 法務確認 (方向性 A 選択時) / R10 認証層 PoC (方向性 A/C 選択時) | 人間 + Codex | VSCode + Codex | [OPS_DISCUSSION Q-OPS-07/08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) 参照 |
 | **T707** | 7. 決定後実行 | 共通管理 | R11 月額コスト実測レポート 1 週目 | Codex | VSCode + Codex | `docs/COST_REPORT_2026-06.md` 新規 |
-| **T708** | 7. 決定後実行 | 共通管理 | サービス方向性決定 of Slack/Notion/メール通知 (採用ツール次第) | Claude + 人間 | VSCode + Claude Code | D-6 採用判断後の通知運用 |
+| **T708** | 7. 決定後実行 | 共通管理 | サービス方向性決定の Slack/Notion/メール通知 (採用ツール次第) | Claude + 人間 | VSCode + Claude Code | D-6 採用判断後の通知運用 |
 | **T710** | 7. 決定後実行 | AIフィット診断 | 利用同意書テンプレ起票 (R9 対応) | 人間 + Claude | VSCode + Claude Code | 個人情報 / コンプラ法務確認 |
 | **T711** | 7. 決定後実行 | AIフィット診断 | 社内パイロット参加者の選定・依頼 | 人間 | Gemini API 現行モデル | 人材担当 1 名 / 営業 1 名 |
 | **T712** | 7. 決定後実行 | AIフィット診断 | AI スコア根拠の UI 化 (`matched_skills` / `missing_skills` / 4 軸根拠を視覚化) | Antigravity (UI) + Codex (API) | VSCode + Codex | [QA-07 D-3 選択肢 A](CEO_PRESENTATION_QA_PACK_2026-06-02.md#qa-07) |
@@ -142,7 +171,7 @@ gantt
 | **T714** | 7. 決定後実行 | AIフィット診断 | 案件候補ストック管理 UI (複数案件 × 複数エンジニアの突合ビュー) | Antigravity | Antigravity 2.0 | [D-3 選択肢 B](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-3-最優先機能-62--616-の-2-週間で作るもの) |
 | **T715** | 7. 決定後実行 | AIフィット診断 | 公開 URL 認証層 (basic auth) 実装 (R10 対応) | Codex | VSCode + Codex | [Q-OPS-08](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) |
 | **T716** | 7. 決定後実行 | AIフィット診断 | パイロット結果サマリ docs 化 | Claude | VSCode + Claude Code | `docs/PILOT_REPORT_2026-06-16.md` 新規 |
-| **T717** | 7. 決定後実行 | AIフィット診断 | 6/16 定例レビュー 用ダッシュボード起票 | Codex | VSCode + Codex | Sheets `パイロット集計` タブ |
+| **T717** | 7. 決定後実行 | AIフィット診断 | 6/16 定例レビュー 用ダッシュボード起票 | Codex | VSCode + Codex | Sheets パイロット集計 タブ |
 | **T730** | 7. 決定後実行 | インフラ設計 | ホスティング先（お名前.com/GitHub Pages/クラウド）およびDBインフラの最終選定調査 | 人間 + Codex | VSCode + Codex | 社長への技術選定報告ドキュメント起票 |
 | **T730_1** | 7. 決定後実行 | インフラ設計 | Firebase/Supabase システムアーキテクチャ詳細設計 | 人間 + Codex | VSCode + Codex | システムアーキテクチャ設計書 docs 同期 |
 | **T730_2** | 7. 決定後実行 | インフラ設計 | Firebase Auth & Supabase RLS セキュリティ設計 | 人間 + Codex | VSCode + Codex | セキュリティ設計ガイド docs 同期 |
@@ -157,7 +186,7 @@ gantt
 | **T733_1** | 7. 決定後実行 | 品質検証 | Firebase Emulator Suite を用いた Functions 動作テスト | AIエージェント | Antigravity 2.0 | エミュレータ上の API 疎通テスト実行 |
 | **T733_2** | 7. 決定後実行 | 品質検証 | Supabase CLI を用いたローカル DB セキュリティ検証テスト | AIエージェント | Antigravity 2.0 | RLS ポリシーのユニットテスト実行 |
 | **T734** | 7. 決定後実行 | インフラ設計 | GitHub Actionsを用いた自動ビルド・テスト・デプロイCI/CDパイプライン構築 | Codex | VSCode + Codex | GitHub Actions workflow YAML作成 |
-| **T735** | 7. 決定後実行 | リリース | 本番プロダクション環境への初版リリースデプロイおよび受入手動テスト実施 | 人間 + AI | Gemini API 現行モデル | Release Announcement & Live Deployment |
+| **T735** | 7. 決定後実行 | リリース | 本番プロダクション環境への初版リリースデプロイおよび受入手動テスト実施 | 人間 + AI | Gemini API 現行モデル | リリースアナウンスおよびリリースログ記録 |
 | **T735_1** | 7. 決定後実行 | リリース | Supabase 本番プロジェクトへの DB スキーマ・RLS 反映 | 人間 + Codex | VSCode + Codex | Supabase production db migration 実行 |
 | **T735_2** | 7. 決定後実行 | リリース | Firebase Hosting / Functions 本番デプロイと受入テスト | 人間 + AI | Gemini API 現行モデル | Hosting URL 疎通と本番受入テスト報告書作成 |
 | **T736** | 7. 決定後実行 | 運用保守 | API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用 | Codex | VSCode + Codex | daily usage ledger監査およびアラート設定 |
@@ -165,12 +194,12 @@ gantt
 | **T738** | 7. 決定後実行 | インフラ | Firebase deploy auth preflight and ADC workflow hardening | Codex | VSCode + Codex | Firebase CI/CD deploy workflow now supports service account ADC, explicit FIREBASE_PROJECT_ID, configurable deploy targets, and Hosting-only default until Blaze/functions are enabled |
 | **T740** | 7. 決定後実行 | インフラ設計 | 本番ドメイン・DNS移行およびSSL証明書自動更新の適用 | 人間 + Codex | VSCode + Codex | カスタムドメインのDNS設定およびSSL証明書発行ステータス確認 |
 | **T741** | 7. 決定後実行 | 運用保守 | 本番環境データベースの自動日次バックアップ・リストア運用の設計および自動化スクリプト実装 | Codex | VSCode + Codex | 毎日午前3時の自動DBダンプ・GCS等外部ストレージ転送・世代管理（7世代）の検証 |
-| **T742** | 7. 決定後実行 | コンプライアンス | 個人情報保護法およびGDPRに準拠したユーザーデータ完全消去（退会）フローのバックエンド実装 | Claude + Codex | VSCode + Claude Code | 各規制要求の遵守・データベース内物理消去機能の実装 |
+| **T742** | 7. 決定後実行 | コンプライアンス | 個人情報保護法およびGDPRに準拠したユーザーデータ完全消去（退会）フローのバックエンド実装 | Claude + Codex | VSCode + Claude Code | 論理削除と物理削除（履歴データ完全クリア）の手順・トリガーAPI設計と実装 |
 | **T743** | 7. 決定後実行 | 運用保守 | 本番環境の死活監視（Uptime Monitoring）およびSentry等によるエラー通知・Slack連携アラート設定 | Codex | VSCode + Codex | 応答遅延・エラー率の上昇をトリガーとする管理者Slack通知フローテスト |
-| **T744** | 7. 決定後実行 | 運用保守 | ユーザー向け操作ガイド・FAQおよび管理者向けトラブルシューティング手順書の整備 | Claude + 人間 | VSCode + Claude Code | 管理者画面・一般ユーザー画面の主要ユースケース解説docs整備 |
+| **T744** | 7. 決定後実行 | 運用保守 | ユーザー向け操作ガイド・FAQおよび管理者向けトラブルシューティング手順書の整備 | Claude + 人間 | VSCode + Claude Code | docs/USER_GUIDE_AND_FAQ.md を新規作成。一般ユーザー向け操作手順・FAQ・管理者向けP1〜P4障害対処・定期メンテナンス手順・エスカレーション基準を整備済 |
 | **T745** | 7. 決定後実行 | バックエンド開発 | サービス利用規約およびプライバシーポリシー本番UIでの同意チェックボックス実装 | AIエージェント | Antigravity + Gemini | 会員登録・ログイン前の規約同意必須化およびチェック状態のバックエンド検証 |
 | **T746** | 7. 決定後実行 | リリース | 本番リリース判定（Go/No-Go）判断基準チェックリストの策定および関係者承認プロセスの確立 | 人間 | Gemini API 現行モデル | セキュリティ監査、負荷テスト、法令遵守状況の最終レビューシート同期 |
-| **T747** | 7. 決定後実行 | 運用保守 | 定期脆弱性スキャンおよび依存パッケージパッチ適用の自動運用設定 (Dependabot/Weekly Vulnerability Scan) | Codex | VSCode + Codex | GitHub Dependabotによる週次ライブラリ監査およびセキュリティパッチ自動PR作成の適用 |
+| **T747** | 7. 決定後実行 | 運用保守 | 定期脆弱性スキャンおよび依存パッケージパッチ適用の自動運用設定 (Dependabot/Weekly Vulnerability Scan)  | Codex | VSCode + Codex | GitHub Dependabotによる週次ライブラリ監査およびセキュリティパッチ自動PR作成の適用 |
 | **T748** | 7. 決定後実行 | 運用保守 | 本番サーバーのログローテーションおよびアクセスログの自動クリーンアップ・圧縮・保存設定 | Codex | VSCode + Codex | Logrotate等を用いたディスク枯渇防止・過去ログの週次ローテートと世代圧縮自動化 |
 | **T749** | 7. 決定後実行 | 共通管理 | 本番インフラ障害におけるエスカレーション連絡網およびディザスタリカバリ（災害復旧）運用計画の策定 | 人間 + Claude | VSCode + Claude Code | 障害検知時の緊急連絡ルート・復旧手順書・DRシナリオのdocs同期 |
 | **T750** | 7. 決定後実行 | 運用保守 | 定期パフォーマンスボトルネック診断およびDBインデックス最適化運用の設計 | Codex | VSCode + Codex | スロークエリ検出・APIレスポンス性能モニタリングおよびインデックス再構成手順の自動化 |
@@ -181,15 +210,23 @@ gantt
 | **T755** | 7. 決定後実行 | 運用保守 | テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボードの構築 | Codex | VSCode + Codex | Prometheus/Sentry等によるリソース性能監視および障害アラート設定 |
 | **T756** | 7. 決定後実行 | コンプライアンス | 個人情報保護およびGDPRに基づくシステム監査ログの氏名マスキング・暗号化パイプライン実装 | Claude | VSCode + Claude Code | データベース及びアクセスログの暗号化・氏名マスクバッチの開発・適用 |
 | **T757** | 7. 決定後実行 | 運用保守 | 週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装 | Codex | VSCode + Codex | API/Infraコスト集計の自動バッチおよびSlack週次通知設定 |
-| **T758** | 7. 決定後実行 | データベース | Supabase (PostgreSQL) の行レベルセキュリティ(RLS)ポリシーの設計と適用 | Codex | VSCode + Codex | RLSの動作検証とポリシー定義 of SQL化 |
+| **T758** | 7. 決定後実行 | データベース | Supabase (PostgreSQL) の行レベルセキュリティ(RLS)ポリシーの設計と適用 | Codex | VSCode + Codex | RLSの動作検証とポリシー定義のSQL化 |
 | **T759** | 7. 決定後実行 | バックエンド開発 | Firebase Cloud Functions 経由での Supabase 接続のプール管理とパフォーマンス最適化 | Codex | VSCode + Codex | 接続プール管理設定のFastAPIへの組み込み |
 | **T760** | 7. 決定後実行 | 品質検証 | Firebase Emulator Suite と Supabase Local CLI を用いたローカル開発・テスト環境の構築 | Codex | VSCode + Codex | ローカルエミュレータによる統合テストの合格率検証 |
 | **T761** | 7. 決定後実行 | 運用保守 | Supabase ダッシュボードでのクエリパフォーマンス監視とインデックスのチューニング | Codex | VSCode + Codex | スロークエリ監視体制のドキュメント化 |
 | **T761_1** | 7. 決定後実行 | 運用保守 | Firebase & Supabase クォータ・エラー監視のアラート構築 | Codex | VSCode + Codex | Sentry / Google Cloud Monitoring 連携設定 |
-
-
-
-
+| **T762** | 8. 本番運用・品質管理 | 品質管理 | サービス品質KPIおよびSLA（稼働率・レスポンスタイム・診断精度）の定義と計測基盤整備 | Claude + 人間 | VSCode + Claude Code | SLA99.5%・P95レスポンス3秒以内・診断精度評価基準をdocs同期 |
+| **T763** | 8. 本番運用・品質管理 | 運用保守 | ユーザーフィードバック収集フロー（Net Promoter Score / 診断結果評価ボタン）の設計・実装 | Antigravity + Claude | Antigravity + Gemini | 診断結果画面への「役に立ちましたか？」フィードバックUI追加とSupabase集計連携 |
+| **T764** | 8. 本番運用・品質管理 | 品質管理 | 月次品質レポート（診断精度・ユーザー満足度・コスト・インフラ稼働率）の定型化と自動生成 | Claude + Codex | VSCode + Claude Code | monthly_quality_report.py の実装と Google Docs 自動同期 |
+| **T765** | 8. 本番運用・品質管理 | コンプライアンス | 個人情報保護法第25条対応：第三者提供記録・開示請求対応手順書の整備 | Claude + 人間 | VSCode + Claude Code | 開示・訂正・削除・利用停止の4種対応手順書をdocs同期 |
+| **T766** | 8. 本番運用・品質管理 | セキュリティ | 四半期セキュリティ監査（静的解析・依存ライブラリ・RLSポリシー・シークレット漏洩検知）の実施手順整備 | Claude + Codex | VSCode + Claude Code | docs/SECURITY_AUDIT_RUNBOOK.md 新規作成・四半期スケジュール設定 |
+| **T767** | 8. 本番運用・品質管理 | 共通管理 | ステークホルダー向け月次進捗レポートおよびKPIダッシュボードの整備 | Claude + 人間 | VSCode + Claude Code | Notion/Google Sheets への月次サマリ自動投稿フロー設計 |
+| **T768** | 9. 長期保守・拡張 | フロントエンド | 多言語対応（i18n）設計と英語/中国語/韓国語UIの実装 | Antigravity | Antigravity + Gemini | i18nライブラリ選定・翻訳リソースファイル生成・4言語切替UIの実装 |
+| **T769** | 9. 長期保守・拡張 | バックエンド開発 | Gemini API モデルバージョン追従および新モデル移行プロセスの標準化 | Codex + Claude | VSCode + Codex | 公式リリースノート監視・移行テスト手順のdocs化・プロンプト互換性検証パイプライン整備 |
+| **T770** | 9. 長期保守・拡張 | 品質管理 | 負荷テスト（同時100ユーザー想定）の実施と結果に基づくスケーリング方針策定 | Codex | VSCode + Codex | k6/Locust 等による負荷シナリオ設計・実行・レポート docs 同期 |
+| **T771** | 9. 長期保守・拡張 | 運用保守 | 定期的なバックアップからのリストア（復旧）訓練の実施およびDR手順の有効性確認 | Codex | VSCode + Codex | DR復旧手順書に基づくテスト実行ログの記録 |
+| **T772** | 9. 長期保守・拡張 | コンプライアンス | 最新の法改正（個人情報保護法等）に伴う利用規約・プライバシーポリシーの年次見直しと改定プロセスの整備 | Claude | VSCode + Claude Code | 法改正チェックリストと改定スケジュールのdocs同期 |
+| **T773** | 9. 長期保守・拡張 | 運用保守 | 年間を通したシステム稼働ログおよび監査ログのコールドストレージ退避・長期保存プロセスの自動化 | Codex | VSCode + Codex | Log Archiverスクリプトの実装およびGCSコールドストレージ転送設定 |
 
 ---
 
