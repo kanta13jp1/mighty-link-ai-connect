@@ -25,13 +25,14 @@ SUPABASE_KEY = (
     or os.environ.get("SUPABASE_KEY")
     or ""
 ).strip()
+USE_SUPABASE = os.environ.get("USE_SUPABASE", "").strip().lower() in {"1", "true", "yes", "on"}
 
 _client: Optional[Client] = None
 
 def get_supabase_client() -> Optional[Client]:
     """Lazy initialization of the Supabase Client SDK instance."""
     global _client
-    if not SUPABASE_SDK_AVAILABLE:
+    if not SUPABASE_SDK_AVAILABLE or not USE_SUPABASE:
         return None
     if _client is None and SUPABASE_URL and SUPABASE_KEY:
         try:
@@ -43,7 +44,7 @@ def get_supabase_client() -> Optional[Client]:
 
 def is_supabase_configured() -> bool:
     """Checks if Supabase SDK is available and environment credentials are set."""
-    return SUPABASE_SDK_AVAILABLE and bool(SUPABASE_URL) and bool(SUPABASE_KEY)
+    return USE_SUPABASE and SUPABASE_SDK_AVAILABLE and bool(SUPABASE_URL) and bool(SUPABASE_KEY)
 
 # --- Data Access Helpers ---
 

@@ -250,9 +250,10 @@ except ImportError:
     POSTGRES_AVAILABLE = False
 
 DATABASE_URL = os.environ.get("SUPABASE_DB_URL", "").strip()
+USE_SUPABASE = env_flag("USE_SUPABASE", False)
 
 def get_db_connection():
-    if DATABASE_URL and (DATABASE_URL.startswith("postgresql://") or DATABASE_URL.startswith("postgres://")) and POSTGRES_AVAILABLE:
+    if USE_SUPABASE and DATABASE_URL and (DATABASE_URL.startswith("postgresql://") or DATABASE_URL.startswith("postgres://")) and POSTGRES_AVAILABLE:
         try:
             # We connect to Supabase/PostgreSQL with a timeout to prevent startup hang
             conn = psycopg2.connect(DATABASE_URL, connect_timeout=3)
