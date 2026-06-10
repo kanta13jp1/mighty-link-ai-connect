@@ -83,6 +83,14 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
+      - name: Verify Python Environment and Source Imports
+        run: |
+          echo "[*] Python executable: $(which python)"
+          python --version
+          echo "[*] Pip version: $(pip --version)"
+          echo "[*] Testing main.py import..."
+          python -c "import main; print('Import check passed!')"
+
       - name: Deploy to Firebase
         env:
           FIREBASE_DEPLOY_TARGETS: ${{ vars.FIREBASE_DEPLOY_TARGETS || 'hosting' }}

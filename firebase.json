@@ -30,7 +30,7 @@
     {
       "source": ".",
       "codeconfig": {
-        "runtime": "python311"
+        "runtime": "python312"
       }
     }
   ]
