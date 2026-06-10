@@ -352,8 +352,14 @@ feat/<tool>-<wbs-id>-<slug>
 
 - **GitHub Actions**: GitHub 公式 changelog の Node 20 deprecation に合わせ、`.github/workflows/deploy.yml` と `.github/workflows/public-demo-guard.yml` に `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` を workflow-level env として追加。事前に Node 24 runtime で action 互換性を検証する。
 - **公式 action major 更新**: `actions/checkout@v6`、`actions/setup-python@v6`、`actions/setup-node@v6`、`google-github-actions/auth@v3` へ更新。Firebase CLI 用 Node.js は `24` を明示し、不要な npm 自動キャッシュは `package-manager-cache: false` で抑止する。
-- **GitHub Project同期メモ**: Issue #68 は作成・クローズ済み。Project #1 への item-add / item-list のみ 401 となり、`gh auth refresh -h github.com -s read:project -s project` は 60 秒で対話承認待ちタイムアウト。課題管理表 `R43` と WBS `T794` へ復旧タスクとして登録。
+- **GitHub Project同期メモ**: Issue #68 は作成・クローズ済み。Project #1 への item-add / item-list が一時 401 となったため、課題管理表 `R43` と WBS `T794` へ復旧タスクとして登録した（T794で解消済み）。
 - **今回の WBS 完了単位**: `T786 GitHub Actions ランナー Node 24 デフォルト切替（2026-06-16）への対応`。2026-06-16 の切替日前に完了扱いへ前倒しし、後段タスクは Sheets/Calendar 同期で現在の前倒し進捗へ反映する。
+
+### Refresh (2026-06-11 / Codex GitHub Project同期復旧セッション)
+
+- **GitHub Project同期復旧**: `gh project list --owner @me` と `gh project item-list 1 --owner @me` が成功し、Issue #68 `[T786] GitHub Actions Node 24 デフォルト切替対応` が Project #1 `Mighty Skill-Bridge` に配置済みかつ Status=Done であることを確認。
+- **T794証跡Issue**: Issue #69 `[T794] GitHub Project item操作 OAuth read:project 再承認・同期復旧` を作成し、Project #1 に `item-add`、`item-edit` で Status=Done、Issue close まで完了。
+- **今回の WBS 完了単位**: `T794 GitHub Project item操作 OAuth read:project 再承認・同期復旧`。課題管理表 `R43` は resolved へ更新し、Sheets/Calendar/Project同期対象へ反映する。
 
 ---
 
@@ -402,6 +408,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-05-23 | Codex | Light refresh: Seedance公式ページのナビ/フッター/スクロール構造をMighty独自UIへ反映し、T676完了を記録 |
 | 2026-06-11 | Claude Code | Refresh: Node 24 切替期限 (T786起票)・Stripe Meters API・Supabase RLS user_metadata 禁忌を反映。T785 WBS整合性監査完了、WBS.md 自動生成化 (generate_wbs_md.py) |
 | 2026-06-11 | Codex | T786完了: GitHub Actions を Node 24 事前検証モードへ切替。checkout/setup-python/setup-node を v6、google-github-actions/auth を v3 へ更新 |
+| 2026-06-11 | Codex | T794完了: GitHub Project item-list/item-add/item-edit を復旧確認し、Issue #68/#69 を Project Done へ同期 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 
