@@ -352,6 +352,7 @@ feat/<tool>-<wbs-id>-<slug>
 
 - **GitHub Actions**: GitHub 公式 changelog の Node 20 deprecation に合わせ、`.github/workflows/deploy.yml` と `.github/workflows/public-demo-guard.yml` に `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` を workflow-level env として追加。事前に Node 24 runtime で action 互換性を検証する。
 - **公式 action major 更新**: `actions/checkout@v6`、`actions/setup-python@v6`、`actions/setup-node@v6`、`google-github-actions/auth@v3` へ更新。Firebase CLI 用 Node.js は `24` を明示し、不要な npm 自動キャッシュは `package-manager-cache: false` で抑止する。
+- **GitHub Project同期メモ**: Issue #68 は作成・クローズ済み。Project #1 への item-add / item-list のみ 401 となり、`gh auth refresh -h github.com -s read:project -s project` は 60 秒で対話承認待ちタイムアウト。課題管理表 `R43` と WBS `T794` へ復旧タスクとして登録。
 - **今回の WBS 完了単位**: `T786 GitHub Actions ランナー Node 24 デフォルト切替（2026-06-16）への対応`。2026-06-16 の切替日前に完了扱いへ前倒しし、後段タスクは Sheets/Calendar 同期で現在の前倒し進捗へ反映する。
 
 ---

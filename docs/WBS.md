@@ -243,6 +243,7 @@ gantt
 | **T791** | 8. 本番運用・品質管理 | 収益化 | Stripe Billing Meters API を用いた課金実装・Webhook 検証・本番適用 | Codex | VSCode + Codex + Stripe official docs | T776 設計に基づき API version 2026-05-27.dahlia 固定で Meter 課金・Webhook 受信・領収書メールを実装しテスト結果を Sheets 同期 | 未着手 |
 | **T792** | 8. 本番運用・品質管理 | コンプライアンス | 特定商取引法に基づく表記・課金規約・返金ポリシーページの整備（有料化前必須） | Claude + 人間 | VSCode + Claude Code | 特商法表記・課金規約・返金ポリシーページを作成しフッターへ統合、公開確認を Sheets 記録 | 未着手 |
 | **T793** | 8. 本番運用・品質管理 | リリース | 本番ローンチ正式アナウンス（プレスリリース最終版・コーポレートサイト掲載・SNS告知） | 人間 + AI | Gemini API 現行モデル | T502 の告知文案をローンチ確定情報で更新し、コーポレートサイト掲載と SNS 告知の実施結果を記録 | 未着手 |
+| **T794** | 7. 決定後実行 | 共通管理 | GitHub Project item操作 OAuth read:project 再承認・同期復旧 | 人間 + Codex | VSCode + Codex + gh CLI | GitHub Issue/Project 同期で item-add/item-list が401になるため、gh auth refresh -s read:project -s project をブラウザ承認し、Issue #68 を Project #1 Done へ配置する | 未着手 |
 
 ---
 
