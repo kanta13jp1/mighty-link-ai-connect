@@ -14,17 +14,23 @@ gantt
     title Mighty Skill-Bridge 開発スケジュール
     dateFormat  YYYY-MM-DD
     section フェーズ1: 企画・設計
-    要件定義 & DB設計          :active, a1, 2026-05-20, 2d
+    要件定義 & DB設計          :done, a1, 2026-05-20, 2d
     section フェーズ2: フロントエンド開発
-    UIコンポーネント実装        : b1, after a1, 3d
+    UIコンポーネント実装        :done, b1, after a1, 3d
     section フェーズ3: バックエンド & AI
-    Gemini API 連携 : c1, after b1, 3d
+    Gemini API 連携 :done, c1, after b1, 3d
     section フェーズ4: テスト & デバッグ
-    Browser Agent & Code Mender: d1, after c1, 2d
+    Browser Agent & Code Mender :done, d1, after c1, 2d
     section フェーズ5: 本番公開
-    CI/CDデプロイ & プレスリリース: e1, after d1, 2d
+    CI/CDデプロイ & プレスリリース :done, e1, after d1, 2d
     section フェーズ6: 社長プレゼン準備
-    6/2判断材料・デモ・連携フロー準備: f1, 2026-05-21, 13d
+    6/2判断材料・デモ・連携フロー準備 :done, f1, 2026-05-21, 13d
+    section フェーズ7: 決定後実行
+    Firebase/Supabase本番実装・パイロット :active, g1, 2026-06-02, 28d
+    section フェーズ8: 本番運用・品質管理
+    KPI/SLA・フィードバック・監査 : h1, 2026-07-06, 14d
+    section フェーズ9: 長期保守・拡張
+    多言語・モデル追従・負荷テスト : i1, 2026-07-14, 14d
 ```
 
 ---
