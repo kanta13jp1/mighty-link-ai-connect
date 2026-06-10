@@ -134,14 +134,3 @@ jobs:
             exit 2
           fi
 
-          # Allow unauthenticated invocations on the Cloud Run service (Gen2)
-          # so Firebase Hosting rewrites and direct API calls reach the FastAPI app.
-          # App-level auth (FastAPI Basic Auth / Firebase Auth) handles access control.
-          if echo "$FIREBASE_DEPLOY_TARGETS" | grep -q "functions"; then
-            echo "[*] Setting Cloud Run IAM policy to allow unauthenticated invocations..."
-            gcloud run services add-iam-policy-binding api \
-              --region=us-central1 \
-              --member="allUsers" \
-              --role="roles/run.invoker" \
-              --project="$FIREBASE_PROJECT_ID" || echo "[!] IAM policy update skipped (may already be set)"
-          fi

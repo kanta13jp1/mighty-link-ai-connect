@@ -29,7 +29,7 @@ except ValueError:
 wsgi_app = ASGIMiddleware(app)
 
 # Export the "api" function mapped in firebase.json
-@https_fn.on_request()
+@https_fn.on_request(invoker="public")
 def api(req: https_fn.Request) -> https_fn.Response:
     """Bridges incoming Firebase functions request to FastAPI ASGI app."""
     status_str = "200 OK"
