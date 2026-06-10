@@ -197,3 +197,4 @@ T780	9. 長期保守・拡張	バックエンド開発	Gemini 2.5 Pro / Flash �
 T781	9. 長期保守・拡張	運用保守	サービス終了（EOL）やデータ移行に備えたユーザーデータのセルフエクスポート機能の設計とPoC	Codex	VSCode + Codex	データエクスポートAPIおよびダウンロードUI of PoC実装	未着手	2026-07-22	2026-07-23
 T782	9. 長期保守・拡張	インフラ	アクセス増加に伴うデータベース接続負荷分散（リードレプリカ・プールサイズ最適化）の設計と負荷テスト検証	Codex	VSCode + Codex	リード分散シミュレーションと負荷テストレポートdocs同期	未着手	2026-07-23	2026-07-24
 T783	7. 決定後実行	インフラ	Firebase main/master 同時デプロイ競合の直列化	Codex	VSCode + Codex + GitHub Actions	`.github/workflows/deploy.yml` の Firebase deploy job に concurrency group を設定し、同一 Firebase project への Functions/Hosting デプロイを直列実行化	完了	2026-06-10	2026-06-10
+T784	7. 決定後実行	インフラ	Firebase Functions deploy opt-in guard	Codex	VSCode + Codex + GitHub Actions	`FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true` が明示されるまで CI は Hosting-only deploy に強制し、Cloud Functions IAM 権限不足による main/master CI 失敗を回避	完了	2026-06-10	2026-06-10

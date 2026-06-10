@@ -1,5 +1,5 @@
 {
-  "generated_at_jst": "2026-06-10T23:10:39+09:00",
+  "generated_at_jst": "2026-06-10T23:32:14+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "google_docs": {
     "docs_ai_cost_monitoring_and_quota_design_md": {
@@ -16,7 +16,7 @@
         }
       ],
       "createdTime": "2026-06-03T05:39:42.251Z",
-      "modifiedTime": "2026-06-10T14:07:44.667Z"
+      "modifiedTime": "2026-06-10T14:29:41.178Z"
     },
     "docs_antigravity_cli_evaluation_report_md": {
       "source": "docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md",
@@ -32,7 +32,7 @@
         }
       ],
       "createdTime": "2026-05-30T06:29:26.117Z",
-      "modifiedTime": "2026-06-10T14:07:48.306Z"
+      "modifiedTime": "2026-06-10T14:29:44.097Z"
     },
     "docs_antigravity_guide_md": {
       "source": "docs/ANTIGRAVITY_GUIDE.md",
@@ -48,7 +48,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:05.145Z",
-      "modifiedTime": "2026-06-10T14:07:51.700Z"
+      "modifiedTime": "2026-06-10T14:29:47.227Z"
     },
     "docs_antigravity_hooks_sync_poc_md": {
       "source": "docs/ANTIGRAVITY_HOOKS_SYNC_POC.md",
@@ -64,7 +64,7 @@
         }
       ],
       "createdTime": "2026-06-03T06:53:08.412Z",
-      "modifiedTime": "2026-06-10T14:07:55.304Z"
+      "modifiedTime": "2026-06-10T14:29:50.063Z"
     },
     "docs_antigravity_managed_agents_cost_policy_md": {
       "source": "docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md",
@@ -80,7 +80,7 @@
         }
       ],
       "createdTime": "2026-05-30T06:29:32.244Z",
-      "modifiedTime": "2026-06-10T14:07:58.763Z"
+      "modifiedTime": "2026-06-10T14:29:53.080Z"
     },
     "docs_audit_log_masking_and_encryption_md": {
       "source": "docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md",
@@ -96,7 +96,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:35:42.295Z",
-      "modifiedTime": "2026-06-10T14:08:02.483Z"
+      "modifiedTime": "2026-06-10T14:29:56.087Z"
     },
     "docs_backend_ai_pipeline_md": {
       "source": "docs/BACKEND_AI_PIPELINE.md",
@@ -112,7 +112,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:08.445Z",
-      "modifiedTime": "2026-06-10T14:08:05.841Z"
+      "modifiedTime": "2026-06-10T14:29:59.035Z"
     },
     "docs_ceo_presentation_backup_guide_md": {
       "source": "docs/CEO_PRESENTATION_BACKUP_GUIDE.md",
@@ -128,7 +128,7 @@
         }
       ],
       "createdTime": "2026-05-28T15:32:31.318Z",
-      "modifiedTime": "2026-06-10T14:08:08.877Z"
+      "modifiedTime": "2026-06-10T14:30:02.114Z"
     },
     "docs_ceo_presentation_canva_figma_guide_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md",
@@ -144,7 +144,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:15:37.750Z",
-      "modifiedTime": "2026-06-10T14:08:11.759Z"
+      "modifiedTime": "2026-06-10T14:30:05.372Z"
     },
     "docs_ceo_presentation_decision_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md",
@@ -160,7 +160,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:11.504Z",
-      "modifiedTime": "2026-06-10T14:08:15.750Z"
+      "modifiedTime": "2026-06-10T14:30:09.576Z"
     },
     "docs_ceo_presentation_discussion_points_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md",
@@ -176,7 +176,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:10.521Z",
-      "modifiedTime": "2026-06-10T14:08:19.256Z"
+      "modifiedTime": "2026-06-10T14:30:13.113Z"
     },
     "docs_ceo_presentation_final_review_checklist_md": {
       "source": "docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md",
@@ -192,7 +192,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:13.734Z",
-      "modifiedTime": "2026-06-10T14:08:22.505Z"
+      "modifiedTime": "2026-06-10T14:30:15.895Z"
     },
     "docs_ceo_presentation_ops_discussion_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md",
@@ -208,7 +208,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:16.975Z",
-      "modifiedTime": "2026-06-10T14:08:25.715Z"
+      "modifiedTime": "2026-06-10T14:30:18.854Z"
     },
     "docs_ceo_presentation_post_decision_roadmap_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
@@ -224,7 +224,7 @@
         }
       ],
       "createdTime": "2026-05-22T01:55:28.832Z",
-      "modifiedTime": "2026-06-10T14:08:29.419Z"
+      "modifiedTime": "2026-06-10T14:30:22.246Z"
     },
     "docs_ceo_presentation_prep_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PREP_2026-06-02.md",
@@ -240,7 +240,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:13.861Z",
-      "modifiedTime": "2026-06-10T14:08:32.677Z"
+      "modifiedTime": "2026-06-10T14:30:25.630Z"
     },
     "docs_ceo_presentation_preshare_memo_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md",
@@ -256,7 +256,7 @@
         }
       ],
       "createdTime": "2026-05-22T04:29:57.435Z",
-      "modifiedTime": "2026-06-10T14:08:36.286Z"
+      "modifiedTime": "2026-06-10T14:30:28.550Z"
     },
     "docs_ceo_presentation_qa_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md",
@@ -272,7 +272,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:23.139Z",
-      "modifiedTime": "2026-06-10T14:08:39.662Z"
+      "modifiedTime": "2026-06-10T14:30:31.523Z"
     },
     "docs_codex_continuation_notes_md": {
       "source": "docs/CODEX_CONTINUATION_NOTES.md",
@@ -288,7 +288,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:17.070Z",
-      "modifiedTime": "2026-06-10T14:08:43.148Z"
+      "modifiedTime": "2026-06-10T14:30:34.602Z"
     },
     "docs_cost_report_2026_06_md": {
       "source": "docs/COST_REPORT_2026-06.md",
@@ -304,7 +304,7 @@
         }
       ],
       "createdTime": "2026-06-02T15:27:49.024Z",
-      "modifiedTime": "2026-06-10T14:08:47.344Z"
+      "modifiedTime": "2026-06-10T14:30:37.985Z"
     },
     "docs_database_md": {
       "source": "docs/database.md",
@@ -320,7 +320,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:20.169Z",
-      "modifiedTime": "2026-06-10T14:08:51.216Z"
+      "modifiedTime": "2026-06-10T14:30:40.988Z"
     },
     "docs_demo_security_and_auth_design_md": {
       "source": "docs/DEMO_SECURITY_AND_AUTH_DESIGN.md",
@@ -336,7 +336,7 @@
         }
       ],
       "createdTime": "2026-06-03T05:02:20.581Z",
-      "modifiedTime": "2026-06-10T14:08:54.344Z"
+      "modifiedTime": "2026-06-10T14:30:44.489Z"
     },
     "docs_development_knowledge_flow_md": {
       "source": "docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
@@ -352,7 +352,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:23.586Z",
-      "modifiedTime": "2026-06-10T14:08:58.506Z"
+      "modifiedTime": "2026-06-10T14:30:47.199Z"
     },
     "docs_disaster_recovery_and_escalation_runbook_md": {
       "source": "docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md",
@@ -368,7 +368,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:16:14.738Z",
-      "modifiedTime": "2026-06-10T14:09:01.625Z"
+      "modifiedTime": "2026-06-10T14:30:50.219Z"
     },
     "docs_firebase_auth_supabase_rls_security_design_md": {
       "source": "docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md",
@@ -384,7 +384,7 @@
         }
       ],
       "createdTime": "2026-06-06T05:10:30.765Z",
-      "modifiedTime": "2026-06-10T14:09:04.992Z"
+      "modifiedTime": "2026-06-10T14:30:53.059Z"
     },
     "docs_firebase_supabase_system_architecture_md": {
       "source": "docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md",
@@ -400,7 +400,7 @@
         }
       ],
       "createdTime": "2026-06-06T02:47:52.808Z",
-      "modifiedTime": "2026-06-10T14:09:07.994Z"
+      "modifiedTime": "2026-06-10T14:30:55.843Z"
     },
     "docs_google_workspace_migration_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
@@ -416,7 +416,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:26.826Z",
-      "modifiedTime": "2026-06-10T14:09:11.142Z"
+      "modifiedTime": "2026-06-10T14:30:59.368Z"
     },
     "docs_growth_strategy_roadmap_md": {
       "source": "docs/GROWTH_STRATEGY_ROADMAP.md",
@@ -432,7 +432,7 @@
         }
       ],
       "createdTime": "2026-06-10T12:30:56.561Z",
-      "modifiedTime": "2026-06-10T14:09:14.222Z"
+      "modifiedTime": "2026-06-10T14:31:01.965Z"
     },
     "docs_hosting_and_database_selection_md": {
       "source": "docs/HOSTING_AND_DATABASE_SELECTION.md",
@@ -448,7 +448,7 @@
         }
       ],
       "createdTime": "2026-06-02T13:12:51.416Z",
-      "modifiedTime": "2026-06-10T14:09:17.116Z"
+      "modifiedTime": "2026-06-10T14:31:05.139Z"
     },
     "docs_integration_demo_evidence_2026_06_02_md": {
       "source": "docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md",
@@ -464,7 +464,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:30.369Z",
-      "modifiedTime": "2026-06-10T14:09:20.215Z"
+      "modifiedTime": "2026-06-10T14:31:07.849Z"
     },
     "docs_mcp_canva_figma_setup_guide_2026_06_02_md": {
       "source": "docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md",
@@ -480,7 +480,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:16:25.443Z",
-      "modifiedTime": "2026-06-10T14:09:23.714Z"
+      "modifiedTime": "2026-06-10T14:31:10.590Z"
     },
     "docs_monthly_progress_report_and_kpi_dashboard_md": {
       "source": "docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md",
@@ -496,7 +496,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:46:22.333Z",
-      "modifiedTime": "2026-06-10T14:09:28.094Z"
+      "modifiedTime": "2026-06-10T14:31:13.253Z"
     },
     "docs_multi_ai_workflow_md": {
       "source": "docs/MULTI_AI_WORKFLOW.md",
@@ -512,7 +512,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:39.743Z",
-      "modifiedTime": "2026-06-10T14:09:31.259Z"
+      "modifiedTime": "2026-06-10T14:31:15.961Z"
     },
     "docs_personal_info_disclosure_procedures_md": {
       "source": "docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md",
@@ -528,7 +528,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:46:28.736Z",
-      "modifiedTime": "2026-06-10T14:09:35.857Z"
+      "modifiedTime": "2026-06-10T14:31:18.645Z"
     },
     "docs_pilot_closed_operation_design_md": {
       "source": "docs/PILOT_CLOSED_OPERATION_DESIGN.md",
@@ -544,7 +544,7 @@
         }
       ],
       "createdTime": "2026-06-03T04:14:48.832Z",
-      "modifiedTime": "2026-06-10T14:09:39.928Z"
+      "modifiedTime": "2026-06-10T14:31:21.634Z"
     },
     "docs_pilot_consent_template_md": {
       "source": "docs/PILOT_CONSENT_TEMPLATE.md",
@@ -560,7 +560,7 @@
         }
       ],
       "createdTime": "2026-06-02T11:18:59.919Z",
-      "modifiedTime": "2026-06-10T14:09:42.736Z"
+      "modifiedTime": "2026-06-10T14:31:24.364Z"
     },
     "docs_pilot_participants_selection_md": {
       "source": "docs/PILOT_PARTICIPANTS_SELECTION.md",
@@ -576,7 +576,7 @@
         }
       ],
       "createdTime": "2026-06-03T02:08:51.666Z",
-      "modifiedTime": "2026-06-10T14:09:45.955Z"
+      "modifiedTime": "2026-06-10T14:31:26.942Z"
     },
     "docs_pilot_report_2026_06_16_md": {
       "source": "docs/PILOT_REPORT_2026-06-16.md",
@@ -592,7 +592,7 @@
         }
       ],
       "createdTime": "2026-06-06T01:45:30.668Z",
-      "modifiedTime": "2026-06-10T14:09:49.237Z"
+      "modifiedTime": "2026-06-10T14:31:29.805Z"
     },
     "docs_production_acceptance_test_report_md": {
       "source": "docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md",
@@ -608,7 +608,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:16:59.142Z",
-      "modifiedTime": "2026-06-10T14:09:52.075Z"
+      "modifiedTime": "2026-06-10T14:31:32.558Z"
     },
     "docs_project_structure_md": {
       "source": "docs/PROJECT_STRUCTURE.md",
@@ -624,7 +624,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:33.155Z",
-      "modifiedTime": "2026-06-10T14:09:55.679Z"
+      "modifiedTime": "2026-06-10T14:31:35.529Z"
     },
     "docs_requirements_md": {
       "source": "docs/requirements.md",
@@ -640,7 +640,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:35.726Z",
-      "modifiedTime": "2026-06-10T14:09:58.893Z"
+      "modifiedTime": "2026-06-10T14:31:38.525Z"
     },
     "docs_security_audit_runbook_md": {
       "source": "docs/SECURITY_AUDIT_RUNBOOK.md",
@@ -656,7 +656,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:37:52.367Z",
-      "modifiedTime": "2026-06-10T14:10:02.386Z"
+      "modifiedTime": "2026-06-10T14:31:41.150Z"
     },
     "docs_sequence_diagrams_md": {
       "source": "docs/SEQUENCE_DIAGRAMS.md",
@@ -672,7 +672,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:16:37.218Z",
-      "modifiedTime": "2026-06-10T14:10:05.384Z"
+      "modifiedTime": "2026-06-10T14:31:43.830Z"
     },
     "docs_setup_guide_md": {
       "source": "docs/SETUP_GUIDE.md",
@@ -688,7 +688,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:39.055Z",
-      "modifiedTime": "2026-06-10T14:10:08.429Z"
+      "modifiedTime": "2026-06-10T14:31:46.720Z"
     },
     "docs_sheets_trackers_schema_md": {
       "source": "docs/SHEETS_TRACKERS_SCHEMA.md",
@@ -704,7 +704,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:50.427Z",
-      "modifiedTime": "2026-06-10T14:10:12.149Z"
+      "modifiedTime": "2026-06-10T14:31:49.277Z"
     },
     "docs_sla_kpi_definition_and_measurement_md": {
       "source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md",
@@ -720,7 +720,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:38:06.744Z",
-      "modifiedTime": "2026-06-10T14:10:15.537Z"
+      "modifiedTime": "2026-06-10T14:31:52.265Z"
     },
     "docs_supabase_database_physical_and_index_design_md": {
       "source": "docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md",
@@ -736,7 +736,7 @@
         }
       ],
       "createdTime": "2026-06-06T05:39:27.159Z",
-      "modifiedTime": "2026-06-10T14:10:18.896Z"
+      "modifiedTime": "2026-06-10T14:31:54.949Z"
     },
     "docs_terms_and_privacy_annual_review_process_md": {
       "source": "docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md",
@@ -752,7 +752,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:47:11.192Z",
-      "modifiedTime": "2026-06-10T14:10:22.048Z"
+      "modifiedTime": "2026-06-10T14:31:57.901Z"
     },
     "docs_user_data_deletion_flow_md": {
       "source": "docs/USER_DATA_DELETION_FLOW.md",
@@ -768,7 +768,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:17:25.739Z",
-      "modifiedTime": "2026-06-10T14:10:25.524Z"
+      "modifiedTime": "2026-06-10T14:32:01.448Z"
     },
     "docs_user_guide_and_faq_md": {
       "source": "docs/USER_GUIDE_AND_FAQ.md",
@@ -784,7 +784,7 @@
         }
       ],
       "createdTime": "2026-06-10T12:31:52.213Z",
-      "modifiedTime": "2026-06-10T14:10:28.847Z"
+      "modifiedTime": "2026-06-10T14:32:04.384Z"
     },
     "docs_wbs_md": {
       "source": "docs/WBS.md",
@@ -800,7 +800,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-06-10T14:10:31.840Z"
+      "modifiedTime": "2026-06-10T14:32:08.697Z"
     },
     "docs_wbs_sync_guide_md": {
       "source": "docs/WBS_SYNC_GUIDE.md",
@@ -816,7 +816,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:44.871Z",
-      "modifiedTime": "2026-06-10T14:10:35.491Z"
+      "modifiedTime": "2026-06-10T14:32:11.599Z"
     }
   },
   "notebooklm": {

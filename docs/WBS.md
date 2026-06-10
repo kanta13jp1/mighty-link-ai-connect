@@ -296,3 +296,4 @@ Google Workspace API と `data/WBS.tsv` 正本運用を活かし、このWBSは�
 | タスクID | 大フェーズ | 小フェーズ | タスク名 | 担当 | 実行エンジン | Sheets Live 連携アクション |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **T783** | 7. 決定後実行 | インフラ | Firebase main/master 同時デプロイ競合の直列化 | Codex | VSCode + Codex + GitHub Actions | `.github/workflows/deploy.yml` の Firebase deploy job に concurrency group を設定し、同一 Firebase project への Functions/Hosting デプロイを直列実行化 |
+| **T784** | 7. 決定後実行 | インフラ | Firebase Functions deploy opt-in guard | Codex | VSCode + Codex + GitHub Actions | `FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true` が明示されるまで CI は Hosting-only deploy に強制し、Cloud Functions IAM 権限不足による main/master CI 失敗を回避 |

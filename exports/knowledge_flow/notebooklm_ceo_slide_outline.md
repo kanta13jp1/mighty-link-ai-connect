@@ -1,6 +1,6 @@
 # NotebookLM CEO Slide Outline
 
-Generated: 2026-06-10T23:10:39+09:00
+Generated: 2026-06-10T23:32:14+09:00
 Status: `auth_required`
 
 NotebookLM CLI is not ready yet, so this file is a placeholder.

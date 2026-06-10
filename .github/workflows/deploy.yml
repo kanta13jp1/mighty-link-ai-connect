@@ -100,6 +100,7 @@ jobs:
       - name: Deploy to Firebase
         env:
           FIREBASE_DEPLOY_TARGETS: ${{ vars.FIREBASE_DEPLOY_TARGETS || 'hosting' }}
+          FIREBASE_FUNCTIONS_DEPLOY_ENABLED: ${{ vars.FIREBASE_FUNCTIONS_DEPLOY_ENABLED || 'false' }}
           FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID || 'mighty-link-ai-connect-13d22' }}
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON || secrets.FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
@@ -130,10 +131,18 @@ jobs:
             exit 0
           fi
 
+          FUNCTIONS_DEPLOY_ENABLED="$(printf '%s' "${FIREBASE_FUNCTIONS_DEPLOY_ENABLED:-false}" | tr '[:upper:]' '[:lower:]')"
+          if [ "$FUNCTIONS_DEPLOY_ENABLED" != "true" ]; then
+            if [ "$FIREBASE_DEPLOY_TARGETS" != "hosting" ]; then
+              echo "[*] FIREBASE_FUNCTIONS_DEPLOY_ENABLED is not true; overriding Firebase deploy targets to hosting."
+            fi
+            FIREBASE_DEPLOY_TARGETS="hosting"
+          fi
+
           echo "[*] Initiating deploy to Firebase project: $FIREBASE_PROJECT_ID"
           echo "[*] Deploy targets: $FIREBASE_DEPLOY_TARGETS"
           if ! firebase deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_DEPLOY_TARGETS" --non-interactive --force "${AUTH_FLAGS[@]}"; then
-            echo "::error title=Firebase deploy failed::Could not deploy '$FIREBASE_DEPLOY_TARGETS' to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists, credentials have deploy permissions, and set FIREBASE_DEPLOY_TARGETS=hosting,functions only after the Firebase project is on the Blaze plan."
+            echo "::error title=Firebase deploy failed::Could not deploy '$FIREBASE_DEPLOY_TARGETS' to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists and credentials have deploy permissions. Set FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true and FIREBASE_DEPLOY_TARGETS=hosting,functions only after the Firebase project and CI service account can update Cloud Functions IAM."
             exit 2
           fi
 

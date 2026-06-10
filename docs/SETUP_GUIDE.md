@@ -558,10 +558,11 @@ The workflow now prefers Firebase CLI Application Default Credentials, matching 
 
 Repository configuration:
 
-- Variable `FIREBASE_DEPLOY_TARGETS`: Firebase deploy targets. Defaults to `hosting`; use `hosting,functions` only after the Firebase project is upgraded to Blaze because Cloud Functions requires Artifact Registry/Cloud Build APIs.
-- Variable `FIREBASE_PROJECT_ID`: Firebase project ID. Defaults to `.firebaserc` / workflow value `mighty-link-ai-connect-d7fa2` when unset.
+- Variable `FIREBASE_DEPLOY_TARGETS`: Firebase deploy targets. Defaults to `hosting`. If this repository variable is set to `hosting,functions`, the workflow still deploys Hosting only unless `FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true`.
+- Variable `FIREBASE_FUNCTIONS_DEPLOY_ENABLED`: set to `true` only after the Firebase project is upgraded to Blaze and the CI service account can update Cloud Functions / Cloud Run invoker IAM policies.
+- Variable `FIREBASE_PROJECT_ID`: Firebase project ID. Defaults to `.firebaserc` / workflow value `mighty-link-ai-connect-13d22` when unset.
 - Secret `FIREBASE_SERVICE_ACCOUNT_JSON`: full JSON key for a service account allowed to deploy Firebase Hosting and Functions.
 - Secret `FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT`: also accepted for compatibility with the default Firebase Hosting GitHub integration naming pattern.
 - Secret `FIREBASE_TOKEN`: legacy fallback. If this is present but the token owner cannot access the target Firebase project, CI fails with `Failed to get Firebase project`.
 
-If the deploy log says the project cannot be accessed, first confirm that the Firebase project exists with exactly the same ID as `FIREBASE_PROJECT_ID` (currently `mighty-link-ai-connect-d7fa2`), then confirm the service account or legacy token user has deploy permission for that project.
+If the deploy log says the project cannot be accessed, first confirm that the Firebase project exists with exactly the same ID as `FIREBASE_PROJECT_ID` (currently `mighty-link-ai-connect-13d22`), then confirm the service account or legacy token user has deploy permission for that project. If the log says `Unable to set the invoker for the IAM policy`, keep `FIREBASE_FUNCTIONS_DEPLOY_ENABLED` unset/false until the service account has the required Functions/Cloud Run IAM permissions.
