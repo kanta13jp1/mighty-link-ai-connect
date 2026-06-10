@@ -262,7 +262,22 @@ def get_db_connection():
             print(f"[-] Failed to connect to Supabase PostgreSQL: {e}. Falling back to SQLite.")
     
     # SQLite Fallback
-    db_path = os.path.join(DATA_DIR, "mighty.db")
+    # Check if we are running in a Serverless/Container environment with a read-only filesystem
+    is_serverless = os.environ.get("K_SERVICE") is not None
+    
+    if is_serverless:
+        db_path = "/tmp/mighty.db"
+    else:
+        # Check if local directory is writable, fallback to /tmp if not
+        try:
+            test_file = os.path.join(DATA_DIR, ".write_test")
+            with open(test_file, "w") as f:
+                f.write("test")
+            os.remove(test_file)
+            db_path = os.path.join(DATA_DIR, "mighty.db")
+        except Exception:
+            db_path = "/tmp/mighty.db"
+            
     conn = sqlite3.connect(db_path)
     # Ensure row-factory is dictionary-like
     conn.row_factory = sqlite3.Row
