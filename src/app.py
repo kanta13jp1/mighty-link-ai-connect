@@ -375,7 +375,10 @@ def init_db():
 
 @app.on_event("startup")
 def startup_db_init():
-    init_db()
+    import threading
+    # Run database initialization in a background thread to prevent container startup timeout
+    thread = threading.Thread(target=init_db, daemon=True)
+    thread.start()
 
 def db_insert_engineer(name: str, resume_raw: str, parsed_skills: dict, career_goals: dict) -> int:
     if SUPABASE_SDK_ACTIVE:
@@ -1559,6 +1562,37 @@ async def health_check():
         "seedance_poll_timeout_seconds": SEEDANCE_POLL_TIMEOUT_SECONDS,
         "seedance_demo_video": seedance_demo_video_url(),
     }
+
+
+@app.get("/api/db-test")
+async def db_test(username: str = Depends(verify_credentials)):
+    import traceback
+    results = {
+        "postgres_available": POSTGRES_AVAILABLE,
+        "use_supabase": USE_SUPABASE,
+        "database_url_configured": bool(DATABASE_URL),
+        "steps": []
+    }
+    if DATABASE_URL:
+        try:
+            results["steps"].append("Connecting to database...")
+            import psycopg2
+            conn = psycopg2.connect(DATABASE_URL, connect_timeout=3)
+            results["steps"].append("Connected. Running test query...")
+            cur = conn.cursor()
+            cur.execute("SELECT 1;")
+            val = cur.fetchone()[0]
+            cur.close()
+            conn.close()
+            results["steps"].append(f"Query returned: {val}")
+            results["direct_postgres_status"] = "success"
+        except Exception as e:
+            results["direct_postgres_status"] = "error"
+            results["direct_postgres_error"] = str(e)
+            results["direct_postgres_traceback"] = traceback.format_exc()
+    else:
+        results["direct_postgres_status"] = "no_url"
+    return results
 
 
 @app.get("/api/audit/recent")
