@@ -29,9 +29,7 @@
   "functions": [
     {
       "source": ".",
-      "codeconfig": {
-        "runtime": "python312"
-      }
+      "runtime": "python312"
     }
   ]
 }
