@@ -168,7 +168,6 @@ T754	7. 決定後実行	バックエンド開発	Alembic/Flyway 等を用いた�
 T755	7. 決定後実行	運用保守	テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボードの構築	Codex	VSCode + Codex	Prometheus/Sentry等によるリソース性能監視および障害アラート設定	未着手	2026-06-25	2026-06-26
 T756	7. 決定後実行	コンプライアンス	個人情報保護およびGDPRに基づくシステム監査ログの氏名マスキング・暗号化パイプライン実装	Claude	VSCode + Claude Code	データベース及びアクセスログの暗号化・氏名マスクバッチの開発・適用	完了	2026-06-10	2026-06-10
 T757	7. 決定後実行	運用保守	週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装	Codex	VSCode + Codex	API/Infraコスト集計の自動バッチおよびSlack週次通知設定	未着手	2026-06-27	2026-06-28
-T758	7. 決定後実行	データベース	Supabase (PostgreSQL) の行レベルセキュリティ(RLS)ポリシーの設計と適用	Codex	VSCode + Codex	RLSの動作検証とポリシー定義のSQL化	未着手	2026-06-28	2026-06-29
 T759	7. 決定後実行	バックエンド開発	Firebase Cloud Functions 経由での Supabase 接続のプール管理とパフォーマンス最適化	Codex	VSCode + Codex	接続プール管理設定のFastAPIへの組み込み	未着手	2026-06-29	2026-06-30
 T760	7. 決定後実行	品質検証	Firebase Emulator Suite と Supabase Local CLI を用いたローカル開発・テスト環境の構築	Codex	VSCode + Codex	ローカルエミュレータによる統合テストの合格率検証	未着手	2026-06-30	2026-07-01
 T761	7. 決定後実行	運用保守	Supabase ダッシュボードでのクエリパフォーマンス監視とインデックスのチューニング	Codex	VSCode + Codex	スロークエリ監視体制のドキュメント化	未着手	2026-07-01	2026-07-02
@@ -177,7 +176,6 @@ T762	8. 本番運用・品質管理	品質管理	サービス品質KPIおよびS
 T763	8. 本番運用・品質管理	運用保守	ユーザーフィードバック収集フロー（Net Promoter Score / 診断結果評価ボタン）の設計・実装	Antigravity + Claude	Antigravity + Gemini	診断結果画面への「役に立ちましたか？」フィードバックUI追加とSupabase集計連携	未着手	2026-07-04	2026-07-06
 T764	8. 本番運用・品質管理	品質管理	月次品質レポート（診断精度・ユーザー満足度・コスト・インフラ稼働率）の定型化と自動生成	Claude + Codex	VSCode + Claude Code	monthly_quality_report.py の実装と Google Docs 自動同期	未着手	2026-07-06	2026-07-07
 T765	8. 本番運用・品質管理	コンプライアンス	個人情報保護法第25条対応：第三者提供記録・開示請求対応手順書の整備	Claude + 人間	VSCode + Claude Code	`docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md` に第三者提供記録・開示/訂正/削除/利用停止請求対応手順とSLAを整理	完了	2026-06-10	2026-06-10
-T766	8. 本番運用・品質管理	セキュリティ	四半期セキュリティ監査（静的解析・依存ライブラリ・RLSポリシー・シークレット漏洩検知）の実施手順整備	Claude + Codex	VSCode + Claude Code	docs/SECURITY_AUDIT_RUNBOOK.md 新規作成・四半期スケジュール設定	未着手	2026-07-08	2026-07-09
 T767	8. 本番運用・品質管理	共通管理	ステークホルダー向け月次進捗レポートおよびKPIダッシュボードの整備	Claude + 人間	VSCode + Claude Code	Notion/Google Sheets への月次サマリ自動投稿フロー設計	完了	2026-06-10	2026-06-10
 T768	9. 長期保守・拡張	フロントエンド	多言語対応（i18n）設計と英語/中国語/韓国語UIの実装	Antigravity	Antigravity + Gemini	i18nライブラリ選定・翻訳リソースファイル生成・4言語切替UIの実装	未着手	2026-07-11	2026-07-15
 T769	9. 長期保守・拡張	バックエンド開発	Gemini API モデルバージョン追従および新モデル移行プロセスの標準化	Codex + Claude	VSCode + Codex	公式リリースノート監視・移行テスト手順のdocs化・プロンプト互換性検証パイプライン整備	未着手	2026-07-15	2026-07-17
@@ -185,16 +183,21 @@ T770	9. 長期保守・拡張	品質管理	負荷テスト（同時100ユーザ�
 T771	9. 長期保守・拡張	運用保守	定期的なバックアップからのリストア（復旧）訓練の実施およびDR手順の有効性確認	Codex	VSCode + Codex	DR復旧手順書に基づくテスト実行ログの記録	未着手	2026-07-19	2026-07-20
 T772	9. 長期保守・拡張	コンプライアンス	最新の法改正（個人情報保護法等）に伴う利用規約・プライバシーポリシーの年次見直しと改定プロセスの整備	Claude	VSCode + Claude Code	法改正チェックリストと改定スケジュールのdocs同期	完了	2026-06-10	2026-06-10
 T773	9. 長期保守・拡張	運用保守	年間を通したシステム稼働ログおよび監査ログのコールドストレージ退避・長期保存プロセスの自動化	Codex	VSCode + Codex	Log Archiverスクリプトの実装およびGCSコールドストレージ転送設定	未着手	2026-07-21	2026-07-22
-T774	9. 長期保守・拡張	運用保守	サービス終了（EOL）やデータ移行に備えたユーザーデータのセルフエクスポート機能の設計とPoC	Codex	VSCode + Codex	データエクスポートAPIおよびダウンロードUIのPoC実装	完了	2026-06-10	2026-06-10
-T775	9. 長期保守・拡張	インフラ	アクセス増加に伴うデータベース接続負荷分散（リードレプリカ・プールサイズ最適化）の設計と負荷テスト検証	Codex	VSCode + Codex	リード分散シミュレーションと負荷テストレポートdocs同期	未着手	2026-07-23	2026-07-24
 T774	7. 決定後実行	セキュリティ	docs/SECURITY_AUDIT_RUNBOOK.md 新規作成（四半期セキュリティ監査手順書）	Claude + Codex	VSCode + Claude Code	セキュリティ監査チェックリストのSheets連携	完了	2026-06-10	2026-06-10
-T775	7. 決定後実行	リリース	本番リリース判定 Go/No-Go チェックリスト文書化と関係者承認フロー実装	Claude + 人間	VSCode + Claude Code	Go/No-Go判定結果のSheets記録	未着手	2026-07-21	2026-07-21
 T776	8. 本番運用・品質管理	収益化	Stripe 決済統合の設計（有料プラン課金フロー・Webhook・領収書メール）	Codex	VSCode + Codex	Stripe Webhook受信ログのSheets同期	未着手	2026-07-22	2026-07-23
 T777	8. 本番運用・品質管理	フロントエンド	利用規約・プライバシーポリシー専用ページの実装とフッターリンク統合	AIエージェント	Antigravity + Gemini	規約ページURL公開確認のSheets記録	未着手	2026-07-24	2026-07-24
 T778	8. 本番運用・品質管理	品質管理	SLA 計測基盤（稼働率・P95レスポンス・診断精度）の Supabase ビュー実装	Codex	VSCode + Codex	SLA指標のSheets自動集計	未着手	2026-07-25	2026-07-25
-T779	9. 長期保守・拡張	運用保守	GitHub Dependabot + Weekly Vulnerability Scan の自動PR設定	Codex	VSCode + Codex	セキュリティパッチPR一覧のSheets連携	未着手	2026-07-26	2026-07-26
-T780	9. 長期保守・拡張	バックエンド開発	Gemini 2.5 Pro / Flash モデル移行テストと本番切り替え手順書	Codex + Claude	VSCode + Codex	モデル移行ログのSheets記録	未着手	2026-07-27	2026-07-28
+T780	9. 長期保守・拡張	バックエンド開発	Gemini 最新安定版モデル（3.5 Flash / 3.1 Pro 系）移行テストと本番切り替え手順書	Codex + Claude	VSCode + Codex	モデル移行ログのSheets記録	未着手	2026-07-27	2026-07-28
 T781	9. 長期保守・拡張	運用保守	サービス終了（EOL）やデータ移行に備えたユーザーデータのセルフエクスポート機能の設計とPoC	Codex	VSCode + Codex	データエクスポートAPIおよびダウンロードUI of PoC実装	未着手	2026-07-22	2026-07-23
 T782	9. 長期保守・拡張	インフラ	アクセス増加に伴うデータベース接続負荷分散（リードレプリカ・プールサイズ最適化）の設計と負荷テスト検証	Codex	VSCode + Codex	リード分散シミュレーションと負荷テストレポートdocs同期	未着手	2026-07-23	2026-07-24
 T783	7. 決定後実行	インフラ	Firebase main/master 同時デプロイ競合の直列化	Codex	VSCode + Codex + GitHub Actions	`.github/workflows/deploy.yml` の Firebase deploy job に concurrency group を設定し、同一 Firebase project への Functions/Hosting デプロイを直列実行化	完了	2026-06-10	2026-06-10
 T784	7. 決定後実行	インフラ	Firebase Functions deploy opt-in guard	Codex	VSCode + Codex + GitHub Actions	`FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true` が明示されるまで CI は Hosting-only deploy に強制し、Cloud Functions IAM 権限不足による main/master CI 失敗を回避	完了	2026-06-10	2026-06-10
+T785	7. 決定後実行	共通管理	WBS 整合性監査（重複タスクID・重複タスク・誤完了フラグの解消と工程網羅性チェック）	Claude Code	VSCode + Claude Code	重複ID T774/T775 と重複タスク T758/T766/T779 を解消し、ID衝突で誤って完了化された EOL エクスポート行を T781 未着手へ正規化。課題管理表 R40 に記録	完了	2026-06-11	2026-06-11
+T786	7. 決定後実行	インフラ	GitHub Actions ランナー Node 24 デフォルト切替（2026-06-16）への対応	Codex	VSCode + Codex + GitHub Actions	`.github/workflows/` のサードパーティ action を v4 系へ点検し、FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true で事前検証して切替日前に対応完了させる	未着手	2026-06-12	2026-06-15
+T787	7. 決定後実行	コンプライアンス	サービス利用規約・プライバシーポリシー初版本文の作成と法務確認	人間 + Claude	VSCode + Claude Code	T745 同意チェックボックス・T777 規約ページの前提となる規約・ポリシー本文を起草し、法務確認の結果を docs と Sheets に記録	未着手	2026-06-12	2026-06-14
+T788	7. 決定後実行	インフラ設計	ステージング環境（Firebase Hosting preview channel / Supabase 検証用プロジェクト）の構築と運用ルール整備	Codex	VSCode + Codex	本番反映前の preview channel デプロイ手順と staging/prod の JWT secret・DB 分離ルールを確立し docs 同期	未着手	2026-07-01	2026-07-02
+T789	8. 本番運用・品質管理	セキュリティ	四半期セキュリティ監査の初回実施（SECURITY_AUDIT_RUNBOOK 準拠）	Claude + Codex	VSCode + Claude Code	docs/SECURITY_AUDIT_RUNBOOK.md に基づき静的解析・依存監査・RLS・シークレット漏洩検知の初回監査を実施し結果を Sheets セキュリティタブへ記録	未着手	2026-07-08	2026-07-09
+T790	8. 本番運用・品質管理	運用保守	ユーザー問い合わせ窓口（サポートメール/フォーム）の開設と対応フロー整備	人間 + Claude	VSCode + Claude Code	問い合わせ受付チャネル開設・一次回答SLA・エスカレーション基準を docs/USER_GUIDE_AND_FAQ.md へ追記し運用開始	未着手	2026-07-06	2026-07-07
+T791	8. 本番運用・品質管理	収益化	Stripe Billing Meters API を用いた課金実装・Webhook 検証・本番適用	Codex	VSCode + Codex + Stripe official docs	T776 設計に基づき API version 2026-05-27.dahlia 固定で Meter 課金・Webhook 受信・領収書メールを実装しテスト結果を Sheets 同期	未着手	2026-07-23	2026-07-26
+T792	8. 本番運用・品質管理	コンプライアンス	特定商取引法に基づく表記・課金規約・返金ポリシーページの整備（有料化前必須）	Claude + 人間	VSCode + Claude Code	特商法表記・課金規約・返金ポリシーページを作成しフッターへ統合、公開確認を Sheets 記録	未着手	2026-07-26	2026-07-27
+T793	8. 本番運用・品質管理	リリース	本番ローンチ正式アナウンス（プレスリリース最終版・コーポレートサイト掲載・SNS告知）	人間 + AI	Gemini API 現行モデル	T502 の告知文案をローンチ確定情報で更新し、コーポレートサイト掲載と SNS 告知の実施結果を記録	未着手	2026-07-21	2026-07-22

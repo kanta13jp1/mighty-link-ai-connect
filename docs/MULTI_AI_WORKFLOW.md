@@ -337,6 +337,17 @@ feat/<tool>-<wbs-id>-<slug>
 - **Google Workspace**: Sheets `batchUpdate` と `data/WBS.tsv` 正本運用を維持。WBS、課題管理表、QA表の同期対象に `T676 / R25 / Q-AHOC-20260523-2` を追加した。
 - **Cost guard**: Seedance APIは引き続き `SEEDANCE_API_ENABLED=1` の明示設定なしでは外部課金呼び出しを行わず、通常デモでは保存済み動画とDownload導線を使う。
 
+### Refresh (2026-06-11 / Claude Code WBS 整合性監査セッション)
+
+- **Anthropic Claude Code**: Terminal / VS Code / JetBrains に加え Desktop / Web (claude.ai/code) / iOS が正式提供。Routines（managed cron 実行）、Channels（Telegram/Discord/webhook 連携）、GitHub Code Review（PR 自動レビュー）、auto memory が公式機能化。`claude --teleport` でセッション移動可。
+- **OpenAI Codex**: Desktop アプリ（プロジェクト管理・レビューパネル）、Chronicle メモリ管理、plugins / skills / subagents、sandboxing + auto-review が公式化。AGENTS.md / MCP は引き続き中核。
+- **Google Gemini**: 現行安定版は **Gemini 3.5 Flash**（agentic/coding 最上位）、3.1 Pro は Preview。**Gemini 2.0 Flash 系 / Gemini 3 Pro Preview は廃止予定** — T780 のタスク名から旧モデル名を削除済み。明示キャッシュ最小トークンは 3.5 Flash / 3.1 Pro で 4,096。Antigravity は Gemini API の Agents 系 Preview として公式掲載。
+- **GitHub Actions（期限付き・重要）**: **2026-06-16 に runner デフォルトが Node 24 へ切替**（Node 20 は 2026-09-16 削除）。`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` で事前検証可能。→ **T786 を起票**（期限 2026-06-15、Codex レーン）。
+- **Firebase Functions**: Python 3.14 ランタイム GA（3.14 以降は requirements インストーラが uv デフォルト）。`functions.config()` は 2027-03 完全廃止。
+- **Supabase RLS**: RLS ポリシーで JWT の `user_metadata` クレーム参照は禁忌（ユーザー改変可能）。Firebase Auth 連携は `accessToken` オプション方式が公式。**JWT secret は staging/prod で分離必須** → T788（ステージング環境構築）の要件に反映済み。
+- **Stripe**: 最新 API バージョン `2026-05-27.dahlia`。legacy usage records API は廃止済みで**従量課金は Billing Meters API 必須** → T776 設計と T791（課金実装、新規起票）は Meters + API version pin 前提とする。
+- **今回の WBS 完了単位**: `T785 WBS 整合性監査`。重複ID（T774/T775 二重定義）が commit 7583bf2 で Phase 9 の未実施タスクを誤って完了化していた問題を解消（課題管理表 R40）。重複タスク T758/T766/T779/T775×2 を削除し、不足工程タスク T786〜T793（Node 24 対応・規約初版・ステージング・監査初回実施・サポート窓口・Stripe 実装・特商法表記・ローンチ告知）を追加。`docs/WBS.md` は `scripts/generate_wbs_md.py` による TSV からの自動生成に移行し、重複 ID は生成時エラーで検出される。
+
 ---
 
 ### Session gate (2026-05-22 Codex pass)
@@ -382,6 +393,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-05-22 | Codex | Light refresh 6th pass: 公式Docs確認範囲拡張、Calendar完了イベント削除ルール、T614/T666完了を反映 |
 | 2026-05-22 | Codex | Light refresh 7th pass: Amazon/Apple/Obsidian/Unityを公式Docs確認範囲へ追加し、Seedance動画UI刷新とT667完了を反映 |
 | 2026-05-23 | Codex | Light refresh: Seedance公式ページのナビ/フッター/スクロール構造をMighty独自UIへ反映し、T676完了を記録 |
+| 2026-06-11 | Claude Code | Refresh: Node 24 切替期限 (T786起票)・Stripe Meters API・Supabase RLS user_metadata 禁忌を反映。T785 WBS整合性監査完了、WBS.md 自動生成化 (generate_wbs_md.py) |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 
