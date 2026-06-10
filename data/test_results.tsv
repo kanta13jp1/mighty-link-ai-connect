@@ -30,3 +30,5 @@ TEST-008	UI/UX	Playwright E2Eテスト	ブラウザ操作によるサンプル�
 TEST-007	Backend/DB	API/DB単体テスト	FastAPI/DB保存/認証等の機能テスト	PASS	Pytest	100%	0%	2026-06-10 21:18
 TEST-008	UI/UX	Playwright E2Eテスト	ブラウザ操作によるサンプルロードと分析検証	PASS	Playwright	100%	0%	2026-06-10 21:18
 TEST-009	Backend/DB	RLSポリシー静的検証テスト	Supabase SQLマイグレーションのRLS有無・firebase_uid検証	PASS	Pytest	100%	0%	2026-06-10 21:18
+TEST-007	Backend/DB	API/DB単体テスト	FastAPI/DB保存/認証等の機能テスト	PASS	Pytest	100%	0%	2026-06-11 00:53
+TEST-008	UI/UX	Playwright E2Eテスト	ブラウザ操作によるサンプルロードと分析検証	PASS	Playwright	100%	0%	2026-06-11 00:53

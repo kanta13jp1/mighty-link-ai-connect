@@ -348,6 +348,12 @@ feat/<tool>-<wbs-id>-<slug>
 - **Stripe**: 最新 API バージョン `2026-05-27.dahlia`。legacy usage records API は廃止済みで**従量課金は Billing Meters API 必須** → T776 設計と T791（課金実装、新規起票）は Meters + API version pin 前提とする。
 - **今回の WBS 完了単位**: `T785 WBS 整合性監査`。重複ID（T774/T775 二重定義）が commit 7583bf2 で Phase 9 の未実施タスクを誤って完了化していた問題を解消（課題管理表 R40）。重複タスク T758/T766/T779/T775×2 を削除し、不足工程タスク T786〜T793（Node 24 対応・規約初版・ステージング・監査初回実施・サポート窓口・Stripe 実装・特商法表記・ローンチ告知）を追加。`docs/WBS.md` は `scripts/generate_wbs_md.py` による TSV からの自動生成に移行し、重複 ID は生成時エラーで検出される。
 
+### Refresh (2026-06-11 / Codex GitHub Actions Node 24 対応セッション)
+
+- **GitHub Actions**: GitHub 公式 changelog の Node 20 deprecation に合わせ、`.github/workflows/deploy.yml` と `.github/workflows/public-demo-guard.yml` に `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` を workflow-level env として追加。事前に Node 24 runtime で action 互換性を検証する。
+- **公式 action major 更新**: `actions/checkout@v6`、`actions/setup-python@v6`、`actions/setup-node@v6`、`google-github-actions/auth@v3` へ更新。Firebase CLI 用 Node.js は `24` を明示し、不要な npm 自動キャッシュは `package-manager-cache: false` で抑止する。
+- **今回の WBS 完了単位**: `T786 GitHub Actions ランナー Node 24 デフォルト切替（2026-06-16）への対応`。2026-06-16 の切替日前に完了扱いへ前倒しし、後段タスクは Sheets/Calendar 同期で現在の前倒し進捗へ反映する。
+
 ---
 
 ### Session gate (2026-05-22 Codex pass)
@@ -394,6 +400,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-05-22 | Codex | Light refresh 7th pass: Amazon/Apple/Obsidian/Unityを公式Docs確認範囲へ追加し、Seedance動画UI刷新とT667完了を反映 |
 | 2026-05-23 | Codex | Light refresh: Seedance公式ページのナビ/フッター/スクロール構造をMighty独自UIへ反映し、T676完了を記録 |
 | 2026-06-11 | Claude Code | Refresh: Node 24 切替期限 (T786起票)・Stripe Meters API・Supabase RLS user_metadata 禁忌を反映。T785 WBS整合性監査完了、WBS.md 自動生成化 (generate_wbs_md.py) |
+| 2026-06-11 | Codex | T786完了: GitHub Actions を Node 24 事前検証モードへ切替。checkout/setup-python/setup-node を v6、google-github-actions/auth を v3 へ更新 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 
