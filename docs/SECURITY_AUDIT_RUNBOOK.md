@@ -10,6 +10,7 @@
 | :--- | :--- | :--- | :--- |
 | 2026-06-10 | v1.0.0 | 初版作成（4軸監査チェックリスト・自動化スクリプト仕様） | Claude Code |
 | 2026-06-11 | v1.1.0 | 初回監査(2026-Q2)実施に伴う更新: 対象パスを実構成 (src/ scripts/ main.py) へ修正、firebase_uid を public スキーマ表記へ統一、Actions SHA ピン留め推奨を追記 | Claude Code |
+| 2026-06-12 | v1.2.0 | 初回監査(2026-Q2)完了。結果は [SECURITY_AUDIT_REPORT_2026-Q2.md](SECURITY_AUDIT_REPORT_2026-Q2.md) に記録（T789 / R49 / R50 / SEC-004〜007）。次回監査は 2026-09 | Claude Code |
 
 ---
 

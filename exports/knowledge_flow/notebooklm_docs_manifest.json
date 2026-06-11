@@ -1,5 +1,5 @@
 {
-  "generated_at_jst": "2026-06-12T04:16:52+09:00",
+  "generated_at_jst": "2026-06-12T05:21:11+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "google_docs": {
     "docs_ai_cost_monitoring_and_quota_design_md": {
@@ -16,7 +16,7 @@
         }
       ],
       "createdTime": "2026-06-03T05:39:42.251Z",
-      "modifiedTime": "2026-06-11T19:08:12.144Z"
+      "modifiedTime": "2026-06-11T20:12:46.931Z"
     },
     "docs_antigravity_cli_evaluation_report_md": {
       "source": "docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md",
@@ -32,7 +32,7 @@
         }
       ],
       "createdTime": "2026-05-30T06:29:26.117Z",
-      "modifiedTime": "2026-06-11T19:08:16.127Z"
+      "modifiedTime": "2026-06-11T20:12:51.634Z"
     },
     "docs_antigravity_guide_md": {
       "source": "docs/ANTIGRAVITY_GUIDE.md",
@@ -48,7 +48,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:05.145Z",
-      "modifiedTime": "2026-06-11T19:08:19.045Z"
+      "modifiedTime": "2026-06-11T20:12:54.969Z"
     },
     "docs_antigravity_hooks_sync_poc_md": {
       "source": "docs/ANTIGRAVITY_HOOKS_SYNC_POC.md",
@@ -64,7 +64,7 @@
         }
       ],
       "createdTime": "2026-06-03T06:53:08.412Z",
-      "modifiedTime": "2026-06-11T19:08:22.707Z"
+      "modifiedTime": "2026-06-11T20:12:58.208Z"
     },
     "docs_antigravity_managed_agents_cost_policy_md": {
       "source": "docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md",
@@ -80,7 +80,7 @@
         }
       ],
       "createdTime": "2026-05-30T06:29:32.244Z",
-      "modifiedTime": "2026-06-11T19:08:25.585Z"
+      "modifiedTime": "2026-06-11T20:13:01.109Z"
     },
     "docs_audit_log_masking_and_encryption_md": {
       "source": "docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md",
@@ -96,7 +96,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:35:42.295Z",
-      "modifiedTime": "2026-06-11T19:08:29.415Z"
+      "modifiedTime": "2026-06-11T20:13:04.278Z"
     },
     "docs_backend_ai_pipeline_md": {
       "source": "docs/BACKEND_AI_PIPELINE.md",
@@ -112,7 +112,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:08.445Z",
-      "modifiedTime": "2026-06-11T19:08:32.345Z"
+      "modifiedTime": "2026-06-11T20:13:07.256Z"
     },
     "docs_ceo_presentation_backup_guide_md": {
       "source": "docs/CEO_PRESENTATION_BACKUP_GUIDE.md",
@@ -128,7 +128,7 @@
         }
       ],
       "createdTime": "2026-05-28T15:32:31.318Z",
-      "modifiedTime": "2026-06-11T19:08:35.642Z"
+      "modifiedTime": "2026-06-11T20:13:10.344Z"
     },
     "docs_ceo_presentation_canva_figma_guide_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md",
@@ -144,7 +144,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:15:37.750Z",
-      "modifiedTime": "2026-06-11T19:08:38.740Z"
+      "modifiedTime": "2026-06-11T20:13:13.727Z"
     },
     "docs_ceo_presentation_decision_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md",
@@ -160,7 +160,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:11.504Z",
-      "modifiedTime": "2026-06-11T19:08:41.853Z"
+      "modifiedTime": "2026-06-11T20:13:16.869Z"
     },
     "docs_ceo_presentation_discussion_points_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md",
@@ -176,7 +176,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:10.521Z",
-      "modifiedTime": "2026-06-11T19:08:45.187Z"
+      "modifiedTime": "2026-06-11T20:13:20.063Z"
     },
     "docs_ceo_presentation_final_review_checklist_md": {
       "source": "docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md",
@@ -192,7 +192,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:13.734Z",
-      "modifiedTime": "2026-06-11T19:08:48.597Z"
+      "modifiedTime": "2026-06-11T20:13:23.158Z"
     },
     "docs_ceo_presentation_ops_discussion_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md",
@@ -208,7 +208,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:16.975Z",
-      "modifiedTime": "2026-06-11T19:08:51.538Z"
+      "modifiedTime": "2026-06-11T20:13:26.115Z"
     },
     "docs_ceo_presentation_post_decision_roadmap_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
@@ -224,7 +224,7 @@
         }
       ],
       "createdTime": "2026-05-22T01:55:28.832Z",
-      "modifiedTime": "2026-06-11T19:08:54.551Z"
+      "modifiedTime": "2026-06-11T20:13:29.335Z"
     },
     "docs_ceo_presentation_prep_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PREP_2026-06-02.md",
@@ -240,7 +240,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:13.861Z",
-      "modifiedTime": "2026-06-11T19:08:57.728Z"
+      "modifiedTime": "2026-06-11T20:13:32.472Z"
     },
     "docs_ceo_presentation_preshare_memo_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md",
@@ -256,7 +256,7 @@
         }
       ],
       "createdTime": "2026-05-22T04:29:57.435Z",
-      "modifiedTime": "2026-06-11T19:09:01.084Z"
+      "modifiedTime": "2026-06-11T20:13:35.848Z"
     },
     "docs_ceo_presentation_qa_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md",
@@ -272,7 +272,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:23.139Z",
-      "modifiedTime": "2026-06-11T19:09:04.574Z"
+      "modifiedTime": "2026-06-11T20:13:38.586Z"
     },
     "docs_codex_continuation_notes_md": {
       "source": "docs/CODEX_CONTINUATION_NOTES.md",
@@ -288,7 +288,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:17.070Z",
-      "modifiedTime": "2026-06-11T19:09:07.925Z"
+      "modifiedTime": "2026-06-11T20:13:41.744Z"
     },
     "docs_cost_report_2026_06_md": {
       "source": "docs/COST_REPORT_2026-06.md",
@@ -304,7 +304,7 @@
         }
       ],
       "createdTime": "2026-06-02T15:27:49.024Z",
-      "modifiedTime": "2026-06-11T19:09:11.462Z"
+      "modifiedTime": "2026-06-11T20:13:45.610Z"
     },
     "docs_database_md": {
       "source": "docs/database.md",
@@ -320,7 +320,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:20.169Z",
-      "modifiedTime": "2026-06-11T19:09:14.604Z"
+      "modifiedTime": "2026-06-11T20:13:48.852Z"
     },
     "docs_demo_security_and_auth_design_md": {
       "source": "docs/DEMO_SECURITY_AND_AUTH_DESIGN.md",
@@ -336,7 +336,7 @@
         }
       ],
       "createdTime": "2026-06-03T05:02:20.581Z",
-      "modifiedTime": "2026-06-11T19:09:17.776Z"
+      "modifiedTime": "2026-06-11T20:13:52.109Z"
     },
     "docs_development_knowledge_flow_md": {
       "source": "docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
@@ -352,7 +352,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:23.586Z",
-      "modifiedTime": "2026-06-11T19:09:20.636Z"
+      "modifiedTime": "2026-06-11T20:13:55.122Z"
     },
     "docs_disaster_recovery_and_escalation_runbook_md": {
       "source": "docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md",
@@ -368,7 +368,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:16:14.738Z",
-      "modifiedTime": "2026-06-11T19:09:23.795Z"
+      "modifiedTime": "2026-06-11T20:13:58.084Z"
     },
     "docs_firebase_auth_supabase_rls_security_design_md": {
       "source": "docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md",
@@ -384,7 +384,7 @@
         }
       ],
       "createdTime": "2026-06-06T05:10:30.765Z",
-      "modifiedTime": "2026-06-11T19:09:26.915Z"
+      "modifiedTime": "2026-06-11T20:14:01.309Z"
     },
     "docs_firebase_supabase_system_architecture_md": {
       "source": "docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md",
@@ -400,7 +400,7 @@
         }
       ],
       "createdTime": "2026-06-06T02:47:52.808Z",
-      "modifiedTime": "2026-06-11T19:09:30.080Z"
+      "modifiedTime": "2026-06-11T20:14:04.202Z"
     },
     "docs_google_workspace_migration_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
@@ -416,7 +416,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:26.826Z",
-      "modifiedTime": "2026-06-11T19:09:33.042Z"
+      "modifiedTime": "2026-06-11T20:14:06.854Z"
     },
     "docs_growth_strategy_roadmap_md": {
       "source": "docs/GROWTH_STRATEGY_ROADMAP.md",
@@ -432,7 +432,7 @@
         }
       ],
       "createdTime": "2026-06-10T12:30:56.561Z",
-      "modifiedTime": "2026-06-11T19:09:36.625Z"
+      "modifiedTime": "2026-06-11T20:14:09.902Z"
     },
     "docs_hosting_and_database_selection_md": {
       "source": "docs/HOSTING_AND_DATABASE_SELECTION.md",
@@ -448,7 +448,7 @@
         }
       ],
       "createdTime": "2026-06-02T13:12:51.416Z",
-      "modifiedTime": "2026-06-11T19:09:39.642Z"
+      "modifiedTime": "2026-06-11T20:14:13.219Z"
     },
     "docs_integration_demo_evidence_2026_06_02_md": {
       "source": "docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md",
@@ -464,7 +464,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:30.369Z",
-      "modifiedTime": "2026-06-11T19:09:42.725Z"
+      "modifiedTime": "2026-06-11T20:14:16.464Z"
     },
     "docs_mcp_canva_figma_setup_guide_2026_06_02_md": {
       "source": "docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md",
@@ -480,7 +480,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:16:25.443Z",
-      "modifiedTime": "2026-06-11T19:09:45.916Z"
+      "modifiedTime": "2026-06-11T20:14:19.308Z"
     },
     "docs_monthly_progress_report_and_kpi_dashboard_md": {
       "source": "docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md",
@@ -496,7 +496,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:46:22.333Z",
-      "modifiedTime": "2026-06-11T19:09:49.026Z"
+      "modifiedTime": "2026-06-11T20:14:22.478Z"
     },
     "docs_multi_ai_workflow_md": {
       "source": "docs/MULTI_AI_WORKFLOW.md",
@@ -512,7 +512,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:39.743Z",
-      "modifiedTime": "2026-06-11T19:09:52.256Z"
+      "modifiedTime": "2026-06-11T20:14:25.353Z"
     },
     "docs_personal_info_disclosure_procedures_md": {
       "source": "docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md",
@@ -528,7 +528,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:46:28.736Z",
-      "modifiedTime": "2026-06-11T19:09:55.809Z"
+      "modifiedTime": "2026-06-11T20:14:28.483Z"
     },
     "docs_pilot_closed_operation_design_md": {
       "source": "docs/PILOT_CLOSED_OPERATION_DESIGN.md",
@@ -544,7 +544,7 @@
         }
       ],
       "createdTime": "2026-06-03T04:14:48.832Z",
-      "modifiedTime": "2026-06-11T19:09:59.115Z"
+      "modifiedTime": "2026-06-11T20:14:31.739Z"
     },
     "docs_pilot_consent_template_md": {
       "source": "docs/PILOT_CONSENT_TEMPLATE.md",
@@ -560,7 +560,7 @@
         }
       ],
       "createdTime": "2026-06-02T11:18:59.919Z",
-      "modifiedTime": "2026-06-11T19:10:02.086Z"
+      "modifiedTime": "2026-06-11T20:14:34.347Z"
     },
     "docs_pilot_participants_selection_md": {
       "source": "docs/PILOT_PARTICIPANTS_SELECTION.md",
@@ -576,7 +576,7 @@
         }
       ],
       "createdTime": "2026-06-03T02:08:51.666Z",
-      "modifiedTime": "2026-06-11T19:10:05.096Z"
+      "modifiedTime": "2026-06-11T20:14:37.607Z"
     },
     "docs_pilot_report_2026_06_16_md": {
       "source": "docs/PILOT_REPORT_2026-06-16.md",
@@ -592,7 +592,7 @@
         }
       ],
       "createdTime": "2026-06-06T01:45:30.668Z",
-      "modifiedTime": "2026-06-11T19:10:08.861Z"
+      "modifiedTime": "2026-06-11T20:14:40.640Z"
     },
     "docs_privacy_policy_md": {
       "source": "docs/PRIVACY_POLICY.md",
@@ -608,7 +608,7 @@
         }
       ],
       "createdTime": "2026-06-11T19:10:11.376Z",
-      "modifiedTime": "2026-06-11T19:10:11.397Z"
+      "modifiedTime": "2026-06-11T20:14:43.220Z"
     },
     "docs_production_acceptance_test_report_md": {
       "source": "docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md",
@@ -624,7 +624,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:16:59.142Z",
-      "modifiedTime": "2026-06-11T19:10:15.400Z"
+      "modifiedTime": "2026-06-11T20:14:46.181Z"
     },
     "docs_project_structure_md": {
       "source": "docs/PROJECT_STRUCTURE.md",
@@ -640,7 +640,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:33.155Z",
-      "modifiedTime": "2026-06-11T19:10:18.422Z"
+      "modifiedTime": "2026-06-11T20:14:49.331Z"
     },
     "docs_requirements_md": {
       "source": "docs/requirements.md",
@@ -656,7 +656,23 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:35.726Z",
-      "modifiedTime": "2026-06-11T19:10:21.455Z"
+      "modifiedTime": "2026-06-11T20:14:52.409Z"
+    },
+    "docs_security_audit_report_2026_q2_md": {
+      "source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md",
+      "id": "18Giy7tbF_P5iNNbo8ornDeq38t6UPgxR9LJBJVzCs5A",
+      "name": "Mighty Skill-Bridge docs/docs/SECURITY_AUDIT_REPORT_2026-Q2.md",
+      "url": "https://docs.google.com/document/d/18Giy7tbF_P5iNNbo8ornDeq38t6UPgxR9LJBJVzCs5A/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-06-11T20:14:55.052Z",
+      "modifiedTime": "2026-06-11T20:14:55.075Z"
     },
     "docs_security_audit_runbook_md": {
       "source": "docs/SECURITY_AUDIT_RUNBOOK.md",
@@ -672,7 +688,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:37:52.367Z",
-      "modifiedTime": "2026-06-11T19:10:24.290Z"
+      "modifiedTime": "2026-06-11T20:14:58.807Z"
     },
     "docs_sequence_diagrams_md": {
       "source": "docs/SEQUENCE_DIAGRAMS.md",
@@ -688,7 +704,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:16:37.218Z",
-      "modifiedTime": "2026-06-11T19:10:27.769Z"
+      "modifiedTime": "2026-06-11T20:15:02.279Z"
     },
     "docs_setup_guide_md": {
       "source": "docs/SETUP_GUIDE.md",
@@ -704,7 +720,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:39.055Z",
-      "modifiedTime": "2026-06-11T19:10:30.690Z"
+      "modifiedTime": "2026-06-11T20:15:05.402Z"
     },
     "docs_sheets_trackers_schema_md": {
       "source": "docs/SHEETS_TRACKERS_SCHEMA.md",
@@ -720,7 +736,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:50.427Z",
-      "modifiedTime": "2026-06-11T19:10:33.863Z"
+      "modifiedTime": "2026-06-11T20:15:08.666Z"
     },
     "docs_sla_kpi_definition_and_measurement_md": {
       "source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md",
@@ -736,7 +752,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:38:06.744Z",
-      "modifiedTime": "2026-06-11T19:10:37.184Z"
+      "modifiedTime": "2026-06-11T20:15:11.839Z"
     },
     "docs_staging_environment_operation_runbook_md": {
       "source": "docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md",
@@ -752,7 +768,7 @@
         }
       ],
       "createdTime": "2026-06-10T17:05:18.055Z",
-      "modifiedTime": "2026-06-11T19:10:40.235Z"
+      "modifiedTime": "2026-06-11T20:15:15.919Z"
     },
     "docs_supabase_database_physical_and_index_design_md": {
       "source": "docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md",
@@ -768,7 +784,7 @@
         }
       ],
       "createdTime": "2026-06-06T05:39:27.159Z",
-      "modifiedTime": "2026-06-11T19:10:43.373Z"
+      "modifiedTime": "2026-06-11T20:15:19.014Z"
     },
     "docs_terms_and_privacy_annual_review_process_md": {
       "source": "docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md",
@@ -784,7 +800,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:47:11.192Z",
-      "modifiedTime": "2026-06-11T19:10:46.264Z"
+      "modifiedTime": "2026-06-11T20:15:22.472Z"
     },
     "docs_terms_of_service_md": {
       "source": "docs/TERMS_OF_SERVICE.md",
@@ -800,7 +816,7 @@
         }
       ],
       "createdTime": "2026-06-11T19:10:49.110Z",
-      "modifiedTime": "2026-06-11T19:10:49.131Z"
+      "modifiedTime": "2026-06-11T20:15:25.776Z"
     },
     "docs_user_data_deletion_flow_md": {
       "source": "docs/USER_DATA_DELETION_FLOW.md",
@@ -816,7 +832,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:17:25.739Z",
-      "modifiedTime": "2026-06-11T19:10:53.177Z"
+      "modifiedTime": "2026-06-11T20:15:28.793Z"
     },
     "docs_user_guide_and_faq_md": {
       "source": "docs/USER_GUIDE_AND_FAQ.md",
@@ -832,7 +848,7 @@
         }
       ],
       "createdTime": "2026-06-10T12:31:52.213Z",
-      "modifiedTime": "2026-06-11T19:10:56.726Z"
+      "modifiedTime": "2026-06-11T20:15:31.891Z"
     },
     "docs_wbs_md": {
       "source": "docs/WBS.md",
@@ -848,7 +864,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-06-11T19:10:59.990Z"
+      "modifiedTime": "2026-06-11T20:15:34.861Z"
     },
     "docs_wbs_sync_guide_md": {
       "source": "docs/WBS_SYNC_GUIDE.md",
@@ -864,14 +880,14 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:44.871Z",
-      "modifiedTime": "2026-06-11T19:11:03.053Z"
+      "modifiedTime": "2026-06-11T20:15:38.524Z"
     }
   },
   "notebooklm": {
     "available": true,
     "status": "ready",
-    "status_output": "Current Context                            \n┌──────────────┬──────────────────────────────────────────────────────┐\n│ Property     │ Value                                                │\n├──────────────┼──────────────────────────────────────────────────────┤\n│ Notebook ID  │ cd44c4ef-4c46-40b5-ace3-1b6904d29591                 │\n│ Title        │ Mighty Skill-Bridge Development Knowledge 2026-06-02 │\n│ Ownership    │ Owner                                                │\n│ Created      │ 2026-06-11                                           │\n│ Conversation │ 511e5401-175b-41ea-8b07-203758f83c77                 │\n└──────────────┴──────────────────────────────────────────────────────┘",
-    "list_output": "Notebooks                                   \n┌────────────────────────────┬───────────────────────────┬───────┬────────────┐\n│ ID                         │ Title                     │ Owner │ Created    │\n├────────────────────────────┼───────────────────────────┼───────┼────────────┤\n│ cd44c4ef-4c46-40b5-ace3-1… │ Mighty Skill-Bridge       │ Owner │ 2026-06-11 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ a235db10-d2c5-4ee3-9621-8… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 28804753-3266-406d-b0ae-e… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 75521ea6-6b9b-47b2-9508-5… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 4af4503e-1085-4281-9b3e-f… │ Mighty-Link AI Connect    │ Owner │ 2026-06-09 │\n│                            │ Project Management WBS    │       │            │\n│ b0fb4be1-88fb-4079-ab65-a… │ Firebase: Building and    │ Owner │ 2026-06-03 │\n│                            │ Scaling Modern Apps with  │       │            │\n│                            │ Google Infrastructure     │       │            │\n│ 54b1bd0c-f201-4b35-9855-8… │ Strategic AI Integration  │ Owner │ 2026-06-03 │\n│                            │ and Sustainable           │       │            │\n│                            │ Development Roadmap       │       │            │\n│ 6d164541-3e0c-49a4-8728-8… │ Google I/O 2026: Building │ Owner │ 2026-06-02 │\n│                            │ the Agentic Future        │       │            │\n│ 5790a227-0187-4b6c-a88e-0… │ Dreamina Seedance 2.0     │ Owner │ 2026-05-23 │\n│                            │ Resource Pack Guide       │       │            │\n└────────────────────────────┴───────────────────────────┴───────┴────────────┘",
+    "status_output": "Current Context                            \n┌──────────────┬──────────────────────────────────────────────────────┐\n│ Property     │ Value                                                │\n├──────────────┼──────────────────────────────────────────────────────┤\n│ Notebook ID  │ cd44c4ef-4c46-40b5-ace3-1b6904d29591                 │\n│ Title        │ Mighty Skill-Bridge Development Knowledge 2026-06-02 │\n│ Ownership    │ Owner                                                │\n│ Created      │ 2026-06-12                                           │\n│ Conversation │ 511e5401-175b-41ea-8b07-203758f83c77                 │\n└──────────────┴──────────────────────────────────────────────────────┘",
+    "list_output": "Notebooks                                   \n┌────────────────────────────┬───────────────────────────┬───────┬────────────┐\n│ ID                         │ Title                     │ Owner │ Created    │\n├────────────────────────────┼───────────────────────────┼───────┼────────────┤\n│ cd44c4ef-4c46-40b5-ace3-1… │ Mighty Skill-Bridge       │ Owner │ 2026-06-12 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ a235db10-d2c5-4ee3-9621-8… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 28804753-3266-406d-b0ae-e… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 75521ea6-6b9b-47b2-9508-5… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 4af4503e-1085-4281-9b3e-f… │ Mighty-Link AI Connect    │ Owner │ 2026-06-09 │\n│                            │ Project Management WBS    │       │            │\n│ b0fb4be1-88fb-4079-ab65-a… │ Firebase: Building and    │ Owner │ 2026-06-03 │\n│                            │ Scaling Modern Apps with  │       │            │\n│                            │ Google Infrastructure     │       │            │\n│ 54b1bd0c-f201-4b35-9855-8… │ Strategic AI Integration  │ Owner │ 2026-06-03 │\n│                            │ and Sustainable           │       │            │\n│                            │ Development Roadmap       │       │            │\n│ 6d164541-3e0c-49a4-8728-8… │ Google I/O 2026: Building │ Owner │ 2026-06-02 │\n│                            │ the Agentic Future        │       │            │\n│ 5790a227-0187-4b6c-a88e-0… │ Dreamina Seedance 2.0     │ Owner │ 2026-05-23 │\n│                            │ Resource Pack Guide       │       │            │\n└────────────────────────────┴───────────────────────────┴───────┴────────────┘",
     "notebook_id": "cd44c4ef-4c46-40b5-ace3-1b6904d29591",
     "notebook_title": "Mighty Skill-Bridge Development Knowledge 2026-06-02",
     "notebook_info": {
@@ -1215,9 +1231,10 @@
       {
         "title": "Mighty Skill-Bridge docs/docs/PRIVACY_POLICY.md",
         "drive_file_id": "19HaoiArtdICqNktUe2do7fyFUpcQWM6yujXzXk9pKx0",
-        "action": "added",
+        "action": "refreshed_existing",
+        "source_id": "489d4325-1bf7-4683-af80-ba8c4be08e88",
         "returncode": 0,
-        "stdout": "Added Drive source: 489d4325-1bf7-4683-af80-ba8c4be08e88\nTitle: Mighty Skill-Bridge docs/docs/PRIVACY_POLICY.md",
+        "stdout": "Source refreshed: 489d4325-1bf7-4683-af80-ba8c4be08e88",
         "stderr": ""
       },
       {
@@ -1245,6 +1262,14 @@
         "source_id": "2883548b-df70-44d7-b476-80ed49c4935d",
         "returncode": 0,
         "stdout": "Source refreshed: 2883548b-df70-44d7-b476-80ed49c4935d",
+        "stderr": ""
+      },
+      {
+        "title": "Mighty Skill-Bridge docs/docs/SECURITY_AUDIT_REPORT_2026-Q2.md",
+        "drive_file_id": "18Giy7tbF_P5iNNbo8ornDeq38t6UPgxR9LJBJVzCs5A",
+        "action": "added",
+        "returncode": 0,
+        "stdout": "Added Drive source: 08071154-40e6-4ccc-9e94-e156713f3714\nTitle: Mighty Skill-Bridge docs/docs/SECURITY_AUDIT_REPORT_2026-Q2.md",
         "stderr": ""
       },
       {
@@ -1322,9 +1347,10 @@
       {
         "title": "Mighty Skill-Bridge docs/docs/TERMS_OF_SERVICE.md",
         "drive_file_id": "1bGSpEdgRyw06UaUQfwGsjLfS1qDimmSAsrN-yQvg2v0",
-        "action": "added",
+        "action": "refreshed_existing",
+        "source_id": "0cf2c452-88d9-4e59-a7f1-1e929bc05429",
         "returncode": 0,
-        "stdout": "Added Drive source: 0cf2c452-88d9-4e59-a7f1-1e929bc05429\nTitle: Mighty Skill-Bridge docs/docs/TERMS_OF_SERVICE.md",
+        "stdout": "Source refreshed: 0cf2c452-88d9-4e59-a7f1-1e929bc05429",
         "stderr": ""
       },
       {

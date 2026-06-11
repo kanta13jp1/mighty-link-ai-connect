@@ -1,6 +1,6 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-12T04:16:52+09:00
+Generated: 2026-06-12T05:21:11+09:00
 
 ## Current Status
 
@@ -51,6 +51,7 @@ Generated: 2026-06-12T04:16:52+09:00
 - `docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md`: https://docs.google.com/document/d/1T4KOHtWeKJRm1HGYCHOm3ey2Pqhmpb_4WHk92lBqvSU/edit?usp=drivesdk
 - `docs/PROJECT_STRUCTURE.md`: https://docs.google.com/document/d/1ACZgUCWCCSM6o7oNh9qsAIk5wfyq7mKsHCiyQxNsrcg/edit?usp=drivesdk
 - `docs/requirements.md`: https://docs.google.com/document/d/1G6XmZoa-LhnKuq4At6PVPJrr7IaT5XrP7IYYnwPKAPA/edit?usp=drivesdk
+- `docs/SECURITY_AUDIT_REPORT_2026-Q2.md`: https://docs.google.com/document/d/18Giy7tbF_P5iNNbo8ornDeq38t6UPgxR9LJBJVzCs5A/edit?usp=drivesdk
 - `docs/SECURITY_AUDIT_RUNBOOK.md`: https://docs.google.com/document/d/1qld9AwkywSTLtPVT5g1HyD98FVJhKrnXoGiviN2tgyQ/edit?usp=drivesdk
 - `docs/SEQUENCE_DIAGRAMS.md`: https://docs.google.com/document/d/1h7CFApE7fncMQT6W8gbSkuieOpf-x0IA15Hd0HEAiGY/edit?usp=drivesdk
 - `docs/SETUP_GUIDE.md`: https://docs.google.com/document/d/16DonChND2WzQFWDZ8aubajlZdVB1aVnMsXnYLXE7xUI/edit?usp=drivesdk

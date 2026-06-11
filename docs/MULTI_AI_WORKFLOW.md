@@ -343,6 +343,26 @@ feat/<tool>-<wbs-id>-<slug>
 
 ---
 
+### Refresh (2026-06-12 / Claude Code 四半期セキュリティ監査セッション)
+
+公式 Docs 24 提供元をバックグラウンド並列調査で確認。本プロジェクトに影響する差分のみ記載。
+
+- **Google（期限付き・最重要）**: **6/18 に Gemini CLI / Gemini Code Assist の個人向け提供が停止**し Antigravity CLI へ移行必須。Firebase の Gemini CLI 向け拡張も同日終了 — **T803 を起票し 6/15〜6/17 で移行対応**。Gemini 3.5 Flash が stable 化（エージェント/コーディング最上位）。
+- **Firebase**: AI Logic ハイブリッド推論（オンデバイス+クラウド）GA (5/28)。Admin Node.js SDK v14 は Node 22+ 必須 (6/8)。Firebase ML は 2027-06-15 シャットダウン予告 — 本プロジェクトは未使用で影響なし。
+- **Supabase（期限付き）**: 6/15 以降の**新規**プロジェクトは GraphQL introspection デフォルト無効（既存 production/staging プロジェクトは影響なし）。無料枠のメールテンプレートカスタマイズ制限開始 (6/3) — Auth メール本格運用時はカスタム SMTP を検討。Passkeys (WebAuthn) ベータ (5/28) は認証強化の将来候補。
+- **GitHub（課金影響）**: 6/1 から Copilot が従量課金 (AI Credits) へ移行し、Copilot code review がプライベートリポジトリで Actions 分を消費。公開デモガード CI と併走するため Actions 消費量の監視を T687/T736 のコスト監視に含める。Copilot SDK GA (6/2)。
+- **Anthropic Claude Code**: v2.1.172 でサブエージェント 5 階層ネスト・プラグインマーケットプレイス検索。Routines（クラウド定期実行）/ Channels が正式機能 — セッションクローズアウト（Sheets/Calendar 同期）の定期自動実行候補。
+- **OpenAI Codex**: AGENTS.md は 3 層階層（global→project→ディレクトリ）・合計 32KiB 上限・`AGENTS.override.md` による一時上書きが規定された。Codex が Amazon Bedrock 経由でも GA。
+- **Microsoft / Amazon**: Azure AI Foundry hosted agents（GA 7 月見込）。Bedrock で GPT-5.5/5.4・Codex が GA — マルチベンダー調達の選択肢拡大のみ、現構成への影響なし。
+- **Stripe（T776/T791 前提）**: Sessions 2026 で Checkout Studio・Workflows GA・Agentic Commerce Suite 拡大。T776 設計時に最新 API バージョンの機能セットを再確認する。
+- **その他**: Figma キャンバス内ネイティブ AI エージェント (5/20)。Discord 特権インテントの年次再申請制。Apple は WWDC26 で Core ML 後継「Core AI」発表。Kimi K2.6 / DeepSeek V4 / Grok Build 0.1 など競合モデル更新 — いずれも現構成への直接影響なし。
+- **本セッションの成果**:
+  - `T789 四半期セキュリティ監査（初回）` 完了（予定 6/22 → 6/12 に 10 日前倒し）— 4 軸監査の結果は `docs/SECURITY_AUDIT_REPORT_2026-Q2.md`。bandit High 1 件（SHA1 syncKey）は即日修正、starlette CVE-2026-48710（R49）と requests timeout 17 箇所（R50）は **T802**（Codex、SLA 6/19）へ分離（GitHub Issue #72）。RLS・シークレット漏洩は PASS。
+  - **不足工程の追加**: T802 監査検出事項修正、T803 Antigravity CLI 移行（6/18 期限）、T804 料金プラン決定（CEO 承認、Stripe 実装 T791 の前提）、T805 外部ペネトレーションテスト（ローンチ前）、T806 リリースノート・バージョニング運用。
+  - **前倒しリスケ**: T789 完了で空いた Claude レーンへ T792 特商法表記を 6/29→**6/22** へ 7 日前倒し（有料化 T791 前の余裕を確保）。
+
+---
+
 ### Session gate (2026-05-22 Codex pass)
 
 ユーザー指示により、以後の各開発セッションでは以下を必須ゲートとする。
@@ -393,6 +413,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-11 | Codex | T788完了: Firebase Hosting preview channel と Supabase staging/prod分離のRunbook、検証スクリプト、テストを追加 |
 | 2026-06-11 | Claude Code | R44対応: 本番 /api 502 の根本原因（a2wsgi import時生成 × gunicorn fork）を特定・修正・手動デプロイ復旧。T795 (pooler URL)・T796 (CI Functions deploy 有効化) を起票 |
 | 2026-06-11 | Claude Code | T795完了: Supabase 接続を aws-1-ap-southeast-1 transaction pooler へ切替、本番 db-test success 確認、app テーブル RLS 有効化。T796: FIREBASE_FUNCTIONS_DOTENV secret + deploy.yml .env 復元でゲート解除 |
+| 2026-06-12 | Claude Code | T789完了: 2026-Q2 四半期セキュリティ監査（初回）を 10 日前倒しで実施。SHA1 即日修正、R49/R50 起票 (Issue #72)、T802〜T806 追加（Antigravity CLI 6/18 移行・価格決定・ペンテスト・リリースノート運用）、T792 を 6/22 へ前倒し |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 

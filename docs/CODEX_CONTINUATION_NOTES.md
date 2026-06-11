@@ -506,10 +506,10 @@ Claude Code レーンは `data/WBS.tsv` を直接編集しない規約のため�
 ### Codex への best practice 採用候補キュー ([MULTI_AI_WORKFLOW Best Practices Refresh](MULTI_AI_WORKFLOW.md#best-practices-refresh-2026-05-22) 参照)
 
 - [x] レポジトリルートに `AGENTS.md` 新規作成 (Codex 用 review behavior + WBS/同期/公開URL guard規約) — T664で完了
-- [ ] `.codex/config.toml` で `model` / `sandbox_mode` / `approval_policy` を固定
-- [ ] `scripts/sync_docs_to_notebooklm.py` に Gemini explicit context caching (1-hour TTL) を導入
-- [ ] Codex skills packaging: `/sync-wbs`, `/sync-notebooklm`, `/verify-demo`
-- [ ] 5/27 Antigravity 復帰後に Antigravity CLI 評価 (旧 Gemini CLI からの移行)
+- [x] `.codex/config.toml` で `model` / `sandbox_mode` / `approval_policy` を固定 — T690で完了
+- [x] `scripts/sync_docs_to_notebooklm.py` に Gemini explicit context caching (1-hour TTL) を導入 — T691で完了
+- [x] Codex skills packaging: `/sync-wbs`, `/sync-notebooklm`, `/verify-demo` — T692で完了
+- [x] 5/27 Antigravity 復帰後に Antigravity CLI 評価 (旧 Gemini CLI からの移行) — T693で完了 ([ANTIGRAVITY_CLI_EVALUATION_REPORT.md](ANTIGRAVITY_CLI_EVALUATION_REPORT.md))。なお 6/18 に Gemini CLI / Code Assist 個人向け提供停止のため、残存依存の最終確認を T803 で実施
 
 ### R1 リスク整理 (T665で上書き)
 
@@ -543,10 +543,10 @@ Claude Code レーンは `data/WBS.tsv` を直接編集しない規約のため�
 
 既存 5 件 (AGENTS.md / .codex/config.toml / context caching / skills / Antigravity CLI 評価) に加えて:
 
-- [ ] [docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md) の markdownlint MD032 (blanks-around-lists) 13 件を一括修正 (Claude Code が初版作成時に発生、blank line 構造の整え)
-- [ ] [docs/CODEX_CONTINUATION_NOTES.md](CODEX_CONTINUATION_NOTES.md) 既存コンテンツ 285-422 行の MD034 (bare URLs) 9 件を一括修正
-- [ ] [Antigravity 2.0 JSON hooks](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/) を sync スクリプト群の trigger に利用できるか PoC (5/27 Antigravity 復帰後)
-- [ ] Antigravity 2.0 live voice transcription を 6/2 デモ T640 リハーサルで評価
+- [x] [docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md) の markdownlint MD032 (blanks-around-lists) 13 件を一括修正 — T694 (markdownlint 22件一括修正) で完了
+- [x] [docs/CODEX_CONTINUATION_NOTES.md](CODEX_CONTINUATION_NOTES.md) 既存コンテンツの MD034 (bare URLs) 9 件を一括修正 — T694で完了
+- [x] [Antigravity 2.0 JSON hooks](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/) を sync スクリプト群の trigger に利用できるか PoC — T695で完了 ([ANTIGRAVITY_HOOKS_SYNC_POC.md](ANTIGRAVITY_HOOKS_SYNC_POC.md))
+- [x] Antigravity 2.0 live voice transcription を 6/2 デモ T640 リハーサルで評価 — T640完了 (6/2 プレゼン終了) に伴いクローズ
 
 ## 2026-05-22 (3rd session) Claude Code WBS 完遂: T606 + tracker tabs インフラ
 

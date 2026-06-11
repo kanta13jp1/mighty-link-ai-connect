@@ -238,7 +238,7 @@ gantt
 | **T786** | 7. 決定後実行 | インフラ | GitHub Actions ランナー Node 24 デフォルト切替（2026-06-16）への対応 | Codex | VSCode + Codex + GitHub Actions | `.github/workflows/` の公式 JavaScript action を Node 24 対応 major（checkout/setup-python/setup-node v6、google-github-actions/auth v3）へ更新し、FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true で事前検証を有効化 | 完了 |
 | **T787** | 7. 決定後実行 | コンプライアンス | サービス利用規約・プライバシーポリシー初版本文の作成と法務確認 | 人間 + Claude | VSCode + Claude Code | docs/TERMS_OF_SERVICE.md・docs/PRIVACY_POLICY.md へ初版本文を起草し、法務確認が必要な論点12件を整理。法務確認と本文確定は T798・課題管理表 R48 で管理 | 完了 |
 | **T788** | 7. 決定後実行 | インフラ設計 | ステージング環境（Firebase Hosting preview channel / Supabase 検証用プロジェクト）の構築と運用ルール整備 | Codex | VSCode + Codex | Firebase Hosting preview channel / Supabase staging-prod 分離Runbook、設定検証スクリプト、pytestを追加し、Issue #70 / Project Done / Sheets / Calendarへ同期 | 完了 |
-| **T789** | 8. 本番運用・品質管理 | セキュリティ | 四半期セキュリティ監査の初回実施（SECURITY_AUDIT_RUNBOOK 準拠） | Claude + Codex | VSCode + Claude Code | docs/SECURITY_AUDIT_RUNBOOK.md に基づき静的解析・依存監査・RLS・シークレット漏洩検知の初回監査を実施し結果を Sheets セキュリティタブへ記録 | 未着手 |
+| **T789** | 8. 本番運用・品質管理 | セキュリティ | 四半期セキュリティ監査の初回実施（SECURITY_AUDIT_RUNBOOK 準拠） | Claude + Codex | VSCode + Claude Code | docs/SECURITY_AUDIT_REPORT_2026-Q2.md へ4軸監査結果を記録。bandit High 1件(SHA1)は即日修正、starlette CVE-2026-48710 / requests timeout 17箇所は T802 (R49/R50, Issue #72) へ分離。RLS・シークレットは PASS。security_log.tsv SEC-004〜007 を Sheets セキュリティタブへ同期 | 完了 |
 | **T790** | 8. 本番運用・品質管理 | 運用保守 | ユーザー問い合わせ窓口（サポートメール/フォーム）の開設と対応フロー整備 | 人間 + Claude | VSCode + Claude Code | 問い合わせ受付チャネル開設・一次回答SLA・エスカレーション基準を docs/USER_GUIDE_AND_FAQ.md へ追記し運用開始 | 未着手 |
 | **T791** | 8. 本番運用・品質管理 | 収益化 | Stripe Billing Meters API を用いた課金実装・Webhook 検証・本番適用 | Codex | VSCode + Codex + Stripe official docs | T776 設計に基づき API version 2026-05-27.dahlia 固定で Meter 課金・Webhook 受信・領収書メールを実装しテスト結果を Sheets 同期 | 未着手 |
 | **T792** | 8. 本番運用・品質管理 | コンプライアンス | 特定商取引法に基づく表記・課金規約・返金ポリシーページの整備（有料化前必須） | Claude + 人間 | VSCode + Claude Code | 特商法表記・課金規約・返金ポリシーページを作成しフッターへ統合、公開確認を Sheets 記録 | 未着手 |
@@ -251,6 +251,11 @@ gantt
 | **T799** | 8. 本番運用・品質管理 | 品質管理 | アクセシビリティ（WCAG 2.2 AA）検証と主要画面のUI修正 | Antigravity | Antigravity + Gemini | Lighthouse/axe による主要画面のアクセシビリティ監査と修正結果を Sheets へ記録 | 未着手 |
 | **T800** | 8. 本番運用・品質管理 | 運用保守 | 利用状況アナリティクス計測設計と導入（イベント計測・KPI集計） | Codex | VSCode + Codex | Firebase Analytics / Supabase イベント計測の設計・導入結果を KPI ダッシュボードと Sheets へ接続 | 未着手 |
 | **T801** | 9. 長期保守・拡張 | 共通管理 | 本番ローンチ後レトロスペクティブと教訓 docs 化 | 人間 + Claude | VSCode + Claude Code | ローンチ後 1 週間の運用実績・課題・教訓を docs 化し次期ロードマップと Sheets へ反映 | 未着手 |
+| **T802** | 8. 本番運用・品質管理 | セキュリティ | 2026-Q2 セキュリティ監査検出事項の修正（starlette >=1.0.1 更新・requests timeout 一括付与） | Codex | VSCode + Codex | R49/R50 (Issue #72) 対応。pip-audit / bandit 再スキャンで CVE・Medium 解消を確認し security_log.tsv SEC-005/006 を FIXED 化 | 未着手 |
+| **T803** | 7. 決定後実行 | インフラ | 6/18 Gemini CLI / Code Assist 提供停止・Firebase 拡張終了に伴う残存依存の最終確認 | Antigravity + 人間 | Antigravity + Gemini | T693 で Antigravity CLI 評価・移行済のため、6/18 停止前に Gemini CLI / Code Assist / Firebase Gemini CLI 拡張への残存依存がないことを最終確認し docs へ記録 | 未着手 |
+| **T804** | 8. 本番運用・品質管理 | 収益化 | 料金プラン・価格設定の決定（CEO 承認） | 人間 | Gemini API 現行モデル | Stripe 課金実装 (T791) 前に料金体系・無料枠・課金単位を確定し、決定内容を Sheets / Notion へ記録 | 未着手 |
+| **T805** | 8. 本番運用・品質管理 | セキュリティ | 外部ペネトレーションテスト（第三者脆弱性診断）の計画・実施 | 人間 + Codex | VSCode + Codex | 本番ローンチ前に外部診断（または OWASP ZAP 等による疑似診断）を実施し、結果と修正方針を docs / Sheets セキュリティタブへ記録 | 未着手 |
+| **T806** | 8. 本番運用・品質管理 | リリース | リリースノート・バージョニング（semver / git tag / GitHub Releases）運用の整備 | Codex | VSCode + Codex | リリースごとの CHANGELOG・git tag・GitHub Releases 運用ルールを整備し、本番初版タグを発行 | 未着手 |
 
 ---
 

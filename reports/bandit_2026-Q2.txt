@@ -1,0 +1,231 @@
+Run started:2026-06-11 19:57:48.126724+00:00
+
+Test results:
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/create_recurrent_regular_review.py:86:14
+85	        
+86	        res = requests.get(list_url, headers=headers, params=params)
+87	        existing_items = res.json().get("items", []) if res.status_code == 200 else []
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/create_recurrent_regular_review.py:95:18
+94	            update_url = f"{list_url}/{event_id}"
+95	            res = requests.put(update_url, headers=headers, json=event_body)
+96	        else:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/create_recurrent_regular_review.py:98:18
+97	            print("[*] Creating brand new recurrent invite...")
+98	            res = requests.post(list_url, headers=headers, json=event_body)
+99	            
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/share_resources.py:66:10
+65	    list_url = "https://www.googleapis.com/calendar/v3/users/me/calendarList"
+66	    res = requests.get(list_url, headers=headers)
+67	    
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/share_resources.py:97:14
+96	    print(f"[*] Adding {CEO_EMAIL} to Calendar ACL as 'writer'...")
+97	    acl_res = requests.post(acl_url, headers=headers, json=acl_body)
+98	    
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/share_resources.py:107:24
+106	        acl_body["role"] = "reader"
+107	        acl_res_retry = requests.post(acl_url, headers=headers, json=acl_body)
+108	        if acl_res_retry.status_code in [200, 201]:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/share_resources.py:132:10
+131	    print(f"[*] Adding {CEO_EMAIL} as 'writer' permission on Spreadsheet {SPREADSHEET_ID}...")
+132	    res = requests.post(perm_url, headers=headers, json=perm_body)
+133	    
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak SHA1 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
+   Location: scripts/sync_wbs_to_calendar.py:628:19
+627	        "syncSource": "mighty-link-ai-connect",
+628	        "syncKey": hashlib.sha1(ev["summary"].encode("utf-8")).hexdigest()
+629	    }
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/sync_wbs_to_calendar.py:693:10
+692	    }
+693	    res = requests.get(list_url, headers=headers, params=params)
+694	    if res.status_code != 200:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/sync_wbs_to_calendar.py:716:25
+715	            delete_url = f"https://www.googleapis.com/calendar/v3/calendars/{calendar_id}/events/{duplicate['id']}"
+716	            delete_res = requests.delete(delete_url, headers=headers)
+717	            if delete_res.status_code in [200, 204]:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/sync_wbs_to_calendar.py:735:14
+734	        }
+735	        res = requests.get(list_url, headers=headers, params=params)
+736	        if res.status_code != 200:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/sync_wbs_to_calendar.py:743:25
+742	            delete_url = f"{list_url}/{item['id']}"
+743	            delete_res = requests.delete(delete_url, headers=headers)
+744	            if delete_res.status_code in [200, 204]:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/sync_wbs_to_calendar.py:786:14
+785	            params["pageToken"] = page_token
+786	        res = requests.get(list_url, headers=headers, params=params)
+787	        if res.status_code != 200:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/sync_wbs_to_calendar.py:796:25
+795	                continue
+796	            delete_res = requests.delete(f"{list_url}/{item['id']}", headers=headers)
+797	            if delete_res.status_code in [200, 204]:
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/sync_wbs_to_calendar.py:823:14
+822	        list_url = "https://www.googleapis.com/calendar/v3/users/me/calendarList"
+823	        res = requests.get(list_url, headers=headers)
+824	        
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/sync_wbs_to_calendar.py:837:24
+836	                cal_body = {"summary": "Mighty Skill-Bridge 開発計画", "timeZone": "Asia/Tokyo"}
+837	                c_res = requests.post(create_url, headers=headers, json=cal_body)
+838	                
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/sync_wbs_to_calendar.py:868:18
+867	            event_url = f"https://www.googleapis.com/calendar/v3/calendars/{target_calendar_id}/events/{existing_event['id']}"
+868	            res = requests.patch(event_url, headers=headers, json=event_body)
+869	            action_label = "Updated"
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: scripts/sync_wbs_to_calendar.py:872:18
+871	            insert_url = f"https://www.googleapis.com/calendar/v3/calendars/{target_calendar_id}/events"
+872	            res = requests.post(insert_url, headers=headers, json=event_body)
+873	            action_label = "Created"
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: scripts/verify_public_demo.py:62:9
+61	    )
+62	    with urllib.request.urlopen(request, timeout=30) as response:
+63	        status = getattr(response, "status", 200)
+
+--------------------------------------------------
+>> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b108_hardcoded_tmp_directory.html
+   Location: src/app.py:269:18
+268	    if is_serverless:
+269	        db_path = "/tmp/mighty.db"
+270	    else:
+
+--------------------------------------------------
+>> Issue: [B108:hardcoded_tmp_directory] Probable insecure usage of temp file/directory.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-377 (https://cwe.mitre.org/data/definitions/377.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b108_hardcoded_tmp_directory.html
+   Location: src/app.py:279:22
+278	        except Exception:
+279	            db_path = "/tmp/mighty.db"
+280	            
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 10304
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 24
+		Medium: 20
+		High: 1
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 17
+		Medium: 6
+		High: 22
+Files skipped (0):

@@ -2,3 +2,7 @@
 SEC-001	HIGH	src/app.py	ハードコードされた認証情報の露出リスク	環境変数からの読み込みに修正し、authorized_user.jsonパスを隔離	FIXED	2026-05-28 10:00	2026-05-28 10:05
 SEC-002	MED	index.html	外部スクリプト(CDN)読み込み時の整合性検証(SRI)不足	integrity属性とcrossorigin属性を追加	FIXED	2026-05-28 10:10	2026-05-28 10:12
 SEC-003	LOW	scripts/sync_wbs_to_calendar.py	例外処理における詳細情報の意図しない標準出力露出	機密情報を除外したエラーハンドリングとロギングへ修正	FIXED	2026-05-28 10:15	2026-05-28 10:18
+SEC-004	HIGH	scripts/sync_wbs_to_calendar.py	bandit B324: Calendar syncKey 生成に SHA1 を使用（弱ハッシュ警告）	非セキュリティ用途（重複排除キー）のため usedforsecurity=False を付与し、再スキャンで High 0 件を確認 (T789)	FIXED	2026-06-12 11:00	2026-06-12 11:30
+SEC-005	HIGH	requirements.txt (starlette 0.52.1)	pip-audit: CVE-2026-48710 Host ヘッダ未検証による request.url パス乖離（パス認可バイパスの可能性）	starlette >=1.0.1 への更新と requirements.txt 下限ピン追加を T802/R49 で対応（SLA 2026-06-19、Issue #72）	OPEN	2026-06-12 11:00	-
+SEC-006	MED	scripts/sync_wbs_to_calendar.py; scripts/share_resources.py; scripts/create_recurrent_regular_review.py	bandit B113: requests timeout 未指定 17 箇所（sync スクリプト無期限ハングリスク）	timeout=30 の一括付与を T802/R50 で対応（SLA 2026-06-19、Issue #72）	OPEN	2026-06-12 11:00	-
+SEC-007	LOW	scripts/verify_public_demo.py; src/app.py	bandit B310 urlopen scheme / B108 hardcoded /tmp	固定 https 公開URL・サーバーレス /tmp 設計（SQLite fallback）のため受容。docs/SECURITY_AUDIT_REPORT_2026-Q2.md §1 に理由を記録	ACCEPTED	2026-06-12 11:00	2026-06-12 11:30

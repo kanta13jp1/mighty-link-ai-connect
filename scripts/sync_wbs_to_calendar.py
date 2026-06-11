@@ -625,7 +625,7 @@ def build_event_body(ev, wbs_ids=None):
     """Builds a deterministic Calendar API event payload."""
     private_props = {
         "syncSource": "mighty-link-ai-connect",
-        "syncKey": hashlib.sha1(ev["summary"].encode("utf-8")).hexdigest()
+        "syncKey": hashlib.sha1(ev["summary"].encode("utf-8"), usedforsecurity=False).hexdigest()
     }
     if wbs_ids:
         private_props["wbsIds"] = ",".join(wbs_ids)
