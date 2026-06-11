@@ -1391,26 +1391,44 @@ def build_fallback_match(engineer_text: str, job_text: str, fallback_reason: str
         {item for item in job.all_skills if item.lower() not in {skill.lower() for skill in candidate.all_skills}},
         key=str.lower,
     )
-    top_matches = ", ".join(matched_skills[:8]) or "要件に対する明示的な一致スキルは限定的"
-    top_gaps = ", ".join(missing_skills[:6]) or "大きな未充足スキルは検出されていません"
+    matched_label = ", ".join(matched_skills[:8])
+    gap_label = ", ".join(missing_skills[:6])
+
+    # 一致/不足スキルが空のときはプレースホルダ文を質問文へ埋め込まず、
+    # スキル名に依存しない文型へ切り替える (R47)
+    if matched_label:
+        summary_matches = f"主要一致スキルは {matched_label}。"
+        qa_matches_question = f"{matched_label} を使った実装経験を、担当範囲・設計判断・成果指標に分けて説明してください。"
+    else:
+        summary_matches = "要件に対する明示的な一致スキルは限定的でした。"
+        qa_matches_question = "これまでの代表的な実装経験を、担当範囲・設計判断・成果指標に分けて説明してください。"
+
+    if gap_label:
+        summary_gaps = f"確認すべきギャップは {gap_label}。"
+        qa_gaps_question = f"現時点で不足候補として見えている {gap_label} を、着任後どの順番でキャッチアップしますか？"
+        week1_focus = gap_label
+    else:
+        summary_gaps = "大きな未充足スキルは検出されていません。"
+        qa_gaps_question = "この案件で新たに求められる技術領域を、着任後どの順番でキャッチアップしますか？"
+        week1_focus = "必須スキル"
 
     summary = (
         f"{candidate.title} と {job.title} の適合度は {final_score}% です。"
-        f"主要一致スキルは {top_matches}。"
+        f"{summary_matches}"
         f"特に backend / AI / Google Workspace 連携の重なりを中心に評価しました。"
-        f"確認すべきギャップは {top_gaps}。"
+        f"{summary_gaps}"
         "Gemini live 復帰後は、この構造化プロファイルをそのままプロンプトへ渡すことで、"
         "より深い文脈評価に即時移行できます。"
     )
 
     qa = [
         {
-            "question": f"{top_matches} を使った実装経験を、担当範囲・設計判断・成果指標に分けて説明してください。",
+            "question": qa_matches_question,
             "answer": "単なる利用経験ではなく、要件定義、API設計、認証、例外処理、運用時の監視までを一連の流れとして説明します。",
             "tip": "Google API や OAuth、バッチ更新、クォータ回避など、本プロジェクトで求められる実務上の判断を具体例に落とし込むと強いです。"
         },
         {
-            "question": f"現時点で不足候補として見えている {top_gaps} を、着任後どの順番でキャッチアップしますか？",
+            "question": qa_gaps_question,
             "answer": "初週で既存仕様と認証フローを把握し、2週目で小さな検証実装、3週目で本番相当のエラーハンドリングとログ設計へ広げる計画を示します。",
             "tip": "不足を隠さず、検証単位・成果物・レビュー方法まで言語化すると信頼感が増します。"
         },
@@ -1431,7 +1449,7 @@ def build_fallback_match(engineer_text: str, job_text: str, fallback_reason: str
         },
         "summary": summary,
         "qa": qa,
-        "roadmap_week1": f"{job.role} の業務範囲、OAuth / Google API 認証、既存 FastAPI 構成を把握し、{top_gaps} の検証観点を洗い出す",
+        "roadmap_week1": f"{job.role} の業務範囲、OAuth / Google API 認証、既存 FastAPI 構成を把握し、{week1_focus} の検証観点を洗い出す",
         "roadmap_week2": "構造化パーサー、スキル分類、4軸スコアリングの小さな改善を行い、Sheets への診断ログ保存までを通す",
         "roadmap_week3": "Gemini live 復帰を想定し、プロンプト入力に渡す structured_profile / gap_analysis / scoring_context を安定化する",
         "roadmap_week4": "Browser Agent による主要シナリオ確認、エラー時 fallback、監査ログ、共有手順を整備して社長報告用デモ品質まで高める",
@@ -2865,6 +2883,7 @@ async def list_jobs(username: Optional[str] = Depends(verify_credentials_optiona
                     "id": r.get("id"),
                     "title": r.get("title"),
                     "company": r.get("company"),
+                    "job_description": r.get("job_description") or "",
                     "parsed_requirements": json.loads(r.get("parsed_requirements")) if isinstance(r.get("parsed_requirements"), str) else (r.get("parsed_requirements") or {}),
                     "company_culture": json.loads(r.get("company_culture")) if isinstance(r.get("company_culture"), str) else (r.get("company_culture") or {}),
                     "created_at": r.get("created_at")
@@ -2876,7 +2895,7 @@ async def list_jobs(username: Optional[str] = Depends(verify_credentials_optiona
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
     try:
-        cursor.execute("SELECT id, title, company, parsed_requirements, company_culture, created_at FROM jobs ORDER BY id DESC;")
+        cursor.execute("SELECT id, title, company, job_description, parsed_requirements, company_culture, created_at FROM jobs ORDER BY id DESC;")
         rows = cursor.fetchall()
         jobs = []
         for r in rows:
@@ -2885,15 +2904,17 @@ async def list_jobs(username: Optional[str] = Depends(verify_credentials_optiona
                     "id": r[0],
                     "title": r[1],
                     "company": r[2],
-                    "parsed_requirements": json.loads(r[3]) if r[3] else {},
-                    "company_culture": json.loads(r[4]) if r[4] else {},
-                    "created_at": r[5].isoformat() if hasattr(r[5], "isoformat") else str(r[5])
+                    "job_description": r[3] or "",
+                    "parsed_requirements": json.loads(r[4]) if r[4] else {},
+                    "company_culture": json.loads(r[5]) if r[5] else {},
+                    "created_at": r[6].isoformat() if hasattr(r[6], "isoformat") else str(r[6])
                 })
             else:
                 jobs.append({
                     "id": r["id"],
                     "title": r["title"],
                     "company": r["company"],
+                    "job_description": r["job_description"] or "",
                     "parsed_requirements": json.loads(r["parsed_requirements"]) if r["parsed_requirements"] else {},
                     "company_culture": json.loads(r["company_culture"]) if r["company_culture"] else {},
                     "created_at": r["created_at"]

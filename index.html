@@ -2823,7 +2823,14 @@
                                 if (Array.isArray(eng.parsed_skills.skills)) {
                                     skillsStr = eng.parsed_skills.skills.join(", ");
                                 } else if (typeof eng.parsed_skills === "object") {
-                                    skillsStr = Object.keys(eng.parsed_skills).join(", ");
+                                    // カテゴリ名だけでは /api/match の再解析でスキル一致しないため、
+                                    // カテゴリ配下の実スキル値を flatten して使う (R46)
+                                    const skillValues = Object.values(eng.parsed_skills)
+                                        .flatMap(v => Array.isArray(v) ? v : [])
+                                        .filter(Boolean);
+                                    skillsStr = skillValues.length > 0
+                                        ? skillValues.join(", ")
+                                        : Object.keys(eng.parsed_skills).join(", ");
                                 }
                             }
                             return {
@@ -2936,7 +2943,7 @@
                         <td class="score-cell">${item.growth}%</td>
                         <td class="score-cell">${item.performing}%</td>
                         <td>
-                            <a class="action-link" onclick="loadCandidateToInputs('${escapeJs(item.name)}', '${escapeJs(item.skills)}', '${escapeJs(activeJob.title)}', '${escapeJs(activeJob.company)}')">詳細分析</a>
+                            <a class="action-link" onclick="loadCandidateToInputs(${item.id})">詳細分析</a>
                             <span class="action-separator">|</span>
                             <a class="action-link" style="color: var(--rose)" onclick="removeCandidate(${item.id})">削除</a>
                         </td>
@@ -2996,21 +3003,45 @@
             updateComparisonBoard();
         }
 
-        function loadCandidateToInputs(name, skills, jobTitle, jobCompany) {
+        function loadCandidateToInputs(engineerId) {
             const engineerInput = document.getElementById("engineer-input");
             const jobInput = document.getElementById("job-input");
-            
-            if (engineerInput && jobInput) {
-                engineerInput.value = `氏名: ${name}\n保有スキル・経歴の概要:\n${skills}`;
-                jobInput.value = `案件名: ${jobTitle}\n所属企業: ${jobCompany}\n詳細案件内容・求めるスキル概要:\n${jobTitle}案件です。アジャイルでスピード感を持って開発を進められる人材を求めています。`;
-                
-                buildPromptFromInputs();
-                
-                document.querySelector(".hero").scrollIntoView({ behavior: "smooth", block: "start" });
-                
-                // Auto trigger runAnalysis
-                runAnalysis();
+            if (!engineerInput || !jobInput) return;
+
+            const eng = comparisonStock.find(c => c.id === engineerId);
+            if (!eng) return;
+            const select = document.getElementById("comparison-job-select");
+            const jobId = select ? parseInt(select.value) : NaN;
+            const activeJob = windowComparisonJobs.find(j => j.id === jobId) || windowComparisonJobs[0];
+            if (!activeJob) return;
+
+            // 分析実行後の auto-add (skills = 経歴書全文) はそのまま渡し、
+            // それ以外はテンプレートで包む (R46)
+            engineerInput.value = eng.skills && eng.skills.startsWith("氏名:")
+                ? eng.skills
+                : `氏名: ${eng.name}\n保有スキル・経歴の概要:\n${eng.skills}`;
+
+            if (activeJob.job_description && activeJob.job_description.trim()) {
+                jobInput.value = activeJob.job_description;
+            } else {
+                let culture = activeJob.company_culture;
+                if (culture && typeof culture === "object") culture = culture.summary || "";
+                const mandatory = activeJob.parsed_requirements && Array.isArray(activeJob.parsed_requirements.mandatory)
+                    ? activeJob.parsed_requirements.mandatory
+                    : [];
+                let jobText = `案件名: ${activeJob.title}\n所属企業: ${activeJob.company}\n詳細案件内容・求めるスキル概要:\n${culture || "アジャイルでスピード感を持って開発を進められる人材を求めています。"}`;
+                if (mandatory.length > 0) {
+                    jobText += `\n必須スキル: ${mandatory.join(", ")}`;
+                }
+                jobInput.value = jobText;
             }
+
+            buildPromptFromInputs();
+
+            document.querySelector(".hero").scrollIntoView({ behavior: "smooth", block: "start" });
+
+            // Auto trigger runAnalysis
+            runAnalysis();
         }
 
         function exportComparisonCSV() {
