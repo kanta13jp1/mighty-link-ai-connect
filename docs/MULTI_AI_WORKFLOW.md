@@ -203,42 +203,15 @@ feat/<tool>-<wbs-id>-<slug>
 
 ---
 
-## 6/2 社長プレゼン向け運用 (時限ルール、~ 2026-06-02)
-
-### Day-by-day オーナーシップ
-
-| Date | Antigravity+Gemini | VSCode+Codex | VSCode+Claude Code |
-|---|---|---|---|
-| 5/22 Fri | (quota out) | T657 PPTX→Drive、T644 gh OAuth | **本書作成**、Done タグ確認 |
-| 5/23 Sat | idle | T646 Slack webhook scaffold、T649 docs 再 sync | T663 checklist 草案、リスク登録 |
-| 5/24 Sun | idle | sync script idempotency tests | T605/T606/T611 outline gap triage |
-| 5/25 Mon | idle | T659 PPTX Drive verify、T660 Notion evidence | INTEGRATION_DEMO_EVIDENCE 整合性 |
-| 5/26 Tue | idle | sync スクリプト CI smoke | スライド内容 review |
-| 5/27 Wed 18:48↻ | **復帰**: T202 radar polish、デモ動画 v1 | frontend 引き継ぎ、backend 専念 | 切り戻し checklist 発行 |
-| 5/28 Thu | デモ動画 v2 (Gemini API multimodal)、T610 1-pager visual | T630 `/api/knowledge-flow/generate` hardening | T611 決定マトリクス review |
-| 5/29 Fri | サービス方向性 pack refinement | T647 Workspace account guard tests | dry-run スクリプト (T640) |
-| 5/30 Sat | demo polish、backup screenshots (T613) | exports/knowledge_flow verify | T663 first full review |
-| 5/31 Sun | reserve | reserve | reserve |
-| 6/1 Mon | **full dry-run** with backup | freeze、tag `ceo-demo-2026-06-02` | T663 sign-off |
-| 6/2 Tue | LIVE デモ | LIVE backup operator | LIVE QA notes |
-
-### Dry-run / 凍結タグ運用
-
-- **5/30 freeze**: `requirements.txt` の依存追加を停止。dependency drift 防止。
-- **6/1 21:00 JST tag**: `git tag ceo-demo-2026-06-02` を Codex が打つ。以降の変更は cherry-pick のみ。
-- **6/2 朝 dry-run**: 全 tool が participate、Claude Code が timer & checklist。
-
----
-
 ## 既知の制約
 
 | 制約 | 影響範囲 | 対応 |
 |---|---|---|
-| GitHub Project `read:project` scope 不足 ([INTEGRATION_DEMO_EVIDENCE_2026-06-02.md:68-77](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md#L68-L77)) | gh CLI で Project 操作不可 (Issue #5/#8) | `gh auth refresh -s project` の人間ブラウザ承認待ち。5/27 までに未解決なら 6/2 デモから Project ボードを除外 |
 | Slack CLI / MCP 未露出 ([CODEX_CONTINUATION_NOTES.md:453](CODEX_CONTINUATION_NOTES.md#L453)) | Slack live 送信不可 (T636/T646/T653/T662) | [exports/knowledge_flow/slack_ceo_update.md](../exports/knowledge_flow/slack_ceo_update.md) の草稿表示で代替。live send は約束しない |
-| サービス方向性未確定 | 6/2 で決定するため Claude が決定マトリクス起草、モデル精緻化はGemini API公式Docs確認後にAntigravityで実施 | [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) |
 | 未確認の未来モデル名・公開時期がdocsへ残る | 社長説明や実装判断が古い前提に引っ張られる | 公式Docs確認後に削除または現在形へ置換 |
-| `data/WBS.tsv` cartesian INSERT 重複リスク (他プロジェクトで先例) | 3 tools が書き込むと重複 | **Codex のみ書き込み**。他は PR コメント提案 |
+| `data/WBS.tsv` への同時書き込み重複リスク | 複数レーンが同時に書き込むと重複・ID衝突 (R40 で実例) | 1 セッション 1 レーンで編集し、編集後に列数・重複 ID を検証してからコミット (T785 以降の運用) |
+
+> 6/2 社長プレゼン向けの時限運用ルール (day-by-day オーナーシップ・凍結タグ) は 2026-06-02 で終了したため削除済み。経緯は Git 履歴と [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md) を参照。GitHub Project scope 問題は T794 (R43) で解消済み。
 
 ---
 
@@ -257,7 +230,7 @@ feat/<tool>-<wbs-id>-<slug>
 
 ## Best Practices Refresh (2026-05-22)
 
-毎セッション開始時に Anthropic / OpenAI / Google / Microsoft / Meta / Amazon / Apple / Kimi / MiMo / DeepSeek / Grok / Seedance / Obsidian / Unity の公式 docs を読み、3-tool 体制への適用可能な best practice を本セクションに追記する (上書きせず日付付きで accrue)。
+毎セッション開始時に Anthropic / OpenAI / Google / Microsoft / Meta / Amazon / Apple / Grok / Kimi / MiMo / DeepSeek / BytePlus / GitHub / Slack / Notion / Obsidian / Unity / Figma / Canva / Reddit / InsForge / FireCrawl / Discord / Stripe の公式 docs を確認し、3-tool 体制へ適用可能な best practice を日付付きで追記する。**肥大化防止のため、効力を失った古い Refresh 節は要約 1 行を残して削除する**（全文は Git 履歴で参照可能）。
 
 ### Anthropic Claude Code & API ([code.claude.com/docs](https://code.claude.com/docs/en/overview) / [platform.claude.com prompt-caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching))
 
@@ -303,39 +276,9 @@ feat/<tool>-<wbs-id>-<slug>
 - [x] Codex skills: `/sync-wbs`, `/sync-notebooklm`, `/verify-demo` を packaging (T692で完了)
 - [x] Antigravity 復帰後 (5/27) に Antigravity CLI 評価 (旧 Gemini CLI からの移行) — [docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md](ANTIGRAVITY_CLI_EVALUATION_REPORT.md) にて完了
 
-### Light refresh (2026-05-22 2nd pass / 24h 以内差分のみ)
+### アーカイブ済み Light refresh (2026-05-22 〜 2026-05-23 の 5 節)
 
-- **Anthropic Claude Code**: [Changelog](https://code.claude.com/docs/en/changelog) で新機能 — `/resume` background sessions / Rewind menu "Summarize up to here" による context 圧縮 / MCP/SDK startup 2s 高速化。
-  - **本プロジェクトへの impact**: Claude Code 1M context 運用で長セッションが続く場合、Rewind "Summarize up to here" を採用候補。直近 turn を残しつつ古い context を圧縮できる。
-- **Google Antigravity 2.0** (前回未捕捉項目): **JSON hooks** と **live voice transcription** が公式機能化 ([Google Developer Blog](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/))。
-  - **本プロジェクトへの impact**: JSON hooks は sync スクリプト群 (Codex レーン) の自動起動 trigger 候補。Live voice transcription は 6/2 デモで「社長のフィードバックをリアルタイム議事録化」する見せ場候補 (T640 リハーサルで Antigravity 復帰後評価)。
-- **OpenAI Codex**: 変更なし (前回 fetch から 24h 以内、リリースサイクル 0.133.0 維持)。
-
-### Light refresh (2026-05-22 5th pass / Codex cleanup session)
-
-- **Anthropic Claude Code**: `CLAUDE.md` / `AGENTS.md` memory import方針を再確認。共有ルールは `AGENTS.md` に集約し、Claude固有の入口は `CLAUDE.md` に限定する。
-- **OpenAI Codex**: `AGENTS.md` と「1 coherent unit of work」方針を再確認。今回のWBS完了単位は `T665 古いドキュメント削除・最新化`。
-- **Google Gemini / Workspace**: Gemini models / context caching / Sheets batchUpdateを再確認。未確認の未来モデル名を正本化せず、Sheetsはbatch更新を維持する。
-- **stale-doc 削除実施**: `ANTIGRAVITY_GUIDE.md` から未確認の未来モデル導入セクションを物理削除し、NotebookLM 22 source / GitHub Issue #1-#11/#13/#14/#16/#18 の現状へ表記を更新。
-
-### Light refresh (2026-05-22 6th pass / Codex calendar cleanup session)
-
-- **公式Docs確認範囲を拡張**: Anthropic / OpenAI / Google に加え、Microsoft AI Foundry、Meta Llama、Amazon Bedrock、Apple Machine Learning/HIG、Kimi/Moonshot、MiMo、DeepSeek、Grok/xAI、Seedance/ByteDance Seed、Obsidian、Unityを `AGENTS.md` のURL正本へ追加。未確認のモデル名・機能名はdocsへ固定しない。
-- **Google Calendar同期ルール**: `sync_wbs_to_calendar.py` は `data/WBS.tsv` の `ステータス` を読み、完了済みWBSに紐づくCalendarイベントを削除する。未完了・実行中・会議イベントは残し、完了履歴はSheets/Docs/Git履歴で追跡する。
-- **今回のWBS完了単位**: `T614 事前送付メモ` をClaude Code成果物として完了反映し、`T666 Calendar完了イベント削除` をCodexで実装完了。
-
-### Light refresh (2026-05-22 7th pass / Seedance UI refresh session)
-
-- **Seedance / ByteDance Seed**: 動画生成デモ中心、強いタイポグラフィ、映像AIプロダクトのプレビュー体験を参考にしつつ、ブランド名・素材・文言はMighty Skill-Bridge独自に維持する。
-- **Apple / Obsidian / Unity / Amazon**: Apple HIGはインターフェースの明瞭性、Obsidianはローカルvaultの情報分離、Unityは将来3Dデモ検討時の正本、Amazon Bedrockはマルチモデル選定時の候補としてURL正本化した。現時点では機能名をdocsへ固定しない。
-- **今回のWBS完了単位**: `T667 Seedance動画デモUI刷新` をCodexで実装完了。`index.html` と `src/index.html` を同時更新し、公開デモガードとPlaywright desktop/mobile表示確認を通した。
-
-### Light refresh (2026-05-23 / Seedance navigation polish session)
-
-- **Seedance / ByteDance Seed**: 公式ページの `Home / Models / Blog & Publication / Join Us`、`EN / 中文`、`Models / Teams / Learn More` 型の情報設計を確認。Mighty Skill-Bridgeではブランド・素材・文言は独自のまま、ヘッダー/フッター項目配置とスクロール時ヘッダー縮小を採用した。
-- **OpenAI Codex / Anthropic Claude Code**: `AGENTS.md` と `CLAUDE.md` によるセッションゲート、1タスク単位の作業、検証後commit/pushの流れを再確認。今回の完了単位は `T676 Seedance風ナビ/フッター刷新`。
-- **Google Workspace**: Sheets `batchUpdate` と `data/WBS.tsv` 正本運用を維持。WBS、課題管理表、QA表の同期対象に `T676 / R25 / Q-AHOC-20260523-2` を追加した。
-- **Cost guard**: Seedance APIは引き続き `SEEDANCE_API_ENABLED=1` の明示設定なしでは外部課金呼び出しを行わず、通常デモでは保存済み動画とDownload導線を使う。
+6/2 プレゼン準備期の Light refresh 5 節（2nd/5th/6th/7th pass、Seedance navigation polish）は時限的内容のため 2026-06-12 に削除した。確立した恒久ルール — AGENTS.md/CLAUDE.md のセッションゲート、Calendar 完了イベント削除、Sheets batchUpdate 正本運用、Seedance API のコストガード（`SEEDANCE_API_ENABLED=1` 必須）— は本書の各正規セクションと AGENTS.md に反映済み。全文は Git 履歴を参照。
 
 ### Refresh (2026-06-11 / Claude Code WBS 整合性監査セッション)
 
@@ -376,6 +319,27 @@ feat/<tool>-<wbs-id>-<slug>
 - **CI ギャップ**: CI は T784 ゲートにより Hosting のみデプロイのため、コード修正が本番 API に自動反映されない。IAM 整備とゲート解除を T796 として起票。
 - **T795 完了（同日対応）**: pooler リージョンをダッシュボードなしで特定（候補リージョンへの接続テストで `aws-1-ap-southeast-1` のみ tenant 認識）。`SUPABASE_DB_URL` を transaction pooler（port 6543, sslmode=require）へ切替え、`USE_SUPABASE=true` を復元して再デプロイ。本番 `/api/db-test` で `direct_postgres_status=success` を確認し、SQLite `/tmp` フォールバックから PostgreSQL 永続化へ移行完了。`init_db` が作成する `engineers`/`jobs`/`match_results` には RLS を有効化（ポリシーなし = anon REST API からのアクセスを全拒否、postgres ロールはオーナーとしてバイパス）。
 - **T796 対応（CI Functions デプロイ恒久化）**: `.env` は gitignored のため、CI からの Functions デプロイは本番ランタイム環境変数を消去してしまう罠があった。`FIREBASE_FUNCTIONS_DOTENV` secret に .env を格納し、deploy.yml が functions デプロイ時に .env を復元する（secret 未設定なら fail-fast）よう修正。`FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true` を設定し、main push での自動デプロイを有効化。
+
+### Refresh (2026-06-12 / Claude Code 規約起草・前倒しリスケセッション)
+
+公式 Docs 24 提供元を 3 並列調査で確認。本プロジェクトに影響する差分のみ記載。
+
+- **Anthropic**: Claude Opus 4.8 (5/28)、Claude Fable 5 / Mythos 5 (6/9) リリース。Claude Code は Dynamic Workflows（並列サブエージェント）と Effort Control が利用可能 — Claude Code レーンの大規模調査タスクで採用済み（本セッションの公式 Docs 並列調査）。
+- **OpenAI Codex**: GPT-5.5 / GPT-5.4 が Responses API 経由の現行。DALL·E 2/3 スナップショット廃止、Prompt Objects / Evals / Agent Builder 廃止予定 — 本プロジェクトでは未使用のため影響なし。
+- **Google Gemini**: Gemini 3.5 Flash がコーディング最適化で現行安定版を維持。Antigravity Agent（Linux サンドボックス実行）と Deep Research Max が Preview。
+- **DeepSeek（期限付き）**: 2026-07-24 に `deepseek-chat` / `deepseek-reasoner` 廃止、v4 系へ移行 — 本プロジェクトでは未使用、採用検討時は v4 系を前提にする。
+- **GitHub**: Agentic workflows が PAT 不要化 (6/11)。Copilot SDK GA (6/2)。Node 24 切替 (6/16) は T786 対応済みのまま維持。
+- **Notion API（破壊的）**: OAuth 認可ごとに一意アクセストークン発行へ変更 (6/8)。新規接続時は従来トークン使い回し前提の実装が壊れる — Notion 証跡ページ運用 (Notion MCP) の再認証時に注意。
+- **Slack API**: データテーブルブロック追加 (5/20)。送信 MCP 未露出の制約 (R3) は変わらず。
+- **Stripe（T791 前提）**: API v2026-05-27 で Billing Meters イベント値 15 桁超は検証エラー（破壊的）、`billed_until` は明示 expand 必須に。メーター集約 3 分→30 秒へ高速化。T776 設計・T791 実装はこのバージョン pin 前提を維持。
+- **Figma / Canva**: Figma Make ベータ（ローカルコードベース接続・MCP 統合）、Figma MCP Server がリモートアクセス対応（デスクトップアプリ不要）— T698 で使った MCP 連携の運用が軽くなる。Canva はブランドテンプレート公開 API・デザイン複製 API 追加（T696 Canva 向け PPTX 運用の代替候補）。
+- **Discord（期限付き）**: 特権インテントがユーザー基準へ移行 (6/10)、Voice 非 E2EE 廃止 — 本プロジェクトでは未使用。
+- **本セッションの成果**:
+  - `T787 利用規約・プライバシーポリシー初版起草` 完了 — `docs/TERMS_OF_SERVICE.md` / `docs/PRIVACY_POLICY.md` を新規作成し、法務確認チェックリスト計 20 論点を整理。法務確認は新タスク T798（R36/R48 連動）へ分離。
+  - **前倒しリスケ**: 未着手 34 タスクをレーン別直列（Codex / Antigravity / Claude / 人間）で引き直し、Phase 7〜9 の最終完了見込みを 2026-07-28 → **2026-07-16** へ 12 日短縮。依存関係（T745 規約同意 UI ← T787 本文、T792 特商法 ← T791 有償化前）を保持。
+  - **不足工程の追加**: T798 法務確認、T799 アクセシビリティ (WCAG 2.2 AA) 検証、T800 利用状況アナリティクス計測、T801 ローンチ後レトロスペクティブ。
+  - **stale-doc 削除**: 6/2 時限運用ルール節・解消済み制約 2 行・旧 Light refresh 5 節を削除し、`generate_wbs_md.py` のガント日付を新スケジュールへ更新。
+  - **Calendar 同期の WBS 動的イベント対応**: `sync_wbs_to_calendar.py` の固定イベントリストが T698 までしかカバーせず、リスケ後の未着手 40 件が Calendar に存在しなかった。`data/WBS.tsv` の未完了行から動的にイベントを生成し（タイトル: `【Mighty Skill-Bridge】<タスクID> <タスク名>`）、`wbsIds` private property ベースで完了行のイベントを自動削除するよう拡張。検索ウィンドウも 2026-12-31 まで拡大。以後のリスケは TSV 更新 + 再同期だけで Calendar へ反映される（GitHub Issue #71。sync スクリプトは Codex レーン管轄のため、本変更のレビューを Codex セッションへ依頼）。
 
 ---
 
@@ -425,6 +389,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-11 | Claude Code | Refresh: Node 24 切替期限 (T786起票)・Stripe Meters API・Supabase RLS user_metadata 禁忌を反映。T785 WBS整合性監査完了、WBS.md 自動生成化 (generate_wbs_md.py) |
 | 2026-06-11 | Codex | T786完了: GitHub Actions を Node 24 事前検証モードへ切替。checkout/setup-python/setup-node を v6、google-github-actions/auth を v3 へ更新 |
 | 2026-06-11 | Codex | T794完了: GitHub Project item-list/item-add/item-edit を復旧確認し、Issue #68/#69 を Project Done へ同期 |
+| 2026-06-12 | Claude Code | T787完了: 利用規約・プライバシーポリシー初版起草。未着手34件の前倒しリスケ (最終完了 7/28→7/16)、T798-T801追加。6/2時限ルール節・旧Light refresh 5節・解消済み制約を削除 |
 | 2026-06-11 | Codex | T788完了: Firebase Hosting preview channel と Supabase staging/prod分離のRunbook、検証スクリプト、テストを追加 |
 | 2026-06-11 | Claude Code | R44対応: 本番 /api 502 の根本原因（a2wsgi import時生成 × gunicorn fork）を特定・修正・手動デプロイ復旧。T795 (pooler URL)・T796 (CI Functions deploy 有効化) を起票 |
 | 2026-06-11 | Claude Code | T795完了: Supabase 接続を aws-1-ap-southeast-1 transaction pooler へ切替、本番 db-test success 確認、app テーブル RLS 有効化。T796: FIREBASE_FUNCTIONS_DOTENV secret + deploy.yml .env 復元でゲート解除 |

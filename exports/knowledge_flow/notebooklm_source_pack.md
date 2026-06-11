@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-06-11 02:01:22 UTC+09:00
+Generated: 2026-06-12 04:00:06 UTC+09:00
 
 ## Purpose
 
@@ -10,11 +10,11 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 
 ## Current WBS Snapshot
 
-- Total tasks: 203
-- Done: 166
+- Total tasks: 210
+- Done: 170
 - In progress: 0
-- Not started: 37
-- Completion rate: 82%
+- Not started: 40
+- Completion rate: 81%
 - CEO presentation phase tasks: 90
 - CEO presentation phase done: 90
 
@@ -627,11 +627,11 @@ gantt
     section フェーズ6: 社長プレゼン準備
     6/2判断材料・デモ・連携フロー準備 :done, f1, 2026-05-21, 13d
     section フェーズ7: 決定後実行
-    Firebase/Supabase本番実装・パイロット :active, g1, 2026-06-02, 28d
+    Firebase/Supabase本番実装・パイロット :active, g1, 2026-06-02, 26d
     section フェーズ8: 本番運用・品質管理
-    KPI/SLA・フィードバック・監査 : h1, 2026-07-06, 14d
+    KPI/SLA・フィードバック・収益化・監査 :active, h1, 2026-06-16, 29d
     section フェーズ9: 長期保守・拡張
-    多言語・モデル追従・負荷テスト : i1, 2026-07-14, 14d
+    多言語・負荷テスト・モデル追従 : i1, 2026-06-20, 27d
 ```
 
 ---
@@ -668,7 +668,7 @@ gantt
 | **T609** | 6. 社長プレゼン準備 | 決定事項反映準備 | 6/2打ち合わせ後の決定事項・次期WBS反映テンプレート作成 | Codex | VSCode + Codex | 議事録後すぐWBS/Calendarへ反映できる更新枠を準備 | 完了 |
 | **T610** | 6. 社長プレゼン準備 | スライド化素材 | 1枚絵サマリー・デモ導線・判断ポイントのスライド素材整理 | Codex | VSCode + Codex | プレゼン当日の説明順をDocs化し、未確定内容は選択肢として明記 | 完了 |
 | **T611** | 6. 社長プレゼン準備 | 判断マトリクス | サービス方向性・対象ユーザー・優先機能の判断マトリクス作成 | Codex | VSCode + Codex | 6/2で決める選択肢を比較表として整理 | 完了 |
-| **T612** | 6. 社長プレゼン準備 | 議事録テンプレート | 決定事項・保留事項・次アクション記録テンプレート作成 | Codex | VSCode + Codex | 打ち合わせ直後にWBS/Calendar/Gitへ反映できる
+| **T612** | 6. 社長プレゼン準備 | 議事録テンプレート | 決定事項・保留事項・次アクション記録テンプレート作成 | Codex | VSCode + Codex | 打ち合わせ直後にWBS/Calenda
 
 ## Source: docs/SETUP_GUIDE.md
 

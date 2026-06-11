@@ -467,6 +467,51 @@ def load_wbs_statuses():
         }
 
 
+def load_wbs_rows():
+    """Loads full WBS rows from the local source of truth."""
+    if not os.path.exists(WBS_FILE):
+        return []
+    with open(WBS_FILE, "r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f, delimiter="\t")
+        return [row for row in reader if row.get("タスクID")]
+
+
+STATIC_WBS_IDS = {task_id for ids in EVENT_WBS_IDS_BY_INDEX.values() for task_id in ids}
+
+
+def dynamic_wbs_events(wbs_rows=None):
+    """Yields Calendar events for non-completed WBS rows without a static event.
+
+    data/WBS.tsv is the source of truth, so rescheduled rows are reflected
+    automatically without editing SCHEDULE_EVENTS.
+    """
+    rows = load_wbs_rows() if wbs_rows is None else wbs_rows
+    for row in rows:
+        task_id = row["タスクID"].strip()
+        status = row.get("ステータス", "").strip()
+        if status == COMPLETED_STATUS or task_id in STATIC_WBS_IDS:
+            continue
+        try:
+            start = datetime.date.fromisoformat(row.get("開始日", "").strip())
+            end = datetime.date.fromisoformat(row.get("終了予定日", "").strip())
+        except ValueError:
+            continue
+        if end < start:
+            end = start
+        yield {
+            "summary": f"【Mighty Skill-Bridge】{task_id} {row.get('タスク名', '').strip()}",
+            "description": (
+                f"{row.get('大フェーズ', '').strip()} / {row.get('小フェーズ', '').strip()}"
+                f"（担当: {row.get('担当', '').strip()} / {row.get('実行エンジン', '').strip()}）"
+            ),
+            "start_date": start.isoformat(),
+            # All-day events use an exclusive end date.
+            "end_date": (end + datetime.timedelta(days=1)).isoformat(),
+            "is_all_day": True,
+            "wbs_ids": [task_id],
+        }
+
+
 def event_wbs_ids(event_index):
     """Returns WBS ids represented by a schedule event index."""
     return EVENT_WBS_IDS_BY_INDEX.get(event_index, [])
@@ -478,12 +523,14 @@ def is_event_completed(event_index, wbs_statuses):
     return bool(ids) and all(wbs_statuses.get(task_id) == COMPLETED_STATUS for task_id in ids)
 
 
-def iter_events_for_sync(wbs_statuses):
-    """Yields events that should remain visible in Calendar/ICS."""
+def iter_events_for_sync(wbs_statuses, wbs_rows=None):
+    """Yields (wbs_ids, event) pairs that should remain visible in Calendar/ICS."""
     for index, ev in enumerate(SCHEDULE_EVENTS):
         if is_event_completed(index, wbs_statuses):
             continue
-        yield index, ev
+        yield event_wbs_ids(index), ev
+    for ev in dynamic_wbs_events(wbs_rows):
+        yield ev["wbs_ids"], ev
 
 
 def iter_completed_events(wbs_statuses):
@@ -498,7 +545,9 @@ def generate_ics_file(wbs_statuses=None):
     print("[*] Generating iCalendar (.ics) file...")
     wbs_statuses = wbs_statuses or load_wbs_statuses()
     sync_events = list(iter_events_for_sync(wbs_statuses))
-    skipped_count = len(SCHEDULE_EVENTS) - len(sync_events)
+    skipped_count = sum(
+        1 for index, _ev in enumerate(SCHEDULE_EVENTS) if is_event_completed(index, wbs_statuses)
+    )
     
     ics_lines = [
         "BEGIN:VCALENDAR",
@@ -512,7 +561,7 @@ def generate_ics_file(wbs_statuses=None):
     
     now_str = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     
-    for _index, ev in sync_events:
+    for _wbs_ids, ev in sync_events:
         ics_lines.append("BEGIN:VEVENT")
         stable_uid = uuid.uuid5(uuid.NAMESPACE_URL, ev["summary"])
         ics_lines.append(f"UID:{stable_uid}@mighty-link.ai")
@@ -639,7 +688,7 @@ def find_existing_event(headers, calendar_id, ev, desired_event):
         "singleEvents": "true",
         "orderBy": "startTime",
         "timeMin": "2026-05-19T00:00:00+09:00",
-        "timeMax": "2026-06-25T23:59:59+09:00"
+        "timeMax": "2026-12-31T23:59:59+09:00"
     }
     res = requests.get(list_url, headers=headers, params=params)
     if res.status_code != 200:
@@ -681,7 +730,7 @@ def remove_events_by_summary(headers, calendar_id, summaries, reason):
             "q": summary,
             "singleEvents": "true",
             "timeMin": "2026-05-19T00:00:00+09:00",
-            "timeMax": "2026-06-25T23:59:59+09:00",
+            "timeMax": "2026-12-31T23:59:59+09:00",
         }
         res = requests.get(list_url, headers=headers, params=params)
         if res.status_code != 200:
@@ -715,6 +764,44 @@ def remove_completed_wbs_events(headers, calendar_id, wbs_statuses):
 
     print(f"[*] Removing completed WBS-linked calendar events: {len(completed_summaries)} target title(s)")
     return remove_events_by_summary(headers, calendar_id, completed_summaries, "completed WBS")
+
+
+def remove_completed_dynamic_events(headers, calendar_id, wbs_statuses):
+    """Deletes synced events whose wbsIds private property maps to completed rows.
+
+    Covers WBS-dynamic events (and any synced event carrying wbsIds), so a row
+    flipped to 完了 in data/WBS.tsv disappears from Calendar on the next sync.
+    """
+    list_url = f"https://www.googleapis.com/calendar/v3/calendars/{calendar_id}/events"
+    deleted_count = 0
+    page_token = None
+    while True:
+        params = {
+            "privateExtendedProperty": "syncSource=mighty-link-ai-connect",
+            "singleEvents": "true",
+            "maxResults": "2500",
+        }
+        if page_token:
+            params["pageToken"] = page_token
+        res = requests.get(list_url, headers=headers, params=params)
+        if res.status_code != 200:
+            print(f"  [!] Could not list synced events for completion cleanup: {res.text}")
+            return deleted_count
+        payload = res.json()
+        for item in payload.get("items", []):
+            raw_ids = item.get("extendedProperties", {}).get("private", {}).get("wbsIds", "")
+            ids = [task_id for task_id in raw_ids.split(",") if task_id]
+            if not ids or any(wbs_statuses.get(task_id) != COMPLETED_STATUS for task_id in ids):
+                continue
+            delete_res = requests.delete(f"{list_url}/{item['id']}", headers=headers)
+            if delete_res.status_code in [200, 204]:
+                print(f"  [*] Removed completed WBS event: {item.get('summary')}")
+                deleted_count += 1
+            else:
+                print(f"  [!] Failed to remove completed WBS event {item['id']}: {delete_res.text}")
+        page_token = payload.get("nextPageToken")
+        if not page_token:
+            return deleted_count
 
 
 def sync_to_google_calendar(access_token, auth_mode, wbs_statuses):
@@ -764,15 +851,16 @@ def sync_to_google_calendar(access_token, auth_mode, wbs_statuses):
 
     stale_deleted_count = remove_stale_event_aliases(headers, target_calendar_id)
     completed_deleted_count = remove_completed_wbs_events(headers, target_calendar_id, wbs_statuses)
+    completed_deleted_count += remove_completed_dynamic_events(headers, target_calendar_id, wbs_statuses)
 
     # 3. Create Events
     success_count = 0
     fail_count = 0
     update_count = 0
     sync_events = list(iter_events_for_sync(wbs_statuses))
-    
-    for event_index, ev in sync_events:
-        event_body = build_event_body(ev, event_wbs_ids(event_index))
+
+    for wbs_ids, ev in sync_events:
+        event_body = build_event_body(ev, wbs_ids)
         existing_event = find_existing_event(headers, target_calendar_id, ev, event_body)
 
         if existing_event:

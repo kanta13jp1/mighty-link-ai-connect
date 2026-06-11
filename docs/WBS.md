@@ -26,11 +26,11 @@ gantt
     section フェーズ6: 社長プレゼン準備
     6/2判断材料・デモ・連携フロー準備 :done, f1, 2026-05-21, 13d
     section フェーズ7: 決定後実行
-    Firebase/Supabase本番実装・パイロット :active, g1, 2026-06-02, 28d
+    Firebase/Supabase本番実装・パイロット :active, g1, 2026-06-02, 26d
     section フェーズ8: 本番運用・品質管理
-    KPI/SLA・フィードバック・監査 : h1, 2026-07-06, 14d
+    KPI/SLA・フィードバック・収益化・監査 :active, h1, 2026-06-16, 29d
     section フェーズ9: 長期保守・拡張
-    多言語・モデル追従・負荷テスト : i1, 2026-07-14, 14d
+    多言語・負荷テスト・モデル追従 : i1, 2026-06-20, 27d
 ```
 
 ---
@@ -236,7 +236,7 @@ gantt
 | **T784** | 7. 決定後実行 | インフラ | Firebase Functions deploy opt-in guard | Codex | VSCode + Codex + GitHub Actions | `FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true` が明示されるまで CI は Hosting-only deploy に強制し、Cloud Functions IAM 権限不足による main/master CI 失敗を回避 | 完了 |
 | **T785** | 7. 決定後実行 | 共通管理 | WBS 整合性監査（重複タスクID・重複タスク・誤完了フラグの解消と工程網羅性チェック） | Claude Code | VSCode + Claude Code | 重複ID T774/T775 と重複タスク T758/T766/T779 を解消し、ID衝突で誤って完了化された EOL エクスポート行を T781 未着手へ正規化。課題管理表 R40 に記録 | 完了 |
 | **T786** | 7. 決定後実行 | インフラ | GitHub Actions ランナー Node 24 デフォルト切替（2026-06-16）への対応 | Codex | VSCode + Codex + GitHub Actions | `.github/workflows/` の公式 JavaScript action を Node 24 対応 major（checkout/setup-python/setup-node v6、google-github-actions/auth v3）へ更新し、FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true で事前検証を有効化 | 完了 |
-| **T787** | 7. 決定後実行 | コンプライアンス | サービス利用規約・プライバシーポリシー初版本文の作成と法務確認 | 人間 + Claude | VSCode + Claude Code | T745 同意チェックボックス・T777 規約ページの前提となる規約・ポリシー本文を起草し、法務確認の結果を docs と Sheets に記録 | 未着手 |
+| **T787** | 7. 決定後実行 | コンプライアンス | サービス利用規約・プライバシーポリシー初版本文の作成と法務確認 | 人間 + Claude | VSCode + Claude Code | docs/TERMS_OF_SERVICE.md・docs/PRIVACY_POLICY.md へ初版本文を起草し、法務確認が必要な論点12件を整理。法務確認と本文確定は T798・課題管理表 R48 で管理 | 完了 |
 | **T788** | 7. 決定後実行 | インフラ設計 | ステージング環境（Firebase Hosting preview channel / Supabase 検証用プロジェクト）の構築と運用ルール整備 | Codex | VSCode + Codex | Firebase Hosting preview channel / Supabase staging-prod 分離Runbook、設定検証スクリプト、pytestを追加し、Issue #70 / Project Done / Sheets / Calendarへ同期 | 完了 |
 | **T789** | 8. 本番運用・品質管理 | セキュリティ | 四半期セキュリティ監査の初回実施（SECURITY_AUDIT_RUNBOOK 準拠） | Claude + Codex | VSCode + Claude Code | docs/SECURITY_AUDIT_RUNBOOK.md に基づき静的解析・依存監査・RLS・シークレット漏洩検知の初回監査を実施し結果を Sheets セキュリティタブへ記録 | 未着手 |
 | **T790** | 8. 本番運用・品質管理 | 運用保守 | ユーザー問い合わせ窓口（サポートメール/フォーム）の開設と対応フロー整備 | 人間 + Claude | VSCode + Claude Code | 問い合わせ受付チャネル開設・一次回答SLA・エスカレーション基準を docs/USER_GUIDE_AND_FAQ.md へ追記し運用開始 | 未着手 |
@@ -247,6 +247,10 @@ gantt
 | **T795** | 7. 決定後実行 | インフラ | Supabase 接続を IPv4 対応の Supavisor pooler URL へ切替 | 人間 + Codex | VSCode + Codex + Supabase Dashboard | SUPABASE_DB_URL を Supavisor transaction pooler (aws-1-ap-southeast-1.pooler.supabase.com:6543, sslmode=require) へ切替え、USE_SUPABASE=true を復元。本番 /api/db-test で direct_postgres_status=success を確認。init_db 作成テーブル (engineers/jobs/match_results) に RLS を有効化し anon REST 露出を遮断 | 完了 |
 | **T796** | 7. 決定後実行 | インフラ | CI からの Firebase Functions デプロイ有効化（IAM 整備 + T784 ゲート解除） | 人間 + Codex | VSCode + Codex + GitHub Actions | FIREBASE_FUNCTIONS_DOTENV secret に .env を格納し deploy.yml で復元、FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true を設定。CI run 27297490789 で functions[api] Successful update を確認し、main push での本番 API 自動更新を実現（invoker IAM は既設定のため R39 再発なし） | 完了 |
 | **T797** | 7. 決定後実行 | インフラ | R46/R47 劣化 match_results の本番DB清掃とCodex証跡登録 | Codex | VSCode + Codex + Supabase DB | 本番DBで match_results id 3/4/5 を R46/R47 の劣化 fallback 行として確認し、id/engineer/job/date/score guard 付きで削除。engineer_id=1/job_id=1 の既存 match_results id 1/2 は実スキル一致を含む履歴のため保持。R46/QA-31/WBSへ証跡を反映 | 完了 |
+| **T798** | 7. 決定後実行 | コンプライアンス | 利用規約・プライバシーポリシーの法務確認と本文確定 | 人間 + Claude | VSCode + Claude Code | T787 初版ドラフトを R36 外部弁護士レビューと合わせて確認し、確定結果を docs/TERMS_OF_SERVICE.md・docs/PRIVACY_POLICY.md と Sheets へ記録 | 未着手 |
+| **T799** | 8. 本番運用・品質管理 | 品質管理 | アクセシビリティ（WCAG 2.2 AA）検証と主要画面のUI修正 | Antigravity | Antigravity + Gemini | Lighthouse/axe による主要画面のアクセシビリティ監査と修正結果を Sheets へ記録 | 未着手 |
+| **T800** | 8. 本番運用・品質管理 | 運用保守 | 利用状況アナリティクス計測設計と導入（イベント計測・KPI集計） | Codex | VSCode + Codex | Firebase Analytics / Supabase イベント計測の設計・導入結果を KPI ダッシュボードと Sheets へ接続 | 未着手 |
+| **T801** | 9. 長期保守・拡張 | 共通管理 | 本番ローンチ後レトロスペクティブと教訓 docs 化 | 人間 + Claude | VSCode + Claude Code | ローンチ後 1 週間の運用実績・課題・教訓を docs 化し次期ロードマップと Sheets へ反映 | 未着手 |
 
 ---
 
