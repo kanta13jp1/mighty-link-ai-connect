@@ -9,6 +9,7 @@
 | 日付 | バージョン | 内容 | 起稿者 |
 | :--- | :--- | :--- | :--- |
 | 2026-06-10 | v1.0.0 | 初版作成（4軸監査チェックリスト・自動化スクリプト仕様） | Claude Code |
+| 2026-06-11 | v1.1.0 | 初回監査(2026-Q2)実施に伴う更新: 対象パスを実構成 (src/ scripts/ main.py) へ修正、firebase_uid を public スキーマ表記へ統一、Actions SHA ピン留め推奨を追記 | Claude Code |
 
 ---
 
@@ -35,12 +36,12 @@
 ### 2.2 実行手順
 
 ```bash
-# Python 静的解析
+# Python 静的解析（対象は src/ scripts/ main.py — functions/ ディレクトリは存在しない）
 pip install bandit semgrep
-bandit -r functions/ scripts/ -ll -f txt -o reports/bandit_YYYY-QQ.txt
+bandit -r src/ scripts/ main.py -ll -f txt -o reports/bandit_YYYY-QQ.txt
 
 # Semgrep（OWASP ルールセット）
-semgrep --config=p/owasp-top-ten --output=reports/semgrep_YYYY-QQ.txt functions/ scripts/
+semgrep --config=p/owasp-top-ten --output=reports/semgrep_YYYY-QQ.txt src/ scripts/ main.py
 
 # JavaScript 静的解析
 npx eslint --plugin security --rule 'security/detect-object-injection: error' exports/
@@ -93,11 +94,12 @@ npm audit --audit-level=moderate --json > reports/npm_audit_YYYY-QQ.json
 
 ### 4.1 チェックリスト
 
-```
+```text
 [ ] 全テーブルで ALTER TABLE ... ENABLE ROW LEVEL SECURITY が設定されている
 [ ] SELECT / INSERT / UPDATE / DELETE の各操作に明示的なポリシーが存在する
 [ ] フロントエンドからの直接 DELETE は profiles テーブルで禁止されている
-[ ] auth.firebase_uid() = user_id による所有者チェックが実装されている
+[ ] public.firebase_uid() = user_id による所有者チェックが実装されている（本番では auth スキーマへの関数作成不可のため public スキーマに配置）
+[ ] RLS ポリシーが JWT の user_metadata クレームを参照していない（ユーザー改変可能なため禁忌）
 [ ] Service Role Key を使用する操作は Cloud Functions のみに限定されている
 [ ] anon ロールが個人情報テーブルへのアクセス権を持っていない
 ```
@@ -185,7 +187,7 @@ gitleaks detect --source . --report-path=reports/gitleaks_YYYY-QQ.json
 
 ### 5.4 シークレット漏洩時の対応（緊急手順）
 
-```
+```text
 1. 漏洩したキーを **即時ローテーション**（GCP / Supabase / Firebase ダッシュボードで新鍵発行）
 2. Git 履歴から削除: git filter-repo --path <file> --invert-paths
 3. GitHub に強制 push: git push --force-with-lease
@@ -233,18 +235,21 @@ jobs:
   bandit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: pip install bandit && bandit -r functions/ scripts/ -ll
+      - uses: actions/checkout@v6
+      - run: pip install bandit && bandit -r src/ scripts/ main.py -ll
 
   gitleaks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with: { fetch-depth: 0 }
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@v2   # 採用時は full commit SHA へピン留めする
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+> [!NOTE]
+> **サードパーティ action は full commit SHA へのピン留めを推奨**（2026-03 の tj-actions/trivy-action 系サプライチェーン攻撃でタグ改ざんによる secrets 流出が実証された）。現在本リポジトリで使用中の action は GitHub / Google 公式の 4 つのみ。Dependabot の `github-actions` エコシステム監視（T747）と併せて運用する。
 
 ---
 

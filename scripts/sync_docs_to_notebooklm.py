@@ -597,8 +597,9 @@ def sync_gemini_context_cache(google_docs: dict[str, Any]) -> dict[str, Any]:
         char_count = len(combined_text)
         print(f"[*] Compiling {len(discover_docs())} docs for context caching. Total characters: {char_count}")
         
-        # We will create the cache using gemini-1.5-flash-002 as the cost-effective PoC model
-        model_name = "gemini-1.5-flash-002"
+        # Current stable model (gemini-1.5 series is retired); explicit caching
+        # on 3.5 Flash requires a minimum of 4,096 tokens per the caching docs
+        model_name = "gemini-3.5-flash"
         ttl_seconds = 3600
         
         print(f"[*] Creating explicit Gemini Context Cache with {model_name}...")
