@@ -227,7 +227,7 @@ gantt
 | **T773** | 9. 長期保守・拡張 | 運用保守 | 年間を通したシステム稼働ログおよび監査ログのコールドストレージ退避・長期保存プロセスの自動化 | Codex | VSCode + Codex | Log Archiverスクリプトの実装およびGCSコールドストレージ転送設定 | 未着手 |
 | **T774** | 7. 決定後実行 | セキュリティ | docs/SECURITY_AUDIT_RUNBOOK.md 新規作成（四半期セキュリティ監査手順書） | Claude + Codex | VSCode + Claude Code | セキュリティ監査チェックリストのSheets連携 | 完了 |
 | **T776** | 8. 本番運用・品質管理 | 収益化 | Stripe 決済統合の設計（有料プラン課金フロー・Webhook・領収書メール） | Codex | VSCode + Codex | Stripe Webhook受信ログのSheets同期 | 未着手 |
-| **T777** | 8. 本番運用・品質管理 | フロントエンド | 利用規約・プライバシーポリシー専用ページの実装とフッターリンク統合 | AIエージェント | Antigravity + Gemini | 規約ページURL公開確認のSheets記録 | 未着手 |
+| **T777** | 8. 本番運用・品質管理 | フロントエンド | 法定ページ（利用規約・プライバシーポリシー・特商法表記・課金規約/返金ポリシー）の実装とフッターリンク統合 | AIエージェント | Antigravity + Gemini | T787/T792 起草ドラフト準拠で法定4ページを実装しフッターへ常時リンク（T798/T804 確定後に本文差し替え）。特商法ページ公開は Stripe 審査 (T791) の前提要件。公開確認を Sheets 記録 | 未着手 |
 | **T778** | 8. 本番運用・品質管理 | 品質管理 | SLA 計測基盤（稼働率・P95レスポンス・診断精度）の Supabase ビュー実装 | Codex | VSCode + Codex | SLA指標のSheets自動集計 | 未着手 |
 | **T780** | 9. 長期保守・拡張 | バックエンド開発 | Gemini 最新安定版モデル（3.5 Flash / 3.1 Pro 系）移行テストと本番切り替え手順書 | Codex + Claude | VSCode + Codex | モデル移行ログのSheets記録 | 未着手 |
 | **T781** | 9. 長期保守・拡張 | 運用保守 | サービス終了（EOL）やデータ移行に備えたユーザーデータのセルフエクスポート機能の設計とPoC | Codex | VSCode + Codex | データエクスポートAPIおよびダウンロードUI of PoC実装 | 未着手 |
@@ -241,7 +241,7 @@ gantt
 | **T789** | 8. 本番運用・品質管理 | セキュリティ | 四半期セキュリティ監査の初回実施（SECURITY_AUDIT_RUNBOOK 準拠） | Claude + Codex | VSCode + Claude Code | docs/SECURITY_AUDIT_REPORT_2026-Q2.md へ4軸監査結果を記録。bandit High 1件(SHA1)は即日修正、starlette CVE-2026-48710 / requests timeout 17箇所は T802 (R49/R50, Issue #72) へ分離。RLS・シークレットは PASS。security_log.tsv SEC-004〜007 を Sheets セキュリティタブへ同期 | 完了 |
 | **T790** | 8. 本番運用・品質管理 | 運用保守 | ユーザー問い合わせ窓口（サポートメール/フォーム）の開設と対応フロー整備 | 人間 + Claude | VSCode + Claude Code | 問い合わせ受付チャネル開設・一次回答SLA・エスカレーション基準を docs/USER_GUIDE_AND_FAQ.md へ追記し運用開始 | 未着手 |
 | **T791** | 8. 本番運用・品質管理 | 収益化 | Stripe Billing Meters API を用いた課金実装・Webhook 検証・本番適用 | Codex | VSCode + Codex + Stripe official docs | T776 設計に基づき API version 2026-05-27.dahlia 固定で Meter 課金・Webhook 受信・領収書メールを実装しテスト結果を Sheets 同期 | 未着手 |
-| **T792** | 8. 本番運用・品質管理 | コンプライアンス | 特定商取引法に基づく表記・課金規約・返金ポリシーページの整備（有料化前必須） | Claude + 人間 | VSCode + Claude Code | 特商法表記・課金規約・返金ポリシーページを作成しフッターへ統合、公開確認を Sheets 記録 | 未着手 |
+| **T792** | 8. 本番運用・品質管理 | コンプライアンス | 特定商取引法に基づく表記・課金規約・返金ポリシー本文の起草（有料化前必須） | Claude + 人間 | VSCode + Claude Code | docs/TOKUSHOHO_NOTATION.md・docs/BILLING_AND_REFUND_POLICY.md を起草し利用規約第7条と接続 (Issue #78)。Stripe審査要件・改正特商法の最終確認画面6項目を T791/T745 実装要件として整理。ページ実装は T777、事業者情報/価格確定は R51/T804、法務確認は T798 で管理 | 完了 |
 | **T793** | 8. 本番運用・品質管理 | リリース | 本番ローンチ正式アナウンス（プレスリリース最終版・コーポレートサイト掲載・SNS告知） | 人間 + AI | Gemini API 現行モデル | T502 の告知文案をローンチ確定情報で更新し、コーポレートサイト掲載と SNS 告知の実施結果を記録 | 未着手 |
 | **T794** | 7. 決定後実行 | 共通管理 | GitHub Project item操作 OAuth read:project 再承認・同期復旧 | 人間 + Codex | VSCode + Codex + gh CLI | GitHub Project #1 の item-list / item-add / item-edit を確認し、Issue #68 と T794 証跡 Issue #69 を Project Done へ同期 | 完了 |
 | **T795** | 7. 決定後実行 | インフラ | Supabase 接続を IPv4 対応の Supavisor pooler URL へ切替 | 人間 + Codex | VSCode + Codex + Supabase Dashboard | SUPABASE_DB_URL を Supavisor transaction pooler (aws-1-ap-southeast-1.pooler.supabase.com:6543, sslmode=require) へ切替え、USE_SUPABASE=true を復元。本番 /api/db-test で direct_postgres_status=success を確認。init_db 作成テーブル (engineers/jobs/match_results) に RLS を有効化し anon REST 露出を遮断 | 完了 |
@@ -256,6 +256,7 @@ gantt
 | **T804** | 8. 本番運用・品質管理 | 収益化 | 料金プラン・価格設定の決定（CEO 承認） | 人間 | Gemini API 現行モデル | Stripe 課金実装 (T791) 前に料金体系・無料枠・課金単位を確定し、決定内容を Sheets / Notion へ記録 | 未着手 |
 | **T805** | 8. 本番運用・品質管理 | セキュリティ | 外部ペネトレーションテスト（第三者脆弱性診断）の計画・実施 | 人間 + Codex | VSCode + Codex | 本番ローンチ前に外部診断（または OWASP ZAP 等による疑似診断）を実施し、結果と修正方針を docs / Sheets セキュリティタブへ記録 | 未着手 |
 | **T806** | 8. 本番運用・品質管理 | リリース | リリースノート・バージョニング（semver / git tag / GitHub Releases）運用の整備 | Codex | VSCode + Codex | リリースごとの CHANGELOG・git tag・GitHub Releases 運用ルールを整備し、本番初版タグを発行 | 未着手 |
+| **T807** | 8. 本番運用・品質管理 | 収益化 | サブスクリプション解約・プラン変更フロー（Stripe カスタマーポータル）の実装 | Codex | VSCode + Codex + Stripe official docs | Stripe Customer Portal を有効化し、解約・プラン変更・支払方法更新の導線を UI へ統合。docs/BILLING_AND_REFUND_POLICY.md 第3〜4条および特商法表記の解約方法欄と整合させ、テスト結果を Sheets 同期 | 未着手 |
 
 ---
 

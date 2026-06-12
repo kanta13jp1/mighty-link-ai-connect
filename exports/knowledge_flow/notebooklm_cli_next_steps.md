@@ -1,6 +1,6 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-12T20:59:40+09:00
+Generated: 2026-06-12T21:35:17+09:00
 
 ## Current Status
 
@@ -17,6 +17,7 @@ Generated: 2026-06-12T20:59:40+09:00
 - `docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md`: https://docs.google.com/document/d/1eDY92cqtEk4ocGZCcAxRtHPlupia8UQNZi8OEY1bSto/edit?usp=drivesdk
 - `docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md`: https://docs.google.com/document/d/1yCaiaUtEAnY2CsQ7spugwdRfNwf-etTYxe96ZunS0uE/edit?usp=drivesdk
 - `docs/BACKEND_AI_PIPELINE.md`: https://docs.google.com/document/d/1duxDhC6yjS-XlyWxse_XdaiRjq88cZz8aBCt0GRxUWg/edit?usp=drivesdk
+- `docs/BILLING_AND_REFUND_POLICY.md`: https://docs.google.com/document/d/1qXQ8UVCo4AJN2DLeYq_CO13GDM8e_9prJhl8Mym6rPM/edit?usp=drivesdk
 - `docs/CEO_PRESENTATION_BACKUP_GUIDE.md`: https://docs.google.com/document/d/1V0Pk334cGh22vH5YcXPepmIV8OHOFs1dtdgUQPa-VUY/edit?usp=drivesdk
 - `docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/17LQKJNaTJYn7ntsh3vIT4A1YqkkMDR_xRDNmuw__iKc/edit?usp=drivesdk
 - `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`: https://docs.google.com/document/d/1XJeHY18JEEeaz4Dc28UHrOYbA7hhZ7ENfyI3TEGPnqc/edit?usp=drivesdk
@@ -61,6 +62,7 @@ Generated: 2026-06-12T20:59:40+09:00
 - `docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md`: https://docs.google.com/document/d/1A0g0ka5kkLZzcBVTX802y8uzKLCJjz2hJRXXXwsXm30/edit?usp=drivesdk
 - `docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md`: https://docs.google.com/document/d/1BMpsn974Ai8K3BY7GAC-XQBgY1zZlslE98ZgA9JB1ik/edit?usp=drivesdk
 - `docs/TERMS_OF_SERVICE.md`: https://docs.google.com/document/d/1bGSpEdgRyw06UaUQfwGsjLfS1qDimmSAsrN-yQvg2v0/edit?usp=drivesdk
+- `docs/TOKUSHOHO_NOTATION.md`: https://docs.google.com/document/d/1LUwRooXcdyrGB4AsuQo70Auz8DoQ-E5eyPV5cYUPWLk/edit?usp=drivesdk
 - `docs/USER_DATA_DELETION_FLOW.md`: https://docs.google.com/document/d/1-2u-qFsKNwrE9Jpl3dovC0fr_Prk4JZUF23xz1e1zQQ/edit?usp=drivesdk
 - `docs/USER_GUIDE_AND_FAQ.md`: https://docs.google.com/document/d/1qawKzp2UdanwIbnWqbVnRaRq4YIQlTEXxlj7mwhmfRk/edit?usp=drivesdk
 - `docs/WBS.md`: https://docs.google.com/document/d/16s5eoPSBLInfS6Kr9Hj4Qgc3y4QXjyjNSbojvZNxBuQ/edit?usp=drivesdk

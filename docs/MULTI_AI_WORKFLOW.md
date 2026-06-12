@@ -363,6 +363,25 @@ feat/<tool>-<wbs-id>-<slug>
 
 ---
 
+### Refresh (2026-06-12 夕 / Claude Code 特商法・課金規約起草セッション)
+
+同日午前の調査からの差分のみ確認（重点: Stripe / 特商法 / Firebase / Supabase / Claude Code / OpenAI / Gemini）。
+
+- **Stripe（T791/T792 直結）**: 特商法表記ページの公開は **Stripe アカウント審査・JCB 審査の前提要件**（公式ガイドで明記）。返金は Refunds API で元の支払方法のみ・着金 5〜10 営業日・**Stripe 決済手数料は返金されない**。最新 API は `2026-05-27.dahlia` のまま（直近 1 週間の新バージョンなし）— T791 のピン留め方針を維持。
+- **消費者庁（特商法）**: サブスクは最終確認画面で「無期限/自動更新である旨・支払時期/金額・解約方法」の明示義務（2022 年改正、現行有効）。2026 年の新規改正なし — `docs/TOKUSHOHO_NOTATION.md` の実装要件セクションに反映済。
+- **Firebase**: CLI v15.20.0 (6/11)。Firebase ML の 2027-06-15 廃止予告 — 本プロジェクトは未使用で影響なし（grep で確認済）。
+- **Supabase**: Realtime Broadcast バイナリ対応 (6/11) のみ。GraphQL/メール制限は変化なし。
+- **Claude Code**: v2.1.173〜175 は管理設定・修正系のみで運用影響なし。
+- **OpenAI / Gemini**: Gemini 2.0 系モデルは 6/1 廃止済 — リポジトリ内の残存参照を grep し、`gemini-3.5-flash` 使用のみで問題なしを確認。
+- **本セッションの成果**:
+  - `T792 特商法表記・課金規約・返金ポリシー本文の起草` 完了（予定 6/22 → 6/12 に 10 日前倒し）— `docs/TOKUSHOHO_NOTATION.md` / `docs/BILLING_AND_REFUND_POLICY.md` を新規起草し、利用規約第 7 条と接続（GitHub Issue #78）。事業者情報・価格の確定待ちを **R51** として起票、返金・解約の設計判断を **QA-32** に記録。
+  - **不足工程の追加**: T807 サブスク解約・プラン変更フロー（Stripe カスタマーポータル）— 解約導線のダークパターン回避と特商法の解約方法表記の整合に必須だが未起票だった。
+  - **T777 スコープ拡張**: 規約 2 ページ → 法定 4 ページ（+特商法表記・課金/返金ポリシー）の実装とフッター統合へ更新。
+  - **前倒しリスケ**: T764 月次品質レポートを 6/16 → **6/13** へ前倒し（T792 完了で Claude レーンが空いたため）。
+  - 他レーン進捗: Codex が T747（Dependabot + 週次 Bandit/pip-audit スキャン CI）を 6/15 予定 → 6/12 に前倒し完了。
+
+---
+
 ### Session gate (2026-05-22 Codex pass)
 
 ユーザー指示により、以後の各開発セッションでは以下を必須ゲートとする。
@@ -414,6 +433,8 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-11 | Claude Code | R44対応: 本番 /api 502 の根本原因（a2wsgi import時生成 × gunicorn fork）を特定・修正・手動デプロイ復旧。T795 (pooler URL)・T796 (CI Functions deploy 有効化) を起票 |
 | 2026-06-11 | Claude Code | T795完了: Supabase 接続を aws-1-ap-southeast-1 transaction pooler へ切替、本番 db-test success 確認、app テーブル RLS 有効化。T796: FIREBASE_FUNCTIONS_DOTENV secret + deploy.yml .env 復元でゲート解除 |
 | 2026-06-12 | Claude Code | T789完了: 2026-Q2 四半期セキュリティ監査（初回）を 10 日前倒しで実施。SHA1 即日修正、R49/R50 起票 (Issue #72)、T802〜T806 追加（Antigravity CLI 6/18 移行・価格決定・ペンテスト・リリースノート運用）、T792 を 6/22 へ前倒し |
+| 2026-06-12 | Codex | T747完了: .github/dependabot.yml (pip/Actions 週次監視) と Weekly Security Scan (Bandit/pip-audit 月曜 07:00 JST) を追加 |
+| 2026-06-12 | Claude Code | T792完了: 特商法表記・課金規約・返金ポリシー本文を起草 (Issue #78)。Stripe 審査要件・改正特商法 6 項目を T791/T745 実装要件化。T807 解約フロー追加、T777 を法定 4 ページへ拡張、R51/QA-32 起票、T764 を 6/13 へ前倒し |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 
