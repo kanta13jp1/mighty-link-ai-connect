@@ -31,7 +31,6 @@
   - 長文推論が必要な設計判断・サービス方向性議論
   - Browser Agent による E2E 検証
 - **制約**: Google AI Pro/Ultra アカウントの baseline quota に依存。枯渇すると Codex へ failover ([ANTIGRAVITY_GUIDE.md:52-54](ANTIGRAVITY_GUIDE.md#L52-L54))。
-- **現在の状態 (2026-05-22)**: quota 切れ → 5/27 18:48:10 reset 待ち ([CODEX_CONTINUATION_NOTES.md:7-13](CODEX_CONTINUATION_NOTES.md#L7-L13))
 
 ### VSCode + Codex (scoped PR・CI・gh CLI)
 
@@ -41,10 +40,9 @@
   - sync スクリプト群の整備・冪等化
   - gh CLI 操作 (Issue / Project / OAuth scope 復旧)
   - Slack / Notion / Drive / NotebookLM の証跡作成
-  - `data/WBS.tsv` の書き込み (**唯一の書き込み権限保持者**)
+  - `data/WBS.tsv` の正本管理（主担当。2026-06-11 以降は Claude Code も検証付きで直接更新可）
   - CI / GitHub Actions の hardening
 - **制約**: フロントエンドの大規模 UI ポリッシュは Antigravity に任せた方が速い。マルチモーダル成果物は生成不可。
-- **現在の状態 (2026-05-22)**: 主作業環境。T657 PPTX→Drive upload / T644 gh OAuth リトライ進行中。
 
 ### VSCode + Claude Code (アーキテクト・docs・調停)
 
@@ -56,10 +54,9 @@
   - **PR レビュー**: Codex / Antigravity の PR を 3rd party 視点で review
   - **memory / knowledge management**: `MEMORY.md` / Obsidian vault / NotebookLM のメタ運用
 - **制約**:
-  - `data/WBS.tsv` への直接書き込み禁止 (Codex のみ)。提案は PR コメントで。
-  - `scripts/*.py` / `src/*` への大規模変更は原則しない (Codex/Antigravity のレーン)
+  - `data/WBS.tsv` の更新は UTF-8/CRLF 維持 + 列数/重複 ID 検証 + `generate_wbs_md.py` 再生成をセットで行う（2026-06-11 に直接更新可へ運用変更。flip の Codex handoff は廃止）
+  - `scripts/*.py` / `src/*` への大規模変更は原則しない (Codex/Antigravity のレーン)。実装系の検出事項は WBS タスク + 課題 + Issue を起票して Codex へ handoff
   - Gemini API を直接叩かない
-- **現在の状態 (2026-05-22)**: 本書を起点として docs/triage レーンを立ち上げ中。
 
 ---
 
@@ -396,6 +393,22 @@ feat/<tool>-<wbs-id>-<slug>
 
 ---
 
+### Refresh (2026-06-13 午後 / Claude Code WBS 工程網羅性監査セッション)
+
+公式 Docs 24 提供元を確認（同日午前セッションからの差分中心）。本プロジェクトに影響する項目のみ記載。
+
+- **Supabase（期限付き・T811 起票）**: **Postgres 14 サポートが 2026-07-01 終了**（公式 changelog 2026-05-12）。T795 の pooler 切替時に本番プロジェクトの PG メジャーバージョン確認記録がない — **T811（6/27〜6/28、Codex）と課題 R53 を起票**。無料枠メールテンプレート制限 (6/3) は Firebase Auth 利用のため影響なし（QA-33 に記録）。
+- **Stripe**: 最新 API は `2026-05-27.dahlia` のまま。Billing Schedules（プリペイド課金）と Activity Logs API (preview) が追加 — T776 設計時に解約フロー（T807）との組み合わせを確認。T791 のバージョン pin 方針は維持。
+- **Google Gemini**: Gemini 3.5 Flash 安定版が agentic/coding 最上位を維持、3.1 Pro は Preview のまま — T769/T780 の前提に変更なし。
+- **Anthropic / OpenAI**: 運用影響のある変更なし。
+- **本セッションの成果（T809 完了）**:
+  - **工程網羅性監査（第2回）**: 企画〜保守 7 工程のカバレッジマトリクスを [WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md](WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md) に記録。不足 4 工程を特定し **T810（障害ポストモーテム運用）・T811（Supabase PG14 EOL 対応）・T812（本番ロールバック手順書）・T813（インボイス制度・Stripe Tax）** を追加。
+  - **前倒しリスケ（第3回）**: T712/T714/T716/T733/T735 の早期完了で空いたレーンへ未着手 31 タスクを引き直し。**ローンチ（T793）7/14 → 7/8（6 日前倒し）、Phase 7〜9 最終完了 7/16 → 7/15**。固定アンカー（T746 Go/No-Go 6/16、T803 外部期限 6/18、T808 月次 7/1）は維持。
+  - **stale-doc 削除**: 3-Tool 構成節の「現在の状態 (2026-05-22)」3 行と、廃止済みの「Claude Code は WBS.tsv 書き込み禁止」制約を削除し現行運用（検証付き直接更新）へ更新。
+  - クリティカルパスは引き続き人間ゲート（T740 DNS・T798 法務確認・R51 事業者情報・T804 価格決定）。6/16 定例レビューでの確定を依頼。
+
+---
+
 ### Session gate (2026-05-22 Codex pass)
 
 ユーザー指示により、以後の各開発セッションでは以下を必須ゲートとする。
@@ -450,6 +463,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-12 | Codex | T747完了: .github/dependabot.yml (pip/Actions 週次監視) と Weekly Security Scan (Bandit/pip-audit 月曜 07:00 JST) を追加 |
 | 2026-06-12 | Claude Code | T792完了: 特商法表記・課金規約・返金ポリシー本文を起草 (Issue #78)。Stripe 審査要件・改正特商法 6 項目を T791/T745 実装要件化。T807 解約フロー追加、T777 を法定 4 ページへ拡張、R51/QA-32 起票、T764 を 6/13 へ前倒し |
 | 2026-06-13 | Claude Code | T764完了: generate_monthly_quality_report.py 実装、docs/MONTHLY_REPORT_2026-06.md (中間) 生成 (Issue #79)。pytest 5 件追加 (全 20 件パス)。T808 自動配信を追加、R52 (FastAPI on_event 非推奨) 起票 |
+| 2026-06-13 | Claude Code | T809完了: WBS 工程網羅性監査 (第2回) で T810〜T813 追加（ポストモーテム・Supabase PG14 EOL・ロールバック手順書・インボイス対応）、前倒しリスケ (第3回) でローンチ 7/14→7/8・最終完了 7/16→7/15。R53/QA-33 起票、stale レーン規約を削除 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 
