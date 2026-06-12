@@ -72,7 +72,7 @@ npm audit: ルート `package.json` なしのため対象外。
 
 - パターンスキャン（Google API key / Supabase JWT / OpenAI key / 秘密鍵 PEM / Slack token / Stripe live key / webhook secret）: ヒット 1 件 → `credentials.json.template` のプレースホルダー（`YOUR_PRIVATE_KEY_HERE`）で**誤検知**。実シークレットの混入なし
 - git 追跡確認: `client_secret.json` / `credentials.json` / `authorized_user.json` / `.env` / `.claude/settings.local.json` / `CLAUDE.local.md` はすべて未追跡かつ `.gitignore` で ignore 済を `git check-ignore` で確認
-- truffleHog / gitleaks による Git 全履歴スキャン: ローカル未導入のため未実施。CI への gitleaks 組み込み（ランブック §7、SHA ピン留め）を T747（Dependabot 設定）と合わせて Codex レーンで検討
+- truffleHog / gitleaks による Git 全履歴スキャン: ローカル未導入のため未実施。T747では新規サードパーティ action を増やさず、Dependabot と週次 Bandit / pip-audit を先行導入。Git 全履歴のシークレットスキャンは、SHAピン留めまたはローカルCLI実行方針を決めたうえで次回監査/外部診断時に扱う。
 
 ## 検出事項と対応状況
 

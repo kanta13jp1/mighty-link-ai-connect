@@ -1,0 +1,88 @@
+name: Weekly Security Scan
+
+"on":
+  schedule:
+    # Monday 07:00 JST.
+    - cron: "0 22 * * 0"
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+      - master
+    paths:
+      - "requirements.txt"
+      - "main.py"
+      - "src/**/*.py"
+      - "scripts/**/*.py"
+      - ".github/workflows/security-scan.yml"
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+jobs:
+  python-security:
+    name: Bandit and pip-audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install Security Tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install bandit pip-audit
+
+      - name: Run Bandit
+        run: |
+          mkdir -p reports
+          if bandit -r src scripts main.py -ll -f txt -o reports/bandit_weekly.txt; then
+            echo "BANDIT_STATUS=pass" >> "$GITHUB_ENV"
+          else
+            echo "BANDIT_STATUS=fail" >> "$GITHUB_ENV"
+          fi
+
+      - name: Run pip-audit
+        run: |
+          mkdir -p reports
+          if pip-audit -r requirements.txt --format json -o reports/pip_audit_weekly.json; then
+            echo "PIP_AUDIT_STATUS=pass" >> "$GITHUB_ENV"
+          else
+            echo "PIP_AUDIT_STATUS=fail" >> "$GITHUB_ENV"
+          fi
+
+      - name: Summarize Results
+        run: |
+          {
+            echo "## Weekly Security Scan"
+            echo ""
+            echo "| Check | Status |"
+            echo "| --- | --- |"
+            echo "| Bandit | ${BANDIT_STATUS:-unknown} |"
+            echo "| pip-audit | ${PIP_AUDIT_STATUS:-unknown} |"
+            echo ""
+            echo "Known open findings are tracked in WBS T802 / GitHub Issue #72 until fixed."
+            echo ""
+            echo "### Bandit excerpt"
+            echo '```text'
+            if [ -f reports/bandit_weekly.txt ]; then tail -n 80 reports/bandit_weekly.txt; else echo "No bandit report generated."; fi
+            echo '```'
+            echo ""
+            echo "### pip-audit report path"
+            echo "\`reports/pip_audit_weekly.json\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Enforce Security Scan Result
+        run: |
+          if [ "${BANDIT_STATUS:-fail}" != "pass" ] || [ "${PIP_AUDIT_STATUS:-fail}" != "pass" ]; then
+            echo "::error title=Security scan findings detected::Review the job summary and current tracker rows. Known open findings are tracked in T802 / Issue #72."
+            exit 1
+          fi

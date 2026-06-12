@@ -11,6 +11,7 @@
 | 2026-06-10 | v1.0.0 | 初版作成（4軸監査チェックリスト・自動化スクリプト仕様） | Claude Code |
 | 2026-06-11 | v1.1.0 | 初回監査(2026-Q2)実施に伴う更新: 対象パスを実構成 (src/ scripts/ main.py) へ修正、firebase_uid を public スキーマ表記へ統一、Actions SHA ピン留め推奨を追記 | Claude Code |
 | 2026-06-12 | v1.2.0 | 初回監査(2026-Q2)完了。結果は [SECURITY_AUDIT_REPORT_2026-Q2.md](SECURITY_AUDIT_REPORT_2026-Q2.md) に記録（T789 / R49 / R50 / SEC-004〜007）。次回監査は 2026-09 | Claude Code |
+| 2026-06-12 | v1.3.0 | T747完了: Dependabot (`pip` / `github-actions`) と週次 `security-scan.yml`（Bandit / pip-audit）を追加。既知未修正事項は T802 / Issue #72 で追跡 | Codex |
 
 ---
 
@@ -19,8 +20,9 @@
 | 実施タイミング | 実施内容 | 担当 |
 | :--- | :--- | :--- |
 | **四半期**（3 / 6 / 9 / 12月） | 全4軸フル監査 | 開発担当 + Claude Code |
-| **月次** | 依存ライブラリ更新確認（Dependabot PR確認） | 開発担当 |
-| **毎 PR マージ時** | GitHub Actions CI による静的解析・シークレットスキャン | 自動（CI） |
+| **週次**（月曜 07:00 JST） | GitHub Actions `Weekly Security Scan` による Bandit / pip-audit 実行 | 自動（CI） |
+| **月次** | Dependabot PR と GitHub security alerts の確認 | 開発担当 |
+| **対象 PR** | Python / requirements / security workflow 変更時の Bandit / pip-audit 実行 | 自動（CI） |
 
 ---
 
@@ -64,7 +66,7 @@ npx eslint --plugin security --rule 'security/detect-object-injection: error' ex
 
 | ツール | 対象 | 用途 |
 | :--- | :--- | :--- |
-| GitHub Dependabot | Python / Node.js | 脆弱性検知・自動 PR 作成（T779 で設定） |
+| GitHub Dependabot | Python / GitHub Actions | 脆弱性検知・自動 PR 作成（T747 で設定） |
 | pip-audit | Python | `requirements.txt` の CVE 照合 |
 | npm audit | Node.js | `package.json` の CVE 照合 |
 | OWASP Dependency-Check | 全依存ライブラリ | NVD データベースとの照合 |
@@ -229,28 +231,31 @@ gitleaks detect --source . --report-path=reports/gitleaks_YYYY-QQ.json
 
 ```yaml
 # .github/workflows/security-scan.yml（抜粋）
-name: Security Scan
-on: [push, pull_request]
+name: Weekly Security Scan
+"on":
+  schedule:
+    - cron: "0 22 * * 0" # Monday 07:00 JST
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "requirements.txt"
+      - "src/**/*.py"
+      - "scripts/**/*.py"
+      - "main.py"
 
 jobs:
-  bandit:
+  python-security:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - run: pip install bandit && bandit -r src/ scripts/ main.py -ll
-
-  gitleaks:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        with: { fetch-depth: 0 }
-      - uses: gitleaks/gitleaks-action@v2   # 採用時は full commit SHA へピン留めする
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v6
+      - run: python -m pip install bandit pip-audit
+      - run: bandit -r src scripts main.py -ll
+      - run: pip-audit -r requirements.txt --format json
 ```
 
 > [!NOTE]
-> **サードパーティ action は full commit SHA へのピン留めを推奨**（2026-03 の tj-actions/trivy-action 系サプライチェーン攻撃でタグ改ざんによる secrets 流出が実証された）。現在本リポジトリで使用中の action は GitHub / Google 公式の 4 つのみ。Dependabot の `github-actions` エコシステム監視（T747）と併せて運用する。
+> **サードパーティ action は full commit SHA へのピン留めを推奨**（2026-03 の tj-actions/trivy-action 系サプライチェーン攻撃でタグ改ざんによる secrets 流出が実証された）。T747の週次スキャンは新規サードパーティ action を増やさず、GitHub公式 action と Python CLI (`bandit` / `pip-audit`) で構成する。GitHub Actions の version update は `.github/dependabot.yml` の `github-actions` エコシステム監視で運用する。
 
 ---
 
