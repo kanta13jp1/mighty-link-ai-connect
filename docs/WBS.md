@@ -216,7 +216,7 @@ gantt
 | **T761_1** | 7. 決定後実行 | 運用保守 | Firebase & Supabase クォータ・エラー監視のアラート構築 | Codex | VSCode + Codex | Sentry / Google Cloud Monitoring 連携設定 | 未着手 |
 | **T762** | 8. 本番運用・品質管理 | 品質管理 | サービス品質KPIおよびSLA（稼働率・レスポンスタイム・診断精度）の定義と計測基盤整備 | Claude + 人間 | VSCode + Claude Code | SLA99.5%・P95レスポンス3秒以内・診断精度評価基準をdocs同期 | 完了 |
 | **T763** | 8. 本番運用・品質管理 | 運用保守 | ユーザーフィードバック収集フロー（Net Promoter Score / 診断結果評価ボタン）の設計・実装 | Antigravity + Claude | Antigravity + Gemini | 診断結果画面への「役に立ちましたか？」フィードバックUI追加とSupabase集計連携 | 未着手 |
-| **T764** | 8. 本番運用・品質管理 | 品質管理 | 月次品質レポート（診断精度・ユーザー満足度・コスト・インフラ稼働率）の定型化と自動生成 | Claude + Codex | VSCode + Claude Code | monthly_quality_report.py の実装と Google Docs 自動同期 | 未着手 |
+| **T764** | 8. 本番運用・品質管理 | 品質管理 | 月次品質レポート（診断精度・ユーザー満足度・コスト・インフラ稼働率）の定型化と自動生成 | Claude + Codex | VSCode + Claude Code | scripts/generate_monthly_quality_report.py を実装し docs/MONTHLY_REPORT_2026-06.md を自動生成 (Issue #79)。WBS進捗・テスト合格率・API利用/コストガード・課題/セキュリティ・翌月アクションを集計。pytest 5件追加 (全suite 20件パス)。Google Docs 同期は docs/*.md 既存パイプライン (sync_docs_to_notebooklm.py) に統合。配信自動化は T808 へ分離 | 完了 |
 | **T765** | 8. 本番運用・品質管理 | コンプライアンス | 個人情報保護法第25条対応：第三者提供記録・開示請求対応手順書の整備 | Claude + 人間 | VSCode + Claude Code | `docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md` に第三者提供記録・開示/訂正/削除/利用停止請求対応手順とSLAを整理 | 完了 |
 | **T767** | 8. 本番運用・品質管理 | 共通管理 | ステークホルダー向け月次進捗レポートおよびKPIダッシュボードの整備 | Claude + 人間 | VSCode + Claude Code | Notion/Google Sheets への月次サマリ自動投稿フロー設計 | 完了 |
 | **T768** | 9. 長期保守・拡張 | フロントエンド | 多言語対応（i18n）設計と英語/中国語/韓国語UIの実装 | Antigravity | Antigravity + Gemini | i18nライブラリ選定・翻訳リソースファイル生成・4言語切替UIの実装 | 未着手 |
@@ -257,6 +257,7 @@ gantt
 | **T805** | 8. 本番運用・品質管理 | セキュリティ | 外部ペネトレーションテスト（第三者脆弱性診断）の計画・実施 | 人間 + Codex | VSCode + Codex | 本番ローンチ前に外部診断（または OWASP ZAP 等による疑似診断）を実施し、結果と修正方針を docs / Sheets セキュリティタブへ記録 | 未着手 |
 | **T806** | 8. 本番運用・品質管理 | リリース | リリースノート・バージョニング（semver / git tag / GitHub Releases）運用の整備 | Codex | VSCode + Codex | リリースごとの CHANGELOG・git tag・GitHub Releases 運用ルールを整備し、本番初版タグを発行 | 未着手 |
 | **T807** | 8. 本番運用・品質管理 | 収益化 | サブスクリプション解約・プラン変更フロー（Stripe カスタマーポータル）の実装 | Codex | VSCode + Codex + Stripe official docs | Stripe Customer Portal を有効化し、解約・プラン変更・支払方法更新の導線を UI へ統合。docs/BILLING_AND_REFUND_POLICY.md 第3〜4条および特商法表記の解約方法欄と整合させ、テスト結果を Sheets 同期 | 未着手 |
+| **T808** | 8. 本番運用・品質管理 | 運用保守 | 月次品質レポートの自動配信（Sheets 月次KPIタブ・Notion 投稿・Slack 通知）の実装 | Codex | VSCode + Codex | T767 §2〜4 仕様に基づき sync_monthly_kpi_to_sheets.py / post_report_to_notion.py / send_monthly_slack_report.py を実装し、T764 生成レポートを毎月1日に自動配信。7/1 の6月確定版レポートから適用 | 未着手 |
 
 ---
 

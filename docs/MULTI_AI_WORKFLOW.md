@@ -382,6 +382,20 @@ feat/<tool>-<wbs-id>-<slug>
 
 ---
 
+### Refresh (2026-06-13 / Claude Code 月次品質レポート実装セッション)
+
+直近 24 時間の差分と T764 直結項目のみ確認。
+
+- **Google Drive API（T764 直結）**: Markdown → Google Docs 変換は `files.create`（multipart）で本文 `text/markdown` + メタデータ `mimeType=application/vnd.google-apps.document` が現行推奨（2024-07 正式対応から変更なし）— 既存 `sync_docs_to_notebooklm.py` パイプラインがこの方式のため、月次レポートは docs/ 配下生成で同期に統合。Sheets API batchUpdate に直近変更なし。
+- **Supabase / Firebase / Claude Code / Gemini / OpenAI**: 24 時間以内の運用影響のある変更なし（OpenAI は 6/11 Ona 買収発表のみ、API 変更なし）。その他 19 ベンダーも大型発表なし。
+- **本セッションの成果**:
+  - `T764 月次品質レポートの定型化と自動生成` 完了（前倒しリスケ後の予定どおり 6/13 着手・同日完了）— `scripts/generate_monthly_quality_report.py` が WBS 進捗・テスト合格率・API 利用/コストガード・課題/セキュリティ・翌月アクションを集計し `docs/MONTHLY_REPORT_2026-06.md` を生成（GitHub Issue #79）。pytest 5 件追加で全 suite 20 件パス。
+  - **不足工程の追加**: T808 月次レポートの自動配信（Sheets 月次 KPI タブ・Notion 投稿・Slack 通知 = T767 §2〜4 の実装、6/30〜7/1、Codex）— 生成は自動化されたが配信が手動のままだった。
+  - **R52 起票**: pytest 実行時に FastAPI `@app.on_event("startup")` の DeprecationWarning を検出 — lifespan ハンドラ移行を T802（fastapi/starlette 更新）と同時対応として Codex へハンドオフ。
+  - リスケ: 追加変更なし。次のボトルネックは人間依存タスク（T740 DNS・T798 法務確認・R51 事業者情報・T804 価格決定）のため、6/16 までに人間側の確定が入れば T777/T791 系をさらに前倒し可能。
+
+---
+
 ### Session gate (2026-05-22 Codex pass)
 
 ユーザー指示により、以後の各開発セッションでは以下を必須ゲートとする。
@@ -435,6 +449,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-12 | Claude Code | T789完了: 2026-Q2 四半期セキュリティ監査（初回）を 10 日前倒しで実施。SHA1 即日修正、R49/R50 起票 (Issue #72)、T802〜T806 追加（Antigravity CLI 6/18 移行・価格決定・ペンテスト・リリースノート運用）、T792 を 6/22 へ前倒し |
 | 2026-06-12 | Codex | T747完了: .github/dependabot.yml (pip/Actions 週次監視) と Weekly Security Scan (Bandit/pip-audit 月曜 07:00 JST) を追加 |
 | 2026-06-12 | Claude Code | T792完了: 特商法表記・課金規約・返金ポリシー本文を起草 (Issue #78)。Stripe 審査要件・改正特商法 6 項目を T791/T745 実装要件化。T807 解約フロー追加、T777 を法定 4 ページへ拡張、R51/QA-32 起票、T764 を 6/13 へ前倒し |
+| 2026-06-13 | Claude Code | T764完了: generate_monthly_quality_report.py 実装、docs/MONTHLY_REPORT_2026-06.md (中間) 生成 (Issue #79)。pytest 5 件追加 (全 20 件パス)。T808 自動配信を追加、R52 (FastAPI on_event 非推奨) 起票 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 
