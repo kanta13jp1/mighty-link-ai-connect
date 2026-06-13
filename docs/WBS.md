@@ -210,7 +210,7 @@ gantt
 | **T752** | 7. 決定後実行 | フロントエンド | ユーザーオンボーディング / アカウント登録・アクティベーションフローの設計・実装 | Antigravity | Antigravity 2.0 | オンボーディングUI・初期セットアップウィザード開発 | 未着手 |
 | **T753** | 7. 決定後実行 | セキュリティ | API レートリミット制限およびDDoS緩和策の適用 | Codex | VSCode + Codex | src/rate_limit.py と FastAPI middleware で /api/parse・/api/match・Seedance/Sheets/knowledge-flow/admin 系に per-client sliding-window 429/Retry-After を追加。docs/API_RATE_LIMIT_AND_DDOS_RUNBOOK.md と pytest で検証 (Issue #89 / R61) | 完了 |
 | **T754** | 7. 決定後実行 | バックエンド開発 | Alembic/Flyway 等を用いたデータベースマイグレーション管理体制の整備 | Codex | VSCode + Codex | db/migrations/sqlite・postgres、scripts/manage_db_migrations.py、DB migration validation CI、Runbookを整備し、Issue #90 / R62 へ証跡化 | 完了 |
-| **T755** | 7. 決定後実行 | 運用保守 | テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボードの構築 | Codex | VSCode + Codex | Prometheus/Sentry等によるリソース性能監視および障害アラート設定 | 未着手 |
+| **T755** | 7. 決定後実行 | 運用保守 | テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボードの構築 | Codex | VSCode + Codex | scripts/generate_infra_monitoring_dashboard.py と .github/workflows/infra-telemetry-dashboard.yml で CPU/メモリ/ディスク/DBクエリ/外部API/URL到達性を横断集計し、docs/INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md・exports/infra_monitoring_dashboard.*・pytestで検証。GitHub Issue #91 と Project #1 に同期 | 完了 |
 | **T756** | 7. 決定後実行 | コンプライアンス | 個人情報保護およびGDPRに基づくシステム監査ログの氏名マスキング・暗号化パイプライン実装 | Claude | VSCode + Claude Code | データベース及びアクセスログの暗号化・氏名マスクバッチの開発・適用 | 完了 |
 | **T757** | 7. 決定後実行 | 運用保守 | 週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装 | Codex | VSCode + Codex | API/Infraコスト集計の自動バッチおよびSlack週次通知設定 | 未着手 |
 | **T759** | 7. 決定後実行 | バックエンド開発 | Firebase Cloud Functions 経由での Supabase 接続のプール管理とパフォーマンス最適化 | Codex | VSCode + Codex | 接続プール管理設定のFastAPIへの組み込み | 未着手 |

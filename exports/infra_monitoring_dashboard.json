@@ -1,0 +1,111 @@
+{
+  "task_id": "T755",
+  "generated_at_utc": "2026-06-13T21:45:32Z",
+  "overall_status": "warning",
+  "summary": {
+    "ok": 3,
+    "unknown": 1,
+    "warning": 6,
+    "critical": 0
+  },
+  "sources": {
+    "uptime": "exports\\uptime_monitor_report.json",
+    "database_performance": "exports\\supabase_performance_report.json",
+    "log_rotation": "exports\\log_rotation_report.json",
+    "external_api_usage": "data\\external_api_usage.jsonl",
+    "supabase_metrics_api": "not configured"
+  },
+  "checks": [
+    {
+      "key": "disk_usage",
+      "category": "host",
+      "status": "warning",
+      "value": "86.98% used (60720.0 MB free / 466325.0 MB total)",
+      "source": "shutil.disk_usage(project root)",
+      "recommendation": "Investigate generated artifacts, logs, and old archives if disk usage exceeds 80%; set INFRA_HOST_RESOURCE_CRITICAL=1 to fail local/CI runner saturation."
+    },
+    {
+      "key": "memory_usage",
+      "category": "host",
+      "status": "warning",
+      "value": "93.00% used (1035.9 MB available / 16068.7 MB total)",
+      "source": "OS memory snapshot",
+      "recommendation": "Use Google Cloud Monitoring / Cloud Run metrics for production memory saturation; set INFRA_HOST_RESOURCE_CRITICAL=1 to fail local/CI runner saturation."
+    },
+    {
+      "key": "cpu_load",
+      "category": "host",
+      "status": "unknown",
+      "value": "load average unavailable; cpu_count=20",
+      "source": "os.getloadavg",
+      "recommendation": "Use Cloud Monitoring CPU utilization and Cloud Run concurrency for production CPU alerting; set INFRA_HOST_RESOURCE_CRITICAL=1 to fail local/CI runner saturation."
+    },
+    {
+      "key": "repo_data_exports_size",
+      "category": "host",
+      "status": "ok",
+      "value": "data=0.6 MB, exports=71.7 MB",
+      "source": "repository directory scan",
+      "recommendation": "Keep generated artifacts bounded; large binary growth should move to Drive/GCS."
+    },
+    {
+      "key": "uptime_summary",
+      "category": "availability",
+      "status": "warning",
+      "value": "ok=2 warning=1 failed=0",
+      "source": "exports\\uptime_monitor_report.json",
+      "recommendation": "Investigate failed targets; TLS warnings for mightylink-app.com remain expected until T740_3."
+    },
+    {
+      "key": "uptime_max_latency",
+      "category": "availability",
+      "status": "ok",
+      "value": "74.55 ms",
+      "source": "exports\\uptime_monitor_report.json",
+      "recommendation": "Correlate high latency with Firebase Hosting and Cloud Run metrics."
+    },
+    {
+      "key": "db_query_diagnostics",
+      "category": "database",
+      "status": "warning",
+      "value": "status=planned, dry_run=True, probes=7",
+      "source": "exports\\supabase_performance_report.json",
+      "recommendation": "Use --execute with SUPABASE_DB_URL for live query telemetry before production DB changes."
+    },
+    {
+      "key": "log_rotation_backlog",
+      "category": "logs",
+      "status": "warning",
+      "value": "rotation_candidates=1, prune_candidates=0",
+      "source": "exports\\log_rotation_report.json",
+      "recommendation": "Run real log rotation if candidates remain after review."
+    },
+    {
+      "key": "external_api_usage",
+      "category": "cost",
+      "status": "ok",
+      "value": "events=50, billable=0, blocked=50",
+      "source": "data\\external_api_usage.jsonl",
+      "recommendation": "Compare billable usage with T757 cost dashboard and provider consoles."
+    },
+    {
+      "key": "supabase_metrics_api",
+      "category": "database",
+      "status": "warning",
+      "value": "not configured",
+      "source": "not configured",
+      "recommendation": "Set SUPABASE_METRICS_URL and token secret in CI to scrape Prometheus-compatible Supabase metrics."
+    }
+  ],
+  "external_api_usage_summary": {
+    "events": 50,
+    "providers": {
+      "seedance_api": 50
+    },
+    "outcomes": {
+      "blocked": 50
+    },
+    "billable_events": 0
+  },
+  "supabase_metrics_summary": null
+}

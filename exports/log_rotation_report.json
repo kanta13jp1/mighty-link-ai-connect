@@ -1,6 +1,6 @@
 {
   "task_id": "T748",
-  "generated_at_utc": "2026-06-13T16:49:55.196552+00:00",
+  "generated_at_utc": "2026-06-13T21:43:17.287923+00:00",
   "dry_run": true,
   "root": ".",
   "archive_dir": "data\\log_archive",
@@ -17,9 +17,9 @@
   "candidates": [
     {
       "source": "test_screenshot_run.log",
-      "archive": "data\\log_archive\\2026\\06\\test_screenshot_run.log.20260613T164955Z.gz",
+      "archive": "data\\log_archive\\2026\\06\\test_screenshot_run.log.20260613T214317Z.gz",
       "size_bytes": 2346,
-      "age_days": 7.73,
+      "age_days": 7.94,
       "reason": "age>=7d"
     }
   ],
