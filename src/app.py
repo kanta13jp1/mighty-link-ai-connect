@@ -59,6 +59,7 @@ from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTex
 from fastapi.staticfiles import StaticFiles
 from fastapi.security import HTTPBasic, HTTPBasicCredentials, HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
+from rate_limit import SlidingWindowRateLimiter, client_identifier
 
 # Try loading optional libraries for Sheets & Gemini
 try:
@@ -225,6 +226,29 @@ BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD", "mighty-link-pass")
 
 security = HTTPBasic()
 security_optional = HTTPBasic(auto_error=False)
+api_rate_limiter = SlidingWindowRateLimiter()
+
+RATE_LIMIT_ENABLED = env_flag("RATE_LIMIT_ENABLED", True)
+RATE_LIMIT_WINDOW_SECONDS = env_int("RATE_LIMIT_WINDOW_SECONDS", 60, 1, 3600)
+RATE_LIMIT_MAX_REQUESTS = env_int("RATE_LIMIT_MAX_REQUESTS", 120, 1, 100000)
+RATE_LIMIT_AUTH_MAX_REQUESTS = env_int("RATE_LIMIT_AUTH_MAX_REQUESTS", 30, 1, 100000)
+RATE_LIMIT_EXPENSIVE_MAX_REQUESTS = env_int("RATE_LIMIT_EXPENSIVE_MAX_REQUESTS", 20, 1, 100000)
+RATE_LIMIT_GENERATION_MAX_REQUESTS = env_int("RATE_LIMIT_GENERATION_MAX_REQUESTS", 6, 1, 100000)
+RATE_LIMIT_EXEMPT_PATHS = {
+    "/",
+    "/api/health",
+    "/favicon.ico",
+    CHROME_DEVTOOLS_WORKSPACE_PATH,
+}
+RATE_LIMIT_EXPENSIVE_API_PATHS = {
+    "/api/parse",
+    "/api/match",
+    "/api/seedance/video-demo",
+    "/api/sync",
+}
+RATE_LIMIT_GENERATION_API_PATHS = {
+    "/api/knowledge-flow/generate",
+}
 
 
 def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
@@ -252,6 +276,113 @@ def verify_credentials_optional(credentials: Optional[HTTPBasicCredentials] = De
             headers={"WWW-Authenticate": "Basic"},
         )
     return credentials.username
+
+
+def rate_limit_rule_for_request(request: Request) -> Optional[Dict[str, object]]:
+    """Return the rate-limit rule for this request, or None when exempt."""
+    if not RATE_LIMIT_ENABLED:
+        return None
+
+    path = request.url.path
+    if path in RATE_LIMIT_EXEMPT_PATHS:
+        return None
+
+    if path.startswith("/exports"):
+        return {
+            "name": "authenticated_exports",
+            "path_key": "/exports/*",
+            "limit": RATE_LIMIT_AUTH_MAX_REQUESTS,
+            "window_seconds": RATE_LIMIT_WINDOW_SECONDS,
+        }
+
+    if path == "/admin" or path == "/admin/usage" or path.startswith("/api/admin") or path in {"/api/audit/recent", "/api/db-test"}:
+        return {
+            "name": "authenticated_admin",
+            "path_key": path,
+            "limit": RATE_LIMIT_AUTH_MAX_REQUESTS,
+            "window_seconds": RATE_LIMIT_WINDOW_SECONDS,
+        }
+
+    if request.method == "POST" and path in RATE_LIMIT_GENERATION_API_PATHS:
+        return {
+            "name": "artifact_generation",
+            "path_key": path,
+            "limit": RATE_LIMIT_GENERATION_MAX_REQUESTS,
+            "window_seconds": RATE_LIMIT_WINDOW_SECONDS,
+        }
+
+    if request.method == "POST" and path in RATE_LIMIT_EXPENSIVE_API_PATHS:
+        return {
+            "name": "expensive_api",
+            "path_key": path,
+            "limit": RATE_LIMIT_EXPENSIVE_MAX_REQUESTS,
+            "window_seconds": RATE_LIMIT_WINDOW_SECONDS,
+        }
+
+    if path.startswith("/api/seedance/video-task/"):
+        return {
+            "name": "api_polling",
+            "path_key": "/api/seedance/video-task/*",
+            "limit": RATE_LIMIT_MAX_REQUESTS,
+            "window_seconds": RATE_LIMIT_WINDOW_SECONDS,
+        }
+
+    if path.startswith("/api/"):
+        return {
+            "name": "api_general",
+            "path_key": path,
+            "limit": RATE_LIMIT_MAX_REQUESTS,
+            "window_seconds": RATE_LIMIT_WINDOW_SECONDS,
+        }
+
+    return None
+
+
+@app.middleware("http")
+async def enforce_api_rate_limits(request: Request, call_next):
+    rule = rate_limit_rule_for_request(request)
+    if rule is None:
+        return await call_next(request)
+
+    host = request.client.host if request.client else None
+    client_id = client_identifier(request.headers, host)
+    path_key = str(rule["path_key"])
+    rule_name = str(rule["name"])
+    limit = int(rule["limit"])
+    window_seconds = int(rule["window_seconds"])
+    key = f"{client_id}:{rule_name}:{path_key}"
+
+    decision = api_rate_limiter.allow(
+        key,
+        limit=limit,
+        window_seconds=window_seconds,
+    )
+    headers = {
+        "X-RateLimit-Limit": str(decision.limit),
+        "X-RateLimit-Remaining": str(decision.remaining),
+        "X-RateLimit-Reset": str(decision.reset_epoch_seconds),
+    }
+
+    if not decision.allowed:
+        headers["Retry-After"] = str(decision.retry_after_seconds)
+        return JSONResponse(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            content={
+                "detail": "Too many requests. Please retry after the advertised delay.",
+                "rate_limit": {
+                    "rule": rule_name,
+                    "limit": decision.limit,
+                    "window_seconds": window_seconds,
+                    "retry_after_seconds": decision.retry_after_seconds,
+                },
+            },
+            headers=headers,
+        )
+
+    response = await call_next(request)
+    for header_name, header_value in headers.items():
+        response.headers[header_name] = header_value
+    return response
 
 
 import sqlite3

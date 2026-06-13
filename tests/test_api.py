@@ -49,6 +49,41 @@ def test_health_check(client):
     assert response.status_code == 200
     assert response.json()["status"] == "healthy"
 
+def test_rate_limit_exempts_health_and_blocks_expensive_api():
+    original_settings = (
+        app.RATE_LIMIT_ENABLED,
+        app.RATE_LIMIT_WINDOW_SECONDS,
+        app.RATE_LIMIT_EXPENSIVE_MAX_REQUESTS,
+    )
+    app.RATE_LIMIT_ENABLED = True
+    app.RATE_LIMIT_WINDOW_SECONDS = 60
+    app.RATE_LIMIT_EXPENSIVE_MAX_REQUESTS = 2
+    app.api_rate_limiter.reset()
+
+    try:
+        with TestClient(app.app) as local_client:
+            for _ in range(4):
+                assert local_client.get("/api/health").status_code == 200
+
+            payload = {"prompt": "Mighty-Link rate limit smoke test"}
+            assert local_client.post("/api/seedance/video-demo", json=payload).status_code == 200
+            allowed_response = local_client.post("/api/seedance/video-demo", json=payload)
+            assert allowed_response.status_code == 200
+            assert allowed_response.headers["X-RateLimit-Limit"] == "2"
+            assert allowed_response.headers["X-RateLimit-Remaining"] == "0"
+
+            blocked_response = local_client.post("/api/seedance/video-demo", json=payload)
+            assert blocked_response.status_code == 429
+            assert blocked_response.headers["Retry-After"]
+            assert blocked_response.json()["rate_limit"]["rule"] == "expensive_api"
+    finally:
+        (
+            app.RATE_LIMIT_ENABLED,
+            app.RATE_LIMIT_WINDOW_SECONDS,
+            app.RATE_LIMIT_EXPENSIVE_MAX_REQUESTS,
+        ) = original_settings
+        app.api_rate_limiter.reset()
+
 def test_basic_auth_protection(client):
     # Public route
     response = client.get("/")
