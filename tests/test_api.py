@@ -40,6 +40,10 @@ def setup_test_db():
 def client():
     return TestClient(app.app)
 
+def test_app_uses_lifespan_without_deprecated_startup_handlers():
+    assert getattr(app.app.router, "on_startup", []) == []
+    assert getattr(app.app.router, "lifespan_context", None) is not None
+
 def test_health_check(client):
     response = client.get("/api/health")
     assert response.status_code == 200

@@ -12,8 +12,8 @@
 
 | 指標 | 今月 | 先月比 |
 | :--- | :--- | :--- |
-| 当月完了タスク数 | 75 件 | -24 件 |
-| 全体完了率 | 80.2% (174/217) | — |
+| 当月完了タスク数 | 79 件 | -20 件 |
+| 全体完了率 | 79.1% (178/225) | — |
 | 期限超過の未完了タスク | 0 件 | — |
 
 ---
@@ -74,27 +74,29 @@
 | R46 | MED | resolved | 比較ボード「詳細分析」がスキルカテゴリ名と定型文を /api/match へ送信し無意味な診断を生成 |
 | R47 | LOW | resolved | deterministic fallback の QA 質問テンプレートにプレースホルダ文が混入 |
 | R48 | HIGH | open | 利用規約・プライバシーポリシー初版の法務確認待ち |
-| R49 | HIGH | open | starlette 0.52.1 に CVE-2026-48710（Host ヘッダ未検証による request.url パス乖離） |
-| R50 | MED | open | Google API 呼び出し 17 箇所で requests timeout 未指定（bandit B113） |
+| R49 | HIGH | resolved | starlette 0.52.1 に CVE-2026-48710（Host ヘッダ未検証による request.url パス乖離） |
+| R50 | MED | resolved | Google API 呼び出し 17 箇所で requests timeout 未指定（bandit B113） |
 | R51 | MED | open | 特商法表記の事業者情報・販売価格の確定待ち |
-| R52 | LOW | open | FastAPI @app.on_event("startup") が deprecated（lifespan ハンドラへ移行要） |
+| R52 | LOW | resolved | FastAPI @app.on_event("startup") が deprecated（lifespan ハンドラへ移行要） |
+| R53 | MED | open | Supabase Postgres 14 サポート終了 (2026-07-01) — 本番/staging プロジェクトの PG バージョン未確認 |
+| R54 | HIGH | resolved | ml-mightylink.com の Cloud DNS ゾーン所有アカウント不明 — T740 カスタムドメイン CNAME 追加がブロック |
 
 **セキュリティ検出（security_log）:**
 
 - SEC-004 [HIGH] bandit B324: Calendar syncKey 生成に SHA1 を使用（弱ハッシュ警告） — FIXED
-- SEC-005 [HIGH] pip-audit: CVE-2026-48710 Host ヘッダ未検証による request.url パス乖離（パス認可バイパスの可能性） — OPEN
-- SEC-006 [MED] bandit B113: requests timeout 未指定 17 箇所（sync スクリプト無期限ハングリスク） — OPEN
-- SEC-007 [LOW] bandit B310 urlopen scheme / B108 hardcoded /tmp — ACCEPTED
+- SEC-005 [HIGH] pip-audit: CVE-2026-48710 Host ヘッダ未検証による request.url パス乖離（パス認可バイパスの可能性） — FIXED
+- SEC-006 [MED] bandit B113: requests timeout 未指定 17 箇所（sync スクリプト無期限ハングリスク） — FIXED
+- SEC-007 [LOW] bandit B310 urlopen scheme / B108 hardcoded /tmp — FIXED
 
 ---
 
 ## 5. 翌月（または直近）の優先アクション
 
-1. T776 Stripe 決済統合の設計（有料プラン課金フロー・Webhook・領収書メール）（開始 2026-07-01 / 担当 Codex）
-2. T791 Stripe Billing Meters API を用いた課金実装・Webhook 検証・本番適用（開始 2026-07-02 / 担当 Codex）
-3. T807 サブスクリプション解約・プラン変更フロー（Stripe カスタマーポータル）の実装（開始 2026-07-05 / 担当 Codex）
-4. T781 サービス終了（EOL）やデータ移行に備えたユーザーデータのセルフエクスポート機能の設計とPoC（開始 2026-07-06 / 担当 Codex）
-5. T805 外部ペネトレーションテスト（第三者脆弱性診断）の計画・実施（開始 2026-07-06 / 担当 人間 + Codex）
+1. T781 サービス終了（EOL）やデータ移行に備えたユーザーデータのセルフエクスポート機能の設計とPoC（開始 2026-07-01 / 担当 Codex）
+2. T791 Stripe Billing Meters API を用いた課金実装・Webhook 検証・本番適用（開始 2026-07-01 / 担当 Codex）
+3. T782 アクセス増加に伴うデータベース接続負荷分散（リードレプリカ・プールサイズ最適化）の設計と負荷テスト検証（開始 2026-07-02 / 担当 Codex）
+4. T805 外部ペネトレーションテスト（第三者脆弱性診断）の計画・実施（開始 2026-07-02 / 担当 人間 + Codex）
+5. T807 サブスクリプション解約・プラン変更フロー（Stripe カスタマーポータル）の実装（開始 2026-07-03 / 担当 Codex）
 
 ---
 

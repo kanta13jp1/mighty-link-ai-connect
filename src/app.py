@@ -26,6 +26,9 @@ import subprocess
 import time
 import base64
 import secrets
+import tempfile
+import threading
+from contextlib import asynccontextmanager
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -162,7 +165,19 @@ def get_current_user(credentials: Optional[HTTPAuthorizationCredentials] = Depen
         )
 
 # Initialize FastAPI App
-app = FastAPI(title="Mighty Skill-Bridge API Server")
+def start_db_init_thread() -> None:
+    # init_db is defined below; lifespan runs only after module import completes.
+    thread = threading.Thread(target=init_db, daemon=True)
+    thread.start()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    start_db_init_thread()
+    yield
+
+
+app = FastAPI(title="Mighty Skill-Bridge API Server", lifespan=lifespan)
 
 # Dynamic Path Resolution (ensures app.py works robustly inside src/)
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) # This is src/
@@ -264,9 +279,10 @@ def get_db_connection():
     # SQLite Fallback
     # Check if we are running in a Serverless/Container environment with a read-only filesystem
     is_serverless = os.environ.get("K_SERVICE") is not None
+    tmp_db_path = os.path.join(tempfile.gettempdir(), "mighty.db")
     
     if is_serverless:
-        db_path = "/tmp/mighty.db"
+        db_path = tmp_db_path
     else:
         # Check if local directory is writable, fallback to /tmp if not
         try:
@@ -276,7 +292,7 @@ def get_db_connection():
             os.remove(test_file)
             db_path = os.path.join(DATA_DIR, "mighty.db")
         except Exception:
-            db_path = "/tmp/mighty.db"
+            db_path = tmp_db_path
             
     conn = sqlite3.connect(db_path)
     # Ensure row-factory is dictionary-like
@@ -378,13 +394,6 @@ def init_db():
     finally:
         cursor.close()
         conn.close()
-
-@app.on_event("startup")
-def startup_db_init():
-    import threading
-    # Run database initialization in a background thread to prevent container startup timeout
-    thread = threading.Thread(target=init_db, daemon=True)
-    thread.start()
 
 def db_insert_engineer(name: str, resume_raw: str, parsed_skills: dict, career_goals: dict) -> int:
     if SUPABASE_SDK_ACTIVE:

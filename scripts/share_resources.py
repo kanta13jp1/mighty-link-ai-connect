@@ -35,6 +35,7 @@ SCOPES = [
     "https://www.googleapis.com/auth/calendar",
     "https://www.googleapis.com/auth/calendar.events",
 ]
+GOOGLE_API_TIMEOUT_SECONDS = 30
 
 from google_workspace_account import assert_expected_google_account
 
@@ -63,7 +64,7 @@ def share_google_calendar(access_token):
     # 1. Find Calendar ID
     print("[*] Checking for custom 'Mighty Skill-Bridge 開発計画' calendar...")
     list_url = "https://www.googleapis.com/calendar/v3/users/me/calendarList"
-    res = requests.get(list_url, headers=headers)
+    res = requests.get(list_url, headers=headers, timeout=GOOGLE_API_TIMEOUT_SECONDS)
     
     if res.status_code != 200:
         print(f"[-] Failed to fetch calendar list: {res.text}")
@@ -94,7 +95,7 @@ def share_google_calendar(access_token):
     }
     
     print(f"[*] Adding {CEO_EMAIL} to Calendar ACL as 'writer'...")
-    acl_res = requests.post(acl_url, headers=headers, json=acl_body)
+    acl_res = requests.post(acl_url, headers=headers, json=acl_body, timeout=GOOGLE_API_TIMEOUT_SECONDS)
     
     if acl_res.status_code in [200, 201]:
         print(f"[+] Successfully shared calendar with {CEO_EMAIL}!")
@@ -104,7 +105,7 @@ def share_google_calendar(access_token):
         print(f"[-] Failed to add writer ACL: {acl_res.text}")
         print("[*] Retrying with 'reader' role...")
         acl_body["role"] = "reader"
-        acl_res_retry = requests.post(acl_url, headers=headers, json=acl_body)
+        acl_res_retry = requests.post(acl_url, headers=headers, json=acl_body, timeout=GOOGLE_API_TIMEOUT_SECONDS)
         if acl_res_retry.status_code in [200, 201]:
             print(f"[+] Successfully shared calendar with {CEO_EMAIL} as 'reader'!")
             return True
@@ -129,7 +130,7 @@ def share_google_spreadsheet(access_token):
     }
     
     print(f"[*] Adding {CEO_EMAIL} as 'writer' permission on Spreadsheet {SPREADSHEET_ID}...")
-    res = requests.post(perm_url, headers=headers, json=perm_body)
+    res = requests.post(perm_url, headers=headers, json=perm_body, timeout=GOOGLE_API_TIMEOUT_SECONDS)
     
     if res.status_code in [200, 201]:
         print(f"[+] Successfully shared Spreadsheet with {CEO_EMAIL}!")

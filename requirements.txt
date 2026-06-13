@@ -1,8 +1,10 @@
 gspread>=6.0.0
 google-auth>=2.0.0
-fastapi>=0.100.0
+fastapi>=0.136.3
+starlette>=1.0.1,<1.1.0
 uvicorn>=0.20.0
 python-multipart>=0.0.6
+requests>=2.32.0
 google-genai>=1.0.0
 python-pptx>=1.0.2
 Pillow>=10.0.0

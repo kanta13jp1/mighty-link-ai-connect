@@ -28,6 +28,7 @@ REPORTS_DIR = PROJECT_ROOT / "reports"
 AUTHORIZED_USER_FILE = PROJECT_ROOT / "authorized_user.json"
 
 CALENDAR_ID = "c_148e9a1be60982dab1792a5f5da8d64deaeee325b3951765ab2fbd3d0561ec02@group.calendar.google.com"
+GOOGLE_API_TIMEOUT_SECONDS = 30
 
 
 def load_credentials() -> UserCredentials:
@@ -83,7 +84,7 @@ def main() -> None:
             "singleEvents": "false",
         }
         
-        res = requests.get(list_url, headers=headers, params=params)
+        res = requests.get(list_url, headers=headers, params=params, timeout=GOOGLE_API_TIMEOUT_SECONDS)
         existing_items = res.json().get("items", []) if res.status_code == 200 else []
         
         event_body = build_recurrent_event()
@@ -92,10 +93,10 @@ def main() -> None:
             print("[*] Found existing recurrent invite. Updating it to avoid duplicates...")
             event_id = existing_items[0]["id"]
             update_url = f"{list_url}/{event_id}"
-            res = requests.put(update_url, headers=headers, json=event_body)
+            res = requests.put(update_url, headers=headers, json=event_body, timeout=GOOGLE_API_TIMEOUT_SECONDS)
         else:
             print("[*] Creating brand new recurrent invite...")
-            res = requests.post(list_url, headers=headers, json=event_body)
+            res = requests.post(list_url, headers=headers, json=event_body, timeout=GOOGLE_API_TIMEOUT_SECONDS)
             
         if res.status_code not in [200, 204]:
             raise RuntimeError(f"Calendar API call failed: {res.status_code} {res.text}")

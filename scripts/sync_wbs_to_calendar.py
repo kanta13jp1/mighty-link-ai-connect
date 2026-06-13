@@ -55,6 +55,7 @@ CREDENTIALS_FILE = os.path.join(PROJECT_ROOT, "credentials.json")       # Servic
 CLIENT_SECRET_FILE = os.path.join(PROJECT_ROOT, "client_secret.json")   # OAuth 2.0 Desktop client
 AUTHORIZED_USER_FILE = os.path.join(PROJECT_ROOT, "authorized_user.json")
 USER_EMAIL = "k-umezawa@ml-mightylink.com"
+GOOGLE_API_TIMEOUT_SECONDS = 30
 WBS_FILE = os.path.join(PROJECT_ROOT, "data", "WBS.tsv")
 
 # WBS Schedule definitions (Parsed from docs/WBS.md / data/WBS.tsv)
@@ -690,7 +691,7 @@ def find_existing_event(headers, calendar_id, ev, desired_event):
         "timeMin": "2026-05-19T00:00:00+09:00",
         "timeMax": "2026-12-31T23:59:59+09:00"
     }
-    res = requests.get(list_url, headers=headers, params=params)
+    res = requests.get(list_url, headers=headers, params=params, timeout=GOOGLE_API_TIMEOUT_SECONDS)
     if res.status_code != 200:
         print(f"  [!] Could not check existing events for {ev['summary']}: {res.text}")
         return None
@@ -713,7 +714,7 @@ def find_existing_event(headers, calendar_id, ev, desired_event):
     for duplicate in matches:
         if duplicate.get("id") != selected.get("id"):
             delete_url = f"https://www.googleapis.com/calendar/v3/calendars/{calendar_id}/events/{duplicate['id']}"
-            delete_res = requests.delete(delete_url, headers=headers)
+            delete_res = requests.delete(delete_url, headers=headers, timeout=GOOGLE_API_TIMEOUT_SECONDS)
             if delete_res.status_code in [200, 204]:
                 print(f"  [*] Removed duplicate event: {ev['summary']}")
             else:
@@ -732,7 +733,7 @@ def remove_events_by_summary(headers, calendar_id, summaries, reason):
             "timeMin": "2026-05-19T00:00:00+09:00",
             "timeMax": "2026-12-31T23:59:59+09:00",
         }
-        res = requests.get(list_url, headers=headers, params=params)
+        res = requests.get(list_url, headers=headers, params=params, timeout=GOOGLE_API_TIMEOUT_SECONDS)
         if res.status_code != 200:
             print(f"  [!] Could not check {reason} events for {summary}: {res.text}")
             continue
@@ -740,7 +741,7 @@ def remove_events_by_summary(headers, calendar_id, summaries, reason):
             if item.get("summary") != summary:
                 continue
             delete_url = f"{list_url}/{item['id']}"
-            delete_res = requests.delete(delete_url, headers=headers)
+            delete_res = requests.delete(delete_url, headers=headers, timeout=GOOGLE_API_TIMEOUT_SECONDS)
             if delete_res.status_code in [200, 204]:
                 print(f"  [*] Removed {reason} event: {summary}")
                 deleted_count += 1
@@ -783,7 +784,7 @@ def remove_completed_dynamic_events(headers, calendar_id, wbs_statuses):
         }
         if page_token:
             params["pageToken"] = page_token
-        res = requests.get(list_url, headers=headers, params=params)
+        res = requests.get(list_url, headers=headers, params=params, timeout=GOOGLE_API_TIMEOUT_SECONDS)
         if res.status_code != 200:
             print(f"  [!] Could not list synced events for completion cleanup: {res.text}")
             return deleted_count
@@ -793,7 +794,7 @@ def remove_completed_dynamic_events(headers, calendar_id, wbs_statuses):
             ids = [task_id for task_id in raw_ids.split(",") if task_id]
             if not ids or any(wbs_statuses.get(task_id) != COMPLETED_STATUS for task_id in ids):
                 continue
-            delete_res = requests.delete(f"{list_url}/{item['id']}", headers=headers)
+            delete_res = requests.delete(f"{list_url}/{item['id']}", headers=headers, timeout=GOOGLE_API_TIMEOUT_SECONDS)
             if delete_res.status_code in [200, 204]:
                 print(f"  [*] Removed completed WBS event: {item.get('summary')}")
                 deleted_count += 1
@@ -820,7 +821,7 @@ def sync_to_google_calendar(access_token, auth_mode, wbs_statuses):
     if "OAuth" in auth_mode:
         print("[*] Checking for existing custom 'Mighty Skill-Bridge 開発計画' calendar...")
         list_url = "https://www.googleapis.com/calendar/v3/users/me/calendarList"
-        res = requests.get(list_url, headers=headers)
+        res = requests.get(list_url, headers=headers, timeout=GOOGLE_API_TIMEOUT_SECONDS)
         
         if res.status_code == 200:
             calendars = res.json().get("items", [])
@@ -834,7 +835,7 @@ def sync_to_google_calendar(access_token, auth_mode, wbs_statuses):
                 print("[*] Custom calendar not found. Creating a new one...")
                 create_url = "https://www.googleapis.com/calendar/v3/calendars"
                 cal_body = {"summary": "Mighty Skill-Bridge 開発計画", "timeZone": "Asia/Tokyo"}
-                c_res = requests.post(create_url, headers=headers, json=cal_body)
+                c_res = requests.post(create_url, headers=headers, json=cal_body, timeout=GOOGLE_API_TIMEOUT_SECONDS)
                 
                 if c_res.status_code == 200:
                     target_calendar_id = c_res.json().get("id")
@@ -865,11 +866,11 @@ def sync_to_google_calendar(access_token, auth_mode, wbs_statuses):
 
         if existing_event:
             event_url = f"https://www.googleapis.com/calendar/v3/calendars/{target_calendar_id}/events/{existing_event['id']}"
-            res = requests.patch(event_url, headers=headers, json=event_body)
+            res = requests.patch(event_url, headers=headers, json=event_body, timeout=GOOGLE_API_TIMEOUT_SECONDS)
             action_label = "Updated"
         else:
             insert_url = f"https://www.googleapis.com/calendar/v3/calendars/{target_calendar_id}/events"
-            res = requests.post(insert_url, headers=headers, json=event_body)
+            res = requests.post(insert_url, headers=headers, json=event_body, timeout=GOOGLE_API_TIMEOUT_SECONDS)
             action_label = "Created"
         
         if res.status_code in [200, 201]:

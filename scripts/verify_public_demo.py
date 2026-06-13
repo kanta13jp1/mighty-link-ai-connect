@@ -11,8 +11,9 @@ remain present even though FastAPI also serves src/index.html locally.
 import argparse
 import sys
 import time
-import urllib.request
 from pathlib import Path
+
+import requests
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -55,15 +56,14 @@ def verify_html(content: str, label: str) -> None:
 def fetch_url(url: str) -> str:
     separator = "&" if "?" in url else "?"
     cache_busted_url = f"{url}{separator}codex_guard={int(time.time())}"
-    request = urllib.request.Request(
+    response = requests.get(
         cache_busted_url,
         headers={"User-Agent": "mighty-link-public-demo-guard/1.0"},
+        timeout=30,
     )
-    with urllib.request.urlopen(request, timeout=30) as response:
-        status = getattr(response, "status", 200)
-        if status != 200:
-            fail(f"Public URL returned HTTP {status}: {cache_busted_url}")
-        return response.read().decode("utf-8", errors="replace")
+    if response.status_code != 200:
+        fail(f"Public URL returned HTTP {response.status_code}: {cache_busted_url}")
+    return response.text
 
 
 def main() -> None:
