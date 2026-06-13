@@ -167,14 +167,14 @@ T750	7. 決定後実行	運用保守	定期パフォーマンスボトルネッ�
 T751	7. 決定後実行	セキュリティ	サードパーティAPIキー（Gemini/OpenAI/Slack等）の年次有効期限ローテーション自動化運用の整備	Codex + 人間	VSCode + Codex	data/secret_rotation_inventory.tsv、scripts/check_secret_rotation_schedule.py、週次 Secret Rotation Review workflow、docs/SECRET_ROTATION_RUNBOOK.md を追加。Gemini/OpenAI/Anthropic/Firebase/Supabase/Slack/Notion/Stripe等23件のsecretメタデータを年次ローテーション管理に載せ、secret値混入検出と期限切れ検知を自動化。Issue #88 / R60	完了	2026-06-14	2026-06-14
 T752	7. 決定後実行	フロントエンド	ユーザーオンボーディング / アカウント登録・アクティベーションフローの設計・実装	Antigravity	Antigravity 2.0	オンボーディングUI・初期セットアップウィザード開発	未着手	2026-06-14	2026-06-16
 T753	7. 決定後実行	セキュリティ	API レートリミット制限およびDDoS緩和策の適用	Codex	VSCode + Codex	src/rate_limit.py と FastAPI middleware で /api/parse・/api/match・Seedance/Sheets/knowledge-flow/admin 系に per-client sliding-window 429/Retry-After を追加。docs/API_RATE_LIMIT_AND_DDOS_RUNBOOK.md と pytest で検証 (Issue #89 / R61)	完了	2026-06-14	2026-06-14
-T754	7. 決定後実行	バックエンド開発	Alembic/Flyway 等を用いたデータベースマイグレーション管理体制の整備	Codex	VSCode + Codex	データベーススキーマ変更 of PostgreSQL/SQLite のバージョン履歴管理および運用整備	未着手	2026-06-15	2026-06-16
-T755	7. 決定後実行	運用保守	テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボードの構築	Codex	VSCode + Codex	Prometheus/Sentry等によるリソース性能監視および障害アラート設定	未着手	2026-06-16	2026-06-17
+T754	7. 決定後実行	バックエンド開発	Alembic/Flyway 等を用いたデータベースマイグレーション管理体制の整備	Codex	VSCode + Codex	db/migrations/sqlite・postgres、scripts/manage_db_migrations.py、DB migration validation CI、Runbookを整備し、Issue #90 / R62 へ証跡化	完了	2026-06-14	2026-06-14
+T755	7. 決定後実行	運用保守	テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボードの構築	Codex	VSCode + Codex	Prometheus/Sentry等によるリソース性能監視および障害アラート設定	未着手	2026-06-15	2026-06-16
 T756	7. 決定後実行	コンプライアンス	個人情報保護およびGDPRに基づくシステム監査ログの氏名マスキング・暗号化パイプライン実装	Claude	VSCode + Claude Code	データベース及びアクセスログの暗号化・氏名マスクバッチの開発・適用	完了	2026-06-10	2026-06-10
-T757	7. 決定後実行	運用保守	週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装	Codex	VSCode + Codex	API/Infraコスト集計の自動バッチおよびSlack週次通知設定	未着手	2026-06-17	2026-06-18
-T759	7. 決定後実行	バックエンド開発	Firebase Cloud Functions 経由での Supabase 接続のプール管理とパフォーマンス最適化	Codex	VSCode + Codex	接続プール管理設定のFastAPIへの組み込み	未着手	2026-06-18	2026-06-19
-T760	7. 決定後実行	品質検証	Firebase Emulator Suite と Supabase Local CLI を用いたローカル開発・テスト環境の構築	Codex	VSCode + Codex	ローカルエミュレータによる統合テストの合格率検証	未着手	2026-06-19	2026-06-20
-T761	7. 決定後実行	運用保守	Supabase ダッシュボードでのクエリパフォーマンス監視とインデックスのチューニング	Codex	VSCode + Codex	スロークエリ監視体制のドキュメント化	未着手	2026-06-20	2026-06-21
-T761_1	7. 決定後実行	運用保守	Firebase & Supabase クォータ・エラー監視のアラート構築	Codex	VSCode + Codex	Sentry / Google Cloud Monitoring 連携設定	未着手	2026-06-21	2026-06-22
+T757	7. 決定後実行	運用保守	週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装	Codex	VSCode + Codex	API/Infraコスト集計の自動バッチおよびSlack週次通知設定	未着手	2026-06-16	2026-06-17
+T759	7. 決定後実行	バックエンド開発	Firebase Cloud Functions 経由での Supabase 接続のプール管理とパフォーマンス最適化	Codex	VSCode + Codex	接続プール管理設定のFastAPIへの組み込み	未着手	2026-06-17	2026-06-18
+T760	7. 決定後実行	品質検証	Firebase Emulator Suite と Supabase Local CLI を用いたローカル開発・テスト環境の構築	Codex	VSCode + Codex	ローカルエミュレータによる統合テストの合格率検証	未着手	2026-06-18	2026-06-19
+T761	7. 決定後実行	運用保守	Supabase ダッシュボードでのクエリパフォーマンス監視とインデックスのチューニング	Codex	VSCode + Codex	スロークエリ監視体制のドキュメント化	未着手	2026-06-19	2026-06-20
+T761_1	7. 決定後実行	運用保守	Firebase & Supabase クォータ・エラー監視のアラート構築	Codex	VSCode + Codex	Sentry / Google Cloud Monitoring 連携設定	未着手	2026-06-20	2026-06-21
 T762	8. 本番運用・品質管理	品質管理	サービス品質KPIおよびSLA（稼働率・レスポンスタイム・診断精度）の定義と計測基盤整備	Claude + 人間	VSCode + Claude Code	SLA99.5%・P95レスポンス3秒以内・診断精度評価基準をdocs同期	完了	2026-06-10	2026-06-10
 T763	8. 本番運用・品質管理	運用保守	ユーザーフィードバック収集フロー（Net Promoter Score / 診断結果評価ボタン）の設計・実装	Antigravity + Claude	Antigravity + Gemini	診断結果画面への「役に立ちましたか？」フィードバックUI追加とSupabase集計連携	未着手	2026-06-16	2026-06-18
 T764	8. 本番運用・品質管理	品質管理	月次品質レポート（診断精度・ユーザー満足度・コスト・インフラ稼働率）の定型化と自動生成	Claude + Codex	VSCode + Claude Code	scripts/generate_monthly_quality_report.py を実装し docs/MONTHLY_REPORT_2026-06.md を自動生成 (Issue #79)。WBS進捗・テスト合格率・API利用/コストガード・課題/セキュリティ・翌月アクションを集計。pytest 5件追加 (全suite 20件パス)。Google Docs 同期は docs/*.md 既存パイプライン (sync_docs_to_notebooklm.py) に統合。配信自動化は T808 へ分離	完了	2026-06-13	2026-06-13

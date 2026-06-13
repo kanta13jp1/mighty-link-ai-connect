@@ -1,0 +1,54 @@
+name: DB Migration Validation
+
+on:
+  pull_request:
+    paths:
+      - "db/migrations/**"
+      - "supabase/migrations/**"
+      - "scripts/manage_db_migrations.py"
+      - "tests/test_db_migration_management.py"
+      - ".github/workflows/db-migration-validate.yml"
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "db/migrations/**"
+      - "supabase/migrations/**"
+      - "scripts/manage_db_migrations.py"
+      - "tests/test_db_migration_management.py"
+      - ".github/workflows/db-migration-validate.yml"
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: python -m pip install pytest
+
+      - name: Validate SQLite migrations
+        run: python scripts/manage_db_migrations.py validate --engine sqlite
+
+      - name: Validate Postgres migrations
+        run: python scripts/manage_db_migrations.py validate --engine postgres
+
+      - name: Validate Supabase migrations
+        run: python scripts/manage_db_migrations.py validate --engine supabase
+
+      - name: Run migration tests
+        run: python -m pytest tests/test_db_migration_management.py

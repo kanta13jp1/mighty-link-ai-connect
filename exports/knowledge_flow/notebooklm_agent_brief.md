@@ -1,6 +1,6 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-06-14T05:04:55+09:00
+Generated: 2026-06-14T06:06:58+09:00
 Status: `skipped`
 
 NotebookLM CLI is not ready yet, so this file is a placeholder.
@@ -38,6 +38,7 @@ During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
 - `docs/CODEX_CONTINUATION_NOTES.md`: https://docs.google.com/document/d/1akLsJ_85jkqcH3aTaae8h5u1xmHGooJn5UlklHvQyfE/edit?usp=drivesdk
 - `docs/COST_REPORT_2026-06.md`: https://docs.google.com/document/d/1CNFK4rA_lhIileO29u0MuvXQca43qkDmSdSla7JdUMY/edit?usp=drivesdk
 - `docs/database.md`: https://docs.google.com/document/d/1WVp_vmYeiCZfFWbCpHNfmwGoUeBADuMjyLySBHrh9bI/edit?usp=drivesdk
+- `docs/DB_MIGRATION_MANAGEMENT_RUNBOOK.md`: https://docs.google.com/document/d/13d9sL_Sle75GqpBTI405P0Z5Owh5ZNVHDLvfsSvOu0U/edit?usp=drivesdk
 - `docs/DEMO_SECURITY_AND_AUTH_DESIGN.md`: https://docs.google.com/document/d/1C606e1yesSIVlZfOrRjZ_4hkgr4OQQ_axpYjBFvrUEc/edit?usp=drivesdk
 - `docs/DEVELOPMENT_KNOWLEDGE_FLOW.md`: https://docs.google.com/document/d/1SS44DK0H57KFdX4jHDucbYe6PRN2ofUllaaLr5zioYU/edit?usp=drivesdk
 - `docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md`: https://docs.google.com/document/d/1yHVwrsZ_TZyEMa1wSfoxaSv85w7pyPqGP7VZUHTwhQU/edit?usp=drivesdk

@@ -62,7 +62,7 @@ python scripts/diagnose_supabase_performance.py --execute --api-url https://migh
 4. 本番適用前に GitHub Issue / 課題管理表へ根拠、想定効果、rollback 方法を記録する。
 5. `CREATE INDEX CONCURRENTLY` を使う。ただし transaction 内では実行しない。
 6. 適用後 24 時間以内に P95 / P99 API 応答、DB CPU、該当 SQL の mean/total time を再測定する。
-7. migration 管理が T754 で整備された後は、すべての index DDL を migration に残す。
+7. すべての index DDL は `docs/DB_MIGRATION_MANAGEMENT_RUNBOOK.md` に従い、`db/migrations/postgres/` または `supabase/migrations/` の forward migration に残す。
 
 ## 再構成・削除の注意
 

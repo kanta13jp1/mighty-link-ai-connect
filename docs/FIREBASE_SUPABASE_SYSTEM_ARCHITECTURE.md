@@ -188,7 +188,7 @@ USING (true);
 ### 5.2 Supabase Local CLI 設定 (`supabase/config.toml`)
 - ローカル PostgreSQL ポート: `54322`
 - API ポート (GoTrue / REST): `54321`
-- スキーマ変更およびマイグレーションの履歴管理は、`supabase migration new` および `supabase db reset` コマンドで一元管理。
+- スキーマ変更およびマイグレーションの履歴管理は、`supabase migration new` / `supabase db reset` と `scripts/manage_db_migrations.py` を併用し、手順は [DB_MIGRATION_MANAGEMENT_RUNBOOK.md](DB_MIGRATION_MANAGEMENT_RUNBOOK.md) を正とする。
 
 ---
 

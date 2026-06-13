@@ -160,7 +160,7 @@ MAINTENANCE_GUIDANCE = (
     "Use Supabase Dashboard Query Performance and Index Advisor before adding indexes.",
     "Prefer CREATE INDEX CONCURRENTLY for large production tables to avoid blocking writes.",
     "Do not run CREATE INDEX CONCURRENTLY or REINDEX CONCURRENTLY inside a transaction.",
-    "Record every accepted index change as a migration in T754 once migration management is ready.",
+    "Record every accepted index change as a forward migration before applying it to staging or production.",
     "Review unused indexes for at least two reporting cycles before dropping them.",
 )
 
