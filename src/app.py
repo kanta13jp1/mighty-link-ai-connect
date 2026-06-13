@@ -59,7 +59,10 @@ from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTex
 from fastapi.staticfiles import StaticFiles
 from fastapi.security import HTTPBasic, HTTPBasicCredentials, HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
-from rate_limit import SlidingWindowRateLimiter, client_identifier
+try:
+    from .rate_limit import SlidingWindowRateLimiter, client_identifier
+except ImportError:
+    from rate_limit import SlidingWindowRateLimiter, client_identifier
 
 # Try loading optional libraries for Sheets & Gemini
 try:
