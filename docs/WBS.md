@@ -205,7 +205,7 @@ gantt
 | **T747** | 7. 決定後実行 | 運用保守 | 定期脆弱性スキャンおよび依存パッケージパッチ適用の自動運用設定 (Dependabot/Weekly Vulnerability Scan) | Codex | VSCode + Codex | .github/dependabot.ymlでpip/GitHub Actionsを週次監視し、Weekly Security ScanでBandit/pip-auditを月曜07:00 JSTに実行。既知R49/R50はT802/Issue #72で修正追跡 | 完了 |
 | **T748** | 7. 決定後実行 | 運用保守 | 本番サーバーのログローテーションおよびアクセスログの自動クリーンアップ・圧縮・保存設定 | Codex | VSCode + Codex | scripts/rotate_runtime_logs.py、週次 dry-run workflow、docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md を追加。Firebase Hosting アクセスログは Cloud Logging retention、ローカル JSONL/.log は gzip 圧縮・90日保持で管理。Issue #85 / R57 | 完了 |
 | **T749** | 7. 決定後実行 | 共通管理 | 本番インフラ障害におけるエスカレーション連絡網およびディザスタリカバリ（災害復旧）運用計画の策定 | 人間 + Claude | VSCode + Claude Code | 障害検知時の緊急連絡ルート・復旧手順書・DRシナリオのdocs同期 | 完了 |
-| **T750** | 7. 決定後実行 | 運用保守 | 定期パフォーマンスボトルネック診断およびDBインデックス最適化運用の設計 | Codex | VSCode + Codex | スロークエリ検出・APIレスポンス性能モニタリングおよびインデックス再構成手順の自動化 | 未着手 |
+| **T750** | 7. 決定後実行 | 運用保守 | 定期パフォーマンスボトルネック診断およびDBインデックス最適化運用の設計 | Codex | VSCode + Codex | scripts/diagnose_supabase_performance.py、週次 dry-run workflow、docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md を追加。pg_stat_statements/Index Advisor/REINDEX CONCURRENTLY/CREATE INDEX CONCURRENTLY の承認フローを標準化。Issue #86 / R58 | 完了 |
 | **T751** | 7. 決定後実行 | セキュリティ | サードパーティAPIキー（Gemini/OpenAI/Slack等）の年次有効期限ローテーション自動化運用の整備 | Codex + 人間 | VSCode + Codex | GCP/Slack/Notion認証キーの期限切れ自動検知・ローテーション作業ガイドの同期 | 未着手 |
 | **T752** | 7. 決定後実行 | フロントエンド | ユーザーオンボーディング / アカウント登録・アクティベーションフローの設計・実装 | Antigravity | Antigravity 2.0 | オンボーディングUI・初期セットアップウィザード開発 | 未着手 |
 | **T753** | 7. 決定後実行 | セキュリティ | API レートリミット制限およびDDoS緩和策の適用 | Codex | VSCode + Codex | Gemini API コール上限・認証アクセスレート制限実装 | 未着手 |

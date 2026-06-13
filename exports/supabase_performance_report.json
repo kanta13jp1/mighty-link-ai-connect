@@ -1,0 +1,58 @@
+{
+  "task_id": "T750",
+  "generated_at_utc": "2026-06-13T17:21:43Z",
+  "status": "planned",
+  "dry_run": true,
+  "database_url": "postgresql://postgres:***@example.invalid:5432/postgres",
+  "sql_bundle": "exports\\supabase_performance_diagnostic.sql",
+  "raw_output": "exports\\supabase_performance_raw.txt",
+  "psql_command": null,
+  "probes": [
+    {
+      "name": "extension_status",
+      "purpose": "Confirm whether pg_stat_statements, hypopg, and index_advisor are available.",
+      "sql": "select extname, extversion\nfrom pg_extension\nwhere extname in ('pg_stat_statements', 'hypopg', 'index_advisor')\norder by extname;"
+    },
+    {
+      "name": "top_queries_by_total_time",
+      "purpose": "Find high total-time statements that dominate DB work.",
+      "sql": "select\n  queryid,\n  calls,\n  round(total_exec_time::numeric, 2) as total_exec_time_ms,\n  round(mean_exec_time::numeric, 2) as mean_exec_time_ms,\n  rows,\n  left(regexp_replace(query, '\\s+', ' ', 'g'), 240) as query_sample\nfrom pg_stat_statements\norder by total_exec_time desc\nlimit 20;"
+    },
+    {
+      "name": "top_queries_by_mean_time",
+      "purpose": "Find statements with high per-call latency.",
+      "sql": "select\n  queryid,\n  calls,\n  round(mean_exec_time::numeric, 2) as mean_exec_time_ms,\n  round(max_exec_time::numeric, 2) as max_exec_time_ms,\n  left(regexp_replace(query, '\\s+', ' ', 'g'), 240) as query_sample\nfrom pg_stat_statements\nwhere calls >= 5\norder by mean_exec_time desc\nlimit 20;"
+    },
+    {
+      "name": "sequential_scan_pressure",
+      "purpose": "Identify tables where sequential scans dominate indexed scans.",
+      "sql": "select\n  schemaname,\n  relname,\n  seq_scan,\n  idx_scan,\n  n_live_tup,\n  n_dead_tup,\n  last_analyze,\n  last_autoanalyze\nfrom pg_stat_user_tables\nwhere seq_scan > greatest(idx_scan * 2, 50)\norder by seq_scan desc\nlimit 30;"
+    },
+    {
+      "name": "unused_indexes",
+      "purpose": "Find non-primary-key indexes with no scans, then review before dropping.",
+      "sql": "select\n  schemaname,\n  relname as table_name,\n  indexrelname as index_name,\n  idx_scan,\n  pg_size_pretty(pg_relation_size(indexrelid)) as index_size\nfrom pg_stat_user_indexes\nwhere idx_scan = 0\n  and indexrelname not like '%_pkey'\norder by pg_relation_size(indexrelid) desc\nlimit 30;"
+    },
+    {
+      "name": "large_indexes",
+      "purpose": "List largest indexes for storage maintenance review.",
+      "sql": "select\n  schemaname,\n  relname as table_name,\n  indexrelname as index_name,\n  idx_scan,\n  pg_size_pretty(pg_relation_size(indexrelid)) as index_size\nfrom pg_stat_user_indexes\norder by pg_relation_size(indexrelid) desc\nlimit 30;"
+    },
+    {
+      "name": "vacuum_analyze_lag",
+      "purpose": "Find tables that may need vacuum/analyze attention.",
+      "sql": "select\n  schemaname,\n  relname,\n  n_live_tup,\n  n_dead_tup,\n  last_vacuum,\n  last_autovacuum,\n  last_analyze,\n  last_autoanalyze\nfrom pg_stat_user_tables\nwhere n_dead_tup > greatest(n_live_tup * 0.2, 1000)\norder by n_dead_tup desc\nlimit 30;"
+    }
+  ],
+  "api_results": [],
+  "maintenance_guidance": [
+    "Use Supabase Dashboard Query Performance and Index Advisor before adding indexes.",
+    "Prefer CREATE INDEX CONCURRENTLY for large production tables to avoid blocking writes.",
+    "Do not run CREATE INDEX CONCURRENTLY or REINDEX CONCURRENTLY inside a transaction.",
+    "Record every accepted index change as a migration in T754 once migration management is ready.",
+    "Review unused indexes for at least two reporting cycles before dropping them."
+  ],
+  "notes": [
+    "Use --execute with SUPABASE_DB_URL to run live diagnostics."
+  ]
+}

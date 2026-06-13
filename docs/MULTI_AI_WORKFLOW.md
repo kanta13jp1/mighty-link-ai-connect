@@ -230,6 +230,7 @@ feat/<tool>-<wbs-id>-<slug>
 毎セッション開始時に Anthropic / OpenAI / Google / Microsoft / Meta / Amazon / Apple / Grok / Kimi / MiMo / DeepSeek / BytePlus / GitHub / Slack / Notion / Obsidian / Unity / Figma / Canva / Reddit / InsForge / FireCrawl / Discord / Stripe / Supabase / お名前.com の公式 docs を確認し、3-tool 体制へ適用可能な best practice を日付付きで追記する。**肥大化防止のため、効力を失った古い Refresh 節は要約 1 行を残して削除する**（全文は Git 履歴で参照可能）。
 
 2026-06-14 の反映: T748 に合わせ、Firebase Hosting のアクセスログは Cloud Logging bucket retention で管理し、ローカル/CI の JSONL・`.log` は `scripts/rotate_runtime_logs.py` で gzip 圧縮・90日保持に統一した。T740_3 は `https://mightylink-app.com/` が到達可能でも証明書主体名が `firebaseapp.com` のままのため、SSL発行完了までは未完了扱いを継続する。
+2026-06-14 追記: T750 に合わせ、Supabase/Postgres の性能診断は `pg_stat_statements`・`pg_stat_user_indexes`・Supabase Index Advisor を根拠にし、`CREATE INDEX CONCURRENTLY` / `REINDEX CONCURRENTLY` は承認・staging検証・migration記録後に適用する運用へ標準化した。
 
 ### Anthropic Claude Code & API ([code.claude.com/docs](https://code.claude.com/docs/en/overview) / [platform.claude.com prompt-caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching))
 
