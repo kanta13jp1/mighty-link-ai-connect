@@ -142,7 +142,7 @@ Resolve-DnsName mightylink-app.com -Type TXT -Server 8.8.8.8
 
 | ID | 内容 | 状態 |
 | --- | --- | --- |
-| T740 | 本番ドメイン・DNS 移行および SSL 証明書自動更新の適用（親） | 進行中 |
+| T740 | 本番ドメイン・DNS 移行および SSL 証明書自動更新の適用（親） | 進行中（T740_3 完了後に完了化） |
 | T740_1 | mightylink-app.com のレジストラ登録 | ✅ 完了 |
-| T740_2 | Firebase カスタムドメイン再登録 + DNS CNAME/A 設定 | 進行中（DNS 反映待ち） |
-| T740_3 | SSL 自動発行確認 + 特商法 販売 URL 確定・docs 反映 | 未着手（T740_2 完了後） |
+| T740_2 | Firebase カスタムドメイン再登録 + DNS CNAME/A 設定 | ✅ 完了（Firebase 追加 + DNS 設定完了。SSL 確認は T740_3 で実施） |
+| T740_3 | SSL 自動発行確認 + 特商法 販売 URL 確定・docs 反映 | 未着手（Firebase の SSL 発行待ち） |

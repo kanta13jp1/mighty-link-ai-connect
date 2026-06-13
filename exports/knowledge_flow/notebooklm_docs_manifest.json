@@ -1,5 +1,5 @@
 {
-  "generated_at_jst": "2026-06-13T02:33:09+09:00",
+  "generated_at_jst": "2026-06-13T14:23:36+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "google_docs": {
     "docs_ai_cost_monitoring_and_quota_design_md": {
@@ -16,7 +16,7 @@
         }
       ],
       "createdTime": "2026-06-03T05:39:42.251Z",
-      "modifiedTime": "2026-06-12T17:24:20.476Z"
+      "modifiedTime": "2026-06-13T05:20:40.479Z"
     },
     "docs_antigravity_cli_evaluation_report_md": {
       "source": "docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md",
@@ -32,7 +32,7 @@
         }
       ],
       "createdTime": "2026-05-30T06:29:26.117Z",
-      "modifiedTime": "2026-06-12T17:24:24.661Z"
+      "modifiedTime": "2026-06-13T05:20:43.420Z"
     },
     "docs_antigravity_guide_md": {
       "source": "docs/ANTIGRAVITY_GUIDE.md",
@@ -48,7 +48,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:05.145Z",
-      "modifiedTime": "2026-06-12T17:24:27.632Z"
+      "modifiedTime": "2026-06-13T05:20:46.668Z"
     },
     "docs_antigravity_hooks_sync_poc_md": {
       "source": "docs/ANTIGRAVITY_HOOKS_SYNC_POC.md",
@@ -64,7 +64,7 @@
         }
       ],
       "createdTime": "2026-06-03T06:53:08.412Z",
-      "modifiedTime": "2026-06-12T17:24:31.606Z"
+      "modifiedTime": "2026-06-13T05:20:49.676Z"
     },
     "docs_antigravity_managed_agents_cost_policy_md": {
       "source": "docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md",
@@ -80,7 +80,7 @@
         }
       ],
       "createdTime": "2026-05-30T06:29:32.244Z",
-      "modifiedTime": "2026-06-12T17:24:34.685Z"
+      "modifiedTime": "2026-06-13T05:20:52.485Z"
     },
     "docs_audit_log_masking_and_encryption_md": {
       "source": "docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md",
@@ -96,7 +96,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:35:42.295Z",
-      "modifiedTime": "2026-06-12T17:24:38.004Z"
+      "modifiedTime": "2026-06-13T05:20:55.146Z"
     },
     "docs_backend_ai_pipeline_md": {
       "source": "docs/BACKEND_AI_PIPELINE.md",
@@ -112,7 +112,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:08.445Z",
-      "modifiedTime": "2026-06-12T17:24:40.704Z"
+      "modifiedTime": "2026-06-13T05:20:57.910Z"
     },
     "docs_billing_and_refund_policy_md": {
       "source": "docs/BILLING_AND_REFUND_POLICY.md",
@@ -128,7 +128,7 @@
         }
       ],
       "createdTime": "2026-06-12T12:26:11.723Z",
-      "modifiedTime": "2026-06-12T17:24:44.015Z"
+      "modifiedTime": "2026-06-13T05:21:00.821Z"
     },
     "docs_ceo_presentation_backup_guide_md": {
       "source": "docs/CEO_PRESENTATION_BACKUP_GUIDE.md",
@@ -144,7 +144,7 @@
         }
       ],
       "createdTime": "2026-05-28T15:32:31.318Z",
-      "modifiedTime": "2026-06-12T17:24:47.138Z"
+      "modifiedTime": "2026-06-13T05:21:03.930Z"
     },
     "docs_ceo_presentation_canva_figma_guide_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md",
@@ -160,7 +160,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:15:37.750Z",
-      "modifiedTime": "2026-06-12T17:24:51.251Z"
+      "modifiedTime": "2026-06-13T05:21:07.102Z"
     },
     "docs_ceo_presentation_decision_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md",
@@ -176,7 +176,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:11.504Z",
-      "modifiedTime": "2026-06-12T17:24:54.375Z"
+      "modifiedTime": "2026-06-13T05:21:10.162Z"
     },
     "docs_ceo_presentation_discussion_points_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md",
@@ -192,7 +192,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:10.521Z",
-      "modifiedTime": "2026-06-12T17:24:57.655Z"
+      "modifiedTime": "2026-06-13T05:21:12.936Z"
     },
     "docs_ceo_presentation_final_review_checklist_md": {
       "source": "docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md",
@@ -208,7 +208,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:13.734Z",
-      "modifiedTime": "2026-06-12T17:25:01.230Z"
+      "modifiedTime": "2026-06-13T05:21:15.847Z"
     },
     "docs_ceo_presentation_ops_discussion_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md",
@@ -224,7 +224,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:16.975Z",
-      "modifiedTime": "2026-06-12T17:25:04.397Z"
+      "modifiedTime": "2026-06-13T05:21:18.663Z"
     },
     "docs_ceo_presentation_post_decision_roadmap_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
@@ -240,7 +240,7 @@
         }
       ],
       "createdTime": "2026-05-22T01:55:28.832Z",
-      "modifiedTime": "2026-06-12T17:25:07.320Z"
+      "modifiedTime": "2026-06-13T05:21:21.394Z"
     },
     "docs_ceo_presentation_prep_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PREP_2026-06-02.md",
@@ -256,7 +256,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:13.861Z",
-      "modifiedTime": "2026-06-12T17:25:10.143Z"
+      "modifiedTime": "2026-06-13T05:21:24.249Z"
     },
     "docs_ceo_presentation_preshare_memo_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md",
@@ -272,7 +272,7 @@
         }
       ],
       "createdTime": "2026-05-22T04:29:57.435Z",
-      "modifiedTime": "2026-06-12T17:25:13.385Z"
+      "modifiedTime": "2026-06-13T05:21:27.598Z"
     },
     "docs_ceo_presentation_qa_pack_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md",
@@ -288,7 +288,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:23.139Z",
-      "modifiedTime": "2026-06-12T17:25:16.833Z"
+      "modifiedTime": "2026-06-13T05:21:30.252Z"
     },
     "docs_codex_continuation_notes_md": {
       "source": "docs/CODEX_CONTINUATION_NOTES.md",
@@ -304,7 +304,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:17.070Z",
-      "modifiedTime": "2026-06-12T17:25:20.156Z"
+      "modifiedTime": "2026-06-13T05:21:33.245Z"
     },
     "docs_cost_report_2026_06_md": {
       "source": "docs/COST_REPORT_2026-06.md",
@@ -320,7 +320,7 @@
         }
       ],
       "createdTime": "2026-06-02T15:27:49.024Z",
-      "modifiedTime": "2026-06-12T17:25:24.063Z"
+      "modifiedTime": "2026-06-13T05:21:36.800Z"
     },
     "docs_database_md": {
       "source": "docs/database.md",
@@ -336,7 +336,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:20.169Z",
-      "modifiedTime": "2026-06-12T17:25:27.136Z"
+      "modifiedTime": "2026-06-13T05:21:39.636Z"
     },
     "docs_demo_security_and_auth_design_md": {
       "source": "docs/DEMO_SECURITY_AND_AUTH_DESIGN.md",
@@ -352,7 +352,7 @@
         }
       ],
       "createdTime": "2026-06-03T05:02:20.581Z",
-      "modifiedTime": "2026-06-12T17:25:29.858Z"
+      "modifiedTime": "2026-06-13T05:21:42.552Z"
     },
     "docs_development_knowledge_flow_md": {
       "source": "docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
@@ -368,7 +368,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:23.586Z",
-      "modifiedTime": "2026-06-12T17:25:32.796Z"
+      "modifiedTime": "2026-06-13T05:21:45.418Z"
     },
     "docs_disaster_recovery_and_escalation_runbook_md": {
       "source": "docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md",
@@ -384,7 +384,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:16:14.738Z",
-      "modifiedTime": "2026-06-12T17:25:36.603Z"
+      "modifiedTime": "2026-06-13T05:21:48.248Z"
     },
     "docs_firebase_auth_supabase_rls_security_design_md": {
       "source": "docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md",
@@ -400,7 +400,7 @@
         }
       ],
       "createdTime": "2026-06-06T05:10:30.765Z",
-      "modifiedTime": "2026-06-12T17:25:39.636Z"
+      "modifiedTime": "2026-06-13T05:21:51.365Z"
     },
     "docs_firebase_supabase_system_architecture_md": {
       "source": "docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md",
@@ -416,7 +416,7 @@
         }
       ],
       "createdTime": "2026-06-06T02:47:52.808Z",
-      "modifiedTime": "2026-06-12T17:25:42.685Z"
+      "modifiedTime": "2026-06-13T05:21:54.463Z"
     },
     "docs_google_workspace_migration_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
@@ -432,7 +432,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:26.826Z",
-      "modifiedTime": "2026-06-12T17:25:45.989Z"
+      "modifiedTime": "2026-06-13T05:21:57.605Z"
     },
     "docs_growth_strategy_roadmap_md": {
       "source": "docs/GROWTH_STRATEGY_ROADMAP.md",
@@ -448,7 +448,7 @@
         }
       ],
       "createdTime": "2026-06-10T12:30:56.561Z",
-      "modifiedTime": "2026-06-12T17:25:49.399Z"
+      "modifiedTime": "2026-06-13T05:22:00.665Z"
     },
     "docs_hosting_and_database_selection_md": {
       "source": "docs/HOSTING_AND_DATABASE_SELECTION.md",
@@ -464,7 +464,7 @@
         }
       ],
       "createdTime": "2026-06-02T13:12:51.416Z",
-      "modifiedTime": "2026-06-12T17:25:52.513Z"
+      "modifiedTime": "2026-06-13T05:22:03.301Z"
     },
     "docs_integration_demo_evidence_2026_06_02_md": {
       "source": "docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md",
@@ -480,7 +480,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:30.369Z",
-      "modifiedTime": "2026-06-12T17:25:55.574Z"
+      "modifiedTime": "2026-06-13T05:22:06.351Z"
     },
     "docs_mcp_canva_figma_setup_guide_2026_06_02_md": {
       "source": "docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md",
@@ -496,7 +496,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:16:25.443Z",
-      "modifiedTime": "2026-06-12T17:25:58.704Z"
+      "modifiedTime": "2026-06-13T05:22:09.112Z"
     },
     "docs_monthly_progress_report_and_kpi_dashboard_md": {
       "source": "docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md",
@@ -512,7 +512,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:46:22.333Z",
-      "modifiedTime": "2026-06-12T17:26:01.864Z"
+      "modifiedTime": "2026-06-13T05:22:12.410Z"
     },
     "docs_monthly_report_2026_06_md": {
       "source": "docs/MONTHLY_REPORT_2026-06.md",
@@ -528,7 +528,7 @@
         }
       ],
       "createdTime": "2026-06-12T13:03:42.463Z",
-      "modifiedTime": "2026-06-12T17:26:04.977Z"
+      "modifiedTime": "2026-06-13T05:22:15.299Z"
     },
     "docs_multi_ai_workflow_md": {
       "source": "docs/MULTI_AI_WORKFLOW.md",
@@ -544,7 +544,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:39.743Z",
-      "modifiedTime": "2026-06-12T17:26:07.821Z"
+      "modifiedTime": "2026-06-13T05:22:18.302Z"
     },
     "docs_personal_info_disclosure_procedures_md": {
       "source": "docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md",
@@ -560,7 +560,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:46:28.736Z",
-      "modifiedTime": "2026-06-12T17:26:11.260Z"
+      "modifiedTime": "2026-06-13T05:22:21.499Z"
     },
     "docs_pilot_closed_operation_design_md": {
       "source": "docs/PILOT_CLOSED_OPERATION_DESIGN.md",
@@ -576,7 +576,7 @@
         }
       ],
       "createdTime": "2026-06-03T04:14:48.832Z",
-      "modifiedTime": "2026-06-12T17:26:14.559Z"
+      "modifiedTime": "2026-06-13T05:22:24.461Z"
     },
     "docs_pilot_consent_template_md": {
       "source": "docs/PILOT_CONSENT_TEMPLATE.md",
@@ -592,7 +592,7 @@
         }
       ],
       "createdTime": "2026-06-02T11:18:59.919Z",
-      "modifiedTime": "2026-06-12T17:26:17.477Z"
+      "modifiedTime": "2026-06-13T05:22:27.520Z"
     },
     "docs_pilot_participants_selection_md": {
       "source": "docs/PILOT_PARTICIPANTS_SELECTION.md",
@@ -608,7 +608,7 @@
         }
       ],
       "createdTime": "2026-06-03T02:08:51.666Z",
-      "modifiedTime": "2026-06-12T17:26:20.441Z"
+      "modifiedTime": "2026-06-13T05:22:30.527Z"
     },
     "docs_pilot_report_2026_06_16_md": {
       "source": "docs/PILOT_REPORT_2026-06-16.md",
@@ -624,7 +624,7 @@
         }
       ],
       "createdTime": "2026-06-06T01:45:30.668Z",
-      "modifiedTime": "2026-06-12T17:26:23.645Z"
+      "modifiedTime": "2026-06-13T05:22:33.515Z"
     },
     "docs_privacy_policy_md": {
       "source": "docs/PRIVACY_POLICY.md",
@@ -640,7 +640,7 @@
         }
       ],
       "createdTime": "2026-06-11T19:10:11.376Z",
-      "modifiedTime": "2026-06-12T17:26:26.880Z"
+      "modifiedTime": "2026-06-13T05:22:36.424Z"
     },
     "docs_production_acceptance_test_report_md": {
       "source": "docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md",
@@ -656,7 +656,23 @@
         }
       ],
       "createdTime": "2026-06-10T13:16:59.142Z",
-      "modifiedTime": "2026-06-12T17:26:29.979Z"
+      "modifiedTime": "2026-06-13T05:22:39.169Z"
+    },
+    "docs_production_domain_setup_guide_md": {
+      "source": "docs/PRODUCTION_DOMAIN_SETUP_GUIDE.md",
+      "id": "1Xj57ffoCwtqaVm68rnfiNSMEW0yuVc_nuzw8TjQmpAs",
+      "name": "Mighty Skill-Bridge docs/docs/PRODUCTION_DOMAIN_SETUP_GUIDE.md",
+      "url": "https://docs.google.com/document/d/1Xj57ffoCwtqaVm68rnfiNSMEW0yuVc_nuzw8TjQmpAs/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-06-13T05:22:42.010Z",
+      "modifiedTime": "2026-06-13T05:22:42.116Z"
     },
     "docs_project_structure_md": {
       "source": "docs/PROJECT_STRUCTURE.md",
@@ -672,7 +688,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:33.155Z",
-      "modifiedTime": "2026-06-12T17:26:33.084Z"
+      "modifiedTime": "2026-06-13T05:22:45.369Z"
     },
     "docs_requirements_md": {
       "source": "docs/requirements.md",
@@ -688,7 +704,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:35.726Z",
-      "modifiedTime": "2026-06-12T17:26:36.055Z"
+      "modifiedTime": "2026-06-13T05:22:48.002Z"
     },
     "docs_security_audit_report_2026_q2_md": {
       "source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md",
@@ -704,7 +720,7 @@
         }
       ],
       "createdTime": "2026-06-11T20:14:55.052Z",
-      "modifiedTime": "2026-06-12T17:26:38.967Z"
+      "modifiedTime": "2026-06-13T05:22:50.709Z"
     },
     "docs_security_audit_runbook_md": {
       "source": "docs/SECURITY_AUDIT_RUNBOOK.md",
@@ -720,7 +736,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:37:52.367Z",
-      "modifiedTime": "2026-06-12T17:26:41.708Z"
+      "modifiedTime": "2026-06-13T05:22:53.663Z"
     },
     "docs_sequence_diagrams_md": {
       "source": "docs/SEQUENCE_DIAGRAMS.md",
@@ -736,7 +752,7 @@
         }
       ],
       "createdTime": "2026-05-28T14:16:37.218Z",
-      "modifiedTime": "2026-06-12T17:26:44.948Z"
+      "modifiedTime": "2026-06-13T05:22:56.553Z"
     },
     "docs_setup_guide_md": {
       "source": "docs/SETUP_GUIDE.md",
@@ -752,7 +768,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:39.055Z",
-      "modifiedTime": "2026-06-12T17:26:48.056Z"
+      "modifiedTime": "2026-06-13T05:22:59.556Z"
     },
     "docs_sheets_trackers_schema_md": {
       "source": "docs/SHEETS_TRACKERS_SCHEMA.md",
@@ -768,7 +784,7 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:50.427Z",
-      "modifiedTime": "2026-06-12T17:26:51.357Z"
+      "modifiedTime": "2026-06-13T05:23:02.686Z"
     },
     "docs_sla_kpi_definition_and_measurement_md": {
       "source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md",
@@ -784,7 +800,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:38:06.744Z",
-      "modifiedTime": "2026-06-12T17:26:54.438Z"
+      "modifiedTime": "2026-06-13T05:23:05.595Z"
     },
     "docs_staging_environment_operation_runbook_md": {
       "source": "docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md",
@@ -800,7 +816,7 @@
         }
       ],
       "createdTime": "2026-06-10T17:05:18.055Z",
-      "modifiedTime": "2026-06-12T17:26:57.403Z"
+      "modifiedTime": "2026-06-13T05:23:09.549Z"
     },
     "docs_supabase_database_physical_and_index_design_md": {
       "source": "docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md",
@@ -816,7 +832,7 @@
         }
       ],
       "createdTime": "2026-06-06T05:39:27.159Z",
-      "modifiedTime": "2026-06-12T17:27:00.565Z"
+      "modifiedTime": "2026-06-13T05:23:12.521Z"
     },
     "docs_terms_and_privacy_annual_review_process_md": {
       "source": "docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md",
@@ -832,7 +848,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:47:11.192Z",
-      "modifiedTime": "2026-06-12T17:27:03.406Z"
+      "modifiedTime": "2026-06-13T05:23:15.722Z"
     },
     "docs_terms_of_service_md": {
       "source": "docs/TERMS_OF_SERVICE.md",
@@ -848,7 +864,7 @@
         }
       ],
       "createdTime": "2026-06-11T19:10:49.110Z",
-      "modifiedTime": "2026-06-12T17:27:06.444Z"
+      "modifiedTime": "2026-06-13T05:23:18.705Z"
     },
     "docs_tokushoho_notation_md": {
       "source": "docs/TOKUSHOHO_NOTATION.md",
@@ -864,7 +880,7 @@
         }
       ],
       "createdTime": "2026-06-12T12:28:31.053Z",
-      "modifiedTime": "2026-06-12T17:27:09.328Z"
+      "modifiedTime": "2026-06-13T05:23:21.706Z"
     },
     "docs_user_data_deletion_flow_md": {
       "source": "docs/USER_DATA_DELETION_FLOW.md",
@@ -880,7 +896,7 @@
         }
       ],
       "createdTime": "2026-06-10T13:17:25.739Z",
-      "modifiedTime": "2026-06-12T17:27:12.185Z"
+      "modifiedTime": "2026-06-13T05:23:24.781Z"
     },
     "docs_user_guide_and_faq_md": {
       "source": "docs/USER_GUIDE_AND_FAQ.md",
@@ -896,7 +912,7 @@
         }
       ],
       "createdTime": "2026-06-10T12:31:52.213Z",
-      "modifiedTime": "2026-06-12T17:27:15.651Z"
+      "modifiedTime": "2026-06-13T05:23:27.494Z"
     },
     "docs_wbs_md": {
       "source": "docs/WBS.md",
@@ -912,7 +928,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-06-12T17:27:18.669Z"
+      "modifiedTime": "2026-06-13T05:23:30.436Z"
     },
     "docs_wbs_process_coverage_audit_2026_06_13_md": {
       "source": "docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md",
@@ -928,7 +944,7 @@
         }
       ],
       "createdTime": "2026-06-12T17:27:22.007Z",
-      "modifiedTime": "2026-06-12T17:27:22.029Z"
+      "modifiedTime": "2026-06-13T05:23:34.058Z"
     },
     "docs_wbs_sync_guide_md": {
       "source": "docs/WBS_SYNC_GUIDE.md",
@@ -944,557 +960,12 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:44.871Z",
-      "modifiedTime": "2026-06-12T17:27:25.779Z"
+      "modifiedTime": "2026-06-13T05:23:36.680Z"
     }
   },
   "notebooklm": {
-    "available": true,
-    "status": "ready",
-    "status_output": "Current Context                            \n┌──────────────┬──────────────────────────────────────────────────────┐\n│ Property     │ Value                                                │\n├──────────────┼──────────────────────────────────────────────────────┤\n│ Notebook ID  │ cd44c4ef-4c46-40b5-ace3-1b6904d29591                 │\n│ Title        │ Mighty Skill-Bridge Development Knowledge 2026-06-02 │\n│ Ownership    │ Owner                                                │\n│ Created      │ 2026-06-12                                           │\n│ Conversation │ 511e5401-175b-41ea-8b07-203758f83c77                 │\n└──────────────┴──────────────────────────────────────────────────────┘",
-    "list_output": "Notebooks                                   \n┌────────────────────────────┬───────────────────────────┬───────┬────────────┐\n│ ID                         │ Title                     │ Owner │ Created    │\n├────────────────────────────┼───────────────────────────┼───────┼────────────┤\n│ cd44c4ef-4c46-40b5-ace3-1… │ Mighty Skill-Bridge       │ Owner │ 2026-06-12 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ a235db10-d2c5-4ee3-9621-8… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 28804753-3266-406d-b0ae-e… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 75521ea6-6b9b-47b2-9508-5… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 4af4503e-1085-4281-9b3e-f… │ Mighty-Link AI Connect    │ Owner │ 2026-06-09 │\n│                            │ Project Management WBS    │       │            │\n│ b0fb4be1-88fb-4079-ab65-a… │ Firebase: Building and    │ Owner │ 2026-06-03 │\n│                            │ Scaling Modern Apps with  │       │            │\n│                            │ Google Infrastructure     │       │            │\n│ 54b1bd0c-f201-4b35-9855-8… │ Strategic AI Integration  │ Owner │ 2026-06-03 │\n│                            │ and Sustainable           │       │            │\n│                            │ Development Roadmap       │       │            │\n│ 6d164541-3e0c-49a4-8728-8… │ Google I/O 2026: Building │ Owner │ 2026-06-02 │\n│                            │ the Agentic Future        │       │            │\n│ 5790a227-0187-4b6c-a88e-0… │ Dreamina Seedance 2.0     │ Owner │ 2026-05-23 │\n│                            │ Resource Pack Guide       │       │            │\n└────────────────────────────┴───────────────────────────┴───────┴────────────┘",
-    "notebook_id": "cd44c4ef-4c46-40b5-ace3-1b6904d29591",
-    "notebook_title": "Mighty Skill-Bridge Development Knowledge 2026-06-02",
-    "notebook_info": {
-      "action": "used_existing",
-      "output": "┌────────────────────────────┬───────────────────────────┬───────┬────────────┐\n│ ID                         │ Title                     │ Owner │ Created    │\n├────────────────────────────┼───────────────────────────┼───────┼────────────┤\n│ cd44c4ef-4c46-40b5-ace3-1… │ Mighty Skill-Bridge       │ Owner │ 2026-06-13 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n└────────────────────────────┴───────────────────────────┴───────┴────────────┘"
-    },
-    "source_results": [
-      {
-        "title": "Mighty Skill-Bridge docs/docs/AI_COST_MONITORING_AND_QUOTA_DESIGN.md",
-        "drive_file_id": "1MaQDg52OsPPzpDVlfAMi4xdqSENRc8tWYNV729uytQ4",
-        "action": "refreshed_existing",
-        "source_id": "ad5dc7ec-8957-4f1c-a513-20d1fb9622f3",
-        "returncode": 0,
-        "stdout": "Source refreshed: ad5dc7ec-8957-4f1c-a513-20d1fb9622f3",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md",
-        "drive_file_id": "1bBNOphS-rJbJMWiYJGba-3ZGE-FEHqHrE4dDbKDPsew",
-        "action": "refreshed_existing",
-        "source_id": "859d74a6-60b9-4bce-aaac-5a3005c953bd",
-        "returncode": 0,
-        "stdout": "Source refreshed: 859d74a6-60b9-4bce-aaac-5a3005c953bd",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/ANTIGRAVITY_GUIDE.md",
-        "drive_file_id": "1d0SMuvOQXnGLxmNj7d1ktfWczSmxlWL0wblxlYDMH4E",
-        "action": "refreshed_existing",
-        "source_id": "9edfc208-b652-48b8-9769-20fcdca6724f",
-        "returncode": 0,
-        "stdout": "Source refreshed: 9edfc208-b652-48b8-9769-20fcdca6724f",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/ANTIGRAVITY_HOOKS_SYNC_POC.md",
-        "drive_file_id": "17zvd4fsOXx3hhgMHeZdTKUNaZlWz7-JzvU-1zS0SLDw",
-        "action": "refreshed_existing",
-        "source_id": "bf95facd-f2f7-4ad2-bad8-3b28c33c7170",
-        "returncode": 0,
-        "stdout": "Source refreshed: bf95facd-f2f7-4ad2-bad8-3b28c33c7170",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md",
-        "drive_file_id": "1eDY92cqtEk4ocGZCcAxRtHPlupia8UQNZi8OEY1bSto",
-        "action": "refreshed_existing",
-        "source_id": "e5504bf5-7ed4-428b-a07c-44dc6f7d3eb0",
-        "returncode": 0,
-        "stdout": "Source refreshed: e5504bf5-7ed4-428b-a07c-44dc6f7d3eb0",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md",
-        "drive_file_id": "1yCaiaUtEAnY2CsQ7spugwdRfNwf-etTYxe96ZunS0uE",
-        "action": "refreshed_existing",
-        "source_id": "82afb20e-6827-43bc-bee5-774212276dc4",
-        "returncode": 0,
-        "stdout": "Source refreshed: 82afb20e-6827-43bc-bee5-774212276dc4",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/BACKEND_AI_PIPELINE.md",
-        "drive_file_id": "1duxDhC6yjS-XlyWxse_XdaiRjq88cZz8aBCt0GRxUWg",
-        "action": "refreshed_existing",
-        "source_id": "9d817bd3-559a-405d-840f-0c4f59ce79cf",
-        "returncode": 0,
-        "stdout": "Source refreshed: 9d817bd3-559a-405d-840f-0c4f59ce79cf",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/BILLING_AND_REFUND_POLICY.md",
-        "drive_file_id": "1qXQ8UVCo4AJN2DLeYq_CO13GDM8e_9prJhl8Mym6rPM",
-        "action": "refreshed_existing",
-        "source_id": "805ede16-1236-4917-8bf0-a2767db72192",
-        "returncode": 0,
-        "stdout": "Source refreshed: 805ede16-1236-4917-8bf0-a2767db72192",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_BACKUP_GUIDE.md",
-        "drive_file_id": "1V0Pk334cGh22vH5YcXPepmIV8OHOFs1dtdgUQPa-VUY",
-        "action": "refreshed_existing",
-        "source_id": "7deff110-2736-42c3-80f9-732b7bfbc34d",
-        "returncode": 0,
-        "stdout": "Source refreshed: 7deff110-2736-42c3-80f9-732b7bfbc34d",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md",
-        "drive_file_id": "17LQKJNaTJYn7ntsh3vIT4A1YqkkMDR_xRDNmuw__iKc",
-        "action": "refreshed_existing",
-        "source_id": "458ca26a-47ac-403d-91e0-0980cbdada6f",
-        "returncode": 0,
-        "stdout": "Source refreshed: 458ca26a-47ac-403d-91e0-0980cbdada6f",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md",
-        "drive_file_id": "1XJeHY18JEEeaz4Dc28UHrOYbA7hhZ7ENfyI3TEGPnqc",
-        "action": "refreshed_existing",
-        "source_id": "ca9e783b-170a-4347-9e38-aeae3e4d8eea",
-        "returncode": 0,
-        "stdout": "Source refreshed: ca9e783b-170a-4347-9e38-aeae3e4d8eea",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md",
-        "drive_file_id": "14JXVTEmE05KPl-8h0-3yUN72d_llc345dC-THSY6MP0",
-        "action": "refreshed_existing",
-        "source_id": "237841a1-17fc-4215-9849-53ab80cb4240",
-        "returncode": 0,
-        "stdout": "Source refreshed: 237841a1-17fc-4215-9849-53ab80cb4240",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md",
-        "drive_file_id": "1QIWGVC-S7xL9qQuO9VwQ8Cu72lBwdRWv-3VT-QfHHSk",
-        "action": "refreshed_existing",
-        "source_id": "f909d5a6-55fa-446f-a553-c67afef33f0b",
-        "returncode": 0,
-        "stdout": "Source refreshed: f909d5a6-55fa-446f-a553-c67afef33f0b",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md",
-        "drive_file_id": "1JgVk67o0IC8JuUtlftMwPQY9cgeoMY4Q1lHJ2xHAkqI",
-        "action": "refreshed_existing",
-        "source_id": "0a6067f9-10c6-4e1e-96a0-bd672b64a0af",
-        "returncode": 0,
-        "stdout": "Source refreshed: 0a6067f9-10c6-4e1e-96a0-bd672b64a0af",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
-        "drive_file_id": "12H5nzd8jDRQU1eg33xNQgkoaEaodz4zQmjSTbaJWHkk",
-        "action": "added",
-        "returncode": 0,
-        "stdout": "Added Drive source: b3b03653-4d1c-4b62-9e15-59548427af8d\nTitle: Mighty Skill-Bridge \ndocs/docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_PREP_2026-06-02.md",
-        "drive_file_id": "1hIcqCfKtRPPVtXrKizMesGpI7j9VACrXgQicHy4XD6o",
-        "action": "refreshed_existing",
-        "source_id": "8e0ea648-3160-41ea-b902-70d8c6511a18",
-        "returncode": 0,
-        "stdout": "Source refreshed: 8e0ea648-3160-41ea-b902-70d8c6511a18",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md",
-        "drive_file_id": "1f46OjAqnCphcg24U--3ro8Om40RdydQpISIUlO9gRoY",
-        "action": "refreshed_existing",
-        "source_id": "0ee53818-27a0-480b-9bdf-c681353338a2",
-        "returncode": 0,
-        "stdout": "Source refreshed: 0ee53818-27a0-480b-9bdf-c681353338a2",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md",
-        "drive_file_id": "1fMHp994ApuoGJsVmyD2PpA_ILNzDsb5RSxomC1rmeew",
-        "action": "refreshed_existing",
-        "source_id": "f5a707f6-076c-4649-89ce-cff010722da5",
-        "returncode": 0,
-        "stdout": "Source refreshed: f5a707f6-076c-4649-89ce-cff010722da5",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/CODEX_CONTINUATION_NOTES.md",
-        "drive_file_id": "1akLsJ_85jkqcH3aTaae8h5u1xmHGooJn5UlklHvQyfE",
-        "action": "refreshed_existing",
-        "source_id": "d4fbbab0-c9d3-46e8-97fb-a62e8de166a3",
-        "returncode": 0,
-        "stdout": "Source refreshed: d4fbbab0-c9d3-46e8-97fb-a62e8de166a3",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/COST_REPORT_2026-06.md",
-        "drive_file_id": "1CNFK4rA_lhIileO29u0MuvXQca43qkDmSdSla7JdUMY",
-        "action": "refreshed_existing",
-        "source_id": "73e33319-397c-4171-bdc4-6097cc60b534",
-        "returncode": 0,
-        "stdout": "Source refreshed: 73e33319-397c-4171-bdc4-6097cc60b534",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/database.md",
-        "drive_file_id": "1WVp_vmYeiCZfFWbCpHNfmwGoUeBADuMjyLySBHrh9bI",
-        "action": "refreshed_existing",
-        "source_id": "1fb91c95-49e8-4177-bcf6-8232bc8beaed",
-        "returncode": 0,
-        "stdout": "Source refreshed: 1fb91c95-49e8-4177-bcf6-8232bc8beaed",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/DEMO_SECURITY_AND_AUTH_DESIGN.md",
-        "drive_file_id": "1C606e1yesSIVlZfOrRjZ_4hkgr4OQQ_axpYjBFvrUEc",
-        "action": "refreshed_existing",
-        "source_id": "cc1b96b7-127a-4d04-b2be-f4f2d56e518d",
-        "returncode": 0,
-        "stdout": "Source refreshed: cc1b96b7-127a-4d04-b2be-f4f2d56e518d",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
-        "drive_file_id": "1SS44DK0H57KFdX4jHDucbYe6PRN2ofUllaaLr5zioYU",
-        "action": "refreshed_existing",
-        "source_id": "3424fb67-cff2-4098-8d22-6c61c9f9affb",
-        "returncode": 0,
-        "stdout": "Source refreshed: 3424fb67-cff2-4098-8d22-6c61c9f9affb",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md",
-        "drive_file_id": "1yHVwrsZ_TZyEMa1wSfoxaSv85w7pyPqGP7VZUHTwhQU",
-        "action": "refreshed_existing",
-        "source_id": "e9d9dc04-d447-4045-969a-d1530c737c54",
-        "returncode": 0,
-        "stdout": "Source refreshed: e9d9dc04-d447-4045-969a-d1530c737c54",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md",
-        "drive_file_id": "1aZ9XMhnsTBYkfhaGh-UppNcEW8FjgKLv9dzB6cenerE",
-        "action": "refreshed_existing",
-        "source_id": "5588b9b5-3260-4178-9dc1-6efa30a09c6c",
-        "returncode": 0,
-        "stdout": "Source refreshed: 5588b9b5-3260-4178-9dc1-6efa30a09c6c",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md",
-        "drive_file_id": "1chyqUHbGFZ41CPKhR6sY5HUTG397IxnmPCuQdUHa5rA",
-        "action": "refreshed_existing",
-        "source_id": "0b2facd0-8d1f-4328-8478-55e75589ec0a",
-        "returncode": 0,
-        "stdout": "Source refreshed: 0b2facd0-8d1f-4328-8478-55e75589ec0a",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
-        "drive_file_id": "1xb9e3AQt7uGSvQvu-D12CGqchlh5Z01FFn44Dkhza8I",
-        "action": "refreshed_existing",
-        "source_id": "24590ac5-daf2-421f-b12f-c0df4f8d60f1",
-        "returncode": 0,
-        "stdout": "Source refreshed: 24590ac5-daf2-421f-b12f-c0df4f8d60f1",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/GROWTH_STRATEGY_ROADMAP.md",
-        "drive_file_id": "1Pp3Tf_r4G2-pxJDFVw5FhFheCgZHZcscsnotmX6vDgQ",
-        "action": "refreshed_existing",
-        "source_id": "ee5d0db8-0c30-43a9-af13-30943878dc5c",
-        "returncode": 0,
-        "stdout": "Source refreshed: ee5d0db8-0c30-43a9-af13-30943878dc5c",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/HOSTING_AND_DATABASE_SELECTION.md",
-        "drive_file_id": "1ngrMIRYYAbR2jzpLGRSKKJBTcOPvwUSJ00MDeCbx8-Y",
-        "action": "added",
-        "returncode": 0,
-        "stdout": "Added Drive source: e340d54c-70c8-4b57-b224-0a530bee3d1b\nTitle: Mighty Skill-Bridge docs/docs/HOSTING_AND_DATABASE_SELECTION.md",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md",
-        "drive_file_id": "1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs",
-        "action": "refreshed_existing",
-        "source_id": "1583c4df-bcc4-4b60-b5b8-92ed44bdcfdd",
-        "returncode": 0,
-        "stdout": "Source refreshed: 1583c4df-bcc4-4b60-b5b8-92ed44bdcfdd",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md",
-        "drive_file_id": "1aFiRyJpftES9MXnSkTUKsaum_KCUt8UhS37p_3Ln15U",
-        "action": "refreshed_existing",
-        "source_id": "8628862e-b064-49c5-a78b-8970c702b383",
-        "returncode": 0,
-        "stdout": "Source refreshed: 8628862e-b064-49c5-a78b-8970c702b383",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md",
-        "drive_file_id": "1gysz5FkXVK22refIm4oGmXslBzOXCbJtTgfr8pxcSWM",
-        "action": "refreshed_existing",
-        "source_id": "e5589b88-402c-467f-925d-bff1a9259f09",
-        "returncode": 0,
-        "stdout": "Source refreshed: e5589b88-402c-467f-925d-bff1a9259f09",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/MONTHLY_REPORT_2026-06.md",
-        "drive_file_id": "1v6aM1DSB5rGL-gYelOq9ZjKWa834Lc3ztBh1SrXFyFs",
-        "action": "refreshed_existing",
-        "source_id": "59474eca-6d6d-4195-8685-a62a202f9372",
-        "returncode": 0,
-        "stdout": "Source refreshed: 59474eca-6d6d-4195-8685-a62a202f9372",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/MULTI_AI_WORKFLOW.md",
-        "drive_file_id": "1WfBfLEpbTV6zcB4AuA4RbeXaJ99qw6h0UGq9D_1oJ_Q",
-        "action": "refreshed_existing",
-        "source_id": "da36d9d2-783f-4c6b-9dd2-57570a51cba7",
-        "returncode": 0,
-        "stdout": "Source refreshed: da36d9d2-783f-4c6b-9dd2-57570a51cba7",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md",
-        "drive_file_id": "1IM6xcwQ3t5agWAvYEzCbJqqFDC6hajUFpYJ0xyq-6FQ",
-        "action": "refreshed_existing",
-        "source_id": "6633b7bc-ebd7-4c02-9766-d899346aaee0",
-        "returncode": 0,
-        "stdout": "Source refreshed: 6633b7bc-ebd7-4c02-9766-d899346aaee0",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/PILOT_CLOSED_OPERATION_DESIGN.md",
-        "drive_file_id": "16xas5El8RUkWPEn91rjqvrCROLH3QP-NwqWNTdtuTPI",
-        "action": "refreshed_existing",
-        "source_id": "af2d0392-5df3-492f-8708-f148ee729f6a",
-        "returncode": 0,
-        "stdout": "Source refreshed: af2d0392-5df3-492f-8708-f148ee729f6a",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/PILOT_CONSENT_TEMPLATE.md",
-        "drive_file_id": "1KExhc4UkexwUBTq--hMDmNpTA59oZFVz_c3yYl4UOBE",
-        "action": "refreshed_existing",
-        "source_id": "c8e3cf30-a6c3-4672-80d0-e38c90e7661f",
-        "returncode": 0,
-        "stdout": "Source refreshed: c8e3cf30-a6c3-4672-80d0-e38c90e7661f",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/PILOT_PARTICIPANTS_SELECTION.md",
-        "drive_file_id": "1BLPG7uYbtU73fQh_tAg4cBBPin3BojMl9nWTDKdWb8w",
-        "action": "refreshed_existing",
-        "source_id": "1fc1351d-00ce-42fe-9580-02c376f441cf",
-        "returncode": 0,
-        "stdout": "Source refreshed: 1fc1351d-00ce-42fe-9580-02c376f441cf",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/PILOT_REPORT_2026-06-16.md",
-        "drive_file_id": "1C9nAy4JmkXdPE80HKkx8z0IstqQDUzWZjyVUvnfW-NU",
-        "action": "refreshed_existing",
-        "source_id": "3947a156-0d80-445d-b669-dcc8d8d3d1a8",
-        "returncode": 0,
-        "stdout": "Source refreshed: 3947a156-0d80-445d-b669-dcc8d8d3d1a8",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/PRIVACY_POLICY.md",
-        "drive_file_id": "19HaoiArtdICqNktUe2do7fyFUpcQWM6yujXzXk9pKx0",
-        "action": "refreshed_existing",
-        "source_id": "489d4325-1bf7-4683-af80-ba8c4be08e88",
-        "returncode": 0,
-        "stdout": "Source refreshed: 489d4325-1bf7-4683-af80-ba8c4be08e88",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md",
-        "drive_file_id": "1T4KOHtWeKJRm1HGYCHOm3ey2Pqhmpb_4WHk92lBqvSU",
-        "action": "refreshed_existing",
-        "source_id": "feca2d47-a4dc-476e-9b6a-115a55c033ad",
-        "returncode": 0,
-        "stdout": "Source refreshed: feca2d47-a4dc-476e-9b6a-115a55c033ad",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/PROJECT_STRUCTURE.md",
-        "drive_file_id": "1ACZgUCWCCSM6o7oNh9qsAIk5wfyq7mKsHCiyQxNsrcg",
-        "action": "refreshed_existing",
-        "source_id": "6f7f5c89-7b5c-4347-ac03-be91932e8e49",
-        "returncode": 0,
-        "stdout": "Source refreshed: 6f7f5c89-7b5c-4347-ac03-be91932e8e49",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/requirements.md",
-        "drive_file_id": "1G6XmZoa-LhnKuq4At6PVPJrr7IaT5XrP7IYYnwPKAPA",
-        "action": "refreshed_existing",
-        "source_id": "2883548b-df70-44d7-b476-80ed49c4935d",
-        "returncode": 0,
-        "stdout": "Source refreshed: 2883548b-df70-44d7-b476-80ed49c4935d",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/SECURITY_AUDIT_REPORT_2026-Q2.md",
-        "drive_file_id": "18Giy7tbF_P5iNNbo8ornDeq38t6UPgxR9LJBJVzCs5A",
-        "action": "refreshed_existing",
-        "source_id": "08071154-40e6-4ccc-9e94-e156713f3714",
-        "returncode": 0,
-        "stdout": "Source refreshed: 08071154-40e6-4ccc-9e94-e156713f3714",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/SECURITY_AUDIT_RUNBOOK.md",
-        "drive_file_id": "1qld9AwkywSTLtPVT5g1HyD98FVJhKrnXoGiviN2tgyQ",
-        "action": "refreshed_existing",
-        "source_id": "76217111-1f2b-4e12-a9ff-321f6deb4d95",
-        "returncode": 0,
-        "stdout": "Source refreshed: 76217111-1f2b-4e12-a9ff-321f6deb4d95",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/SEQUENCE_DIAGRAMS.md",
-        "drive_file_id": "1h7CFApE7fncMQT6W8gbSkuieOpf-x0IA15Hd0HEAiGY",
-        "action": "refreshed_existing",
-        "source_id": "ce3de56f-389c-4faa-af46-cbf053fe4fdb",
-        "returncode": 0,
-        "stdout": "Source refreshed: ce3de56f-389c-4faa-af46-cbf053fe4fdb",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/SETUP_GUIDE.md",
-        "drive_file_id": "16DonChND2WzQFWDZ8aubajlZdVB1aVnMsXnYLXE7xUI",
-        "action": "refreshed_existing",
-        "source_id": "6c6e1452-a72c-4615-b671-03f33e5aa9b6",
-        "returncode": 0,
-        "stdout": "Source refreshed: 6c6e1452-a72c-4615-b671-03f33e5aa9b6",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/SHEETS_TRACKERS_SCHEMA.md",
-        "drive_file_id": "11uhVT03zDzAnXLVHrcZAQCwQ4z4e0PbFjBcOOOEdvU8",
-        "action": "refreshed_existing",
-        "source_id": "e66bccef-f724-4179-88c7-9c895ecba52c",
-        "returncode": 0,
-        "stdout": "Source refreshed: e66bccef-f724-4179-88c7-9c895ecba52c",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md",
-        "drive_file_id": "1jEicYb_uJHFTY5_RGJSN1PMGKilCpznOsKXWx9EIbbg",
-        "action": "refreshed_existing",
-        "source_id": "d3bac9b7-f7a7-494b-89b0-5fd9d1461fcb",
-        "returncode": 0,
-        "stdout": "Source refreshed: d3bac9b7-f7a7-494b-89b0-5fd9d1461fcb",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md",
-        "drive_file_id": "1cZdaWmWxszmTRIcva3T3-GRkMpXa9qjT7MR-TIL7yHk",
-        "action": "refreshed_existing",
-        "source_id": "9580e11f-7df8-45fa-abd1-10a071ef0e13",
-        "returncode": 0,
-        "stdout": "Source refreshed: 9580e11f-7df8-45fa-abd1-10a071ef0e13",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md",
-        "drive_file_id": "1A0g0ka5kkLZzcBVTX802y8uzKLCJjz2hJRXXXwsXm30",
-        "action": "refreshed_existing",
-        "source_id": "062f90e6-c615-46f5-b126-a6ad324edc5b",
-        "returncode": 0,
-        "stdout": "Source refreshed: 062f90e6-c615-46f5-b126-a6ad324edc5b",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md",
-        "drive_file_id": "1BMpsn974Ai8K3BY7GAC-XQBgY1zZlslE98ZgA9JB1ik",
-        "action": "refreshed_existing",
-        "source_id": "bd718a5d-5763-422d-86f9-10f47db887ba",
-        "returncode": 0,
-        "stdout": "Source refreshed: bd718a5d-5763-422d-86f9-10f47db887ba",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/TERMS_OF_SERVICE.md",
-        "drive_file_id": "1bGSpEdgRyw06UaUQfwGsjLfS1qDimmSAsrN-yQvg2v0",
-        "action": "refreshed_existing",
-        "source_id": "0cf2c452-88d9-4e59-a7f1-1e929bc05429",
-        "returncode": 0,
-        "stdout": "Source refreshed: 0cf2c452-88d9-4e59-a7f1-1e929bc05429",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/TOKUSHOHO_NOTATION.md",
-        "drive_file_id": "1LUwRooXcdyrGB4AsuQo70Auz8DoQ-E5eyPV5cYUPWLk",
-        "action": "refreshed_existing",
-        "source_id": "5d9563f4-e822-40ca-8733-9ad67d22b858",
-        "returncode": 0,
-        "stdout": "Source refreshed: 5d9563f4-e822-40ca-8733-9ad67d22b858",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/USER_DATA_DELETION_FLOW.md",
-        "drive_file_id": "1-2u-qFsKNwrE9Jpl3dovC0fr_Prk4JZUF23xz1e1zQQ",
-        "action": "refreshed_existing",
-        "source_id": "5980e338-196f-4f90-b3f8-3455283c3181",
-        "returncode": 0,
-        "stdout": "Source refreshed: 5980e338-196f-4f90-b3f8-3455283c3181",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/USER_GUIDE_AND_FAQ.md",
-        "drive_file_id": "1qawKzp2UdanwIbnWqbVnRaRq4YIQlTEXxlj7mwhmfRk",
-        "action": "refreshed_existing",
-        "source_id": "b89c7e8d-291a-404d-844b-b8eeccbe242f",
-        "returncode": 0,
-        "stdout": "Source refreshed: b89c7e8d-291a-404d-844b-b8eeccbe242f",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/WBS.md",
-        "drive_file_id": "16s5eoPSBLInfS6Kr9Hj4Qgc3y4QXjyjNSbojvZNxBuQ",
-        "action": "refreshed_existing",
-        "source_id": "ec51e0f8-e7db-4345-ad02-4a301bb9e76b",
-        "returncode": 0,
-        "stdout": "Source refreshed: ec51e0f8-e7db-4345-ad02-4a301bb9e76b",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md",
-        "drive_file_id": "1U_VJfbWxl-akmnrFOngfFlOU_pQIpsG5af7bUtODigg",
-        "action": "added",
-        "returncode": 0,
-        "stdout": "Added Drive source: 9a24a2e8-dd77-4271-8236-372688018f9f\nTitle: Mighty Skill-Bridge docs/docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md",
-        "stderr": ""
-      },
-      {
-        "title": "Mighty Skill-Bridge docs/docs/WBS_SYNC_GUIDE.md",
-        "drive_file_id": "1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY",
-        "action": "refreshed_existing",
-        "source_id": "530dae74-93fd-47ba-bb8d-9407e38d6585",
-        "returncode": 0,
-        "stdout": "Source refreshed: 530dae74-93fd-47ba-bb8d-9407e38d6585",
-        "stderr": ""
-      }
-    ],
-    "summary_returncode": 0,
-    "answer_returncode": 0,
-    "slide_outline_returncode": 0,
-    "agent_brief": "exports/knowledge_flow/notebooklm_agent_brief.md",
-    "agent_brief_json": "exports/knowledge_flow/notebooklm_agent_brief.json",
-    "ceo_slide_outline": "exports/knowledge_flow/notebooklm_ceo_slide_outline.md",
-    "ceo_slide_outline_json": "exports/knowledge_flow/notebooklm_ceo_slide_outline.json"
+    "status": "skipped",
+    "reason": "--drive-only"
   },
   "gemini_context_cache": {
     "status": "skipped",
