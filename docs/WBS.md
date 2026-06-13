@@ -192,7 +192,10 @@ gantt
 | **T736** | 7. 決定後実行 | 運用保守 | API利用メーター監視、日次コスト台帳監査、および超過自動遮断機能の運用適用 | Codex | VSCode + Codex | `scripts/audit_external_api_usage.py`でdaily usage ledgerを監査し、Seedance/Geminiの閾値警告・遮断状態をJSONレポート化 | 完了 |
 | **T737** | 7. 決定後実行 | 運用保守 | デイリー作業レポート（WBS/進捗状況）のGmail/Slack自動送信機能の実装 | Codex | VSCode + Codex | send_daily_report.py自動送信設定 | 完了 |
 | **T738** | 7. 決定後実行 | インフラ | Firebase deploy auth preflight and ADC workflow hardening | Codex | VSCode + Codex | Firebase CI/CD deploy workflow now supports service account ADC, explicit FIREBASE_PROJECT_ID, configurable deploy targets, and Hosting-only default until Blaze/functions are enabled | 完了 |
-| **T740** | 7. 決定後実行 | インフラ設計 | 本番ドメイン・DNS移行およびSSL証明書自動更新の適用 | 人間 + Codex | VSCode + Codex | カスタムドメインのDNS設定およびSSL証明書発行ステータス確認 | 未着手 |
+| **T740** | 7. 決定後実行 | インフラ設計 | 本番ドメイン・DNS移行およびSSL証明書自動更新の適用 | 人間 + Codex | VSCode + Codex | 本番ドメインは mightylink-app.com に決定 (2026-06-13、R54 により会社ドメインから変更)。サブタスク T740_1〜T740_3 の完了をもって本タスク完了。DNS設定とSSL証明書発行ステータスを Sheets へ記録 | 未着手 |
+| **T740_1** | 7. 決定後実行 | インフラ設計 | 本番ドメイン mightylink-app.com のレジストラ登録（CEO へ事前共有のうえ取得） | 人間 | レジストラ管理画面 | お名前.com 等で mightylink-app.com を登録（約10分・年額約2,000円）。空き確認済 (2026-06-13 RDAP)。登録完了をセッションへ連絡 | 未着手 |
+| **T740_2** | 7. 決定後実行 | インフラ設計 | Firebase カスタムドメイン再登録（app.ml-mightylink.com エントリ削除 → mightylink-app.com 追加）と DNS CNAME 設定 | 人間 + Claude Code | Firebase Console + gcloud CLI | Firebase Hosting の旧エントリを削除し mightylink-app.com を追加。レジストラ DNS なら CNAME 1行（→ mighty-link-ai-connect-13d22.web.app）、Cloud DNS 採用なら gcloud でゾーン作成。設定値は Claude Code が案内 | 未着手 |
+| **T740_3** | 7. 決定後実行 | インフラ設計 | SSL 証明書自動発行の確認と販売 URL 確定（特商法表記・docs の URL 反映） | Claude Code + 人間 | VSCode + Claude Code | Firebase の接続ステータス「接続済み」と HTTPS 疎通を確認し T740 を完了化。docs/TOKUSHOHO_NOTATION.md の販売 URL【要確認】を https://mightylink-app.com/ で確定し、関連 docs の URL 記載を一括更新 | 未着手 |
 | **T741** | 7. 決定後実行 | 運用保守 | 本番環境データベースの自動日次バックアップ・リストア運用の設計および自動化スクリプト実装 | Codex | VSCode + Codex | 毎日午前3時の自動DBダンプ・GCS等外部ストレージ転送・世代管理（7世代）の検証 | 未着手 |
 | **T742** | 7. 決定後実行 | コンプライアンス | 個人情報保護法およびGDPRに準拠したユーザーデータ完全消去（退会）フローのバックエンド実装 | Claude + Codex | VSCode + Claude Code | 論理削除と物理削除（履歴データ完全クリア）の手順・トリガーAPI設計と実装 | 完了 |
 | **T743** | 7. 決定後実行 | 運用保守 | 本番環境の死活監視（Uptime Monitoring）およびSentry等によるエラー通知・Slack連携アラート設定 | Codex | VSCode + Codex | 応答遅延・エラー率の上昇をトリガーとする管理者Slack通知フローテスト | 未着手 |

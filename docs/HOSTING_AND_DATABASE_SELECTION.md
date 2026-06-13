@@ -76,7 +76,7 @@ graph TD
 | **ホスティング (静的)** | Firebase Hosting (Sparkプラン) | **$0.00 (完全無料)** | グローバルCDN、SSL自動付与 |
 | **バックエンド (API)** | Firebase Cloud Functions (Pay-as-you-go) | **$0.00** | 無料枠範囲内 (月200万呼び出しまで無料) |
 | **データベース** | Supabase PostgreSQL (Free Tier) | **$0.00 (完全無料)** | 500MB容量、自動インデックス、REST API付 |
-| **ドメイン & SSL** | ml-mightylink.com (カスタム統合) | 既存のドメインを活用 | Firebase HostingがSSL証明書を無料管理 |
+| **ドメイン & SSL** | mightylink-app.com (サービス専用ドメイン、2026-06-13 決定) | 年額約 2,000 円 | 会社ドメイン ml-mightylink.com の DNS 管理者不明 (R54) のためサービス専用ドメインを新規取得。Firebase HostingがSSL証明書を無料管理 |
 | **Google Workspace** | Calendar, Sheets, Drive API | 既存アカウント範囲内 | $0.00 (追加費用なし) |
 | **合計固定費** | — | **$0.00 (完全無料)** | **初期投資リスクゼロで、世界最高峰のインフラを入手可能** |
 
