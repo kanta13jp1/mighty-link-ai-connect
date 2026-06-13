@@ -161,7 +161,7 @@ docs/QUALITY_REPORT_YYYY-MM.md
 SLA 違反（稼働率 < 99.5%）が確認された場合：
 
 1. **即時**: Slack #alerts に自動通知（Google Cloud Monitoring アラートポリシー）
-2. **24時間以内**: 根本原因分析（RCA）を実施し、ポストモーテムを `docs/POSTMORTEM_YYYY-MM-DD.md` に作成
+2. **24時間以内**: 根本原因分析（RCA）を実施し、[INCIDENT_POSTMORTEM_RUNBOOK.md](INCIDENT_POSTMORTEM_RUNBOOK.md) に従って `docs/POSTMORTEM_YYYY-MM-DD_<ID>_<SLUG>.md` を作成
 3. **翌月の月次レポート**: SLA 違反の経緯・影響・再発防止策を記載
 
 ---

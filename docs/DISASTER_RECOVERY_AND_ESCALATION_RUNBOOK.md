@@ -233,3 +233,4 @@ pg_restore \
 - [ユーザー操作ガイド・FAQ・管理者トラブルシューティング](USER_GUIDE_AND_FAQ.md)
 - [Supabase Database 物理設計とインデックス設計](SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md)
 - [Supabase DB バックアップ・リストア運用 Runbook](SUPABASE_BACKUP_RESTORE_RUNBOOK.md)
+- [障害インシデント対応記録・ポストモーテム運用 Runbook](INCIDENT_POSTMORTEM_RUNBOOK.md)

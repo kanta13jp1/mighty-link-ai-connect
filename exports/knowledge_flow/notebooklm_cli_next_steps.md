@@ -1,12 +1,12 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-13T22:18:07+09:00
+Generated: 2026-06-14T00:53:20+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- NotebookLM CLI status: `ready`
+- NotebookLM CLI status: `skipped`
 
 ## Google Docs Synced From docs/
 
@@ -39,6 +39,7 @@ Generated: 2026-06-13T22:18:07+09:00
 - `docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1xb9e3AQt7uGSvQvu-D12CGqchlh5Z01FFn44Dkhza8I/edit?usp=drivesdk
 - `docs/GROWTH_STRATEGY_ROADMAP.md`: https://docs.google.com/document/d/1Pp3Tf_r4G2-pxJDFVw5FhFheCgZHZcscsnotmX6vDgQ/edit?usp=drivesdk
 - `docs/HOSTING_AND_DATABASE_SELECTION.md`: https://docs.google.com/document/d/1ngrMIRYYAbR2jzpLGRSKKJBTcOPvwUSJ00MDeCbx8-Y/edit?usp=drivesdk
+- `docs/INCIDENT_POSTMORTEM_RUNBOOK.md`: https://docs.google.com/document/d/1nfuwYTaxVnadProXz1I6U-qVVK8mECRDmoJWdecFLr8/edit?usp=drivesdk
 - `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
 - `docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/1aFiRyJpftES9MXnSkTUKsaum_KCUt8UhS37p_3Ln15U/edit?usp=drivesdk
 - `docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md`: https://docs.google.com/document/d/1gysz5FkXVK22refIm4oGmXslBzOXCbJtTgfr8pxcSWM/edit?usp=drivesdk
@@ -49,6 +50,7 @@ Generated: 2026-06-13T22:18:07+09:00
 - `docs/PILOT_CONSENT_TEMPLATE.md`: https://docs.google.com/document/d/1KExhc4UkexwUBTq--hMDmNpTA59oZFVz_c3yYl4UOBE/edit?usp=drivesdk
 - `docs/PILOT_PARTICIPANTS_SELECTION.md`: https://docs.google.com/document/d/1BLPG7uYbtU73fQh_tAg4cBBPin3BojMl9nWTDKdWb8w/edit?usp=drivesdk
 - `docs/PILOT_REPORT_2026-06-16.md`: https://docs.google.com/document/d/1C9nAy4JmkXdPE80HKkx8z0IstqQDUzWZjyVUvnfW-NU/edit?usp=drivesdk
+- `docs/POSTMORTEM_2026-06-11_R44_PRODUCTION_API_502.md`: https://docs.google.com/document/d/1v0seY6IBvRFBoNb0vVSOY01pgzxwzGQjfATLrDYN3aM/edit?usp=drivesdk
 - `docs/PRIVACY_POLICY.md`: https://docs.google.com/document/d/19HaoiArtdICqNktUe2do7fyFUpcQWM6yujXzXk9pKx0/edit?usp=drivesdk
 - `docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md`: https://docs.google.com/document/d/1T4KOHtWeKJRm1HGYCHOm3ey2Pqhmpb_4WHk92lBqvSU/edit?usp=drivesdk
 - `docs/PRODUCTION_DOMAIN_SETUP_GUIDE.md`: https://docs.google.com/document/d/1Xj57ffoCwtqaVm68rnfiNSMEW0yuVc_nuzw8TjQmpAs/edit?usp=drivesdk
@@ -73,19 +75,9 @@ Generated: 2026-06-13T22:18:07+09:00
 - `docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md`: https://docs.google.com/document/d/1U_VJfbWxl-akmnrFOngfFlOU_pQIpsG5af7bUtODigg/edit?usp=drivesdk
 - `docs/WBS_SYNC_GUIDE.md`: https://docs.google.com/document/d/1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY/edit?usp=drivesdk
 
-## NotebookLM Sync Result
-
-NotebookLM CLI is authenticated and the docs source set has been synced.
-
-- Notebook: `e82f0b43-69aa-474a-9b6c-b67f018696fb`
-- Agent brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
-- Agent brief JSON: `exports/knowledge_flow/notebooklm_agent_brief.json`
-- CEO slide outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
-- CEO slide outline JSON: `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
-
 ## Re-authentication
 
-If NotebookLM authentication expires later, run:
+NotebookLM CLI currently needs browser re-authentication before sources can be added to NotebookLM.
 
 ```powershell
 python scripts/notebooklm_login_workspace.py
@@ -93,3 +85,20 @@ python scripts/sync_docs_to_notebooklm.py
 ```
 
 During browser login, select `k-umezawa@ml-mightylink.com`.
+
+## Last CLI Error
+
+```text
+
+```
+
+## Agent Retrieval Command
+
+After authentication, the script will add the Drive docs as NotebookLM sources and write:
+
+- `exports/knowledge_flow/notebooklm_agent_brief.md`
+- `exports/knowledge_flow/notebooklm_agent_brief.json`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
+
+These files are the agent-facing design and roadmap summary for subsequent Codex work.

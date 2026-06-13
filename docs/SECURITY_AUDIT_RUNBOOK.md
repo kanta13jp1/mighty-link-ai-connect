@@ -195,7 +195,7 @@ gitleaks detect --source . --report-path=reports/gitleaks_YYYY-QQ.json
 2. Git 履歴から削除: git filter-repo --path <file> --invert-paths
 3. GitHub に強制 push: git push --force-with-lease
 4. GitHub に連絡してキャッシュ削除を依頼
-5. インシデントレポートを作成（docs/POSTMORTEM_YYYY-MM-DD.md）
+5. インシデントレポートを作成（[INCIDENT_POSTMORTEM_RUNBOOK.md](INCIDENT_POSTMORTEM_RUNBOOK.md) に従い `docs/POSTMORTEM_YYYY-MM-DD_<ID>_<SLUG>.md` を作成）
 6. アクセスログを確認して不正利用がないか検証
 ```
 
