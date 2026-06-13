@@ -1,0 +1,4 @@
+target_id	name	url	expected_status	timeout_seconds	allow_tls_error	severity	owner	notes
+UPTIME_PUBLIC_DEMO	GitHub Pages public demo	https://kanta13jp1.github.io/mighty-link-ai-connect/	200	15	false	P1	Codex	CEO共有済みの公開デモURL。Public Demo Guardと同じ正本。
+UPTIME_FIREBASE_HOSTING	Firebase Hosting default URL	https://mighty-link-ai-connect-13d22.web.app/	200	15	false	P1	Codex	Firebase Hostingの標準URL。custom domain反映中も本番到達性の基準にする。
+UPTIME_CUSTOM_DOMAIN_PENDING	mightylink-app.com custom domain	https://mightylink-app.com/	200	15	true	P2	Codex	T740_3完了まではFirebase証明書のホスト名不一致をwarningとして記録する。

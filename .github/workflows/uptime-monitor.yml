@@ -1,0 +1,30 @@
+name: Public Uptime Monitor
+
+on:
+  schedule:
+    # Every 30 minutes. GitHub schedules are UTC; this supports both JST business hours and overnight checks.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+jobs:
+  uptime-monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Check public uptime targets
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: python scripts/check_uptime_targets.py --notify-on-failure
