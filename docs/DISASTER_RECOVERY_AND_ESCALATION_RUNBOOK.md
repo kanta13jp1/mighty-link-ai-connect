@@ -227,6 +227,7 @@ pg_restore \
 
 ## 7. 関連ドキュメント
 
+- [本番リリース ロールバック手順書](PRODUCTION_ROLLBACK_RUNBOOK.md)
 - [Firebase / Supabase システムアーキテクチャ詳細設計書](FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md)
 - [ユーザーデータ完全消去フロー設計書](USER_DATA_DELETION_FLOW.md)
 - [ユーザー操作ガイド・FAQ・管理者トラブルシューティング](USER_GUIDE_AND_FAQ.md)

@@ -130,7 +130,7 @@ Supabaseは次の優先順位で staging を確保する。
 
 - Hosting previewの問題は channel 削除で止める。
 - staging DB migrationの問題は staging branch/projectを破棄して再作成する。productionへ未適用なら本番rollbackは不要。
-- productionへ適用後に問題が出た場合は [DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md](DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md) に従い、RLS・migration・公開URL影響を切り分ける。
+- productionへ適用後に問題が出た場合は [PRODUCTION_ROLLBACK_RUNBOOK.md](PRODUCTION_ROLLBACK_RUNBOOK.md) と [DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md](DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md) に従い、RLS・migration・公開URL影響を切り分ける。
 
 ## ツールレーン
 
