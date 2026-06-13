@@ -203,7 +203,7 @@ gantt
 | **T745** | 7. 決定後実行 | バックエンド開発 | サービス利用規約およびプライバシーポリシー本番UIでの同意チェックボックス実装 | AIエージェント | Antigravity + Gemini | 会員登録・ログイン前の規約同意必須化およびチェック状態のバックエンド検証 | 未着手 |
 | **T746** | 7. 決定後実行 | リリース | 本番リリース判定（Go/No-Go）判断基準チェックリストの策定および関係者承認プロセスの確立 | 人間 | Gemini API 現行モデル | セキュリティ監査、負荷テスト、法令遵守状況の最終レビューシート同期 | 未着手 |
 | **T747** | 7. 決定後実行 | 運用保守 | 定期脆弱性スキャンおよび依存パッケージパッチ適用の自動運用設定 (Dependabot/Weekly Vulnerability Scan) | Codex | VSCode + Codex | .github/dependabot.ymlでpip/GitHub Actionsを週次監視し、Weekly Security ScanでBandit/pip-auditを月曜07:00 JSTに実行。既知R49/R50はT802/Issue #72で修正追跡 | 完了 |
-| **T748** | 7. 決定後実行 | 運用保守 | 本番サーバーのログローテーションおよびアクセスログの自動クリーンアップ・圧縮・保存設定 | Codex | VSCode + Codex | Logrotate等を用いたディスク枯渇防止・過去ログの週次ローテートと世代圧縮自動化 | 未着手 |
+| **T748** | 7. 決定後実行 | 運用保守 | 本番サーバーのログローテーションおよびアクセスログの自動クリーンアップ・圧縮・保存設定 | Codex | VSCode + Codex | scripts/rotate_runtime_logs.py、週次 dry-run workflow、docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md を追加。Firebase Hosting アクセスログは Cloud Logging retention、ローカル JSONL/.log は gzip 圧縮・90日保持で管理。Issue #85 / R57 | 完了 |
 | **T749** | 7. 決定後実行 | 共通管理 | 本番インフラ障害におけるエスカレーション連絡網およびディザスタリカバリ（災害復旧）運用計画の策定 | 人間 + Claude | VSCode + Claude Code | 障害検知時の緊急連絡ルート・復旧手順書・DRシナリオのdocs同期 | 完了 |
 | **T750** | 7. 決定後実行 | 運用保守 | 定期パフォーマンスボトルネック診断およびDBインデックス最適化運用の設計 | Codex | VSCode + Codex | スロークエリ検出・APIレスポンス性能モニタリングおよびインデックス再構成手順の自動化 | 未着手 |
 | **T751** | 7. 決定後実行 | セキュリティ | サードパーティAPIキー（Gemini/OpenAI/Slack等）の年次有効期限ローテーション自動化運用の整備 | Codex + 人間 | VSCode + Codex | GCP/Slack/Notion認証キーの期限切れ自動検知・ローテーション作業ガイドの同期 | 未着手 |

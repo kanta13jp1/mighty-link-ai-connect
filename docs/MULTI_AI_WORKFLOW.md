@@ -225,9 +225,11 @@ feat/<tool>-<wbs-id>-<slug>
 
 ---
 
-## Best Practices Refresh (2026-05-22)
+## Best Practices Refresh (2026-06-14)
 
-毎セッション開始時に Anthropic / OpenAI / Google / Microsoft / Meta / Amazon / Apple / Grok / Kimi / MiMo / DeepSeek / BytePlus / GitHub / Slack / Notion / Obsidian / Unity / Figma / Canva / Reddit / InsForge / FireCrawl / Discord / Stripe の公式 docs を確認し、3-tool 体制へ適用可能な best practice を日付付きで追記する。**肥大化防止のため、効力を失った古い Refresh 節は要約 1 行を残して削除する**（全文は Git 履歴で参照可能）。
+毎セッション開始時に Anthropic / OpenAI / Google / Microsoft / Meta / Amazon / Apple / Grok / Kimi / MiMo / DeepSeek / BytePlus / GitHub / Slack / Notion / Obsidian / Unity / Figma / Canva / Reddit / InsForge / FireCrawl / Discord / Stripe / Supabase / お名前.com の公式 docs を確認し、3-tool 体制へ適用可能な best practice を日付付きで追記する。**肥大化防止のため、効力を失った古い Refresh 節は要約 1 行を残して削除する**（全文は Git 履歴で参照可能）。
+
+2026-06-14 の反映: T748 に合わせ、Firebase Hosting のアクセスログは Cloud Logging bucket retention で管理し、ローカル/CI の JSONL・`.log` は `scripts/rotate_runtime_logs.py` で gzip 圧縮・90日保持に統一した。T740_3 は `https://mightylink-app.com/` が到達可能でも証明書主体名が `firebaseapp.com` のままのため、SSL発行完了までは未完了扱いを継続する。
 
 ### Anthropic Claude Code & API ([code.claude.com/docs](https://code.claude.com/docs/en/overview) / [platform.claude.com prompt-caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching))
 
@@ -251,7 +253,7 @@ feat/<tool>-<wbs-id>-<slug>
 
 ### OpenAI Codex CLI ([developers.openai.com/codex best-practices](https://developers.openai.com/codex/learn/best-practices))
 
-- **GPT-5.5** (2026-04-23 launch) + **GPT-5.5 Pro** が現行モデル。Codex CLI 最新は 0.133.0 (2026-05)。
+- **モデル名・CLI版は固定記述しない**: Codex の現行モデル/CLI は公式 docs とローカル `codex --version` を確認して採用する。未確認の将来モデル名や古い版番号を正本にしない。
 - **AGENTS.md** = レポジトリルートに置く Codex 用設定 (review behavior、coding rules)。
   - **本プロジェクトへの impact**: `AGENTS.md` 新規作成を Codex レーンに依頼推奨。内容は MULTI_AI_WORKFLOW の Codex セクションを抜粋 + `code_review.md` 参照 + `data/WBS.tsv` 排他書き込み規約。
 - **layered config**: `~/.codex/config.toml` (personal) + `.codex/config.toml` (repo) + CLI flag (一時)。T690にてリポジトリレベルの `.codex/config.toml` を新規作成し、`model` / `sandbox_mode` / `approval_policy` を完全に固定化。

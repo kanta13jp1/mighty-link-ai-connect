@@ -1,12 +1,12 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-14T00:53:20+09:00
+Generated: 2026-06-14T02:02:42+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- NotebookLM CLI status: `skipped`
+- NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
 
@@ -41,6 +41,7 @@ Generated: 2026-06-14T00:53:20+09:00
 - `docs/HOSTING_AND_DATABASE_SELECTION.md`: https://docs.google.com/document/d/1ngrMIRYYAbR2jzpLGRSKKJBTcOPvwUSJ00MDeCbx8-Y/edit?usp=drivesdk
 - `docs/INCIDENT_POSTMORTEM_RUNBOOK.md`: https://docs.google.com/document/d/1nfuwYTaxVnadProXz1I6U-qVVK8mECRDmoJWdecFLr8/edit?usp=drivesdk
 - `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
+- `docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md`: https://docs.google.com/document/d/1EKarbQEJc11rMLWXU4L9TL994vPp5dawHyjf-y3HPJg/edit?usp=drivesdk
 - `docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/1aFiRyJpftES9MXnSkTUKsaum_KCUt8UhS37p_3Ln15U/edit?usp=drivesdk
 - `docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md`: https://docs.google.com/document/d/1gysz5FkXVK22refIm4oGmXslBzOXCbJtTgfr8pxcSWM/edit?usp=drivesdk
 - `docs/MONTHLY_REPORT_2026-06.md`: https://docs.google.com/document/d/1v6aM1DSB5rGL-gYelOq9ZjKWa834Lc3ztBh1SrXFyFs/edit?usp=drivesdk
@@ -75,9 +76,19 @@ Generated: 2026-06-14T00:53:20+09:00
 - `docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md`: https://docs.google.com/document/d/1U_VJfbWxl-akmnrFOngfFlOU_pQIpsG5af7bUtODigg/edit?usp=drivesdk
 - `docs/WBS_SYNC_GUIDE.md`: https://docs.google.com/document/d/1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY/edit?usp=drivesdk
 
+## NotebookLM Sync Result
+
+NotebookLM CLI is authenticated and the docs source set has been synced.
+
+- Notebook: `2c7c4a2d-2731-4c8f-8136-4c41daa7b7b3`
+- Agent brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
+- Agent brief JSON: `exports/knowledge_flow/notebooklm_agent_brief.json`
+- CEO slide outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
+- CEO slide outline JSON: `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
+
 ## Re-authentication
 
-NotebookLM CLI currently needs browser re-authentication before sources can be added to NotebookLM.
+If NotebookLM authentication expires later, run:
 
 ```powershell
 python scripts/notebooklm_login_workspace.py
@@ -85,20 +96,3 @@ python scripts/sync_docs_to_notebooklm.py
 ```
 
 During browser login, select `k-umezawa@ml-mightylink.com`.
-
-## Last CLI Error
-
-```text
-
-```
-
-## Agent Retrieval Command
-
-After authentication, the script will add the Drive docs as NotebookLM sources and write:
-
-- `exports/knowledge_flow/notebooklm_agent_brief.md`
-- `exports/knowledge_flow/notebooklm_agent_brief.json`
-- `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
-- `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
-
-These files are the agent-facing design and roadmap summary for subsequent Codex work.
