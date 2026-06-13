@@ -232,3 +232,4 @@ pg_restore \
 - [ユーザーデータ完全消去フロー設計書](USER_DATA_DELETION_FLOW.md)
 - [ユーザー操作ガイド・FAQ・管理者トラブルシューティング](USER_GUIDE_AND_FAQ.md)
 - [Supabase Database 物理設計とインデックス設計](SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md)
+- [Supabase DB バックアップ・リストア運用 Runbook](SUPABASE_BACKUP_RESTORE_RUNBOOK.md)

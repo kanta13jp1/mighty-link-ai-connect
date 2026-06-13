@@ -1,0 +1,71 @@
+name: Supabase Daily Backup
+
+on:
+  schedule:
+    # 03:00 JST daily.
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  backup:
+    name: Dump Supabase DB to GCS
+    runs-on: ubuntu-latest
+    concurrency:
+      group: supabase-daily-backup
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      GCP_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      SUPABASE_BACKUP_GCS_URI: ${{ secrets.SUPABASE_BACKUP_GCS_URI }}
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      SUPABASE_BACKUP_RETENTION: "7"
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Validate backup configuration
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_DB_URL:-}" ]; then
+            echo "::error title=Missing SUPABASE_DB_URL::Set the production Supabase database connection string as a repository secret."
+            exit 2
+          fi
+          if [ -z "${SUPABASE_BACKUP_GCS_URI:-}" ]; then
+            echo "::error title=Missing SUPABASE_BACKUP_GCS_URI::Set a private GCS target such as gs://bucket/supabase."
+            exit 2
+          fi
+          if [ -z "${GCP_WORKLOAD_IDENTITY_PROVIDER:-}" ] || [ -z "${GCP_SERVICE_ACCOUNT_EMAIL:-}" ]; then
+            echo "::error title=Missing GCP WIF configuration::Set GCP_WORKLOAD_IDENTITY_PROVIDER and GCP_SERVICE_ACCOUNT_EMAIL secrets."
+            exit 2
+          fi
+
+      - name: Set up Supabase CLI
+        uses: supabase/setup-cli@v2
+        with:
+          github-token: ${{ github.token }}
+
+      - name: Authenticate to Google Cloud via WIF
+        uses: google-github-actions/auth@v3
+        with:
+          create_credentials_file: true
+          workload_identity_provider: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.GCP_SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Create backup and upload to GCS
+        env:
+          SUPABASE_BACKUP_DIR: ${{ runner.temp }}/supabase-backups
+        run: python scripts/backup_supabase_database.py

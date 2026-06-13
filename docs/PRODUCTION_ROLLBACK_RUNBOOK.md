@@ -243,3 +243,7 @@ T746 の Go 判定では次を全て満たす。
 - `data/WBS.tsv` と [WBS.md](WBS.md) で T812 が完了になっている。
 - Sheets / Calendar へ同期され、完了済みCalendarイベントが削除されている。
 - GitHub Issue / Project にT812完了の証跡がある。
+
+## 11. T741 バックアップ/リストア参照
+
+Supabase DB の日次バックアップ、GCS退避、7世代管理、復元 dry-run / 実復元の標準手順は [SUPABASE_BACKUP_RESTORE_RUNBOOK.md](SUPABASE_BACKUP_RESTORE_RUNBOOK.md) を正とする。破壊的 migration や data loss を伴う rollback では、production 直接復元の前に新規 Supabase project への復元検証を行い、GitHub Issue / WBS / Sheets に backup snapshot と判断者を記録する。

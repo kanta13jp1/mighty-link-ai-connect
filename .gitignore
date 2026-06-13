@@ -25,6 +25,7 @@ CLAUDE.local.md
 # Ignore virtual environments, database files, and logs
 venv/
 scratch/
+backups/
 *.db
 *.log
 .env
