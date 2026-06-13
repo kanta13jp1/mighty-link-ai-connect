@@ -212,7 +212,7 @@ gantt
 | **T754** | 7. 決定後実行 | バックエンド開発 | Alembic/Flyway 等を用いたデータベースマイグレーション管理体制の整備 | Codex | VSCode + Codex | db/migrations/sqlite・postgres、scripts/manage_db_migrations.py、DB migration validation CI、Runbookを整備し、Issue #90 / R62 へ証跡化 | 完了 |
 | **T755** | 7. 決定後実行 | 運用保守 | テレメトリおよびインフラリソース（CPU/メモリ/ディスク/クエリ）監視ダッシュボードの構築 | Codex | VSCode + Codex | scripts/generate_infra_monitoring_dashboard.py と .github/workflows/infra-telemetry-dashboard.yml で CPU/メモリ/ディスク/DBクエリ/外部API/URL到達性を横断集計し、docs/INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md・exports/infra_monitoring_dashboard.*・pytestで検証。GitHub Issue #91 と Project #1 に同期 | 完了 |
 | **T756** | 7. 決定後実行 | コンプライアンス | 個人情報保護およびGDPRに基づくシステム監査ログの氏名マスキング・暗号化パイプライン実装 | Claude | VSCode + Claude Code | データベース及びアクセスログの暗号化・氏名マスクバッチの開発・適用 | 完了 |
-| **T757** | 7. 決定後実行 | 運用保守 | 週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装 | Codex | VSCode + Codex | API/Infraコスト集計の自動バッチおよびSlack週次通知設定 | 未着手 |
+| **T757** | 7. 決定後実行 | 運用保守 | 週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装 | Codex | VSCode + Codex | data/cost_allocation_budgets.tsv、scripts/generate_weekly_cost_dashboard.py、Weekly Cost Dashboard workflow、docs/WEEKLY_COST_DASHBOARD_RUNBOOK.md、exports/weekly_cost_dashboard.*、email/Slack通知ドラフト、pytestを追加。GitHub Issue #92 と Project #1 に同期 | 完了 |
 | **T759** | 7. 決定後実行 | バックエンド開発 | Firebase Cloud Functions 経由での Supabase 接続のプール管理とパフォーマンス最適化 | Codex | VSCode + Codex | 接続プール管理設定のFastAPIへの組み込み | 未着手 |
 | **T760** | 7. 決定後実行 | 品質検証 | Firebase Emulator Suite と Supabase Local CLI を用いたローカル開発・テスト環境の構築 | Codex | VSCode + Codex | ローカルエミュレータによる統合テストの合格率検証 | 未着手 |
 | **T761** | 7. 決定後実行 | 運用保守 | Supabase ダッシュボードでのクエリパフォーマンス監視とインデックスのチューニング | Codex | VSCode + Codex | スロークエリ監視体制のドキュメント化 | 未着手 |

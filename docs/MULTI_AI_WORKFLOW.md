@@ -233,6 +233,7 @@ feat/<tool>-<wbs-id>-<slug>
 2026-06-14 追記: T750 に合わせ、Supabase/Postgres の性能診断は `pg_stat_statements`・`pg_stat_user_indexes`・Supabase Index Advisor を根拠にし、`CREATE INDEX CONCURRENTLY` / `REINDEX CONCURRENTLY` は承認・staging検証・migration記録後に適用する運用へ標準化した。
 2026-06-14 追記: T743 に合わせ、公開デモ・Firebase Hosting・custom domain の死活監視は `data/uptime_targets.tsv` を正本にし、GitHub Actions の `Public Uptime Monitor` が30分間隔で確認する。Slack webhook は GitHub secret のみから読み、T740_3完了前の `mightylink-app.com` TLS不一致は warning として証跡化する。
 2026-06-14 追記: T751 に合わせ、外部API key・Webhook secret・DB接続文字列は `data/secret_rotation_inventory.tsv` のメタデータだけを正本化し、秘密値はGit/Docs/Sheets/Issue/reportへ出さない。`Secret Rotation Review` workflow が年次期限とsecret値混入パターンを週次で検知する。
+2026-06-14 追記: T757 に合わせ、週次コスト配賦は `data/cost_allocation_budgets.tsv` を正本にし、実請求未接続は `unknown` として表示、Slack/SMTP secret は環境変数のみで扱い成果物へ保存しない。
 
 ### Anthropic Claude Code & API ([code.claude.com/docs](https://code.claude.com/docs/en/overview) / [platform.claude.com prompt-caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching))
 

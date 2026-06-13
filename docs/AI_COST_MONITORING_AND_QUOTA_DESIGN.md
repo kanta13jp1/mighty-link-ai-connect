@@ -66,6 +66,17 @@
 * [不要なコンテキスト読み込みの削減、キャッシュ適用プランなど]
 ```
 
+### 2026-06-14 追記: T757 週次コスト配賦ダッシュボード
+
+月次レポートに加えて、`scripts/generate_weekly_cost_dashboard.py` で週次のコスト配賦ビューを生成する運用へ拡張しました。`data/cost_allocation_budgets.tsv` を正本として、AI API / Firebase・Google Cloud / Supabase / Stripe / GitHub Actions / Slack通知のコストセンター、担当レーン、月次予算、警告閾値、請求正本を管理します。
+
+- 出力: `exports/weekly_cost_dashboard.json` / `exports/weekly_cost_dashboard.md`
+- 通知ドラフト: `exports/weekly_cost_alert_email.md` / `exports/weekly_cost_slack_payload.json`
+- 週次自動検証: `.github/workflows/weekly-cost-dashboard.yml`
+- 実請求額の正本: Google Cloud Billing export、Firebase Budgets、Supabase Dashboard、Stripe Dashboard、GitHub Actions usage、BytePlus / Google AI usage
+- 実請求export未接続のコストセンターは `unknown` と表示し、ローカル台帳から金額を推測しません。
+- Slack webhook URL、SMTP password、API key、請求アカウントIDは成果物・Issue・Sheetsに保存しません。
+
 ---
 
 ## 4. 優先レーンポリシー (Traffic Lane Shift Policy)

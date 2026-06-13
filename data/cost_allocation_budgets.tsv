@@ -1,0 +1,8 @@
+cost_center	owner_lane	category	monthly_budget_usd	warning_ratio	critical_ratio	source	notes
+ai_api_gemini	Antigravity + Gemini	AI API	20.00	0.80	1.00	data/external_api_usage.jsonl; Google AI Studio usage; Cloud Billing export	Gemini calls are guarded by daily call/token limits; actual spend must be checked in Google billing sources.
+ai_api_seedance	Antigravity + Gemini	AI API	20.00	0.80	1.00	data/external_api_usage.jsonl; BytePlus ModelArk monitoring	Seedance live calls are disabled by default; BytePlus console remains the spend source of truth.
+firebase_google_cloud	VSCode + Codex	Infra	10.00	0.80	1.00	Cloud Billing BigQuery export; Firebase budgets	Enable Cloud Billing export for actual Firebase/Cloud Functions/Cloud Run spend allocation.
+supabase_db	VSCode + Codex	DB	25.00	0.80	1.00	Supabase dashboard; Supabase Management API	Supabase free/paid usage should be checked against project billing and usage dashboards.
+stripe_billing	VSCode + Codex	Payments	5.00	0.80	1.00	Stripe Billing Meters; Stripe Dashboard	No live payments before T791; meter event summaries become the source after billing launch.
+github_actions	VSCode + Codex	CI	10.00	0.80	1.00	GitHub Actions usage	CI/CD, Pages, public demo guard, and monitoring workflows should be watched weekly.
+slack_notifications	VSCode + Codex	Ops	0.00	1.00	1.00	Slack incoming webhook / chat.postMessage	No direct project billing expected; respect one message per second per channel and keep webhook URLs out of artifacts.
