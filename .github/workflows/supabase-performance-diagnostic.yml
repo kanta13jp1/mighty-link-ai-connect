@@ -26,3 +26,6 @@ jobs:
 
       - name: Build performance diagnostic bundle
         run: python scripts/diagnose_supabase_performance.py --dry-run
+
+      - name: Build query performance review
+        run: python scripts/generate_supabase_query_performance_review.py --fail-on-critical

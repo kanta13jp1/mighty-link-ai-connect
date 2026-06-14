@@ -1,0 +1,89 @@
+{
+  "task_id": "T761",
+  "generated_at_utc": "2026-06-14T18:29:48Z",
+  "overall_status": "ready",
+  "summary": {
+    "ok": 1,
+    "ready": 3,
+    "warning": 0,
+    "critical": 0
+  },
+  "sources": {
+    "performance_report": "exports/supabase_performance_report.json",
+    "supabase_dashboard": "Database > Query Performance / Performance Advisor / Index Advisor",
+    "runbook": "docs/SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK.md"
+  },
+  "checks": [
+    {
+      "key": "diagnostic_report_status",
+      "status": "ready",
+      "source": "exports/supabase_performance_report.json",
+      "action": "Use this dry-run bundle for the next live Supabase Dashboard review.",
+      "evidence": "status=planned, dry_run=True, probes=7, api_results=0"
+    },
+    {
+      "key": "diagnostic_probe_coverage",
+      "status": "ok",
+      "source": "exports/supabase_performance_report.json",
+      "action": "Keep the diagnostic bundle aligned with Supabase pg_stat_statements and index review needs.",
+      "evidence": "missing=none"
+    },
+    {
+      "key": "dashboard_review_gate",
+      "status": "ready",
+      "source": "Supabase Dashboard",
+      "action": "Run Query Performance, Performance Advisor, and Index Advisor review before any production index migration.",
+      "evidence": "manual dashboard confirmation required; no production credentials stored in this artifact"
+    },
+    {
+      "key": "migration_safety_gate",
+      "status": "ready",
+      "source": "DB_MIGRATION_MANAGEMENT_RUNBOOK.md",
+      "action": "Use forward migrations, staging verification, and CREATE INDEX CONCURRENTLY where applicable.",
+      "evidence": "direct production DDL is disallowed by project operating rules"
+    }
+  ],
+  "dashboard_checklist": [
+    {
+      "area": "Query Performance",
+      "action": "Open Supabase Dashboard > Database > Query Performance and sort by total time, mean time, and calls.",
+      "decision": "Map the top slow queries to API route or UI operation before changing indexes."
+    },
+    {
+      "area": "Performance Advisor",
+      "action": "Open Database > Performance Advisor and rerun checks after fixes.",
+      "decision": "Create a GitHub Issue for every warning that affects production reads, writes, locks, or bloat."
+    },
+    {
+      "area": "Index Advisor",
+      "action": "For each slow query, open the Indexes tab and compare suggested indexes with existing indexes.",
+      "decision": "Accept only recommendations backed by EXPLAIN evidence and expected production query shape."
+    },
+    {
+      "area": "SQL / Inspect",
+      "action": "Run supabase inspect db outliers, index-usage, unused-indexes, seq-scans, cache-hit, locks, and blocking.",
+      "decision": "Use the CLI output to validate Dashboard findings and avoid one-off UI-only decisions."
+    },
+    {
+      "area": "Migration",
+      "action": "Record accepted DDL as a forward migration and prefer CREATE INDEX CONCURRENTLY for production-sized tables.",
+      "decision": "Never apply index DDL directly in production without WBS, Issue, rollback note, and staging evidence."
+    }
+  ],
+  "inspect_commands": [
+    "supabase inspect db outliers",
+    "supabase inspect db index-usage",
+    "supabase inspect db unused-indexes",
+    "supabase inspect db seq-scans",
+    "supabase inspect db cache-hit",
+    "supabase inspect db locks",
+    "supabase inspect db blocking"
+  ],
+  "tuning_rules": [
+    "Do not add or drop indexes from a single slow-query observation.",
+    "Prefer measured query plans from staging and production-like data volume.",
+    "Create or update a GitHub Issue before accepted DDL work.",
+    "Write accepted index DDL as a forward migration and include rollback notes.",
+    "Review unused indexes across at least two reporting cycles before dropping them."
+  ]
+}

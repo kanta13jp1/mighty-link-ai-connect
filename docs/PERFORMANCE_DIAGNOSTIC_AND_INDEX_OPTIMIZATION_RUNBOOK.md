@@ -23,6 +23,7 @@
 
 ```powershell
 python scripts/diagnose_supabase_performance.py --dry-run
+python scripts/generate_supabase_query_performance_review.py --fail-on-critical
 ```
 
 本番 DB 診断:
@@ -30,6 +31,7 @@ python scripts/diagnose_supabase_performance.py --dry-run
 ```powershell
 $env:SUPABASE_DB_URL = "postgresql://postgres:<password>@<host>:6543/postgres?sslmode=require"
 python scripts/diagnose_supabase_performance.py --execute --api-url https://mighty-link-ai-connect-13d22.web.app/api/health
+python scripts/generate_supabase_query_performance_review.py --fail-on-critical
 ```
 
 出力:
@@ -39,8 +41,22 @@ python scripts/diagnose_supabase_performance.py --execute --api-url https://migh
 | `exports/supabase_performance_diagnostic.sql` | 読み取り専用の診断 SQL bundle |
 | `exports/supabase_performance_report.json` | 実行計画、プローブ一覧、API応答計測、psqlコマンド（secret redaction済み） |
 | `exports/supabase_performance_raw.txt` | `--execute` 時の psql 出力 |
+| `exports/supabase_query_performance_review.json` | T761 の機械判定用レビュー結果 |
+| `exports/supabase_query_performance_review.md` | Supabase Dashboard / Index Advisor の人間向け確認チェックリスト |
 
-`.github/workflows/supabase-performance-diagnostic.yml` は毎週 dry-run を実行し、診断 bundle が壊れていないことを確認する。実 DB への診断は `SUPABASE_DB_URL` を使うため、手動実行または別途承認された secret 付き workflow で実施する。
+`.github/workflows/supabase-performance-diagnostic.yml` は毎週 dry-run と T761 レビュー生成を実行し、診断 bundle と Dashboard 確認チェックリストが壊れていないことを確認する。実 DB への診断は `SUPABASE_DB_URL` を使うため、手動実行または別途承認された secret 付き workflow で実施する。
+
+## T761 Dashboard Review
+
+T761 では [SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK.md](SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK.md) を追加し、診断結果を Supabase Dashboard の Query Performance / Performance Advisor / Index Advisor と照合する手順を標準化した。`scripts/generate_supabase_query_performance_review.py` は T750 の `exports/supabase_performance_report.json` を入力にして、以下を生成する。
+
+- dry-run 診断が揃っているかの自動チェック
+- 必須プローブの欠落検知
+- Dashboard で確認すべき area / action / decision rule
+- `supabase inspect db outliers` などの CLI 裏取りコマンド
+- index DDL を直接本番適用しないための migration safety gate
+
+インデックス追加・再構成・削除は T761 で実施しない。Query Performance と `pg_stat_statements` の根拠、Index Advisor の提案、staging での `EXPLAIN (ANALYZE, BUFFERS)`、rollback note が揃った場合に、別 WBS / GitHub Issue として切り出す。
 
 ## 診断プローブ
 

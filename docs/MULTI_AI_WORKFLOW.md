@@ -236,6 +236,7 @@ feat/<tool>-<wbs-id>-<slug>
 2026-06-14 追記: T757 に合わせ、週次コスト配賦は `data/cost_allocation_budgets.tsv` を正本にし、実請求未接続は `unknown` として表示、Slack/SMTP secret は環境変数のみで扱い成果物へ保存しない。
 2026-06-14 追記: T759 に合わせ、Firebase Functions / Cloud Run から Supabase へは Supavisor transaction pooler (`pooler.supabase.com:6543`) と `psycopg2.pool.ThreadedConnectionPool` の小さなアプリ内poolを併用し、`/api/db-test` は非秘密のpool状態だけを返す。
 2026-06-14 追記: T740_3 に合わせ、`mightylink-app.com` の Google Trust Services 証明書発行を確認したため、`data/uptime_targets.tsv` は custom domain を strict TLS / P1 監視へ切り替え、特商法表記の販売URLを `https://mightylink-app.com/` で確定した。
+2026-06-15 追記: T761 に合わせ、Supabase Query Performance / Performance Advisor / Index Advisor の確認は `scripts/generate_supabase_query_performance_review.py` と `exports/supabase_query_performance_review.*` に証跡化し、index DDL は Dashboard・`pg_stat_statements`・`supabase inspect`・staging `EXPLAIN`・Issue/rollback note が揃うまで別タスクへ切り出す。
 
 ### Anthropic Claude Code & API ([code.claude.com/docs](https://code.claude.com/docs/en/overview) / [platform.claude.com prompt-caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching))
 
@@ -485,6 +486,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-13 | Claude Code | T809完了: WBS 工程網羅性監査 (第2回) で T810〜T813 追加（ポストモーテム・Supabase PG14 EOL・ロールバック手順書・インボイス対応）、前倒しリスケ (第3回) でローンチ 7/14→7/8・最終完了 7/16→7/15。R53/QA-33 起票、stale レーン規約を削除 |
 | 2026-06-13 | Codex | T810完了: R44本番502/504障害のポストモーテム実例と標準Runbookを作成し、DR/SLA/Security Runbook・課題管理表R56・GitHub Issue/Project同期へ接続 |
 | 2026-06-15 | Codex | T760完了: Firebase Emulator Suite / Supabase Local CLI のローカル開発Runbook、`supabase/config.toml`、合成seed、検証スクリプト、pytest、GitHub Actions workflowを追加。production DB URLをローカル統合テストから分離 |
+| 2026-06-15 | Codex | T761完了: Supabase Query Performance / Performance Advisor / Index Advisor のレビュー成果物生成、Runbook、pytest、週次GitHub Actionsゲートを追加。インデックスDDLは根拠・Issue・migration/rollback note が揃った別タスクへ分離 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 

@@ -1,6 +1,6 @@
 {
   "task_id": "T750",
-  "generated_at_utc": "2026-06-13T21:43:17Z",
+  "generated_at_utc": "2026-06-14T18:25:34Z",
   "status": "planned",
   "dry_run": true,
   "database_url": "postgresql://postgres:***@example.invalid:5432/postgres",
