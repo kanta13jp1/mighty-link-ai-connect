@@ -139,12 +139,14 @@ USING (true);
 ### 4.1 接続の物理的制限と対策
 - **制限**: Supabase (PostgreSQL 15+) の最大直接接続数はインスタンスサイズによって制限（無料枠/スタータープランではおよそ 60 程度）。
 - **対策**:
-  1. **PgBouncer トランザクションモード**: バックエンドから Supabase に接続する際、`port 5432`（直接接続）ではなく、`port 6543`（PgBouncer経由トランザクションモード）を使用します。
-  2. **FastAPI / SQLAlchemy プーリングの最適化**:
-     - `pool_size` = 5
-     - `max_overflow` = 10
-     - `pool_recycle` = 1800 (アイドル接続の定期解放)
-     - `pool_pre_ping` = True (切断されたプール接続の自動検知と再接続)
+  1. **Supavisor トランザクションモード**: バックエンドから Supabase に接続する際、直接接続ではなく `pooler.supabase.com:6543`（Supavisor transaction mode）を使用します。T795 で本番 `SUPABASE_DB_URL` はこの形式へ切替済みです。
+  2. **FastAPI / psycopg2 プーリングの最適化 (T759)**:
+     - `SUPABASE_DB_POOL_MIN` = 1
+     - `SUPABASE_DB_POOL_MAX` = 4（Functions/Cloud Run の各インスタンス内で小さく保つ）
+     - `SUPABASE_DB_POOL_RECYCLE_SECONDS` = 1800
+     - `SUPABASE_DB_POOL_PRE_PING` = True
+     - `SUPABASE_DB_APPLICATION_NAME` = `mighty-skill-bridge-functions`
+  3. `src/app.py` の `PooledPostgresConnection` は既存の `conn.close()` 呼び出しを pool 返却に変換し、呼び出しごとの物理接続作成を避けます。運用手順は [SUPABASE_CONNECTION_POOLING_RUNBOOK.md](SUPABASE_CONNECTION_POOLING_RUNBOOK.md) を正とします。
 
 ---
 

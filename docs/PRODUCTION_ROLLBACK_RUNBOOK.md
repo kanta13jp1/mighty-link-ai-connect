@@ -27,7 +27,7 @@
 - Firebase Functions runtime `python312`
 - Supabase production project の schema migration / RLS / data
 - CEO 共有 URL `https://kanta13jp1.github.io/mighty-link-ai-connect/`
-- カスタムドメイン `https://mightylink-app.com/`（T740_3 完了後）
+- カスタムドメイン / 販売 URL `https://mightylink-app.com/`（T740_3 完了済み）
 
 対象外:
 
@@ -75,7 +75,7 @@
    python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
    Invoke-WebRequest -Uri "https://mightylink-app.com/" -TimeoutSec 15 -UseBasicParsing
    ```
-   T740_3 完了前は `mightylink-app.com` のSSL未発行を既知の未完了条件として扱い、GitHub Pages/Firebase標準ドメインの健全性で一次判定する。
+   T740_3 完了後は `mightylink-app.com` も strict HTTPS 成功を本番判定条件に含める。
 5. WBS / Sheets / Calendar / GitHub Issue / Project を同期する。
    ```powershell
    python scripts/verify_google_workspace_account.py
@@ -209,7 +209,7 @@ T746 の Go 判定では次を全て満たす。
 - Cloud Run `api` の直前revisionを控えている。
 - Supabase backup/PITR 時刻と migration list を控えている。
 - `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` が成功。
-- T740_3 完了後は `https://mightylink-app.com/` のHTTPS確認も成功。
+- `https://mightylink-app.com/` のHTTPS確認も成功。
 - WBS / Sheets / Calendar / GitHub Issue / Project の同期担当が決まっている。
 
 ## 9. 記録テンプレート

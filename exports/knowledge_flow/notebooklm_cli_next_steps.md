@@ -1,6 +1,6 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-14T08:53:37+09:00
+Generated: 2026-06-14T14:37:14+09:00
 
 ## Current Status
 
@@ -71,6 +71,7 @@ Generated: 2026-06-14T08:53:37+09:00
 - `docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md`: https://docs.google.com/document/d/1jEicYb_uJHFTY5_RGJSN1PMGKilCpznOsKXWx9EIbbg/edit?usp=drivesdk
 - `docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md`: https://docs.google.com/document/d/1cZdaWmWxszmTRIcva3T3-GRkMpXa9qjT7MR-TIL7yHk/edit?usp=drivesdk
 - `docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md`: https://docs.google.com/document/d/11N-1PlKMV4nr2I1SBeMQISbbPZOAOVmhkqMKCf8Pg74/edit?usp=drivesdk
+- `docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md`: https://docs.google.com/document/d/135y0TSQWMvp-nBsUrIRUzDlRLWzlvRFF82D-56IQkHg/edit?usp=drivesdk
 - `docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md`: https://docs.google.com/document/d/1A0g0ka5kkLZzcBVTX802y8uzKLCJjz2hJRXXXwsXm30/edit?usp=drivesdk
 - `docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md`: https://docs.google.com/document/d/1BMpsn974Ai8K3BY7GAC-XQBgY1zZlslE98ZgA9JB1ik/edit?usp=drivesdk
 - `docs/TERMS_OF_SERVICE.md`: https://docs.google.com/document/d/1bGSpEdgRyw06UaUQfwGsjLfS1qDimmSAsrN-yQvg2v0/edit?usp=drivesdk

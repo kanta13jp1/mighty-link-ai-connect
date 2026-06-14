@@ -1,13 +1,13 @@
 {
   "task_id": "T743",
-  "generated_at_utc": "2026-06-13T21:43:17Z",
+  "generated_at_utc": "2026-06-14T05:38:10Z",
   "targets_path": "data\\uptime_targets.tsv",
   "summary": {
     "total": 3,
-    "ok": 2,
-    "warning": 1,
+    "ok": 3,
+    "warning": 0,
     "failed": 0,
-    "status": "warning"
+    "status": "ok"
   },
   "results": [
     {
@@ -19,7 +19,7 @@
       "owner": "Codex",
       "status": "ok",
       "http_status": 200,
-      "elapsed_ms": 74.55,
+      "elapsed_ms": 256.98,
       "final_url": "https://kanta13jp1.github.io/mighty-link-ai-connect/",
       "tls_verification": "strict",
       "error": null,
@@ -34,26 +34,26 @@
       "owner": "Codex",
       "status": "ok",
       "http_status": 200,
-      "elapsed_ms": 45.01,
+      "elapsed_ms": 44.72,
       "final_url": "https://mighty-link-ai-connect-13d22.web.app/",
       "tls_verification": "strict",
       "error": null,
       "notes": "Firebase Hostingの標準URL。custom domain反映中も本番到達性の基準にする。"
     },
     {
-      "target_id": "UPTIME_CUSTOM_DOMAIN_PENDING",
+      "target_id": "UPTIME_CUSTOM_DOMAIN",
       "name": "mightylink-app.com custom domain",
       "url": "https://mightylink-app.com/",
       "expected_status": 200,
-      "severity": "P2",
+      "severity": "P1",
       "owner": "Codex",
-      "status": "warning",
+      "status": "ok",
       "http_status": 200,
-      "elapsed_ms": 18.76,
+      "elapsed_ms": 46.58,
       "final_url": "https://mightylink-app.com/",
-      "tls_verification": "fallback_unverified",
-      "error": "URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'mightylink-app.com'. (_ssl.c:1000)>",
-      "notes": "T740_3完了まではFirebase証明書のホスト名不一致をwarningとして記録する。"
+      "tls_verification": "strict",
+      "error": null,
+      "notes": "T740_3完了済み。Google Trust Services証明書のSubject CN=mightylink-app.comを確認したためstrict TLSで監視する。"
     }
   ]
 }

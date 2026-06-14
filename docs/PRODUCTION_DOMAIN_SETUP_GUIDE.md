@@ -69,9 +69,9 @@
 | 住所録に A・TXT を登録 | ✅ 完了（値も正しいことを確認済み） |
 | 参照先の切り替え（ネームサーバー → dnsv.jp） | ✅ 完了 |
 | 世界中への反映（キャッシュ更新） | ✅ A/TXT/NS は公開 DNS で反映済み |
-| Firebase の所有権確認 → SSL 発行 → 「接続済み」 | ⏳ 証明書のホスト名一致待ち（2026-06-14 時点） |
+| Firebase の所有権確認 → SSL 発行 → 「接続済み」 | ✅ 完了（2026-06-14、Google Trust Services 証明書の Subject が `CN=mightylink-app.com` と一致） |
 
-> 2026-06-14 時点では `https://mightylink-app.com/` へ到達自体はできますが、信頼済み SSL 証明書はまだ `mightylink-app.com` と一致していません。社外へは「設定は完了、DNS も反映済み。Firebase の証明書発行完了待ち」と案内し、「もう安全に使える」とはまだ案内しないでください。
+> 2026-06-14 時点で `https://mightylink-app.com/` は strict HTTPS で接続可能です。販売 URL / 本番 URL として案内できます。旧 `.web.app` URL と GitHub Pages 公開デモ URL はバックアップ・検証用途として残します。
 
 ---
 
@@ -112,7 +112,7 @@
 | DNS: TXT レコード | ホスト名 空欄（apex）→ `hosting-site=mighty-link-ai-connect-13d22`（所有権確認） |
 | Firebase プロジェクト | `mighty-link-ai-connect-13d22`（現状は kanta13jp@gmail.com 個人アカウント） |
 | 旧 .web.app URL | `mighty-link-ai-connect-13d22.web.app`（引き続き有効） |
-| SSL | Firebase Hosting による Let's Encrypt 自動発行・自動更新 |
+| SSL | Firebase Hosting による Google Trust Services 証明書の自動発行・自動更新（2026-06-14 に `CN=mightylink-app.com` を確認） |
 | 当初計画（不採用） | `app.ml-mightylink.com`（会社ドメイン。DNS ゾーン所有者不明 = R54 のため断念） |
 
 ### 反映確認に使ったコマンド（参考）
@@ -134,7 +134,7 @@ Resolve-DnsName mightylink-app.com -Type TXT -Server 8.8.8.8
 | 住所録に書いた値が反映されない | ネームサーバーが dnsv.jp に切り替わっていない | お名前.com「ネームサーバーの設定」で「お名前.comのネームサーバーを使う」（= 01〜04.dnsv.jp）を選択 |
 | ある日突然サイトに繋がらなくなった | ドメインの更新期限切れ | お名前.com で更新。自動更新の有効化を推奨 |
 
-> **2026-06-13 時点の状況**: DNS 設定（A/TXT/ネームサーバー）は完了し、登録局・公開DNS すべてで正しい値を確認済み。`mightylink-app.com` への通信も Firebase へ到達済み。残るは Firebase 内部キャッシュの自動更新（最大24時間目安）→ 完了後に SSL 自動発行され「接続済み」になる。**人手の作業は完了しており、自動完了待ちの状態**。
+> **2026-06-14 時点の状況**: DNS 設定（A/TXT/ネームサーバー）は完了し、Firebase Hosting の SSL 証明書も発行済み。`https://mightylink-app.com/` は strict HTTPS で接続可能になったため、T740_3 を完了し、特商法表記の販売 URL をこの URL で確定した。
 
 ---
 
@@ -142,7 +142,7 @@ Resolve-DnsName mightylink-app.com -Type TXT -Server 8.8.8.8
 
 | ID | 内容 | 状態 |
 | --- | --- | --- |
-| T740 | 本番ドメイン・DNS 移行および SSL 証明書自動更新の適用（親） | 進行中（T740_3 完了後に完了化） |
+| T740 | 本番ドメイン・DNS 移行および SSL 証明書自動更新の適用（親） | ✅ 完了 |
 | T740_1 | mightylink-app.com のレジストラ登録 | ✅ 完了 |
 | T740_2 | Firebase カスタムドメイン再登録 + DNS CNAME/A 設定 | ✅ 完了（Firebase 追加 + DNS 設定完了。SSL 確認は T740_3 で実施） |
-| T740_3 | SSL 自動発行確認 + 特商法 販売 URL 確定・docs 反映 | 未着手（Firebase の SSL 発行待ち） |
+| T740_3 | SSL 自動発行確認 + 特商法 販売 URL 確定・docs 反映 | ✅ 完了 |

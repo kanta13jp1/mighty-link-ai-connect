@@ -28,9 +28,10 @@ import base64
 import secrets
 import tempfile
 import threading
+from urllib.parse import urlparse
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field, asdict
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 
 def env_int(name: str, default: int, minimum: int, maximum: int) -> int:
@@ -394,21 +395,144 @@ import sqlite3
 try:
     import psycopg2
     from psycopg2.extras import RealDictCursor
+    from psycopg2 import pool as psycopg2_pool
     POSTGRES_AVAILABLE = True
 except ImportError:
     POSTGRES_AVAILABLE = False
+    psycopg2_pool = None
 
 DATABASE_URL = os.environ.get("SUPABASE_DB_URL", "").strip()
 USE_SUPABASE = env_flag("USE_SUPABASE", False)
+SUPABASE_DB_CONNECT_TIMEOUT_SECONDS = env_int("SUPABASE_DB_CONNECT_TIMEOUT_SECONDS", 3, 1, 30)
+SUPABASE_DB_POOL_MIN = env_int("SUPABASE_DB_POOL_MIN", 1, 1, 10)
+SUPABASE_DB_POOL_MAX = env_int("SUPABASE_DB_POOL_MAX", 4, SUPABASE_DB_POOL_MIN, 20)
+SUPABASE_DB_POOL_RECYCLE_SECONDS = env_int("SUPABASE_DB_POOL_RECYCLE_SECONDS", 1800, 60, 86400)
+SUPABASE_DB_POOL_PRE_PING = env_flag("SUPABASE_DB_POOL_PRE_PING", True)
+SUPABASE_DB_APPLICATION_NAME = os.environ.get(
+    "SUPABASE_DB_APPLICATION_NAME",
+    "mighty-skill-bridge-functions",
+).strip() or "mighty-skill-bridge-functions"
+
+_postgres_pool = None
+_postgres_pool_created_at = 0.0
+_postgres_pool_lock = threading.Lock()
+
+
+def _is_postgres_url(database_url: str) -> bool:
+    return database_url.startswith(("postgresql://", "postgres://"))
+
+
+def _database_url_pooler_mode(database_url: str) -> str:
+    if not database_url:
+        return "not_configured"
+    try:
+        parsed = urlparse(database_url)
+    except ValueError:
+        return "invalid"
+    host = (parsed.hostname or "").lower()
+    port = parsed.port
+    if "pooler.supabase.com" in host and port == 6543:
+        return "supavisor_transaction"
+    if "pooler.supabase.com" in host and port == 5432:
+        return "supavisor_session"
+    if "supabase.co" in host and port == 5432:
+        return "direct_ipv6_risk"
+    return "custom_postgres"
+
+
+def get_supabase_pool_status() -> dict:
+    """Return non-secret connection pool configuration for health/debug views."""
+    return {
+        "enabled": bool(USE_SUPABASE and DATABASE_URL and _is_postgres_url(DATABASE_URL) and POSTGRES_AVAILABLE),
+        "postgres_available": POSTGRES_AVAILABLE,
+        "database_url_configured": bool(DATABASE_URL),
+        "pooler_mode": _database_url_pooler_mode(DATABASE_URL),
+        "min_connections": SUPABASE_DB_POOL_MIN,
+        "max_connections": SUPABASE_DB_POOL_MAX,
+        "connect_timeout_seconds": SUPABASE_DB_CONNECT_TIMEOUT_SECONDS,
+        "recycle_seconds": SUPABASE_DB_POOL_RECYCLE_SECONDS,
+        "pre_ping": SUPABASE_DB_POOL_PRE_PING,
+        "application_name": SUPABASE_DB_APPLICATION_NAME,
+        "pool_initialized": _postgres_pool is not None,
+    }
+
+
+class PooledPostgresConnection:
+    """Small adapter so existing conn.close() calls return the handle to the pool."""
+
+    def __init__(self, raw_connection: Any, pool: Any):
+        self._raw_connection = raw_connection
+        self._pool = pool
+        self._returned = False
+
+    def close(self) -> None:
+        if not self._returned:
+            self._pool.putconn(self._raw_connection)
+            self._returned = True
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._raw_connection, name)
+
+
+def _close_postgres_pool() -> None:
+    global _postgres_pool, _postgres_pool_created_at
+    with _postgres_pool_lock:
+        if _postgres_pool is not None:
+            _postgres_pool.closeall()
+        _postgres_pool = None
+        _postgres_pool_created_at = 0.0
+
+
+def _get_or_create_postgres_pool():
+    global _postgres_pool, _postgres_pool_created_at
+    if not POSTGRES_AVAILABLE or psycopg2_pool is None:
+        raise RuntimeError("psycopg2 pool support is not available")
+
+    now = time.monotonic()
+    with _postgres_pool_lock:
+        expired = (
+            _postgres_pool is not None
+            and now - _postgres_pool_created_at > SUPABASE_DB_POOL_RECYCLE_SECONDS
+        )
+        if expired:
+            _postgres_pool.closeall()
+            _postgres_pool = None
+            _postgres_pool_created_at = 0.0
+        if _postgres_pool is None:
+            _postgres_pool = psycopg2_pool.ThreadedConnectionPool(
+                SUPABASE_DB_POOL_MIN,
+                SUPABASE_DB_POOL_MAX,
+                DATABASE_URL,
+                connect_timeout=SUPABASE_DB_CONNECT_TIMEOUT_SECONDS,
+                application_name=SUPABASE_DB_APPLICATION_NAME,
+            )
+            _postgres_pool_created_at = now
+        return _postgres_pool
+
+
+def _borrow_postgres_connection():
+    pool = _get_or_create_postgres_pool()
+    conn = pool.getconn()
+    try:
+        if SUPABASE_DB_POOL_PRE_PING:
+            cur = conn.cursor()
+            try:
+                cur.execute("SELECT 1;")
+                cur.fetchone()
+            finally:
+                cur.close()
+        return PooledPostgresConnection(conn, pool)
+    except Exception:
+        pool.putconn(conn, close=True)
+        raise
 
 def get_db_connection():
-    if USE_SUPABASE and DATABASE_URL and (DATABASE_URL.startswith("postgresql://") or DATABASE_URL.startswith("postgres://")) and POSTGRES_AVAILABLE:
+    if USE_SUPABASE and DATABASE_URL and _is_postgres_url(DATABASE_URL) and POSTGRES_AVAILABLE:
         try:
-            # We connect to Supabase/PostgreSQL with a timeout to prevent startup hang
-            conn = psycopg2.connect(DATABASE_URL, connect_timeout=3)
+            conn = _borrow_postgres_connection()
             return conn, "postgres"
         except Exception as e:
-            print(f"[-] Failed to connect to Supabase PostgreSQL: {e}. Falling back to SQLite.")
+            print(f"[-] Failed to borrow Supabase PostgreSQL pooled connection: {e}. Falling back to SQLite.")
     
     # SQLite Fallback
     # Check if we are running in a Serverless/Container environment with a read-only filesystem
@@ -1738,25 +1862,30 @@ async def db_test(username: str = Depends(verify_credentials)):
         "postgres_available": POSTGRES_AVAILABLE,
         "use_supabase": USE_SUPABASE,
         "database_url_configured": bool(DATABASE_URL),
+        "pool": get_supabase_pool_status(),
         "steps": []
     }
-    if DATABASE_URL:
+    if DATABASE_URL and USE_SUPABASE and POSTGRES_AVAILABLE:
+        conn = None
+        cur = None
         try:
-            results["steps"].append("Connecting to database...")
-            import psycopg2
-            conn = psycopg2.connect(DATABASE_URL, connect_timeout=3)
-            results["steps"].append("Connected. Running test query...")
+            results["steps"].append("Borrowing pooled database connection...")
+            conn, db_type = get_db_connection()
+            results["steps"].append(f"Connected via {db_type}. Running test query...")
             cur = conn.cursor()
             cur.execute("SELECT 1;")
             val = cur.fetchone()[0]
-            cur.close()
-            conn.close()
             results["steps"].append(f"Query returned: {val}")
-            results["direct_postgres_status"] = "success"
+            results["direct_postgres_status"] = "success" if db_type == "postgres" else "fallback_sqlite"
         except Exception as e:
             results["direct_postgres_status"] = "error"
             results["direct_postgres_error"] = str(e)
             results["direct_postgres_traceback"] = traceback.format_exc()
+        finally:
+            if cur is not None:
+                cur.close()
+            if conn is not None:
+                conn.close()
     else:
         results["direct_postgres_status"] = "no_url"
     return results

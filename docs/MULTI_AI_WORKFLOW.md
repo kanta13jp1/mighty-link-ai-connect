@@ -229,11 +229,13 @@ feat/<tool>-<wbs-id>-<slug>
 
 毎セッション開始時に Anthropic / OpenAI / Google / Microsoft / Meta / Amazon / Apple / Grok / Kimi / MiMo / DeepSeek / BytePlus / GitHub / Slack / Notion / Obsidian / Unity / Figma / Canva / Reddit / InsForge / FireCrawl / Discord / Stripe / Supabase / お名前.com の公式 docs を確認し、3-tool 体制へ適用可能な best practice を日付付きで追記する。**肥大化防止のため、効力を失った古い Refresh 節は要約 1 行を残して削除する**（全文は Git 履歴で参照可能）。
 
-2026-06-14 の反映: T748 に合わせ、Firebase Hosting のアクセスログは Cloud Logging bucket retention で管理し、ローカル/CI の JSONL・`.log` は `scripts/rotate_runtime_logs.py` で gzip 圧縮・90日保持に統一した。T740_3 は `https://mightylink-app.com/` が到達可能でも証明書主体名が `firebaseapp.com` のままのため、SSL発行完了までは未完了扱いを継続する。
+2026-06-14 の反映: T748 に合わせ、Firebase Hosting のアクセスログは Cloud Logging bucket retention で管理し、ローカル/CI の JSONL・`.log` は `scripts/rotate_runtime_logs.py` で gzip 圧縮・90日保持に統一した。T740_3 は `https://mightylink-app.com/` の証明書主体名が `CN=mightylink-app.com` になったことを確認し、販売URLとして確定した。
 2026-06-14 追記: T750 に合わせ、Supabase/Postgres の性能診断は `pg_stat_statements`・`pg_stat_user_indexes`・Supabase Index Advisor を根拠にし、`CREATE INDEX CONCURRENTLY` / `REINDEX CONCURRENTLY` は承認・staging検証・migration記録後に適用する運用へ標準化した。
 2026-06-14 追記: T743 に合わせ、公開デモ・Firebase Hosting・custom domain の死活監視は `data/uptime_targets.tsv` を正本にし、GitHub Actions の `Public Uptime Monitor` が30分間隔で確認する。Slack webhook は GitHub secret のみから読み、T740_3完了前の `mightylink-app.com` TLS不一致は warning として証跡化する。
 2026-06-14 追記: T751 に合わせ、外部API key・Webhook secret・DB接続文字列は `data/secret_rotation_inventory.tsv` のメタデータだけを正本化し、秘密値はGit/Docs/Sheets/Issue/reportへ出さない。`Secret Rotation Review` workflow が年次期限とsecret値混入パターンを週次で検知する。
 2026-06-14 追記: T757 に合わせ、週次コスト配賦は `data/cost_allocation_budgets.tsv` を正本にし、実請求未接続は `unknown` として表示、Slack/SMTP secret は環境変数のみで扱い成果物へ保存しない。
+2026-06-14 追記: T759 に合わせ、Firebase Functions / Cloud Run から Supabase へは Supavisor transaction pooler (`pooler.supabase.com:6543`) と `psycopg2.pool.ThreadedConnectionPool` の小さなアプリ内poolを併用し、`/api/db-test` は非秘密のpool状態だけを返す。
+2026-06-14 追記: T740_3 に合わせ、`mightylink-app.com` の Google Trust Services 証明書発行を確認したため、`data/uptime_targets.tsv` は custom domain を strict TLS / P1 監視へ切り替え、特商法表記の販売URLを `https://mightylink-app.com/` で確定した。
 
 ### Anthropic Claude Code & API ([code.claude.com/docs](https://code.claude.com/docs/en/overview) / [platform.claude.com prompt-caching](https://platform.claude.com/docs/en/build-with-claude/prompt-caching))
 

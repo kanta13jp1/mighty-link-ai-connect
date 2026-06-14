@@ -6,7 +6,7 @@
 
 ## 目的
 
-本番公開URLの到達性を定期確認し、停止やHTTP異常を GitHub Actions と Slack 通知で早期検知する。T740_3 が完了するまでは `mightylink-app.com` のTLSホスト名不一致を warning として記録し、正式証明書発行後に strict TLS 監視へ切り替える。
+本番公開URLの到達性を定期確認し、停止やHTTP異常を GitHub Actions と Slack 通知で早期検知する。T740_3 完了により `mightylink-app.com` は Google Trust Services 証明書の Subject が `CN=mightylink-app.com` と一致したため、strict TLS 監視を正とする。
 
 ## 公式ドキュメント確認
 
@@ -48,7 +48,7 @@ python scripts/check_uptime_targets.py --notify-on-failure
 | `warning` | `allow_tls_error=true` の対象でstrict TLSは失敗したが、到達性は確認できた | 0 |
 | `failed` | HTTP異常、DNS失敗、timeout、または許可されないTLS失敗 | 1 |
 
-`mightylink-app.com` はT740_3完了前だけ `allow_tls_error=true` にする。Firebase Consoleで接続済みになり、証明書のSANに `mightylink-app.com` が入ったら `false` へ戻す。
+`mightylink-app.com` はT740_3完了済みのため `allow_tls_error=false` にする。証明書ホスト名不一致が再発した場合は warning ではなく failed として扱う。
 
 ## 障害時の初動
 
