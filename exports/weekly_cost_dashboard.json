@@ -1,9 +1,9 @@
 {
   "task_id": "T757",
-  "generated_at": "2026-06-13T23:43:01Z",
+  "generated_at": "2026-06-14T19:06:32Z",
   "period": {
-    "start": "2026-06-08",
-    "end": "2026-06-14"
+    "start": "2026-06-09",
+    "end": "2026-06-15"
   },
   "overall_status": "unknown",
   "summary": {
@@ -13,7 +13,7 @@
     "critical": 0,
     "weekly_actual_usd": 0.0,
     "billable_events": 0,
-    "blocked_events": 40
+    "blocked_events": 47
   },
   "cost_centers": [
     {
@@ -42,15 +42,15 @@
       "weekly_actual_usd": null,
       "monthly_budget_usd": 20.0,
       "budget_used_percent": null,
-      "events": 40,
+      "events": 47,
       "billable_events": 0,
-      "blocked_events": 40,
+      "blocked_events": 47,
       "reported_total_tokens": 0,
       "providers": {
-        "seedance_api": 40
+        "seedance_api": 47
       },
       "outcomes": {
-        "blocked": 40
+        "blocked": 47
       },
       "source": "data/external_api_usage.jsonl; BytePlus ModelArk monitoring",
       "actual_sources": [],

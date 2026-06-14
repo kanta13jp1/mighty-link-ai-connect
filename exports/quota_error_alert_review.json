@@ -1,0 +1,153 @@
+{
+  "task_id": "T761_1",
+  "generated_at_utc": "2026-06-14T19:09:19Z",
+  "overall_status": "ready",
+  "summary": {
+    "ok": 1,
+    "ready": 8,
+    "warning": 0,
+    "critical": 0
+  },
+  "sources": {
+    "infra_report": "exports/infra_monitoring_dashboard.json",
+    "cost_report": "exports/weekly_cost_dashboard.json",
+    "uptime_report": "exports/uptime_monitor_report.json",
+    "supabase_query_review": "exports/supabase_query_performance_review.json",
+    "budgets": "data/cost_allocation_budgets.tsv",
+    "runbook": "docs/FIREBASE_SUPABASE_QUOTA_ERROR_ALERT_RUNBOOK.md"
+  },
+  "checks": [
+    {
+      "key": "firebase_billing_budget_alert",
+      "provider": "Firebase / Google Cloud",
+      "status": "ready",
+      "signal": "Cloud Billing actual spend, Firebase plan usage, Hosting/Functions cost center",
+      "threshold": "Warning at 80% and critical at 100% of firebase_google_cloud monthly budget",
+      "action": "Create or verify a Cloud Billing budget alert and keep billed actuals in the weekly cost dashboard.",
+      "notification": "Budget email notification plus optional Slack relay through existing cost alert draft",
+      "source": "exports/weekly_cost_dashboard.json; data/cost_allocation_budgets.tsv; Cloud Billing Budgets",
+      "evidence": "firebase_google_cloud monthly_budget_usd=10.00, warning_ratio=0.80, critical_ratio=1.00; cost_report=ready"
+    },
+    {
+      "key": "firebase_hosting_functions_quota",
+      "provider": "Firebase / Google Cloud",
+      "status": "ready",
+      "signal": "Firebase Hosting transfer/storage, Functions/Cloud Run invocations, memory, timeout, and quota usage",
+      "threshold": "Warning when dashboard usage exceeds 80%; critical when provider quota or deployment limit is reached",
+      "action": "Review Firebase Usage and Cloud Run/Functions quotas weekly; convert repeated warnings to Cloud Monitoring policies.",
+      "notification": "Ops Slack/Email after manual threshold confirmation; no provider token is stored in artifacts",
+      "source": "exports/infra_monitoring_dashboard.json; Firebase Usage dashboard; Cloud Monitoring",
+      "evidence": "infra_report=warning"
+    },
+    {
+      "key": "firebase_error_log_alert",
+      "provider": "Firebase / Google Cloud",
+      "status": "ready",
+      "signal": "HTTPS uptime failures, 5xx responses, Cloud Functions/Cloud Run error logs, TLS certificate failures",
+      "threshold": "Critical on public demo outage, custom domain strict TLS failure, or repeated 5xx/log-based error spikes",
+      "action": "Create a Cloud Logging logs-based metric and Cloud Monitoring alert policy for 5xx and function error logs.",
+      "notification": "Slack webhook or email notification, then follow DR and incident postmortem runbooks",
+      "source": "exports/uptime_monitor_report.json; Cloud Logging; Cloud Monitoring alert policies",
+      "evidence": "uptime_report=ready; infra_report=warning"
+    },
+    {
+      "key": "firebase_performance_alert",
+      "provider": "Firebase",
+      "status": "ready",
+      "signal": "Firebase Performance Monitoring latency, network errors, and custom trace degradation",
+      "threshold": "Warning on sustained p95 latency regression; critical when user-visible flows breach SLA thresholds",
+      "action": "Define Performance Monitoring alert events for key user journeys after live traffic exists.",
+      "notification": "Firebase alert trigger to Cloud Functions or operator email, then GitHub Issue for recurring degradation",
+      "source": "Firebase Performance Monitoring; Firebase alert triggers",
+      "evidence": "No production traffic baseline yet; keep as ready gate until enough samples exist"
+    },
+    {
+      "key": "supabase_usage_budget_alert",
+      "provider": "Supabase",
+      "status": "ready",
+      "signal": "Supabase spend, egress, database size, storage, auth MAU, and plan usage",
+      "threshold": "Warning at 80% and critical at 100% of supabase_db monthly budget or provider quota",
+      "action": "Check Supabase billing/usage dashboard weekly and record actuals without project IDs or secrets.",
+      "notification": "Weekly cost dashboard alert draft plus operator escalation for paid-plan changes",
+      "source": "exports/weekly_cost_dashboard.json; data/cost_allocation_budgets.tsv; Supabase billing dashboard",
+      "evidence": "supabase_db monthly_budget_usd=25.00, warning_ratio=0.80, critical_ratio=1.00"
+    },
+    {
+      "key": "supabase_metrics_api_alert",
+      "provider": "Supabase",
+      "status": "ready",
+      "signal": "Prometheus-compatible database health metrics from Supabase Metrics API",
+      "threshold": "Warning on missing scrape; critical on connection saturation, disk pressure, WAL backlog, or error burst",
+      "action": "Add SUPABASE_METRICS_URL and SUPABASE_METRICS_BEARER_TOKEN as CI/environment secrets before live alerting.",
+      "notification": "Grafana/Datadog/Cloud Monitoring bridge or GitHub Actions summary; token values never enter reports",
+      "source": "exports/infra_monitoring_dashboard.json; Supabase Metrics API",
+      "evidence": "metrics endpoint not configured in this environment"
+    },
+    {
+      "key": "supabase_db_saturation_alert",
+      "provider": "Supabase",
+      "status": "ready",
+      "signal": "Slow query review, connection pressure, CPU, memory, disk, locks, WAL, cache hit rate, and index advisor findings",
+      "threshold": "Warning at 80% resource pressure or repeated p95 query latency > 1s; critical on blocking locks or failed diagnostics",
+      "action": "Use Query Performance / Performance Advisor / Index Advisor review before opening DDL or pool-size changes.",
+      "notification": "GitHub Issue plus WBS follow-up; production DDL requires migration safety gate",
+      "source": "exports/supabase_query_performance_review.json; Supabase Dashboard; supabase inspect",
+      "evidence": "query_review=ready"
+    },
+    {
+      "key": "notification_channel_routing",
+      "provider": "Operations",
+      "status": "ready",
+      "signal": "Slack webhook, email destination, GitHub Actions failure, and Issue/Project escalation",
+      "threshold": "Critical alerts must reach a human-owned channel; warning alerts may stay in scheduled report artifacts",
+      "action": "Store SLACK_WEBHOOK_URL and email settings only as GitHub/CI secrets; never write them to docs, Sheets, or Issues.",
+      "notification": "Slack, email, GitHub Issue comment, and Calendar/WBS closeout",
+      "source": "GitHub Actions secrets; weekly cost alert draft; uptime monitor workflow",
+      "evidence": "notification secrets not configured locally; CI can inject them"
+    },
+    {
+      "key": "incident_escalation_gate",
+      "provider": "Operations",
+      "status": "ok",
+      "signal": "Critical alert handoff, DR escalation, postmortem creation, and WBS follow-up",
+      "threshold": "Any critical production availability/data-loss/billing runaway alert starts incident handling",
+      "action": "Open/close GitHub Issue with WBS reference and attach follow-up actions to issues_tracker.tsv and qa_tracker.tsv.",
+      "notification": "Human operator, GitHub Issue #97, Project #1, and Google Workspace WBS sync",
+      "source": "docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md; docs/INCIDENT_POSTMORTEM_RUNBOOK.md",
+      "evidence": "runbooks present"
+    }
+  ],
+  "operator_checklist": [
+    {
+      "area": "Cloud Billing",
+      "action": "Verify Firebase/GCP budget alert recipients and thresholds before enabling paid expansion.",
+      "evidence": "Weekly cost dashboard row for firebase_google_cloud plus Cloud Billing budget policy screenshot/export."
+    },
+    {
+      "area": "Cloud Monitoring",
+      "action": "Create alert policies for HTTPS 5xx/log-based errors, Functions/Cloud Run errors, and TLS failures.",
+      "evidence": "Alert policy name, notification channel, and GitHub Issue link."
+    },
+    {
+      "area": "Firebase",
+      "action": "Review Hosting/Functions usage and Performance Monitoring alert events after production traffic starts.",
+      "evidence": "Firebase usage dashboard and Performance Monitoring alert settings."
+    },
+    {
+      "area": "Supabase",
+      "action": "Enable Metrics API/Grafana-style scraping and watch connection, CPU, disk, WAL, cache, and slow query signals.",
+      "evidence": "Metrics scrape status plus Supabase Query Performance review artifact."
+    },
+    {
+      "area": "Escalation",
+      "action": "Route critical alerts to a human-owned channel and open a WBS-linked Issue for follow-up.",
+      "evidence": "Issue/Project status, Sheets sync, and Calendar cleanup for completed WBS rows."
+    }
+  ],
+  "escalation_rules": [
+    "Do not store Slack webhooks, Supabase bearer tokens, database URLs, or billing account identifiers in artifacts.",
+    "Treat Cloud Billing budget alerts as notifications, not automatic spend caps.",
+    "Convert repeated warning alerts into WBS tasks with GitHub Issues and Project status.",
+    "Escalate critical availability, quota exhaustion, or data-loss risk through the DR and incident runbooks."
+  ]
+}

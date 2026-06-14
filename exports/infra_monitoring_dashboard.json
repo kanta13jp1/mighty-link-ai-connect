@@ -1,11 +1,11 @@
 {
   "task_id": "T755",
-  "generated_at_utc": "2026-06-13T21:45:32Z",
+  "generated_at_utc": "2026-06-14T19:06:40Z",
   "overall_status": "warning",
   "summary": {
-    "ok": 3,
+    "ok": 4,
     "unknown": 1,
-    "warning": 6,
+    "warning": 5,
     "critical": 0
   },
   "sources": {
@@ -20,7 +20,7 @@
       "key": "disk_usage",
       "category": "host",
       "status": "warning",
-      "value": "86.98% used (60720.0 MB free / 466325.0 MB total)",
+      "value": "80.66% used (90191.2 MB free / 466325.0 MB total)",
       "source": "shutil.disk_usage(project root)",
       "recommendation": "Investigate generated artifacts, logs, and old archives if disk usage exceeds 80%; set INFRA_HOST_RESOURCE_CRITICAL=1 to fail local/CI runner saturation."
     },
@@ -28,7 +28,7 @@
       "key": "memory_usage",
       "category": "host",
       "status": "warning",
-      "value": "93.00% used (1035.9 MB available / 16068.7 MB total)",
+      "value": "85.00% used (2338.0 MB available / 16068.7 MB total)",
       "source": "OS memory snapshot",
       "recommendation": "Use Google Cloud Monitoring / Cloud Run metrics for production memory saturation; set INFRA_HOST_RESOURCE_CRITICAL=1 to fail local/CI runner saturation."
     },
@@ -44,15 +44,15 @@
       "key": "repo_data_exports_size",
       "category": "host",
       "status": "ok",
-      "value": "data=0.6 MB, exports=71.7 MB",
+      "value": "data=0.7 MB, exports=71.7 MB",
       "source": "repository directory scan",
       "recommendation": "Keep generated artifacts bounded; large binary growth should move to Drive/GCS."
     },
     {
       "key": "uptime_summary",
       "category": "availability",
-      "status": "warning",
-      "value": "ok=2 warning=1 failed=0",
+      "status": "ok",
+      "value": "ok=3 warning=0 failed=0",
       "source": "exports\\uptime_monitor_report.json",
       "recommendation": "Investigate failed targets; TLS warnings for mightylink-app.com remain expected until T740_3."
     },
@@ -60,7 +60,7 @@
       "key": "uptime_max_latency",
       "category": "availability",
       "status": "ok",
-      "value": "74.55 ms",
+      "value": "321.87 ms",
       "source": "exports\\uptime_monitor_report.json",
       "recommendation": "Correlate high latency with Firebase Hosting and Cloud Run metrics."
     },
@@ -84,7 +84,7 @@
       "key": "external_api_usage",
       "category": "cost",
       "status": "ok",
-      "value": "events=50, billable=0, blocked=50",
+      "value": "events=59, billable=0, blocked=59",
       "source": "data\\external_api_usage.jsonl",
       "recommendation": "Compare billable usage with T757 cost dashboard and provider consoles."
     },
@@ -98,12 +98,12 @@
     }
   ],
   "external_api_usage_summary": {
-    "events": 50,
+    "events": 59,
     "providers": {
-      "seedance_api": 50
+      "seedance_api": 59
     },
     "outcomes": {
-      "blocked": 50
+      "blocked": 59
     },
     "billable_events": 0
   },
