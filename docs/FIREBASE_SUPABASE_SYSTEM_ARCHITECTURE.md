@@ -153,6 +153,7 @@ USING (true);
 ## 5. ローカル開発および統合テスト構成 (Local Development Workflow)
 
 開発中の安全性を確保し、クラウド課金を防ぐため、ローカル開発時には両プロバイダのエミュレータ（ローカルスタック）を完全同期して稼働させます。
+実行手順・検証項目・禁止事項は [LOCAL_DEV_EMULATOR_STACK_RUNBOOK.md](LOCAL_DEV_EMULATOR_STACK_RUNBOOK.md) を正とします。
 
 ```
 [フロントエンド (localhost:3000)]
@@ -182,14 +183,23 @@ USING (true);
     "ui": {
       "enabled": true,
       "port": 4000
-    }
+    },
+    "singleProjectMode": true
   }
 }
+```
+
+設定の静的検証は次で実行します。
+
+```powershell
+python scripts/verify_local_dev_stack.py --fail-on-critical
 ```
 
 ### 5.2 Supabase Local CLI 設定 (`supabase/config.toml`)
 - ローカル PostgreSQL ポート: `54322`
 - API ポート (GoTrue / REST): `54321`
+- Studio ポート: `54323`
+- seed は `supabase/seed.sql` の合成データのみを使用し、実メール・会社ドメインメール・production data は投入しない。
 - スキーマ変更およびマイグレーションの履歴管理は、`supabase migration new` / `supabase db reset` と `scripts/manage_db_migrations.py` を併用し、手順は [DB_MIGRATION_MANAGEMENT_RUNBOOK.md](DB_MIGRATION_MANAGEMENT_RUNBOOK.md) を正とする。
 
 ---

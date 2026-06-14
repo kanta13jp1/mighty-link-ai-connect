@@ -1,0 +1,140 @@
+{
+  "status": "ok",
+  "generated_at": "2026-06-14T17:21:52Z",
+  "summary": {
+    "ok": 21,
+    "warning": 0,
+    "critical": 0
+  },
+  "checks": [
+    {
+      "key": "firebase.json",
+      "state": "ok",
+      "message": "firebase.json is valid JSON"
+    },
+    {
+      "key": ".firebaserc.default",
+      "state": "ok",
+      "message": "Default Firebase project is configured"
+    },
+    {
+      "key": "firebase.hosting",
+      "state": "ok",
+      "message": "Hosting site and public directory are explicit"
+    },
+    {
+      "key": "firebase.emulators.auth",
+      "state": "ok",
+      "message": "auth emulator port is pinned",
+      "details": {
+        "port": 9099
+      }
+    },
+    {
+      "key": "firebase.emulators.functions",
+      "state": "ok",
+      "message": "functions emulator port is pinned",
+      "details": {
+        "port": 5001
+      }
+    },
+    {
+      "key": "firebase.emulators.hosting",
+      "state": "ok",
+      "message": "hosting emulator port is pinned",
+      "details": {
+        "port": 5000
+      }
+    },
+    {
+      "key": "firebase.emulators.ui",
+      "state": "ok",
+      "message": "ui emulator port is pinned",
+      "details": {
+        "port": 4000
+      }
+    },
+    {
+      "key": "firebase.emulators.ui.enabled",
+      "state": "ok",
+      "message": "Emulator UI is enabled"
+    },
+    {
+      "key": "firebase.emulators.singleProjectMode",
+      "state": "ok",
+      "message": "Single project mode is enabled"
+    },
+    {
+      "key": "supabase.config",
+      "state": "ok",
+      "message": "supabase/config.toml is valid TOML"
+    },
+    {
+      "key": "supabase.project_id",
+      "state": "ok",
+      "message": "Supabase local project_id is non-production"
+    },
+    {
+      "key": "supabase.api.port",
+      "state": "ok",
+      "message": "api port is pinned",
+      "details": {
+        "port": 54321
+      }
+    },
+    {
+      "key": "supabase.db.port",
+      "state": "ok",
+      "message": "db port is pinned",
+      "details": {
+        "port": 54322
+      }
+    },
+    {
+      "key": "supabase.studio.port",
+      "state": "ok",
+      "message": "studio port is pinned",
+      "details": {
+        "port": 54323
+      }
+    },
+    {
+      "key": "supabase.seed.config",
+      "state": "ok",
+      "message": "Supabase local seed is explicitly configured"
+    },
+    {
+      "key": "supabase.seed.file",
+      "state": "ok",
+      "message": "Supabase local seed file exists"
+    },
+    {
+      "key": "supabase.migrations",
+      "state": "ok",
+      "message": "Supabase migrations are present",
+      "details": {
+        "count": 1
+      }
+    },
+    {
+      "key": "supabase.auth.site_url",
+      "state": "ok",
+      "message": "Local auth site_url is localhost"
+    },
+    {
+      "key": "supabase.seed.synthetic",
+      "state": "ok",
+      "message": "Seed data uses reserved synthetic example.test identities"
+    },
+    {
+      "key": "local_config.secret_scan",
+      "state": "ok",
+      "message": "No secret-like values found in local stack config"
+    },
+    {
+      "key": "local_env.supabase_db_url",
+      "state": "ok",
+      "message": "SUPABASE_DB_URL is unset; local stack does not require production DB credentials"
+    }
+  ]
+}

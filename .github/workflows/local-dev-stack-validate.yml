@@ -1,0 +1,54 @@
+name: Local Dev Stack Validation
+
+on:
+  pull_request:
+    paths:
+      - "firebase.json"
+      - ".firebaserc"
+      - "supabase/config.toml"
+      - "supabase/seed.sql"
+      - "supabase/migrations/**"
+      - "scripts/verify_local_dev_stack.py"
+      - "tests/test_local_dev_stack.py"
+      - ".github/workflows/local-dev-stack-validate.yml"
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "firebase.json"
+      - ".firebaserc"
+      - "supabase/config.toml"
+      - "supabase/seed.sql"
+      - "supabase/migrations/**"
+      - "scripts/verify_local_dev_stack.py"
+      - "tests/test_local_dev_stack.py"
+      - ".github/workflows/local-dev-stack-validate.yml"
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: python -m pip install pytest
+
+      - name: Validate local Firebase/Supabase stack config
+        run: python scripts/verify_local_dev_stack.py --fail-on-critical --output exports/local_dev_stack_report.json
+
+      - name: Run local stack tests
+        run: python -m pytest tests/test_local_dev_stack.py -q

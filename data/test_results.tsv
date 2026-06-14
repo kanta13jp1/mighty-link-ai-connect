@@ -36,3 +36,4 @@ TEST-010	Operations/Monitoring	インフラテレメトリダッシュボード�
 TEST-011	Operations/Cost	週次コスト配賦ダッシュボード単体テスト	外部API利用台帳の週次集計、予算閾値判定、通知secret非出力、warning/critical終了コードを検証	PASS	Pytest	100%	0%	2026-06-14 08:38
 TEST-012	Backend/DB	Supabase接続プール単体テスト	Supavisor transaction/session/direct URL判定、非秘密pool status、conn.close()によるpool返却とpre-pingを検証	PASS	Pytest	100%	0%	2026-06-14 09:42
 TEST-013	Infra/Domain	mightylink-app.com strict TLS確認	https://mightylink-app.com/ の証明書SubjectがCN=mightylink-app.com、IssuerがGoogle Trust Servicesであり、strict HTTPS監視へ切替可能なことを確認	PASS	PowerShell + TLS inspect	100%	0%	2026-06-14 09:55
+TEST-014	Infra/Local Dev	Firebase Emulator / Supabase Local 設定検証テスト	firebase.json emulator固定ポート、supabase/config.toml、合成seed、secret-like値検出、production SUPABASE_DB_URL拒否、GitHub Actions workflow対象を検証	PASS	Pytest + static verifier	100%	0%	2026-06-15 10:00

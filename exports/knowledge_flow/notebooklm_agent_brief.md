@@ -1,6 +1,6 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-06-14T14:37:14+09:00
+Generated: 2026-06-15T02:31:44+09:00
 Status: `skipped`
 
 NotebookLM CLI is not ready yet, so this file is a placeholder.
@@ -50,6 +50,7 @@ During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
 - `docs/INCIDENT_POSTMORTEM_RUNBOOK.md`: https://docs.google.com/document/d/1nfuwYTaxVnadProXz1I6U-qVVK8mECRDmoJWdecFLr8/edit?usp=drivesdk
 - `docs/INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1sbnNMCbBwpPyuLj60FNwEE3L1UAq8mZ79n7Zlv9Huco/edit?usp=drivesdk
 - `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
+- `docs/LOCAL_DEV_EMULATOR_STACK_RUNBOOK.md`: https://docs.google.com/document/d/1_jywSbN49MBBiyGRd89HguBrj-2ktZkB9SWiS3FaBuU/edit?usp=drivesdk
 - `docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md`: https://docs.google.com/document/d/1EKarbQEJc11rMLWXU4L9TL994vPp5dawHyjf-y3HPJg/edit?usp=drivesdk
 - `docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/1aFiRyJpftES9MXnSkTUKsaum_KCUt8UhS37p_3Ln15U/edit?usp=drivesdk
 - `docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md`: https://docs.google.com/document/d/1gysz5FkXVK22refIm4oGmXslBzOXCbJtTgfr8pxcSWM/edit?usp=drivesdk

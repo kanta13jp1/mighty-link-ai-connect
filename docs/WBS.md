@@ -193,7 +193,7 @@ gantt
 | **T737** | 7. 決定後実行 | 運用保守 | デイリー作業レポート（WBS/進捗状況）のGmail/Slack自動送信機能の実装 | Codex | VSCode + Codex | send_daily_report.py自動送信設定 | 完了 |
 | **T738** | 7. 決定後実行 | インフラ | Firebase deploy auth preflight and ADC workflow hardening | Codex | VSCode + Codex | Firebase CI/CD deploy workflow now supports service account ADC, explicit FIREBASE_PROJECT_ID, configurable deploy targets, and Hosting-only default until Blaze/functions are enabled | 完了 |
 | **T740** | 7. 決定後実行 | インフラ設計 | 本番ドメイン・DNS移行およびSSL証明書自動更新の適用 | 人間 + Codex | VSCode + Codex | mightylink-app.com の登録、Firebase Hosting カスタムドメイン追加、DNS A/TXT/NS反映、Google Trust Services証明書 CN=mightylink-app.com 発行、特商法販売URL確定、uptime strict TLS監視化を完了。Issue #94 / Project #1 に同期 | 完了 |
-| **T740_1** | 7. 決定後実行 | インフラ設計 | 本番ドメイン mightylink-app.com のレジストラ登録（CEO へ事前共有のうえ取得） | 人間 | レジストラ管理画面 | お名前.com 等で mightylink-app.com を登録（約10分・年額約2,000円）。空き確認済 (2026-06-13 RDAP)。登録完了をセッションへ連絡 | 完了 |
+| **T740_1** | 7. 決定後実行 | インフラ設計 | 本番ドメイン mightylink-app.com のレジストラ登録（CEO へ事前共有のうえ取得） | 人間 | レジストラ管理画面 | お名前.com 等で mightylink-app.com を登録（約10分・本ドメイン単体の維持費0円キャンペーン適用）。空き確認済 (2026-06-13 RDAP)。登録完了をセッションへ連絡 | 完了 |
 | **T740_2** | 7. 決定後実行 | インフラ設計 | Firebase カスタムドメイン再登録（app.ml-mightylink.com エントリ削除 → mightylink-app.com 追加）と DNS CNAME 設定 | 人間 + Claude Code | Firebase Console + gcloud CLI | Firebase Hosting の旧エントリを削除し mightylink-app.com を追加。レジストラ DNS なら CNAME 1行（→ mighty-link-ai-connect-13d22.web.app）、Cloud DNS 採用なら gcloud でゾーン作成。設定値は Claude Code が案内 | 完了 |
 | **T740_3** | 7. 決定後実行 | インフラ設計 | SSL 証明書自動発行の確認と販売 URL 確定（特商法表記・docs の URL 反映） | Claude Code + 人間 | VSCode + Claude Code | https://mightylink-app.com/ のstrict HTTPS疎通と証明書Subject CN=mightylink-app.com / Google Trust Services発行を確認。docs/TOKUSHOHO_NOTATION.md の販売URLを確定し、PRODUCTION_DOMAIN_SETUP_GUIDE、UPTIME監視、Rollback docsへ反映。Issue #94 / Project #1 に同期 | 完了 |
 | **T741** | 7. 決定後実行 | 運用保守 | 本番環境データベースの自動日次バックアップ・リストア運用の設計および自動化スクリプト実装 | Codex | VSCode + Codex | scripts/backup_supabase_database.py・scripts/restore_supabase_database.py・.github/workflows/supabase-backup.yml・docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md を追加し、毎日03:00 JSTのSupabase DB dump/GCS退避/7世代管理/復元手順を整備（GitHub Issue #83） | 完了 |
@@ -214,7 +214,7 @@ gantt
 | **T756** | 7. 決定後実行 | コンプライアンス | 個人情報保護およびGDPRに基づくシステム監査ログの氏名マスキング・暗号化パイプライン実装 | Claude | VSCode + Claude Code | データベース及びアクセスログの暗号化・氏名マスクバッチの開発・適用 | 完了 |
 | **T757** | 7. 決定後実行 | 運用保守 | 週次課金・コスト配分ダッシュボードの構築およびアラートメール通知の実装 | Codex | VSCode + Codex | data/cost_allocation_budgets.tsv、scripts/generate_weekly_cost_dashboard.py、Weekly Cost Dashboard workflow、docs/WEEKLY_COST_DASHBOARD_RUNBOOK.md、exports/weekly_cost_dashboard.*、email/Slack通知ドラフト、pytestを追加。GitHub Issue #92 と Project #1 に同期 | 完了 |
 | **T759** | 7. 決定後実行 | バックエンド開発 | Firebase Cloud Functions 経由での Supabase 接続のプール管理とパフォーマンス最適化 | Codex | VSCode + Codex | src/app.py に psycopg2 ThreadedConnectionPool、Supavisor pooler mode検出、pre-ping/recycle、非秘密pool状態を返す /api/db-test を組み込み。docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md と tests/test_supabase_connection_pool.py を追加し、Issue #93 / Project #1 に同期 | 完了 |
-| **T760** | 7. 決定後実行 | 品質検証 | Firebase Emulator Suite と Supabase Local CLI を用いたローカル開発・テスト環境の構築 | Codex | VSCode + Codex | ローカルエミュレータによる統合テストの合格率検証 | 未着手 |
+| **T760** | 7. 決定後実行 | 品質検証 | Firebase Emulator Suite と Supabase Local CLI を用いたローカル開発・テスト環境の構築 | Codex | VSCode + Codex | Firebase Emulator / Supabase Local Runbook、config、合成seed、検証スクリプト、pytest、Local Dev Stack Validation workflowを整備し、Issue #95 / Project / Sheets / Calendarへ同期 | 完了 |
 | **T761** | 7. 決定後実行 | 運用保守 | Supabase ダッシュボードでのクエリパフォーマンス監視とインデックスのチューニング | Codex | VSCode + Codex | スロークエリ監視体制のドキュメント化 | 未着手 |
 | **T761_1** | 7. 決定後実行 | 運用保守 | Firebase & Supabase クォータ・エラー監視のアラート構築 | Codex | VSCode + Codex | Sentry / Google Cloud Monitoring 連携設定 | 未着手 |
 | **T762** | 8. 本番運用・品質管理 | 品質管理 | サービス品質KPIおよびSLA（稼働率・レスポンスタイム・診断精度）の定義と計測基盤整備 | Claude + 人間 | VSCode + Claude Code | SLA99.5%・P95レスポンス3秒以内・診断精度評価基準をdocs同期 | 完了 |
@@ -266,6 +266,7 @@ gantt
 | **T811** | 9. 長期保守・拡張 | DB保守 | Supabase Postgres 14 サポート終了（2026-07-01）対応：本番/staging の PG バージョン確認とアップグレード計画 | Codex | VSCode + Codex | Supabase 公式 changelog（2026-05-12）準拠。PG バージョン確認結果と必要時のアップグレード手順・実施結果を docs / Sheets セキュリティタブへ記録（課題 R53） | 未着手 |
 | **T812** | 7. 決定後実行 | リリース運用 | 本番リリースのロールバック手順書（Hosting/Functions ロールバック・DB マイグレーション巻き戻し）の整備 | Codex + Claude | VSCode + Codex | docs/PRODUCTION_ROLLBACK_RUNBOOK.md を作成し、Firebase Hosting/Functions/Cloud Run/Supabase migration rollback を T746 Go/No-Go 前提へ連結。GitHub Issue #81 / Project Done で証跡化 | 完了 |
 | **T813** | 8. 本番運用・品質管理 | 課金・税務 | 有料化に伴う適格請求書（インボイス制度）・消費税処理の確認と Stripe Tax 設定 | 人間 + Codex | VSCode + Codex | T804 価格決定後に適格請求書発行事業者登録の要否を人間（経理/CEO）が確認し、Stripe Tax / 領収書表記の設定結果を Sheets へ記録 | 未着手 |
+| **T814** | 7. 決定後実行 | 共通管理 | 本番ドメイン設定および開発・運用体制に関する社長報告文面の起草・レビュー | Antigravity | Antigravity + Gemini | 状況報告文面のドラフトと改善案提示による社長への報告準備完了 | 完了 |
 
 ---
 

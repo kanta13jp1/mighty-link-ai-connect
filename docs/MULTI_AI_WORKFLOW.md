@@ -484,6 +484,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-13 | Claude Code | T764完了: generate_monthly_quality_report.py 実装、docs/MONTHLY_REPORT_2026-06.md (中間) 生成 (Issue #79)。pytest 5 件追加 (全 20 件パス)。T808 自動配信を追加、R52 (FastAPI on_event 非推奨) 起票 |
 | 2026-06-13 | Claude Code | T809完了: WBS 工程網羅性監査 (第2回) で T810〜T813 追加（ポストモーテム・Supabase PG14 EOL・ロールバック手順書・インボイス対応）、前倒しリスケ (第3回) でローンチ 7/14→7/8・最終完了 7/16→7/15。R53/QA-33 起票、stale レーン規約を削除 |
 | 2026-06-13 | Codex | T810完了: R44本番502/504障害のポストモーテム実例と標準Runbookを作成し、DR/SLA/Security Runbook・課題管理表R56・GitHub Issue/Project同期へ接続 |
+| 2026-06-15 | Codex | T760完了: Firebase Emulator Suite / Supabase Local CLI のローカル開発Runbook、`supabase/config.toml`、合成seed、検証スクリプト、pytest、GitHub Actions workflowを追加。production DB URLをローカル統合テストから分離 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 
