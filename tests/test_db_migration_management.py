@@ -47,8 +47,11 @@ def test_sqlite_apply_is_idempotent(tmp_path):
         }
         ledger = conn.execute("SELECT version, name FROM schema_migrations").fetchall()
 
-    assert {"engineers", "jobs", "match_results", "schema_migrations"}.issubset(tables)
-    assert ledger == [("20260614000000", "app_core_schema")]
+    assert {"engineers", "jobs", "match_results", "feedback_events", "schema_migrations"}.issubset(tables)
+    assert ledger == [
+        ("20260614000000", "app_core_schema"),
+        ("20260616000000", "feedback_events"),
+    ]
 
 
 def test_duplicate_migration_version_is_rejected(tmp_path):

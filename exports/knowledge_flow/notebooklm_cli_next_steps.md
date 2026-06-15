@@ -1,6 +1,6 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-15T04:19:52+09:00
+Generated: 2026-06-16T05:04:50+09:00
 
 ## Current Status
 
@@ -81,6 +81,7 @@ Generated: 2026-06-15T04:19:52+09:00
 - `docs/TOKUSHOHO_NOTATION.md`: https://docs.google.com/document/d/1LUwRooXcdyrGB4AsuQo70Auz8DoQ-E5eyPV5cYUPWLk/edit?usp=drivesdk
 - `docs/UPTIME_MONITORING_AND_ALERT_RUNBOOK.md`: https://docs.google.com/document/d/1loht22D5jpIbl5Hcb8JAgGhdK_odNrAha6BzSFXhplA/edit?usp=drivesdk
 - `docs/USER_DATA_DELETION_FLOW.md`: https://docs.google.com/document/d/1-2u-qFsKNwrE9Jpl3dovC0fr_Prk4JZUF23xz1e1zQQ/edit?usp=drivesdk
+- `docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md`: https://docs.google.com/document/d/1E44oW3XLOkEwyNSq5kweNe4Jujx4RoBiG598C_gTr5M/edit?usp=drivesdk
 - `docs/USER_GUIDE_AND_FAQ.md`: https://docs.google.com/document/d/1qawKzp2UdanwIbnWqbVnRaRq4YIQlTEXxlj7mwhmfRk/edit?usp=drivesdk
 - `docs/WBS.md`: https://docs.google.com/document/d/16s5eoPSBLInfS6Kr9Hj4Qgc3y4QXjyjNSbojvZNxBuQ/edit?usp=drivesdk
 - `docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md`: https://docs.google.com/document/d/1U_VJfbWxl-akmnrFOngfFlOU_pQIpsG5af7bUtODigg/edit?usp=drivesdk

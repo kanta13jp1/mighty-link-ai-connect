@@ -247,6 +247,7 @@ RATE_LIMIT_EXEMPT_PATHS = {
 RATE_LIMIT_EXPENSIVE_API_PATHS = {
     "/api/parse",
     "/api/match",
+    "/api/feedback",
     "/api/seedance/video-demo",
     "/api/sync",
 }
@@ -599,12 +600,29 @@ def init_db():
                 analyzed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
             """)
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS feedback_events (
+                id SERIAL PRIMARY KEY,
+                match_result_id INTEGER REFERENCES match_results(id) ON DELETE SET NULL,
+                rating VARCHAR(32) NOT NULL CHECK (rating IN ('helpful', 'not_helpful')),
+                nps_score INTEGER CHECK (nps_score BETWEEN 0 AND 10),
+                comment TEXT,
+                source VARCHAR(80) NOT NULL DEFAULT 'diagnosis_report',
+                page_url TEXT,
+                session_id VARCHAR(120),
+                metadata JSONB DEFAULT '{}'::jsonb,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_feedback_events_match_result_id ON feedback_events(match_result_id);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_feedback_events_created_at ON feedback_events(created_at);")
             # Supabase exposes public-schema tables through the anon REST API.
             # Enabling RLS with no policies denies anon access entirely, while
             # the app (table owner via the postgres role) bypasses RLS.
             cursor.execute("ALTER TABLE engineers ENABLE ROW LEVEL SECURITY;")
             cursor.execute("ALTER TABLE jobs ENABLE ROW LEVEL SECURITY;")
             cursor.execute("ALTER TABLE match_results ENABLE ROW LEVEL SECURITY;")
+            cursor.execute("ALTER TABLE feedback_events ENABLE ROW LEVEL SECURITY;")
         else:
             # SQLite DDL
             cursor.execute("""
@@ -645,6 +663,23 @@ def init_db():
                 FOREIGN KEY(job_id) REFERENCES jobs(id) ON DELETE CASCADE
             );
             """)
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS feedback_events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                match_result_id INTEGER,
+                rating VARCHAR(32) NOT NULL CHECK (rating IN ('helpful', 'not_helpful')),
+                nps_score INTEGER CHECK (nps_score IS NULL OR (nps_score BETWEEN 0 AND 10)),
+                comment TEXT,
+                source VARCHAR(80) NOT NULL DEFAULT 'diagnosis_report',
+                page_url TEXT,
+                session_id VARCHAR(120),
+                metadata TEXT DEFAULT '{}',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY(match_result_id) REFERENCES match_results(id) ON DELETE SET NULL
+            );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_feedback_events_match_result_id ON feedback_events(match_result_id);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_feedback_events_created_at ON feedback_events(created_at);")
         conn.commit()
         print(f"[+] Database tables initialized successfully ({db_type}).")
     except Exception as e:
@@ -744,6 +779,177 @@ def db_insert_match_result(engineer_id: int, job_id: int, fit_ratio: float, scor
     finally:
         cursor.close()
         conn.close()
+
+
+VALID_FEEDBACK_RATINGS = {"helpful", "not_helpful"}
+MAX_FEEDBACK_COMMENT_LENGTH = 1000
+
+
+def clean_feedback_text(value: Optional[str], limit: int) -> str:
+    if value is None:
+        return ""
+    normalized = re.sub(r"\s+", " ", str(value)).strip()
+    return normalized[:limit]
+
+
+def db_insert_feedback_event(
+    match_result_id: Optional[int],
+    rating: str,
+    nps_score: Optional[int],
+    comment: Optional[str],
+    source: str,
+    page_url: Optional[str],
+    session_id: Optional[str],
+    metadata: Optional[dict] = None,
+) -> int:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    clean_comment = clean_feedback_text(comment, MAX_FEEDBACK_COMMENT_LENGTH)
+    clean_source = clean_feedback_text(source, 80) or "diagnosis_report"
+    clean_page_url = clean_feedback_text(page_url, 500)
+    clean_session_id = clean_feedback_text(session_id, 120)
+    metadata_json = json.dumps(metadata or {}, ensure_ascii=False)
+    try:
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                INSERT INTO feedback_events
+                    (match_result_id, rating, nps_score, comment, source, page_url, session_id, metadata)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s::jsonb)
+                RETURNING id;
+                """,
+                (
+                    match_result_id,
+                    rating,
+                    nps_score,
+                    clean_comment,
+                    clean_source,
+                    clean_page_url,
+                    clean_session_id,
+                    metadata_json,
+                ),
+            )
+            inserted_id = cursor.fetchone()[0]
+        else:
+            cursor.execute(
+                """
+                INSERT INTO feedback_events
+                    (match_result_id, rating, nps_score, comment, source, page_url, session_id, metadata)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+                """,
+                (
+                    match_result_id,
+                    rating,
+                    nps_score,
+                    clean_comment,
+                    clean_source,
+                    clean_page_url,
+                    clean_session_id,
+                    metadata_json,
+                ),
+            )
+            inserted_id = cursor.lastrowid
+        conn.commit()
+        return inserted_id
+    except Exception as e:
+        print(f"[-] Database insert feedback event failed: {e}")
+        return 0
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def _scalar(row: Any, index: int = 0) -> Any:
+    return row[index] if row is not None else None
+
+
+def db_get_feedback_summary(limit: int = 20) -> dict:
+    limit = max(1, min(limit, 100))
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT COUNT(*) FROM feedback_events;")
+        total = int(_scalar(cursor.fetchone()) or 0)
+
+        cursor.execute("SELECT rating, COUNT(*) FROM feedback_events GROUP BY rating;")
+        rating_counts = {"helpful": 0, "not_helpful": 0}
+        for row in cursor.fetchall():
+            rating_counts[str(row[0])] = int(row[1])
+
+        cursor.execute("SELECT AVG(nps_score), COUNT(nps_score) FROM feedback_events WHERE nps_score IS NOT NULL;")
+        nps_row = cursor.fetchone()
+        nps_average = float(nps_row[0]) if nps_row and nps_row[0] is not None else None
+        nps_count = int(nps_row[1]) if nps_row else 0
+
+        columns = [
+            "id",
+            "match_result_id",
+            "rating",
+            "nps_score",
+            "comment",
+            "source",
+            "page_url",
+            "session_id",
+            "created_at",
+        ]
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                SELECT id, match_result_id, rating, nps_score, comment, source, page_url, session_id, created_at
+                FROM feedback_events
+                ORDER BY id DESC
+                LIMIT %s;
+                """,
+                (limit,),
+            )
+        else:
+            cursor.execute(
+                """
+                SELECT id, match_result_id, rating, nps_score, comment, source, page_url, session_id, created_at
+                FROM feedback_events
+                ORDER BY id DESC
+                LIMIT ?;
+                """,
+                (limit,),
+            )
+
+        recent = []
+        for row in cursor.fetchall():
+            row_dict = dict(row) if isinstance(row, sqlite3.Row) else dict(zip(columns, row))
+            recent.append({
+                "id": row_dict.get("id"),
+                "match_result_id": row_dict.get("match_result_id"),
+                "rating": row_dict.get("rating"),
+                "nps_score": row_dict.get("nps_score"),
+                "comment_excerpt": clean_feedback_text(row_dict.get("comment"), 160),
+                "source": row_dict.get("source"),
+                "page_url": row_dict.get("page_url"),
+                "session_id": row_dict.get("session_id"),
+                "created_at": str(row_dict.get("created_at") or ""),
+            })
+
+        return {
+            "total": total,
+            "rating_counts": rating_counts,
+            "nps": {
+                "average": round(nps_average, 2) if nps_average is not None else None,
+                "count": nps_count,
+            },
+            "recent": recent,
+        }
+    except Exception as e:
+        print(f"[-] Database feedback summary failed: {e}")
+        return {
+            "total": 0,
+            "rating_counts": {"helpful": 0, "not_helpful": 0},
+            "nps": {"average": None, "count": 0},
+            "recent": [],
+            "error": str(e),
+        }
+    finally:
+        cursor.close()
+        conn.close()
+
 
 def resolve_or_insert_engineer(content: str) -> int:
     profile = build_profile(content, "engineer")
@@ -2650,6 +2856,17 @@ class EvaluationRequest(BaseModel):
     engineer_content: str
     job_content: str
 
+
+class FeedbackRequest(BaseModel):
+    match_id: Optional[int] = None
+    rating: str
+    nps_score: Optional[int] = None
+    comment: Optional[str] = ""
+    source: str = "diagnosis_report"
+    page_url: Optional[str] = ""
+    session_id: Optional[str] = ""
+
+
 # 2. API: 4-Dimension AI Fit Evaluation
 @app.post("/api/match")
 async def evaluate_matching(req: EvaluationRequest):
@@ -2809,6 +3026,38 @@ async def evaluate_matching(req: EvaluationRequest):
     
     print("[+] Deterministic evaluator fallback completed successfully.")
     return fallback_response
+
+
+@app.post("/api/feedback")
+async def submit_feedback(req: FeedbackRequest):
+    """Store post-diagnosis helpfulness and NPS feedback for quality review."""
+    rating = clean_feedback_text(req.rating, 32).lower()
+    if rating not in VALID_FEEDBACK_RATINGS:
+        raise HTTPException(status_code=400, detail="rating must be helpful or not_helpful")
+    if req.nps_score is not None and not 0 <= req.nps_score <= 10:
+        raise HTTPException(status_code=400, detail="nps_score must be between 0 and 10")
+    if req.comment and len(req.comment) > MAX_FEEDBACK_COMMENT_LENGTH:
+        raise HTTPException(status_code=400, detail=f"comment must be {MAX_FEEDBACK_COMMENT_LENGTH} characters or fewer")
+
+    feedback_id = db_insert_feedback_event(
+        match_result_id=req.match_id,
+        rating=rating,
+        nps_score=req.nps_score,
+        comment=req.comment,
+        source=req.source,
+        page_url=req.page_url,
+        session_id=req.session_id,
+        metadata={"api_version": "2026-06-16", "wbs_task": "T763"},
+    )
+    if not feedback_id:
+        raise HTTPException(status_code=500, detail="Failed to store feedback")
+    return {"status": "success", "feedback_id": feedback_id}
+
+
+@app.get("/api/feedback/summary")
+async def get_feedback_summary(limit: int = 20, username: str = Depends(verify_credentials)):
+    """Authenticated feedback summary for operations and quality review."""
+    return {"status": "success", **db_get_feedback_summary(limit=limit)}
 
 
 class SyncRequest(BaseModel):

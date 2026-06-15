@@ -173,3 +173,53 @@ def test_match_and_database_persistence(client):
     matches_list = response.json()["matches"]
     assert len(matches_list) > 0
     assert any(m["id"] == db_match_id for m in matches_list)
+
+
+def test_feedback_submission_and_summary(client):
+    engineer_content = "Name: Feedback User\nSkills: Python, FastAPI, Supabase"
+    job_content = "Role: Backend Engineer\nRequirements: Python, API development"
+
+    match_response = client.post(
+        "/api/match",
+        json={"engineer_content": engineer_content, "job_content": job_content},
+    )
+    assert match_response.status_code == 200
+    db_match_id = match_response.json()["db_match_id"]
+    assert db_match_id > 0
+
+    feedback_response = client.post(
+        "/api/feedback",
+        json={
+            "match_id": db_match_id,
+            "rating": "helpful",
+            "nps_score": 9,
+            "comment": "Clear score rationale and useful next actions.",
+            "source": "diagnosis_report",
+            "page_url": "/",
+            "session_id": "test-session",
+        },
+    )
+    assert feedback_response.status_code == 200
+    assert feedback_response.json()["status"] == "success"
+    assert feedback_response.json()["feedback_id"] > 0
+
+    invalid_response = client.post(
+        "/api/feedback",
+        json={"match_id": db_match_id, "rating": "helpful", "nps_score": 11},
+    )
+    assert invalid_response.status_code == 400
+
+    unauthorized_summary = client.get("/api/feedback/summary")
+    assert unauthorized_summary.status_code == 401
+
+    summary_response = client.get(
+        "/api/feedback/summary",
+        auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD),
+    )
+    assert summary_response.status_code == 200
+    summary = summary_response.json()
+    assert summary["status"] == "success"
+    assert summary["total"] >= 1
+    assert summary["rating_counts"]["helpful"] >= 1
+    assert summary["nps"]["average"] >= 9
+    assert any(item["match_result_id"] == db_match_id for item in summary["recent"])

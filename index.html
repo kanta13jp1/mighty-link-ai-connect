@@ -1493,6 +1493,132 @@
         .bar-growth-pct { color: var(--yellow); }
         .bar-performing-pct { color: var(--rose); }
 
+        .feedback-panel {
+            border-top: 1px solid var(--line);
+            padding-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .feedback-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .feedback-eyebrow {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .feedback-head h3 {
+            color: var(--text);
+            font-size: 17px;
+            line-height: 1.4;
+        }
+
+        .feedback-status {
+            min-width: 72px;
+            padding: 6px 10px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .feedback-choice-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .feedback-choice {
+            min-height: 44px;
+            flex: 1 1 160px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text);
+            font-weight: 800;
+            cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .feedback-choice:hover,
+        .feedback-choice.active {
+            border-color: var(--blue);
+            background: rgba(139, 220, 255, 0.09);
+            color: var(--blue);
+        }
+
+        .feedback-nps {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px 12px;
+            align-items: center;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .feedback-nps output {
+            color: var(--green);
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .feedback-nps input {
+            grid-column: 1 / -1;
+            width: 100%;
+            accent-color: var(--blue);
+        }
+
+        .feedback-comment {
+            width: 100%;
+            min-height: 88px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text);
+            padding: 12px 14px;
+            resize: vertical;
+            font: inherit;
+            line-height: 1.5;
+        }
+
+        .feedback-comment::placeholder {
+            color: rgba(170, 169, 162, 0.72);
+        }
+
+        .feedback-submit-row {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .feedback-submit {
+            min-width: 104px;
+            min-height: 42px;
+            border: 1px solid rgba(186, 255, 102, 0.35);
+            border-radius: 8px;
+            background: rgba(186, 255, 102, 0.08);
+            color: var(--green);
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .feedback-submit:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
         /* タブエリア */
         .tabs-area {
             margin-top: 12px;
@@ -1670,6 +1796,12 @@
             }
             .metrics-grid {
                 grid-template-columns: 1fr;
+            }
+            .feedback-head {
+                flex-direction: column;
+            }
+            .feedback-status {
+                align-self: flex-start;
             }
         }
         /* ====== Scroll fade-in (Seedance-style section reveal) ====== */
@@ -2001,6 +2133,29 @@
                     </div>
 
                     <!-- タブエリア -->
+                    <div class="feedback-panel" id="feedback-panel" aria-live="polite">
+                        <div class="feedback-head">
+                            <div>
+                                <span class="feedback-eyebrow">User feedback</span>
+                                <h3>診断結果は役に立ちましたか？</h3>
+                            </div>
+                            <span class="feedback-status" id="feedback-status">未送信</span>
+                        </div>
+                        <div class="feedback-choice-row" role="group" aria-label="診断結果評価">
+                            <button type="button" class="feedback-choice" data-rating="helpful" onclick="selectFeedbackRating('helpful')">役に立った</button>
+                            <button type="button" class="feedback-choice" data-rating="not_helpful" onclick="selectFeedbackRating('not_helpful')">改善したい</button>
+                        </div>
+                        <label class="feedback-nps" for="feedback-nps">
+                            <span>推奨度</span>
+                            <output id="feedback-nps-output" for="feedback-nps">8</output>
+                            <input id="feedback-nps" type="range" min="0" max="10" value="8" oninput="updateFeedbackNps(this.value)">
+                        </label>
+                        <textarea id="feedback-comment" class="feedback-comment" maxlength="1000" placeholder="補足コメント（任意）"></textarea>
+                        <div class="feedback-submit-row">
+                            <button type="button" class="feedback-submit" id="feedback-submit" onclick="submitFeedback()" disabled>送信</button>
+                        </div>
+                    </div>
+
                     <div class="tabs-area">
                         <div class="tab-buttons">
                             <button class="tab-btn active" onclick="switchReportTab('qa')">面談想定質問 (Q&A)</button>
@@ -2280,6 +2435,23 @@
 
         let radarChart = null;
         let reportRadarChart = null;
+        let currentFeedbackMatchId = null;
+        let selectedFeedbackRating = "";
+        const feedbackSessionStorageKey = "mighty_feedback_session_id";
+
+        function getFeedbackSessionId() {
+            try {
+                const existing = window.localStorage.getItem(feedbackSessionStorageKey);
+                if (existing) return existing;
+                const generated = window.crypto && window.crypto.randomUUID
+                    ? window.crypto.randomUUID()
+                    : `session-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+                window.localStorage.setItem(feedbackSessionStorageKey, generated);
+                return generated;
+            } catch (error) {
+                return `session-${Date.now()}`;
+            }
+        }
 
         function toggleNav() {
             const links = document.querySelector(".nav-links");
@@ -2420,6 +2592,94 @@
             document.getElementById("seedance-prompt").value = `Cinematic loop of network connections for Mighty Skill-Bridge: candidate ${engName} and project ${jobName}. Glowing neon blue and green light lines flowing, connecting nodes, representing AI agents, data synergy, technology bridge, dark mode, high-tech, 8k resolution, smooth ambient motion, slow pan`;
         }
 
+        function resetFeedbackState() {
+            currentFeedbackMatchId = null;
+            selectedFeedbackRating = "";
+            document.querySelectorAll(".feedback-choice").forEach((button) => {
+                button.classList.remove("active");
+                button.setAttribute("aria-pressed", "false");
+            });
+            const nps = document.getElementById("feedback-nps");
+            const output = document.getElementById("feedback-nps-output");
+            const comment = document.getElementById("feedback-comment");
+            const submit = document.getElementById("feedback-submit");
+            const status = document.getElementById("feedback-status");
+            if (nps) nps.value = "8";
+            if (output) output.textContent = "8";
+            if (comment) comment.value = "";
+            if (submit) submit.disabled = true;
+            if (status) {
+                status.textContent = "未送信";
+                status.style.color = "var(--muted)";
+            }
+        }
+
+        function selectFeedbackRating(rating) {
+            if (!["helpful", "not_helpful"].includes(rating)) return;
+            selectedFeedbackRating = rating;
+            document.querySelectorAll(".feedback-choice").forEach((button) => {
+                const active = button.dataset.rating === rating;
+                button.classList.toggle("active", active);
+                button.setAttribute("aria-pressed", active ? "true" : "false");
+            });
+            const submit = document.getElementById("feedback-submit");
+            const status = document.getElementById("feedback-status");
+            if (submit) submit.disabled = false;
+            if (status) {
+                status.textContent = "入力中";
+                status.style.color = "var(--blue)";
+            }
+        }
+
+        function updateFeedbackNps(value) {
+            const output = document.getElementById("feedback-nps-output");
+            if (output) output.textContent = String(value);
+        }
+
+        async function submitFeedback() {
+            if (!selectedFeedbackRating) return;
+            const nps = document.getElementById("feedback-nps");
+            const comment = document.getElementById("feedback-comment");
+            const submit = document.getElementById("feedback-submit");
+            const status = document.getElementById("feedback-status");
+            const payload = {
+                match_id: currentFeedbackMatchId,
+                rating: selectedFeedbackRating,
+                nps_score: Number(nps ? nps.value : 8),
+                comment: comment ? comment.value.trim() : "",
+                source: "diagnosis_report",
+                page_url: `${window.location.pathname}${window.location.search}`,
+                session_id: getFeedbackSessionId()
+            };
+
+            if (submit) submit.disabled = true;
+            if (status) {
+                status.textContent = "送信中";
+                status.style.color = "var(--yellow)";
+            }
+
+            try {
+                const response = await fetch("/api/feedback", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    throw new Error("Feedback endpoint unavailable");
+                }
+                if (status) {
+                    status.textContent = "送信済み";
+                    status.style.color = "var(--green)";
+                }
+            } catch (error) {
+                if (submit) submit.disabled = false;
+                if (status) {
+                    status.textContent = "送信失敗";
+                    status.style.color = "var(--rose)";
+                }
+            }
+        }
+
         async function runAnalysis() {
             const button = document.querySelector(".big-btn");
             const original = button.innerHTML;
@@ -2441,6 +2701,7 @@
 
             const reportSection = document.getElementById("report-section");
             const videoSection = document.getElementById("video-section");
+            resetFeedbackState();
 
             if (reportSection) {
                 // reset gauge and progress fills
@@ -2501,6 +2762,7 @@
                     };
                     summaryText = data.summary;
                     qas = data.qa || [];
+                    currentFeedbackMatchId = data.db_match_id || null;
                     
                     if (data.structured) {
                         matchedSkills = data.structured.matched_skills || [];
