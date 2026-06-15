@@ -223,3 +223,60 @@ def test_feedback_submission_and_summary(client):
     assert summary["rating_counts"]["helpful"] >= 1
     assert summary["nps"]["average"] >= 9
     assert any(item["match_result_id"] == db_match_id for item in summary["recent"])
+
+
+def test_support_request_submission_and_summary(client):
+    support_response = client.post(
+        "/api/support/request",
+        json={
+            "category": "technical",
+            "contact_email": "support-user@example.test",
+            "subject": "診断結果が送信できない",
+            "message": "診断結果画面から問い合わせを送信したいが、送信ボタンが反応しません。",
+            "source": "support_form",
+            "page_url": "/",
+            "session_id": "support-test-session",
+        },
+    )
+    assert support_response.status_code == 200
+    support_data = support_response.json()
+    assert support_data["status"] == "success"
+    assert support_data["support_request_id"] > 0
+    assert support_data["priority"] == "high"
+
+    invalid_email_response = client.post(
+        "/api/support/request",
+        json={
+            "category": "general",
+            "contact_email": "not-an-email",
+            "subject": "問い合わせ",
+            "message": "問い合わせ本文の最小文字数を満たしています。",
+        },
+    )
+    assert invalid_email_response.status_code == 400
+
+    invalid_message_response = client.post(
+        "/api/support/request",
+        json={
+            "category": "general",
+            "contact_email": "support-user@example.test",
+            "subject": "短い本文",
+            "message": "短い",
+        },
+    )
+    assert invalid_message_response.status_code == 400
+
+    unauthorized_summary = client.get("/api/support/summary")
+    assert unauthorized_summary.status_code == 401
+
+    summary_response = client.get(
+        "/api/support/summary",
+        auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD),
+    )
+    assert summary_response.status_code == 200
+    summary = summary_response.json()
+    assert summary["status"] == "success"
+    assert summary["total"] >= 1
+    assert summary["category_counts"]["technical"] >= 1
+    assert summary["priority_counts"]["high"] >= 1
+    assert any(item["contact_email"] == "support-user@example.test" for item in summary["recent"])

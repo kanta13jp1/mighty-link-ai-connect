@@ -1619,6 +1619,151 @@
             cursor: not-allowed;
         }
 
+        .support-section {
+            padding: 72px 40px 80px;
+            border-top: 1px solid var(--line);
+            background:
+                linear-gradient(135deg, rgba(139, 220, 255, 0.08), transparent 35%),
+                linear-gradient(315deg, rgba(186, 255, 102, 0.06), transparent 42%);
+        }
+
+        .support-shell {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 0.85fr) minmax(340px, 1.15fr);
+            gap: 32px;
+            align-items: start;
+        }
+
+        .support-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .support-copy h2 {
+            font-size: clamp(28px, 5vw, 48px);
+            line-height: 1.05;
+            color: var(--text);
+        }
+
+        .support-copy p {
+            max-width: 520px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .support-sla {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .support-sla-item {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .support-sla-item dt {
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .support-sla-item dd {
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .support-form {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 22px;
+            background: rgba(8, 12, 16, 0.72);
+            box-shadow: 0 18px 46px rgba(0, 0, 0, 0.24);
+        }
+
+        .support-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .support-field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .support-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .support-field label {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .support-field input,
+        .support-field select,
+        .support-field textarea {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.035);
+            color: var(--text);
+            padding: 12px 14px;
+            font: inherit;
+            line-height: 1.45;
+        }
+
+        .support-field select {
+            color-scheme: dark;
+        }
+
+        .support-field textarea {
+            min-height: 132px;
+            resize: vertical;
+        }
+
+        .support-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .support-status {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .support-submit {
+            min-width: 132px;
+            min-height: 44px;
+            border: 1px solid rgba(139, 220, 255, 0.45);
+            border-radius: 8px;
+            background: rgba(139, 220, 255, 0.1);
+            color: var(--blue);
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .support-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         /* タブエリア */
         .tabs-area {
             margin-top: 12px;
@@ -1802,6 +1947,21 @@
             }
             .feedback-status {
                 align-self: flex-start;
+            }
+            .support-section {
+                padding: 56px 20px 64px;
+            }
+            .support-shell,
+            .support-form-grid,
+            .support-sla {
+                grid-template-columns: 1fr;
+            }
+            .support-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+            .support-submit {
+                width: 100%;
             }
         }
         /* ====== Scroll fade-in (Seedance-style section reveal) ====== */
@@ -2359,6 +2519,56 @@
             <div id="knowledge-flow-output" class="knowledge-flow-output">Ready.</div>
         </section>
 
+        <section class="support-section fade-in-on-scroll" id="support" aria-label="Support contact">
+            <div class="support-shell">
+                <div class="support-copy">
+                    <div class="step-kicker">Support Desk</div>
+                    <h2>問い合わせ窓口</h2>
+                    <p>技術不具合、請求、個人情報、診断改善の相談を受け付けます。暫定メール窓口は <a href="mailto:k-umezawa@ml-mightylink.com" style="color:var(--blue); font-weight:800;">k-umezawa@ml-mightylink.com</a> です。</p>
+                    <dl class="support-sla">
+                        <div class="support-sla-item">
+                            <dt>First reply</dt>
+                            <dd>1営業日以内</dd>
+                        </div>
+                        <div class="support-sla-item">
+                            <dt>Urgent</dt>
+                            <dd>当日一次確認</dd>
+                        </div>
+                    </dl>
+                </div>
+                <form class="support-form" id="support-form" onsubmit="submitSupportRequest(event)">
+                    <div class="support-form-grid">
+                        <div class="support-field">
+                            <label for="support-category">種別</label>
+                            <select id="support-category" required>
+                                <option value="general">一般</option>
+                                <option value="technical">技術不具合</option>
+                                <option value="billing">請求</option>
+                                <option value="privacy">個人情報</option>
+                                <option value="feedback">診断改善</option>
+                            </select>
+                        </div>
+                        <div class="support-field">
+                            <label for="support-email">返信先メール</label>
+                            <input id="support-email" type="email" autocomplete="email" maxlength="254" required>
+                        </div>
+                        <div class="support-field full">
+                            <label for="support-subject">件名</label>
+                            <input id="support-subject" type="text" minlength="3" maxlength="160" required>
+                        </div>
+                        <div class="support-field full">
+                            <label for="support-message">内容</label>
+                            <textarea id="support-message" minlength="10" maxlength="3000" required></textarea>
+                        </div>
+                    </div>
+                    <div class="support-actions">
+                        <span class="support-status" id="support-status">未送信</span>
+                        <button type="submit" class="support-submit" id="support-submit">送信</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
         <footer class="site-footer" aria-label="Site footer">
             <div class="footer-inner">
                 <div class="footer-brand">
@@ -2372,6 +2582,7 @@
                     <span>Advancing project intelligence, in service of better teams.</span>
                     <span>Copyright © 2026 Mighty-Link</span>
                     <a href="mailto:careers@ml-mightylink.com" style="color:var(--muted); font-size:12px; margin-top: 8px; display:inline-block;">Contact us : careers@ml-mightylink.com</a>
+                    <a href="#support" style="color:var(--blue); font-size:12px; margin-top: 4px; display:inline-block;">Support : k-umezawa@ml-mightylink.com</a>
                     <a href="#top" style="color:var(--muted); font-size:11px; margin-top: 4px; display:inline-block;">Disclaimer</a>
                 </div>
                 <div class="footer-column">
@@ -2677,6 +2888,52 @@
                     status.textContent = "送信失敗";
                     status.style.color = "var(--rose)";
                 }
+            }
+        }
+
+        function setSupportStatus(text, colorVar) {
+            const status = document.getElementById("support-status");
+            if (!status) return;
+            status.textContent = text;
+            status.style.color = colorVar || "var(--muted)";
+        }
+
+        async function submitSupportRequest(event) {
+            event.preventDefault();
+            const form = document.getElementById("support-form");
+            const submit = document.getElementById("support-submit");
+            const category = document.getElementById("support-category");
+            const email = document.getElementById("support-email");
+            const subject = document.getElementById("support-subject");
+            const message = document.getElementById("support-message");
+            const payload = {
+                category: category ? category.value : "general",
+                contact_email: email ? email.value.trim() : "",
+                subject: subject ? subject.value.trim() : "",
+                message: message ? message.value.trim() : "",
+                source: "support_form",
+                page_url: `${window.location.pathname}${window.location.search}`,
+                session_id: getFeedbackSessionId()
+            };
+
+            if (submit) submit.disabled = true;
+            setSupportStatus("送信中", "var(--yellow)");
+
+            try {
+                const response = await fetch("/api/support/request", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    throw new Error("Support endpoint unavailable");
+                }
+                if (form) form.reset();
+                setSupportStatus("送信済み", "var(--green)");
+            } catch (error) {
+                setSupportStatus("送信失敗", "var(--rose)");
+            } finally {
+                if (submit) submit.disabled = false;
             }
         }
 

@@ -91,5 +91,15 @@ def test_ui_flow(fastapi_server):
         assert matched_badges.count() > 0
         assert missing_badges.count() > 0
         print(f"[+] Verified matched ({matched_badges.count()}) and missing ({missing_badges.count()}) skills badges are rendered successfully.")
+
+        # 9. Verify support form can submit through the FastAPI endpoint
+        page.locator("#support").scroll_into_view_if_needed()
+        page.locator("#support-category").select_option("technical")
+        page.locator("#support-email").fill("ui-support@example.test")
+        page.locator("#support-subject").fill("UI smoke support request")
+        page.locator("#support-message").fill("The support contact form is visible and accepts a smoke-test request.")
+        page.locator("#support-submit").click()
+        page.wait_for_function("document.getElementById('support-status').textContent === '送信済み'")
+        assert page.locator("#support-status").text_content() == "送信済み"
         
         browser.close()

@@ -248,6 +248,7 @@ RATE_LIMIT_EXPENSIVE_API_PATHS = {
     "/api/parse",
     "/api/match",
     "/api/feedback",
+    "/api/support/request",
     "/api/seedance/video-demo",
     "/api/sync",
 }
@@ -616,6 +617,25 @@ def init_db():
             """)
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_feedback_events_match_result_id ON feedback_events(match_result_id);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_feedback_events_created_at ON feedback_events(created_at);")
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS support_requests (
+                id SERIAL PRIMARY KEY,
+                category VARCHAR(32) NOT NULL CHECK (category IN ('general', 'technical', 'billing', 'privacy', 'feedback')),
+                priority VARCHAR(16) NOT NULL DEFAULT 'normal' CHECK (priority IN ('normal', 'high', 'urgent')),
+                contact_email VARCHAR(254) NOT NULL,
+                subject VARCHAR(160) NOT NULL,
+                message TEXT NOT NULL,
+                status VARCHAR(32) NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'triaged', 'in_progress', 'escalated', 'closed')),
+                source VARCHAR(80) NOT NULL DEFAULT 'support_form',
+                page_url TEXT,
+                session_id VARCHAR(120),
+                metadata JSONB DEFAULT '{}'::jsonb,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_status_priority ON support_requests(status, priority);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_created_at ON support_requests(created_at);")
             # Supabase exposes public-schema tables through the anon REST API.
             # Enabling RLS with no policies denies anon access entirely, while
             # the app (table owner via the postgres role) bypasses RLS.
@@ -623,6 +643,7 @@ def init_db():
             cursor.execute("ALTER TABLE jobs ENABLE ROW LEVEL SECURITY;")
             cursor.execute("ALTER TABLE match_results ENABLE ROW LEVEL SECURITY;")
             cursor.execute("ALTER TABLE feedback_events ENABLE ROW LEVEL SECURITY;")
+            cursor.execute("ALTER TABLE support_requests ENABLE ROW LEVEL SECURITY;")
         else:
             # SQLite DDL
             cursor.execute("""
@@ -680,6 +701,25 @@ def init_db():
             """)
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_feedback_events_match_result_id ON feedback_events(match_result_id);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_feedback_events_created_at ON feedback_events(created_at);")
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS support_requests (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                category VARCHAR(32) NOT NULL CHECK (category IN ('general', 'technical', 'billing', 'privacy', 'feedback')),
+                priority VARCHAR(16) NOT NULL DEFAULT 'normal' CHECK (priority IN ('normal', 'high', 'urgent')),
+                contact_email VARCHAR(254) NOT NULL,
+                subject VARCHAR(160) NOT NULL,
+                message TEXT NOT NULL,
+                status VARCHAR(32) NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'triaged', 'in_progress', 'escalated', 'closed')),
+                source VARCHAR(80) NOT NULL DEFAULT 'support_form',
+                page_url TEXT,
+                session_id VARCHAR(120),
+                metadata TEXT DEFAULT '{}',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_status_priority ON support_requests(status, priority);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_created_at ON support_requests(created_at);")
         conn.commit()
         print(f"[+] Database tables initialized successfully ({db_type}).")
     except Exception as e:
@@ -783,6 +823,12 @@ def db_insert_match_result(engineer_id: int, job_id: int, fit_ratio: float, scor
 
 VALID_FEEDBACK_RATINGS = {"helpful", "not_helpful"}
 MAX_FEEDBACK_COMMENT_LENGTH = 1000
+VALID_SUPPORT_CATEGORIES = {"general", "technical", "billing", "privacy", "feedback"}
+VALID_SUPPORT_PRIORITIES = {"normal", "high", "urgent"}
+SUPPORT_STATUSES = {"new", "triaged", "in_progress", "escalated", "closed"}
+MAX_SUPPORT_SUBJECT_LENGTH = 160
+MAX_SUPPORT_MESSAGE_LENGTH = 3000
+SUPPORT_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
 def clean_feedback_text(value: Optional[str], limit: int) -> str:
@@ -943,6 +989,174 @@ def db_get_feedback_summary(limit: int = 20) -> dict:
             "total": 0,
             "rating_counts": {"helpful": 0, "not_helpful": 0},
             "nps": {"average": None, "count": 0},
+            "recent": [],
+            "error": str(e),
+        }
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def db_insert_support_request(
+    category: str,
+    priority: str,
+    contact_email: str,
+    subject: str,
+    message: str,
+    source: str,
+    page_url: Optional[str],
+    session_id: Optional[str],
+    metadata: Optional[dict] = None,
+) -> int:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    clean_email = clean_feedback_text(contact_email, 254).lower()
+    clean_subject = clean_feedback_text(subject, MAX_SUPPORT_SUBJECT_LENGTH)
+    clean_message = clean_feedback_text(message, MAX_SUPPORT_MESSAGE_LENGTH)
+    clean_source = clean_feedback_text(source, 80) or "support_form"
+    clean_page_url = clean_feedback_text(page_url, 500)
+    clean_session_id = clean_feedback_text(session_id, 120)
+    metadata_json = json.dumps(metadata or {}, ensure_ascii=False)
+    try:
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                INSERT INTO support_requests
+                    (category, priority, contact_email, subject, message, source, page_url, session_id, metadata)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb)
+                RETURNING id;
+                """,
+                (
+                    category,
+                    priority,
+                    clean_email,
+                    clean_subject,
+                    clean_message,
+                    clean_source,
+                    clean_page_url,
+                    clean_session_id,
+                    metadata_json,
+                ),
+            )
+            inserted_id = cursor.fetchone()[0]
+        else:
+            cursor.execute(
+                """
+                INSERT INTO support_requests
+                    (category, priority, contact_email, subject, message, source, page_url, session_id, metadata)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+                """,
+                (
+                    category,
+                    priority,
+                    clean_email,
+                    clean_subject,
+                    clean_message,
+                    clean_source,
+                    clean_page_url,
+                    clean_session_id,
+                    metadata_json,
+                ),
+            )
+            inserted_id = cursor.lastrowid
+        conn.commit()
+        return inserted_id
+    except Exception as e:
+        print(f"[-] Database insert support request failed: {e}")
+        return 0
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def db_get_support_summary(limit: int = 20) -> dict:
+    limit = max(1, min(limit, 100))
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT COUNT(*) FROM support_requests;")
+        total = int(_scalar(cursor.fetchone()) or 0)
+
+        cursor.execute("SELECT status, COUNT(*) FROM support_requests GROUP BY status;")
+        status_counts = {status_name: 0 for status_name in sorted(SUPPORT_STATUSES)}
+        for row in cursor.fetchall():
+            status_counts[str(row[0])] = int(row[1])
+
+        cursor.execute("SELECT priority, COUNT(*) FROM support_requests GROUP BY priority;")
+        priority_counts = {priority_name: 0 for priority_name in sorted(VALID_SUPPORT_PRIORITIES)}
+        for row in cursor.fetchall():
+            priority_counts[str(row[0])] = int(row[1])
+
+        cursor.execute("SELECT category, COUNT(*) FROM support_requests GROUP BY category;")
+        category_counts = {category_name: 0 for category_name in sorted(VALID_SUPPORT_CATEGORIES)}
+        for row in cursor.fetchall():
+            category_counts[str(row[0])] = int(row[1])
+
+        columns = [
+            "id",
+            "category",
+            "priority",
+            "contact_email",
+            "subject",
+            "message",
+            "status",
+            "source",
+            "page_url",
+            "session_id",
+            "created_at",
+        ]
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                SELECT id, category, priority, contact_email, subject, message, status, source, page_url, session_id, created_at
+                FROM support_requests
+                ORDER BY id DESC
+                LIMIT %s;
+                """,
+                (limit,),
+            )
+        else:
+            cursor.execute(
+                """
+                SELECT id, category, priority, contact_email, subject, message, status, source, page_url, session_id, created_at
+                FROM support_requests
+                ORDER BY id DESC
+                LIMIT ?;
+                """,
+                (limit,),
+            )
+
+        recent = []
+        for row in cursor.fetchall():
+            row_dict = dict(row) if isinstance(row, sqlite3.Row) else dict(zip(columns, row))
+            recent.append({
+                "id": row_dict.get("id"),
+                "category": row_dict.get("category"),
+                "priority": row_dict.get("priority"),
+                "contact_email": row_dict.get("contact_email"),
+                "subject": row_dict.get("subject"),
+                "message_excerpt": clean_feedback_text(row_dict.get("message"), 180),
+                "status": row_dict.get("status"),
+                "source": row_dict.get("source"),
+                "page_url": row_dict.get("page_url"),
+                "session_id": row_dict.get("session_id"),
+                "created_at": str(row_dict.get("created_at") or ""),
+            })
+
+        return {
+            "total": total,
+            "status_counts": status_counts,
+            "priority_counts": priority_counts,
+            "category_counts": category_counts,
+            "recent": recent,
+        }
+    except Exception as e:
+        print(f"[-] Database support summary failed: {e}")
+        return {
+            "total": 0,
+            "status_counts": {status_name: 0 for status_name in sorted(SUPPORT_STATUSES)},
+            "priority_counts": {priority_name: 0 for priority_name in sorted(VALID_SUPPORT_PRIORITIES)},
+            "category_counts": {category_name: 0 for category_name in sorted(VALID_SUPPORT_CATEGORIES)},
             "recent": [],
             "error": str(e),
         }
@@ -2867,6 +3081,17 @@ class FeedbackRequest(BaseModel):
     session_id: Optional[str] = ""
 
 
+class SupportRequest(BaseModel):
+    category: str = "general"
+    priority: Optional[str] = None
+    contact_email: str
+    subject: str
+    message: str
+    source: str = "support_form"
+    page_url: Optional[str] = ""
+    session_id: Optional[str] = ""
+
+
 # 2. API: 4-Dimension AI Fit Evaluation
 @app.post("/api/match")
 async def evaluate_matching(req: EvaluationRequest):
@@ -3058,6 +3283,57 @@ async def submit_feedback(req: FeedbackRequest):
 async def get_feedback_summary(limit: int = 20, username: str = Depends(verify_credentials)):
     """Authenticated feedback summary for operations and quality review."""
     return {"status": "success", **db_get_feedback_summary(limit=limit)}
+
+
+@app.post("/api/support/request")
+async def submit_support_request(req: SupportRequest):
+    """Store user support inquiries for triage and escalation tracking."""
+    category = clean_feedback_text(req.category, 32).lower()
+    if category not in VALID_SUPPORT_CATEGORIES:
+        raise HTTPException(status_code=400, detail="category must be general, technical, billing, privacy, or feedback")
+
+    priority = clean_feedback_text(req.priority, 16).lower()
+    if not priority:
+        priority = "high" if category in {"technical", "privacy"} else "normal"
+    if priority not in VALID_SUPPORT_PRIORITIES:
+        raise HTTPException(status_code=400, detail="priority must be normal, high, or urgent")
+
+    contact_email = clean_feedback_text(req.contact_email, 254).lower()
+    if not SUPPORT_EMAIL_RE.match(contact_email):
+        raise HTTPException(status_code=400, detail="valid contact_email is required")
+
+    subject = clean_feedback_text(req.subject, MAX_SUPPORT_SUBJECT_LENGTH)
+    if len(subject) < 3:
+        raise HTTPException(status_code=400, detail="subject must be at least 3 characters")
+    if req.subject and len(req.subject) > MAX_SUPPORT_SUBJECT_LENGTH:
+        raise HTTPException(status_code=400, detail=f"subject must be {MAX_SUPPORT_SUBJECT_LENGTH} characters or fewer")
+
+    message = clean_feedback_text(req.message, MAX_SUPPORT_MESSAGE_LENGTH)
+    if len(message) < 10:
+        raise HTTPException(status_code=400, detail="message must be at least 10 characters")
+    if req.message and len(req.message) > MAX_SUPPORT_MESSAGE_LENGTH:
+        raise HTTPException(status_code=400, detail=f"message must be {MAX_SUPPORT_MESSAGE_LENGTH} characters or fewer")
+
+    support_id = db_insert_support_request(
+        category=category,
+        priority=priority,
+        contact_email=contact_email,
+        subject=subject,
+        message=message,
+        source=req.source,
+        page_url=req.page_url,
+        session_id=req.session_id,
+        metadata={"api_version": "2026-06-16", "wbs_task": "T790"},
+    )
+    if not support_id:
+        raise HTTPException(status_code=500, detail="Failed to store support request")
+    return {"status": "success", "support_request_id": support_id, "priority": priority}
+
+
+@app.get("/api/support/summary")
+async def get_support_summary(limit: int = 20, username: str = Depends(verify_credentials)):
+    """Authenticated support queue summary for operations review."""
+    return {"status": "success", **db_get_support_summary(limit=limit)}
 
 
 class SyncRequest(BaseModel):

@@ -1,6 +1,6 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-06-16T05:04:50+09:00
+Generated: 2026-06-16T05:55:47+09:00
 Status: `skipped`
 
 NotebookLM CLI is not ready yet, so this file is a placeholder.
@@ -82,6 +82,7 @@ During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
 - `docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md`: https://docs.google.com/document/d/135y0TSQWMvp-nBsUrIRUzDlRLWzlvRFF82D-56IQkHg/edit?usp=drivesdk
 - `docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md`: https://docs.google.com/document/d/1A0g0ka5kkLZzcBVTX802y8uzKLCJjz2hJRXXXwsXm30/edit?usp=drivesdk
 - `docs/SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1Dd5nercLOqw_GlWXEmbBXW62u8Q-YgRoulbPIgEtZtM/edit?usp=drivesdk
+- `docs/SUPPORT_CONTACT_AND_ESCALATION_RUNBOOK.md`: https://docs.google.com/document/d/1aiVwihpYd92tWZQb1K19OyM2FHND6TWwq9_y43eAlqQ/edit?usp=drivesdk
 - `docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md`: https://docs.google.com/document/d/1BMpsn974Ai8K3BY7GAC-XQBgY1zZlslE98ZgA9JB1ik/edit?usp=drivesdk
 - `docs/TERMS_OF_SERVICE.md`: https://docs.google.com/document/d/1bGSpEdgRyw06UaUQfwGsjLfS1qDimmSAsrN-yQvg2v0/edit?usp=drivesdk
 - `docs/TOKUSHOHO_NOTATION.md`: https://docs.google.com/document/d/1LUwRooXcdyrGB4AsuQo70Auz8DoQ-E5eyPV5cYUPWLk/edit?usp=drivesdk

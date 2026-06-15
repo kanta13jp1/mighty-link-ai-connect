@@ -1,9 +1,9 @@
 # 📘 Mighty Skill-Bridge: ユーザー操作ガイド・FAQ・管理者トラブルシューティング手順書
 
 > **対象読者**: 一般ユーザー（人材担当・営業担当）、システム管理者  
-> **最終更新**: 2026-06-10  
-> **バージョン**: v1.0.0  
-> **関連タスク**: T744
+> **最終更新**: 2026-06-16
+> **バージョン**: v1.1.0
+> **関連タスク**: T744 / T790
 
 ---
 
@@ -15,6 +15,7 @@
    - [1.3 AIフィット診断の実行手順](#13-aiフィット診断の実行手順)
    - [1.4 診断結果の見方](#14-診断結果の見方)
    - [1.5 案件候補ストック管理](#15-案件候補ストック管理)
+   - [1.6 問い合わせ窓口](#16-問い合わせ窓口)
 2. [よくある質問（FAQ）](#2-よくある質問faq)
 3. [管理者向けトラブルシューティング手順書](#3-管理者向けトラブルシューティング手順書)
    - [3.1 システム構成の概要](#31-システム構成の概要)
@@ -128,6 +129,22 @@ AIが自動生成した面談質問と模範解答が表示されます。
 
 ---
 
+### 1.6 問い合わせ窓口
+
+問い合わせは、アプリ下部の **問い合わせ窓口** フォームまたは暫定メール窓口 `k-umezawa@ml-mightylink.com` で受け付けます。
+
+| 種別 | 主な内容 | 初回返信目安 |
+|:---|:---|:---|
+| 一般 | 操作方法、利用相談、軽微な確認 | 1営業日以内 |
+| 技術不具合 | 診断エラー、画面不具合、API失敗 | 当日〜1営業日以内 |
+| 請求 | 有償化後のプラン・請求・領収書 | 1営業日以内 |
+| 個人情報 | 経歴書・個人情報の削除/確認 | 当日一次確認 |
+| 診断改善 | 診断結果への改善要望、NPSコメント補足 | 2営業日以内 |
+
+フォーム送信内容は `support_requests` テーブルに保存され、管理者のみが `GET /api/support/summary` で確認します。GitHub Pages の静的デモ環境では API が存在しないため、送信できない場合はメール窓口を使ってください。
+
+---
+
 ## 2. よくある質問（FAQ）
 
 ### Q1. アップロードできるファイル形式は？
@@ -183,6 +200,12 @@ AIが自動生成した面談質問と模範解答が表示されます。
 
 ---
 
+### Q9. 問い合わせへの回答状況はどこで確認されますか？
+
+**A**: 管理者は Basic Auth 付きの `GET /api/support/summary` で新規件数、優先度、カテゴリ、直近問い合わせの抜粋を確認します。返信は暫定メール窓口 `k-umezawa@ml-mightylink.com` から行い、仕様変更・不具合・法務確認が必要なものは `data/issues_tracker.tsv` と GitHub Issues へ起票します。
+
+---
+
 ## 3. 管理者向けトラブルシューティング手順書
 
 ### 3.1 システム構成の概要
@@ -208,6 +231,7 @@ AIが自動生成した面談質問と模範解答が表示されます。
 | GitHub Actions (CI/CD) | `https://github.com/kanta13jp1/mighty-link-ai-connect/actions` |
 | 公開デモ URL | `https://kanta13jp1.github.io/mighty-link-ai-connect/` |
 | 管理者ダッシュボード | `http://localhost:8000/admin` (ローカル) |
+| 問い合わせサマリAPI | `/api/support/summary` (Basic Auth必須) |
 
 ---
 
@@ -318,6 +342,25 @@ python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB
 
 ---
 
+#### 🟠 P2/P3: 問い合わせ対応遅延
+
+**症状**: `support_requests` の `new` が未確認のまま残る、技術不具合/個人情報カテゴリの一次確認が遅れる
+
+**確認手順**:
+```powershell
+# Basic Auth付きで問い合わせキューを確認
+$pair = "$env:BASIC_AUTH_USERNAME`:$env:BASIC_AUTH_PASSWORD"
+$auth = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($pair))
+Invoke-WebRequest -Uri "http://localhost:8000/api/support/summary" -Headers @{Authorization = "Basic $auth"} -UseBasicParsing
+```
+
+**対処**:
+1. `GET /api/support/summary` の `priority_counts.high/urgent` と `category_counts.technical/privacy` を確認
+2. 技術不具合・個人情報・請求は、同日中に一次返信し `data/issues_tracker.tsv` へ起票
+3. サービス停止・個人情報漏えい疑い・課金誤請求は P1/P2 として [INCIDENT_POSTMORTEM_RUNBOOK.md](INCIDENT_POSTMORTEM_RUNBOOK.md) に接続
+
+---
+
 #### 🟡 P3: CI/CD デプロイ失敗（GitHub Actions）
 
 **症状**: push後に本番反映されない
@@ -348,6 +391,9 @@ python scripts/monitor_managed_agents_cost.py
 
 # 監査ログのローテーション確認
 Get-Item data\audit\*.jsonl | Sort-Object LastWriteTime -Descending | Select-Object -First 3 Name, Length
+
+# 問い合わせキュー確認
+# GET /api/support/summary を管理者認証付きで確認し、未対応があれば課題管理表へ反映
 ```
 
 #### 週次（毎週月曜日）
@@ -392,8 +438,8 @@ python scripts/upload_notebooklm_docs_to_drive.py
 | 優先度 | 条件 | 初動対応時間 | エスカレーション先 |
 |:---:|:---|:---:|:---|
 | **P1** | サービス全体停止・認証全断 | 30分以内 | 開発担当 → 即座にSlack通知 |
-| **P2** | AI診断不可・DB接続失敗 | 2時間以内 | 開発担当へ報告 |
-| **P3** | Sheets同期失敗・デプロイ遅延 | 翌営業日 | 定例レビューで報告 |
+| **P2** | AI診断不可・DB接続失敗・個人情報漏えい疑い・課金誤請求 | 2時間以内 | 開発担当へ報告、必要に応じてCEOへ共有 |
+| **P3** | Sheets同期失敗・デプロイ遅延・通常問い合わせ未返信 | 翌営業日 | 定例レビューで報告 |
 | **P4** | ドキュメント誤記・UI軽微バグ | 1週間以内 | GitHub Issues へ起票 |
 
 #### 連絡先
@@ -415,5 +461,6 @@ python scripts/upload_notebooklm_docs_to_drive.py
 | [SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md](SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md) | DB物理設計 |
 | [PILOT_CONSENT_TEMPLATE.md](PILOT_CONSENT_TEMPLATE.md) | 個人情報同意書テンプレート |
 | [PILOT_REPORT_2026-06-16.md](PILOT_REPORT_2026-06-16.md) | パイロット結果サマリ |
+| [SUPPORT_CONTACT_AND_ESCALATION_RUNBOOK.md](SUPPORT_CONTACT_AND_ESCALATION_RUNBOOK.md) | 問い合わせ窓口・SLA・エスカレーション運用 |
 | [SETUP_GUIDE.md](SETUP_GUIDE.md) | 環境構築手順書 |
 | [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) | 3ツール開発ワークフロー |
