@@ -1,0 +1,341 @@
+{
+  "task_id": "T746",
+  "generated_at": "2026-06-16T23:38:12Z",
+  "criteria_source": "data/release_go_no_go_criteria.tsv",
+  "wbs_source": "data/WBS.tsv",
+  "overall_recommendation": "NO_GO",
+  "summary": {
+    "total": 15,
+    "counts": {
+      "PASS": 8,
+      "HUMAN_GATE": 2,
+      "BLOCKED": 5
+    },
+    "evidence_warnings": 0
+  },
+  "scopes": {
+    "controlled_demo": {
+      "recommendation": "GO",
+      "worst_state": "PASS",
+      "counts": {
+        "PASS": 5
+      },
+      "total": 5
+    },
+    "public_paid_launch": {
+      "recommendation": "NO_GO",
+      "worst_state": "BLOCKED",
+      "counts": {
+        "PASS": 3,
+        "HUMAN_GATE": 2,
+        "BLOCKED": 5
+      },
+      "total": 10
+    }
+  },
+  "criteria": [
+    {
+      "criterion_id": "DEMO-01",
+      "scope": "controlled_demo",
+      "category": "公開デモ",
+      "criterion": "CEO共有済みGitHub Pages公開デモが主要UIマーカーを満たす",
+      "evidence_source": "scripts/verify_public_demo.py; https://kanta13jp1.github.io/mighty-link-ai-connect/",
+      "required_state": "PASS",
+      "current_state": "PASS",
+      "owner": "Codex",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T306;T631;T743",
+      "related_issue": "",
+      "last_checked": "2026-06-17",
+      "notes": "公開デモguardをpush前後で必ず実行する。",
+      "wbs_statuses": {
+        "T306": "完了",
+        "T631": "完了",
+        "T743": "完了"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "DEMO-02",
+      "scope": "controlled_demo",
+      "category": "本番URL",
+      "criterion": "販売URL mightylink-app.com のHTTPS/TLSが有効である",
+      "evidence_source": "docs/PRODUCTION_DOMAIN_SETUP_GUIDE.md; docs/TOKUSHOHO_NOTATION.md",
+      "required_state": "PASS",
+      "current_state": "PASS",
+      "owner": "Codex",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T740_3;T743",
+      "related_issue": "R66",
+      "last_checked": "2026-06-17",
+      "notes": "Google Trust Services証明書発行済み。販売URLとして確定済み。",
+      "wbs_statuses": {
+        "T740_3": "完了",
+        "T743": "完了"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "DEMO-03",
+      "scope": "controlled_demo",
+      "category": "運用保守",
+      "criterion": "問い合わせ窓口と一次回答SLAが整備済み",
+      "evidence_source": "docs/SUPPORT_CONTACT_AND_ESCALATION_RUNBOOK.md; src/app.py",
+      "required_state": "PASS",
+      "current_state": "PASS",
+      "owner": "Codex",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T790",
+      "related_issue": "R71",
+      "last_checked": "2026-06-17",
+      "notes": "暫定窓口は k-umezawa@ml-mightylink.com。会社共有窓口は将来移行。",
+      "wbs_statuses": {
+        "T790": "完了"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "DEMO-04",
+      "scope": "controlled_demo",
+      "category": "障害対応",
+      "criterion": "DR・ポストモーテム・ロールバック手順が参照可能",
+      "evidence_source": "docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md; docs/INCIDENT_POSTMORTEM_RUNBOOK.md; docs/PRODUCTION_ROLLBACK_RUNBOOK.md",
+      "required_state": "PASS",
+      "current_state": "PASS",
+      "owner": "Codex + Claude",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T749;T810;T812",
+      "related_issue": "R56",
+      "last_checked": "2026-06-17",
+      "notes": "P1/P2時の連絡・復旧・記録テンプレートは整備済み。",
+      "wbs_statuses": {
+        "T749": "完了",
+        "T810": "完了",
+        "T812": "完了"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "DEMO-05",
+      "scope": "controlled_demo",
+      "category": "監視",
+      "criterion": "公開URL/カスタムドメイン/クォータ・エラー監視の運用手順がある",
+      "evidence_source": "docs/UPTIME_MONITORING_AND_ALERT_RUNBOOK.md; docs/FIREBASE_SUPABASE_QUOTA_ERROR_ALERT_RUNBOOK.md; exports/quota_error_alert_review.md",
+      "required_state": "PASS",
+      "current_state": "PASS",
+      "owner": "Codex",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T743;T761_1",
+      "related_issue": "R69",
+      "last_checked": "2026-06-17",
+      "notes": "Slack webhook等のsecretは環境変数・GitHub secretsのみで扱う。",
+      "wbs_statuses": {
+        "T743": "完了",
+        "T761_1": "完了"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-01",
+      "scope": "public_paid_launch",
+      "category": "セキュリティ",
+      "criterion": "四半期セキュリティ監査と監査検出事項修正が完了している",
+      "evidence_source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md; requirements.txt",
+      "required_state": "PASS",
+      "current_state": "PASS",
+      "owner": "Claude + Codex",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T789;T802",
+      "related_issue": "R49;R50;R52",
+      "last_checked": "2026-06-17",
+      "notes": "Bandit High/Medium 0、pip-audit 0をT802で確認済み。",
+      "wbs_statuses": {
+        "T789": "完了",
+        "T802": "完了"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-02",
+      "scope": "public_paid_launch",
+      "category": "バックアップ",
+      "criterion": "本番DBバックアップ・復元手順が整備され、ロールバック判定に含まれている",
+      "evidence_source": "docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md; docs/PRODUCTION_ROLLBACK_RUNBOOK.md",
+      "required_state": "PASS",
+      "current_state": "PASS",
+      "owner": "Codex",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T741;T812",
+      "related_issue": "",
+      "last_checked": "2026-06-17",
+      "notes": "破壊的migration前はbackup/PITR時刻と復元担当を記録する。",
+      "wbs_statuses": {
+        "T741": "完了",
+        "T812": "完了"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-03",
+      "scope": "public_paid_launch",
+      "category": "SLA/KPI",
+      "criterion": "SLA/KPI定義、フィードバック収集、品質レポート接続方針がある",
+      "evidence_source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md",
+      "required_state": "PASS",
+      "current_state": "PASS",
+      "owner": "Codex",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T762;T763;T790",
+      "related_issue": "R70;R71",
+      "last_checked": "2026-06-17",
+      "notes": "NPS/役立ち度は月次品質レポートへ接続予定。",
+      "wbs_statuses": {
+        "T762": "完了",
+        "T763": "完了",
+        "T790": "完了"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-04",
+      "scope": "public_paid_launch",
+      "category": "コンプライアンス",
+      "criterion": "利用規約・プライバシーポリシーの法務確認と本文確定が完了している",
+      "evidence_source": "docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md",
+      "required_state": "PASS",
+      "current_state": "HUMAN_GATE",
+      "owner": "人間 + Claude",
+      "decision_authority": "CEO / 法務",
+      "related_wbs": "T798",
+      "related_issue": "R36;R48;R51",
+      "last_checked": "2026-06-17",
+      "notes": "法務確認完了まで一般公開・有償化はNo-Go。",
+      "wbs_statuses": {
+        "T798": "未着手"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-05",
+      "scope": "public_paid_launch",
+      "category": "コンプライアンス",
+      "criterion": "利用規約・プライバシーポリシー同意チェックボックスが本番UIに実装済み",
+      "evidence_source": "index.html; docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Antigravity + Gemini",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T745",
+      "related_issue": "",
+      "last_checked": "2026-06-17",
+      "notes": "ユーザー登録/診断前に同意取得できるUIが必要。",
+      "wbs_statuses": {
+        "T745": "未着手"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-06",
+      "scope": "public_paid_launch",
+      "category": "フロントエンド",
+      "criterion": "ユーザーオンボーディング/アカウント登録/アクティベーションフローが実装済み",
+      "evidence_source": "docs/USER_GUIDE_AND_FAQ.md; index.html; src/app.py",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Antigravity + Gemini",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T752",
+      "related_issue": "",
+      "last_checked": "2026-06-17",
+      "notes": "招待制/閉域運用から一般利用へ移る前の必須導線。",
+      "wbs_statuses": {
+        "T752": "未着手"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-07",
+      "scope": "public_paid_launch",
+      "category": "コンプライアンス",
+      "criterion": "法定4ページとフッター常時リンクが本番UIに統合済み",
+      "evidence_source": "docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md; docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Antigravity + Gemini",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T777",
+      "related_issue": "",
+      "last_checked": "2026-06-17",
+      "notes": "Stripe審査と販売URL案内の前提。",
+      "wbs_statuses": {
+        "T777": "未着手"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-08",
+      "scope": "public_paid_launch",
+      "category": "収益化",
+      "criterion": "料金プラン・無料枠・課金単位がCEO承認済み",
+      "evidence_source": "docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md",
+      "required_state": "PASS",
+      "current_state": "HUMAN_GATE",
+      "owner": "人間",
+      "decision_authority": "CEO",
+      "related_wbs": "T804",
+      "related_issue": "R51",
+      "last_checked": "2026-06-17",
+      "notes": "価格未確定のまま有償プランは開始しない。",
+      "wbs_statuses": {
+        "T804": "未着手"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-09",
+      "scope": "public_paid_launch",
+      "category": "収益化",
+      "criterion": "Stripe課金設計・Billing Meters実装・Webhook検証が完了している",
+      "evidence_source": "docs/BILLING_AND_REFUND_POLICY.md; src/app.py",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Codex",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T776;T791",
+      "related_issue": "",
+      "last_checked": "2026-06-17",
+      "notes": "設計T776、実装T791、解約導線T807と一体で判定する。",
+      "wbs_statuses": {
+        "T776": "未着手",
+        "T791": "未着手"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-10",
+      "scope": "public_paid_launch",
+      "category": "品質管理",
+      "criterion": "同時100ユーザー想定の負荷テストとスケーリング方針が完了している",
+      "evidence_source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Codex",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T770",
+      "related_issue": "",
+      "last_checked": "2026-06-17",
+      "notes": "一般公開前にAPI/DB/Functionsの負荷余力を確認する。",
+      "wbs_statuses": {
+        "T770": "未着手"
+      },
+      "missing_evidence": []
+    }
+  ],
+  "evidence_warnings": [],
+  "approval_process": [
+    "Codex/Antigravity/Claude各レーンが担当ゲートの証跡をdocs・exports・Issueへ残す。",
+    "T746の判定表をSheetsのリリース判定タブへ同期し、未完了ゲートをCEO/法務/開発責任者へ割り当てる。",
+    "public_paid_launch は BLOCKED が0件、HUMAN_GATE がCEO/法務承認済みになるまでNo-Go。",
+    "Go判定後も rollback担当者、known-good commit、Firebase release、Cloud Run revision、Supabase backup/PITR時刻を記録してから本番反映する。"
+  ]
+}

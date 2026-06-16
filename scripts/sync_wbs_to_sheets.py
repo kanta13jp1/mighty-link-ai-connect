@@ -61,6 +61,7 @@ TEST_TSV_FILE = os.path.join(DATA_DIR, "test_results.tsv")
 SECURITY_TSV_FILE = os.path.join(DATA_DIR, "security_log.tsv")
 DEPLOY_TSV_FILE = os.path.join(DATA_DIR, "deploy_log.tsv")
 PILOT_TSV_FILE = os.path.join(DATA_DIR, "pilot_summary.tsv")
+RELEASE_GNG_TSV_FILE = os.path.join(DATA_DIR, "release_go_no_go_criteria.tsv")
 USER_EMAIL = "k-umezawa@ml-mightylink.com"
 WBS_SHEET_NAME = "Mighty-Link WBS"
 SUMMARY_SHEET_NAME = "WBS Summary"
@@ -71,6 +72,7 @@ TEST_SHEET_NAME = "テスト結果"
 SECURITY_SHEET_NAME = "セキュリティ"
 DEPLOY_SHEET_NAME = "デプロイ結果"
 PILOT_SHEET_NAME = "パイロット集計"
+RELEASE_GNG_SHEET_NAME = "リリース判定"
 DATA_START_ROW = 8
 
 # Mighty-Link Color Palette (Normalized to 0.0 - 1.0 for Sheets API)
@@ -1078,6 +1080,9 @@ def apply_tracker_styles(sh, worksheet, num_rows, num_cols, tracker_type):
     elif tracker_type == "pilot":
         col_widths = [90, 120, 260, 100, 100, 90, 145]
         date_cols = []
+    elif tracker_type == "release_gng":
+        col_widths = [105, 130, 130, 360, 260, 115, 125, 135, 155, 150, 120, 110, 340]
+        date_cols = [(11, 12)]
     else:
         col_widths = [120] * num_cols
         date_cols = []
@@ -1136,6 +1141,14 @@ def apply_tracker_styles(sh, worksheet, num_rows, num_cols, tracker_type):
             add_text_conditional(sheet_id, data_start, num_rows, 5, "完了", COLORS["status_done"]),
             add_text_conditional(sheet_id, data_start, num_rows, 5, "実行中", COLORS["status_working"]),
             add_text_conditional(sheet_id, data_start, num_rows, 5, "未着手", COLORS["status_todo"]),
+        ])
+    elif tracker_type == "release_gng":
+        requests.extend([
+            add_text_conditional(sheet_id, data_start, num_rows, 6, "PASS", COLORS["status_done"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 6, "WARNING", COLORS["status_working"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 6, "HUMAN_GATE", COLORS["warning_bg"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 6, "BLOCKED", COLORS["status_alert"]),
+            add_text_conditional(sheet_id, data_start, num_rows, 5, "PASS", COLORS["status_done"]),
         ])
     if requests:
         sh.batch_update({"requests": requests})
@@ -1271,6 +1284,7 @@ def main():
     security_source_rows = load_tracker_data(SECURITY_TSV_FILE)
     deploy_source_rows = load_tracker_data(DEPLOY_TSV_FILE)
     pilot_source_rows = load_tracker_data(PILOT_TSV_FILE)
+    release_gng_source_rows = load_tracker_data(RELEASE_GNG_TSV_FILE)
     issue_values = build_tracker_sheet(
         "Mighty-Link 課題管理表",
         "6/2社長プレゼン準備と開発運用で発生した課題・ブロッカーを管理",
@@ -1301,6 +1315,11 @@ def main():
         "社内パイロットのKPI、実績、および法務・コンプライアンス管理状況をダッシュボード化",
         pilot_source_rows,
     )
+    release_gng_values = build_tracker_sheet(
+        "Mighty-Link リリース判定",
+        "T746 Go/No-Go 判定基準、証跡、承認者、および未完了ゲートを管理",
+        release_gng_source_rows,
+    )
 
     wbs_rows = max(len(enhanced_values) + 20, 120)
     wbs_cols = len(ENHANCED_HEADERS)
@@ -1312,6 +1331,7 @@ def main():
     qa_sheet = None
     test_sheet = None
     security_sheet = None
+    release_gng_sheet = None
     if issue_values:
         issue_sheet = ensure_worksheet(
             sh,
@@ -1356,6 +1376,13 @@ def main():
             rows=max(len(pilot_values) + 20, 60),
             cols=len(pilot_values[0]),
         )
+    if release_gng_values:
+        release_gng_sheet = ensure_worksheet(
+            sh,
+            RELEASE_GNG_SHEET_NAME,
+            rows=max(len(release_gng_values) + 20, 80),
+            cols=len(release_gng_values[0]),
+        )
 
     # Remove default Sheet1 if present to keep the workbook clean.
     try:
@@ -1373,6 +1400,8 @@ def main():
             protected_sheet_ids.append(deploy_sheet.id)
         if pilot_sheet:
             protected_sheet_ids.append(pilot_sheet.id)
+        if release_gng_sheet:
+            protected_sheet_ids.append(release_gng_sheet.id)
         if default_sheet.id not in protected_sheet_ids:
             sh.del_worksheet(default_sheet)
     except Exception:
@@ -1395,6 +1424,8 @@ def main():
         deploy_sheet.update(values=deploy_values, range_name="A1", value_input_option="USER_ENTERED")
     if pilot_sheet:
         pilot_sheet.update(values=pilot_values, range_name="A1", value_input_option="USER_ENTERED")
+    if release_gng_sheet:
+        release_gng_sheet.update(values=release_gng_values, range_name="A1", value_input_option="USER_ENTERED")
     print(f"[+] Successfully wrote {len(wbs_data)} source rows into {len(enhanced_values)} hierarchical WBS display rows.")
     if issue_values:
         print(f"[+] Successfully wrote {max(len(issue_values) - 4, 0)} issue tracker rows into '{ISSUES_SHEET_NAME}'.")
@@ -1408,6 +1439,8 @@ def main():
         print(f"[+] Successfully wrote {max(len(deploy_values) - 4, 0)} deploy tracker rows into '{DEPLOY_SHEET_NAME}'.")
     if pilot_values:
         print(f"[+] Successfully wrote {max(len(pilot_values) - 4, 0)} pilot summary rows into '{PILOT_SHEET_NAME}'.")
+    if release_gng_values:
+        print(f"[+] Successfully wrote {max(len(release_gng_values) - 4, 0)} release decision rows into '{RELEASE_GNG_SHEET_NAME}'.")
 
     # 5. Apply Professional Styles (CATS-inspired WBS Design)
     try:
@@ -1426,6 +1459,8 @@ def main():
             apply_tracker_styles(sh, deploy_sheet, len(deploy_values), len(deploy_values[0]), "deploy")
         if pilot_sheet:
             apply_tracker_styles(sh, pilot_sheet, len(pilot_values), len(pilot_values[0]), "pilot")
+        if release_gng_sheet:
+            apply_tracker_styles(sh, release_gng_sheet, len(release_gng_values), len(release_gng_values[0]), "release_gng")
         print("[+] CATS-like hierarchy, summary, timeline, tracker tabs, filters, freeze panes, and status colors applied.")
     except Exception as e:
         print(f"[!] Warning while setting styles/dimensions: {e}")

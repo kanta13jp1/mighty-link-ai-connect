@@ -1,4 +1,4 @@
-# Google Sheets 追加タブ スキーマ: 課題管理表 / QA表
+# Google Sheets 追加タブ スキーマ: 課題管理表 / QA表 / リリース判定
 
 作成日: 2026-05-22
 オーナー: VSCode + Claude Code レーン (スキーマ維持) / 実装は Codex レーン
@@ -9,6 +9,8 @@
 ## 背景
 
 2026-05-22 にユーザー (<kanta13jp@gmail.com>) が「スプレッドシートには、WBS の他に、課題管理表、QA表も作成してください。課題や QA が出たらこちらに反映してください」と明示。既存の Sheets 3 タブ (`Mighty-Link WBS` / `WBS Summary` / `WBS Timeline`) に、**`課題管理表`** と **`QA表`** の 2 タブを追加する。
+
+2026-06-17 の T746 で、一般公開/有償ローンチの Go/No-Go 判定を同じスプレッドシートで管理するため、**`リリース判定`** タブを追加する。
 
 ---
 
@@ -96,20 +98,63 @@
 
 ---
 
-## 3. sync スクリプト実装方針 (Codex レーンへ handoff)
+## 3. リリース判定 (Release Go/No-Go Tracker)
 
-### 3.1 推奨アーキテクチャ
+### 3.1 正本 / sync 方向
 
-`scripts/sync_wbs_to_sheets.py` を base に、以下 2 タブの同期を同一スクリプトへ統合済み:
+- 正本: [data/release_go_no_go_criteria.tsv](../data/release_go_no_go_criteria.tsv)
+- sync 方向: TSV → Sheets (`scripts/sync_wbs_to_sheets.py` の同一実行で WBS / 課題 / QA と一緒に同期)
+- 編集: Go/No-Goゲートを更新したレーンが `data/release_go_no_go_criteria.tsv` を更新し、`last_checked` を当日にする
+- Sheets タブ名: **`リリース判定`**
+
+### 3.2 カラム定義
+
+| # | カラム | 型 | 必須 | 説明 |
+| --- | --- | --- | --- | --- |
+| 1 | `criterion_id` | text | YES | 判定基準ID。`DEMO-01`、`PUBLIC-01` など |
+| 2 | `scope` | enum | YES | `controlled_demo` / `public_paid_launch` |
+| 3 | `category` | text | YES | 公開デモ、コンプライアンス、収益化、品質管理など |
+| 4 | `criterion` | text | YES | 判定条件 |
+| 5 | `evidence_source` | text | YES | docs、exports、scripts、URLなどの証跡 |
+| 6 | `required_state` | enum | YES | 原則 `PASS` |
+| 7 | `current_state` | enum | YES | `PASS` / `WARNING` / `HUMAN_GATE` / `BLOCKED` / `N/A` |
+| 8 | `owner` | text | YES | 担当レーンまたは人間承認者 |
+| 9 | `decision_authority` | text | YES | 最終判断者 |
+| 10 | `related_wbs` | text | NO | 関連WBS ID。複数は `;` 区切り |
+| 11 | `related_issue` | text | NO | 関連Issueまたは課題ID |
+| 12 | `last_checked` | date | YES | YYYY-MM-DD |
+| 13 | `notes` | text | NO | 補足 |
+
+### 3.3 Sheets 装飾
+
+- `current_state`: `PASS` = 緑、`WARNING` / `HUMAN_GATE` = 黄、`BLOCKED` = 赤
+- `required_state`: `PASS` = 緑
+- `last_checked`: `yyyy-mm-dd` 日付形式
+- `scope` で `controlled_demo` と `public_paid_launch` を分けてフィルタできるようにする
+
+### 3.4 生成物
+
+- `python scripts/generate_production_go_no_go_review.py`
+- [exports/production_go_no_go_review.md](../exports/production_go_no_go_review.md)
+- [exports/production_go_no_go_review.json](../exports/production_go_no_go_review.json)
+- [docs/PRODUCTION_GO_NO_GO_CHECKLIST.md](PRODUCTION_GO_NO_GO_CHECKLIST.md)
+
+---
+
+## 4. sync スクリプト実装方針 (Codex レーンへ handoff)
+
+### 4.1 推奨アーキテクチャ
+
+`scripts/sync_wbs_to_sheets.py` を base に、以下の追加タブの同期を同一スクリプトへ統合済み:
 
 ```text
 scripts/
-└── sync_wbs_to_sheets.py        # WBS 3 タブ + 課題管理表 + QA表
+└── sync_wbs_to_sheets.py        # WBS 3タブ + 課題管理表 + QA表 + テスト/監査/デプロイ/パイロット/リリース判定
 ```
 
 WBS と tracker を同じ OAuth / Google Workspace アカウント検証で同期することで、実行漏れと誤アカウント同期を避ける。
 
-### 3.2 共通部分の再利用
+### 4.2 共通部分の再利用
 
 `sync_wbs_to_sheets.py` の以下のコンポーネントは流用可能:
 
@@ -119,31 +164,32 @@ WBS と tracker を同じ OAuth / Google Workspace アカウント検証で同�
 - 既存 Sheets ID (`1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8`) の reuse
 - API 429 quota 回避ロジック (batch update)
 
-### 3.3 実装時の注意
+### 4.3 実装時の注意
 
-- 既存 3 タブを **破壊しない** (`worksheet.clear()` の前に existing rows をバックアップ、新タブのみ idempotent な upsert)
+- 既存タブを **破壊しない** (`worksheet.clear()` の前に existing rows をバックアップ、新タブのみ idempotent な upsert)
 - `課題管理表` は **append-only** 思想だが、`状態` カラムの変更は許容 (`更新日` 自動更新)
 - `QA表` は ID 安定 (QA-01 は常に同じ行)
+- `リリース判定` はT746以降のGo/No-Go正本として扱い、`BLOCKED` / `HUMAN_GATE` を残したまま一般公開へ進めない
 - TSV の改行 / タブを含むセル ('回答方針' 等で長文化リスク) は `csv.QUOTE_ALL` で escape
 
-### 3.4 検証
+### 4.4 検証
 
-- `python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8` で `Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` / `課題管理表` / `QA表` を同時更新
+- `python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8` で `Mighty-Link WBS` / `WBS Summary` / `WBS Timeline` / `課題管理表` / `QA表` / `リリース判定` を同時更新
 - 実行後の Sheets 目視確認 (<k-umezawa@ml-mightylink.com> で開く)
 - 行数が `wc -l data/issues_tracker.tsv` (ヘッダ除く) と一致
 
 ---
 
-## 4. 運用フロー (Claude Code セッション中の更新パス)
+## 5. 運用フロー (Claude Code セッション中の更新パス)
 
-### 4.1 新規課題発生時
+### 5.1 新規課題発生時
 
 1. Claude Code が `data/issues_tracker.tsv` に新行を append
 2. 重要度が `HIGH` で `risk:ceo-blocker` 該当ならば対応 docs (CEO_PRESENTATION_PREP の Risks 表) も同時更新
 3. コミット → push → PR → main merge
 4. main merge 後に `python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8` 実行
 
-### 4.2 新規 QA 発生時 (社長 / 顧客から実際に聞かれた)
+### 5.2 新規 QA 発生時 (社長 / 顧客から実際に聞かれた)
 
 1. Claude Code が `data/qa_tracker.tsv` に新行 `Q-AHOC-{YYYYMMDD}-{n}` を append
 2. 回答方針が確立できる場合は同時に記入、できない場合は `保留中` で先に入れる
@@ -151,18 +197,26 @@ WBS と tracker を同じ OAuth / Google Workspace アカウント検証で同�
 4. コミット → push → PR → main merge
 5. main merge 後に `python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8` 実行
 
-### 4.3 既存課題 / QA の状態変更
+### 5.3 新規リリース判定ゲート発生時
+
+1. Codex または該当レーンが `data/release_go_no_go_criteria.tsv` に基準を追加
+2. `current_state` は証跡が揃うまで `BLOCKED` または `HUMAN_GATE`
+3. `python scripts/generate_production_go_no_go_review.py` で `exports/production_go_no_go_review.*` を再生成
+4. 同上 commit → push → main → sync
+
+### 5.4 既存課題 / QA / リリース判定の状態変更
 
 1. `data/issues_tracker.tsv` / `data/qa_tracker.tsv` の該当行を直接編集 (状態 + 更新日のみ)
-2. 同上 commit → push → PR → main → sync
+2. `data/release_go_no_go_criteria.tsv` は該当ゲートの `current_state`、`last_checked`、`notes` を更新
+3. 同上 commit → push → PR → main → sync
 
 ---
 
-## 5. 制約事項
+## 6. 制約事項
 
 - 個人情報 / 認証情報 / API キーは絶対に tracker に記入しない (Sheets は社長共有のため、Workspace 内とはいえ Issue 名にのみ抽象化)
 - `data/WBS.tsv` の直接編集は Codex レーンを正とする。
-- `data/issues_tracker.tsv` / `data/qa_tracker.tsv` は、課題やQAを検知したレーンが更新してよい。ただし1行1件、ID安定、`更新日` 更新、秘密情報禁止を守る。
+- `data/issues_tracker.tsv` / `data/qa_tracker.tsv` / `data/release_go_no_go_criteria.tsv` は、課題・QA・リリース判定ゲートを検知したレーンが更新してよい。ただし1行1件、ID安定、日付更新、秘密情報禁止を守る。
 
 ---
 
@@ -172,3 +226,4 @@ WBS と tracker を同じ OAuth / Google Workspace アカウント検証で同�
 | --- | --- | --- |
 | 2026-05-22 | Claude Code | 初版作成 (課題管理表 + QA表 スキーマ定義、sync スクリプト実装方針、運用フロー) |
 | 2026-05-22 | Codex | `sync_wbs_to_sheets.py` に `課題管理表` / `QA表` 同期を統合し、同一OAuth実行で5タブを更新する運用へ変更 |
+| 2026-06-17 | Codex | T746として `リリース判定` タブ、Go/No-Go基準TSV、自動レビュー生成物を追加 |

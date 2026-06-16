@@ -15,7 +15,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:24:43.067Z",
-      "modifiedTime": "2026-06-16T17:07:28.126Z",
+      "modifiedTime": "2026-06-16T23:53:56.574Z",
       "source": "exports/knowledge_flow/notebooklm_source_pack.txt"
     },
     "notebooklm_presentation_brief": {
@@ -31,7 +31,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:24:46.489Z",
-      "modifiedTime": "2026-06-16T17:07:33.275Z",
+      "modifiedTime": "2026-06-16T23:54:01.997Z",
       "source": "exports/knowledge_flow/notebooklm_presentation_brief.txt"
     },
     "notebooklm_agent_brief": {
@@ -47,7 +47,7 @@
         }
       ],
       "createdTime": "2026-05-21T16:35:24.795Z",
-      "modifiedTime": "2026-06-16T17:07:37.817Z",
+      "modifiedTime": "2026-06-16T23:54:06.599Z",
       "source": "exports/knowledge_flow/notebooklm_agent_brief.md"
     },
     "notebooklm_ceo_slide_outline": {
@@ -63,7 +63,7 @@
         }
       ],
       "createdTime": "2026-05-21T16:35:27.388Z",
-      "modifiedTime": "2026-06-16T17:07:42.718Z",
+      "modifiedTime": "2026-06-16T23:54:11.510Z",
       "source": "exports/knowledge_flow/notebooklm_ceo_slide_outline.md"
     },
     "press_release_sns": {
@@ -79,7 +79,7 @@
         }
       ],
       "createdTime": "2026-05-28T16:02:34.205Z",
-      "modifiedTime": "2026-06-16T17:07:47.377Z",
+      "modifiedTime": "2026-06-16T23:54:16.022Z",
       "source": "exports/knowledge_flow/press_release_sns.md"
     }
   },
@@ -98,13 +98,13 @@
         }
       ],
       "createdTime": "2026-05-21T17:25:09.130Z",
-      "modifiedTime": "2026-06-16T17:07:52.590Z",
+      "modifiedTime": "2026-06-16T23:54:20.453Z",
       "source": "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx"
     },
     "ceo_presentation_pptx_branded": {
       "id": "1myH1m8TKiukdxR7F_EertJ1102CfglBC",
       "name": "Mighty Skill-Bridge CEO Presentation Deck 2026-06-02 (Branded).pptx",
-      "url": "https://docs.google.com/presentation/d/1myH1m8TKiukdxR7F_EertJ1102CfglBC/edit?usp=drivesdk&ouid=117190324786156797159&rtpof=true&sd=true",
+      "url": "https://docs.google.com/presentation/d/1myH1m8TKiukdxR7F_EertJ1102CfglBC/edit?usp=drivesdk&rtpof=true&sd=true",
       "downloadUrl": "https://drive.google.com/uc?id=1myH1m8TKiukdxR7F_EertJ1102CfglBC&export=download",
       "mimeType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
       "ownedByMe": true,
@@ -115,7 +115,7 @@
         }
       ],
       "createdTime": "2026-05-23T15:24:51.404Z",
-      "modifiedTime": "2026-06-16T17:07:58.053Z",
+      "modifiedTime": "2026-06-16T23:54:25.047Z",
       "source": "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02_branded.pptx"
     },
     "ui_wireframes_pptx": {
@@ -132,7 +132,7 @@
         }
       ],
       "createdTime": "2026-05-23T17:52:43.352Z",
-      "modifiedTime": "2026-06-16T17:08:01.383Z",
+      "modifiedTime": "2026-06-16T23:54:28.315Z",
       "source": "exports/knowledge_flow/mighty_skill_bridge_ui_wireframes_2026-06-02.pptx"
     },
     "ui_wireframes_canva_pptx": {
@@ -149,7 +149,7 @@
         }
       ],
       "createdTime": "2026-05-23T21:25:41.009Z",
-      "modifiedTime": "2026-06-16T17:08:06.748Z",
+      "modifiedTime": "2026-06-16T23:54:33.251Z",
       "source": "exports/mighty_skill_bridge_wireframes_v2.pptx"
     }
   }
