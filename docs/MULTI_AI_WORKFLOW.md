@@ -354,7 +354,7 @@ feat/<tool>-<wbs-id>-<slug>
 
 公式 Docs 24 提供元をバックグラウンド並列調査で確認。本プロジェクトに影響する差分のみ記載。
 
-- **Google（期限付き・最重要）**: **6/18 に Gemini CLI / Gemini Code Assist の個人向け提供が停止**し Antigravity CLI へ移行必須。Firebase の Gemini CLI 向け拡張も同日終了 — **T803 を起票し 6/15〜6/17 で移行対応**。Gemini 3.5 Flash が stable 化（エージェント/コーディング最上位）。
+- **Google（期限付き・最重要）**: **6/18 に Gemini CLI / Gemini Code Assist の個人向け提供が停止**し Antigravity CLI へ移行必須。Firebase の Gemini CLI 向け拡張も同日終了 — **T803 で残存依存監査を完了**し、実運用ファイルに Gemini CLI / Code Assist / Firebase Gemini CLI 拡張への現役依存がないことを確認済み（証跡: [GEMINI_CLI_MIGRATION_AUDIT_2026-06-17.md](GEMINI_CLI_MIGRATION_AUDIT_2026-06-17.md)）。Gemini 3.5 Flash が stable 化（エージェント/コーディング最上位）。
 - **Firebase**: AI Logic ハイブリッド推論（オンデバイス+クラウド）GA (5/28)。Admin Node.js SDK v14 は Node 22+ 必須 (6/8)。Firebase ML は 2027-06-15 シャットダウン予告 — 本プロジェクトは未使用で影響なし。
 - **Supabase（期限付き）**: 6/15 以降の**新規**プロジェクトは GraphQL introspection デフォルト無効（既存 production/staging プロジェクトは影響なし）。無料枠のメールテンプレートカスタマイズ制限開始 (6/3) — Auth メール本格運用時はカスタム SMTP を検討。Passkeys (WebAuthn) ベータ (5/28) は認証強化の将来候補。
 - **GitHub（課金影響）**: 6/1 から Copilot が従量課金 (AI Credits) へ移行し、Copilot code review がプライベートリポジトリで Actions 分を消費。公開デモガード CI と併走するため Actions 消費量の監視を T687/T736 のコスト監視に含める。Copilot SDK GA (6/2)。

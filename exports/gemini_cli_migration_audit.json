@@ -1,0 +1,171 @@
+{
+  "status": "ok",
+  "audit_date": "2026-06-17",
+  "generated_at": "2026-06-16T17:08:23Z",
+  "official_sources": [
+    {
+      "title": "Google Developers Blog: Transitioning Gemini CLI to Antigravity CLI",
+      "url": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/",
+      "finding": "Gemini CLI / Gemini Code Assist individual requests stop on 2026-06-18; Antigravity CLI is the replacement lane."
+    },
+    {
+      "title": "Gemini Code Assist for individuals",
+      "url": "https://developers.google.com/gemini-code-assist/docs/deprecations/code-assist-individuals",
+      "finding": "Consumer/individual Gemini Code Assist and Gemini CLI requests stop on 2026-06-18; standard and enterprise tiers are not impacted."
+    },
+    {
+      "title": "Firebase extension for Gemini CLI",
+      "url": "https://firebase.google.com/docs/ai-assistance/gcli-extension",
+      "finding": "The Firebase extension for Gemini CLI stops working on 2026-06-18; migrate Firebase agent work to Antigravity CLI."
+    },
+    {
+      "title": "Firebase release notes",
+      "url": "https://firebase.google.com/support/release-notes",
+      "finding": "Firebase repeats the 2026-06-18 Gemini CLI extension shutdown and directs users to Antigravity CLI / direct Firebase agent skills."
+    },
+    {
+      "title": "Gemini API model docs",
+      "url": "https://ai.google.dev/gemini-api/docs/models",
+      "finding": "Gemini API model usage remains separate from deprecated Gemini CLI tooling."
+    }
+  ],
+  "summary": {
+    "active_blockers": 0,
+    "historical_references": 11,
+    "operational_files_scanned": 77,
+    "reference_files_scanned": 94
+  },
+  "tool_checks": {
+    "antigravity_cli": {
+      "state": "available",
+      "command": "antigravity-ide.cmd",
+      "path": "C:\\Users\\kanta\\AppData\\Local\\Programs\\Antigravity IDE\\bin\\antigravity-ide.cmd",
+      "message": "Antigravity CLI is available on PATH."
+    },
+    "gemini_cli": {
+      "state": "not_found",
+      "command": "gemini.cmd",
+      "path": null,
+      "message": "No local Gemini CLI executable was found on PATH."
+    }
+  },
+  "active_findings": [],
+  "reference_findings": [
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_code_assist_extension",
+      "label": "Gemini Code Assist IDE extension",
+      "path": "data/WBS.tsv",
+      "line": 216,
+      "evidence": "T803\t7. 決定後実行\tインフラ\t6/18 Gemini CLI / Code Assist 提供停止・Firebase 拡張終了に伴う残存依存の最終確認\tAntigravity + 人間\tAntigravity + Gemini\tscripts/verify_gemini_cli_migration.py と pytestを追加し、2026-06-17に実運用77ファイルを監査。Gemini CLI / Gemini Code Assist / Firebase Gem",
+      "replacement": "Use Antigravity IDE/CLI for individual Google agent workflows; enterprise GCA is separate."
+    },
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_cli_name",
+      "label": "Gemini CLI named dependency",
+      "path": "data/WBS.tsv",
+      "line": 216,
+      "evidence": "T803\t7. 決定後実行\tインフラ\t6/18 Gemini CLI / Code Assist 提供停止・Firebase 拡張終了に伴う残存依存の最終確認\tAntigravity + 人間\tAntigravity + Gemini\tscripts/verify_gemini_cli_migration.py と pytestを追加し、2026-06-17に実運用77ファイルを監査。Gemini CLI / Gemini Code Assist / Firebase Gem",
+      "replacement": "Keep only historical migration notes; active setup must say Antigravity CLI."
+    },
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_cli_name",
+      "label": "Gemini CLI named dependency",
+      "path": "docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md",
+      "line": 10,
+      "evidence": "Mighty Skill-Bridge プロジェクトでは、これまで Google公式AIツールとして `Gemini CLI` の採用を検討していましたが、Google Developer Blog にて **Gemini CLI から Antigravity CLI への移行** が正式アナウンスされました。",
+      "replacement": "Keep only historical migration notes; active setup must say Antigravity CLI."
+    },
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_cli_name",
+      "label": "Gemini CLI named dependency",
+      "path": "docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md",
+      "line": 56,
+      "evidence": "- 旧 Gemini CLI に比べ、起動速度およびプロセス応答速度が劇的に向上しています。",
+      "replacement": "Keep only historical migration notes; active setup must say Antigravity CLI."
+    },
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_cli_name",
+      "label": "Gemini CLI named dependency",
+      "path": "docs/CODEX_CONTINUATION_NOTES.md",
+      "line": 512,
+      "evidence": "- [x] 5/27 Antigravity 復帰後に Antigravity CLI 評価 (旧 Gemini CLI からの移行) — T693で完了 ([ANTIGRAVITY_CLI_EVALUATION_REPORT.md](ANTIGRAVITY_CLI_EVALUATION_REPORT.md))。なお 6/18 に Gemini CLI / Code Assist 個人向け提供停止のため、残存依存の最終確認を T803 で実施",
+      "replacement": "Keep only historical migration notes; active setup must say Antigravity CLI."
+    },
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_cli_name",
+      "label": "Gemini CLI named dependency",
+      "path": "docs/MULTI_AI_WORKFLOW.md",
+      "line": 284,
+      "evidence": "- [x] Antigravity 復帰後 (5/27) に Antigravity CLI 評価 (旧 Gemini CLI からの移行) — [docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md](ANTIGRAVITY_CLI_EVALUATION_REPORT.md) にて完了",
+      "replacement": "Keep only historical migration notes; active setup must say Antigravity CLI."
+    },
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_code_assist_extension",
+      "label": "Gemini Code Assist IDE extension",
+      "path": "docs/MULTI_AI_WORKFLOW.md",
+      "line": 357,
+      "evidence": "- **Google（期限付き・最重要）**: **6/18 に Gemini CLI / Gemini Code Assist の個人向け提供が停止**し Antigravity CLI へ移行必須。Firebase の Gemini CLI 向け拡張も同日終了 — **T803 で残存依存監査を完了**し、実運用ファイルに Gemini CLI / Code Assist / Firebase Gemini CLI 拡張への現役依存がないことを確認済み（証跡: [GEMI",
+      "replacement": "Use Antigravity IDE/CLI for individual Google agent workflows; enterprise GCA is separate."
+    },
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_cli_name",
+      "label": "Gemini CLI named dependency",
+      "path": "docs/MULTI_AI_WORKFLOW.md",
+      "line": 357,
+      "evidence": "- **Google（期限付き・最重要）**: **6/18 に Gemini CLI / Gemini Code Assist の個人向け提供が停止**し Antigravity CLI へ移行必須。Firebase の Gemini CLI 向け拡張も同日終了 — **T803 で残存依存監査を完了**し、実運用ファイルに Gemini CLI / Code Assist / Firebase Gemini CLI 拡張への現役依存がないことを確認済み（証跡: [GEMI",
+      "replacement": "Keep only historical migration notes; active setup must say Antigravity CLI."
+    },
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_code_assist_extension",
+      "label": "Gemini Code Assist IDE extension",
+      "path": "docs/WBS.md",
+      "line": 258,
+      "evidence": "| **T803** | 7. 決定後実行 | インフラ | 6/18 Gemini CLI / Code Assist 提供停止・Firebase 拡張終了に伴う残存依存の最終確認 | Antigravity + 人間 | Antigravity + Gemini | scripts/verify_gemini_cli_migration.py と pytestを追加し、2026-06-17に実運用77ファイルを監査。Gemini CLI / Gemini Code Ass",
+      "replacement": "Use Antigravity IDE/CLI for individual Google agent workflows; enterprise GCA is separate."
+    },
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_cli_name",
+      "label": "Gemini CLI named dependency",
+      "path": "docs/WBS.md",
+      "line": 258,
+      "evidence": "| **T803** | 7. 決定後実行 | インフラ | 6/18 Gemini CLI / Code Assist 提供停止・Firebase 拡張終了に伴う残存依存の最終確認 | Antigravity + 人間 | Antigravity + Gemini | scripts/verify_gemini_cli_migration.py と pytestを追加し、2026-06-17に実運用77ファイルを監査。Gemini CLI / Gemini Code Ass",
+      "replacement": "Keep only historical migration notes; active setup must say Antigravity CLI."
+    },
+    {
+      "state": "historical_reference",
+      "severity": "info",
+      "pattern": "gemini_cli_name",
+      "label": "Gemini CLI named dependency",
+      "path": "docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md",
+      "line": 43,
+      "evidence": "**固定アンカー（動かさない）**: T746 Go/No-Go（6/16 定例レビュー連動）、T803 Gemini CLI 停止対応（外部期限 6/18）、T798 法務確認（人間ゲート、6/16 まで）、T802 監査修正（SLA 6/19）、T808 月次配信（7/1 月次サイクル）、T741/T743/T745（既に最速）。",
+      "replacement": "Keep only historical migration notes; active setup must say Antigravity CLI."
+    }
+  ],
+  "guardrails": [
+    "Do not add `gemini extensions install https://github.com/firebase/agent-skills/` to scripts, CI, or setup docs.",
+    "Do not require `google.geminicodeassist` or the individual Gemini Code Assist IDE extension in .vscode recommendations.",
+    "Use Antigravity CLI / Antigravity IDE for the Google agent lane; keep Gemini API usage as API/model integration only.",
+    "Keep historical docs only when they explicitly describe the migration or shutdown context."
+  ]
+}
