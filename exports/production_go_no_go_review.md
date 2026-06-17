@@ -1,6 +1,6 @@
 # 本番リリース Go/No-Go 判定レビュー (T746)
 
-- 生成時刻(UTC): 2026-06-16T23:38:12Z
+- 生成時刻(UTC): 2026-06-17T05:35:51Z
 - 正本TSV: `data/release_go_no_go_criteria.tsv`
 - WBS正本: `data/WBS.tsv`
 - 総合判定: **NO_GO**
@@ -10,7 +10,7 @@
 | スコープ | 判定 | 件数 | 状態内訳 |
 | :--- | :--- | ---: | :--- |
 | controlled_demo | GO | 5 | PASS:5 |
-| public_paid_launch | NO_GO | 10 | BLOCKED:5, HUMAN_GATE:2, PASS:3 |
+| public_paid_launch | NO_GO | 11 | BLOCKED:6, HUMAN_GATE:2, PASS:3 |
 
 ## 判定基準
 
@@ -31,6 +31,7 @@
 | PUBLIC-08 | public_paid_launch | 収益化 | HUMAN_GATE | 料金プラン・無料枠・課金単位がCEO承認済み | docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md | T804 | CEO | 価格未確定のまま有償プランは開始しない。 |
 | PUBLIC-09 | public_paid_launch | 収益化 | BLOCKED | Stripe課金設計・Billing Meters実装・Webhook検証が完了している | docs/BILLING_AND_REFUND_POLICY.md; src/app.py | T776;T791 | 開発責任者 | 設計T776、実装T791、解約導線T807と一体で判定する。 |
 | PUBLIC-10 | public_paid_launch | 品質管理 | BLOCKED | 同時100ユーザー想定の負荷テストとスケーリング方針が完了している | docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md | T770 | 開発責任者 | 一般公開前にAPI/DB/Functionsの負荷余力を確認する。 |
+| PUBLIC-11 | public_paid_launch | コア機能 | BLOCKED | 6/17打ち合わせで最優先化された営業メールAIマッチングMVPが検証済み | docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md; docs/meetings/2026-06-17_CEO_Meeting_Minutes.md | T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7 | CEO / 開発責任者 | 一般公開・有償化前の新コア機能ゲート。T817_2以降の実装、人間レビュー、個人情報/監査/負荷確認が必要。 |
 
 ## 承認プロセス
 

@@ -1,0 +1,109 @@
+# 2026-06-17 小林社長・梅澤 打ち合わせ議事録
+
+- 日時: 2026-06-17
+- 参加者: 小林雅水 代表取締役社長、寛太梅澤
+- 元情報: Gemini が生成した打ち合わせメモを、プロジェクト正本に合わせて整理
+- 関連WBS: T816, T817, T817_1, T818, T819, T820
+- 関連Issue: #104
+
+---
+
+## 正確性確認メモ
+
+Geminiメモは会話の要点を概ね捉えているが、プロジェクト管理上は次の補正を正本として扱う。
+
+1. **本番リリース判定**
+   - T746の正本では、`controlled_demo` は `GO`、`public_paid_launch` は `NO_GO`。
+   - したがって、社長説明・限定デモ・管理下確認は進行可だが、一般公開・有償ローンチは法務、同意UI、課金、負荷テスト、営業メールAIマッチングMVPなどのゲート完了後に再判定する。
+2. **ドメイン表記**
+   - プロジェクト正本の販売URLは `https://mightylink-app.com/`。
+   - Geminiメモ内の `ml-link.com` は、別ドメインを指す可能性があるため、現時点では正本URLとして扱わない。
+3. **レジストラと既存サイト作業**
+   - 本プロジェクトのレジストラは「お名前.com」。
+   - 打ち合わせで共有されたWordPress/FTP/管理画面情報は、既存ホームページ更新作業のためのアクセス情報として扱う。認証情報そのものはリポジトリ、Sheets、Issue、NotebookLMへ記録しない。
+4. **7月15日目標**
+   - 2026-07-15前後の完了目標は、現時点ではMVP開発および社内確認の管理目標として扱う。
+   - 一般公開・有償化日はGo/No-Goの再判定後に確定する。
+
+---
+
+## 決定事項
+
+### 1. 既存ホームページのポリシーリンク追加方針
+
+- AIが生成したファイル一式を機械的に全置換するのではなく、既存ページの下部へポリシーリンクを追加する部分修正で進める。
+- 小林社長から共有されたWordPress管理画面およびFTP情報を用いて、寛太梅澤が更新作業を支援する。
+- 作業時は差分確認、バックアップ取得、認証情報の非記録を徹底する。
+- 対応WBS: T816
+
+### 2. 営業メールAIマッチングを最優先機能にする
+
+- 毎日約1,000通届く営業メール、案件メールから、SQL、Oracle、Java、インフラ、リモート条件、単価、稼働時期などを自動抽出する。
+- 抽出結果をSupabaseへ蓄積し、エンジニアのスキル、経験、希望条件と照合して候補案件をリストアップする。
+- 初期MVPは「メール取り込み、要件抽出、DB化、検索、マッチング根拠、人間レビュー」の一連の流れを対象にする。
+- 詳細要件は [SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md](../SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md) を正本とする。
+- 対応WBS: T817, T817_1 から T817_7
+
+### 3. 技術スタックと運用状況
+
+- ホスティング、バックエンド: Firebase Hosting、Firebase Functions、GCP
+- DB: Supabase
+- ソースコード管理: GitHub
+- WBS、課題管理表、QA表、リリース判定: Google Workspace Sheets
+- 現状の構築は一部を梅澤個人アカウントで進めているが、将来的には会社アカウント、会社請求へ移行する。
+- 現時点のランニングコストは、無料枠内でほぼ無料。現在のドメイン費用も0円として共有済み。
+- HTTPS証明書はFirebaseが自動発行し、`https://mightylink-app.com/` は疎通済み。
+
+### 4. アカウント移行方針
+
+- GitHub、Firebase、Supabase、AI開発ツールなど、個人アカウントで進めている領域は、開発が進んだ段階で会社所有アカウントへ移行する。
+- Google Workspaceは会社提供のGoogleアカウントを使用している。
+- 移行に伴う費用や課金については会社負担で進める方針。
+- 対応WBS: T818
+
+### 5. 次回打ち合わせ
+
+- 次回進捗確認は 2026-07-02 に実施予定。
+- 主要報告対象は、営業メールAIマッチングの要件、PoC進捗、既存ホームページ更新状況、アカウント移行準備。
+- 対応WBS: T819
+
+---
+
+## アクション一覧
+
+| WBS | 担当 | 内容 | 状態 |
+| --- | --- | --- | --- |
+| T816 | 寛太梅澤 | WordPress/FTP経由で既存ホームページへポリシーリンクを追加する | 未着手 |
+| T817_1 | Codex | 営業メールAIマッチングMVPの要件定義とデータモデルを整理する | 完了 |
+| T817_2 | Codex | Gmail APIまたはファイルアップロード経由のメール取り込みPoCを作る | 未着手 |
+| T817_3 | Codex | Supabaseの案件メールDBスキーマ、RLS、migrationを設計する | 未着手 |
+| T817_4 | Codex / Antigravity | AIによるスキル、案件要件抽出パイプラインを実装する | 未着手 |
+| T817_5 | Codex / Antigravity | マッチング検索APIと候補者リストアップUIを実装する | 未着手 |
+| T817_6 | Codex / Claude Code | 人間レビュー、評価ログ、フィードバック改善ループを整備する | 未着手 |
+| T817_7 | Codex / Claude Code | 本番運用、個人情報、監査、負荷確認を完了する | 未着手 |
+| T818 | 寛太梅澤 | 個人アカウントから会社アカウント、会社請求への移行準備を進める | 未着手 |
+| T819 | 寛太梅澤 | 2026-07-02の次回打ち合わせで進捗報告する | 未着手 |
+
+---
+
+## QA
+
+| 質問 | 回答方針 |
+| --- | --- |
+| AI生成ファイルを全置換する必要があるか | いいえ。ポリシーリンク追加は部分修正で進め、差分を確認して反映する。 |
+| 毎日約1,000通の営業メールから案件マッチングを自動化できるか | 可能。Gmail APIまたはファイル取り込みでメールを取得し、AI抽出、Supabase蓄積、検索、マッチング、人間レビューを段階的に作る。 |
+| 個人アカウントで作った環境は将来会社管理へ移せるか | 移行可能。所有者、請求、シークレット、OAuth、GitHub権限、Firebase/Supabaseプロジェクト移管をランブック化して進める。 |
+| 現時点で一般公開や有償ローンチをしてよいか | いいえ。限定デモはGoだが、一般公開・有償ローンチはNo-Go。新たに営業メールAIマッチングMVPも公開前ゲートに追加する。 |
+
+---
+
+## 公式ドキュメント確認メモ
+
+今回の反映では、次の公式ドキュメントを参照して方針を確認した。
+
+- Gmail API: https://developers.google.com/workspace/gmail/api/guides
+- Google Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate
+- Firebase Hosting: https://firebase.google.com/docs/hosting
+- Supabase Docs: https://supabase.com/docs/guides/getting-started
+- GitHub Actions: https://docs.github.com/actions
+- WordPress REST API Authentication: https://developer.wordpress.org/rest-api/using-the-rest-api/authentication/

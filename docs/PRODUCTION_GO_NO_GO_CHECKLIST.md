@@ -22,9 +22,11 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 | Scope | 判定 | 理由 |
 | --- | --- | --- |
 | `controlled_demo` | `GO` | GitHub Pages公開デモ、本番URL、問い合わせ窓口、DR/Incident/Rollback、監視・クォータRunbookの証跡が揃っている |
-| `public_paid_launch` | `NO_GO` | 法務/CEO承認、規約同意UI、オンボーディング、法定4ページ実装、Stripe課金、負荷テストが未完了 |
+| `public_paid_launch` | `NO_GO` | 法務/CEO承認、規約同意UI、オンボーディング、法定4ページ実装、Stripe課金、負荷テスト、営業メールAIマッチングMVPが未完了 |
 
 つまり、現状は「社長説明・限定デモは継続可。一般公開・有償ローンチは未承認」である。
+
+2026-06-17の小林社長・梅澤打ち合わせで、毎日約1,000通届く営業メールから案件要件を抽出し、エンジニア候補と照合するAIマッチング機能が最優先開発項目になった。これに伴い、営業メールAIマッチングMVPは `public_paid_launch` の追加ゲートとして扱う。限定デモのGo判定は維持するが、本機能を売りにした一般公開、有償提供、営業利用はT817_2からT817_7の完了後に再判定する。
 
 ---
 
@@ -65,6 +67,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T777 | 法定4ページ実装とフッター常時リンク | `BLOCKED` |
 | T776 / T791 | Stripe課金設計・Billing Meters/Webhook検証 | `BLOCKED` |
 | T770 | 同時100ユーザー想定の負荷テスト | `BLOCKED` |
+| T817_2 - T817_7 | 営業メールAIマッチングMVPの実装、人間レビュー、個人情報/監査/負荷確認 | `BLOCKED` |
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 
@@ -96,6 +99,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 2026-06-17時点の確認対象:
 
 - Firebase Hosting / Functions: https://firebase.google.com/docs/hosting / https://firebase.google.com/docs/functions
+- Gmail API: https://developers.google.com/workspace/gmail/api/guides
 - Google Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate
 - GitHub Actions: https://docs.github.com/actions
 - Supabase: https://supabase.com/docs/guides/getting-started

@@ -1,15 +1,15 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-16T23:38:12Z",
+  "generated_at": "2026-06-17T05:35:51Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
-    "total": 15,
+    "total": 16,
     "counts": {
       "PASS": 8,
       "HUMAN_GATE": 2,
-      "BLOCKED": 5
+      "BLOCKED": 6
     },
     "evidence_warnings": 0
   },
@@ -28,9 +28,9 @@
       "counts": {
         "PASS": 3,
         "HUMAN_GATE": 2,
-        "BLOCKED": 5
+        "BLOCKED": 6
       },
-      "total": 10
+      "total": 11
     }
   },
   "criteria": [
@@ -327,6 +327,32 @@
       "notes": "一般公開前にAPI/DB/Functionsの負荷余力を確認する。",
       "wbs_statuses": {
         "T770": "未着手"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-11",
+      "scope": "public_paid_launch",
+      "category": "コア機能",
+      "criterion": "6/17打ち合わせで最優先化された営業メールAIマッチングMVPが検証済み",
+      "evidence_source": "docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md; docs/meetings/2026-06-17_CEO_Meeting_Minutes.md",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Codex + Antigravity",
+      "decision_authority": "CEO / 開発責任者",
+      "related_wbs": "T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7",
+      "related_issue": "R75",
+      "last_checked": "2026-06-17",
+      "notes": "一般公開・有償化前の新コア機能ゲート。T817_2以降の実装、人間レビュー、個人情報/監査/負荷確認が必要。",
+      "wbs_statuses": {
+        "T817": "実行中",
+        "T817_1": "完了",
+        "T817_2": "未着手",
+        "T817_3": "未着手",
+        "T817_4": "未着手",
+        "T817_5": "未着手",
+        "T817_6": "未着手",
+        "T817_7": "未着手"
       },
       "missing_evidence": []
     }
