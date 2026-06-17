@@ -1,103 +1,64 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-06-17T18:21:54+09:00
-Status: `skipped`
+Generated: 2026-06-17T20:51:58+09:00
+Notebook: `56932988-812c-412e-94f4-4878953d20a1`
 
-NotebookLM CLI is not ready yet, so this file is a placeholder.
+## Question
 
-## Required Action
+このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、
+Codex/AIエージェントが次に開発を進めるための要約を作ってください。
 
-```powershell
-notebooklm login
-python scripts/sync_docs_to_notebooklm.py
-```
+必ず以下を含めてください。
+1. 現在のプロダクト方向性で確定していること
+2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク
+3. 6/2で社長に決めてもらうべき事項
+4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提
+5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題
+6. WBSへ追加すべき次アクション
 
-During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
 
-## Synced Google Docs
+## NotebookLM Answer
 
-- `docs/AI_COST_MONITORING_AND_QUOTA_DESIGN.md`: https://docs.google.com/document/d/1MaQDg52OsPPzpDVlfAMi4xdqSENRc8tWYNV729uytQ4/edit?usp=drivesdk
-- `docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md`: https://docs.google.com/document/d/1bBNOphS-rJbJMWiYJGba-3ZGE-FEHqHrE4dDbKDPsew/edit?usp=drivesdk
-- `docs/ANTIGRAVITY_GUIDE.md`: https://docs.google.com/document/d/1d0SMuvOQXnGLxmNj7d1ktfWczSmxlWL0wblxlYDMH4E/edit?usp=drivesdk
-- `docs/ANTIGRAVITY_HOOKS_SYNC_POC.md`: https://docs.google.com/document/d/17zvd4fsOXx3hhgMHeZdTKUNaZlWz7-JzvU-1zS0SLDw/edit?usp=drivesdk
-- `docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md`: https://docs.google.com/document/d/1eDY92cqtEk4ocGZCcAxRtHPlupia8UQNZi8OEY1bSto/edit?usp=drivesdk
-- `docs/API_RATE_LIMIT_AND_DDOS_RUNBOOK.md`: https://docs.google.com/document/d/1X18Bm0OmNuRlhmkS8PVDo-3ojRRrc4gVbxVGUhQ-Q40/edit?usp=drivesdk
-- `docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md`: https://docs.google.com/document/d/1yCaiaUtEAnY2CsQ7spugwdRfNwf-etTYxe96ZunS0uE/edit?usp=drivesdk
-- `docs/BACKEND_AI_PIPELINE.md`: https://docs.google.com/document/d/1duxDhC6yjS-XlyWxse_XdaiRjq88cZz8aBCt0GRxUWg/edit?usp=drivesdk
-- `docs/BILLING_AND_REFUND_POLICY.md`: https://docs.google.com/document/d/1qXQ8UVCo4AJN2DLeYq_CO13GDM8e_9prJhl8Mym6rPM/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_BACKUP_GUIDE.md`: https://docs.google.com/document/d/1V0Pk334cGh22vH5YcXPepmIV8OHOFs1dtdgUQPa-VUY/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/17LQKJNaTJYn7ntsh3vIT4A1YqkkMDR_xRDNmuw__iKc/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`: https://docs.google.com/document/d/1XJeHY18JEEeaz4Dc28UHrOYbA7hhZ7ENfyI3TEGPnqc/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md`: https://docs.google.com/document/d/14JXVTEmE05KPl-8h0-3yUN72d_llc345dC-THSY6MP0/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md`: https://docs.google.com/document/d/1QIWGVC-S7xL9qQuO9VwQ8Cu72lBwdRWv-3VT-QfHHSk/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md`: https://docs.google.com/document/d/1JgVk67o0IC8JuUtlftMwPQY9cgeoMY4Q1lHJ2xHAkqI/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md`: https://docs.google.com/document/d/12H5nzd8jDRQU1eg33xNQgkoaEaodz4zQmjSTbaJWHkk/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_PREP_2026-06-02.md`: https://docs.google.com/document/d/1hIcqCfKtRPPVtXrKizMesGpI7j9VACrXgQicHy4XD6o/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md`: https://docs.google.com/document/d/1f46OjAqnCphcg24U--3ro8Om40RdydQpISIUlO9gRoY/edit?usp=drivesdk
-- `docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md`: https://docs.google.com/document/d/1fMHp994ApuoGJsVmyD2PpA_ILNzDsb5RSxomC1rmeew/edit?usp=drivesdk
-- `docs/CODEX_CONTINUATION_NOTES.md`: https://docs.google.com/document/d/1akLsJ_85jkqcH3aTaae8h5u1xmHGooJn5UlklHvQyfE/edit?usp=drivesdk
-- `docs/COST_REPORT_2026-06.md`: https://docs.google.com/document/d/1CNFK4rA_lhIileO29u0MuvXQca43qkDmSdSla7JdUMY/edit?usp=drivesdk
-- `docs/database.md`: https://docs.google.com/document/d/1WVp_vmYeiCZfFWbCpHNfmwGoUeBADuMjyLySBHrh9bI/edit?usp=drivesdk
-- `docs/DB_MIGRATION_MANAGEMENT_RUNBOOK.md`: https://docs.google.com/document/d/13d9sL_Sle75GqpBTI405P0Z5Owh5ZNVHDLvfsSvOu0U/edit?usp=drivesdk
-- `docs/DEMO_SECURITY_AND_AUTH_DESIGN.md`: https://docs.google.com/document/d/1C606e1yesSIVlZfOrRjZ_4hkgr4OQQ_axpYjBFvrUEc/edit?usp=drivesdk
-- `docs/DEVELOPMENT_KNOWLEDGE_FLOW.md`: https://docs.google.com/document/d/1SS44DK0H57KFdX4jHDucbYe6PRN2ofUllaaLr5zioYU/edit?usp=drivesdk
-- `docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md`: https://docs.google.com/document/d/1yHVwrsZ_TZyEMa1wSfoxaSv85w7pyPqGP7VZUHTwhQU/edit?usp=drivesdk
-- `docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md`: https://docs.google.com/document/d/1aZ9XMhnsTBYkfhaGh-UppNcEW8FjgKLv9dzB6cenerE/edit?usp=drivesdk
-- `docs/FIREBASE_SUPABASE_QUOTA_ERROR_ALERT_RUNBOOK.md`: https://docs.google.com/document/d/10dbRSFj2mRlF9OdKfsdAT4QCT_GSZv8is3Otu1nTf5Q/edit?usp=drivesdk
-- `docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md`: https://docs.google.com/document/d/1chyqUHbGFZ41CPKhR6sY5HUTG397IxnmPCuQdUHa5rA/edit?usp=drivesdk
-- `docs/GEMINI_CLI_MIGRATION_AUDIT_2026-06-17.md`: https://docs.google.com/document/d/1f-Y6v0WBFliNpYUtY6Hv_rjo4_87_lBDZawhw6pyr4s/edit?usp=drivesdk
-- `docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1xb9e3AQt7uGSvQvu-D12CGqchlh5Z01FFn44Dkhza8I/edit?usp=drivesdk
-- `docs/GROWTH_STRATEGY_ROADMAP.md`: https://docs.google.com/document/d/1Pp3Tf_r4G2-pxJDFVw5FhFheCgZHZcscsnotmX6vDgQ/edit?usp=drivesdk
-- `docs/HOSTING_AND_DATABASE_SELECTION.md`: https://docs.google.com/document/d/1ngrMIRYYAbR2jzpLGRSKKJBTcOPvwUSJ00MDeCbx8-Y/edit?usp=drivesdk
-- `docs/INCIDENT_POSTMORTEM_RUNBOOK.md`: https://docs.google.com/document/d/1nfuwYTaxVnadProXz1I6U-qVVK8mECRDmoJWdecFLr8/edit?usp=drivesdk
-- `docs/INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1sbnNMCbBwpPyuLj60FNwEE3L1UAq8mZ79n7Zlv9Huco/edit?usp=drivesdk
-- `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
-- `docs/LOCAL_DEV_EMULATOR_STACK_RUNBOOK.md`: https://docs.google.com/document/d/1_jywSbN49MBBiyGRd89HguBrj-2ktZkB9SWiS3FaBuU/edit?usp=drivesdk
-- `docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md`: https://docs.google.com/document/d/1EKarbQEJc11rMLWXU4L9TL994vPp5dawHyjf-y3HPJg/edit?usp=drivesdk
-- `docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/1aFiRyJpftES9MXnSkTUKsaum_KCUt8UhS37p_3Ln15U/edit?usp=drivesdk
-- `docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md`: https://docs.google.com/document/d/1gysz5FkXVK22refIm4oGmXslBzOXCbJtTgfr8pxcSWM/edit?usp=drivesdk
-- `docs/MONTHLY_REPORT_2026-06.md`: https://docs.google.com/document/d/1v6aM1DSB5rGL-gYelOq9ZjKWa834Lc3ztBh1SrXFyFs/edit?usp=drivesdk
-- `docs/MULTI_AI_WORKFLOW.md`: https://docs.google.com/document/d/1WfBfLEpbTV6zcB4AuA4RbeXaJ99qw6h0UGq9D_1oJ_Q/edit?usp=drivesdk
-- `docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md`: https://docs.google.com/document/d/1CCKPhwbsBu-WMKQnq5JcdMR2iqrPO951tBqWfi7ZWNs/edit?usp=drivesdk
-- `docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md`: https://docs.google.com/document/d/1IM6xcwQ3t5agWAvYEzCbJqqFDC6hajUFpYJ0xyq-6FQ/edit?usp=drivesdk
-- `docs/PILOT_CLOSED_OPERATION_DESIGN.md`: https://docs.google.com/document/d/16xas5El8RUkWPEn91rjqvrCROLH3QP-NwqWNTdtuTPI/edit?usp=drivesdk
-- `docs/PILOT_CONSENT_TEMPLATE.md`: https://docs.google.com/document/d/1KExhc4UkexwUBTq--hMDmNpTA59oZFVz_c3yYl4UOBE/edit?usp=drivesdk
-- `docs/PILOT_PARTICIPANTS_SELECTION.md`: https://docs.google.com/document/d/1BLPG7uYbtU73fQh_tAg4cBBPin3BojMl9nWTDKdWb8w/edit?usp=drivesdk
-- `docs/PILOT_REPORT_2026-06-16.md`: https://docs.google.com/document/d/1C9nAy4JmkXdPE80HKkx8z0IstqQDUzWZjyVUvnfW-NU/edit?usp=drivesdk
-- `docs/POSTMORTEM_2026-06-11_R44_PRODUCTION_API_502.md`: https://docs.google.com/document/d/1v0seY6IBvRFBoNb0vVSOY01pgzxwzGQjfATLrDYN3aM/edit?usp=drivesdk
-- `docs/PRIVACY_POLICY.md`: https://docs.google.com/document/d/19HaoiArtdICqNktUe2do7fyFUpcQWM6yujXzXk9pKx0/edit?usp=drivesdk
-- `docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md`: https://docs.google.com/document/d/1T4KOHtWeKJRm1HGYCHOm3ey2Pqhmpb_4WHk92lBqvSU/edit?usp=drivesdk
-- `docs/PRODUCTION_DOMAIN_SETUP_GUIDE.md`: https://docs.google.com/document/d/1Xj57ffoCwtqaVm68rnfiNSMEW0yuVc_nuzw8TjQmpAs/edit?usp=drivesdk
-- `docs/PRODUCTION_GO_NO_GO_CHECKLIST.md`: https://docs.google.com/document/d/1sahYuhH1nbiAhsKcuJDnn6vwlAXREbOGPzJ-MoQVGD4/edit?usp=drivesdk
-- `docs/PRODUCTION_ROLLBACK_RUNBOOK.md`: https://docs.google.com/document/d/1nFPq-gr8xdBOy0r3iSHQVNl0rgnZc1azvjIO6Q7egoE/edit?usp=drivesdk
-- `docs/PROJECT_STRUCTURE.md`: https://docs.google.com/document/d/1ACZgUCWCCSM6o7oNh9qsAIk5wfyq7mKsHCiyQxNsrcg/edit?usp=drivesdk
-- `docs/requirements.md`: https://docs.google.com/document/d/1G6XmZoa-LhnKuq4At6PVPJrr7IaT5XrP7IYYnwPKAPA/edit?usp=drivesdk
-- `docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md`: https://docs.google.com/document/d/11MyRx1UWsDlEx6LBFqiLszFBP6NGEAcz5KDbnTczlYQ/edit?usp=drivesdk
-- `docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md`: https://docs.google.com/document/d/18zF_qKGO0e1wN5Pevda9NjnsmEpeM6JjQ8qZMHQIClE/edit?usp=drivesdk
-- `docs/SECRET_ROTATION_RUNBOOK.md`: https://docs.google.com/document/d/1BuhE9B4Sc3oTzH0cBEKMs7hFbWJp8qhGplm03haUH48/edit?usp=drivesdk
-- `docs/SECURITY_AUDIT_REPORT_2026-Q2.md`: https://docs.google.com/document/d/18Giy7tbF_P5iNNbo8ornDeq38t6UPgxR9LJBJVzCs5A/edit?usp=drivesdk
-- `docs/SECURITY_AUDIT_RUNBOOK.md`: https://docs.google.com/document/d/1qld9AwkywSTLtPVT5g1HyD98FVJhKrnXoGiviN2tgyQ/edit?usp=drivesdk
-- `docs/SEQUENCE_DIAGRAMS.md`: https://docs.google.com/document/d/1h7CFApE7fncMQT6W8gbSkuieOpf-x0IA15Hd0HEAiGY/edit?usp=drivesdk
-- `docs/SETUP_GUIDE.md`: https://docs.google.com/document/d/16DonChND2WzQFWDZ8aubajlZdVB1aVnMsXnYLXE7xUI/edit?usp=drivesdk
-- `docs/SHEETS_TRACKERS_SCHEMA.md`: https://docs.google.com/document/d/11uhVT03zDzAnXLVHrcZAQCwQ4z4e0PbFjBcOOOEdvU8/edit?usp=drivesdk
-- `docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md`: https://docs.google.com/document/d/1jEicYb_uJHFTY5_RGJSN1PMGKilCpznOsKXWx9EIbbg/edit?usp=drivesdk
-- `docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md`: https://docs.google.com/document/d/1cZdaWmWxszmTRIcva3T3-GRkMpXa9qjT7MR-TIL7yHk/edit?usp=drivesdk
-- `docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md`: https://docs.google.com/document/d/11N-1PlKMV4nr2I1SBeMQISbbPZOAOVmhkqMKCf8Pg74/edit?usp=drivesdk
-- `docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md`: https://docs.google.com/document/d/135y0TSQWMvp-nBsUrIRUzDlRLWzlvRFF82D-56IQkHg/edit?usp=drivesdk
-- `docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md`: https://docs.google.com/document/d/1A0g0ka5kkLZzcBVTX802y8uzKLCJjz2hJRXXXwsXm30/edit?usp=drivesdk
-- `docs/SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1Dd5nercLOqw_GlWXEmbBXW62u8Q-YgRoulbPIgEtZtM/edit?usp=drivesdk
-- `docs/SUPPORT_CONTACT_AND_ESCALATION_RUNBOOK.md`: https://docs.google.com/document/d/1aiVwihpYd92tWZQb1K19OyM2FHND6TWwq9_y43eAlqQ/edit?usp=drivesdk
-- `docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md`: https://docs.google.com/document/d/1BMpsn974Ai8K3BY7GAC-XQBgY1zZlslE98ZgA9JB1ik/edit?usp=drivesdk
-- `docs/TERMS_OF_SERVICE.md`: https://docs.google.com/document/d/1bGSpEdgRyw06UaUQfwGsjLfS1qDimmSAsrN-yQvg2v0/edit?usp=drivesdk
-- `docs/TOKUSHOHO_NOTATION.md`: https://docs.google.com/document/d/1LUwRooXcdyrGB4AsuQo70Auz8DoQ-E5eyPV5cYUPWLk/edit?usp=drivesdk
-- `docs/UPTIME_MONITORING_AND_ALERT_RUNBOOK.md`: https://docs.google.com/document/d/1loht22D5jpIbl5Hcb8JAgGhdK_odNrAha6BzSFXhplA/edit?usp=drivesdk
-- `docs/USER_DATA_DELETION_FLOW.md`: https://docs.google.com/document/d/1-2u-qFsKNwrE9Jpl3dovC0fr_Prk4JZUF23xz1e1zQQ/edit?usp=drivesdk
-- `docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md`: https://docs.google.com/document/d/1E44oW3XLOkEwyNSq5kweNe4Jujx4RoBiG598C_gTr5M/edit?usp=drivesdk
-- `docs/USER_GUIDE_AND_FAQ.md`: https://docs.google.com/document/d/1qawKzp2UdanwIbnWqbVnRaRq4YIQlTEXxlj7mwhmfRk/edit?usp=drivesdk
-- `docs/WBS.md`: https://docs.google.com/document/d/16s5eoPSBLInfS6Kr9Hj4Qgc3y4QXjyjNSbojvZNxBuQ/edit?usp=drivesdk
-- `docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md`: https://docs.google.com/document/d/1U_VJfbWxl-akmnrFOngfFlOU_pQIpsG5af7bUtODigg/edit?usp=drivesdk
-- `docs/WBS_SYNC_GUIDE.md`: https://docs.google.com/document/d/1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY/edit?usp=drivesdk
-- `docs/WEEKLY_COST_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1Sg3jtNziaRKU5lqgZ254BvrEXW0L6KPkhE8hmb-8Cwg/edit?usp=drivesdk
+**1. 現在のプロダクト方向性で確定していること**
+* 6/2の社長打ち合わせにより、**「方向性A：AIフィット診断支援」**として推進することが決定し、社内パイロット（人材担当・営業担当）が進行中です[1-3]。
+* さらに6/17の打ち合わせにより、**「営業メールAIマッチングMVP」が最優先開発項目**として確定しました。共有営業アドレスに毎日届く大量の案件・要員メールを自動抽出・構造化し、双方向でマッチングする機能を実装し、これが有償化および一般公開（public_paid_launch）の必須ゲートとなります[4-7]。
 
-After re-authentication, this file will be replaced by a NotebookLM-generated
-agent brief with design, roadmap, and next-action guidance.
+**2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク**
+*(※ドキュメントに記録された当時の準備タスク)*
+* **プレゼン資料・判断材料の作成**: プレゼン構成、1枚絵サマリー、サービス方向性の判断マトリクスなどの資料整備[8, 9]。
+* **デモ環境の安定稼働確認**: 公開デモのREADME fallbackを防止するガードや、ローカルFastAPIの動作確認[10-12]。
+* **Google Workspace 連携の構築**: `data/WBS.tsv` を正本とした、Google Sheets（WBS、Summary、Timeline、課題管理表、QA表）およびCalendar（完了イベントの自動削除含む）への自動同期パイプラインの確立[10, 13, 14]。
+* **開発ナレッジ連携の実装**: NotebookLMへの資料投入、Notion証跡ページ作成、Slack投稿案生成、Obsidian雛形など、連携状態を示すローカル生成デモの準備[15, 16]。
+* **スライドの美麗化**: NotebookLMからのPPTX生成や、Canva/Figma MCPを用いたデザイン刷新とDrive共有[17-19]。
+
+**3. 6/2で社長に決めてもらうべき事項**
+*(※当時の論点整理・QAパックの内容)*
+* **サービス方向性と対象ユーザー**: プロトタイプを何のサービスとして育てるか（A:AI診断、B:PM支援、C:PoC構築、D:保留）および、最初に見せる対象ユーザー[20, 21]。
+* **最優先機能**: 6/16までの2週間で実装すべき最優先機能（AIスコア根拠説明、案件ストック管理など）[22]。
+* **AIエンジン選定とコスト上限**: 3-tool並走体制の維持可否と、月額APIコストの上限（1万/3万/5万円など）[23, 24]。
+* **公開範囲と法務確認**: 公開URLの社外共有範囲、認証層追加の要否、個人情報を取り扱う場合の法務確認時期[24, 25]。
+* **連携ツールの採用判断**: NotebookLM / Slack / Notion / Obsidian の正式運用における優先順位と共有範囲[25, 26]。
+
+**4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提**
+* **AIフォールバックの確保**: GeminiのQuota枯渇時や障害時には `AI_FORCE_MOCK=1` を設定し、deterministic fallback へ移行させることで開発・テストを止めない。上流クライアントはLiveとMockを意識しない設計にする[27-29]。
+* **DBプール接続の最適化**: Supabase PostgreSQL を利用し、Cloud Functions 等からは Supavisor transaction pooler（port 6543）を使用する。アプリ内の `psycopg2.pool.ThreadedConnectionPool` は最小1、最大4と小さく保つ[30-32]。
+* **RLSと権限分離**: フロントエンド（anonキー）からの直接データ削除・更新は禁止する。特権操作やAPIメーターの更新は Cloud Functions（`service_role` キー）からのみ実行し、RLSの認可には改変可能な `user_metadata` ではなく `public.firebase_uid()` を用いる[33-35]。
+* **シークレット・機密情報の隔離**: OAuthトークン、APIキー、メール本文全文、個人情報は、GitHub、Sheets、Issue、NotebookLMなどの外部へ絶対に露出・記録させない[36-38]。
+
+**5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題**
+* **NotebookLM**: `sync_docs_to_notebooklm.py` で同期を行うが、CLIの認証切れが発生するため、Workspaceアカウント（`k-umezawa@...`）を用いた `notebooklm_login_workspace.py` による手動再認証運用が必要[39, 40]。
+* **Slack**: CLI未検出および送信MCP未露出のため、草稿の提示（`slack_ceo_update.md`）に留まっている。実送信（WBS同期完了通知等）へ移行するには、投稿先チャンネルと送信権限の確定が必要[41-43]。
+* **Notion**: MCPによる証跡ページ作成やDB用CSV出力は行えているが、月次レポートの自動投稿（`post_report_to_notion.py`）等、運用フローへの完全な自動組み込み（T808）が未完了[44, 45]。
+* **Obsidian**: ローカルの思考メモ、ADR、プロンプト資産として運用し、公式化する内容のみを `docs/` に昇格させる（Gitには機密情報を含めない）[46, 47]。
+* **GitHub Issues**: WBS（報告・日程管理）とは分離し、個別の実装タスクや障害対応の追跡用として使い分ける運用を徹底する[48]。
+* **GitHub Project**: `read:project` のOAuthスコープ不足問題はブラウザ認証で解消（T794）したが、継続的な認証維持とIssue同期が課題[49, 50]。
+
+**6. WBSへ追加すべき次アクション**
+* **営業メールAIマッチングの実装 (T817_3 〜 T817_7)**: SupabaseスキーマとRLS整備、AI抽出パイプライン、双方向マッチングAPI/UI構築、人間レビュー機能、本番運用のコンプライアンス確保[6, 51, 52]。
+* **収益化と本番ローンチ対応**: Stripe Billing Meters APIを用いた課金実装 (T791)、特商法・課金規約の法務確認と価格のCEO承認 (T798, T804)、インボイス制度/Stripe Tax設定 (T813)、解約フロー実装 (T807)[53-57]。
+* **インフラ・品質保守**: Supabase Postgres 14 EOL（2026-07-01）へのアップグレード対応 (T811)、月次品質レポート自動配信 (T808)、アクセシビリティ検証 (T799)、利用状況アナリティクス導入 (T800)、外部ペネトレーションテストの計画・実施 (T805)[45, 56, 58-60]。
+* **環境移管と次回報告**: 開発・運用環境（Firebase/Supabase/GitHub）の会社アカウント・請求口座への移管準備 (T818) と、7/2仮の定例打ち合わせに向けた進捗報告資料の作成 (T819)[52, 61]。
+
+## Notebook Summary
+
+NotebookLM summary command return code: `0`
