@@ -1,0 +1,68 @@
+{
+  "task_id": "T817_2",
+  "generated_at": "2026-06-17T06:42:23Z",
+  "input_count": 3,
+  "unique_count": 2,
+  "duplicate_count": 1,
+  "supported_extensions": [
+    ".csv",
+    ".eml",
+    ".txt"
+  ],
+  "privacy_controls": [
+    "raw_email_body_not_written",
+    "sender_hash_used_for_identity",
+    "email_phone_secret_patterns_redacted_from_excerpts",
+    "dedupe_uses_sender_subject_body_hash"
+  ],
+  "duplicate_groups": {
+    "dec0931ce9426a9df73a51692a44c5cbf827d3867c105d29b16b8d2dcb1d5c47": [
+      "data/samples/sales_emails/project_1.eml",
+      "data/samples/sales_emails/project_1_duplicate.txt"
+    ]
+  },
+  "messages": [
+    {
+      "source_path": "data/samples/sales_emails/project_1.eml",
+      "source_type": "eml",
+      "duplicate": false,
+      "duplicate_of": "",
+      "dedupe_key": "dec0931ce9426a9df73a51692a44c5cbf827d3867c105d29b16b8d2dcb1d5c47",
+      "sender_hash": "1d81f23a4cf19c1608b94ea4b72e02692297685a6d18993ab16b86ce6d06468f",
+      "sender_domain": "example.test",
+      "message_id_hash": "9e8364c83df2c89d4c1970b26a98858b9e729d23e81327b593a94ca7c2bcce40",
+      "normalized_subject": "SQL Oracle remote project",
+      "body_hash": "a979db1f1d5dac8c0c0aab256341b8ec52ff9652aa1987f606c4ae497c8b7104",
+      "received_at": "Wed, 17 Jun 2026 10:00:00 +0900",
+      "body_excerpt": "SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted> / <phone:redacted>."
+    },
+    {
+      "source_path": "data/samples/sales_emails/project_1_duplicate.txt",
+      "source_type": "txt",
+      "duplicate": true,
+      "duplicate_of": "data/samples/sales_emails/project_1.eml",
+      "dedupe_key": "dec0931ce9426a9df73a51692a44c5cbf827d3867c105d29b16b8d2dcb1d5c47",
+      "sender_hash": "1d81f23a4cf19c1608b94ea4b72e02692297685a6d18993ab16b86ce6d06468f",
+      "sender_domain": "example.test",
+      "message_id_hash": "",
+      "normalized_subject": "SQL Oracle remote project",
+      "body_hash": "a979db1f1d5dac8c0c0aab256341b8ec52ff9652aa1987f606c4ae497c8b7104",
+      "received_at": "Wed, 17 Jun 2026 10:05:00 +0900",
+      "body_excerpt": "SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted> / <phone:redacted>."
+    },
+    {
+      "source_path": "data/samples/sales_emails/talent_1.csv#row2",
+      "source_type": "csv",
+      "duplicate": false,
+      "duplicate_of": "",
+      "dedupe_key": "cdce27acc8caf12485ab80abf06e506f4ca2460b897bbe8d6eac3c60473390da",
+      "sender_hash": "e802c252b2080f3c81cca49aa3a7ac1b2caad9f65b1a1d2dae952734b46d524e",
+      "sender_domain": "example.test",
+      "message_id_hash": "d4cf8b04d8d749871c42e3a93012ad3c578bf928bbe93ef11cb317e8c42fe681",
+      "normalized_subject": "Java AWS engineer available",
+      "body_hash": "79c5892fdefc1616451a16cbbfca8bd526883657f574282f3425ac1124c61965",
+      "received_at": "2026-06-17",
+      "body_excerpt": "Java and AWS engineer is available from July. Preferred: remote. Contact: <email:redacted>"
+    }
+  ]
+}

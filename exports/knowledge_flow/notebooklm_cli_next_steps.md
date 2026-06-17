@@ -1,6 +1,6 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-17T15:20:37+09:00
+Generated: 2026-06-17T18:21:54+09:00
 
 ## Current Status
 
@@ -67,6 +67,7 @@ Generated: 2026-06-17T15:20:37+09:00
 - `docs/PROJECT_STRUCTURE.md`: https://docs.google.com/document/d/1ACZgUCWCCSM6o7oNh9qsAIk5wfyq7mKsHCiyQxNsrcg/edit?usp=drivesdk
 - `docs/requirements.md`: https://docs.google.com/document/d/1G6XmZoa-LhnKuq4At6PVPJrr7IaT5XrP7IYYnwPKAPA/edit?usp=drivesdk
 - `docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md`: https://docs.google.com/document/d/11MyRx1UWsDlEx6LBFqiLszFBP6NGEAcz5KDbnTczlYQ/edit?usp=drivesdk
+- `docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md`: https://docs.google.com/document/d/18zF_qKGO0e1wN5Pevda9NjnsmEpeM6JjQ8qZMHQIClE/edit?usp=drivesdk
 - `docs/SECRET_ROTATION_RUNBOOK.md`: https://docs.google.com/document/d/1BuhE9B4Sc3oTzH0cBEKMs7hFbWJp8qhGplm03haUH48/edit?usp=drivesdk
 - `docs/SECURITY_AUDIT_REPORT_2026-Q2.md`: https://docs.google.com/document/d/18Giy7tbF_P5iNNbo8ornDeq38t6UPgxR9LJBJVzCs5A/edit?usp=drivesdk
 - `docs/SECURITY_AUDIT_RUNBOOK.md`: https://docs.google.com/document/d/1qld9AwkywSTLtPVT5g1HyD98FVJhKrnXoGiviN2tgyQ/edit?usp=drivesdk
