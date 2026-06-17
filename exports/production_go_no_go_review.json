@@ -1,6 +1,6 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-17T05:35:51Z",
+  "generated_at": "2026-06-17T06:08:52Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
@@ -340,10 +340,10 @@
       "current_state": "BLOCKED",
       "owner": "Codex + Antigravity",
       "decision_authority": "CEO / 開発責任者",
-      "related_wbs": "T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7",
-      "related_issue": "R75",
+      "related_wbs": "T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7;T821",
+      "related_issue": "R75;R77",
       "last_checked": "2026-06-17",
-      "notes": "一般公開・有償化前の新コア機能ゲート。T817_2以降の実装、人間レビュー、個人情報/監査/負荷確認が必要。",
+      "notes": "一般公開・有償化前の新コア機能ゲート。共有営業アドレスからの案件/要員メール取り込み、エンジニア→案件と案件→人材の双方向検索、人間レビュー、個人情報/監査/負荷確認が必要。",
       "wbs_statuses": {
         "T817": "実行中",
         "T817_1": "完了",
@@ -352,7 +352,8 @@
         "T817_4": "未着手",
         "T817_5": "未着手",
         "T817_6": "未着手",
-        "T817_7": "未着手"
+        "T817_7": "未着手",
+        "T821": "完了"
       },
       "missing_evidence": []
     }
