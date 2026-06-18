@@ -48,3 +48,4 @@ TEST-022	Planning/Transcript	6/17文字起こし全文照合と日付/双方向�
 TEST-023	Backend/AI Matching	営業メール取り込みPoCと重複排除	T817_2向けに.eml/.txt/.csv取り込み、RE/FW件名正規化、送信者/件名/本文ハッシュ重複判定、メール/電話/secret-like値redaction、Markdown/JSONレポート生成を検証	PASS	Pytest	100%	0%	2026-06-17 20:30
 TEST-024	Backend/DB	営業メールAIマッチングSupabaseスキーマ/RLS/migration	T817_3向けにSupabase/PostgreSQL/SQLite migration検証、9テーブル作成、RLS有効化、anon/authenticated直アクセスREVOKE、本文全文・secret非保存、synthetic seed、rollback整備、全体pytest 92件を検証	PASS	Pytest + migration validator	100%	0%	2026-06-18 10:30
 TEST-025	Backend/AI Matching	営業メールAI抽出パイプラインとdeterministic fallback	T817_4向けに案件要件/要員情報/スキルタグ抽出、必須/尚可分類、単価/勤務地/リモート/稼働時期/商流/根拠抜粋/信頼度、要員匿名キー、メール/電話/secret-like値redaction、CLI出力を検証	PASS	Pytest	100%	0%	2026-06-19 01:10
+TEST-026	Backend/UI AI Matching	営業メールAIマッチング検索API/UIと候補リスト	T817_5向けにsanitized extraction reviewから案件→人材/人材→案件の候補生成、スキルフィルタ、最低スコア、API応答、CLI出力、UI候補表示データ、メール/電話/secret-like値非混入を検証	PASS	Pytest + static UI review	100%	0%	2026-06-19 04:45

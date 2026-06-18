@@ -637,6 +637,7 @@
 
         .comparison-table {
             width: 100%;
+            min-width: 1120px;
             border-collapse: collapse;
             text-align: left;
             font-size: 14px;
@@ -707,6 +708,15 @@
             font-weight: 600;
             font-family: monospace;
             font-size: 15px;
+        }
+
+        .reason-cell {
+            max-width: 240px;
+            min-width: 180px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.55;
+            white-space: normal;
         }
 
         .action-link {
@@ -2411,6 +2421,8 @@
                                 <th class="sortable" onclick="sortComparison('culture')">カルチャー適合 <span class="sort-indicator" id="sort-culture"></span></th>
                                 <th class="sortable" onclick="sortComparison('growth')">成長親和性 <span class="sort-indicator" id="sort-growth"></span></th>
                                 <th class="sortable" onclick="sortComparison('performing')">稼働安定性 <span class="sort-indicator" id="sort-performing"></span></th>
+                                <th>一致根拠</th>
+                                <th>確認/不足</th>
                                 <th>アクション</th>
                             </tr>
                         </thead>
@@ -3314,10 +3326,60 @@
             { id: 3, title: "Python機械学習エンジニア", company: "Mighty Link", company_culture: "データドリブンなアプローチ、研究開発とビジネス価値の調和を重視" }
         ];
 
+        let salesEmailMatches = [];
         let currentSortField = "";
         let currentSortOrder = "desc";
 
+        async function initSalesEmailMatchData() {
+            try {
+                const res = await fetch("/api/sales-email/matches?direction=project_to_talent&limit=50");
+                if (!res.ok) return false;
+                const data = await res.json();
+                if (data.status !== "success" || !Array.isArray(data.matches) || data.matches.length === 0) {
+                    return false;
+                }
+
+                salesEmailMatches = data.matches;
+                windowComparisonJobs = (data.projects || []).map((project, index) => ({
+                    id: 1000 + index,
+                    title: project.title || `営業メール案件 ${index + 1}`,
+                    company: "営業メールDB",
+                    company_culture: "T817_4の抽出結果をもとに、根拠と不足理由を人間レビュー前提で表示します。",
+                    parsed_requirements: { mandatory: project.required_skills || [] },
+                    job_description: [
+                        `案件名: ${project.title || "営業メール案件"}`,
+                        `必須スキル: ${(project.required_skills || []).join(", ") || "未抽出"}`,
+                        `尚可スキル: ${(project.nice_to_have_skills || []).join(", ") || "未抽出"}`,
+                        `勤務地/リモート: ${project.location || "未抽出"} / ${project.remote_type || "unknown"}`,
+                        `根拠: ${project.evidence_excerpt || "redacted evidence only"}`
+                    ].join("\n"),
+                    sales_email_project_key: project.project_key
+                }));
+                comparisonStock = (data.talents || []).map((talent, index) => ({
+                    id: 2000 + index,
+                    name: talent.display_name || `匿名候補者 ${index + 1}`,
+                    skills: (talent.skills || []).join(", "),
+                    evidence: talent.evidence_excerpt || "",
+                    sales_email_talent_key: talent.talent_key
+                }));
+                return windowComparisonJobs.length > 0 && comparisonStock.length > 0;
+            } catch (e) {
+                console.warn("Could not fetch sales email matches, using existing comparison data:", e);
+                return false;
+            }
+        }
+
         async function initComparisonBoard() {
+            const salesEmailLoaded = await initSalesEmailMatchData();
+            if (salesEmailLoaded) {
+                const select = document.getElementById("comparison-job-select");
+                if (select) {
+                    select.innerHTML = windowComparisonJobs.map(j => `<option value="${j.id}">${escapeHtml(j.company)} - ${escapeHtml(j.title)}</option>`).join("");
+                }
+                updateComparisonBoard();
+                return;
+            }
+
             // Fetch jobs and engineers from real backend if possible
             try {
                 const res = await fetch("/api/jobs");
@@ -3410,6 +3472,27 @@
             };
         }
 
+        function getSalesEmailMatchScore(engineer, job) {
+            if (!engineer.sales_email_talent_key || !job.sales_email_project_key) return null;
+            const row = salesEmailMatches.find(item =>
+                item.project_key === job.sales_email_project_key &&
+                item.talent_key === engineer.sales_email_talent_key
+            );
+            if (!row) return null;
+            const breakdown = row.score_breakdown || {};
+            return {
+                final_score: row.score || 0,
+                skill: breakdown.required_skill_fit || 0,
+                culture: breakdown.condition_fit || 0,
+                growth: breakdown.evidence_confidence || 0,
+                performing: breakdown.nice_skill_fit || 0,
+                match_reason: row.match_reason || "sanitized evidence match",
+                mismatch_reason: Array.isArray(row.mismatch_reasons) ? row.mismatch_reasons.join("; ") : "",
+                matched_skills: row.matched_skills || [],
+                missing_skills: row.missing_skills || []
+            };
+        }
+
         function updateComparisonBoard() {
             const select = document.getElementById("comparison-job-select");
             if (!select) return;
@@ -3419,7 +3502,7 @@
 
             // Compute scores for each stocked engineer against active job
             let computedList = comparisonStock.map(eng => {
-                const metrics = getMatchScore(eng, activeJob);
+                const metrics = getSalesEmailMatchScore(eng, activeJob) || getMatchScore(eng, activeJob);
                 return {
                     ...eng,
                     ...metrics
@@ -3444,7 +3527,7 @@
             if (!tbody) return;
 
             if (computedList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--muted)">候補エンジニアが登録されていません。</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--muted)">候補エンジニアが登録されていません。</td></tr>`;
                 return;
             }
 
@@ -3461,6 +3544,8 @@
                         <td class="score-cell">${item.culture}%</td>
                         <td class="score-cell">${item.growth}%</td>
                         <td class="score-cell">${item.performing}%</td>
+                        <td class="reason-cell">${escapeHtml(item.match_reason || "既存デモスコアで算出")}</td>
+                        <td class="reason-cell">${escapeHtml(item.mismatch_reason || "詳細分析で確認")}</td>
                         <td>
                             <a class="action-link" onclick="loadCandidateToInputs(${item.id})">詳細分析</a>
                             <span class="action-separator">|</span>
@@ -3567,7 +3652,7 @@
             const select = document.getElementById("comparison-job-select");
             const jobTitle = select ? select.options[select.selectedIndex].text : "job";
             
-            let csvContent = "\ufeffCandidate Name,Final Compatibility Score,Skill Fit,Culture Fit,Growth Fit,Performing Fit\n";
+            let csvContent = "\ufeffCandidate Name,Final Compatibility Score,Skill Fit,Culture Fit,Growth Fit,Performing Fit,Reason,Check Points\n";
             
             const rows = document.querySelectorAll("#comparison-tbody tr");
             if (rows.length === 0 || rows[0].innerText.includes("登録されていません")) {
@@ -3577,15 +3662,17 @@
             
             rows.forEach(tr => {
                 const cells = tr.querySelectorAll("td");
-                if (cells.length >= 6) {
+                if (cells.length >= 8) {
                     const name = cells[0].innerText.trim();
                     const final = cells[1].innerText.trim().replace("%", "");
                     const skill = cells[2].innerText.trim().replace("%", "");
                     const culture = cells[3].innerText.trim().replace("%", "");
                     const growth = cells[4].innerText.trim().replace("%", "");
                     const performing = cells[5].innerText.trim().replace("%", "");
+                    const reason = cells[6].innerText.trim().replace(/"/g, '""');
+                    const checks = cells[7].innerText.trim().replace(/"/g, '""');
                     
-                    csvContent += `"${name}",${final},${skill},${culture},${growth},${performing}\n`;
+                    csvContent += `"${name}",${final},${skill},${culture},${growth},${performing},"${reason}","${checks}"\n`;
                 }
             });
             

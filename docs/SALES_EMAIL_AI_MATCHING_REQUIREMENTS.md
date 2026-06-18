@@ -3,7 +3,7 @@
 - 作成日: 2026-06-17
 - 関連WBS: T817, T817_1, T817_2, T817_3, T817_4, T817_5, T817_6, T817_7, T821
 - 関連Issue: #104, #105, #106, #107, #109
-- ステータス: MVP要件定義、T817_2の安全なファイル取り込みPoC、T817_3のSupabaseスキーマ/RLS/migration整備、T817_4のAI抽出deterministic fallbackまで完了。実装はT817_5以降で段階実施。
+- ステータス: MVP要件定義、T817_2の安全なファイル取り込みPoC、T817_3のSupabaseスキーマ/RLS/migration整備、T817_4のAI抽出deterministic fallback、T817_5の双方向検索API/UIまで完了。人間レビューと本番hardeningはT817_6以降で段階実施。
 
 ---
 
@@ -48,7 +48,7 @@
 | `email_match_results` | 案件とエンジニアのマッチ結果、スコア、根拠 |
 | `email_match_feedback` | 人間レビュー結果、修正タグ、採用/却下理由 |
 
-T817_3で `docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md` を追加し、Supabase/PostgreSQL/SQLiteのmigration、synthetic seed、rollback、pytestを整備済み。Supabase側は全テーブルでRLSを有効化し、`anon` と `authenticated` の直接アクセスを `REVOKE ALL` した。T817_4/T817_5でAPI実装に合わせたサービス層ポリシーを追加するまでは、公開REST経由の読み書き用 `CREATE POLICY` は作らない。
+T817_3で `docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md` を追加し、Supabase/PostgreSQL/SQLiteのmigration、synthetic seed、rollback、pytestを整備済み。Supabase側は全テーブルでRLSを有効化し、`anon` と `authenticated` の直接アクセスを `REVOKE ALL` した。T817_5の候補検索APIは、Git管理されたsanitized extraction reviewを読むだけで、Supabaseへ匿名REST直書きしない。人間レビュー保存と実メールDBへのサービス層ポリシーはT817_6以降で追加する。
 
 ### 4. AI抽出項目
 
@@ -115,7 +115,7 @@ T817_4で `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md`、`src/sales_email_e
 | T817_2 | Gmail/ファイル取り込みPoC | 完了。`.eml`、`.txt`、CSVを安全に取り込み、送信者/正規化件名/本文ハッシュで重複排除し、本文全文・secret非保存をpytestで検証済み |
 | T817_3 | Supabaseスキーマ/RLS/migration | 完了。9テーブル、RLS、anon/authenticated直アクセスREVOKE、synthetic seed、rollback、SQLite fallback、pytestを整備済み |
 | T817_4 | AI抽出パイプライン | 完了。案件要件、要員情報、スキルタグ、根拠抜粋、信頼度、deterministic fallbackを実装し、本文全文・個人連絡先・secret-like値の非出力をpytestで検証済み |
-| T817_5 | マッチングAPI/UI | 条件検索、候補リスト、根拠表示が動く |
+| T817_5 | マッチングAPI/UI | 完了。条件検索、候補リスト、根拠表示、CSV出力が動く |
 | T817_6 | 人間レビュー/評価ログ | 誤抽出修正、採用/却下、フィードバックが保存される |
 | T817_7 | 本番運用hardening | 個人情報、監査、負荷、アカウント権限、Go/No-Goを確認済み |
 
@@ -123,7 +123,7 @@ T817_4で `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md`、`src/sales_email_e
 
 ## 公開判定への影響
 
-本機能は2026-06-17打ち合わせで新たに最優先機能となったため、`public_paid_launch` の追加ゲートとする。限定デモは継続できるが、営業メールAIマッチングを売りにした一般公開、有償提供、営業利用は、T817_5からT817_7までの実装、レビュー、セキュリティ確認後に再判定する。
+本機能は2026-06-17打ち合わせで新たに最優先機能となったため、`public_paid_launch` の追加ゲートとする。限定デモは継続できるが、営業メールAIマッチングを売りにした一般公開、有償提供、営業利用は、T817_6からT817_7までの人間レビュー、運用hardening、セキュリティ確認後に再判定する。
 
 ---
 

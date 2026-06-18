@@ -28,6 +28,7 @@ import base64
 import secrets
 import tempfile
 import threading
+from pathlib import Path
 from urllib.parse import urlparse
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field, asdict
@@ -64,6 +65,24 @@ try:
     from .rate_limit import SlidingWindowRateLimiter, client_identifier
 except ImportError:
     from rate_limit import SlidingWindowRateLimiter, client_identifier
+
+try:
+    from .sales_email_match import (
+        SearchCriteria,
+        build_match_report_from_file,
+        criteria_from_values,
+    )
+except ImportError:
+    try:
+        from sales_email_match import (
+            SearchCriteria,
+            build_match_report_from_file,
+            criteria_from_values,
+        )
+    except ImportError:
+        SearchCriteria = None
+        build_match_report_from_file = None
+        criteria_from_values = None
 
 # Try loading optional libraries for Sheets & Gemini
 try:
@@ -195,6 +214,10 @@ EXTERNAL_API_USAGE_LOG_FILE = os.path.join(DATA_DIR, "external_api_usage.jsonl")
 KNOWLEDGE_FLOW_DIR = os.path.join(EXPORTS_DIR, "knowledge_flow")
 KNOWLEDGE_FLOW_MANIFEST = os.path.join(KNOWLEDGE_FLOW_DIR, "manifest.json")
 KNOWLEDGE_FLOW_SCRIPT = os.path.join(PROJECT_ROOT, "scripts", "generate_knowledge_flow_demo.py")
+SALES_EMAIL_MATCH_REPORT_FILE = os.environ.get(
+    "SALES_EMAIL_MATCH_REPORT_FILE",
+    os.path.join(EXPORTS_DIR, "sales_email_extraction_review.json"),
+)
 FAVICON_FILE = os.path.join(PROJECT_ROOT, "favicon.ico")
 CHROME_DEVTOOLS_WORKSPACE_PATH = "/.well-known/appspecific/com.chrome.devtools.json"
 SEEDANCE_DEMO_DIR = os.path.join(EXPORTS_DIR, "seedance_demo")
@@ -3251,6 +3274,50 @@ async def evaluate_matching(req: EvaluationRequest):
     
     print("[+] Deterministic evaluator fallback completed successfully.")
     return fallback_response
+
+
+@app.get("/api/sales-email/matches")
+async def list_sales_email_matches(
+    direction: str = "project_to_talent",
+    skills: str = "",
+    remote: str = "",
+    min_score: int = 0,
+    limit: int = 20,
+    project_key: str = "",
+    talent_key: str = "",
+    username: Optional[str] = Depends(verify_credentials_optional),
+):
+    """Return sanitized bidirectional candidate lists from T817_4 extraction output."""
+    if build_match_report_from_file is None or criteria_from_values is None:
+        raise HTTPException(status_code=503, detail="sales email matching module is unavailable")
+
+    report_path = Path(SALES_EMAIL_MATCH_REPORT_FILE)
+    try:
+        criteria = criteria_from_values(
+            direction=direction,
+            skills=skills,
+            remote=remote,
+            min_score=min_score,
+            limit=limit,
+            project_key=project_key,
+            talent_key=talent_key,
+        )
+        report = build_match_report_from_file(report_path, criteria)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        print(f"[-] sales email match endpoint failed: {exc}")
+        raise HTTPException(status_code=500, detail="sales email match report generation failed") from exc
+
+    try:
+        source_report = os.path.relpath(str(report_path), PROJECT_ROOT)
+    except ValueError:
+        source_report = str(report_path)
+    return {
+        "status": "success",
+        "source_report": source_report,
+        **report,
+    }
 
 
 @app.post("/api/feedback")

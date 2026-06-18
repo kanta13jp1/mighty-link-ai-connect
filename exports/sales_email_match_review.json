@@ -1,0 +1,122 @@
+{
+  "task_id": "T817_5",
+  "generated_at": "2026-06-18T19:44:39Z",
+  "model_name": "deterministic-sales-email-matcher-v1",
+  "direction": "project_to_talent",
+  "filters": {
+    "direction": "project_to_talent",
+    "skills": [
+      "Java"
+    ],
+    "remote": "",
+    "min_score": 0,
+    "limit": 20,
+    "project_key": "",
+    "talent_key": ""
+  },
+  "privacy_controls": [
+    "email_phone_secret_patterns_redacted_from_evidence",
+    "human_review_required_before_confirmed_status",
+    "raw_email_body_not_written",
+    "sender_hash_or_domain_only",
+    "talent_identity_anonymized",
+    "raw_email_body_not_loaded",
+    "match_output_uses_redacted_evidence_only",
+    "human_review_required_before_outreach"
+  ],
+  "project_count": 1,
+  "talent_count": 1,
+  "match_count": 1,
+  "projects": [
+    {
+      "project_key": "project_dfd7e130d4a1029d",
+      "title": "SQL Oracle remote project",
+      "required_skills": [
+        "Java",
+        "Oracle",
+        "SQL"
+      ],
+      "nice_to_have_skills": [],
+      "skill_categories": {
+        "database": [
+          "Oracle",
+          "SQL"
+        ],
+        "language": [
+          "Java"
+        ]
+      },
+      "rate_min": null,
+      "rate_max": null,
+      "location": "",
+      "remote_type": "remote",
+      "start_date_text": "2026-07",
+      "evidence_excerpt": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted> / <phone:redacted>.",
+      "confidence": 0.73,
+      "source_paths": [
+        "data/samples/sales_emails/project_1.eml",
+        "data/samples/sales_emails/project_1_duplicate.txt"
+      ]
+    }
+  ],
+  "talents": [
+    {
+      "talent_key": "talent_edc29c0bdc42d66e",
+      "display_name": "talent_edc29c0bdc42d66e",
+      "skills": [
+        "AWS",
+        "Java"
+      ],
+      "skill_categories": {
+        "cloud": [
+          "AWS"
+        ],
+        "language": [
+          "Java"
+        ]
+      },
+      "desired_rate_min": null,
+      "desired_rate_max": null,
+      "desired_location": "",
+      "remote_preference": "remote",
+      "availability_text": "",
+      "evidence_excerpt": "Java AWS engineer available Java and AWS engineer is available from July. Preferred: remote. Contact: <email:redacted>",
+      "confidence": 0.62,
+      "source_paths": [
+        "data/samples/sales_emails/talent_1.csv#row2"
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "project_key": "project_dfd7e130d4a1029d",
+      "project_title": "SQL Oracle remote project",
+      "talent_key": "talent_edc29c0bdc42d66e",
+      "talent_label": "talent_edc29c0bdc42d66e",
+      "score": 52,
+      "score_breakdown": {
+        "required_skill_fit": 33,
+        "nice_skill_fit": 50,
+        "condition_fit": 100,
+        "evidence_confidence": 68
+      },
+      "matched_skills": [
+        "Java"
+      ],
+      "missing_skills": [
+        "Oracle",
+        "SQL"
+      ],
+      "matched_conditions": [
+        "remote:remote"
+      ],
+      "mismatch_reasons": [
+        "missing required skills: Oracle, SQL"
+      ],
+      "match_reason": "skill overlap: Java; conditions: remote:remote",
+      "project_evidence": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted> / <phone:redacted>.",
+      "talent_evidence": "Java AWS engineer available Java and AWS engineer is available from July. Preferred: remote. Contact: <email:redacted>",
+      "review_status": "pending"
+    }
+  ]
+}
