@@ -1,6 +1,6 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-06-19T00:04:23+09:00
+Generated: 2026-06-19T04:03:25+09:00
 Status: `skipped`
 
 NotebookLM CLI is not ready yet, so this file is a placeholder.
@@ -74,6 +74,7 @@ During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
 - `docs/requirements.md`: https://docs.google.com/document/d/1G6XmZoa-LhnKuq4At6PVPJrr7IaT5XrP7IYYnwPKAPA/edit?usp=drivesdk
 - `docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md`: https://docs.google.com/document/d/11MyRx1UWsDlEx6LBFqiLszFBP6NGEAcz5KDbnTczlYQ/edit?usp=drivesdk
 - `docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md`: https://docs.google.com/document/d/1Yu-4tcUc6U4goBmTi2MloyiDgIJvNN0Xps1be_XQS5A/edit?usp=drivesdk
+- `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md`: https://docs.google.com/document/d/1KQO1j61S3tUB2d3Dmmw4s-dEFgyNBhRBqGLMAWgopX8/edit?usp=drivesdk
 - `docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md`: https://docs.google.com/document/d/18zF_qKGO0e1wN5Pevda9NjnsmEpeM6JjQ8qZMHQIClE/edit?usp=drivesdk
 - `docs/SECRET_ROTATION_RUNBOOK.md`: https://docs.google.com/document/d/1BuhE9B4Sc3oTzH0cBEKMs7hFbWJp8qhGplm03haUH48/edit?usp=drivesdk
 - `docs/SECURITY_AUDIT_REPORT_2026-Q2.md`: https://docs.google.com/document/d/18Giy7tbF_P5iNNbo8ornDeq38t6UPgxR9LJBJVzCs5A/edit?usp=drivesdk

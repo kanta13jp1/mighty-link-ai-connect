@@ -5,7 +5,7 @@
 - 関連Issue: #107
 - 関連課題: R75, R80
 - 対象DB: Supabase/PostgreSQL、ローカルSQLite fallback
-- ステータス: T817_3 完了。実メール接続、AI抽出、API/UI、人間レビューはT817_4以降で実装する。
+- ステータス: T817_3 完了。T817_4のAI抽出deterministic fallbackも完了。API/UI、人間レビューはT817_5以降で実装する。
 
 ---
 
@@ -87,7 +87,7 @@ python scripts/manage_db_migrations.py apply --engine sqlite --sqlite-path data/
 
 ## 次工程
 
-- T817_4: Gmail/ファイル取り込み結果から案件要件、要員情報、スキルタグをAI抽出し、根拠抜粋と信頼度を保存する。
+- T817_4: 完了。Gmail/ファイル取り込み結果から案件要件、要員情報、スキルタグを抽出し、根拠抜粋と信頼度を保存できる構造を `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md` に整理済み。
 - T817_5: 双方向検索API/UIを作り、案件から候補人材、人材から候補案件を表示する。
 - T817_6: 人間レビュー、採用/却下、補正ログ、フィードバック改善ループを実装する。
 - T817_7: 個人情報最小化、監査ログ、保持/削除、負荷、アカウント移管、Go/No-Goを確認する。

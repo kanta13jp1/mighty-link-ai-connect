@@ -116,6 +116,8 @@ T817_2のPoCはローカルファイルで検証し、実メール本文やOAuth
 
 Gmail APIの取得処理は、今回の `sales_email_ingest.py` に `RawSalesEmail` を渡すアダプタとして追加する。これにより、重複排除、redaction、レポート生成の挙動をGmail/ファイルで共通化する。
 
+T817_4で `scripts/extract_sales_email_requirements.py` を追加したため、取り込み後は同じ `.eml`、`.txt`、CSV入力から案件要件、要員情報、スキルタグ、redacted根拠抜粋、信頼度を抽出できる。
+
 ---
 
 ## 検証

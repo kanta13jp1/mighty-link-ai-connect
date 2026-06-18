@@ -1,0 +1,201 @@
+{
+  "task_id": "T817_4",
+  "generated_at": "2026-06-18T18:20:56Z",
+  "model_name": "deterministic-sales-email-extractor-v1",
+  "fallback_used": true,
+  "input_count": 3,
+  "project_requirement_count": 2,
+  "talent_profile_count": 1,
+  "skill_tag_count": 8,
+  "privacy_controls": [
+    "raw_email_body_not_written",
+    "email_phone_secret_patterns_redacted_from_evidence",
+    "sender_hash_or_domain_only",
+    "talent_identity_anonymized",
+    "human_review_required_before_confirmed_status"
+  ],
+  "extractions": [
+    {
+      "source_path": "data/samples/sales_emails/project_1.eml",
+      "source_type": "eml",
+      "dedupe_key": "dec0931ce9426a9df73a51692a44c5cbf827d3867c105d29b16b8d2dcb1d5c47",
+      "sender_domain": "example.test",
+      "normalized_subject": "SQL Oracle remote project",
+      "email_kind": "project_intro",
+      "model_name": "deterministic-sales-email-extractor-v1",
+      "fallback_used": true,
+      "project_requirement": {
+        "title": "SQL Oracle remote project",
+        "summary": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted> / <phone:redacted>.",
+        "required_skills": [
+          "Java",
+          "Oracle",
+          "SQL"
+        ],
+        "nice_to_have_skills": [],
+        "skill_categories": {
+          "database": [
+            "Oracle",
+            "SQL"
+          ],
+          "language": [
+            "Java"
+          ]
+        },
+        "rate_min": null,
+        "rate_max": null,
+        "rate_unit": "",
+        "location": "",
+        "remote_type": "remote",
+        "start_date_text": "2026-07",
+        "duration_text": "",
+        "commercial_flow": "",
+        "restrictions": "",
+        "evidence_excerpt": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted> / <phone:redacted>.",
+        "confidence": 0.73,
+        "review_status": "pending"
+      },
+      "talent_profile": null,
+      "skill_tags": [
+        {
+          "skill_name": "Oracle",
+          "skill_category": "database",
+          "importance": "required",
+          "confidence": 0.86,
+          "evidence_excerpt": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted>..."
+        },
+        {
+          "skill_name": "SQL",
+          "skill_category": "database",
+          "importance": "required",
+          "confidence": 0.86,
+          "evidence_excerpt": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted>..."
+        },
+        {
+          "skill_name": "Java",
+          "skill_category": "language",
+          "importance": "required",
+          "confidence": 0.86,
+          "evidence_excerpt": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted>..."
+        }
+      ]
+    },
+    {
+      "source_path": "data/samples/sales_emails/project_1_duplicate.txt",
+      "source_type": "txt",
+      "dedupe_key": "dec0931ce9426a9df73a51692a44c5cbf827d3867c105d29b16b8d2dcb1d5c47",
+      "sender_domain": "example.test",
+      "normalized_subject": "SQL Oracle remote project",
+      "email_kind": "project_intro",
+      "model_name": "deterministic-sales-email-extractor-v1",
+      "fallback_used": true,
+      "project_requirement": {
+        "title": "SQL Oracle remote project",
+        "summary": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted> / <phone:redacted>.",
+        "required_skills": [
+          "Java",
+          "Oracle",
+          "SQL"
+        ],
+        "nice_to_have_skills": [],
+        "skill_categories": {
+          "database": [
+            "Oracle",
+            "SQL"
+          ],
+          "language": [
+            "Java"
+          ]
+        },
+        "rate_min": null,
+        "rate_max": null,
+        "rate_unit": "",
+        "location": "",
+        "remote_type": "remote",
+        "start_date_text": "2026-07",
+        "duration_text": "",
+        "commercial_flow": "",
+        "restrictions": "",
+        "evidence_excerpt": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted> / <phone:redacted>.",
+        "confidence": 0.73,
+        "review_status": "pending"
+      },
+      "talent_profile": null,
+      "skill_tags": [
+        {
+          "skill_name": "Oracle",
+          "skill_category": "database",
+          "importance": "required",
+          "confidence": 0.86,
+          "evidence_excerpt": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted>..."
+        },
+        {
+          "skill_name": "SQL",
+          "skill_category": "database",
+          "importance": "required",
+          "confidence": 0.86,
+          "evidence_excerpt": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted>..."
+        },
+        {
+          "skill_name": "Java",
+          "skill_category": "language",
+          "importance": "required",
+          "confidence": 0.86,
+          "evidence_excerpt": "SQL Oracle remote project SQL and Oracle engineer is required for a remote backend project. Skills: SQL, Oracle, Java, API development. Start: 2026-07. Contact: <email:redacted>..."
+        }
+      ]
+    },
+    {
+      "source_path": "data/samples/sales_emails/talent_1.csv#row2",
+      "source_type": "csv",
+      "dedupe_key": "cdce27acc8caf12485ab80abf06e506f4ca2460b897bbe8d6eac3c60473390da",
+      "sender_domain": "example.test",
+      "normalized_subject": "Java AWS engineer available",
+      "email_kind": "talent_proposal",
+      "model_name": "deterministic-sales-email-extractor-v1",
+      "fallback_used": true,
+      "project_requirement": null,
+      "talent_profile": {
+        "anonymized_talent_key": "talent_edc29c0bdc42d66e",
+        "summary": "Java AWS engineer available Java and AWS engineer is available from July. Preferred: remote. Contact: <email:redacted>",
+        "skills": [
+          "AWS",
+          "Java"
+        ],
+        "skill_categories": {
+          "cloud": [
+            "AWS"
+          ],
+          "language": [
+            "Java"
+          ]
+        },
+        "experience_years": null,
+        "desired_rate_min": null,
+        "desired_rate_max": null,
+        "desired_location": "",
+        "remote_preference": "remote",
+        "availability_text": "",
+        "evidence_excerpt": "Java AWS engineer available Java and AWS engineer is available from July. Preferred: remote. Contact: <email:redacted>",
+        "confidence": 0.62,
+        "review_status": "pending"
+      },
+      "skill_tags": [
+        {
+          "skill_name": "AWS",
+          "skill_category": "cloud",
+          "importance": "nice_to_have",
+          "confidence": 0.86,
+          "evidence_excerpt": "Java AWS engineer available Java and AWS engineer is available from July. Preferred: remote. Contact: <email:redacted>"
+        },
+        {
+          "skill_name": "Java",
+          "skill_category": "language",
+          "importance": "nice_to_have",
+          "confidence": 0.86,
+          "evidence_excerpt": "Java AWS engineer available Java and AWS engineer is available from July. Preferred: remote. Contact: <email:redacted>"
+        }
+      ]
+    }
+  ]
+}

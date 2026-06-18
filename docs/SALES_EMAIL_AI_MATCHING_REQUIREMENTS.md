@@ -2,8 +2,8 @@
 
 - 作成日: 2026-06-17
 - 関連WBS: T817, T817_1, T817_2, T817_3, T817_4, T817_5, T817_6, T817_7, T821
-- 関連Issue: #104, #105, #106, #107
-- ステータス: MVP要件定義、T817_2の安全なファイル取り込みPoC、T817_3のSupabaseスキーマ/RLS/migration整備まで完了。実装はT817_4以降で段階実施。
+- 関連Issue: #104, #105, #106, #107, #109
+- ステータス: MVP要件定義、T817_2の安全なファイル取り込みPoC、T817_3のSupabaseスキーマ/RLS/migration整備、T817_4のAI抽出deterministic fallbackまで完了。実装はT817_5以降で段階実施。
 
 ---
 
@@ -68,7 +68,7 @@ AI抽出では、最低限次の項目を構造化する。
 - メール由来の根拠抜粋
 - 抽出信頼度
 
-AIの出力はそのまま確定情報にせず、人間レビューで修正できる前提にする。モデル障害時は決定論的なキーワード抽出へフォールバックする。
+T817_4で `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md`、`src/sales_email_extract.py`、`scripts/extract_sales_email_requirements.py` を追加し、案件要件、要員情報、スキルタグ、根拠抜粋、信頼度を構造化するdeterministic fallbackを実装済み。AIの出力はそのまま確定情報にせず、人間レビューで修正できる前提にする。
 
 ### 5. マッチング
 
@@ -114,7 +114,7 @@ AIの出力はそのまま確定情報にせず、人間レビューで修正で
 | T817_1 | MVP要件定義・データモデル設計 | 本文書、議事録、課題、QA、Go/No-Goゲートへ反映済み |
 | T817_2 | Gmail/ファイル取り込みPoC | 完了。`.eml`、`.txt`、CSVを安全に取り込み、送信者/正規化件名/本文ハッシュで重複排除し、本文全文・secret非保存をpytestで検証済み |
 | T817_3 | Supabaseスキーマ/RLS/migration | 完了。9テーブル、RLS、anon/authenticated直アクセスREVOKE、synthetic seed、rollback、SQLite fallback、pytestを整備済み |
-| T817_4 | AI抽出パイプライン | 案件要件とスキルタグを構造化し、根拠を残せる |
+| T817_4 | AI抽出パイプライン | 完了。案件要件、要員情報、スキルタグ、根拠抜粋、信頼度、deterministic fallbackを実装し、本文全文・個人連絡先・secret-like値の非出力をpytestで検証済み |
 | T817_5 | マッチングAPI/UI | 条件検索、候補リスト、根拠表示が動く |
 | T817_6 | 人間レビュー/評価ログ | 誤抽出修正、採用/却下、フィードバックが保存される |
 | T817_7 | 本番運用hardening | 個人情報、監査、負荷、アカウント権限、Go/No-Goを確認済み |
@@ -123,7 +123,7 @@ AIの出力はそのまま確定情報にせず、人間レビューで修正で
 
 ## 公開判定への影響
 
-本機能は2026-06-17打ち合わせで新たに最優先機能となったため、`public_paid_launch` の追加ゲートとする。限定デモは継続できるが、営業メールAIマッチングを売りにした一般公開、有償提供、営業利用は、T817_4からT817_7までの実装、レビュー、セキュリティ確認後に再判定する。
+本機能は2026-06-17打ち合わせで新たに最優先機能となったため、`public_paid_launch` の追加ゲートとする。限定デモは継続できるが、営業メールAIマッチングを売りにした一般公開、有償提供、営業利用は、T817_5からT817_7までの実装、レビュー、セキュリティ確認後に再判定する。
 
 ---
 
@@ -132,6 +132,8 @@ AIの出力はそのまま確定情報にせず、人間レビューで修正で
 今回の要件化では、次の公式ドキュメントを参照した。
 
 - Gmail API Guides: https://developers.google.com/workspace/gmail/api/guides
+- Gemini API Models: https://ai.google.dev/gemini-api/docs/models
+- Gemini API Context Caching: https://ai.google.dev/gemini-api/docs/caching
 - Supabase Database Migrations: https://supabase.com/docs/guides/deployment/database-migrations
 - Supabase Row Level Security: https://supabase.com/docs/guides/database/postgres/row-level-security
 - Firebase Hosting Docs: https://firebase.google.com/docs/hosting
