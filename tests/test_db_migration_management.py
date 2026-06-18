@@ -53,12 +53,22 @@ def test_sqlite_apply_is_idempotent(tmp_path):
         "match_results",
         "feedback_events",
         "support_requests",
+        "sales_mailbox_sources",
+        "sales_email_messages",
+        "sales_email_entities",
+        "project_requirements",
+        "talent_profiles_from_email",
+        "requirement_skill_tags",
+        "email_parse_runs",
+        "email_match_results",
+        "email_match_feedback",
         "schema_migrations",
     }.issubset(tables)
     assert ledger == [
         ("20260614000000", "app_core_schema"),
         ("20260616000000", "feedback_events"),
         ("20260616000001", "support_requests"),
+        ("20260618000000", "sales_email_matching_schema"),
     ]
 
 

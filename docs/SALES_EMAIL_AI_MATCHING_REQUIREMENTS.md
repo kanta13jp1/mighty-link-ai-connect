@@ -2,8 +2,8 @@
 
 - 作成日: 2026-06-17
 - 関連WBS: T817, T817_1, T817_2, T817_3, T817_4, T817_5, T817_6, T817_7, T821
-- 関連Issue: #104, #105, #106
-- ステータス: MVP要件定義完了。T817_2の安全なファイル取り込みPoCと重複排除は完了。実装はT817_3以降で段階実施。
+- 関連Issue: #104, #105, #106, #107
+- ステータス: MVP要件定義、T817_2の安全なファイル取り込みPoC、T817_3のSupabaseスキーマ/RLS/migration整備まで完了。実装はT817_4以降で段階実施。
 
 ---
 
@@ -48,7 +48,7 @@
 | `email_match_results` | 案件とエンジニアのマッチ結果、スコア、根拠 |
 | `email_match_feedback` | 人間レビュー結果、修正タグ、採用/却下理由 |
 
-RLSを有効にし、匿名REST経由での直接読み書きは避ける。アプリケーションAPI経由で監査可能な操作に限定する。
+T817_3で `docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md` を追加し、Supabase/PostgreSQL/SQLiteのmigration、synthetic seed、rollback、pytestを整備済み。Supabase側は全テーブルでRLSを有効化し、`anon` と `authenticated` の直接アクセスを `REVOKE ALL` した。T817_4/T817_5でAPI実装に合わせたサービス層ポリシーを追加するまでは、公開REST経由の読み書き用 `CREATE POLICY` は作らない。
 
 ### 4. AI抽出項目
 
@@ -113,7 +113,7 @@ AIの出力はそのまま確定情報にせず、人間レビューで修正で
 | --- | --- | --- |
 | T817_1 | MVP要件定義・データモデル設計 | 本文書、議事録、課題、QA、Go/No-Goゲートへ反映済み |
 | T817_2 | Gmail/ファイル取り込みPoC | 完了。`.eml`、`.txt`、CSVを安全に取り込み、送信者/正規化件名/本文ハッシュで重複排除し、本文全文・secret非保存をpytestで検証済み |
-| T817_3 | Supabaseスキーマ/RLS/migration | テーブル、RLS、seed、rollbackが揃う |
+| T817_3 | Supabaseスキーマ/RLS/migration | 完了。9テーブル、RLS、anon/authenticated直アクセスREVOKE、synthetic seed、rollback、SQLite fallback、pytestを整備済み |
 | T817_4 | AI抽出パイプライン | 案件要件とスキルタグを構造化し、根拠を残せる |
 | T817_5 | マッチングAPI/UI | 条件検索、候補リスト、根拠表示が動く |
 | T817_6 | 人間レビュー/評価ログ | 誤抽出修正、採用/却下、フィードバックが保存される |
@@ -123,7 +123,7 @@ AIの出力はそのまま確定情報にせず、人間レビューで修正で
 
 ## 公開判定への影響
 
-本機能は2026-06-17打ち合わせで新たに最優先機能となったため、`public_paid_launch` の追加ゲートとする。限定デモは継続できるが、営業メールAIマッチングを売りにした一般公開、有償提供、営業利用は、T817_2からT817_7までの実装、レビュー、セキュリティ確認後に再判定する。
+本機能は2026-06-17打ち合わせで新たに最優先機能となったため、`public_paid_launch` の追加ゲートとする。限定デモは継続できるが、営業メールAIマッチングを売りにした一般公開、有償提供、営業利用は、T817_4からT817_7までの実装、レビュー、セキュリティ確認後に再判定する。
 
 ---
 
@@ -132,7 +132,8 @@ AIの出力はそのまま確定情報にせず、人間レビューで修正で
 今回の要件化では、次の公式ドキュメントを参照した。
 
 - Gmail API Guides: https://developers.google.com/workspace/gmail/api/guides
-- Supabase Docs: https://supabase.com/docs/guides/getting-started
+- Supabase Database Migrations: https://supabase.com/docs/guides/deployment/database-migrations
+- Supabase Row Level Security: https://supabase.com/docs/guides/database/postgres/row-level-security
 - Firebase Hosting Docs: https://firebase.google.com/docs/hosting
 - Google Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate
 - GitHub Actions Docs: https://docs.github.com/actions

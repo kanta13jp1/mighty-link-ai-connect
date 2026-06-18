@@ -85,7 +85,7 @@ Geminiメモは会話の要点を概ね捉えているが、プロジェクト�
 | T816 | 寛太梅澤 | WordPress/FTP経由で既存ホームページへポリシーリンクを追加する | 未着手 |
 | T817_1 | Codex | 営業メールAIマッチングMVPの要件定義とデータモデルを整理する | 完了 |
 | T817_2 | Codex | Gmail APIまたはファイルアップロード経由のメール取り込みPoCを作る | 完了 |
-| T817_3 | Codex | Supabaseの案件メールDBスキーマ、RLS、migrationを設計する | 未着手 |
+| T817_3 | Codex | Supabaseの案件メールDBスキーマ、RLS、migrationを設計する | 完了 |
 | T817_4 | Codex / Antigravity | AIによるスキル、案件要件抽出パイプラインを実装する | 未着手 |
 | T817_5 | Codex / Antigravity | マッチング検索APIと候補者リストアップUIを実装する | 未着手 |
 | T817_6 | Codex / Claude Code | 人間レビュー、評価ログ、フィードバック改善ループを整備する | 未着手 |

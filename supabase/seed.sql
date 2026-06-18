@@ -104,3 +104,202 @@ SET
   daily_tokens_count = EXCLUDED.daily_tokens_count,
   limit_exceeded = EXCLUDED.limit_exceeded,
   reset_at = EXCLUDED.reset_at;
+
+WITH source AS (
+  INSERT INTO public.sales_mailbox_sources (
+    source_key,
+    display_name,
+    source_type,
+    retention_days,
+    metadata
+  )
+  VALUES (
+    'local_synthetic_sales_mailbox',
+    'Local synthetic sales mailbox',
+    'manual_upload',
+    30,
+    '{"seed": true, "contains_real_mail": false}'::jsonb
+  )
+  ON CONFLICT (source_key) DO UPDATE
+  SET
+    display_name = EXCLUDED.display_name,
+    source_type = EXCLUDED.source_type,
+    retention_days = EXCLUDED.retention_days,
+    metadata = EXCLUDED.metadata
+  RETURNING id
+),
+project_message AS (
+  INSERT INTO public.sales_email_messages (
+    mailbox_source_id,
+    message_id_hash,
+    dedupe_key,
+    sender_hash,
+    sender_domain,
+    normalized_subject,
+    received_at,
+    body_hash,
+    body_excerpt,
+    source_path,
+    source_type,
+    ingest_status,
+    metadata
+  )
+  SELECT
+    id,
+    repeat('1', 64),
+    repeat('2', 64),
+    repeat('3', 64),
+    'example.test',
+    'Synthetic SQL Oracle remote project',
+    timezone('utc'::text, now()),
+    repeat('4', 64),
+    'Synthetic project mail. Contact fields are redacted before storage.',
+    'supabase/seed.sql#project',
+    'manual_upload',
+    'parsed',
+    '{"seed": true}'::jsonb
+  FROM source
+  ON CONFLICT (dedupe_key) DO UPDATE
+  SET
+    ingest_status = EXCLUDED.ingest_status,
+    body_excerpt = EXCLUDED.body_excerpt,
+    metadata = EXCLUDED.metadata
+  RETURNING id
+),
+talent_message AS (
+  INSERT INTO public.sales_email_messages (
+    mailbox_source_id,
+    message_id_hash,
+    dedupe_key,
+    sender_hash,
+    sender_domain,
+    normalized_subject,
+    received_at,
+    body_hash,
+    body_excerpt,
+    source_path,
+    source_type,
+    ingest_status,
+    metadata
+  )
+  SELECT
+    id,
+    repeat('5', 64),
+    repeat('6', 64),
+    repeat('7', 64),
+    'example.test',
+    'Synthetic Java AWS talent proposal',
+    timezone('utc'::text, now()),
+    repeat('8', 64),
+    'Synthetic talent mail. Contact fields are redacted before storage.',
+    'supabase/seed.sql#talent',
+    'manual_upload',
+    'parsed',
+    '{"seed": true}'::jsonb
+  FROM source
+  ON CONFLICT (dedupe_key) DO UPDATE
+  SET
+    ingest_status = EXCLUDED.ingest_status,
+    body_excerpt = EXCLUDED.body_excerpt,
+    metadata = EXCLUDED.metadata
+  RETURNING id
+),
+project_row AS (
+  INSERT INTO public.project_requirements (
+    message_id,
+    title,
+    summary,
+    required_skills,
+    nice_to_have_skills,
+    skill_categories,
+    rate_min,
+    rate_max,
+    rate_unit,
+    location,
+    remote_type,
+    start_date_text,
+    duration_text,
+    evidence_excerpt,
+    review_status,
+    metadata
+  )
+  SELECT
+    id,
+    'Synthetic SQL Oracle remote project',
+    'Local seed project requirement for sales email matching schema validation.',
+    '["SQL", "Oracle", "Java"]'::jsonb,
+    '["AWS"]'::jsonb,
+    '{"db": ["SQL", "Oracle"], "language": ["Java"], "cloud": ["AWS"]}'::jsonb,
+    700000,
+    900000,
+    'monthly_jpy',
+    'Tokyo',
+    'remote',
+    '2026-07',
+    '3 months',
+    'SQL and Oracle engineer is required for a remote backend project.',
+    'confirmed',
+    '{"seed": true}'::jsonb
+  FROM project_message
+  RETURNING id
+),
+talent_row AS (
+  INSERT INTO public.talent_profiles_from_email (
+    message_id,
+    anonymized_talent_key,
+    summary,
+    skills,
+    skill_categories,
+    experience_years,
+    desired_rate_min,
+    desired_rate_max,
+    desired_location,
+    remote_preference,
+    availability_text,
+    evidence_excerpt,
+    review_status,
+    metadata
+  )
+  SELECT
+    id,
+    'local_synthetic_talent_001',
+    'Local seed talent profile for project-to-talent matching validation.',
+    '["Java", "AWS", "API development"]'::jsonb,
+    '{"language": ["Java"], "cloud": ["AWS"], "process": ["API development"]}'::jsonb,
+    5,
+    650000,
+    850000,
+    'Tokyo',
+    'remote',
+    '2026-07',
+    'Java and AWS engineer is available from July.',
+    'confirmed',
+    '{"seed": true}'::jsonb
+  FROM talent_message
+  ON CONFLICT (anonymized_talent_key) DO UPDATE
+  SET
+    summary = EXCLUDED.summary,
+    skills = EXCLUDED.skills,
+    skill_categories = EXCLUDED.skill_categories,
+    review_status = EXCLUDED.review_status,
+    metadata = EXCLUDED.metadata
+  RETURNING id
+)
+INSERT INTO public.requirement_skill_tags (
+  project_requirement_id,
+  talent_profile_id,
+  skill_name,
+  skill_category,
+  importance,
+  confidence,
+  evidence_excerpt,
+  metadata
+)
+SELECT id, NULL, 'SQL', 'db', 'required', 0.95, 'SQL and Oracle engineer is required.', '{"seed": true}'::jsonb
+FROM project_row
+UNION ALL
+SELECT id, NULL, 'Oracle', 'db', 'required', 0.95, 'SQL and Oracle engineer is required.', '{"seed": true}'::jsonb
+FROM project_row
+UNION ALL
+SELECT NULL, id, 'Java', 'language', 'experience', 0.9, 'Java and AWS engineer is available.', '{"seed": true}'::jsonb
+FROM talent_row;

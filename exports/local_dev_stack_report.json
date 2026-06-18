@@ -1,8 +1,8 @@
 {
   "status": "ok",
-  "generated_at": "2026-06-14T17:21:52Z",
+  "generated_at": "2026-06-18T14:51:14Z",
   "summary": {
-    "ok": 21,
+    "ok": 20,
     "warning": 0,
     "critical": 0
   },
@@ -113,7 +113,7 @@
       "state": "ok",
       "message": "Supabase migrations are present",
       "details": {
-        "count": 1
+        "count": 4
       }
     },
     {
@@ -130,11 +130,6 @@
       "key": "local_config.secret_scan",
       "state": "ok",
       "message": "No secret-like values found in local stack config"
-    },
-    {
-      "key": "local_env.supabase_db_url",
-      "state": "ok",
-      "message": "SUPABASE_DB_URL is unset; local stack does not require production DB credentials"
     }
   ]
 }

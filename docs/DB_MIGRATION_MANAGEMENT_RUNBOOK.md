@@ -81,6 +81,18 @@ Supabase migration history と Git の migration file がずれた場合は、`s
 - `supabase/migrations/` の命名・重複version・SQL statement検出
 - SQLite migration runner の idempotency pytest
 
+## 営業メールAIマッチング migration
+
+T817_3で営業メールAIマッチング用の `20260618000000_sales_email_matching_schema` を追加した。詳細は `docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md` を正本にする。
+
+- Supabase: `supabase/migrations/20260618000000_sales_email_matching_schema.sql`
+- PostgreSQL runtime: `db/migrations/postgres/20260618000000_sales_email_matching_schema.sql`
+- SQLite fallback: `db/migrations/sqlite/20260618000000_sales_email_matching_schema.sql`
+- rollback: `db/migrations/rollback/20260618000000_sales_email_matching_schema_rollback.sql`
+- test: `tests/test_sales_email_schema_migrations.py`
+
+このmigrationはメール本文全文、OAuth token、service role secretを保存しない。Supabase側では全テーブルでRLSを有効化し、`anon` と `authenticated` の直接アクセスを `REVOKE ALL` する。T817_4/T817_5でAPIサービス層を実装するまで、公開REST用の `CREATE POLICY` は追加しない。
+
 ## 障害時
 
 - 軽微な schema 誤り: forward-fix migration を追加する。
@@ -90,5 +102,6 @@ Supabase migration history と Git の migration file がずれた場合は、`s
 ## 公式ドキュメント確認メモ
 
 - Supabase Database Migrations: `supabase migration new`、`supabase db reset`、`supabase db push`、チーム開発時の「リモートDB直接変更禁止」を正本にする。
+- Supabase Row Level Security: テーブル単位でRLSを有効化し、公開REST/APIのポリシーは最小権限で明示的に追加する。
 - Firebase Functions/Hosting: environment と custom domain SSL は本番接続に影響するため、DB migration と同じ closeout で公開URL guardを通す。
 - GitHub Actions: migration validation は PR/push/workflow_dispatch で自動実行する。

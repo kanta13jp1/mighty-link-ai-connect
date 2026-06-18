@@ -269,10 +269,10 @@ gantt
 | **T814** | 7. 決定後実行 | 共通管理 | 本番ドメイン設定および開発・運用体制に関する社長報告文面の起草・レビュー | Antigravity | Antigravity + Gemini | 状況報告文面のドラフトと改善案提示による社長への報告準備完了 | 完了 |
 | **T815** | 7. 決定後実行 | 共通管理 | 6/17 定例打ち合わせアジェンダPowerPointスライドの自動生成 | Antigravity | Antigravity + Gemini | アジェンダ生成スクリプト generate_agenda_deck_2026-06-17.py に基づき、PPTXスライドを自動出力完了 | 完了 |
 | **T816** | 7. 決定後実行 | リリース運用 | WordPress/FTP経由での既存ホームページへのポリシーリンク追加実装 | 寛太梅澤 | 人間 | お名前.com/WordPressの提供済みFTP/管理者権限を用いて、全ファイル置換ではなく差分確認付きでポリシーリンクを反映。認証情報はGitHub/Sheets/Issue/NotebookLMへ記録しない | 完了 |
-| **T817** | 7. 決定後実行 | バックエンド開発 | 営業メールの自動解析・DB化およびAIマッチング機能の本格実装 | 寛太梅澤 + Codex | VSCode + Codex + Gemini API + Supabase + Gmail API | 2026-06-17打ち合わせで最優先化。docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.mdを正本に、共有営業アドレスのメール取り込み、AI抽出、Supabase案件/要員DB、双方向検索、候補者マッチング、人間レビュー、本番hardeningをT817_1〜T817_7で実施。T817_2を前倒し完了したため後続を再スケジュール | 実行中 |
+| **T817** | 7. 決定後実行 | バックエンド開発 | 営業メールの自動解析・DB化およびAIマッチング機能の本格実装 | 寛太梅澤 + Codex | VSCode + Codex + Gemini API + Supabase + Gmail API | 2026-06-17打ち合わせで最優先化。docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.mdを正本に、共有営業アドレスのメール取り込み、AI抽出、Supabase案件/要員DB、双方向検索、候補者マッチング、人間レビュー、本番hardeningをT817_1〜T817_7で実施。T817_2/T817_3を前倒し完了したため後続を再スケジュール | 実行中 |
 | **T817_1** | 7. 決定後実行 | 要件定義 | 営業メールAIマッチングMVP要件定義・データモデル設計 | Codex | VSCode + Codex + official docs | Geminiメモと文字起こしを精査し、docs/meetings/2026-06-17_CEO_Meeting_Minutes.mdとdocs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.mdへ反映。release Go/No-GoにPUBLIC-11を追加し、課題/QA/GitHub Issue #104/#105へ同期 | 完了 |
 | **T817_2** | 7. 決定後実行 | バックエンド開発 | Gmail/ファイル取り込みPoCと重複排除 | Codex | VSCode + Codex + Gmail API | src/sales_email_ingest.py と scripts/ingest_sales_emails.py で .eml/.txt/CSV の安全な取り込み、件名/送信者/本文ハッシュ重複排除、本文全文・secret非保存、redactedレポート生成を実装。Runbookとpytestを追加しIssue #106へ同期 | 完了 |
-| **T817_3** | 7. 決定後実行 | DB設計 | Supabase案件メールDBスキーマ・RLS・migration整備 | Codex | VSCode + Codex + Supabase | sales_email_messages/project_requirements/requirement_skill_tags/email_parse_runs/email_match_results/email_match_feedbackのmigration、RLS、rollback、seedを整備する | 未着手 |
+| **T817_3** | 7. 決定後実行 | DB設計 | Supabase案件メールDBスキーマ・RLS・migration整備 | Codex | VSCode + Codex + Supabase | sales_email_messages/project_requirements/talent_profiles_from_email/requirement_skill_tags/email_parse_runs/email_match_results/email_match_feedback等のmigration、RLS、seed、rollback、SQLite fallback、pytestを整備。匿名/認証済みREST直アクセスを閉じ、サービス層経由の前提をRunbook化してIssue #107へ同期 | 完了 |
 | **T817_4** | 7. 決定後実行 | AI実装 | 営業メールからのスキル・案件要件抽出パイプライン | Codex + Antigravity | VSCode + Codex + Gemini API | 必須/尚可スキル、単価、勤務地、リモート、稼働時期、商流、根拠抜粋、信頼度を構造化し、モデル障害時のdeterministic fallbackを実装する | 未着手 |
 | **T817_5** | 7. 決定後実行 | フロントエンド | マッチング検索API/UI・候補者リストアップ | Codex + Antigravity | VSCode + Codex + Antigravity | スキル/条件検索、エンジニア→案件、案件→人材の双方向候補一覧、スコア、根拠、不一致理由を表示するAPIとUIを実装する | 未着手 |
 | **T817_6** | 7. 決定後実行 | 品質管理 | 人間レビュー・評価ログ・フィードバック改善ループ | Codex + Claude Code | VSCode + Codex + Claude Code | 誤抽出修正、採用/却下、再解析、レビュー履歴、改善フィードバックをDBと運用手順に反映する | 未着手 |
@@ -281,6 +281,7 @@ gantt
 | **T819** | 7. 決定後実行 | 共通管理 | 7/2(木)仮 定例打ち合わせの実施と進捗報告 | 寛太梅澤 | 人間 + NotebookLM + Google Workspace | 営業メールAIマッチングPoC、既存サイト更新、アカウント移行準備、Go/No-Go状況を2026-07-02(木)仮の打ち合わせ資料へまとめる | 未着手 |
 | **T820** | 7. 決定後実行 | 共通管理 | 6/17 定例打ち合わせ決定事項のプロジェクト・WBSへの反映 | Codex + Antigravity | VSCode + Codex + Antigravity + Gemini | Geminiメモの正確性を確認し、議事録、WBS、課題管理表、QA表、営業メールAIマッチング要件、Issue #104、NotebookLM/Sheets/Calendar同期へ反映 | 完了 |
 | **T821** | 7. 決定後実行 | 共通管理 | 6/17文字起こし全文照合・日付/双方向マッチング要件補正 | Codex | VSCode + Codex + official docs | 文字起こしをGeminiメモ反映済み議事録と照合し、次回打ち合わせを2026-07-02(木)仮へ補正。共有営業アドレス、BP一斉配信、SQL/Oracle過剰ヒット、案件/人材双方向マッチングをdocs/WBS/課題/QA/Issue #105へ反映し、認証情報全文は保存しない | 完了 |
+| **T822** | 7. 決定後実行 | リリース運用 | モバイル表示時のホームページ main1.jpeg 404エラーの修正 | Antigravity | Antigravity + Gemini | Vegasスライダーのモバイル用画像ソースに baseURL を付与し相対パスによる404エラーを解消。FTPで second.js を本番へアップロードして動作検証完了 | 完了 |
 
 ---
 
