@@ -4,7 +4,7 @@
 - 関連WBS: T817, T817_4
 - 関連Issue: #109
 - 関連課題: R75, R81
-- ステータス: T817_4 完了。T817_5のAPI/UIも完了。人間レビュー、本番hardeningはT817_6以降で実装する。
+- ステータス: T817_4 完了。T817_5のAPI/UI、T817_6の人間レビュー保存も完了。本番hardeningはT817_7で実装する。
 
 ---
 
@@ -69,7 +69,7 @@ python -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract
 ## 次工程
 
 - T817_5: 完了。`sales_email_extraction_review.json` 相当の構造をAPI/UIで検索し、案件→人材、人材→案件の双方向候補リストを表示する。
-- T817_6: 人間レビューで抽出結果を採用/却下/補正し、`email_match_feedback` へつなぐ。
+- T817_6: 完了。人間レビューで抽出結果を採用/却下/要確認/補正し、`email_match_feedback` とredacted評価ログへ接続済み。
 - T817_7: 実メール接続、保持/削除、監査ログ、負荷、アカウント権限、Go/No-Goを確認する。
 
 ## 公式ドキュメント確認メモ

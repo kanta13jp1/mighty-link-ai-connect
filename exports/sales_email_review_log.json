@@ -1,0 +1,58 @@
+{
+  "task_id": "T817_6",
+  "generated_at": "2026-06-19T05:07:59Z",
+  "model_name": "human-sales-email-review-loop-v1",
+  "privacy_controls": [
+    "raw_email_body_not_loaded",
+    "review_notes_redacted",
+    "talent_identity_anonymized",
+    "human_decision_logged"
+  ],
+  "review_count": 1,
+  "status_counts": {
+    "needs_review": 1
+  },
+  "improvement_loop": {
+    "accepted": 0,
+    "rejected": 0,
+    "corrected": 0,
+    "needs_review": 1,
+    "ready_for_model_prompt_review": 0
+  },
+  "reviews": [
+    {
+      "task_id": "T817_6",
+      "review_id": "review_c7b20e65003b8b79e268",
+      "generated_at": "2026-06-19T05:07:59Z",
+      "model_name": "human-sales-email-review-loop-v1",
+      "match_key": "match_0afa39928552104ea48c",
+      "feedback_status": "needs_review",
+      "reviewer_id": "codex-session",
+      "project_key": "project_dfd7e130d4a1029d",
+      "project_title": "SQL Oracle remote project",
+      "talent_key": "talent_edc29c0bdc42d66e",
+      "talent_label": "talent_edc29c0bdc42d66e",
+      "original_score": 52,
+      "corrected_score": null,
+      "matched_skills": [
+        "Java"
+      ],
+      "missing_skills": [
+        "Oracle",
+        "SQL"
+      ],
+      "mismatch_reasons": [
+        "missing required skills: Oracle, SQL"
+      ],
+      "reviewer_notes": "T817_6 initial human-review loop smoke: Java overlap is useful, but Oracle and SQL are missing, so outreach remains blocked until reviewer confirmation.",
+      "corrected_fields": {},
+      "next_action": "Confirm Oracle/SQL experience evidence or reject this candidate for the SQL Oracle project.",
+      "privacy_controls": [
+        "raw_email_body_not_loaded",
+        "review_notes_redacted",
+        "talent_identity_anonymized",
+        "human_decision_logged"
+      ]
+    }
+  ]
+}

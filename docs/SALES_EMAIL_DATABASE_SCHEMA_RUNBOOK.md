@@ -1,11 +1,11 @@
 # 営業メールAIマッチング DBスキーマ Runbook
 
 - 作成日: 2026-06-18
-- 関連WBS: T817, T817_3
+- 関連WBS: T817, T817_3, T817_6
 - 関連Issue: #107
-- 関連課題: R75, R80
+- 関連課題: R75, R80, R83
 - 対象DB: Supabase/PostgreSQL、ローカルSQLite fallback
-- ステータス: T817_3 完了。T817_4のAI抽出deterministic fallback、T817_5の双方向検索API/UIも完了。人間レビューはT817_6以降で実装する。
+- ステータス: T817_3 完了。T817_4のAI抽出deterministic fallback、T817_5の双方向検索API/UI、T817_6の人間レビュー保存も完了。本番hardeningはT817_7で実施する。
 
 ---
 
@@ -25,6 +25,7 @@
 | rollback SQL | `db/migrations/rollback/20260618000000_sales_email_matching_schema_rollback.sql` |
 | synthetic seed | `supabase/seed.sql` |
 | 検証テスト | `tests/test_sales_email_schema_migrations.py` |
+| 人間レビューRunbook | `docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md` |
 
 ## 追加テーブル
 
@@ -45,7 +46,7 @@
 1. メール本文全文、OAuthトークン、service role secret、添付ファイル実体は保存しない。
 2. `sales_email_messages.raw_storage_policy` は `hash_and_redacted_excerpt_only` に固定する。
 3. Supabase側は全テーブルでRLSを有効化し、`anon` と `authenticated` からの直接アクセスを `REVOKE ALL` する。
-4. T817_5の候補検索APIはsanitized extraction reviewを読むだけで、Supabaseへ匿名REST直書きしない。公開RESTからの読み書き用 `CREATE POLICY` は、人間レビュー保存と実メールDB運用を扱うT817_6以降で必要最小限に追加する。
+4. T817_5の候補検索APIはsanitized extraction reviewを読むだけで、Supabaseへ匿名REST直書きしない。T817_6の人間レビューAPIはBasic Auth管理API経由で `email_match_feedback` に保存し、公開RESTからの匿名直書きは許可しない。
 5. 本番適用時は、Supabase Dashboardまたはバックアップスクリプトでbackup/PITR時刻を記録してから1レーンだけが実行する。
 6. GitHub Issue、Sheets、NotebookLM、公開資料には実メール本文、個人メールアドレス、電話番号、認証情報を記録しない。
 
@@ -89,7 +90,7 @@ python scripts/manage_db_migrations.py apply --engine sqlite --sqlite-path data/
 
 - T817_4: 完了。Gmail/ファイル取り込み結果から案件要件、要員情報、スキルタグを抽出し、根拠抜粋と信頼度を保存できる構造を `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md` に整理済み。
 - T817_5: 完了。双方向検索API/UIを作り、案件から候補人材、人材から候補案件を表示する。
-- T817_6: 人間レビュー、採用/却下、補正ログ、フィードバック改善ループを実装する。
+- T817_6: 完了。人間レビュー、採用/却下/要確認/補正ログ、フィードバック改善ループを `docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md` に整理済み。
 - T817_7: 個人情報最小化、監査ログ、保持/削除、負荷、アカウント移管、Go/No-Goを確認する。
 
 ## 公式ドキュメント確認メモ

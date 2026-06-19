@@ -1,10 +1,10 @@
 # 営業メールAIマッチング検索API/UI Runbook
 
 - 作成日: 2026-06-19
-- 関連WBS: T817, T817_5
+- 関連WBS: T817, T817_5, T817_6
 - 関連Issue: #110
-- 関連課題: R75, R82
-- ステータス: T817_5 完了。人間レビュー、評価ログ、本番hardeningはT817_6以降で実装する。
+- 関連課題: R75, R82, R83
+- ステータス: T817_5 完了。T817_6で人間レビュー、評価ログ、`email_match_feedback` 保存も完了。本番hardeningはT817_7で実装する。
 
 ---
 
@@ -12,7 +12,7 @@
 
 T817_4で生成した安全な営業メール抽出レビューJSONを入力に、案件から候補人材、人材から候補案件を双方向にリストアップする。候補にはスコア、スキル一致、条件一致、根拠、不一致理由を付ける。
 
-この段階では営業判断へ自動確定しない。すべての候補は `review_status=pending` とし、T817_6の人間レビューで採用、却下、補正する。
+この段階では営業判断へ自動確定しない。すべての候補は `review_status=pending` とし、T817_6の `POST /api/sales-email/reviews` で人間レビューの採用、却下、要確認、補正を保存する。
 
 ## 正本ファイル
 
@@ -22,9 +22,10 @@ T817_4で生成した安全な営業メール抽出レビューJSONを入力に�
 | CLI | `scripts/build_sales_email_match_review.py` |
 | API | `GET /api/sales-email/matches` in `src/app.py` |
 | UI | `src/index.html`, `index.html` の案件候補比較ボード |
-| テスト | `tests/test_sales_email_match.py` |
+| テスト | `tests/test_sales_email_match.py`, `tests/test_sales_email_review.py` |
 | 入力 | `exports/sales_email_extraction_review.json` |
 | 出力 | `exports/sales_email_match_review.json`, `exports/sales_email_match_review.md` |
+| 人間レビュー | `exports/sales_email_review_log.json`, `exports/sales_email_review_log.md` |
 
 ## API
 
@@ -72,7 +73,7 @@ CSVエクスポートにも根拠と確認ポイントを含める。
 1. 入力JSONに `raw_email_body_not_written`, `email_phone_secret_patterns_redacted_from_evidence`, `talent_identity_anonymized` がない場合はAPI/CLIで拒否する。
 2. マッチング処理ではメール本文全文を読まない。T817_4のredacted evidenceと構造化項目だけを使う。
 3. UI表示は匿名候補者キーを使い、氏名や連絡先は表示しない。
-4. `review_status=pending` を維持し、人間レビュー前に営業利用の確定判断へ使わない。
+4. `review_status=pending` を維持し、人間レビュー前に営業利用の確定判断へ使わない。レビュー後も実メール接続後の運用hardeningが終わるまでは公開・有償利用へ使わない。
 5. 実メール接続後もNotebookLM、GitHub、Sheetsへ本文全文や個人連絡先を同期しない。
 
 ## 実行方法
@@ -103,7 +104,7 @@ python -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract
 
 ## 次工程
 
-- T817_6: 人間レビューで採用/却下/補正を保存し、`email_match_feedback` へ接続する。
+- T817_6: 完了。人間レビューで採用/却下/要確認/補正を保存し、`email_match_feedback` とredacted評価ログへ接続済み。
 - T817_7: 実メール接続後の保持/削除、監査ログ、負荷、アカウント権限、Go/No-Goを確認する。
 
 ## 公式ドキュメント確認メモ

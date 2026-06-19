@@ -1,5 +1,5 @@
 {
-  "generated_at_jst": "2026-06-19T04:58:20+09:00",
+  "generated_at_jst": "2026-06-19T14:03:30+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "google_docs": {
     "docs_ai_cost_monitoring_and_quota_design_md": {
@@ -368,7 +368,7 @@
         }
       ],
       "createdTime": "2026-06-13T21:03:38.375Z",
-      "modifiedTime": "2026-06-18T19:53:45.403Z"
+      "modifiedTime": "2026-06-19T05:04:06.490Z"
     },
     "docs_demo_security_and_auth_design_md": {
       "source": "docs/DEMO_SECURITY_AND_AUTH_DESIGN.md",
@@ -848,7 +848,7 @@
         }
       ],
       "createdTime": "2026-06-16T23:51:48.038Z",
-      "modifiedTime": "2026-06-18T19:55:54.477Z"
+      "modifiedTime": "2026-06-19T05:04:00.945Z"
     },
     "docs_production_rollback_runbook_md": {
       "source": "docs/PRODUCTION_ROLLBACK_RUNBOOK.md",
@@ -912,7 +912,7 @@
         }
       ],
       "createdTime": "2026-06-17T05:45:11.689Z",
-      "modifiedTime": "2026-06-18T19:56:11.577Z"
+      "modifiedTime": "2026-06-19T05:03:38.759Z"
     },
     "docs_sales_email_database_schema_runbook_md": {
       "source": "docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md",
@@ -928,7 +928,7 @@
         }
       ],
       "createdTime": "2026-06-18T15:02:20.781Z",
-      "modifiedTime": "2026-06-18T19:56:16.012Z"
+      "modifiedTime": "2026-06-19T05:03:43.828Z"
     },
     "docs_sales_email_extraction_pipeline_runbook_md": {
       "source": "docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md",
@@ -944,7 +944,7 @@
         }
       ],
       "createdTime": "2026-06-18T19:01:27.243Z",
-      "modifiedTime": "2026-06-18T19:56:20.534Z"
+      "modifiedTime": "2026-06-19T05:03:55.046Z"
     },
     "docs_sales_email_ingestion_poc_runbook_md": {
       "source": "docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md",
@@ -976,7 +976,7 @@
         }
       ],
       "createdTime": "2026-06-18T19:56:28.088Z",
-      "modifiedTime": "2026-06-18T19:56:28.117Z"
+      "modifiedTime": "2026-06-19T05:03:49.692Z"
     },
     "docs_secret_rotation_runbook_md": {
       "source": "docs/SECRET_ROTATION_RUNBOOK.md",
@@ -1312,7 +1312,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-06-18T19:58:04.249Z"
+      "modifiedTime": "2026-06-19T05:04:16.947Z"
     },
     "docs_wbs_process_coverage_audit_2026_06_13_md": {
       "source": "docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md",
@@ -1361,6 +1361,38 @@
       ],
       "createdTime": "2026-06-13T23:53:34.523Z",
       "modifiedTime": "2026-06-18T19:58:18.355Z"
+    },
+    "docs_sales_email_human_review_runbook_md": {
+      "source": "docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md",
+      "id": "1zq9bmhw7msxsSR447LmX_bYBxGJGryDw9QBBATExjQ4",
+      "name": "Mighty Skill-Bridge docs/docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md",
+      "url": "https://docs.google.com/document/d/1zq9bmhw7msxsSR447LmX_bYBxGJGryDw9QBBATExjQ4/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-06-19T05:03:31.589Z",
+      "modifiedTime": "2026-06-19T05:03:31.620Z"
+    },
+    "docs_meetings_2026_06_17_ceo_meeting_minutes_md": {
+      "source": "docs/meetings/2026-06-17_CEO_Meeting_Minutes.md",
+      "id": "1VKxSieVH95rctGYed87hqigsOp5GaewTGqZknGJzk-8",
+      "name": "Mighty Skill-Bridge docs/docs/meetings/2026-06-17_CEO_Meeting_Minutes.md",
+      "url": "https://docs.google.com/document/d/1VKxSieVH95rctGYed87hqigsOp5GaewTGqZknGJzk-8/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-06-19T05:04:10.576Z",
+      "modifiedTime": "2026-06-19T05:04:10.612Z"
     }
   },
   "notebooklm": {

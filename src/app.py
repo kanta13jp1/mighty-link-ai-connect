@@ -84,6 +84,48 @@ except ImportError:
         build_match_report_from_file = None
         criteria_from_values = None
 
+try:
+    from .sales_email_review import (
+        VALID_FEEDBACK_STATUSES as SALES_EMAIL_REVIEW_STATUSES,
+        build_review_entry as build_sales_email_review_entry,
+        build_review_report as build_sales_email_review_report,
+        find_match as find_sales_email_match_for_review,
+        load_review_report as load_sales_email_review_report,
+        match_key as sales_email_match_key,
+        project_by_key as sales_email_project_by_key,
+        talent_by_key as sales_email_talent_by_key,
+        upsert_review_entry as upsert_sales_email_review_entry,
+        write_json_report as write_sales_email_review_json,
+        write_markdown_report as write_sales_email_review_markdown,
+    )
+except ImportError:
+    try:
+        from sales_email_review import (
+            VALID_FEEDBACK_STATUSES as SALES_EMAIL_REVIEW_STATUSES,
+            build_review_entry as build_sales_email_review_entry,
+            build_review_report as build_sales_email_review_report,
+            find_match as find_sales_email_match_for_review,
+            load_review_report as load_sales_email_review_report,
+            match_key as sales_email_match_key,
+            project_by_key as sales_email_project_by_key,
+            talent_by_key as sales_email_talent_by_key,
+            upsert_review_entry as upsert_sales_email_review_entry,
+            write_json_report as write_sales_email_review_json,
+            write_markdown_report as write_sales_email_review_markdown,
+        )
+    except ImportError:
+        SALES_EMAIL_REVIEW_STATUSES = set()
+        build_sales_email_review_entry = None
+        build_sales_email_review_report = None
+        find_sales_email_match_for_review = None
+        load_sales_email_review_report = None
+        sales_email_match_key = None
+        sales_email_project_by_key = None
+        sales_email_talent_by_key = None
+        upsert_sales_email_review_entry = None
+        write_sales_email_review_json = None
+        write_sales_email_review_markdown = None
+
 # Try loading optional libraries for Sheets & Gemini
 try:
     import gspread
@@ -218,6 +260,14 @@ SALES_EMAIL_MATCH_REPORT_FILE = os.environ.get(
     "SALES_EMAIL_MATCH_REPORT_FILE",
     os.path.join(EXPORTS_DIR, "sales_email_extraction_review.json"),
 )
+SALES_EMAIL_REVIEW_LOG_FILE = os.environ.get(
+    "SALES_EMAIL_REVIEW_LOG_FILE",
+    os.path.join(EXPORTS_DIR, "sales_email_review_log.json"),
+)
+SALES_EMAIL_REVIEW_MARKDOWN_FILE = os.environ.get(
+    "SALES_EMAIL_REVIEW_MARKDOWN_FILE",
+    os.path.join(EXPORTS_DIR, "sales_email_review_log.md"),
+)
 FAVICON_FILE = os.path.join(PROJECT_ROOT, "favicon.ico")
 CHROME_DEVTOOLS_WORKSPACE_PATH = "/.well-known/appspecific/com.chrome.devtools.json"
 SEEDANCE_DEMO_DIR = os.path.join(EXPORTS_DIR, "seedance_demo")
@@ -324,7 +374,12 @@ def rate_limit_rule_for_request(request: Request) -> Optional[Dict[str, object]]
             "window_seconds": RATE_LIMIT_WINDOW_SECONDS,
         }
 
-    if path == "/admin" or path == "/admin/usage" or path.startswith("/api/admin") or path in {"/api/audit/recent", "/api/db-test"}:
+    if path == "/admin" or path == "/admin/usage" or path.startswith("/api/admin") or path in {
+        "/api/audit/recent",
+        "/api/db-test",
+        "/api/sales-email/reviews",
+        "/api/sales-email/reviews/summary",
+    }:
         return {
             "name": "authenticated_admin",
             "path_key": path,
@@ -582,6 +637,169 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn, "sqlite"
 
+
+def init_sales_email_review_tables(cursor: Any, db_type: str) -> None:
+    """Create the T817_6 review tables when app-level migrations are absent."""
+    if db_type == "postgres":
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS project_requirements (
+            id SERIAL PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            summary TEXT,
+            required_skills JSONB NOT NULL DEFAULT '[]'::jsonb,
+            nice_to_have_skills JSONB NOT NULL DEFAULT '[]'::jsonb,
+            skill_categories JSONB NOT NULL DEFAULT '{}'::jsonb,
+            rate_min INTEGER CHECK (rate_min IS NULL OR rate_min >= 0),
+            rate_max INTEGER CHECK (rate_max IS NULL OR rate_max >= 0),
+            location VARCHAR(160),
+            remote_type VARCHAR(32) CHECK (remote_type IS NULL OR remote_type IN ('onsite', 'hybrid', 'remote', 'unknown')),
+            start_date_text VARCHAR(120),
+            evidence_excerpt TEXT,
+            review_status VARCHAR(32) NOT NULL DEFAULT 'pending' CHECK (review_status IN ('pending', 'confirmed', 'corrected', 'rejected')),
+            metadata JSONB DEFAULT '{}'::jsonb,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS talent_profiles_from_email (
+            id SERIAL PRIMARY KEY,
+            anonymized_talent_key VARCHAR(120) NOT NULL UNIQUE,
+            summary TEXT,
+            skills JSONB NOT NULL DEFAULT '[]'::jsonb,
+            skill_categories JSONB NOT NULL DEFAULT '{}'::jsonb,
+            desired_rate_min INTEGER CHECK (desired_rate_min IS NULL OR desired_rate_min >= 0),
+            desired_rate_max INTEGER CHECK (desired_rate_max IS NULL OR desired_rate_max >= 0),
+            desired_location VARCHAR(160),
+            remote_preference VARCHAR(32) CHECK (remote_preference IS NULL OR remote_preference IN ('onsite', 'hybrid', 'remote', 'unknown')),
+            availability_text VARCHAR(160),
+            evidence_excerpt TEXT,
+            review_status VARCHAR(32) NOT NULL DEFAULT 'pending' CHECK (review_status IN ('pending', 'confirmed', 'corrected', 'rejected')),
+            metadata JSONB DEFAULT '{}'::jsonb,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS email_match_results (
+            id SERIAL PRIMARY KEY,
+            project_requirement_id INTEGER REFERENCES project_requirements(id) ON DELETE CASCADE,
+            talent_profile_id INTEGER REFERENCES talent_profiles_from_email(id) ON DELETE CASCADE,
+            engineer_id INTEGER,
+            direction VARCHAR(32) NOT NULL CHECK (direction IN ('engineer_to_project', 'project_to_talent')),
+            match_score REAL NOT NULL CHECK (match_score >= 0 AND match_score <= 100),
+            matched_skills JSONB NOT NULL DEFAULT '[]'::jsonb,
+            missing_skills JSONB NOT NULL DEFAULT '[]'::jsonb,
+            mismatch_reasons JSONB NOT NULL DEFAULT '[]'::jsonb,
+            evidence_summary TEXT,
+            review_status VARCHAR(32) NOT NULL DEFAULT 'pending' CHECK (review_status IN ('pending', 'accepted', 'rejected', 'corrected')),
+            metadata JSONB DEFAULT '{}'::jsonb,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            CHECK (project_requirement_id IS NOT NULL OR talent_profile_id IS NOT NULL OR engineer_id IS NOT NULL)
+        );
+        """)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS email_match_feedback (
+            id SERIAL PRIMARY KEY,
+            match_result_id INTEGER NOT NULL REFERENCES email_match_results(id) ON DELETE CASCADE,
+            reviewer_id VARCHAR(255),
+            feedback_status VARCHAR(32) NOT NULL CHECK (feedback_status IN ('accepted', 'rejected', 'needs_review', 'corrected')),
+            corrected_score REAL CHECK (corrected_score IS NULL OR (corrected_score >= 0 AND corrected_score <= 100)),
+            corrected_notes TEXT,
+            metadata JSONB DEFAULT '{}'::jsonb,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """)
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_project_requirements_review_status ON project_requirements(review_status);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_talent_profiles_review_status ON talent_profiles_from_email(review_status);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_email_match_results_score ON email_match_results(match_score DESC);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_email_match_feedback_status ON email_match_feedback(feedback_status);")
+        cursor.execute("ALTER TABLE project_requirements ENABLE ROW LEVEL SECURITY;")
+        cursor.execute("ALTER TABLE talent_profiles_from_email ENABLE ROW LEVEL SECURITY;")
+        cursor.execute("ALTER TABLE email_match_results ENABLE ROW LEVEL SECURITY;")
+        cursor.execute("ALTER TABLE email_match_feedback ENABLE ROW LEVEL SECURITY;")
+    else:
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS project_requirements (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title VARCHAR(255) NOT NULL,
+            summary TEXT,
+            required_skills TEXT NOT NULL DEFAULT '[]',
+            nice_to_have_skills TEXT NOT NULL DEFAULT '[]',
+            skill_categories TEXT NOT NULL DEFAULT '{}',
+            rate_min INTEGER CHECK (rate_min IS NULL OR rate_min >= 0),
+            rate_max INTEGER CHECK (rate_max IS NULL OR rate_max >= 0),
+            location VARCHAR(160),
+            remote_type VARCHAR(32) CHECK (remote_type IS NULL OR remote_type IN ('onsite', 'hybrid', 'remote', 'unknown')),
+            start_date_text VARCHAR(120),
+            evidence_excerpt TEXT,
+            review_status VARCHAR(32) NOT NULL DEFAULT 'pending' CHECK (review_status IN ('pending', 'confirmed', 'corrected', 'rejected')),
+            metadata TEXT DEFAULT '{}',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS talent_profiles_from_email (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            anonymized_talent_key VARCHAR(120) NOT NULL UNIQUE,
+            summary TEXT,
+            skills TEXT NOT NULL DEFAULT '[]',
+            skill_categories TEXT NOT NULL DEFAULT '{}',
+            desired_rate_min INTEGER CHECK (desired_rate_min IS NULL OR desired_rate_min >= 0),
+            desired_rate_max INTEGER CHECK (desired_rate_max IS NULL OR desired_rate_max >= 0),
+            desired_location VARCHAR(160),
+            remote_preference VARCHAR(32) CHECK (remote_preference IS NULL OR remote_preference IN ('onsite', 'hybrid', 'remote', 'unknown')),
+            availability_text VARCHAR(160),
+            evidence_excerpt TEXT,
+            review_status VARCHAR(32) NOT NULL DEFAULT 'pending' CHECK (review_status IN ('pending', 'confirmed', 'corrected', 'rejected')),
+            metadata TEXT DEFAULT '{}',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+        """)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS email_match_results (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            project_requirement_id INTEGER,
+            talent_profile_id INTEGER,
+            engineer_id INTEGER,
+            direction VARCHAR(32) NOT NULL CHECK (direction IN ('engineer_to_project', 'project_to_talent')),
+            match_score REAL NOT NULL CHECK (match_score >= 0 AND match_score <= 100),
+            matched_skills TEXT NOT NULL DEFAULT '[]',
+            missing_skills TEXT NOT NULL DEFAULT '[]',
+            mismatch_reasons TEXT NOT NULL DEFAULT '[]',
+            evidence_summary TEXT,
+            review_status VARCHAR(32) NOT NULL DEFAULT 'pending' CHECK (review_status IN ('pending', 'accepted', 'rejected', 'corrected')),
+            metadata TEXT DEFAULT '{}',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            CHECK (project_requirement_id IS NOT NULL OR talent_profile_id IS NOT NULL OR engineer_id IS NOT NULL),
+            FOREIGN KEY(project_requirement_id) REFERENCES project_requirements(id) ON DELETE CASCADE,
+            FOREIGN KEY(talent_profile_id) REFERENCES talent_profiles_from_email(id) ON DELETE CASCADE,
+            FOREIGN KEY(engineer_id) REFERENCES engineers(id) ON DELETE SET NULL
+        );
+        """)
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS email_match_feedback (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            match_result_id INTEGER NOT NULL,
+            reviewer_id VARCHAR(255),
+            feedback_status VARCHAR(32) NOT NULL CHECK (feedback_status IN ('accepted', 'rejected', 'needs_review', 'corrected')),
+            corrected_score REAL CHECK (corrected_score IS NULL OR (corrected_score >= 0 AND corrected_score <= 100)),
+            corrected_notes TEXT,
+            metadata TEXT DEFAULT '{}',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(match_result_id) REFERENCES email_match_results(id) ON DELETE CASCADE
+        );
+        """)
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_project_requirements_review_status ON project_requirements(review_status);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_talent_profiles_review_status ON talent_profiles_from_email(review_status);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_email_match_results_score ON email_match_results(match_score);")
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_email_match_feedback_status ON email_match_feedback(feedback_status);")
+
+
 def init_db():
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
@@ -743,6 +961,7 @@ def init_db():
             """)
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_status_priority ON support_requests(status, priority);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_created_at ON support_requests(created_at);")
+        init_sales_email_review_tables(cursor, db_type)
         conn.commit()
         print(f"[+] Database tables initialized successfully ({db_type}).")
     except Exception as e:
@@ -1012,6 +1231,368 @@ def db_get_feedback_summary(limit: int = 20) -> dict:
             "total": 0,
             "rating_counts": {"helpful": 0, "not_helpful": 0},
             "nps": {"average": None, "count": 0},
+            "recent": [],
+            "error": str(e),
+        }
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def db_json_value(value: Any) -> str:
+    return json.dumps(value if value is not None else {}, ensure_ascii=False)
+
+
+def db_json_array(value: Any) -> str:
+    if isinstance(value, list):
+        return json.dumps(value, ensure_ascii=False)
+    return json.dumps([], ensure_ascii=False)
+
+
+def sales_email_db_direction(direction: str) -> str:
+    return "engineer_to_project" if direction == "talent_to_project" else "project_to_talent"
+
+
+def sales_email_match_review_status(feedback_status: str) -> str:
+    return "pending" if feedback_status == "needs_review" else feedback_status
+
+
+def db_get_or_create_sales_project(cursor: Any, db_type: str, project: dict, project_key: str) -> int:
+    if db_type == "postgres":
+        cursor.execute("SELECT id FROM project_requirements WHERE metadata->>'project_key' = %s LIMIT 1;", (project_key,))
+    else:
+        cursor.execute("SELECT id FROM project_requirements WHERE metadata LIKE ? LIMIT 1;", (f"%{project_key}%",))
+    row = cursor.fetchone()
+    if row:
+        return int(row[0])
+
+    metadata = {"project_key": project_key, "source": "sales_email_human_review", "wbs_task": "T817_6"}
+    values = (
+        clean_feedback_text(project.get("title") or "Sales email project", 255),
+        clean_feedback_text(project.get("summary") or "", 1000),
+        db_json_array(project.get("required_skills")),
+        db_json_array(project.get("nice_to_have_skills")),
+        db_json_value(project.get("skill_categories") if isinstance(project.get("skill_categories"), dict) else {}),
+        project.get("rate_min") if isinstance(project.get("rate_min"), int) else None,
+        project.get("rate_max") if isinstance(project.get("rate_max"), int) else None,
+        clean_feedback_text(project.get("location") or "", 160),
+        clean_feedback_text(project.get("remote_type") or "unknown", 32) or "unknown",
+        clean_feedback_text(project.get("start_date_text") or "", 120),
+        clean_feedback_text(project.get("evidence_excerpt") or "", 1000),
+        db_json_value(metadata),
+    )
+    if db_type == "postgres":
+        cursor.execute(
+            """
+            INSERT INTO project_requirements
+                (title, summary, required_skills, nice_to_have_skills, skill_categories, rate_min, rate_max,
+                 location, remote_type, start_date_text, evidence_excerpt, metadata)
+            VALUES (%s, %s, %s::jsonb, %s::jsonb, %s::jsonb, %s, %s, %s, %s, %s, %s, %s::jsonb)
+            RETURNING id;
+            """,
+            values,
+        )
+        return int(cursor.fetchone()[0])
+
+    cursor.execute(
+        """
+        INSERT INTO project_requirements
+            (title, summary, required_skills, nice_to_have_skills, skill_categories, rate_min, rate_max,
+             location, remote_type, start_date_text, evidence_excerpt, metadata)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        """,
+        values,
+    )
+    return int(cursor.lastrowid)
+
+
+def db_get_or_create_sales_talent(cursor: Any, db_type: str, talent: dict, talent_key: str) -> int:
+    if db_type == "postgres":
+        cursor.execute("SELECT id FROM talent_profiles_from_email WHERE anonymized_talent_key = %s LIMIT 1;", (talent_key,))
+    else:
+        cursor.execute("SELECT id FROM talent_profiles_from_email WHERE anonymized_talent_key = ? LIMIT 1;", (talent_key,))
+    row = cursor.fetchone()
+    if row:
+        return int(row[0])
+
+    metadata = {"talent_key": talent_key, "source": "sales_email_human_review", "wbs_task": "T817_6"}
+    values = (
+        clean_feedback_text(talent_key or "anonymous_talent", 120),
+        clean_feedback_text(talent.get("summary") or "", 1000),
+        db_json_array(talent.get("skills")),
+        db_json_value(talent.get("skill_categories") if isinstance(talent.get("skill_categories"), dict) else {}),
+        talent.get("desired_rate_min") if isinstance(talent.get("desired_rate_min"), int) else None,
+        talent.get("desired_rate_max") if isinstance(talent.get("desired_rate_max"), int) else None,
+        clean_feedback_text(talent.get("desired_location") or "", 160),
+        clean_feedback_text(talent.get("remote_preference") or "unknown", 32) or "unknown",
+        clean_feedback_text(talent.get("availability_text") or "", 160),
+        clean_feedback_text(talent.get("evidence_excerpt") or "", 1000),
+        db_json_value(metadata),
+    )
+    if db_type == "postgres":
+        cursor.execute(
+            """
+            INSERT INTO talent_profiles_from_email
+                (anonymized_talent_key, summary, skills, skill_categories, desired_rate_min, desired_rate_max,
+                 desired_location, remote_preference, availability_text, evidence_excerpt, metadata)
+            VALUES (%s, %s, %s::jsonb, %s::jsonb, %s, %s, %s, %s, %s, %s, %s::jsonb)
+            RETURNING id;
+            """,
+            values,
+        )
+        return int(cursor.fetchone()[0])
+
+    cursor.execute(
+        """
+        INSERT INTO talent_profiles_from_email
+            (anonymized_talent_key, summary, skills, skill_categories, desired_rate_min, desired_rate_max,
+             desired_location, remote_preference, availability_text, evidence_excerpt, metadata)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        """,
+        values,
+    )
+    return int(cursor.lastrowid)
+
+
+def db_get_or_create_sales_email_match_result(
+    cursor: Any,
+    db_type: str,
+    match_row: dict,
+    project_id: int,
+    talent_id: int,
+    match_key_value: str,
+    report_direction: str,
+) -> int:
+    if db_type == "postgres":
+        cursor.execute("SELECT id FROM email_match_results WHERE metadata->>'match_key' = %s LIMIT 1;", (match_key_value,))
+    else:
+        cursor.execute("SELECT id FROM email_match_results WHERE metadata LIKE ? LIMIT 1;", (f"%{match_key_value}%",))
+    row = cursor.fetchone()
+    if row:
+        return int(row[0])
+
+    metadata = {
+        "match_key": match_key_value,
+        "match_reason": match_row.get("match_reason"),
+        "matched_conditions": match_row.get("matched_conditions", []),
+        "score_breakdown": match_row.get("score_breakdown", {}),
+        "report_direction": report_direction,
+        "source": "sales_email_human_review",
+        "wbs_task": "T817_6",
+    }
+    values = (
+        project_id,
+        talent_id,
+        sales_email_db_direction(report_direction),
+        float(match_row.get("score") or 0),
+        db_json_array(match_row.get("matched_skills")),
+        db_json_array(match_row.get("missing_skills")),
+        db_json_array(match_row.get("mismatch_reasons")),
+        clean_feedback_text(match_row.get("match_reason") or "", 1000),
+        db_json_value(metadata),
+    )
+    if db_type == "postgres":
+        cursor.execute(
+            """
+            INSERT INTO email_match_results
+                (project_requirement_id, talent_profile_id, direction, match_score, matched_skills,
+                 missing_skills, mismatch_reasons, evidence_summary, metadata)
+            VALUES (%s, %s, %s, %s, %s::jsonb, %s::jsonb, %s::jsonb, %s, %s::jsonb)
+            RETURNING id;
+            """,
+            values,
+        )
+        return int(cursor.fetchone()[0])
+
+    cursor.execute(
+        """
+        INSERT INTO email_match_results
+            (project_requirement_id, talent_profile_id, direction, match_score, matched_skills,
+             missing_skills, mismatch_reasons, evidence_summary, metadata)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+        """,
+        values,
+    )
+    return int(cursor.lastrowid)
+
+
+def db_insert_sales_email_match_review(
+    match_row: dict,
+    project: dict,
+    talent: dict,
+    review_entry: dict,
+    report_direction: str,
+) -> dict:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        project_id = db_get_or_create_sales_project(cursor, db_type, project, review_entry["project_key"])
+        talent_id = db_get_or_create_sales_talent(cursor, db_type, talent, review_entry["talent_key"])
+        match_result_id = db_get_or_create_sales_email_match_result(
+            cursor,
+            db_type,
+            match_row,
+            project_id,
+            talent_id,
+            review_entry["match_key"],
+            report_direction,
+        )
+        feedback_status = review_entry["feedback_status"]
+        match_status = sales_email_match_review_status(feedback_status)
+        metadata = {
+            "review_id": review_entry.get("review_id"),
+            "match_key": review_entry.get("match_key"),
+            "corrected_fields": review_entry.get("corrected_fields", {}),
+            "next_action": review_entry.get("next_action", ""),
+            "privacy_controls": review_entry.get("privacy_controls", []),
+            "wbs_task": "T817_6",
+        }
+        corrected_notes = clean_feedback_text(review_entry.get("reviewer_notes") or "", MAX_FEEDBACK_COMMENT_LENGTH)
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                UPDATE email_match_results
+                SET review_status = %s,
+                    match_score = COALESCE(%s, match_score),
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE id = %s;
+                """,
+                (match_status, review_entry.get("corrected_score"), match_result_id),
+            )
+            cursor.execute(
+                """
+                INSERT INTO email_match_feedback
+                    (match_result_id, reviewer_id, feedback_status, corrected_score, corrected_notes, metadata)
+                VALUES (%s, %s, %s, %s, %s, %s::jsonb)
+                RETURNING id;
+                """,
+                (
+                    match_result_id,
+                    review_entry.get("reviewer_id"),
+                    feedback_status,
+                    review_entry.get("corrected_score"),
+                    corrected_notes,
+                    db_json_value(metadata),
+                ),
+            )
+            feedback_id = int(cursor.fetchone()[0])
+        else:
+            cursor.execute(
+                """
+                UPDATE email_match_results
+                SET review_status = ?,
+                    match_score = COALESCE(?, match_score),
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE id = ?;
+                """,
+                (match_status, review_entry.get("corrected_score"), match_result_id),
+            )
+            cursor.execute(
+                """
+                INSERT INTO email_match_feedback
+                    (match_result_id, reviewer_id, feedback_status, corrected_score, corrected_notes, metadata)
+                VALUES (?, ?, ?, ?, ?, ?);
+                """,
+                (
+                    match_result_id,
+                    review_entry.get("reviewer_id"),
+                    feedback_status,
+                    review_entry.get("corrected_score"),
+                    corrected_notes,
+                    db_json_value(metadata),
+                ),
+            )
+            feedback_id = int(cursor.lastrowid)
+        conn.commit()
+        return {
+            "project_requirement_id": project_id,
+            "talent_profile_id": talent_id,
+            "match_result_id": match_result_id,
+            "feedback_id": feedback_id,
+            "db_type": db_type,
+        }
+    except Exception as e:
+        conn.rollback()
+        print(f"[-] Database insert sales email match review failed: {e}")
+        return {"error": str(e), "db_type": db_type}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def db_get_sales_email_review_summary(limit: int = 20) -> dict:
+    limit = max(1, min(limit, 100))
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT COUNT(*) FROM email_match_feedback;")
+        total = int(_scalar(cursor.fetchone()) or 0)
+
+        cursor.execute("SELECT feedback_status, COUNT(*) FROM email_match_feedback GROUP BY feedback_status;")
+        status_counts = {status: 0 for status in sorted(SALES_EMAIL_REVIEW_STATUSES or [])}
+        for row in cursor.fetchall():
+            status_counts[str(row[0])] = int(row[1])
+
+        columns = [
+            "id",
+            "match_result_id",
+            "reviewer_id",
+            "feedback_status",
+            "corrected_score",
+            "corrected_notes",
+            "metadata",
+            "created_at",
+        ]
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                SELECT id, match_result_id, reviewer_id, feedback_status, corrected_score, corrected_notes, metadata, created_at
+                FROM email_match_feedback
+                ORDER BY id DESC
+                LIMIT %s;
+                """,
+                (limit,),
+            )
+        else:
+            cursor.execute(
+                """
+                SELECT id, match_result_id, reviewer_id, feedback_status, corrected_score, corrected_notes, metadata, created_at
+                FROM email_match_feedback
+                ORDER BY id DESC
+                LIMIT ?;
+                """,
+                (limit,),
+            )
+        recent = []
+        for row in cursor.fetchall():
+            row_dict = dict(row) if isinstance(row, sqlite3.Row) else dict(zip(columns, row))
+            metadata = row_dict.get("metadata") or {}
+            if isinstance(metadata, str):
+                try:
+                    metadata = json.loads(metadata)
+                except json.JSONDecodeError:
+                    metadata = {}
+            recent.append({
+                "id": row_dict.get("id"),
+                "match_result_id": row_dict.get("match_result_id"),
+                "reviewer_id": clean_feedback_text(row_dict.get("reviewer_id"), 120),
+                "feedback_status": row_dict.get("feedback_status"),
+                "corrected_score": row_dict.get("corrected_score"),
+                "notes_excerpt": clean_feedback_text(row_dict.get("corrected_notes"), 160),
+                "match_key": metadata.get("match_key"),
+                "next_action": clean_feedback_text(metadata.get("next_action"), 160),
+                "created_at": str(row_dict.get("created_at") or ""),
+            })
+        return {
+            "total": total,
+            "status_counts": status_counts,
+            "recent": recent,
+        }
+    except Exception as e:
+        print(f"[-] Database sales email review summary failed: {e}")
+        return {
+            "total": 0,
+            "status_counts": {status: 0 for status in sorted(SALES_EMAIL_REVIEW_STATUSES or [])},
             "recent": [],
             "error": str(e),
         }
@@ -3104,6 +3685,17 @@ class FeedbackRequest(BaseModel):
     session_id: Optional[str] = ""
 
 
+class SalesEmailMatchReviewRequest(BaseModel):
+    match_key: Optional[str] = ""
+    project_key: Optional[str] = ""
+    talent_key: Optional[str] = ""
+    feedback_status: str
+    corrected_score: Optional[float] = None
+    corrected_notes: Optional[str] = ""
+    corrected_fields: Optional[Dict[str, Any]] = None
+    next_action: Optional[str] = ""
+
+
 class SupportRequest(BaseModel):
     category: str = "general"
     priority: Optional[str] = None
@@ -3317,6 +3909,121 @@ async def list_sales_email_matches(
         "status": "success",
         "source_report": source_report,
         **report,
+    }
+
+
+@app.post("/api/sales-email/reviews")
+async def submit_sales_email_match_review(
+    req: SalesEmailMatchReviewRequest,
+    username: str = Depends(verify_credentials),
+):
+    """Store a sanitized human review for a sales email match candidate."""
+    required_helpers = [
+        build_match_report_from_file,
+        criteria_from_values,
+        find_sales_email_match_for_review,
+        build_sales_email_review_entry,
+        sales_email_project_by_key,
+        sales_email_talent_by_key,
+        load_sales_email_review_report,
+        upsert_sales_email_review_entry,
+        write_sales_email_review_json,
+        write_sales_email_review_markdown,
+    ]
+    if any(helper is None for helper in required_helpers):
+        raise HTTPException(status_code=503, detail="sales email review module is unavailable")
+
+    feedback_status = clean_feedback_text(req.feedback_status, 32).lower()
+    if feedback_status not in SALES_EMAIL_REVIEW_STATUSES:
+        raise HTTPException(status_code=400, detail="feedback_status must be accepted, rejected, needs_review, or corrected")
+    if req.corrected_score is not None and not 0 <= req.corrected_score <= 100:
+        raise HTTPException(status_code=400, detail="corrected_score must be between 0 and 100")
+
+    report_path = Path(SALES_EMAIL_MATCH_REPORT_FILE)
+    try:
+        criteria = criteria_from_values(limit=100)
+        report = build_match_report_from_file(report_path, criteria)
+        match_row = find_sales_email_match_for_review(
+            report,
+            wanted_match_key=clean_feedback_text(req.match_key, 120),
+            project_key=clean_feedback_text(req.project_key, 120),
+            talent_key=clean_feedback_text(req.talent_key, 120),
+        )
+        review_entry = build_sales_email_review_entry(
+            match_row,
+            feedback_status=feedback_status,
+            reviewer_id=username,
+            corrected_score=req.corrected_score,
+            corrected_notes=req.corrected_notes or "",
+            corrected_fields=req.corrected_fields or {},
+            next_action=req.next_action or "",
+        )
+        project = sales_email_project_by_key(report, review_entry["project_key"])
+        talent = sales_email_talent_by_key(report, review_entry["talent_key"])
+        db_result = db_insert_sales_email_match_review(
+            match_row=match_row,
+            project=project,
+            talent=talent,
+            review_entry=review_entry,
+            report_direction=str(report.get("direction") or "project_to_talent"),
+        )
+        if db_result.get("error"):
+            raise HTTPException(status_code=500, detail="Failed to store sales email review")
+
+        review_log_path = Path(SALES_EMAIL_REVIEW_LOG_FILE)
+        review_md_path = Path(SALES_EMAIL_REVIEW_MARKDOWN_FILE)
+        current_log = load_sales_email_review_report(review_log_path)
+        review_report = upsert_sales_email_review_entry(current_log, review_entry, replace=False)
+        write_sales_email_review_json(review_report, review_log_path)
+        write_sales_email_review_markdown(review_report, review_md_path)
+        audit_event = write_audit_event(
+            "sales_email_match_review",
+            {
+                "wbs_task": "T817_6",
+                "review_id": review_entry["review_id"],
+                "match_key": review_entry["match_key"],
+                "feedback_status": review_entry["feedback_status"],
+                "project_key": review_entry["project_key"],
+                "talent_key": review_entry["talent_key"],
+                "db_match_result_id": db_result["match_result_id"],
+                "feedback_id": db_result["feedback_id"],
+            },
+        )
+    except HTTPException:
+        raise
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        print(f"[-] sales email review endpoint failed: {exc}")
+        raise HTTPException(status_code=500, detail="sales email review failed") from exc
+
+    return {
+        "status": "success",
+        "review": review_entry,
+        "db": db_result,
+        "audit_event_id": audit_event["event_id"],
+        "review_log": os.path.relpath(str(Path(SALES_EMAIL_REVIEW_LOG_FILE)), PROJECT_ROOT),
+    }
+
+
+@app.get("/api/sales-email/reviews/summary")
+async def get_sales_email_match_review_summary(limit: int = 20, username: str = Depends(verify_credentials)):
+    """Authenticated summary of T817_6 sales email match reviews."""
+    file_summary = {}
+    if load_sales_email_review_report is not None and build_sales_email_review_report is not None:
+        try:
+            file_report = load_sales_email_review_report(Path(SALES_EMAIL_REVIEW_LOG_FILE))
+            file_summary = {
+                "file_review_count": file_report.get("review_count", 0),
+                "file_status_counts": file_report.get("status_counts", {}),
+            }
+        except Exception:
+            file_summary = {"file_review_count": 0, "file_status_counts": {}}
+    return {
+        "status": "success",
+        "review_log": os.path.relpath(str(Path(SALES_EMAIL_REVIEW_LOG_FILE)), PROJECT_ROOT),
+        **db_get_sales_email_review_summary(limit=limit),
+        **file_summary,
     }
 
 

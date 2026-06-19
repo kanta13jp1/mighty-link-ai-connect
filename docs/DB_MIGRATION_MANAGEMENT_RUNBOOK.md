@@ -91,7 +91,7 @@ T817_3で営業メールAIマッチング用の `20260618000000_sales_email_matc
 - rollback: `db/migrations/rollback/20260618000000_sales_email_matching_schema_rollback.sql`
 - test: `tests/test_sales_email_schema_migrations.py`
 
-このmigrationはメール本文全文、OAuth token、service role secretを保存しない。Supabase側では全テーブルでRLSを有効化し、`anon` と `authenticated` の直接アクセスを `REVOKE ALL` する。T817_5の候補検索APIはsanitized extraction reviewを読むだけでDBへ匿名REST直書きしない。公開REST用の `CREATE POLICY` は、T817_6以降の人間レビュー保存と実メールDB運用に合わせて必要最小限で追加する。
+このmigrationはメール本文全文、OAuth token、service role secretを保存しない。Supabase側では全テーブルでRLSを有効化し、`anon` と `authenticated` の直接アクセスを `REVOKE ALL` する。T817_5の候補検索APIはsanitized extraction reviewを読むだけでDBへ匿名REST直書きしない。T817_6の人間レビュー保存はBasic Auth付きサービスAPI経由に限定し、公開REST用の `CREATE POLICY` はT817_7の実メールDB運用hardening時に必要最小限で追加する。
 
 ## 障害時
 
