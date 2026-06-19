@@ -1,0 +1,76 @@
+{
+  "task_id": "T806",
+  "generated_at": "2026-06-19T14:39:56Z",
+  "status": "ok",
+  "version": "0.1.0-controlled-demo.1",
+  "tag": "v0.1.0-controlled-demo.1",
+  "github_release_prerelease": true,
+  "checks": [
+    {
+      "key": "version.semver",
+      "state": "ok",
+      "message": "VERSION is valid SemVer.",
+      "details": {
+        "version": "0.1.0-controlled-demo.1",
+        "tag": "v0.1.0-controlled-demo.1",
+        "prerelease": true
+      }
+    },
+    {
+      "key": "changelog.section",
+      "state": "ok",
+      "message": "CHANGELOG.md contains the release section and release boundary.",
+      "details": {
+        "expected_heading": "## [0.1.0-controlled-demo.1]",
+        "missing_terms": []
+      }
+    },
+    {
+      "key": "runbook.exists",
+      "state": "ok",
+      "message": "Release versioning runbook exists.",
+      "details": {
+        "path": "docs/RELEASE_VERSIONING_RUNBOOK.md"
+      }
+    },
+    {
+      "key": "go_no_go.boundary",
+      "state": "ok",
+      "message": "Release version boundary matches the current Go/No-Go state.",
+      "details": {
+        "controlled_demo": "GO",
+        "public_paid_launch": "NO_GO",
+        "version": "0.1.0-controlled-demo.1"
+      }
+    },
+    {
+      "key": "wbs.status",
+      "state": "ok",
+      "message": "WBS T806 is marked complete.",
+      "details": {
+        "task_id": "T806",
+        "status": "完了"
+      }
+    },
+    {
+      "key": "release.secret_free",
+      "state": "ok",
+      "message": "Release artifacts contain no secret-like values.",
+      "details": {
+        "findings": []
+      }
+    }
+  ],
+  "summary": {
+    "counts": {
+      "ok": 6
+    }
+  },
+  "sources": {
+    "version": "VERSION",
+    "changelog": "CHANGELOG.md",
+    "runbook": "docs/RELEASE_VERSIONING_RUNBOOK.md",
+    "go_no_go": "exports/production_go_no_go_review.json",
+    "wbs": "data/WBS.tsv"
+  }
+}

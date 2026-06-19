@@ -490,6 +490,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-15 | Codex | T761完了: Supabase Query Performance / Performance Advisor / Index Advisor のレビュー成果物生成、Runbook、pytest、週次GitHub Actionsゲートを追加。インデックスDDLは根拠・Issue・migration/rollback note が揃った別タスクへ分離 |
 | 2026-06-15 | Codex | T761_1完了: Firebase/GCP と Supabase の quota・error・billing・DB saturation alert review を生成する script/runbook/workflow/pytest を追加し、Issue #97 / WBS / Sheets / Calendar / Project へ同期 |
 | 2026-06-19 | Codex | T818完了: GitHub/Firebase/GCP/Supabase/Google Workspace/NotebookLM/AI開発ツール/Stripe/ドメインの会社アカウント移行準備ランブックを作成。R76/QA-48を更新し、本移管タスクT823を追加 |
+| 2026-06-19 | Codex | T806完了: `VERSION` / `CHANGELOG.md` / [RELEASE_VERSIONING_RUNBOOK.md](RELEASE_VERSIONING_RUNBOOK.md) / `validate_release_versioning.py` を追加し、`v0.1.0-controlled-demo.1` を管理下デモprereleaseとして発行する運用を整備。public_paid_launchはNo-Goのまま維持 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 

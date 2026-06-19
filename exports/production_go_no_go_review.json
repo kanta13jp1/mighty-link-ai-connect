@@ -1,17 +1,17 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-19T05:40:26Z",
+  "generated_at": "2026-06-19T14:39:56Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
-    "total": 16,
+    "total": 17,
     "counts": {
-      "PASS": 8,
+      "PASS": 9,
       "HUMAN_GATE": 2,
       "BLOCKED": 6
     },
-    "evidence_warnings": 0
+    "evidence_warnings": 1
   },
   "scopes": {
     "controlled_demo": {
@@ -26,11 +26,11 @@
       "recommendation": "NO_GO",
       "worst_state": "BLOCKED",
       "counts": {
-        "PASS": 3,
+        "PASS": 4,
         "HUMAN_GATE": 2,
         "BLOCKED": 6
       },
-      "total": 11
+      "total": 12
     }
   },
   "criteria": [
@@ -356,9 +356,37 @@
         "T821": "完了"
       },
       "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-12",
+      "scope": "public_paid_launch",
+      "category": "リリース",
+      "criterion": "CHANGELOG・SemVer・git tag・GitHub Releases運用が整備済み",
+      "evidence_source": "CHANGELOG.md; VERSION; docs/RELEASE_VERSIONING_RUNBOOK.md; exports/release_versioning_review.md",
+      "required_state": "PASS",
+      "current_state": "PASS",
+      "owner": "Codex",
+      "decision_authority": "開発責任者",
+      "related_wbs": "T806",
+      "related_issue": "R84",
+      "last_checked": "2026-06-19",
+      "notes": "v0.1.0-controlled-demo.1は管理下デモ用prerelease。public_paid_launchはNo-Goのまま維持し、GAタグは全ゲート完了後に発行する。",
+      "wbs_statuses": {
+        "T806": "完了"
+      },
+      "missing_evidence": [
+        "exports/release_versioning_review.md"
+      ]
     }
   ],
-  "evidence_warnings": [],
+  "evidence_warnings": [
+    {
+      "criterion_id": "PUBLIC-12",
+      "missing_evidence": [
+        "exports/release_versioning_review.md"
+      ]
+    }
+  ],
   "approval_process": [
     "Codex/Antigravity/Claude各レーンが担当ゲートの証跡をdocs・exports・Issueへ残す。",
     "T746の判定表をSheetsのリリース判定タブへ同期し、未完了ゲートをCEO/法務/開発責任者へ割り当てる。",
