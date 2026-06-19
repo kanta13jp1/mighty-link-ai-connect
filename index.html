@@ -1774,6 +1774,57 @@
             cursor: not-allowed;
         }
 
+        .data-export-panel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+        }
+
+        .data-export-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .data-export-copy span {
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .data-export-copy strong {
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .data-export-status {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .data-export-submit {
+            min-width: 132px;
+            min-height: 40px;
+            border: 1px solid rgba(186, 255, 102, 0.38);
+            border-radius: 8px;
+            background: rgba(186, 255, 102, 0.08);
+            color: var(--green);
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .data-export-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         /* タブエリア */
         .tabs-area {
             margin-top: 12px;
@@ -2577,6 +2628,14 @@
                         <span class="support-status" id="support-status">未送信</span>
                         <button type="submit" class="support-submit" id="support-submit">送信</button>
                     </div>
+                    <div class="data-export-panel">
+                        <div class="data-export-copy">
+                            <span>Data export</span>
+                            <strong>ユーザーデータ JSON</strong>
+                            <em class="data-export-status" id="data-export-status">未取得</em>
+                        </div>
+                        <button type="button" class="data-export-submit" id="data-export-submit" onclick="downloadUserDataExport()">JSON取得</button>
+                    </div>
                 </form>
             </div>
         </section>
@@ -2946,6 +3005,64 @@
                 setSupportStatus("送信失敗", "var(--rose)");
             } finally {
                 if (submit) submit.disabled = false;
+            }
+        }
+
+        function setDataExportStatus(text, colorVar) {
+            const status = document.getElementById("data-export-status");
+            if (!status) return;
+            status.textContent = text;
+            status.style.color = colorVar || "var(--muted)";
+        }
+
+        function getStoredFirebaseToken() {
+            const keys = ["mighty_firebase_id_token", "firebase_id_token", "idToken"];
+            for (const storage of [window.localStorage, window.sessionStorage]) {
+                for (const key of keys) {
+                    try {
+                        const value = storage.getItem(key);
+                        if (value) return value;
+                    } catch (error) {
+                        continue;
+                    }
+                }
+            }
+            return "";
+        }
+
+        async function downloadUserDataExport() {
+            const button = document.getElementById("data-export-submit");
+            const token = getStoredFirebaseToken();
+            if (!token) {
+                setDataExportStatus("ログイン後に利用可", "var(--yellow)");
+                return;
+            }
+
+            if (button) button.disabled = true;
+            setDataExportStatus("取得中", "var(--yellow)");
+
+            try {
+                const url = `/api/user-data/export?session_id=${encodeURIComponent(getFeedbackSessionId())}`;
+                const response = await fetch(url, {
+                    headers: {Authorization: `Bearer ${token}`}
+                });
+                if (!response.ok) {
+                    throw new Error("Export endpoint unavailable");
+                }
+                const blob = await response.blob();
+                const objectUrl = window.URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = objectUrl;
+                link.download = "mighty-link-user-data-export.json";
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(objectUrl);
+                setDataExportStatus("取得済み", "var(--green)");
+            } catch (error) {
+                setDataExportStatus("取得失敗", "var(--rose)");
+            } finally {
+                if (button) button.disabled = false;
             }
         }
 

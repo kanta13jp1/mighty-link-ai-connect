@@ -1,6 +1,6 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-19T23:51:50+09:00
+Generated: 2026-06-20T01:18:50+09:00
 
 ## Current Status
 
@@ -92,6 +92,7 @@ Generated: 2026-06-19T23:51:50+09:00
 - `docs/TOKUSHOHO_NOTATION.md`: https://docs.google.com/document/d/1LUwRooXcdyrGB4AsuQo70Auz8DoQ-E5eyPV5cYUPWLk/edit?usp=drivesdk
 - `docs/UPTIME_MONITORING_AND_ALERT_RUNBOOK.md`: https://docs.google.com/document/d/1loht22D5jpIbl5Hcb8JAgGhdK_odNrAha6BzSFXhplA/edit?usp=drivesdk
 - `docs/USER_DATA_DELETION_FLOW.md`: https://docs.google.com/document/d/1-2u-qFsKNwrE9Jpl3dovC0fr_Prk4JZUF23xz1e1zQQ/edit?usp=drivesdk
+- `docs/USER_DATA_SELF_EXPORT_RUNBOOK.md`: https://docs.google.com/document/d/1J4X3KQMpUzzcHV57CDYHrRGLvg2h0bHC1JHHFvknnqw/edit?usp=drivesdk
 - `docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md`: https://docs.google.com/document/d/1E44oW3XLOkEwyNSq5kweNe4Jujx4RoBiG598C_gTr5M/edit?usp=drivesdk
 - `docs/USER_GUIDE_AND_FAQ.md`: https://docs.google.com/document/d/1qawKzp2UdanwIbnWqbVnRaRq4YIQlTEXxlj7mwhmfRk/edit?usp=drivesdk
 - `docs/WBS.md`: https://docs.google.com/document/d/16s5eoPSBLInfS6Kr9Hj4Qgc3y4QXjyjNSbojvZNxBuQ/edit?usp=drivesdk

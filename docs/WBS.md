@@ -233,7 +233,7 @@ gantt
 | **T777** | 8. 本番運用・品質管理 | フロントエンド | 法定ページ（利用規約・プライバシーポリシー・特商法表記・課金規約/返金ポリシー）の実装とフッターリンク統合 | AIエージェント | Antigravity + Gemini | T787/T792 起草ドラフト準拠で法定4ページを実装しフッターへ常時リンク（T798/T804 確定後に本文差し替え）。特商法ページ公開は Stripe 審査 (T791) の前提要件。公開確認を Sheets 記録 | 完了 |
 | **T778** | 8. 本番運用・品質管理 | 品質管理 | SLA 計測基盤（稼働率・P95レスポンス・診断精度）の Supabase ビュー実装 | Codex | VSCode + Codex | SLA指標のSheets自動集計 | 未着手 |
 | **T780** | 9. 長期保守・拡張 | バックエンド開発 | Gemini 最新安定版モデル（3.5 Flash / 3.1 Pro 系）移行テストと本番切り替え手順書 | Codex + Claude | VSCode + Codex | モデル移行ログのSheets記録 | 未着手 |
-| **T781** | 9. 長期保守・拡張 | 運用保守 | サービス終了（EOL）やデータ移行に備えたユーザーデータのセルフエクスポート機能の設計とPoC | Codex | VSCode + Codex | データエクスポートAPIおよびダウンロードUI of PoC実装 | 未着手 |
+| **T781** | 9. 長期保守・拡張 | 運用保守 | サービス終了（EOL）やデータ移行に備えたユーザーデータのセルフエクスポート機能の設計とPoC | Codex | VSCode + Codex | GET /api/user-data/export、Firebase Auth必須のJSONセルフエクスポート、session/emailスコープ、ダウンロードUI、Runbook、pytestを実装。owner_uid本対応はT752へ接続 | 完了 |
 | **T782** | 9. 長期保守・拡張 | インフラ | アクセス増加に伴うデータベース接続負荷分散（リードレプリカ・プールサイズ最適化）の設計と負荷テスト検証 | Codex | VSCode + Codex | リード分散シミュレーションと負荷テストレポートdocs同期 | 未着手 |
 | **T783** | 7. 決定後実行 | インフラ | Firebase main/master 同時デプロイ競合の直列化 | Codex | VSCode + Codex + GitHub Actions | `.github/workflows/deploy.yml` の Firebase deploy job に concurrency group を設定し、同一 Firebase project への Functions/Hosting デプロイを直列実行化 | 完了 |
 | **T784** | 7. 決定後実行 | インフラ | Firebase Functions deploy opt-in guard | Codex | VSCode + Codex + GitHub Actions | `FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true` が明示されるまで CI は Hosting-only deploy に強制し、Cloud Functions IAM 権限不足による main/master CI 失敗を回避 | 完了 |

@@ -192,6 +192,7 @@ except ImportError:
     SUPABASE_SDK_ACTIVE = False
 
 security_bearer = HTTPBearer(auto_error=False)
+USER_DATA_EXPORT_ALLOW_MOCK = env_flag("USER_DATA_EXPORT_ALLOW_MOCK", False)
 
 def get_current_user(credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_bearer)) -> dict:
     """Dependency to get the authenticated user from Firebase Auth ID Token.
@@ -222,6 +223,45 @@ def get_current_user(credentials: Optional[HTTPAuthorizationCredentials] = Depen
             "email": decoded_token.get("email"),
             "name": decoded_token.get("name", "User"),
             "decoded_token": decoded_token
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"Invalid Authorization Token: {str(e)}",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
+def get_current_user_for_data_export(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_bearer),
+) -> dict:
+    """Strict Firebase identity for user data exports.
+
+    The public demo can run with MOCK_AUTH enabled, but personal data export must
+    not use that mock identity unless tests/local operators opt in explicitly.
+    """
+    if USER_DATA_EXPORT_ALLOW_MOCK:
+        return get_current_user(credentials)
+
+    if not FIREBASE_ADMIN_AVAILABLE:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Firebase Admin SDK is required for user data export.",
+        )
+    if not credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Firebase ID token is required for user data export.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    try:
+        decoded_token = auth.verify_id_token(credentials.credentials)
+        return {
+            "uid": decoded_token.get("uid"),
+            "email": decoded_token.get("email"),
+            "name": decoded_token.get("name", "User"),
+            "decoded_token": decoded_token,
         }
     except Exception as e:
         raise HTTPException(
@@ -379,6 +419,7 @@ def rate_limit_rule_for_request(request: Request) -> Optional[Dict[str, object]]
         "/api/db-test",
         "/api/sales-email/reviews",
         "/api/sales-email/reviews/summary",
+        "/api/user-data/export",
     }:
         return {
             "name": "authenticated_admin",
@@ -1769,6 +1810,225 @@ def db_get_support_summary(limit: int = 20) -> dict:
         conn.close()
 
 
+USER_DATA_EXPORT_MAX_ROWS = 200
+USER_DATA_EXPORT_JSON_FIELDS = {
+    "parsed_skills",
+    "career_goals",
+    "parsed_requirements",
+    "company_culture",
+    "interview_questions",
+    "metadata",
+}
+
+
+def db_placeholder(db_type: str) -> str:
+    return "%s" if db_type == "postgres" else "?"
+
+
+def json_safe_value(column: str, value: Any) -> Any:
+    if value is None:
+        return None
+    if isinstance(value, (datetime.datetime, datetime.date)):
+        return value.isoformat()
+    if isinstance(value, (dict, list, int, float, bool)):
+        return value
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    if column in USER_DATA_EXPORT_JSON_FIELDS and isinstance(value, str):
+        try:
+            return json.loads(value)
+        except Exception:
+            return value
+    return str(value)
+
+
+def db_row_to_export_dict(row: Any, columns: List[str]) -> dict:
+    row_dict = dict(row) if isinstance(row, sqlite3.Row) else dict(zip(columns, row))
+    return {key: json_safe_value(key, value) for key, value in row_dict.items()}
+
+
+def db_fetch_by_ids(
+    cursor: Any,
+    db_type: str,
+    table: str,
+    columns: List[str],
+    ids: List[int],
+) -> List[dict]:
+    if not ids:
+        return []
+    placeholder = db_placeholder(db_type)
+    placeholders = ",".join([placeholder] * len(ids))
+    sql = f"SELECT {', '.join(columns)} FROM {table} WHERE id IN ({placeholders}) ORDER BY id DESC;"
+    cursor.execute(sql, tuple(ids))
+    return [db_row_to_export_dict(row, columns) for row in cursor.fetchall()]
+
+
+def unique_ints(values: List[Any]) -> List[int]:
+    result = []
+    seen = set()
+    for value in values:
+        if value is None:
+            continue
+        try:
+            normalized = int(value)
+        except (TypeError, ValueError):
+            continue
+        if normalized not in seen:
+            result.append(normalized)
+            seen.add(normalized)
+    return result
+
+
+def build_user_data_export(current_user: dict, session_id: str = "") -> dict:
+    """Build a scoped JSON export for the authenticated user."""
+    user_email = clean_feedback_text(current_user.get("email"), 254).lower()
+    user_uid = clean_feedback_text(current_user.get("uid"), 120)
+    clean_session_id = clean_feedback_text(session_id, 120)
+
+    if not user_email and not clean_session_id:
+        raise ValueError("user email or browser session_id is required for export scope")
+
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    placeholder = db_placeholder(db_type)
+    try:
+        support_columns = [
+            "id",
+            "category",
+            "priority",
+            "contact_email",
+            "subject",
+            "message",
+            "status",
+            "source",
+            "page_url",
+            "session_id",
+            "metadata",
+            "created_at",
+            "updated_at",
+        ]
+        support_requests: List[dict] = []
+        if user_email:
+            cursor.execute(
+                f"""
+                SELECT {', '.join(support_columns)}
+                FROM support_requests
+                WHERE LOWER(contact_email) = LOWER({placeholder})
+                ORDER BY id DESC
+                LIMIT {placeholder};
+                """,
+                (user_email, USER_DATA_EXPORT_MAX_ROWS),
+            )
+            support_requests = [
+                db_row_to_export_dict(row, support_columns) for row in cursor.fetchall()
+            ]
+
+        feedback_columns = [
+            "id",
+            "match_result_id",
+            "rating",
+            "nps_score",
+            "comment",
+            "source",
+            "page_url",
+            "session_id",
+            "metadata",
+            "created_at",
+        ]
+        feedback_events: List[dict] = []
+        if clean_session_id:
+            cursor.execute(
+                f"""
+                SELECT {', '.join(feedback_columns)}
+                FROM feedback_events
+                WHERE session_id = {placeholder}
+                ORDER BY id DESC
+                LIMIT {placeholder};
+                """,
+                (clean_session_id, USER_DATA_EXPORT_MAX_ROWS),
+            )
+            feedback_events = [
+                db_row_to_export_dict(row, feedback_columns) for row in cursor.fetchall()
+            ]
+
+        match_columns = [
+            "id",
+            "engineer_id",
+            "job_id",
+            "fit_ratio",
+            "score_skill",
+            "score_culture",
+            "score_growth",
+            "score_performing",
+            "match_summary",
+            "interview_questions",
+            "analyzed_at",
+        ]
+        match_ids = unique_ints([item.get("match_result_id") for item in feedback_events])
+        match_results = db_fetch_by_ids(cursor, db_type, "match_results", match_columns, match_ids)
+
+        engineer_columns = [
+            "id",
+            "name",
+            "resume_raw",
+            "parsed_skills",
+            "career_goals",
+            "created_at",
+        ]
+        engineer_ids = unique_ints([item.get("engineer_id") for item in match_results])
+        engineers = db_fetch_by_ids(cursor, db_type, "engineers", engineer_columns, engineer_ids)
+
+        job_columns = [
+            "id",
+            "title",
+            "company",
+            "job_description",
+            "parsed_requirements",
+            "company_culture",
+            "created_at",
+        ]
+        job_ids = unique_ints([item.get("job_id") for item in match_results])
+        jobs = db_fetch_by_ids(cursor, db_type, "jobs", job_columns, job_ids)
+
+        records = {
+            "support_requests": support_requests,
+            "feedback_events": feedback_events,
+            "match_results": match_results,
+            "engineers": engineers,
+            "jobs": jobs,
+        }
+
+        return {
+            "status": "success",
+            "schema_version": "2026-06-20.T781",
+            "generated_at": (
+                datetime.datetime.now(datetime.timezone.utc)
+                .replace(microsecond=0)
+                .isoformat()
+                .replace("+00:00", "Z")
+            ),
+            "user": {
+                "uid": user_uid,
+                "email": user_email,
+            },
+            "scope": {
+                "support_email": user_email or None,
+                "browser_session_id": clean_session_id or None,
+                "match_source": "feedback_events.match_result_id for the supplied browser session",
+                "max_rows_per_collection": USER_DATA_EXPORT_MAX_ROWS,
+            },
+            "record_counts": {name: len(value) for name, value in records.items()},
+            "records": records,
+            "ownership_gaps": [
+                "engineers/jobs/match_results created before owner_uid support are exported only when tied to the supplied feedback session_id.",
+                "T752 onboarding must add stable owner_uid columns before public paid launch self-service export.",
+            ],
+        }
+    finally:
+        cursor.close()
+        conn.close()
+
+
 def resolve_or_insert_engineer(content: str) -> int:
     profile = build_profile(content, "engineer")
     name = profile.title
@@ -2040,7 +2300,12 @@ def today_key() -> str:
 
 
 def utc_now_iso() -> str:
-    return datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z"
+    return (
+        datetime.datetime.now(datetime.timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
 
 def read_external_api_events(limit: Optional[int] = None) -> List[dict]:
@@ -2858,6 +3123,28 @@ async def get_auth_me(current_user: dict = Depends(get_current_user)):
         "status": "success",
         "user": current_user
     }
+
+
+@app.get("/api/user-data/export")
+async def export_user_data(
+    session_id: str = "",
+    current_user: dict = Depends(get_current_user_for_data_export),
+):
+    """Return the authenticated user's scoped data export as JSON."""
+    try:
+        export_payload = build_user_data_export(current_user, session_id=session_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        print(f"[-] User data export failed: {exc}")
+        raise HTTPException(status_code=500, detail="Failed to build user data export") from exc
+
+    filename = "mighty-link-user-data-export.json"
+    return JSONResponse(
+        content=export_payload,
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
+
 
 # API Health Check Endpoint
 @app.get("/api/health")

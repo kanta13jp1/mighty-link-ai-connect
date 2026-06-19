@@ -223,7 +223,7 @@ CREATE POLICY "profiles_hide_deleted"
 
 | 種別 | 対応方法 | SLA |
 | :--- | :--- | :--- |
-| 開示請求 | 管理者ダッシュボードから該当 user_id のデータを CSV エクスポート | 受付後 2 週間以内 |
+| 開示請求 | 利用者本人は `GET /api/user-data/export` でJSONエクスポート。本人が利用できない場合のみ管理者が監査付きで代理エクスポート | 受付後 2 週間以内 |
 | 訂正請求 | 管理者が Supabase ダッシュボードで直接更新 | 受付後 2 週間以内 |
 | 削除請求 | 退会 API (`DELETE /api/v1/users/me`) を管理者が代理実行 | 受付後 2 週間以内 |
 | 利用停止請求 | Firebase Auth でアカウントを無効化（disabled = true） | 受付後 3 営業日以内 |
