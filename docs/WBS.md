@@ -277,11 +277,12 @@ gantt
 | **T817_5** | 7. 決定後実行 | フロントエンド | マッチング検索API/UI・候補者リストアップ | Codex + Antigravity | VSCode + Codex + Antigravity | src/sales_email_match.py、scripts/build_sales_email_match_review.py、GET /api/sales-email/matches、案件候補比較ボードで、案件→人材/人材→案件の双方向候補、スコア、根拠、不一致理由、CSV出力を実装。本文全文・個人連絡先・secret-like値非出力をpytestで検証しIssue #110へ同期 | 完了 |
 | **T817_6** | 7. 決定後実行 | 品質管理 | 人間レビュー・評価ログ・フィードバック改善ループ | Codex + Claude Code | VSCode + Codex + Claude Code | src/sales_email_review.py、scripts/review_sales_email_match.py、POST/GET /api/sales-email/reviews、email_match_feedback保存、exports/sales_email_review_log.*、Runbook、pytestで、採用/却下/要確認/補正ログとredactionを実装しIssue #111へ同期 | 完了 |
 | **T817_7** | 7. 決定後実行 | 本番運用 | 営業メールAIマッチング本番運用hardening | Codex + Claude Code | VSCode + Codex + Claude Code | 実メール接続後の個人情報最小化、監査ログ、保持/削除、負荷、バックアップ、アカウント権限を確認し、public_paid_launch判定へ接続する | 未着手 |
-| **T818** | 7. 決定後実行 | 共通管理 | 開発・運用環境（Firebase/Supabase/GitHub）の会社アカウント移行準備 | 寛太梅澤 | 人間 + VSCode + Codex | 個人アカウントから会社アカウント/請求口座への移管手順、権限、secret、請求、所有権、ロールバックを整理し検証する | 未着手 |
+| **T818** | 7. 決定後実行 | 共通管理 | 開発・運用環境（Firebase/Supabase/GitHub）の会社アカウント移行準備 | 寛太梅澤 | 人間 + VSCode + Codex | docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.mdで現状棚卸し、GitHub/Firebase/GCP/Supabase/Google Workspace/NotebookLM/AI開発ツール/Stripe/ドメインの会社移管順序、secret/OAuth、請求、権限、バックアップ、ロールバックを整理。実移管タスクT823を追加しIssue #112/R76/QA-48へ同期 | 完了 |
 | **T819** | 7. 決定後実行 | 共通管理 | 7/2(木)仮 定例打ち合わせの実施と進捗報告 | 寛太梅澤 | 人間 + NotebookLM + Google Workspace | 営業メールAIマッチングPoC、既存サイト更新、アカウント移行準備、Go/No-Go状況を2026-07-02(木)仮の打ち合わせ資料へまとめる | 未着手 |
 | **T820** | 7. 決定後実行 | 共通管理 | 6/17 定例打ち合わせ決定事項のプロジェクト・WBSへの反映 | Codex + Antigravity | VSCode + Codex + Antigravity + Gemini | Geminiメモの正確性を確認し、議事録、WBS、課題管理表、QA表、営業メールAIマッチング要件、Issue #104、NotebookLM/Sheets/Calendar同期へ反映 | 完了 |
 | **T821** | 7. 決定後実行 | 共通管理 | 6/17文字起こし全文照合・日付/双方向マッチング要件補正 | Codex | VSCode + Codex + official docs | 文字起こしをGeminiメモ反映済み議事録と照合し、次回打ち合わせを2026-07-02(木)仮へ補正。共有営業アドレス、BP一斉配信、SQL/Oracle過剰ヒット、案件/人材双方向マッチングをdocs/WBS/課題/QA/Issue #105へ反映し、認証情報全文は保存しない | 完了 |
 | **T822** | 7. 決定後実行 | リリース運用 | モバイル表示時のホームページ main1.jpeg 404エラーの修正 | Antigravity | Antigravity + Gemini | Vegasスライダーのモバイル用画像ソースに baseURL を付与し相対パスによる404エラーを解消。FTPで second.js を本番へアップロードして動作検証完了 | 完了 |
+| **T823** | 7. 決定後実行 | 共通管理 | 会社アカウント本移管・請求切替の実施 | 寛太梅澤 + Codex | 人間 + VSCode + Codex + Google Workspace | 会社GitHub Organization、Firebase/GCP IAM・Billing、Supabase Organization transfer、GitHub Actions secrets再登録、NotebookLM/Drive所有場所、AI開発ツール契約、Stripe会社名義化をT818ランブックに沿って実施し、公開デモ・mightylink-app.com・Sheets/Calendar同期を検証する | 未着手 |
 
 ---
 

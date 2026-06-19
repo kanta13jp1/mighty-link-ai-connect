@@ -7,6 +7,8 @@
 
 Mighty Skill-Bridge の Google API 実行主体を、新しい Google Workspace アカウント `k-umezawa@ml-mightylink.com` に移行し、WBS カレンダー、進捗管理スプレッドシート、ローカル FastAPI サーバーの連携を同一アカウントで運用できる状態にする。
 
+GitHub、Firebase/GCP、Supabase、AI開発ツール、ドメイン、請求先を含む横断的な会社アカウント移行準備は [ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md](ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md) を正本とする。本書は Google Workspace / OAuth / Sheets / Calendar の実行主体に限定する。
+
 ## 関係アカウントとリソース
 
 - Workspace 実行アカウント: `k-umezawa@ml-mightylink.com`

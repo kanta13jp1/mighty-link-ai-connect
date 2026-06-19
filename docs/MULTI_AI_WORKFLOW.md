@@ -489,6 +489,7 @@ feat/<tool>-<wbs-id>-<slug>
 | 2026-06-15 | Codex | T760完了: Firebase Emulator Suite / Supabase Local CLI のローカル開発Runbook、`supabase/config.toml`、合成seed、検証スクリプト、pytest、GitHub Actions workflowを追加。production DB URLをローカル統合テストから分離 |
 | 2026-06-15 | Codex | T761完了: Supabase Query Performance / Performance Advisor / Index Advisor のレビュー成果物生成、Runbook、pytest、週次GitHub Actionsゲートを追加。インデックスDDLは根拠・Issue・migration/rollback note が揃った別タスクへ分離 |
 | 2026-06-15 | Codex | T761_1完了: Firebase/GCP と Supabase の quota・error・billing・DB saturation alert review を生成する script/runbook/workflow/pytest を追加し、Issue #97 / WBS / Sheets / Calendar / Project へ同期 |
+| 2026-06-19 | Codex | T818完了: GitHub/Firebase/GCP/Supabase/Google Workspace/NotebookLM/AI開発ツール/Stripe/ドメインの会社アカウント移行準備ランブックを作成。R76/QA-48を更新し、本移管タスクT823を追加 |
 
 ## 💰 コスト監視 & Managed Agents 料金ポリシー
 

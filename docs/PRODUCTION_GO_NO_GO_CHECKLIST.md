@@ -91,6 +91,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 - DB: Supabase
 - ソースコード管理: GitHub
 - WBS/課題/QA/リリース判定: Google Workspace Sheets
+- 会社アカウント移行: T818で準備ランブックを整備済み。実移管、請求切替、個人Owner依存の解消はT823で実施する。
 
 ---
 
