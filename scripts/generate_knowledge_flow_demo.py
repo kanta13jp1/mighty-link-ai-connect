@@ -457,7 +457,7 @@ Use the NotebookLM source pack to answer:
 After `notebooklm login`, run:
 
 ```powershell
-python scripts/sync_docs_to_notebooklm.py
+python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
 ```
 
 Then read `exports/knowledge_flow/notebooklm_agent_brief.md` before the next Codex implementation pass.

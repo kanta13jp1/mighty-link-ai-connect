@@ -75,7 +75,7 @@ def main() -> None:
 
     print()
     print(f"NotebookLM authentication saved: {storage_path}")
-    print("Next, run: python scripts/sync_docs_to_notebooklm.py")
+        print("Next, run: python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60")
 
 
 if __name__ == "__main__":

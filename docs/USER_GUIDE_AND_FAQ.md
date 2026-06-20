@@ -422,7 +422,7 @@ python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-l
 
 ```powershell
 # NotebookLM ドキュメント同期
-python scripts/sync_docs_to_notebooklm.py
+python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
 
 # CEO向けプレゼンデッキ更新
 python scripts/generate_ceo_presentation_deck.py

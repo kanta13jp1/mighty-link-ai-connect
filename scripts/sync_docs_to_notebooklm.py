@@ -66,6 +66,7 @@ from google_workspace_account import (  # noqa: E402
 NOTEBOOK_TITLE = "Mighty Skill-Bridge Development Knowledge 2026-06-02"
 SOURCE_PREFIX = "Mighty Skill-Bridge docs"
 NOTEBOOKLM_COMMAND_TIMEOUT_SECONDS = int(os.environ.get("NOTEBOOKLM_COMMAND_TIMEOUT_SECONDS", "420"))
+NOTEBOOKLM_ASK_TIMEOUT_SECONDS = int(os.environ.get("NOTEBOOKLM_ASK_TIMEOUT_SECONDS", "900"))
 
 AGENT_QUESTION = """\
 このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、
@@ -183,20 +184,46 @@ def sync_google_docs(previous: dict[str, Any]) -> dict[str, Any]:
     return docs
 
 
-def run_notebooklm(args: list[str], *, check: bool = False) -> subprocess.CompletedProcess[str]:
+def completed_output_text(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return str(value)
+
+
+def run_notebooklm(
+    args: list[str],
+    *,
+    check: bool = False,
+    timeout: int | None = None,
+) -> subprocess.CompletedProcess[str]:
     executable = shutil.which("notebooklm")
     if not executable:
         raise FileNotFoundError("notebooklm CLI was not found on PATH.")
 
-    completed = subprocess.run(
-        [executable, *args],
-        cwd=str(PROJECT_ROOT),
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        capture_output=True,
-        timeout=NOTEBOOKLM_COMMAND_TIMEOUT_SECONDS,
-    )
+    effective_timeout = timeout if timeout is not None else NOTEBOOKLM_COMMAND_TIMEOUT_SECONDS
+    command = [executable, *args]
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=str(PROJECT_ROOT),
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            capture_output=True,
+            timeout=effective_timeout,
+        )
+    except subprocess.TimeoutExpired as error:
+        stdout = completed_output_text(getattr(error, "stdout", None) or getattr(error, "output", None))
+        stderr = completed_output_text(getattr(error, "stderr", None))
+        timeout_message = f"notebooklm {' '.join(args)} timed out after {effective_timeout} seconds."
+        completed = subprocess.CompletedProcess(
+            command,
+            124,
+            stdout=stdout,
+            stderr=f"{stderr}\n{timeout_message}".strip(),
+        )
     if check and completed.returncode != 0:
         raise RuntimeError(completed.stderr.strip() or completed.stdout.strip())
     return completed
@@ -247,6 +274,38 @@ def notebook_answer_text(completed: subprocess.CompletedProcess[str]) -> str:
     return completed.stdout
 
 
+def find_existing_notebook_by_title(title: str) -> tuple[str, dict[str, Any]] | None:
+    listed = run_notebooklm(["list", "--json"])
+    if listed.returncode != 0:
+        return None
+
+    try:
+        payload = parse_json_output(listed)
+    except json.JSONDecodeError:
+        return None
+
+    notebooks = payload.get("notebooks", []) if isinstance(payload, dict) else payload
+    if not isinstance(notebooks, list):
+        return None
+
+    for notebook in notebooks:
+        if not isinstance(notebook, dict):
+            continue
+        if notebook.get("title") != title:
+            continue
+        notebook_id = notebook.get("id") or notebook.get("notebook_id")
+        if not notebook_id:
+            continue
+        use_result = run_notebooklm(["use", str(notebook_id)])
+        if use_result.returncode == 0:
+            return str(notebook_id), {
+                "action": "used_title_match",
+                "payload": notebook,
+                "output": use_result.stdout.strip(),
+            }
+    return None
+
+
 def resolve_notebook(previous: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     previous_notebook = previous.get("notebooklm", {}) if isinstance(previous, dict) else {}
     previous_id = previous_notebook.get("notebook_id")
@@ -254,6 +313,10 @@ def resolve_notebook(previous: dict[str, Any]) -> tuple[str, dict[str, Any]]:
         use_result = run_notebooklm(["use", previous_id])
         if use_result.returncode == 0:
             return previous_id, {"action": "used_existing", "output": use_result.stdout.strip()}
+
+    existing = find_existing_notebook_by_title(NOTEBOOK_TITLE)
+    if existing:
+        return existing
 
     created = run_notebooklm(["create", NOTEBOOK_TITLE, "--json"], check=True)
     payload = parse_json_output(created)
@@ -290,9 +353,100 @@ def existing_source_titles(notebook_id: str) -> dict[str, str]:
     return titles
 
 
+def write_notebooklm_ask_skipped_outputs(
+    *,
+    notebook_id: str,
+    notebook_info: dict[str, Any],
+    source_results: list[dict[str, Any]],
+    ask_timeout_seconds: int,
+) -> dict[str, Any]:
+    generated_at = jst_now().isoformat(timespec="seconds")
+    next_command = f"python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds {ask_timeout_seconds}"
+    ask_generation = {
+        "status": "skipped",
+        "reason": "--skip-asks",
+        "generated_at_jst": generated_at,
+        "ask_timeout_seconds": ask_timeout_seconds,
+        "next_command": next_command,
+        "source_count": len(source_results),
+    }
+    common_payload = {
+        "notebook_id": notebook_id,
+        "notebook_info": notebook_info,
+        "source_count": len(source_results),
+        "source_results": source_results,
+        "ask_generation": ask_generation,
+    }
+    write_json(
+        AGENT_BRIEF_JSON_PATH,
+        {
+            **common_payload,
+            "question": AGENT_QUESTION,
+            "summary_returncode": None,
+            "answer_returncode": None,
+        },
+    )
+    write_json(
+        CEO_SLIDE_OUTLINE_JSON_PATH,
+        {
+            **common_payload,
+            "question": CEO_SLIDE_QUESTION,
+            "answer_returncode": None,
+        },
+    )
+    write_text(
+        AGENT_BRIEF_PATH,
+        f"""# NotebookLM Agent Brief
+
+Generated: {generated_at}
+Notebook: `{notebook_id}`
+Status: `source_sync_ready`
+
+NotebookLM source sync completed. The summary/ask generation phase was skipped by `--skip-asks` to keep the closeout run deterministic.
+
+## Synced Sources
+
+- Source rows processed: `{len(source_results)}`
+
+## Optional Ask Generation
+
+```powershell
+{next_command}
+```
+
+After the optional ask generation succeeds, this file will be replaced by a NotebookLM-generated agent brief.
+""",
+    )
+    write_text(
+        CEO_SLIDE_OUTLINE_PATH,
+        f"""# NotebookLM CEO Slide Outline
+
+Generated: {generated_at}
+Notebook: `{notebook_id}`
+Status: `source_sync_ready`
+
+NotebookLM source sync completed. The CEO slide outline ask was skipped by `--skip-asks` to avoid blocking the docs/Drive sync on a long NotebookLM response.
+
+## Optional Ask Generation
+
+```powershell
+{next_command}
+```
+
+After the optional ask generation succeeds, this file will be replaced by a NotebookLM-generated CEO presentation outline.
+""",
+    )
+    return ask_generation
+
+
 def sync_notebooklm_sources(
     docs: dict[str, Any],
     previous: dict[str, Any],
+    *,
+    run_asks: bool = True,
+    ask_timeout_seconds: int = NOTEBOOKLM_ASK_TIMEOUT_SECONDS,
+    refresh_existing_sources: bool = True,
+    source_timeout_seconds: int = NOTEBOOKLM_COMMAND_TIMEOUT_SECONDS,
 ) -> dict[str, Any]:
     status = notebooklm_auth_status()
     if status.get("status") != "ready":
@@ -306,7 +460,25 @@ def sync_notebooklm_sources(
         title = doc["name"]
         existing_source_id = existing_titles.get(title)
         if existing_source_id:
-            refreshed = run_notebooklm(["source", "refresh", existing_source_id, "-n", notebook_id])
+            if not refresh_existing_sources:
+                source_results.append(
+                    {
+                        "title": title,
+                        "drive_file_id": doc["id"],
+                        "action": "skipped_existing_refresh",
+                        "reason": "--skip-source-refresh",
+                        "source_id": existing_source_id,
+                        "returncode": None,
+                        "stdout": "",
+                        "stderr": "",
+                    }
+                )
+                continue
+
+            refreshed = run_notebooklm(
+                ["source", "refresh", existing_source_id, "-n", notebook_id],
+                timeout=source_timeout_seconds,
+            )
             source_results.append(
                 {
                     "title": title,
@@ -330,7 +502,8 @@ def sync_notebooklm_sources(
                 notebook_id,
                 "--mime-type",
                 "google-doc",
-            ]
+            ],
+            timeout=source_timeout_seconds,
         )
         source_results.append(
             {
@@ -343,9 +516,50 @@ def sync_notebooklm_sources(
             }
         )
 
-    summary = run_notebooklm(["summary", "-n", notebook_id, "--topics"])
-    answer = run_notebooklm(["ask", "-n", notebook_id, AGENT_QUESTION, "--json"])
-    slide_answer = run_notebooklm(["ask", "-n", notebook_id, CEO_SLIDE_QUESTION, "--json"])
+    if not run_asks:
+        ask_generation = write_notebooklm_ask_skipped_outputs(
+            notebook_id=notebook_id,
+            notebook_info=notebook_info,
+            source_results=source_results,
+            ask_timeout_seconds=ask_timeout_seconds,
+        )
+        return {
+            **status,
+            "notebook_id": notebook_id,
+            "notebook_title": NOTEBOOK_TITLE,
+            "notebook_info": notebook_info,
+            "source_results": source_results,
+            "source_sync": {
+                "refresh_existing_sources": refresh_existing_sources,
+                "source_timeout_seconds": source_timeout_seconds,
+            },
+            "ask_generation": ask_generation,
+            "summary_returncode": None,
+            "answer_returncode": None,
+            "slide_outline_returncode": None,
+            "agent_brief": relative(AGENT_BRIEF_PATH),
+            "agent_brief_json": relative(AGENT_BRIEF_JSON_PATH),
+            "ceo_slide_outline": relative(CEO_SLIDE_OUTLINE_PATH),
+            "ceo_slide_outline_json": relative(CEO_SLIDE_OUTLINE_JSON_PATH),
+        }
+
+    summary = run_notebooklm(["summary", "-n", notebook_id, "--topics"], timeout=ask_timeout_seconds)
+    answer = run_notebooklm(["ask", "-n", notebook_id, AGENT_QUESTION, "--json"], timeout=ask_timeout_seconds)
+    slide_answer = run_notebooklm(
+        ["ask", "-n", notebook_id, CEO_SLIDE_QUESTION, "--json"],
+        timeout=ask_timeout_seconds,
+    )
+    ask_returncodes = [summary.returncode, answer.returncode, slide_answer.returncode]
+    ask_status = "ready" if all(code == 0 for code in ask_returncodes) else "partial"
+    if any(code == 124 for code in ask_returncodes):
+        ask_status = "timeout"
+    ask_generation = {
+        "status": ask_status,
+        "ask_timeout_seconds": ask_timeout_seconds,
+        "summary_returncode": summary.returncode,
+        "answer_returncode": answer.returncode,
+        "slide_outline_returncode": slide_answer.returncode,
+    }
 
     brief_payload: dict[str, Any] = {
         "notebook_id": notebook_id,
@@ -414,6 +628,11 @@ Notebook: `{notebook_id}`
         "notebook_title": NOTEBOOK_TITLE,
         "notebook_info": notebook_info,
         "source_results": source_results,
+        "source_sync": {
+            "refresh_existing_sources": refresh_existing_sources,
+            "source_timeout_seconds": source_timeout_seconds,
+        },
+        "ask_generation": ask_generation,
         "summary_returncode": summary.returncode,
         "answer_returncode": answer.returncode,
         "slide_outline_returncode": slide_answer.returncode,
@@ -433,16 +652,31 @@ def write_next_steps(manifest: dict[str, Any]) -> None:
     )
     auth_status = notebooklm.get("status", "unknown")
     error = notebooklm.get("error", "")
+    ask_generation = notebooklm.get("ask_generation", {})
+    ask_status = ask_generation.get("status", "not_run")
+    ask_next_command = ask_generation.get(
+        "next_command",
+        f"python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds {NOTEBOOKLM_ASK_TIMEOUT_SECONDS}",
+    )
     if auth_status == "ready":
         reauth_section = f"""## NotebookLM Sync Result
 
 NotebookLM CLI is authenticated and the docs source set has been synced.
 
 - Notebook: `{notebooklm.get("notebook_id", "")}`
+- Ask generation: `{ask_status}`
 - Agent brief: `{notebooklm.get("agent_brief", relative(AGENT_BRIEF_PATH))}`
 - Agent brief JSON: `{notebooklm.get("agent_brief_json", relative(AGENT_BRIEF_JSON_PATH))}`
 - CEO slide outline: `{notebooklm.get("ceo_slide_outline", relative(CEO_SLIDE_OUTLINE_PATH))}`
 - CEO slide outline JSON: `{notebooklm.get("ceo_slide_outline_json", relative(CEO_SLIDE_OUTLINE_JSON_PATH))}`
+
+## Optional Ask Generation
+
+If ask generation was skipped or timed out, keep the synced sources and rerun only the long NotebookLM summary/ask phase when needed:
+
+```powershell
+{ask_next_command}
+```
 
 ## Re-authentication
 
@@ -450,7 +684,7 @@ If NotebookLM authentication expires later, run:
 
 ```powershell
 python scripts/notebooklm_login_workspace.py
-python scripts/sync_docs_to_notebooklm.py
+python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
 ```
 
 During browser login, select `k-umezawa@ml-mightylink.com`.
@@ -462,7 +696,7 @@ NotebookLM CLI currently needs browser re-authentication before sources can be a
 
 ```powershell
 python scripts/notebooklm_login_workspace.py
-python scripts/sync_docs_to_notebooklm.py
+python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
 ```
 
 During browser login, select `k-umezawa@ml-mightylink.com`.
@@ -519,7 +753,7 @@ NotebookLM CLI is not ready yet, so this file is a placeholder.
 
 ```powershell
 notebooklm login
-python scripts/sync_docs_to_notebooklm.py
+python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
 ```
 
 During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
@@ -554,7 +788,7 @@ NotebookLM CLI is not ready yet, so this file is a placeholder.
 
 ```powershell
 notebooklm login
-python scripts/sync_docs_to_notebooklm.py
+python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
 ```
 
 After re-authentication, this file will be replaced by a NotebookLM-generated
@@ -640,6 +874,28 @@ def _main_impl() -> None:
         action="store_true",
         help="Only sync docs/ to Workspace Google Docs and skip NotebookLM CLI calls.",
     )
+    parser.add_argument(
+        "--skip-asks",
+        action="store_true",
+        help="Sync Google Docs as NotebookLM sources but skip long summary/ask generation.",
+    )
+    parser.add_argument(
+        "--ask-timeout-seconds",
+        type=int,
+        default=NOTEBOOKLM_ASK_TIMEOUT_SECONDS,
+        help="Timeout in seconds for NotebookLM summary/ask commands.",
+    )
+    parser.add_argument(
+        "--skip-source-refresh",
+        action="store_true",
+        help="Add missing NotebookLM sources but skip refreshing sources that already exist.",
+    )
+    parser.add_argument(
+        "--source-timeout-seconds",
+        type=int,
+        default=NOTEBOOKLM_COMMAND_TIMEOUT_SECONDS,
+        help="Timeout in seconds for each NotebookLM source add/refresh command.",
+    )
     args = parser.parse_args()
 
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
@@ -648,6 +904,10 @@ def _main_impl() -> None:
     notebooklm = {"status": "skipped", "reason": "--drive-only"} if args.drive_only else sync_notebooklm_sources(
         google_docs,
         previous,
+        run_asks=not args.skip_asks,
+        ask_timeout_seconds=args.ask_timeout_seconds,
+        refresh_existing_sources=not args.skip_source_refresh,
+        source_timeout_seconds=args.source_timeout_seconds,
     )
 
     # Run the Gemini explicit context caching PoC (T691)

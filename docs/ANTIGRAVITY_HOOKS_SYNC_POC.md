@@ -33,7 +33,7 @@ Mighty Skill-Bridge の開発は、Antigravity + Gemini、VSCode + Codex、VSCod
 * **対象ファイル**: `docs/*.md` (Markdownドキュメント全般)
 * **実行コマンド**: 
   ```powershell
-  python scripts/sync_docs_to_notebooklm.py && python scripts/generate_ceo_presentation_deck.py && python scripts/upload_notebooklm_docs_to_drive.py
+  python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60 && python scripts/generate_ceo_presentation_deck.py && python scripts/upload_notebooklm_docs_to_drive.py
   ```
 * **効果**: 設計書や議事録が追加・更新されるたび、自動でGoogleドライブにアップロードされ、NotebookLMのナレッジベースが常に最新状態に維持されます。また、PPTXプレゼン資料も自動的に再生成され、ドライブ上の共有ファイルに同期されます。
 

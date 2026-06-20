@@ -183,18 +183,19 @@ CLI/MCPで実施した連携証跡:
 docs配下をNotebookLM source候補として同期する場合:
 
 ```powershell
-python scripts/sync_docs_to_notebooklm.py
+python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
 ```
 
 NotebookLM CLIが認証切れの場合は、以下を実行してから再同期します。
 
 ```powershell
 notebooklm login
-python scripts/sync_docs_to_notebooklm.py
+python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
 ```
 
 `notebooklm login` では `k-umezawa@ml-mightylink.com` を選択してください。同期状況は `exports/knowledge_flow/notebooklm_docs_manifest.json`、再認証手順は `exports/knowledge_flow/notebooklm_cli_next_steps.md` に保存されます。
 NotebookLM CLI のログイン状態と、Sheets / Calendar / Drive API が使う `authorized_user.json` は別物です。Drive API 側で `invalid_grant` が出る場合は、`python scripts/verify_google_workspace_account.py --reauth` で再認証してください。
+NotebookLM の Agent Brief / CEO Slide Outline を再生成したい場合のみ、`python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900` を別実行してください。
 
 - Notion証跡ページ: `https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951`
 - GitHub Issues: `https://github.com/kanta13jp1/mighty-link-ai-connect/issues`
@@ -298,7 +299,7 @@ Google Cloud Console の対象プロジェクトで、OAuth 同意画面のテ�
 
 ```powershell
 python scripts/notebooklm_login_workspace.py
-python scripts/sync_docs_to_notebooklm.py
+python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
 python scripts/generate_ceo_presentation_deck.py
 ```
 
