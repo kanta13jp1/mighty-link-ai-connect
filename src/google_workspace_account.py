@@ -6,6 +6,7 @@ import os
 from typing import Any
 
 import requests
+from google.auth.exceptions import RefreshError
 from google.auth.transport.requests import Request
 
 
@@ -19,9 +20,39 @@ class GoogleWorkspaceAccountError(RuntimeError):
     """Raised when OAuth credentials do not belong to the expected account."""
 
 
+class GoogleWorkspaceReauthRequiredError(GoogleWorkspaceAccountError):
+    """Raised when local OAuth refresh credentials can no longer be used."""
+
+
+def google_workspace_reauth_message(expected_email: str = EXPECTED_GOOGLE_ACCOUNT) -> str:
+    return (
+        "Google Workspace OAuth token is expired or revoked. "
+        "Run `python scripts/verify_google_workspace_account.py --reauth` "
+        f"and sign in as `{expected_email}`. "
+        "Do not commit `authorized_user.json`, `client_secret.json`, or any OAuth token."
+    )
+
+
+def is_google_oauth_reauth_required(error: BaseException) -> bool:
+    message = str(error).lower()
+    return (
+        isinstance(error, GoogleWorkspaceReauthRequiredError)
+        or (
+            isinstance(error, RefreshError)
+            and ("invalid_grant" in message or "expired or revoked" in message)
+        )
+        or ("invalid_grant" in message and "expired or revoked" in message)
+    )
+
+
 def _refresh_if_needed(credentials: Any) -> None:
     if not getattr(credentials, "valid", False):
-        credentials.refresh(Request())
+        try:
+            credentials.refresh(Request())
+        except RefreshError as error:
+            if is_google_oauth_reauth_required(error):
+                raise GoogleWorkspaceReauthRequiredError(google_workspace_reauth_message()) from error
+            raise GoogleWorkspaceAccountError(f"Google OAuth credential refresh failed: {error}") from error
 
 
 def fetch_drive_user(credentials: Any) -> dict:

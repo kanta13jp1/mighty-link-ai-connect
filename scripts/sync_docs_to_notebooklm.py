@@ -57,6 +57,10 @@ from upload_notebooklm_docs_to_drive import (  # noqa: E402
     upload_as_google_doc,
     verify_workspace_owner,
 )
+from google_workspace_account import (  # noqa: E402
+    GoogleWorkspaceReauthRequiredError,
+    is_google_oauth_reauth_required,
+)
 
 
 NOTEBOOK_TITLE = "Mighty Skill-Bridge Development Knowledge 2026-06-02"
@@ -629,7 +633,7 @@ def sync_gemini_context_cache(google_docs: dict[str, Any]) -> dict[str, Any]:
         return {"status": "failed", "error": str(e)}
 
 
-def main() -> None:
+def _main_impl() -> None:
     parser = argparse.ArgumentParser(description="Sync docs/ Google Docs and NotebookLM sources.")
     parser.add_argument(
         "--drive-only",
@@ -671,6 +675,19 @@ def main() -> None:
         print(f"[*] Agent brief: {notebooklm['agent_brief']}")
     if notebooklm.get("ceo_slide_outline"):
         print(f"[*] CEO slide outline: {notebooklm['ceo_slide_outline']}")
+
+
+def main() -> None:
+    try:
+        _main_impl()
+    except GoogleWorkspaceReauthRequiredError as error:
+        print(f"[-] {error}")
+        sys.exit(2)
+    except Exception as error:
+        if is_google_oauth_reauth_required(error):
+            print(f"[-] {error}")
+            sys.exit(2)
+        raise
 
 
 if __name__ == "__main__":

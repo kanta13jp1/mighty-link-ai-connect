@@ -48,6 +48,8 @@ from google_workspace_account import (
     GoogleWorkspaceAccountError,
     assert_expected_google_account,
     credentials_from_gspread_client,
+    google_workspace_reauth_message,
+    is_google_oauth_reauth_required,
 )
 
 # Configuration
@@ -933,9 +935,18 @@ def main():
             auth_mode = "OAuth 2.0 (User Drive)"
             print("[+] OAuth 2.0 Authentication Successful!")
         except GoogleWorkspaceAccountError as e:
+            if is_google_oauth_reauth_required(e):
+                print(f"[-] OAuth 2.0 Workspace Account Verification Failed: {e}")
+                print("[*] The iCalendar fallback was still generated at exports/mighty_development_plan.ics.")
+                sys.exit(2)
             print(f"[-] OAuth 2.0 Workspace Account Verification Failed: {e}")
             sys.exit(1)
         except Exception as e:
+            if is_google_oauth_reauth_required(e):
+                print(f"[-] OAuth 2.0 Authentication Failed: {e}")
+                print(f"[*] {google_workspace_reauth_message(USER_EMAIL)}")
+                print("[*] The iCalendar fallback was still generated at exports/mighty_development_plan.ics.")
+                sys.exit(2)
             print(f"[-] OAuth 2.0 Authentication Failed: {e}")
             print("[*] Falling back to Service Account check...")
 

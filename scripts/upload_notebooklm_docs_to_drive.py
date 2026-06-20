@@ -32,7 +32,9 @@ if str(SRC_DIR) not in sys.path:
 
 from google_workspace_account import (  # noqa: E402
     EXPECTED_GOOGLE_ACCOUNT,
+    GoogleWorkspaceReauthRequiredError,
     assert_expected_google_account,
+    is_google_oauth_reauth_required,
 )
 
 
@@ -322,7 +324,7 @@ def verify_workspace_owner(file_metadata: dict[str, Any]) -> None:
         )
 
 
-def main() -> None:
+def _main_impl() -> None:
     credentials = load_credentials()
     previous = load_previous_metadata()
     previous_docs = previous.get("documents", {}) if isinstance(previous, dict) else {}
@@ -409,6 +411,19 @@ def main() -> None:
     for key, item in files.items():
         print(f"  - {key}: {item['url']}")
     print(f"[*] Metadata: {OUTPUT_FILE.relative_to(PROJECT_ROOT)}")
+
+
+def main() -> None:
+    try:
+        _main_impl()
+    except GoogleWorkspaceReauthRequiredError as error:
+        print(f"[-] {error}")
+        sys.exit(2)
+    except Exception as error:
+        if is_google_oauth_reauth_required(error):
+            print(f"[-] {error}")
+            sys.exit(2)
+        raise
 
 
 if __name__ == "__main__":

@@ -284,6 +284,7 @@ gantt
 | **T822** | 7. 決定後実行 | リリース運用 | モバイル表示時のホームページ main1.jpeg 404エラーの修正 | Antigravity | Antigravity + Gemini | Vegasスライダーのモバイル用画像ソースに baseURL を付与し相対パスによる404エラーを解消。FTPで second.js を本番へアップロードして動作検証完了 | 完了 |
 | **T823** | 7. 決定後実行 | 共通管理 | 会社アカウント本移管・請求切替の実施 | 寛太梅澤 + Codex | 人間 + VSCode + Codex + Google Workspace | 会社GitHub Organization、Firebase/GCP IAM・Billing、Supabase Organization transfer、GitHub Actions secrets再登録、NotebookLM/Drive所有場所、AI開発ツール契約、Stripe会社名義化をT818ランブックに沿って実施し、公開デモ・mightylink-app.com・Sheets/Calendar同期を検証する | 未着手 |
 | **T824** | 7. 決定後実行 | 要件定義 | 営業メール自動取り込み接続方式のヒアリング項目・必要情報チェックリスト整備 | Codex | VSCode + Codex + official provider docs | 営業メール受信環境をGmailと決め打ちせず、Microsoft Graph/Gmail API/IMAP/POP3/Webhook/ファイル監視別の必要情報、Secret管理、実値非記録ルールをdocs/SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.mdへ整理し、T817/T817_2 docsのGmail前提表現を補正 | 完了 |
+| **T825** | 7. 決定後実行 | Google Workspace同期 | Google Workspace OAuth失効時の再認証CLIとRunbook整備 | Codex | VSCode + Codex + Google OAuth official docs | verify_google_workspace_account.pyに--reauthを追加し、invalid_grant時のSheets/Calendar同期エラーを再認証案内へ整流。docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md、WBS/課題/QA/GitHub Issueへ同期 | 完了 |
 
 ---
 

@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-06-20 14:38:10 UTC+09:00
+Generated: 2026-06-21 00:51:57 UTC+09:00
 
 ## Purpose
 
@@ -10,8 +10,8 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 
 ## Current WBS Snapshot
 
-- Total tasks: 243
-- Done: 216
+- Total tasks: 244
+- Done: 217
 - In progress: 1
 - Not started: 26
 - Completion rate: 89%
@@ -779,6 +779,7 @@ python scripts/sync_wbs_to_calendar.py
 - `authorized_user.json` がプロジェクトルートに保存され、次回以降は認証が自動化されます。
 - `python scripts/verify_google_workspace_account.py` で、`authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づいていることを確認できます。
 - Sheets / Calendar / FastAPI 同期は、実行前にDrive APIでアカウントを検証し、別アカウントの場合は停止します。
+- `invalid_grant` または `expired or revoked` が出た場合は、[Google Workspace OAuth 再認証 Runbook](GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md) に従い `python scripts/verify_google_workspace_account.py --reauth` を実行します。
 
 ## 6. WBS を Google Sheets へ同期
 
@@ -832,12 +833,4 @@ python scripts/share_resources.py
 実際に見せるための成果物生成:
 
 ```powershell
-python scripts/generate_knowledge_flow_demo.py
-```
-
-生成される主なファイル:
-
-- `exports/knowledge_flow/notebooklm_source_pack.md`
-- `exports/knowledge_flow/notebooklm_source_pack.txt`
-- `exports/knowledge_flow/notebooklm_presentation_brief.md`
-- `exports/kno
+python scripts/generate_knowledge_flow_demo.p

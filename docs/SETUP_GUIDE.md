@@ -105,6 +105,7 @@ python scripts/sync_wbs_to_calendar.py
 - `authorized_user.json` がプロジェクトルートに保存され、次回以降は認証が自動化されます。
 - `python scripts/verify_google_workspace_account.py` で、`authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づいていることを確認できます。
 - Sheets / Calendar / FastAPI 同期は、実行前にDrive APIでアカウントを検証し、別アカウントの場合は停止します。
+- `invalid_grant` または `expired or revoked` が出た場合は、[Google Workspace OAuth 再認証 Runbook](GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md) に従い `python scripts/verify_google_workspace_account.py --reauth` を実行します。
 
 ## 6. WBS を Google Sheets へ同期
 
@@ -193,6 +194,7 @@ python scripts/sync_docs_to_notebooklm.py
 ```
 
 `notebooklm login` では `k-umezawa@ml-mightylink.com` を選択してください。同期状況は `exports/knowledge_flow/notebooklm_docs_manifest.json`、再認証手順は `exports/knowledge_flow/notebooklm_cli_next_steps.md` に保存されます。
+NotebookLM CLI のログイン状態と、Sheets / Calendar / Drive API が使う `authorized_user.json` は別物です。Drive API 側で `invalid_grant` が出る場合は、`python scripts/verify_google_workspace_account.py --reauth` で再認証してください。
 
 - Notion証跡ページ: `https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951`
 - GitHub Issues: `https://github.com/kanta13jp1/mighty-link-ai-connect/issues`

@@ -343,9 +343,11 @@ python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB
 ```
 
 **対処**:
-1. `authorized_user.json` の有効期限切れ → `python scripts/verify_google_workspace_account.py --reauth` で再認証
+1. `authorized_user.json` の有効期限切れ・取り消し → `python scripts/verify_google_workspace_account.py --reauth` で `k-umezawa@ml-mightylink.com` に再認証
 2. スプレッドシートIDが正しいか確認（`1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8`）
 3. 連携アカウントが `k-umezawa@ml-mightylink.com` であることを確認
+
+詳細手順: [Google Workspace OAuth 再認証 Runbook](GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md)
 
 ---
 
