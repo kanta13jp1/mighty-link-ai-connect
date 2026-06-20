@@ -85,7 +85,7 @@ Geminiメモは会話の要点を概ね捉えているが、プロジェクト�
 | --- | --- | --- | --- |
 | T816 | 寛太梅澤 | WordPress/FTP経由で既存ホームページへポリシーリンクを追加する | 未着手 |
 | T817_1 | Codex | 営業メールAIマッチングMVPの要件定義とデータモデルを整理する | 完了 |
-| T817_2 | Codex | Gmail APIまたはファイルアップロード経由のメール取り込みPoCを作る | 完了 |
+| T817_2 | Codex | ファイルアップロード経由のメール取り込みPoCを作り、実メールの接続方式は受信環境ヒアリング後に選ぶ | 完了 |
 | T817_3 | Codex | Supabaseの案件メールDBスキーマ、RLS、migrationを設計する | 完了 |
 | T817_4 | Codex / Antigravity | AIによるスキル、案件要件抽出パイプラインを実装する | 完了 |
 | T817_5 | Codex / Antigravity | マッチング検索APIと候補者リストアップUIを実装する | 完了 |
@@ -103,7 +103,7 @@ Geminiメモは会話の要点を概ね捉えているが、プロジェクト�
 | 質問 | 回答方針 |
 | --- | --- |
 | AI生成ファイルを全置換する必要があるか | いいえ。ポリシーリンク追加は部分修正で進め、差分を確認して反映する。 |
-| 毎日約1,000通の営業メールから案件マッチングを自動化できるか | 可能。Gmail APIまたはファイル取り込みでメールを取得し、AI抽出、Supabase蓄積、検索、マッチング、人間レビューを段階的に作る。 |
+| 毎日約1,000通の営業メールから案件マッチングを自動化できるか | 可能。受信環境を確認したうえでMicrosoft Graph、Gmail API、IMAP、Webhook/メール転送、ファイル取り込みなどから選び、AI抽出、Supabase蓄積、検索、マッチング、人間レビューを段階的に作る。 |
 | マッチングは「経歴書から案件を探す」だけか | いいえ。経歴書/エンジニア条件から案件を探す方向と、案件要件から候補人材を探す方向の両方を対象にする。 |
 | 次回打ち合わせは7/2か7/3か | 文字起こしでは「2日の木曜日」を仮予定として合意しているため、正本では2026-07-02（木）仮とする。 |
 | 個人アカウントで作った環境は将来会社管理へ移せるか | 移行可能。T818で所有者、請求、シークレット、OAuth、GitHub権限、Firebase/Supabaseプロジェクト移管をランブック化済み。実移管はT823で実施する。 |
@@ -115,7 +115,7 @@ Geminiメモは会話の要点を概ね捉えているが、プロジェクト�
 
 今回の反映では、次の公式ドキュメントを参照して方針を確認した。
 
-- Gmail API: https://developers.google.com/workspace/gmail/api/guides
+- 営業メール自動取り込み接続方式チェックリスト: `docs/SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md`
 - Google Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate
 - Firebase Hosting: https://firebase.google.com/docs/hosting
 - Supabase Docs: https://supabase.com/docs/guides/getting-started

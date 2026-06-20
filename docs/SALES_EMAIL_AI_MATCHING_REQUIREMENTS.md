@@ -1,9 +1,9 @@
 # 営業メールAIマッチング MVP要件定義
 
 - 作成日: 2026-06-17
-- 関連WBS: T817, T817_1, T817_2, T817_3, T817_4, T817_5, T817_6, T817_7, T821
+- 関連WBS: T817, T817_1, T817_2, T817_3, T817_4, T817_5, T817_6, T817_7, T821, T824
 - 関連Issue: #104, #105, #106, #107, #109, #110
-- ステータス: MVP要件定義、T817_2の安全なファイル取り込みPoC、T817_3のSupabaseスキーマ/RLS/migration整備、T817_4のAI抽出deterministic fallback、T817_5の双方向検索API/UI、T817_6の人間レビュー/評価ログまで完了。本番hardeningはT817_7で段階実施。
+- ステータス: MVP要件定義、T817_2の安全なファイル取り込みPoC、T817_3のSupabaseスキーマ/RLS/migration整備、T817_4のAI抽出deterministic fallback、T817_5の双方向検索API/UI、T817_6の人間レビュー/評価ログまで完了。T824で接続方式をGmail前提からプロバイダ中立へ補正。本番hardeningはT817_7で段階実施。
 
 ---
 
@@ -21,10 +21,11 @@
 
 ### 1. メール取り込み
 
-- Gmail APIを使った共有営業アドレスの受信メール取得を第一候補にする。
-- 初期PoCでは、`.eml`、`.txt`、CSVアップロードによる手動取り込みも許容する。
+- 受信環境は未確定のため、Gmail APIを前提にしない。Microsoft 365 / Exchange Online、Google Workspace / Gmail、汎用IMAP、Webhook/メール転送、ファイル監視のいずれかをヒアリング後に選定する。
+- 必要な確認項目は [SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md](SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md) を正本にする。
+- 初期PoCでは、`.eml`、`.txt`、CSVアップロードによる安全なファイル取り込みを許容する。
 - 取り込み対象は案件紹介、要員募集、要員提案、スキル要件、単価、勤務地、稼働時期を含むBP各社からの一斉配信メール。
-- OAuthトークン、メール本文、添付ファイルの扱いは最小権限とし、認証情報をリポジトリ、Sheets、Issue、NotebookLMへ記録しない。
+- OAuthトークン、メールパスワード、アプリパスワード、API secret、メール本文、添付ファイルの扱いは最小権限とし、認証情報をリポジトリ、Sheets、Issue、NotebookLM、Slack、チャット本文へ記録しない。
 
 ### 2. 正規化と重複排除
 
@@ -101,7 +102,7 @@ T817_4で `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md`、`src/sales_email_e
 ### 7. セキュリティ、個人情報、運用
 
 - メール本文には個人情報、商流情報、非公開案件情報が含まれるため、公開デモやNotebookLM資料へ本文全文を転載しない。
-- OAuth、Gmail、Supabase、Firebaseのシークレットは環境変数またはGoogle/GitHubのSecret管理に限定する。
+- OAuth、IMAP/POP3、Microsoft Graph、Gmail、Webhook、Supabase、Firebaseのシークレットは環境変数、Google Secret Manager、GitHub Secrets、または会社指定のパスワード管理ツールに限定する。
 - 解析ログにはメール本文全文ではなく、件数、処理結果、エラー種別、ハッシュ、抽出項目サマリを残す。
 - 本番利用前に、保持期間、削除手順、アクセス権、監査ログ、バックアップ/復元を確認する。
 
@@ -112,12 +113,13 @@ T817_4で `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md`、`src/sales_email_e
 | WBS | 内容 | 完了条件 |
 | --- | --- | --- |
 | T817_1 | MVP要件定義・データモデル設計 | 本文書、議事録、課題、QA、Go/No-Goゲートへ反映済み |
-| T817_2 | Gmail/ファイル取り込みPoC | 完了。`.eml`、`.txt`、CSVを安全に取り込み、送信者/正規化件名/本文ハッシュで重複排除し、本文全文・secret非保存をpytestで検証済み |
+| T817_2 | ファイル取り込みPoCと重複排除 | 完了。`.eml`、`.txt`、CSVを安全に取り込み、送信者/正規化件名/本文ハッシュで重複排除し、本文全文・secret非保存をpytestで検証済み |
 | T817_3 | Supabaseスキーマ/RLS/migration | 完了。9テーブル、RLS、anon/authenticated直アクセスREVOKE、synthetic seed、rollback、SQLite fallback、pytestを整備済み |
 | T817_4 | AI抽出パイプライン | 完了。案件要件、要員情報、スキルタグ、根拠抜粋、信頼度、deterministic fallbackを実装し、本文全文・個人連絡先・secret-like値の非出力をpytestで検証済み |
 | T817_5 | マッチングAPI/UI | 完了。条件検索、候補リスト、根拠表示、CSV出力が動く |
 | T817_6 | 人間レビュー/評価ログ | 完了。採用/却下/要確認/補正、redactedレビュー履歴、DB保存、Markdown/JSON評価ログが動く |
-| T817_7 | 本番運用hardening | 個人情報、監査、負荷、アカウント権限、Go/No-Goを確認済み |
+| T817_7 | 本番運用hardening | 未着手。実メール接続後の個人情報最小化、監査、負荷、アカウント権限、Go/No-Goを確認する |
+| T824 | 自動取り込み接続方式チェックリスト | 完了。受信環境を推測せず、Microsoft Graph / Gmail API / IMAP / POP3 / Webhook / ファイル監視別の必要情報とSecret管理ルールを整理済み |
 
 ---
 
@@ -131,7 +133,13 @@ T817_4で `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md`、`src/sales_email_e
 
 今回の要件化では、次の公式ドキュメントを参照した。
 
+- Microsoft Graph messages: https://learn.microsoft.com/en-us/graph/api/user-list-messages
+- Microsoft Graph delta query for messages: https://learn.microsoft.com/en-us/graph/delta-query-messages
+- Microsoft Graph Outlook change notifications: https://learn.microsoft.com/en-us/graph/outlook-change-notifications-overview
 - Gmail API Guides: https://developers.google.com/workspace/gmail/api/guides
+- Gmail API Push Notifications: https://developers.google.com/workspace/gmail/api/guides/push
+- IMAP4rev2 RFC 9051: https://datatracker.ietf.org/doc/html/rfc9051
+- Amazon SES receiving email: https://docs.aws.amazon.com/ses/latest/dg/receiving-email.html
 - Gemini API Models: https://ai.google.dev/gemini-api/docs/models
 - Gemini API Context Caching: https://ai.google.dev/gemini-api/docs/caching
 - Supabase Database Migrations: https://supabase.com/docs/guides/deployment/database-migrations

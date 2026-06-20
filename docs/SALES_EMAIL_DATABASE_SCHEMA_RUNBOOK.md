@@ -13,7 +13,7 @@
 
 営業メールAIマッチング機能で、共有営業アドレスに届く案件メール、要員メール、スキル要件メールを安全にDB化するための初期スキーマ、RLS、migration、seed、rollbackを管理する。
 
-今回のT817_3では、本文全文やOAuthトークンを保存せず、hash、redacted excerpt、構造化された案件/要員/スキル情報、解析ログ、マッチング結果、レビュー結果を保存できる土台までを整備した。実メールのGmail接続やAI抽出結果の確定ロジックはまだ含めない。
+今回のT817_3では、本文全文やOAuthトークンを保存せず、hash、redacted excerpt、構造化された案件/要員/スキル情報、解析ログ、マッチング結果、レビュー結果を保存できる土台までを整備した。実メールの接続方式選定やAI抽出結果の確定ロジックはまだ含めない。
 
 ## 正本ファイル
 
@@ -31,7 +31,7 @@
 
 | テーブル | 役割 |
 | --- | --- |
-| `sales_mailbox_sources` | Gmail、手動アップロード、CSVなどの取り込み元 |
+| `sales_mailbox_sources` | Microsoft Graph、Gmail API、IMAP、Webhook、手動アップロード、CSVなどの取り込み元 |
 | `sales_email_messages` | メールメタ情報、dedupe key、送信者hash、本文hash、redacted excerpt |
 | `sales_email_entities` | メールから抽出した案件、要員、会社、スキル、条件 |
 | `project_requirements` | 案件要件、必須/尚可スキル、単価、勤務地、商流、根拠 |
@@ -88,7 +88,7 @@ python scripts/manage_db_migrations.py apply --engine sqlite --sqlite-path data/
 
 ## 次工程
 
-- T817_4: 完了。Gmail/ファイル取り込み結果から案件要件、要員情報、スキルタグを抽出し、根拠抜粋と信頼度を保存できる構造を `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md` に整理済み。
+- T817_4: 完了。ファイル取り込みPoCの結果から案件要件、要員情報、スキルタグを抽出し、根拠抜粋と信頼度を保存できる構造を `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md` に整理済み。
 - T817_5: 完了。双方向検索API/UIを作り、案件から候補人材、人材から候補案件を表示する。
 - T817_6: 完了。人間レビュー、採用/却下/要確認/補正ログ、フィードバック改善ループを `docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md` に整理済み。
 - T817_7: 個人情報最小化、監査ログ、保持/削除、負荷、アカウント移管、Go/No-Goを確認する。
@@ -97,5 +97,5 @@ python scripts/manage_db_migrations.py apply --engine sqlite --sqlite-path data/
 
 - Supabase Database Migrations: https://supabase.com/docs/guides/deployment/database-migrations
 - Supabase Row Level Security: https://supabase.com/docs/guides/database/postgres/row-level-security
-- Gmail API Guides: https://developers.google.com/workspace/gmail/api/guides
+- 営業メール自動取り込み接続方式チェックリスト: `docs/SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md`
 - OpenAI Codex AGENTS.md: https://developers.openai.com/codex/guides/agents-md

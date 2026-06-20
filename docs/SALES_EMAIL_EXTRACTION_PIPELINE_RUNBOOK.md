@@ -76,6 +76,6 @@ python -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract
 
 - Gemini API Models: https://ai.google.dev/gemini-api/docs/models
 - Gemini API Context Caching: https://ai.google.dev/gemini-api/docs/caching
-- Gmail API Guides: https://developers.google.com/workspace/gmail/api/guides
+- 営業メール自動取り込み接続方式チェックリスト: `docs/SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md`
 - Supabase Row Level Security: https://supabase.com/docs/guides/database/postgres/row-level-security
 - OpenAI Codex Best Practices: https://developers.openai.com/codex/learn/best-practices

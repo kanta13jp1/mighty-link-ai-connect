@@ -104,7 +104,7 @@ python -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract
 - Supabase Row Level Security: https://supabase.com/docs/guides/database/postgres/row-level-security
 - Supabase Python Client: https://supabase.com/docs/reference/python/introduction
 - Supabase Production Checklist: https://supabase.com/docs/guides/deployment/going-into-prod
-- Gmail API Guides: https://developers.google.com/workspace/gmail/api/guides
+- 営業メール自動取り込み 接続方式確認チェックリスト: [SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md](SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md)
 - Google Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate
 - GitHub Actions Docs: https://docs.github.com/actions
 - OpenAI Codex Best Practices: https://developers.openai.com/codex/learn/best-practices

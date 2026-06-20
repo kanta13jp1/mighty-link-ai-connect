@@ -111,6 +111,6 @@ python -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract
 
 - OpenAI Codex Best Practices: https://developers.openai.com/codex/learn/best-practices
 - Gemini API Models: https://ai.google.dev/gemini-api/docs/models
-- Gmail API Guides: https://developers.google.com/workspace/gmail/api/guides
+- 営業メール自動取り込み 接続方式確認チェックリスト: [SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md](SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md)
 - Supabase Row Level Security: https://supabase.com/docs/guides/database/postgres/row-level-security
 - Google Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate
