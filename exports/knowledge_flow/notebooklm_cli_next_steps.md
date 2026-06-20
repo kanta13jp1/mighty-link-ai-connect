@@ -1,6 +1,6 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-20T01:18:50+09:00
+Generated: 2026-06-21T02:14:06+09:00
 
 ## Current Status
 
@@ -42,6 +42,7 @@ Generated: 2026-06-20T01:18:50+09:00
 - `docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md`: https://docs.google.com/document/d/1chyqUHbGFZ41CPKhR6sY5HUTG397IxnmPCuQdUHa5rA/edit?usp=drivesdk
 - `docs/GEMINI_CLI_MIGRATION_AUDIT_2026-06-17.md`: https://docs.google.com/document/d/1f-Y6v0WBFliNpYUtY6Hv_rjo4_87_lBDZawhw6pyr4s/edit?usp=drivesdk
 - `docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1xb9e3AQt7uGSvQvu-D12CGqchlh5Z01FFn44Dkhza8I/edit?usp=drivesdk
+- `docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md`: https://docs.google.com/document/d/1sNtUB-fmge59PdRumkD0Ug6z9KPEF_QQw2PfX4qxnKo/edit?usp=drivesdk
 - `docs/GROWTH_STRATEGY_ROADMAP.md`: https://docs.google.com/document/d/1Pp3Tf_r4G2-pxJDFVw5FhFheCgZHZcscsnotmX6vDgQ/edit?usp=drivesdk
 - `docs/HOSTING_AND_DATABASE_SELECTION.md`: https://docs.google.com/document/d/1ngrMIRYYAbR2jzpLGRSKKJBTcOPvwUSJ00MDeCbx8-Y/edit?usp=drivesdk
 - `docs/INCIDENT_POSTMORTEM_RUNBOOK.md`: https://docs.google.com/document/d/1nfuwYTaxVnadProXz1I6U-qVVK8mECRDmoJWdecFLr8/edit?usp=drivesdk
@@ -69,6 +70,7 @@ Generated: 2026-06-20T01:18:50+09:00
 - `docs/RELEASE_VERSIONING_RUNBOOK.md`: https://docs.google.com/document/d/1rFB5wODhmZt8-8Oh2dkSEL8kmNMxGeKsLz6b6B45jrY/edit?usp=drivesdk
 - `docs/requirements.md`: https://docs.google.com/document/d/1G6XmZoa-LhnKuq4At6PVPJrr7IaT5XrP7IYYnwPKAPA/edit?usp=drivesdk
 - `docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md`: https://docs.google.com/document/d/11MyRx1UWsDlEx6LBFqiLszFBP6NGEAcz5KDbnTczlYQ/edit?usp=drivesdk
+- `docs/SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md`: https://docs.google.com/document/d/13RgWfLvuQw1-i-88WMkz7N90B9MCRTqrWNqy7jEFwBM/edit?usp=drivesdk
 - `docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md`: https://docs.google.com/document/d/1Yu-4tcUc6U4goBmTi2MloyiDgIJvNN0Xps1be_XQS5A/edit?usp=drivesdk
 - `docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md`: https://docs.google.com/document/d/1KQO1j61S3tUB2d3Dmmw4s-dEFgyNBhRBqGLMAWgopX8/edit?usp=drivesdk
 - `docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md`: https://docs.google.com/document/d/1zq9bmhw7msxsSR447LmX_bYBxGJGryDw9QBBATExjQ4/edit?usp=drivesdk
