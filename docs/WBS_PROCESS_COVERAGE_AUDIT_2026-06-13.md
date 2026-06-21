@@ -20,7 +20,7 @@
 | 4. テスト | T401/T733 系（UI・API・Emulator）、T770 負荷、T805 ペンテスト、T799 アクセシビリティ、T735 受入 | 網羅 |
 | 5. リリース | T501/T734 CI/CD、T746 Go/No-Go、T806 バージョニング、T793 ローンチアナウンス、T812 本番ロールバック | 網羅（T746の前提としてT812を連結） |
 | 6. 実運用 | T743/T755 監視、T741 バックアップ、T790 サポート窓口、T757 コスト、T762/T778 SLA、T807 解約フロー、T808 月次配信 | **GAP-2: 障害ポストモーテム運用なし → T810** / **GAP-3: インボイス制度・Stripe Tax 未起票 → T813** |
-| 7. 保守 | T747 依存更新、T769/T780 モデル追従、T771 リストア訓練、T773 ログ退避、T768 i18n、T772 規約年次見直し、T781 EOL エクスポート、T801 レトロ | **GAP-4: Supabase PG14 EOL (2026-07-01) 確認なし → T811** |
+| 7. 保守 | T747 依存更新、T769/T780 モデル追従、T771 リストア訓練、T773 ログ退避、T768 i18n、T772 規約年次見直し、T781 EOL エクスポート、T801 レトロ | **GAP-4: Supabase PG14 EOL (2026-07-01) 実DB確認 → T811。T828で確認ゲート整備済み** |
 
 ## 3. 追加タスク（4 件 + 本監査タスク）
 
@@ -28,13 +28,15 @@
 | --- | --- | --- | --- | --- |
 | T809 | WBS 工程網羅性監査（第2回）・前倒しリスケ（第3回） | Claude Code | 6/13（完了） | 本書 |
 | T810 | 障害インシデント対応記録・ポストモーテムテンプレート整備 | Claude Code | 6/17〜6/18 | R44（本番 502 障害）は MULTI_AI_WORKFLOW.md の Refresh 節に記録されたのみで、再発防止を蓄積する定型ポストモーテム運用が未整備。DR Runbook（T749）はエスカレーションのみで事後レビューを規定していない |
-| T811 | Supabase Postgres 14 サポート終了（2026-07-01）対応 | Codex | 6/27〜6/28 | Supabase 公式 changelog（2026-05-12）: PG14 サポートは 2026-07-01 終了。T795 pooler 切替時に本番プロジェクトの PG メジャーバージョンを確認した記録がない（課題 R53） |
+| T811 | Supabase Postgres 14 サポート終了（2026-07-01）対応 | Codex | 6/22 | Supabase 公式 changelog（2026-05-12）: PG14 サポートは 2026-07-01 終了。T828でsecret非出力のversion()確認ゲートとRunbookを整備済み。T811で会社管理経路のDB URLまたはSQL Editor結果を使い、staging/productionの実PGメジャーバージョンを確定する（課題 R53） |
 | T812 | 本番リリースのロールバック手順書整備 | Codex + Claude | 6/13（完了） | [PRODUCTION_ROLLBACK_RUNBOOK.md](PRODUCTION_ROLLBACK_RUNBOOK.md) を作成し、Hosting/Functions/Cloud Run/Supabase migration の戻し方をT746 Go/No-Go前提へ連結 |
 | T813 | 適格請求書（インボイス制度）・消費税処理の確認と Stripe Tax 設定 | 人間 + Codex | 6/29〜7/1 | 有料化（T791）に対し税務面の対応タスクが空白。Stripe は 2026-04 から請求書の税額自動計算を拡充済み。適格請求書発行事業者登録の要否判断は人間（経理/CEO）ゲート |
 
 確認のうえ「不足なし」と判定した観点: パイロット→GA 移行（T711〜T716/T793）、退会・データ消去（T742/T765）、依存パッケージ自動更新（T747）、監査ログ保全（T756/T773）、ステークホルダー報告（T767/T808）、属人性対策（T689）。
 
 2026-06-13 追記: GAP-1 は T812 完了により解消済み。残る追加タスクは T810/T811/T813。
+
+2026-06-21 追記: T828で `scripts/check_supabase_postgres_version.py`、`docs/SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md`、pytest、secret非出力レポートを追加し、T811の実DB確認ゲートを整備した。実DB URLはローカル環境に未設定のため、T811で会社指定のSecret管理経路から受け取り、staging/productionの最終バージョン確認を実施する。
 
 ## 4. 前倒しリスケ（第3回）
 
@@ -68,7 +70,7 @@
 
 ## 6. 公式 Docs 確認の本プロジェクト影響（2026-06-13 時点）
 
-- **Supabase**: PG14 サポート 2026-07-01 終了（→ T811/R53）。無料枠メールテンプレート制限は Firebase Auth 利用のため影響なし（→ QA-33）。
+- **Supabase**: PG14 サポート 2026-07-01 終了（→ T811/R53）。T828で確認ゲート・Runbook・secret非出力レポートを整備済み。無料枠メールテンプレート制限は Firebase Auth 利用のため影響なし（→ QA-33）。
 - **Stripe**: 最新 API は `2026-05-27.dahlia` のまま — T791 のバージョン pin 前提に変更なし。
 - **Google**: Gemini 3.5 Flash が安定版最上位を維持 — T780 の移行先前提に変更なし。Gemini 2.0 系は廃止済み。
 - **Anthropic / OpenAI**: 運用影響のある変更なし（Claude Code は Desktop/Web/Routines 提供継続、Codex は AGENTS.md 3 層構成のまま）。

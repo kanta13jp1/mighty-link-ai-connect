@@ -1,0 +1,38 @@
+{
+  "task_id": "T828",
+  "related_task_id": "T811",
+  "generated_at_utc": "2026-06-21T07:46:40Z",
+  "dry_run": true,
+  "status": "needs_credentials",
+  "pg14_eol_date": "2026-07-01",
+  "version_sql": "select version();",
+  "checks": [
+    {
+      "target": "staging",
+      "source": "SUPABASE_STAGING_DB_URL",
+      "state": "missing-env",
+      "major": null,
+      "version_text": null,
+      "action": "Set SUPABASE_STAGING_DB_URL locally or paste sanitized Supabase SQL Editor `select version();` output with --offline-version staging=...",
+      "database_url": null
+    },
+    {
+      "target": "production",
+      "source": "SUPABASE_PROD_DB_URL",
+      "state": "missing-env",
+      "major": null,
+      "version_text": null,
+      "action": "Set SUPABASE_PROD_DB_URL locally or paste sanitized Supabase SQL Editor `select version();` output with --offline-version production=...",
+      "database_url": null
+    }
+  ],
+  "pre_upgrade_gate": [
+    "Record a fresh Supabase backup or PITR timestamp before changing Postgres major versions.",
+    "Run the version check for both staging and production; production must not be upgraded first.",
+    "Review extensions before upgrading, especially TimescaleDB, plv8, pg_graphql, pgjwt, and deprecated Postgres 17 extensions.",
+    "Check logical replication slots and recreate them after upgrade if used.",
+    "Reserve a maintenance window and announce write-impacting downtime before production upgrade.",
+    "Run API smoke tests, RLS tests, migration validation, and the public demo guard after staging and production checks."
+  ],
+  "secret_policy": "Database URLs and service role keys must stay in local env vars or GitHub Secrets. Reports contain only redacted URLs and sanitized version strings."
+}
