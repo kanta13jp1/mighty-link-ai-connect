@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-21T17:57:32+09:00
+Generated: 2026-06-21T19:13:18+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `94`
-- Drive docs uploaded: `2`
-- Drive docs skipped unchanged: `92`
+- Drive docs discovered: `95`
+- Drive docs uploaded: `4`
+- Drive docs skipped unchanged: `91`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -55,6 +55,7 @@ Generated: 2026-06-21T17:57:32+09:00
 - `docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md`: https://docs.google.com/document/d/1EKarbQEJc11rMLWXU4L9TL994vPp5dawHyjf-y3HPJg/edit?usp=drivesdk
 - `docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/1aFiRyJpftES9MXnSkTUKsaum_KCUt8UhS37p_3Ln15U/edit?usp=drivesdk
 - `docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md`: https://docs.google.com/document/d/1gysz5FkXVK22refIm4oGmXslBzOXCbJtTgfr8pxcSWM/edit?usp=drivesdk
+- `docs/MONTHLY_QUALITY_REPORT_DELIVERY_RUNBOOK.md`: https://docs.google.com/document/d/1hpESXzggNnUlIWIVQyV_1c3-eLOFdsP2n7terUlicbc/edit?usp=drivesdk
 - `docs/MONTHLY_REPORT_2026-06.md`: https://docs.google.com/document/d/1v6aM1DSB5rGL-gYelOq9ZjKWa834Lc3ztBh1SrXFyFs/edit?usp=drivesdk
 - `docs/MULTI_AI_WORKFLOW.md`: https://docs.google.com/document/d/1WfBfLEpbTV6zcB4AuA4RbeXaJ99qw6h0UGq9D_1oJ_Q/edit?usp=drivesdk
 - `docs/NOTEBOOKLM_SYNC_TIMEOUT_RUNBOOK.md`: https://docs.google.com/document/d/1CdeYHRCiCsdoUC7nlHW9ozc1vKUNjvEv2i2nMHYKvJA/edit?usp=drivesdk

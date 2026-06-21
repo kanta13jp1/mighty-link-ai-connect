@@ -1,9 +1,9 @@
 # Mighty Skill-Bridge 月次品質レポート: 2026年06月
 
 > [!NOTE]
-> 月中時点の中間スナップショットです（生成日: 2026-06-13）。確定版は翌月 1 日に再生成します（T767 スケジュール）。
+> 月中時点の中間スナップショットです（生成日: 2026-06-21）。確定版は翌月 1 日に再生成します（T767 スケジュール）。
 
-**作成日**: 2026-06-13
+**作成日**: 2026-06-21
 **作成者**: 梅澤 寛太（+ Claude Code, scripts/generate_monthly_quality_report.py による自動生成）
 
 ---
@@ -12,9 +12,15 @@
 
 | 指標 | 今月 | 先月比 |
 | :--- | :--- | :--- |
-| 当月完了タスク数 | 79 件 | -20 件 |
-| 全体完了率 | 79.1% (178/225) | — |
-| 期限超過の未完了タスク | 0 件 | — |
+| 当月完了タスク数 | 124 件 | +25 件 |
+| 全体完了率 | 89.6% (223/249) | — |
+| 期限超過の未完了タスク | 3 件 | — |
+
+**期限超過タスク（要リスケまたは着手）:**
+
+- T745 サービス利用規約およびプライバシーポリシー本番UIでの同意チェックボックス実装（期限 2026-06-14 / 担当 AIエージェント）
+- T752 ユーザーオンボーディング / アカウント登録・アクティベーションフローの設計・実装（期限 2026-06-16 / 担当 Antigravity）
+- T798 利用規約・プライバシーポリシーの法務確認と本文確定（期限 2026-06-16 / 担当 人間 + Claude）
 
 ---
 
@@ -22,7 +28,7 @@
 
 | KPI | 今月実績 | 目標 | 判定 |
 | :--- | :--- | :--- | :--- |
-| テスト合格率 | 100.0% (33/33) | 100% | ✅ |
+| テスト合格率 | 100.0% (53/53) | 100% | ✅ |
 | AI 診断 API 課金実行件数 | 0 件 | コストガード内 | ✅ |
 | 稼働率 / P95 / 5xx エラー率 | 未計測 | ≥99.5% / ≤3.0s / ≤0.5% | ⏳ 計測基盤整備中（T743 死活監視・T755 テレメトリ・T778 SLA ビュー） |
 
@@ -30,13 +36,13 @@
 
 ## 3. 外部 API 利用・コスト
 
-日次利用台帳監査（`reports/daily_usage_audit_*.json`、当月 1 日分）の集計:
+日次利用台帳監査（`reports/daily_usage_audit_*.json`、当月 2 日分）の集計:
 
 | プロバイダ:操作 | 課金実行 | ガード遮断 | 報告トークン |
 | :--- | ---: | ---: | ---: |
 | gemini_api:match | 0 | 0 | 0 |
 | gemini_api:parse | 0 | 0 | 0 |
-| seedance_api:generation_create | 0 | 8 | 0 |
+| seedance_api:generation_create | 0 | 18 | 0 |
 
 ガードアラート: 0 件（コストガードはすべて上限内）
 
@@ -80,6 +86,45 @@
 | R52 | LOW | resolved | FastAPI @app.on_event("startup") が deprecated（lifespan ハンドラへ移行要） |
 | R53 | MED | open | Supabase Postgres 14 サポート終了 (2026-07-01) — 本番/staging プロジェクトの PG バージョン未確認 |
 | R54 | HIGH | resolved | ml-mightylink.com の Cloud DNS ゾーン所有アカウント不明 — T740 カスタムドメイン CNAME 追加がブロック |
+| R55 | MED | resolved | Public Demo Guard workflow が requests 未インストールで失敗 |
+| R56 | MED | resolved | R44本番502障害のポストモーテム運用が未整備 |
+| R57 | MED | resolved | 本番ログローテーションとアクセスログ保持運用が未整備 |
+| R58 | MED | resolved | 定期パフォーマンス診断とDBインデックス最適化運用が未整備 |
+| R59 | MED | resolved | 本番死活監視とSlackアラート運用が未整備 |
+| R60 | MED | resolved | サードパーティAPIキー・Webhook secretのローテーション運用が未整備 |
+| R61 | MED | resolved | API レート制限未適用による高コストAPI連打・認証経路総当たり・DDoS増幅リスク |
+| R62 | MED | resolved | DB migration管理がアプリDDL・Supabase migration・運用docsに分散していた |
+| R63 | MED | resolved | CPU/メモリ/ディスク/DBクエリ/外部API/URL到達性の監視情報が個別レポートに分散していた |
+| R64 | MED | resolved | 週次コスト配賦と通知が手動レポート・個別コンソール確認に分散していた |
+| R65 | MED | resolved | Firebase Functions / Cloud Run から Supabase へ毎回直接接続する実装が残っていた |
+| R66 | MED | resolved | mightylink-app.com のSSL証明書発行待ちにより販売URL確定が保留されていた |
+| R67 | MED | resolved | ローカルFirebase/Supabase開発環境の検証基盤が未整備 |
+| R68 | MED | resolved | Supabase Query Performance / Index Advisor の定例レビュー証跡が未整備 |
+| R69 | MED | resolved | Firebase/Supabaseのクォータ・エラー・課金・DB飽和アラート設計が個別Runbookに分散していた |
+| R70 | MED | resolved | 診断結果の役立ち度/NPSを継続収集する仕組みが未整備だった |
+| R71 | MED | resolved | ユーザー問い合わせ窓口と対応SLAが未整備だった |
+| R72 | MED | resolved | 6/18 Gemini CLI / Code Assist 個人向け停止に伴う残存依存リスク |
+| R73 | MED | resolved | 本番Go/No-Go判定基準と承認プロセスが未整備だった |
+| R74 | HIGH | open | WordPress/FTP経由の既存サイト更新で全ファイル置換や認証情報記録が発生するリスク |
+| R75 | HIGH | open | 営業メールAIマッチングの個人情報・誤抽出・誤マッチングリスク |
+| R76 | MED | resolved | 個人アカウントで構築したGitHub/Firebase/Supabase/AI開発ツールの会社移管リスク |
+| R77 | MED | resolved | Geminiメモと文字起こしで次回日程・マッチング方向の解釈に差分があった |
+| R78 | MED | resolved | 営業メール取り込みPoCで本文全文・認証情報がレポートへ混入するリスク |
+| R79 | HIGH | resolved | モバイル表示時にホームページで main1.jpeg の 404 エラーが発生する問題 |
+| R80 | HIGH | resolved | 営業メールAIマッチングDBを匿名RESTから直接読書きできるリスク |
+| R81 | HIGH | resolved | 営業メールAI抽出結果に本文全文・個人連絡先・secret-like値が混入するリスク |
+| R82 | HIGH | resolved | 営業メールAIマッチング候補リストに非公開本文・連絡先・未レビュー判断が混入するリスク |
+| R83 | MED | resolved | 営業メールAIマッチングの人間レビューコメントに連絡先やsecret-like値が混入するリスク |
+| R84 | MED | resolved | リリースタグと一般公開/有償ローンチ判定が混同されるリスク |
+| R85 | MED | resolved | ユーザーデータのセルフエクスポートが未整備でEOL/移行/開示請求時に手作業へ依存するリスク |
+| R86 | MED | resolved | 営業メール自動取り込み方式をGmail前提で決め打ちして実装するリスク |
+| R87 | HIGH | resolved | Google Workspace OAuth token失効でSheets/Calendar/Drive同期が止まるリスク |
+| R88 | MED | resolved | NotebookLM ask生成・既存source refreshの長時間化でdocs同期closeoutが止まるリスク |
+| R89 | MED | resolved | 毎セッションの公式Docs確認対象が多く、三ツール運用ゲートと同期手順が分散するリスク |
+| R90 | MED | resolved | Supabase PG14 EOL確認時にDB URLやversion確認ログを安全に扱うゲートが未整備 |
+| R91 | MED | resolved | Stripe Customer Portal 実装時にlive key未設定・ID露出・外部通信誤実行が起きるリスク |
+| R92 | MED | resolved | NotebookLM docs/source同期スクリプトがskip/drive-onlyでも5分タイムアウトする |
+| R93 | MED | open | 月次品質レポートのNotion/Slack本送信はGitHub Secrets設定に依存する |
 
 **セキュリティ検出（security_log）:**
 
@@ -92,11 +137,11 @@
 
 ## 5. 翌月（または直近）の優先アクション
 
-1. T804 料金プラン・価格設定の決定（CEO承認）（開始 2026-06-21 / 担当 人間）
-2. T811 Supabase Postgres 14 EOL対応の本番/stagingバージョン確認（開始 2026-06-22 / 担当 Codex）
-3. T813 インボイス制度・消費税処理とStripe Tax設定確認（開始 2026-06-23 / 担当 人間 + Codex）
-4. T807 Stripe Customer Portalのlive有効化・本番検証（開始 2026-06-24 / 担当 Codex）
-5. T808 月次品質レポートの自動配信（開始 2026-06-24 / 担当 Codex）
+1. T791 Stripe Billing Meters API を用いた課金実装・Webhook 検証・本番適用（開始 2026-07-01 / 担当 Codex）
+2. T782 アクセス増加に伴うデータベース接続負荷分散（リードレプリカ・プールサイズ最適化）の設計と負荷テスト検証（開始 2026-07-02 / 担当 Codex）
+3. T819 7/2(木)仮 定例打ち合わせの実施と進捗報告（開始 2026-07-02 / 担当 寛太梅澤）
+4. T800 利用状況アナリティクス計測設計と導入（イベント計測・KPI集計）（開始 2026-07-03 / 担当 Codex）
+5. T769 Gemini API モデルバージョン追従および新モデル移行プロセスの標準化（開始 2026-07-04 / 担当 Codex + Claude）
 
 ---
 

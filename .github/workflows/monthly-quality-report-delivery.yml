@@ -1,0 +1,103 @@
+name: Monthly Quality Report Delivery
+
+on:
+  schedule:
+    # 09:00 JST on the first day of every month.
+    - cron: "0 0 1 * *"
+  workflow_dispatch:
+    inputs:
+      month:
+        description: "Target month YYYY-MM. Defaults to the previous completed month."
+        required: false
+        type: string
+  pull_request:
+    paths:
+      - "scripts/generate_monthly_quality_report.py"
+      - "scripts/monthly_quality_delivery.py"
+      - "scripts/sync_monthly_kpi_to_sheets.py"
+      - "scripts/post_report_to_notion.py"
+      - "scripts/send_monthly_slack_report.py"
+      - "tests/test_monthly_quality_delivery.py"
+      - "docs/MONTHLY_QUALITY_REPORT_DELIVERY_RUNBOOK.md"
+      - ".github/workflows/monthly-quality-report-delivery.yml"
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+jobs:
+  monthly-quality-report-delivery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install -r requirements.txt
+
+      - name: Resolve target month
+        id: target
+        shell: bash
+        run: |
+          if [ -n "${{ inputs.month }}" ]; then
+            echo "month=${{ inputs.month }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "month=$(date -u -d "$(date -u +%Y-%m-01) -1 day" +%Y-%m)" >> "$GITHUB_OUTPUT"
+          fi
+          echo "today=$(TZ=Asia/Tokyo date +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+
+      - name: Generate monthly quality report
+        run: |
+          python scripts/generate_monthly_quality_report.py \
+            --month "${{ steps.target.outputs.month }}" \
+            --today "${{ steps.target.outputs.today }}"
+
+      - name: Sync monthly KPI to Sheets
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          python scripts/sync_monthly_kpi_to_sheets.py \
+            --month "${{ steps.target.outputs.month }}" \
+            --today "${{ steps.target.outputs.today }}"
+
+      - name: Post monthly report to Notion
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_MONTHLY_REPORT_DATABASE_ID }}
+          NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_MONTHLY_REPORT_DATA_SOURCE_ID }}
+          NOTION_PARENT_PAGE_ID: ${{ secrets.NOTION_MONTHLY_REPORT_PARENT_PAGE_ID }}
+          NOTION_TITLE_PROPERTY: ${{ vars.NOTION_MONTHLY_REPORT_TITLE_PROPERTY }}
+        run: |
+          python scripts/post_report_to_notion.py \
+            --month "${{ steps.target.outputs.month }}" \
+            --today "${{ steps.target.outputs.today }}"
+
+      - name: Send monthly Slack report
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          python scripts/send_monthly_slack_report.py \
+            --month "${{ steps.target.outputs.month }}" \
+            --today "${{ steps.target.outputs.today }}"
+
+      - name: Run delivery tests
+        run: |
+          python -m pip install pytest
+          python -m pytest tests/test_monthly_quality_delivery.py tests/test_monthly_quality_report.py
+
+      - name: Upload delivery artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: monthly-quality-report-${{ steps.target.outputs.month }}
+          path: |
+            docs/MONTHLY_REPORT_${{ steps.target.outputs.month }}.md
+            exports/monthly_quality_*_${{ steps.target.outputs.month }}.json

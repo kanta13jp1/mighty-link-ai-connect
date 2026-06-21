@@ -9,6 +9,7 @@
 | 日付 | バージョン | 内容 | 起稿者 |
 | :--- | :--- | :--- | :--- |
 | 2026-06-10 | v1.0.0 | 初版作成（レポート構成・Sheets設計・自動投稿フロー） | Claude Code |
+| 2026-06-21 | v1.1.0 | T808で月次配信スクリプト、GitHub Actions、Runbookを実装。未計測KPIは捏造せず `未計測` としてSheetsへupsertする運用に更新 | Codex |
 
 ---
 
@@ -125,13 +126,19 @@ docs/MONTHLY_REPORT_YYYY-MM.md
 # 実行: python scripts/sync_monthly_kpi_to_sheets.py --month 2026-06
 #
 # 処理フロー:
-# 1. Supabase: kpi_daily_diagnoses ビューから月次集計
-# 2. Google Cloud Monitoring API: Uptime Check から稼働率取得
-# 3. Sentry API: エラー率・インシデント数取得
-# 4. GCP Billing API: 月間コスト取得
-# 5. Sheets「月次KPIサマリー」タブに1行追記
-# 6. グラフ範囲を自動拡張
+# 1. docs/MONTHLY_REPORT_YYYY-MM.md と data/*.tsv から月次KPI summaryを生成
+# 2. 現時点でlive source未接続のSLA/費用指標は `未計測` として保持
+# 3. Google Sheets「月次KPIサマリー」タブへ月単位でupsert
+# 4. 書式はSheets API batchUpdateでヘッダー固定・フィルタ・列幅を適用
+# 5. T800/T807/T811でlive telemetry/billing sourceが揃ったら同じ月行を再upsert
 ```
+
+T808実装:
+
+- `scripts/monthly_quality_delivery.py`
+- `scripts/sync_monthly_kpi_to_sheets.py`
+- `exports/monthly_quality_kpi_YYYY-MM.json`
+- `docs/MONTHLY_QUALITY_REPORT_DELIVERY_RUNBOOK.md`
 
 ---
 
@@ -144,15 +151,21 @@ docs/MONTHLY_REPORT_YYYY-MM.md
 # Notion API: https://api.notion.com/v1/pages
 #
 # 必要環境変数:
-#   NOTION_API_KEY: Notion Integration Token
-#   NOTION_DATABASE_ID: 月次レポートデータベースのID
+#   NOTION_API_KEY または NOTION_TOKEN: Notion Integration Token
+#   NOTION_DATABASE_ID / NOTION_DATA_SOURCE_ID / NOTION_PARENT_PAGE_ID のいずれか
 #
 # 処理:
 # 1. docs/MONTHLY_REPORT_YYYY-MM.md を読み込み
-# 2. Markdown → Notion ブロックに変換
-# 3. Notion データベースに新規ページとして投稿
-# 4. 投稿URLをSlack #dev-reports チャンネルに通知
+# 2. 月次KPI summary → Notion ブロックに変換
+# 3. Notion parentへ新規ページとして投稿
+# 4. 認証情報がない場合は payload/status JSON を生成し、外部送信はskip
 ```
+
+T808実装:
+
+- `scripts/post_report_to_notion.py`
+- `exports/monthly_quality_notion_payload_YYYY-MM.json`
+- `exports/monthly_quality_notion_status_YYYY-MM.json`
 
 ---
 
@@ -162,7 +175,7 @@ docs/MONTHLY_REPORT_YYYY-MM.md
 
 ```python
 # scripts/send_monthly_slack_report.py
-# Slack Incoming Webhook を使用
+# Slack Incoming Webhook を使用。webhook URLは SLACK_WEBHOOK_URL からのみ読む
 #
 # 送信先: #dev-reports チャンネル
 # 送信内容:
@@ -170,8 +183,14 @@ docs/MONTHLY_REPORT_YYYY-MM.md
 #   ✅ WBS 完了率: XX.X% (+X.Xpt)
 #   📈 稼働率: XX.XX% | P95: X.Xs | 診断件数: XX件
 #   💰 月間コスト: $XX.XX / $105 (XX%)
-#   🔗 詳細: [Sheets URL] | [GitHub URL]
+#   詳細: Sheets URL | Notion URL（設定済みの場合）
 ```
+
+T808実装:
+
+- `scripts/send_monthly_slack_report.py`
+- `exports/monthly_quality_slack_payload_YYYY-MM.json`
+- `exports/monthly_quality_slack_status_YYYY-MM.json`
 
 ---
 
@@ -181,8 +200,8 @@ docs/MONTHLY_REPORT_YYYY-MM.md
 | :--- | :--- | :--- |
 | 毎月末日 | KPI データ収集・集計 | `sync_monthly_kpi_to_sheets.py` |
 | 翌月1日 AM 07:00 | `docs/MONTHLY_REPORT_YYYY-MM.md` 生成 | `generate_monthly_quality_report.py`（T764） |
-| 翌月1日 AM 09:00 | Slack 通知送信 | `send_monthly_slack_report.py` |
-| 翌月1日 AM 10:00 | Notion 投稿 | `post_report_to_notion.py` |
+| 翌月1日 AM 09:00 | Sheets/Notion/Slack 月次配信 | `.github/workflows/monthly-quality-report-delivery.yml` |
+| 随時 | 配信結果確認 | `exports/monthly_quality_*_YYYY-MM.json` / [MONTHLY_QUALITY_REPORT_DELIVERY_RUNBOOK.md](MONTHLY_QUALITY_REPORT_DELIVERY_RUNBOOK.md) |
 
 ---
 

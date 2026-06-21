@@ -1,0 +1,7 @@
+{
+  "task_id": "T808",
+  "status": "skipped_missing_credentials",
+  "message": "Slack send skipped because SLACK_WEBHOOK_URL is not configured.",
+  "checked_at": "2026-06-21T10:06:29Z",
+  "artifact": "exports/monthly_quality_slack_payload_2026-06.json"
+}

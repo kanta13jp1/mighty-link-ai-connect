@@ -1,0 +1,117 @@
+{
+  "parent": {
+    "database_id": "NOTION_DATABASE_ID_NOT_CONFIGURED"
+  },
+  "properties": {
+    "Name": {
+      "title": [
+        {
+          "type": "text",
+          "text": {
+            "content": "Mighty Skill-Bridge 月次品質レポート 2026年06月"
+          }
+        }
+      ]
+    }
+  },
+  "children": [
+    {
+      "object": "block",
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Mighty Skill-Bridge 月次品質レポート 2026年06月"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "interim report generated from docs/MONTHLY_REPORT_2026-06.md at 2026-06-21T10:06:29Z."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "WBS完了率: 89.6% (223/249)"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "テスト合格率: 100.0% (53/53)"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "診断件数: 25 / 精度スコア: 88%"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "当月課題: 71件 (未解決 15件) / セキュリティ検出: 4件"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "object": "block",
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "SLA稼働率、P95、5xx、Firebase/Supabase費用は未計測値を捏造せず、未計測として保持します。"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

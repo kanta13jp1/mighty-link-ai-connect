@@ -1,0 +1,75 @@
+{
+  "task_id": "T808",
+  "month": "2026-06",
+  "month_label": "2026年06月",
+  "generated_at": "2026-06-21T10:06:29Z",
+  "report_kind": "interim",
+  "report_file": "docs/MONTHLY_REPORT_2026-06.md",
+  "wbs": {
+    "total": 249,
+    "done_total": 223,
+    "done_this_month": 124,
+    "completion_pct": 89.6,
+    "delayed_count": 3
+  },
+  "tests": {
+    "total": 53,
+    "passed": 53,
+    "pass_pct": 100.0
+  },
+  "issues": {
+    "total": 71,
+    "open": 15
+  },
+  "security": {
+    "total": 4,
+    "open": 0
+  },
+  "usage": {
+    "providers": {
+      "seedance_api:generation_create": {
+        "billable": 0,
+        "blocked": 18,
+        "tokens": 0
+      },
+      "gemini_api:parse": {
+        "billable": 0,
+        "blocked": 0,
+        "tokens": 0
+      },
+      "gemini_api:match": {
+        "billable": 0,
+        "blocked": 0,
+        "tokens": 0
+      }
+    },
+    "alerts": [],
+    "audit_days": 2
+  },
+  "kpi": {
+    "availability_pct": null,
+    "p95_response_seconds": null,
+    "error_5xx_pct": null,
+    "diagnosis_count": 25.0,
+    "accuracy_score_pct": 88.0,
+    "gemini_cost_usd": 0.0,
+    "firebase_cost_usd": null,
+    "supabase_cost_usd": null,
+    "total_cost_usd": 0.0,
+    "gemini_billable_calls": 0
+  },
+  "sources": {
+    "report": "docs/MONTHLY_REPORT_2026-06.md",
+    "wbs": "data/WBS.tsv",
+    "issues": "data/issues_tracker.tsv",
+    "qa": "data/qa_tracker.tsv",
+    "tests": "data/test_results.tsv",
+    "security": "data/security_log.tsv",
+    "pilot": "data/pilot_summary.tsv",
+    "usage_audits": "reports/daily_usage_audit_*.json"
+  },
+  "notes": [
+    "SLA availability, P95 response, 5xx error rate, Firebase cost, and Supabase cost remain '未計測' until T800/T807/T811 connect live telemetry and billing exports.",
+    "Notification and API secrets are read from environment variables only and are not written to artifacts."
+  ]
+}

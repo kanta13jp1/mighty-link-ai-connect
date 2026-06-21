@@ -1,0 +1,7 @@
+{
+  "task_id": "T808",
+  "status": "skipped_missing_credentials",
+  "message": "Notion post skipped because credentials or parent ID are not configured.",
+  "checked_at": "2026-06-21T10:06:29Z",
+  "artifact": "exports/monthly_quality_notion_payload_2026-06.json"
+}

@@ -1,0 +1,57 @@
+{
+  "text": "[2026年06月] Mighty Skill-Bridge 月次品質レポート: WBS 89.6%, tests 100.0%, cost $0.00",
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "2026年06月 月次品質レポート"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*WBS完了率*\n89.6% (223/249)"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*テスト合格率*\n100.0% (53/53)"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*診断件数*\n25"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*精度スコア*\n88%"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*月間コスト*\n$0.00"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*未解決課題*\n15件"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "Sheets: https://docs.google.com/spreadsheets/d/1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8"
+      }
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": "docs/MONTHLY_REPORT_2026-06.md / interim / 2026-06-21T10:06:29Z"
+        }
+      ]
+    }
+  ]
+}
