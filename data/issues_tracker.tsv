@@ -72,7 +72,7 @@ HANDOFF-42	docs	MED	resolved	WBS Overdue Presentation & Tool Blocked Tasks Resol
 R28	compliance	HIGH	open	経歴書のマスキング法務合意確認	個人情報漏洩のリスク	外部のコンプラ専門弁護士とNDA付きでリーガルレビューを行う	人間+Claude	2026-06-02		T710	docs/requirements.md		Meet/Gemini議事録から自動起票	2026-06-02
 R29	cost	MED	resolved	APIコストの月額制限の検証	予算超過による実稼働停止リスク	Daily usage ledgersからGemini API制限閾値と通知フラグをテスト環境で調整する	Codex	2026-06-02	2026-06-10	T707,T736	docs/COST_REPORT_2026-06.md;docs/SETUP_GUIDE.md	#64	`scripts/audit_external_api_usage.py`で日次台帳の閾値監査・警告・JSONレポート出力を追加し、テストで遮断/警告判定を固定	2026-06-10
 R30	ops	LOW	open	録画データの整理	録画ファイルの散逸リスク	小林雅水のGoogleドライブへ保存された録画ファイルを適切なフォルダへ移動する	寛太梅澤	2026-06-02		T702	docs/meetings/2026-06-02_CEO_Meeting_Minutes.md		Meet/Gemini議事録から自動起票	2026-06-02
-R31	research	MED	open	既存診断ツールの選定調査	既存ツールの機能不適合リスク	従業員の適性や精神状態を診断可能な既存の外部サービスやツールを調査する	寛太梅澤	2026-06-02		T703	docs/requirements.md		Meet/Gemini議事録から自動起票	2026-06-02
+R31	research	MED	resolved	既存診断ツールの選定調査	既存ツールの機能不適合リスク	従業員の適性や精神状態を診断可能な既存の外部サービスやツールを調査する	Codex + 寛太梅澤	2026-06-02	2026-06-21	T703;T832;T838	docs/requirements.md;docs/EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md	#124	厚労省ストレスチェック制度、個人情報保護委員会の健康情報取扱い、SPI3、ミキワメ、ラフール、HRBrain、Wevox、SmartHR等の公式情報を確認し、MightyLink本体では精神状態の医療診断AIを内製しない方針、外部サービス比較軸、Supabaseへの最小保存方針、後続T838を確定	2026-06-21
 R32	tech-ai	HIGH	open	AI適性状況診断ツールの実装	従業員ヒアリング効率化の不達リスク	社内メンバーのヒアリングを効率化するためのAI適性および状況診断ツールを作成する	寛太梅澤	2026-06-02		T704	docs/requirements.md		Meet/Gemini議事録から自動起票	2026-06-02
 R33	tech-ai	HIGH	open	勤務表データの自動解析実装	勤務表データ解析不適合リスク	勤務表のデータを解析しジョブ感へ自動的に情報を反映するシステムを開発する	寛太梅澤	2026-06-02		T705	docs/requirements.md		Meet/Gemini議事録から自動起票	2026-06-02
 R34	ops	MED	open	開発マイルストーンの策定	スケジュール遅延リスク	プロジェクトの全タスクを洗い出しリリース予定を含むマイルストーンを確定する	寛太梅澤	2026-06-02		T706	docs/WBS.md		Meet/Gemini議事録から自動起票	2026-06-02
