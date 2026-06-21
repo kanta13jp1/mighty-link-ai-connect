@@ -95,7 +95,7 @@ jobs:
           python -m pytest tests/test_monthly_quality_delivery.py tests/test_monthly_quality_report.py
 
       - name: Upload delivery artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: monthly-quality-report-${{ steps.target.outputs.month }}
           path: |
