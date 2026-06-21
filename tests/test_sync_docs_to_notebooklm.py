@@ -2,6 +2,7 @@ import os
 import json
 import subprocess
 import sys
+import datetime as dt
 
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -131,3 +132,124 @@ def test_resolve_notebook_reuses_existing_title_before_create(monkeypatch):
     assert notebook_id == "existing-notebook"
     assert info["action"] == "used_title_match"
     assert ["create", sync.NOTEBOOK_TITLE, "--json"] not in calls
+
+
+def test_sync_google_docs_skips_unchanged_manifest_entries(tmp_path, monkeypatch):
+    doc = tmp_path / "example.md"
+    doc.write_text("# Example\n\nunchanged\n", encoding="utf-8")
+    monkeypatch.setattr(sync, "DOCS_DIR", tmp_path)
+    monkeypatch.setattr(sync, "discover_docs", lambda: [doc])
+    monkeypatch.setattr(sync, "relative", lambda path: f"docs/{path.name}")
+    monkeypatch.setattr(sync, "load_credentials", lambda: (_ for _ in ()).throw(AssertionError("no auth needed")))
+
+    digest = sync.source_content_digest(doc)
+    previous = {
+        "generated_at_jst": dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).isoformat(),
+        "google_docs": {
+            "docs_example_md": {
+                "source": "docs/example.md",
+                "id": "drive-1",
+                "name": "Mighty Skill-Bridge docs/docs/example.md",
+                "url": "https://docs.google.com/document/d/drive-1/edit",
+                "mimeType": "application/vnd.google-apps.document",
+                "source_digest": digest,
+            }
+        },
+    }
+
+    docs = sync.sync_google_docs(previous)
+
+    assert docs["docs_example_md"]["sync_action"] == "skipped_unchanged"
+    assert docs["docs_example_md"]["sync_reason"] == "source_digest_match"
+    summary = sync.summarize_google_doc_sync(docs, force_upload=False)
+    assert summary["uploaded"] == 0
+    assert summary["skipped"] == 1
+
+
+def test_sync_google_docs_skips_legacy_manifest_when_mtime_is_old(tmp_path, monkeypatch):
+    doc = tmp_path / "legacy.md"
+    doc.write_text("# Legacy\n\nold content\n", encoding="utf-8")
+    old_mtime = 1_700_000_000
+    os.utime(doc, (old_mtime, old_mtime))
+    monkeypatch.setattr(sync, "DOCS_DIR", tmp_path)
+    monkeypatch.setattr(sync, "discover_docs", lambda: [doc])
+    monkeypatch.setattr(sync, "relative", lambda path: f"docs/{path.name}")
+    monkeypatch.setattr(sync, "load_credentials", lambda: (_ for _ in ()).throw(AssertionError("no auth needed")))
+
+    generated_at = dt.datetime.fromtimestamp(
+        old_mtime + 60,
+        tz=dt.timezone(dt.timedelta(hours=9)),
+    ).isoformat()
+    previous = {
+        "generated_at_jst": generated_at,
+        "google_docs": {
+            "docs_legacy_md": {
+                "source": "docs/legacy.md",
+                "id": "drive-legacy",
+                "name": "Mighty Skill-Bridge docs/docs/legacy.md",
+                "url": "https://docs.google.com/document/d/drive-legacy/edit",
+                "mimeType": "application/vnd.google-apps.document",
+            }
+        },
+    }
+
+    docs = sync.sync_google_docs(previous)
+
+    assert docs["docs_legacy_md"]["sync_action"] == "skipped_unchanged"
+    assert docs["docs_legacy_md"]["sync_reason"] == "legacy_manifest_mtime_before_generated_at"
+    assert docs["docs_legacy_md"]["source_digest"] == sync.source_content_digest(doc)
+
+
+def test_sync_google_docs_uploads_changed_docs_and_force_uploads(tmp_path, monkeypatch):
+    doc = tmp_path / "changed.md"
+    doc.write_text("# Changed\n\nnew content\n", encoding="utf-8")
+    monkeypatch.setattr(sync, "DOCS_DIR", tmp_path)
+    monkeypatch.setattr(sync, "discover_docs", lambda: [doc])
+    monkeypatch.setattr(sync, "relative", lambda path: f"docs/{path.name}")
+    monkeypatch.setattr(sync, "load_credentials", lambda: "credentials")
+    monkeypatch.setattr(sync, "get_file", lambda credentials, file_id: {"id": file_id})
+
+    uploads = []
+
+    def fake_upload_as_google_doc(credentials, *, title, content, existing_file_id):
+        uploads.append(
+            {
+                "credentials": credentials,
+                "title": title,
+                "content": content,
+                "existing_file_id": existing_file_id,
+            }
+        )
+        return {
+            "id": existing_file_id or "drive-created",
+            "name": title,
+            "webViewLink": "https://docs.google.com/document/d/drive-changed/edit",
+            "mimeType": "application/vnd.google-apps.document",
+            "ownedByMe": True,
+            "owners": [{"emailAddress": sync.EXPECTED_GOOGLE_ACCOUNT}],
+        }
+
+    monkeypatch.setattr(sync, "upload_as_google_doc", fake_upload_as_google_doc)
+    monkeypatch.setattr(sync, "verify_workspace_owner", lambda result: None)
+
+    previous = {
+        "generated_at_jst": "2026-06-21T00:00:00+09:00",
+        "google_docs": {
+            "docs_changed_md": {
+                "source": "docs/changed.md",
+                "id": "drive-existing",
+                "name": "Mighty Skill-Bridge docs/docs/changed.md",
+                "url": "https://docs.google.com/document/d/drive-existing/edit",
+                "mimeType": "application/vnd.google-apps.document",
+                "source_digest": "old-digest",
+            }
+        },
+    }
+
+    docs = sync.sync_google_docs(previous)
+
+    assert uploads
+    assert uploads[0]["credentials"] == "credentials"
+    assert uploads[0]["existing_file_id"] == "drive-existing"
+    assert docs["docs_changed_md"]["sync_action"] == "uploaded_updated"
+    assert docs["docs_changed_md"]["source_digest"] == sync.source_content_digest(doc)

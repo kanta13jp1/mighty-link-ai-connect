@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 import os
 import re
@@ -148,19 +149,147 @@ def build_google_doc_content(path: Path) -> str:
     )
 
 
-def sync_google_docs(previous: dict[str, Any]) -> dict[str, Any]:
-    credentials = load_credentials()
+def source_content_digest(path: Path) -> str:
+    digest = hashlib.sha256()
+    digest.update(relative(path).encode("utf-8"))
+    digest.update(b"\0")
+    digest.update(path.read_bytes())
+    return digest.hexdigest()
+
+
+def parse_manifest_time(value: Any) -> dt.datetime | None:
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        parsed = dt.datetime.fromisoformat(value.strip())
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=dt.timezone(dt.timedelta(hours=9)))
+    return parsed
+
+
+def source_mtime_jst(path: Path) -> dt.datetime:
+    return dt.datetime.fromtimestamp(
+        path.stat().st_mtime,
+        tz=dt.timezone(dt.timedelta(hours=9)),
+    )
+
+
+def reusable_previous_doc(
+    path: Path,
+    previous_entry: dict[str, Any],
+    digest: str,
+    previous_generated_at: dt.datetime | None,
+) -> tuple[bool, str]:
+    if not previous_entry.get("id") or not previous_entry.get("url"):
+        return False, "missing_manifest_drive_metadata"
+
+    if previous_entry.get("source_digest") == digest:
+        return True, "source_digest_match"
+
+    # Legacy manifests did not store a digest. If the local file has not changed
+    # since that manifest was generated, trust the existing Drive document and
+    # write a digest forward so future runs can use exact comparison.
+    if not previous_entry.get("source_digest") and previous_generated_at:
+        if source_mtime_jst(path) <= previous_generated_at:
+            return True, "legacy_manifest_mtime_before_generated_at"
+
+    return False, "source_changed_or_untracked"
+
+
+def skipped_google_doc_entry(
+    path: Path,
+    previous_entry: dict[str, Any],
+    digest: str,
+    reason: str,
+) -> dict[str, Any]:
+    return {
+        **previous_entry,
+        "source": relative(path),
+        "source_digest": digest,
+        "sync_action": "skipped_unchanged",
+        "sync_reason": reason,
+        "skipped_at_jst": jst_now().isoformat(timespec="seconds"),
+        "source_mtime_jst": source_mtime_jst(path).isoformat(timespec="seconds"),
+    }
+
+
+def google_doc_entry_from_upload(
+    path: Path,
+    result: dict[str, Any],
+    digest: str,
+    action: str,
+) -> dict[str, Any]:
+    return {
+        "source": relative(path),
+        "id": result["id"],
+        "name": result["name"],
+        "url": result["webViewLink"],
+        "mimeType": result["mimeType"],
+        "ownedByMe": result.get("ownedByMe"),
+        "owners": result.get("owners", []),
+        "createdTime": result.get("createdTime"),
+        "modifiedTime": result.get("modifiedTime"),
+        "source_digest": digest,
+        "sync_action": action,
+        "source_mtime_jst": source_mtime_jst(path).isoformat(timespec="seconds"),
+    }
+
+
+def summarize_google_doc_sync(docs: dict[str, Any], *, force_upload: bool) -> dict[str, Any]:
+    action_counts: dict[str, int] = {}
+    for doc in docs.values():
+        action = str(doc.get("sync_action") or "unknown")
+        action_counts[action] = action_counts.get(action, 0) + 1
+    uploaded = sum(
+        count
+        for action, count in action_counts.items()
+        if action.startswith("uploaded")
+    )
+    skipped = action_counts.get("skipped_unchanged", 0)
+    return {
+        "force_upload": force_upload,
+        "docs_discovered": len(docs),
+        "uploaded": uploaded,
+        "skipped": skipped,
+        "action_counts": action_counts,
+    }
+
+
+def sync_google_docs(previous: dict[str, Any], *, force_upload: bool = False) -> dict[str, Any]:
     previous_docs = previous.get("google_docs", {}) if isinstance(previous, dict) else {}
+    previous_generated_at = parse_manifest_time(previous.get("generated_at_jst"))
     docs: dict[str, Any] = {}
+    credentials: Any | None = None
+
+    def ensure_credentials() -> Any:
+        nonlocal credentials
+        if credentials is None:
+            credentials = load_credentials()
+        return credentials
 
     for path in discover_docs():
         key = source_key(path)
-        previous_id = previous_docs.get(key, {}).get("id")
-        existing = get_file(credentials, previous_id) if previous_id else None
+        digest = source_content_digest(path)
+        previous_entry = previous_docs.get(key, {}) if isinstance(previous_docs, dict) else {}
+        reusable, reason = reusable_previous_doc(
+            path,
+            previous_entry,
+            digest,
+            previous_generated_at,
+        )
+        if reusable and not force_upload:
+            docs[key] = skipped_google_doc_entry(path, previous_entry, digest, reason)
+            continue
+
+        credentials_for_upload = ensure_credentials()
+        previous_id = previous_entry.get("id")
+        existing = get_file(credentials_for_upload, previous_id) if previous_id else None
         existing_id = existing["id"] if existing else None
 
         result = upload_as_google_doc(
-            credentials,
+            credentials_for_upload,
             title=source_title(path),
             content=build_google_doc_content(path),
             existing_file_id=existing_id,
@@ -169,17 +298,8 @@ def sync_google_docs(previous: dict[str, Any]) -> dict[str, Any]:
         if not result.get("webViewLink"):
             result["webViewLink"] = f"https://docs.google.com/document/d/{result['id']}/edit"
 
-        docs[key] = {
-            "source": relative(path),
-            "id": result["id"],
-            "name": result["name"],
-            "url": result["webViewLink"],
-            "mimeType": result["mimeType"],
-            "ownedByMe": result.get("ownedByMe"),
-            "owners": result.get("owners", []),
-            "createdTime": result.get("createdTime"),
-            "modifiedTime": result.get("modifiedTime"),
-        }
+        action = "uploaded_updated" if existing_id else "uploaded_created"
+        docs[key] = google_doc_entry_from_upload(path, result, digest, action)
 
     return docs
 
@@ -646,6 +766,7 @@ Notebook: `{notebook_id}`
 def write_next_steps(manifest: dict[str, Any]) -> None:
     notebooklm = manifest.get("notebooklm", {})
     docs = manifest.get("google_docs", {})
+    drive_sync = manifest.get("drive_sync", {})
     source_rows = "\n".join(
         f"- `{doc['source']}`: {doc['url']}"
         for doc in docs.values()
@@ -729,6 +850,9 @@ Generated: {jst_now().isoformat(timespec='seconds')}
 
 - Google Drive sync: done
 - Workspace account: `{EXPECTED_GOOGLE_ACCOUNT}`
+- Drive docs discovered: `{drive_sync.get("docs_discovered", len(docs))}`
+- Drive docs uploaded: `{drive_sync.get("uploaded", "unknown")}`
+- Drive docs skipped unchanged: `{drive_sync.get("skipped", "unknown")}`
 - NotebookLM CLI status: `{auth_status}`
 
 ## Google Docs Synced From docs/
@@ -875,6 +999,11 @@ def _main_impl() -> None:
         help="Only sync docs/ to Workspace Google Docs and skip NotebookLM CLI calls.",
     )
     parser.add_argument(
+        "--force-drive-sync",
+        action="store_true",
+        help="Upload every docs/*.md file to Google Drive instead of trusting unchanged manifest entries.",
+    )
+    parser.add_argument(
         "--skip-asks",
         action="store_true",
         help="Sync Google Docs as NotebookLM sources but skip long summary/ask generation.",
@@ -900,7 +1029,8 @@ def _main_impl() -> None:
 
     EXPORT_DIR.mkdir(parents=True, exist_ok=True)
     previous = load_manifest()
-    google_docs = sync_google_docs(previous)
+    google_docs = sync_google_docs(previous, force_upload=args.force_drive_sync)
+    drive_sync = summarize_google_doc_sync(google_docs, force_upload=args.force_drive_sync)
     notebooklm = {"status": "skipped", "reason": "--drive-only"} if args.drive_only else sync_notebooklm_sources(
         google_docs,
         previous,
@@ -916,6 +1046,7 @@ def _main_impl() -> None:
     manifest = {
         "generated_at_jst": jst_now().isoformat(timespec="seconds"),
         "account": EXPECTED_GOOGLE_ACCOUNT,
+        "drive_sync": drive_sync,
         "google_docs": google_docs,
         "notebooklm": notebooklm,
         "gemini_context_cache": gemini_cache,
@@ -925,6 +1056,8 @@ def _main_impl() -> None:
 
     print("[+] docs/ Google Docs sync complete.")
     print(f"[*] Synced docs: {len(google_docs)}")
+    print(f"[*] Drive docs uploaded: {drive_sync.get('uploaded')}")
+    print(f"[*] Drive docs skipped unchanged: {drive_sync.get('skipped')}")
     print(f"[*] NotebookLM status: {notebooklm.get('status')}")
     print(f"[*] Gemini Context Cache status: {gemini_cache.get('status')}")
     if gemini_cache.get("cache_name"):

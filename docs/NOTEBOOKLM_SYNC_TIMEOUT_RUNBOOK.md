@@ -1,13 +1,17 @@
 # NotebookLM 同期タイムアウト対策 Runbook
 
 作成日: 2026-06-21
-対象WBS: T826
+対象WBS: T826 / T830
 
 ## 目的
 
 `docs/` から Google Docs / Google Drive / NotebookLM sources へ同期する処理と、NotebookLM に長文回答を生成させる処理を分離する。
 
 前回の同期では、Drive への取り込みと NotebookLM source 追加は完了した一方で、NotebookLM の `ask` 生成が長時間化し、セッション closeout 全体が不安定になった。今後は closeout の主判定を「source 同期完了」に置き、回答生成は必要時だけ別フェーズで実行する。
+
+2026-06-21の再発（T830）では、`--skip-asks --skip-source-refresh --source-timeout-seconds 60` と `--drive-only` の両方が5分タイムアウトした。原因は NotebookLM CLI ではなく、`--drive-only` でも全 `docs/*.md` を毎回Google Docsへ再アップロードしていたことによるDrive同期時間の増大だった。
+
+T830で `exports/knowledge_flow/notebooklm_docs_manifest.json` の `source_digest` とローカルmtimeを使う差分同期に変更した。未変更docsは既存Drive document IDを信頼してskipし、変更docsだけをDrive APIへ送る。全件再アップロードが必要な場合だけ `--force-drive-sync` を使う。
 
 ## 標準手順
 
@@ -19,6 +23,14 @@ NotebookLM CLI の状態に依存せず、Google Drive 側の docs 同期だけ�
 python scripts/sync_docs_to_notebooklm.py --drive-only
 ```
 
+通常は差分同期で動作する。T830検証では、94件中88件を未変更skip、6件だけアップロードし、32秒で完了した。
+
+全docsを強制的にDriveへ再アップロードする場合:
+
+```powershell
+python scripts/sync_docs_to_notebooklm.py --drive-only --force-drive-sync
+```
+
 ### 2. NotebookLM sources まで同期する
 
 NotebookLM CLI にログイン済みで、NotebookLM notebook の source set を更新したいが、回答生成を待たない場合:
@@ -26,6 +38,8 @@ NotebookLM CLI にログイン済みで、NotebookLM notebook の source set を
 ```powershell
 python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
 ```
+
+T830検証では、Drive docs 94件をすべて未変更skipし、NotebookLM source refreshもskipして17秒で完了した。
 
 このコマンドは次を行う。
 
@@ -71,10 +85,12 @@ Get-Process | Where-Object { $_.ProcessName -match 'python|notebook|chrome|msedg
 - 既存sourceも強制refreshしたい: `--skip-asks --source-timeout-seconds 120` など、時間を取れる時に別実行する
 - NotebookLM 生成物そのものが必要: `--ask-timeout-seconds 900`
 - CLI 認証が切れている: `python scripts/notebooklm_login_workspace.py` を実行し、会社提供 Google アカウント `k-umezawa@ml-mightylink.com` でログインする
+- Drive docsを強制再作成したい: `--force-drive-sync` を明示する。通常closeoutでは指定しない。
 
 ## 関連ファイル
 
 - `scripts/sync_docs_to_notebooklm.py`
+- `tests/test_sync_docs_to_notebooklm.py`
 - `exports/knowledge_flow/notebooklm_docs_manifest.json`
 - `exports/knowledge_flow/notebooklm_cli_next_steps.md`
 - `exports/knowledge_flow/notebooklm_agent_brief.md`

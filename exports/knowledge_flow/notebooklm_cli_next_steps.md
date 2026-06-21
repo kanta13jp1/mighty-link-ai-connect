@@ -1,11 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-21T16:46:34+09:00
+Generated: 2026-06-21T17:57:32+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
+- Drive docs discovered: `94`
+- Drive docs uploaded: `2`
+- Drive docs skipped unchanged: `92`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -85,6 +88,7 @@ Generated: 2026-06-21T16:46:34+09:00
 - `docs/SHEETS_TRACKERS_SCHEMA.md`: https://docs.google.com/document/d/11uhVT03zDzAnXLVHrcZAQCwQ4z4e0PbFjBcOOOEdvU8/edit?usp=drivesdk
 - `docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md`: https://docs.google.com/document/d/1jEicYb_uJHFTY5_RGJSN1PMGKilCpznOsKXWx9EIbbg/edit?usp=drivesdk
 - `docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md`: https://docs.google.com/document/d/1cZdaWmWxszmTRIcva3T3-GRkMpXa9qjT7MR-TIL7yHk/edit?usp=drivesdk
+- `docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md`: https://docs.google.com/document/d/19Lr08_Uww54iQerNJMSWSf81SY7TSGoQbRSPjvXdXIM/edit?usp=drivesdk
 - `docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md`: https://docs.google.com/document/d/11N-1PlKMV4nr2I1SBeMQISbbPZOAOVmhkqMKCf8Pg74/edit?usp=drivesdk
 - `docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md`: https://docs.google.com/document/d/135y0TSQWMvp-nBsUrIRUzDlRLWzlvRFF82D-56IQkHg/edit?usp=drivesdk
 - `docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md`: https://docs.google.com/document/d/1A0g0ka5kkLZzcBVTX802y8uzKLCJjz2hJRXXXwsXm30/edit?usp=drivesdk
