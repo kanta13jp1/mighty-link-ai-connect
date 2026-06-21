@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge CEO Presentation Deck
 
-Generated: 2026-06-21T23:48:29+09:00
+Generated: 2026-06-22T01:04:16+09:00
 
 ## Output
 

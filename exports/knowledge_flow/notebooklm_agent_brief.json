@@ -2,10 +2,18 @@
   "notebook_id": "4934c12b-b270-4739-97a1-b04b5b84eaaf",
   "notebook_info": {
     "action": "used_existing",
-    "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-06-21 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
+    "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-06-22 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
   },
-  "source_count": 97,
+  "source_count": 98,
   "source_results": [
+    {
+      "title": "Mighty Skill-Bridge docs/docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
+      "drive_file_id": "1vJ8XPvZviNxlRVMwabTQeaTrTgzwuL9AMkkIFR43V-s",
+      "action": "added",
+      "returncode": 0,
+      "stdout": "Added Drive source: fb3a0e43-06e8-4e2c-8eac-f923443147f5\nTitle: Mighty Skill-Bridge docs/docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
+      "stderr": ""
+    },
     {
       "title": "Mighty Skill-Bridge docs/docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md",
       "drive_file_id": "1vZkDFnO5AhW1oEC3pif_bO9kCLQg8xh4iqdPXfm0QmI",
@@ -279,9 +287,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md",
       "drive_file_id": "1btkSsKS8Z9GHsOS11oaEhT2P2V0vogPR-Z37oWQ7N_M",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: fb0479ee-e6cf-4c0b-9016-360cc92f46f5\nTitle: Mighty Skill-Bridge docs/docs/EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "fb0479ee-e6cf-4c0b-9016-360cc92f46f5",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -978,10 +988,10 @@
   "ask_generation": {
     "status": "skipped",
     "reason": "--skip-asks",
-    "generated_at_jst": "2026-06-21T23:48:24+09:00",
+    "generated_at_jst": "2026-06-22T01:04:11+09:00",
     "ask_timeout_seconds": 900,
     "next_command": "python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900",
-    "source_count": 97
+    "source_count": 98
   },
   "question": "このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、\nCodex/AIエージェントが次に開発を進めるための要約を作ってください。\n\n必ず以下を含めてください。\n1. 現在のプロダクト方向性で確定していること\n2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク\n3. 6/2で社長に決めてもらうべき事項\n4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提\n5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題\n6. WBSへ追加すべき次アクション\n",
   "summary_returncode": null,

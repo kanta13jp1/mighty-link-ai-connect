@@ -53,6 +53,46 @@
             text-decoration: none;
         }
 
+        .skip-link,
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .skip-link:focus {
+            z-index: 1000;
+            top: 12px;
+            left: 12px;
+            width: auto;
+            height: auto;
+            margin: 0;
+            clip: auto;
+            padding: 10px 14px;
+            border: 1px solid var(--blue);
+            border-radius: 8px;
+            color: #030303;
+            background: var(--blue);
+            font-weight: 900;
+            box-shadow: 0 0 0 4px rgba(139, 220, 255, 0.22);
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible,
+        [tabindex]:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 3px;
+        }
+
         button,
         textarea {
             font: inherit;
@@ -134,6 +174,12 @@
 
         .nav-links a,
         .language-switch a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 32px;
+            min-width: 32px;
+            padding: 6px 4px;
             color: rgba(247, 247, 242, 0.72);
             font-size: 14px;
             font-weight: 700;
@@ -633,6 +679,11 @@
             overflow-x: auto;
             border-radius: 12px;
             border: 1px solid var(--line);
+        }
+
+        .table-responsive:focus-visible {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(139, 220, 255, 0.2);
         }
 
         .comparison-table {
@@ -2119,6 +2170,7 @@
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#top">Skip to main content</a>
     <header class="topbar">
         <a class="brand" href="#top" aria-label="Mighty Skill-Bridge home">
             <span class="brand-mark">M</span>
@@ -2127,8 +2179,8 @@
                 <span>エンジニア＆案件 AIフィットシミュレーター</span>
             </span>
         </a>
-        <nav class="nav-links" aria-label="Primary navigation">
-            <a href="exports/mighty-link-hp/index.html" target="_blank" style="color: var(--yellow); font-weight: 700;">MightyLINK HP</a>
+        <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
+            <a href="exports/mighty-link-hp/index.html" target="_blank" rel="noopener" style="color: var(--yellow); font-weight: 700;">MightyLINK HP</a>
             <a href="#top">Home</a>
             <a href="#models">Models</a>
             <a href="#knowledge-flow-demo">Blog & Publication</a>
@@ -2148,13 +2200,13 @@
                 <span class="status-dot"></span>
                 <span id="api-status">Seedance API Preview</span>
                 <span>/</span>
-                <a href="admin" style="color: var(--blue); font-weight: 700; text-decoration: underline;" target="_blank">Admin</a>
+                <a href="admin" style="color: var(--blue); font-weight: 700; text-decoration: underline;" target="_blank" rel="noopener">Admin</a>
             </div>
-            <button class="mobile-menu" type="button" aria-label="Open menu" onclick="toggleNav()">☰</button>
+            <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleNav()">☰</button>
         </div>
     </header>
 
-    <main id="top">
+    <main id="top" tabindex="-1">
         <!-- ==========================================================================
              Step 1: AI Fit Simulation Profile Inputs (プロフィール入力)
              ========================================================================== -->
@@ -2163,7 +2215,7 @@
             <div class="hero-video-showcase">
                 <div class="step-kicker">AI Brand Video</div>
                 <div class="hero-video-frame">
-                    <video id="hero-video-bg" class="hero-video-bg" autoplay muted loop playsinline preload="auto">
+                    <video id="hero-video-bg" class="hero-video-bg" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1">
                         <source src="exports/seedance_demo/mighty_skill_bridge_procedural_fallback.mp4" type="video/mp4">
                     </video>
                     <div class="stage-vignette"></div>
@@ -2182,8 +2234,9 @@
                         <span>Engineer Profile</span>
                         <button class="sample-btn" onclick="loadSampleEngineer()">Load Sample</button>
                     </div>
-                    <h2>Engineer Skill & Experience</h2>
-                    <textarea id="engineer-input" class="textarea-input" placeholder="エンジニアのスキルや経歴を入力してください..."></textarea>
+                    <h2 id="engineer-input-heading">Engineer Skill & Experience</h2>
+                    <label class="sr-only" for="engineer-input">Engineer profile, skills, and experience</label>
+                    <textarea id="engineer-input" class="textarea-input" aria-labelledby="engineer-input-heading" placeholder="エンジニアのスキルや経歴を入力してください..."></textarea>
                 </div>
 
                 <!-- 右カラム: Project Requirements -->
@@ -2193,8 +2246,9 @@
                         <span>Project Requirements</span>
                         <button class="sample-btn" onclick="loadSampleJob()">Load Sample</button>
                     </div>
-                    <h2>Job & Team Requirements</h2>
-                    <textarea id="job-input" class="textarea-input" placeholder="案件の必須要件や歓迎要件を入力してください..."></textarea>
+                    <h2 id="job-input-heading">Job & Team Requirements</h2>
+                    <label class="sr-only" for="job-input">Project requirements and team conditions</label>
+                    <textarea id="job-input" class="textarea-input" aria-labelledby="job-input-heading" placeholder="案件の必須要件や歓迎要件を入力してください..."></textarea>
                 </div>
             </div>
             
@@ -2251,7 +2305,8 @@
                     <!-- ドーナツゲージカード -->
                     <div class="gauge-card">
                         <div class="gauge-container">
-                            <svg viewBox="0 0 120 120" class="gauge-svg">
+                            <svg viewBox="0 0 120 120" class="gauge-svg" role="img" aria-labelledby="gauge-title">
+                                <title id="gauge-title">Overall match score gauge</title>
                                 <defs>
                                     <linearGradient id="gauge-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" stop-color="#8bdcff" />
@@ -2278,7 +2333,7 @@
                     <div class="radar-card">
                         <div class="chart-label">Fit Radar</div>
                         <div class="chart-wrapper">
-                            <canvas id="reportRadarChart"></canvas>
+                            <canvas id="reportRadarChart" role="img" aria-label="4-axis fit radar chart. Results appear after analysis.">4-axis fit radar chart. Results appear after analysis.</canvas>
                         </div>
                         <div class="radar-footer">
                             Growth-Fit (キャリア)
@@ -2301,7 +2356,7 @@
                                 <span class="metric-pct bar-skill-pct" id="bar-val-skill">0%</span>
                             </div>
                             <div class="progress-track">
-                                <div class="progress-bar bar-skill" id="bar-fill-skill"></div>
+                                <div class="progress-bar bar-skill" id="bar-fill-skill" role="progressbar" aria-label="Skill fit score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
                             </div>
                         </div>
                         <div class="metric-row">
@@ -2310,7 +2365,7 @@
                                 <span class="metric-pct bar-culture-pct" id="bar-val-culture">0%</span>
                             </div>
                             <div class="progress-track">
-                                <div class="progress-bar bar-culture" id="bar-fill-culture"></div>
+                                <div class="progress-bar bar-culture" id="bar-fill-culture" role="progressbar" aria-label="Culture fit score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
                             </div>
                         </div>
                         <div class="metric-row">
@@ -2319,7 +2374,7 @@
                                 <span class="metric-pct bar-growth-pct" id="bar-val-growth">0%</span>
                             </div>
                             <div class="progress-track">
-                                <div class="progress-bar bar-growth" id="bar-fill-growth"></div>
+                                <div class="progress-bar bar-growth" id="bar-fill-growth" role="progressbar" aria-label="Growth fit score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
                             </div>
                         </div>
                         <div class="metric-row">
@@ -2328,7 +2383,7 @@
                                 <span class="metric-pct bar-performing-pct" id="bar-val-performing">0%</span>
                             </div>
                             <div class="progress-track">
-                                <div class="progress-bar bar-performing" id="bar-fill-performing"></div>
+                                <div class="progress-bar bar-performing" id="bar-fill-performing" role="progressbar" aria-label="Performing fit score" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
                             </div>
                         </div>
                     </div>
@@ -2371,6 +2426,7 @@
                             <output id="feedback-nps-output" for="feedback-nps">8</output>
                             <input id="feedback-nps" type="range" min="0" max="10" value="8" oninput="updateFeedbackNps(this.value)">
                         </label>
+                        <label class="sr-only" for="feedback-comment">Feedback comment</label>
                         <textarea id="feedback-comment" class="feedback-comment" maxlength="1000" placeholder="補足コメント（任意）"></textarea>
                         <div class="feedback-submit-row">
                             <button type="button" class="feedback-submit" id="feedback-submit" onclick="submitFeedback()" disabled>送信</button>
@@ -2378,13 +2434,13 @@
                     </div>
 
                     <div class="tabs-area">
-                        <div class="tab-buttons">
-                            <button class="tab-btn active" onclick="switchReportTab('qa')">面談想定質問 (Q&A)</button>
-                            <button class="tab-btn" onclick="switchReportTab('roadmap')">Docs Live 連携ロードマップ</button>
+                        <div class="tab-buttons" role="tablist" aria-label="Analysis report tabs">
+                            <button class="tab-btn active" id="tab-btn-qa" role="tab" aria-selected="true" aria-controls="tab-qa" onclick="switchReportTab('qa')">面談想定質問 (Q&A)</button>
+                            <button class="tab-btn" id="tab-btn-roadmap" role="tab" aria-selected="false" aria-controls="tab-roadmap" onclick="switchReportTab('roadmap')">Docs Live 連携ロードマップ</button>
                         </div>
 
                         <!-- 面談想定質問コンテンツ -->
-                        <div class="tab-content" id="tab-qa">
+                        <div class="tab-content" id="tab-qa" role="tabpanel" aria-labelledby="tab-btn-qa">
                             <div class="qa-item">
                                 <div class="qa-q">Q1. Google Sheets API や Drive API を活用した、OAuth 2.0 認証を含む連携開発の実績について具体的に教えてください。</div>
                                 <div class="qa-a">
@@ -2401,7 +2457,7 @@
                         </div>
 
                         <!-- ロードマップコンテンツ -->
-                        <div class="tab-content" id="tab-roadmap" style="display: none;">
+                        <div class="tab-content" id="tab-roadmap" role="tabpanel" aria-labelledby="tab-btn-roadmap" style="display: none;" hidden>
                             <div class="roadmap-timeline">
                                 <div class="roadmap-step">
                                     <div class="step-badge">Phase 1</div>
@@ -2462,7 +2518,7 @@
                     </div>
                 </div>
 
-                <div class="table-responsive">
+                <div class="table-responsive" tabindex="0" aria-label="Candidates comparison table. Scroll horizontally to review all score columns.">
                     <table class="comparison-table">
                         <thead>
                             <tr>
@@ -2513,7 +2569,7 @@
                 <!-- 左カラム: プレミアムビデオプレイヤー -->
                 <div class="video-left">
                     <div class="video-wrapper">
-                        <video id="seedance-video" class="seedance-video" autoplay muted loop playsinline controls preload="auto">
+                        <video id="seedance-video" class="seedance-video" autoplay muted loop playsinline controls preload="auto" aria-label="AI-generated match story preview video">
                             <source src="exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4" type="video/mp4">
                         </video>
                         <div class="stage-vignette"></div>
@@ -2738,7 +2794,9 @@
         function toggleNav() {
             const links = document.querySelector(".nav-links");
             if (!links) return;
+            const firstLink = links.querySelector("a");
             links.scrollIntoView({behavior: "smooth", block: "nearest", inline: "start"});
+            if (firstLink) firstLink.focus({preventScroll: true});
         }
 
         function switchLanguage(el) {
@@ -3099,6 +3157,7 @@
                     const bar = document.getElementById(`bar-fill-${key}`);
                     const val = document.getElementById(`bar-val-${key}`);
                     if (bar) bar.style.width = "0%";
+                    if (bar) bar.setAttribute("aria-valuenow", "0");
                     if (val) val.textContent = "0%";
                 });
 
@@ -3302,20 +3361,32 @@
 
             if (tabName === 'qa') {
                 tabQa.style.display = "flex";
+                tabQa.hidden = false;
                 tabRoadmap.style.display = "none";
+                tabRoadmap.hidden = true;
                 btns[0].classList.add("active");
                 btns[1].classList.remove("active");
+                btns[0].setAttribute("aria-selected", "true");
+                btns[1].setAttribute("aria-selected", "false");
             } else {
                 tabQa.style.display = "none";
+                tabQa.hidden = true;
                 tabRoadmap.style.display = "flex";
+                tabRoadmap.hidden = false;
                 btns[0].classList.remove("active");
                 btns[1].classList.add("active");
+                btns[0].setAttribute("aria-selected", "false");
+                btns[1].setAttribute("aria-selected", "true");
             }
         }
 
         function renderReportRadar(scores) {
             const canvas = document.getElementById("reportRadarChart");
             if (!canvas) return;
+            canvas.setAttribute(
+                "aria-label",
+                `4-axis fit radar chart. Skill ${scores.skill} percent, Culture ${scores.culture} percent, Growth ${scores.growth} percent, Performing ${scores.performing} percent.`
+            );
             const ctx = canvas.getContext("2d");
             if (reportRadarChart) {
                 reportRadarChart.destroy();
@@ -3399,18 +3470,22 @@
                 // Progress bars
                 const curSkill = Math.floor(easeProgress * scores.skill);
                 if (barFillSkill) barFillSkill.style.width = curSkill + "%";
+                if (barFillSkill) barFillSkill.setAttribute("aria-valuenow", String(curSkill));
                 if (barValSkill) barValSkill.textContent = curSkill + "%";
 
                 const curCulture = Math.floor(easeProgress * scores.culture);
                 if (barFillCulture) barFillCulture.style.width = curCulture + "%";
+                if (barFillCulture) barFillCulture.setAttribute("aria-valuenow", String(curCulture));
                 if (barValCulture) barValCulture.textContent = curCulture + "%";
 
                 const curGrowth = Math.floor(easeProgress * scores.growth);
                 if (barFillGrowth) barFillGrowth.style.width = curGrowth + "%";
+                if (barFillGrowth) barFillGrowth.setAttribute("aria-valuenow", String(curGrowth));
                 if (barValGrowth) barValGrowth.textContent = curGrowth + "%";
 
                 const curPerforming = Math.floor(easeProgress * scores.performing);
                 if (barFillPerforming) barFillPerforming.style.width = curPerforming + "%";
+                if (barFillPerforming) barFillPerforming.setAttribute("aria-valuenow", String(curPerforming));
                 if (barValPerforming) barValPerforming.textContent = curPerforming + "%";
 
                 if (progress < 1) {
