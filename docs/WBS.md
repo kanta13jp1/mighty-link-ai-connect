@@ -286,6 +286,7 @@ gantt
 | **T824** | 7. 決定後実行 | 要件定義 | 営業メール自動取り込み接続方式のヒアリング項目・必要情報チェックリスト整備 | Codex | VSCode + Codex + official provider docs | 営業メール受信環境をGmailと決め打ちせず、Microsoft Graph/Gmail API/IMAP/POP3/Webhook/ファイル監視別の必要情報、Secret管理、実値非記録ルールをdocs/SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.mdへ整理し、T817/T817_2 docsのGmail前提表現を補正 | 完了 |
 | **T825** | 7. 決定後実行 | Google Workspace同期 | Google Workspace OAuth失効時の再認証CLIとRunbook整備 | Codex | VSCode + Codex + Google OAuth official docs | verify_google_workspace_account.pyに--reauthを追加し、invalid_grant時のSheets/Calendar同期エラーを再認証案内へ整流。docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md、WBS/課題/QA/GitHub Issueへ同期 | 完了 |
 | **T826** | 7. 決定後実行 | NotebookLM同期 | NotebookLM source同期と質問生成フェーズの分離・タイムアウトhardening | Codex | VSCode + Codex + NotebookLM CLI + Google Workspace official docs | sync_docs_to_notebooklm.pyに--skip-asks/--skip-source-refresh/--ask-timeout-secondsとTimeoutExpired処理を追加し、source同期・既存source refresh・長時間ask生成を分離。Runbook、pytest、課題/QA/GitHub Issueへ反映 | 完了 |
+| **T827** | 7. 決定後実行 | 開発運用 | 三ツール開発セッションゲートと公式Docs確認対象の再整備 | Codex | VSCode + Codex + official docs | docs/MULTI_AI_WORKFLOW.mdを現行のAntigravity + Gemini / VSCode + Codex / VSCode + Claude Code運用へ再構成し、毎セッションの公式Docs確認、WBS完了、課題/QA反映、Sheets/Calendar/GitHub同期、secret非記録、後続タスク前倒し日程を明文化。GitHub Issue #118 / Project #1へ同期 | 完了 |
 
 ---
 
