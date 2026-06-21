@@ -73,7 +73,7 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 
 - Codex manual は `fetch-codex-manual.mjs` で最新版を取得してから、AGENTS.md、MCP、skills、GitHub連携の判断に使う。
 - GitHub Projects は Project #1 `Mighty Skill-Bridge` を正とし、Issueを追加したらStatusをDoneまで更新する。
-- Stripe Customer Portal は、サブスクリプション管理、支払方法、請求書、解約を顧客が管理できるHosted UIとして扱う。T807で実装する。
+- Stripe Customer Portal は、サブスクリプション管理、支払方法、請求書、解約を顧客が管理できるHosted UIとして扱う。T829でアプリ側セッションAPIとdry-run導線を整備済みで、T807でStripe Dashboard live有効化・本番検証を完了する。
 - Supabase は Postgres 14 サポート終了が 2026-07-01 に迫るため、T811を前倒しして本番/stagingのメジャーバージョン確認を優先する。
 - InsForge は導入判断前に `skill.md` を確認する。現行バックエンド方針は Firebase、DBは Supabase のままにする。
 

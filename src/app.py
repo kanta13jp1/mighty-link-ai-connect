@@ -67,6 +67,21 @@ except ImportError:
     from rate_limit import SlidingWindowRateLimiter, client_identifier
 
 try:
+    from .stripe_customer_portal import (
+        StripePortalError,
+        build_customer_portal_payload,
+        create_customer_portal_session,
+        sanitized_payload as sanitize_stripe_portal_payload,
+    )
+except ImportError:
+    from stripe_customer_portal import (
+        StripePortalError,
+        build_customer_portal_payload,
+        create_customer_portal_session,
+        sanitized_payload as sanitize_stripe_portal_payload,
+    )
+
+try:
     from .sales_email_match import (
         SearchCriteria,
         build_match_report_from_file,
@@ -362,6 +377,7 @@ RATE_LIMIT_EXPENSIVE_API_PATHS = {
     "/api/match",
     "/api/feedback",
     "/api/support/request",
+    "/api/billing/customer-portal/session",
     "/api/seedance/video-demo",
     "/api/sync",
 }
@@ -3064,6 +3080,240 @@ class SeedanceVideoRequest(BaseModel):
     aspect_ratio: str = "16:9"
     duration_seconds: int = 6
 
+
+class StripeCustomerPortalSessionRequest(BaseModel):
+    customer_id: str
+    return_url: Optional[str] = None
+    subscription_id: Optional[str] = None
+    flow_type: Optional[str] = None
+    configuration_id: Optional[str] = None
+    locale: Optional[str] = None
+    dry_run: bool = False
+
+
+def stripe_customer_portal_return_url(requested_url: Optional[str]) -> str:
+    return (
+        (requested_url or "").strip()
+        or os.environ.get("STRIPE_CUSTOMER_PORTAL_RETURN_URL", "").strip()
+        or "https://mightylink-app.com/billing"
+    )
+
+
+def stripe_customer_portal_required_env() -> List[str]:
+    return [
+        "STRIPE_CUSTOMER_PORTAL_ENABLED=1",
+        "STRIPE_SECRET_KEY",
+        "STRIPE_CUSTOMER_PORTAL_RETURN_URL",
+        "STRIPE_CUSTOMER_PORTAL_CONFIGURATION_ID (optional)",
+    ]
+
+
+BILLING_PORTAL_HTML = """<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mighty Skill-Bridge Billing</title>
+    <style>
+        :root {
+            --bg: #f7f8fb;
+            --panel: #ffffff;
+            --line: #d8dde7;
+            --text: #18202f;
+            --muted: #5d6676;
+            --accent: #0f766e;
+            --accent-strong: #0b5f59;
+            --danger: #b42318;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+        main {
+            width: min(920px, calc(100% - 32px));
+            margin: 32px auto;
+            display: grid;
+            gap: 18px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 16px;
+        }
+        h1 { font-size: 24px; margin: 0; }
+        .home {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+        label {
+            display: grid;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 700;
+        }
+        input, select {
+            min-height: 42px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 10px 12px;
+            font: inherit;
+            color: var(--text);
+            background: #fff;
+        }
+        .full { grid-column: 1 / -1; }
+        .check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 42px;
+        }
+        .check input { min-height: auto; }
+        .actions {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        button, .launch {
+            min-height: 42px;
+            border: 0;
+            border-radius: 6px;
+            padding: 0 16px;
+            background: var(--accent);
+            color: #fff;
+            font: inherit;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        button:hover, .launch:hover { background: var(--accent-strong); }
+        .launch[hidden] { display: none; }
+        pre {
+            min-height: 164px;
+            margin: 0;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-size: 13px;
+            line-height: 1.55;
+            color: var(--text);
+        }
+        .error { color: var(--danger); }
+        @media (max-width: 720px) {
+            main { width: min(100% - 24px, 920px); margin: 20px auto; }
+            header { align-items: flex-start; flex-direction: column; }
+            form { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Billing Portal</h1>
+            <a class="home" href="/">Mighty Skill-Bridge</a>
+        </header>
+        <section class="panel">
+            <form id="portal-form">
+                <label>Customer ID
+                    <input id="customer-id" name="customer_id" required placeholder="cus_..." autocomplete="off">
+                </label>
+                <label>Flow
+                    <select id="flow-type" name="flow_type">
+                        <option value="">Portal home</option>
+                        <option value="subscription_cancel">Cancel subscription</option>
+                        <option value="subscription_update">Change plan</option>
+                        <option value="payment_method_update">Payment method</option>
+                    </select>
+                </label>
+                <label>Subscription ID
+                    <input id="subscription-id" name="subscription_id" placeholder="sub_..." autocomplete="off">
+                </label>
+                <label>Configuration ID
+                    <input id="configuration-id" name="configuration_id" placeholder="bpc_..." autocomplete="off">
+                </label>
+                <label class="full">Return URL
+                    <input id="return-url" name="return_url" placeholder="https://mightylink-app.com/billing">
+                </label>
+                <label class="check full">
+                    <input id="dry-run" name="dry_run" type="checkbox" checked>
+                    Dry-run
+                </label>
+                <div class="actions">
+                    <button type="submit">Create Session</button>
+                    <a id="launch-link" class="launch" hidden target="_blank" rel="noopener">Open Portal</a>
+                </div>
+            </form>
+        </section>
+        <section class="panel">
+            <pre id="result">Ready.</pre>
+        </section>
+    </main>
+    <script>
+        const form = document.getElementById("portal-form");
+        const result = document.getElementById("result");
+        const launch = document.getElementById("launch-link");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            launch.hidden = true;
+            launch.removeAttribute("href");
+            result.className = "";
+            const payload = {
+                customer_id: document.getElementById("customer-id").value,
+                return_url: document.getElementById("return-url").value || null,
+                subscription_id: document.getElementById("subscription-id").value || null,
+                configuration_id: document.getElementById("configuration-id").value || null,
+                flow_type: document.getElementById("flow-type").value || null,
+                dry_run: document.getElementById("dry-run").checked
+            };
+            try {
+                const response = await fetch("/api/billing/customer-portal/session", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(payload)
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    result.className = "error";
+                }
+                result.textContent = JSON.stringify(data, null, 2);
+                if (data.url) {
+                    launch.href = data.url;
+                    launch.hidden = false;
+                }
+            } catch (error) {
+                result.className = "error";
+                result.textContent = String(error);
+            }
+        });
+    </script>
+</body>
+</html>
+"""
+
 # Static Hosting route
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
@@ -3115,6 +3365,13 @@ async def serve_index():
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="index.html not found in project workspace.")
 
+
+@app.get("/billing", response_class=HTMLResponse)
+async def serve_billing_portal():
+    """Serves a local Stripe Customer Portal launcher."""
+    return HTMLResponse(content=BILLING_PORTAL_HTML)
+
+
 # API Auth User Information Endpoint
 @app.get("/api/auth/me")
 async def get_auth_me(current_user: dict = Depends(get_current_user)):
@@ -3122,6 +3379,69 @@ async def get_auth_me(current_user: dict = Depends(get_current_user)):
     return {
         "status": "success",
         "user": current_user
+    }
+
+
+@app.post("/api/billing/customer-portal/session")
+async def create_billing_customer_portal_session(
+    req: StripeCustomerPortalSessionRequest,
+    current_user: dict = Depends(get_current_user),
+):
+    """Create, or preview, a short-lived Stripe Customer Portal session."""
+    del current_user
+    return_url = stripe_customer_portal_return_url(req.return_url)
+    configuration_id = (
+        (req.configuration_id or "").strip()
+        or os.environ.get("STRIPE_CUSTOMER_PORTAL_CONFIGURATION_ID", "").strip()
+        or None
+    )
+    try:
+        payload = build_customer_portal_payload(
+            customer_id=req.customer_id,
+            return_url=return_url,
+            configuration_id=configuration_id,
+            flow_type=req.flow_type,
+            subscription_id=req.subscription_id,
+            locale=req.locale,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    enabled = env_flag("STRIPE_CUSTOMER_PORTAL_ENABLED", default=False)
+    secret_key = os.environ.get("STRIPE_SECRET_KEY", "").strip()
+
+    if req.dry_run or not enabled or not secret_key:
+        mode = "dry_run" if req.dry_run else "not_configured"
+        return {
+            "status": "preview",
+            "mode": mode,
+            "enabled": enabled,
+            "stripe_secret_configured": bool(secret_key),
+            "payload": sanitize_stripe_portal_payload(payload),
+            "required_env": stripe_customer_portal_required_env(),
+        }
+
+    try:
+        session = create_customer_portal_session(
+            secret_key=secret_key,
+            payload=payload,
+        )
+    except StripePortalError as exc:
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "message": str(exc),
+                "stripe_status": exc.status_code,
+                "stripe_code": exc.code,
+            },
+        ) from exc
+
+    return {
+        "status": "success",
+        "id": session.get("id"),
+        "url": session["url"],
+        "livemode": session.get("livemode"),
+        "return_url": session.get("return_url") or return_url,
     }
 
 
@@ -3163,6 +3483,8 @@ async def health_check():
         "seedance_result_polling": bool(SEEDANCE_RESULT_API_URL_TEMPLATE),
         "seedance_poll_timeout_seconds": SEEDANCE_POLL_TIMEOUT_SECONDS,
         "seedance_demo_video": seedance_demo_video_url(),
+        "stripe_customer_portal_enabled": env_flag("STRIPE_CUSTOMER_PORTAL_ENABLED", default=False),
+        "stripe_secret_configured": bool(os.environ.get("STRIPE_SECRET_KEY", "").strip()),
     }
 
 

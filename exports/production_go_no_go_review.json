@@ -1,6 +1,6 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-19T14:39:56Z",
+  "generated_at": "2026-06-21T08:11:46Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
@@ -11,7 +11,7 @@
       "HUMAN_GATE": 2,
       "BLOCKED": 6
     },
-    "evidence_warnings": 1
+    "evidence_warnings": 0
   },
   "scopes": {
     "controlled_demo": {
@@ -295,19 +295,21 @@
       "criterion_id": "PUBLIC-09",
       "scope": "public_paid_launch",
       "category": "収益化",
-      "criterion": "Stripe課金設計・Billing Meters実装・Webhook検証が完了している",
-      "evidence_source": "docs/BILLING_AND_REFUND_POLICY.md; src/app.py",
+      "criterion": "Stripe課金設計・Billing Meters実装・Webhook・Customer Portal live検証が完了している",
+      "evidence_source": "docs/BILLING_AND_REFUND_POLICY.md; docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md; src/app.py; src/stripe_customer_portal.py",
       "required_state": "PASS",
       "current_state": "BLOCKED",
       "owner": "Codex",
       "decision_authority": "開発責任者",
-      "related_wbs": "T776;T791",
-      "related_issue": "",
-      "last_checked": "2026-06-17",
-      "notes": "設計T776、実装T791、解約導線T807と一体で判定する。",
+      "related_wbs": "T776;T791;T807;T829",
+      "related_issue": "R91",
+      "last_checked": "2026-06-21",
+      "notes": "T829でCustomer PortalセッションAPIとdry-run導線は完了。public_paid_launchは設計T776、Billing実装T791、Customer Portal live検証T807を通過してから判定する。",
       "wbs_statuses": {
         "T776": "未着手",
-        "T791": "未着手"
+        "T791": "未着手",
+        "T807": "未着手",
+        "T829": "完了"
       },
       "missing_evidence": []
     },
@@ -374,19 +376,10 @@
       "wbs_statuses": {
         "T806": "完了"
       },
-      "missing_evidence": [
-        "exports/release_versioning_review.md"
-      ]
+      "missing_evidence": []
     }
   ],
-  "evidence_warnings": [
-    {
-      "criterion_id": "PUBLIC-12",
-      "missing_evidence": [
-        "exports/release_versioning_review.md"
-      ]
-    }
-  ],
+  "evidence_warnings": [],
   "approval_process": [
     "Codex/Antigravity/Claude各レーンが担当ゲートの証跡をdocs・exports・Issueへ残す。",
     "T746の判定表をSheetsのリリース判定タブへ同期し、未完了ゲートをCEO/法務/開発責任者へ割り当てる。",
