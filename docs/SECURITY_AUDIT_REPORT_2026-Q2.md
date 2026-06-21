@@ -17,8 +17,9 @@
 | 依存ライブラリ脆弱性 (pip-audit 2.10.1) | ✅ PASS（T802 で修正完了） | 0 件 | 0 件 |
 | RLS ポリシー検証 (pytest + SQL レビュー) | ✅ PASS | 0 件 | 0 件 |
 | シークレット漏洩 (パターンスキャン + git 追跡確認) | ✅ PASS | 0 件（誤検知 1 件のみ） | 0 件 |
+| 外部ペネトレーション疑似診断 (T805) | ⚠️ WARNING | High 0 / Medium 4 / Low 7 | R94 |
 
-**総合判定**: PASS — High 検出は監査セッション内で修正完了し、未解決だった R49（starlette CVE）/ R50（requests timeout）/ R52（FastAPI startup deprecated）も T802 で修正完了。2026-06-13 の再スキャンで Bandit High/Medium 0 件、pip-audit 0 件、pytest 21 件通過を確認した。
+**総合判定**: PASS（controlled demo） / WARNING（public paid launch） — High 検出は監査セッション内で修正完了し、未解決だった R49（starlette CVE）/ R50（requests timeout）/ R52（FastAPI startup deprecated）も T802 で修正完了。2026-06-13 の再スキャンで Bandit High/Medium 0 件、pip-audit 0 件、pytest 21 件通過を確認した。2026-06-21 の T805 疑似診断では High 0 / secret-like値露出 0 を確認したが、CSP / X-Content-Type-Options 等の公開URLヘッダhardeningを R94 / T835 へ継続する。
 
 ---
 
@@ -74,6 +75,17 @@ npm audit: ルート `package.json` なしのため対象外。
 - git 追跡確認: `client_secret.json` / `credentials.json` / `authorized_user.json` / `.env` / `.claude/settings.local.json` / `CLAUDE.local.md` はすべて未追跡かつ `.gitignore` で ignore 済を `git check-ignore` で確認
 - truffleHog / gitleaks による Git 全履歴スキャン: ローカル未導入のため未実施。T747では新規サードパーティ action を増やさず、Dependabot と週次 Bandit / pip-audit を先行導入。Git 全履歴のシークレットスキャンは、SHAピン留めまたはローカルCLI実行方針を決めたうえで次回監査/外部診断時に扱う。
 
+## 5. 外部ペネトレーション疑似診断（T805）
+
+`python scripts/run_external_pentest_review.py --timeout 15` を実行し、[EXTERNAL_PENTEST_RUNBOOK.md](EXTERNAL_PENTEST_RUNBOOK.md) と `exports/external_pentest_review.*` に証跡を保存した。
+
+| 対象 | 到達 | High | Medium | Low | 主要メモ |
+| :--- | :--- | ---: | ---: | ---: | :--- |
+| `https://kanta13jp1.github.io/mighty-link-ai-connect/` | 200 | 0 | 2 | 5 | CSP / X-Content-Type-Options 不足、CORS wildcard、Clickjacking/Referrer/Permissionsヘッダ不足 |
+| `https://mightylink-app.com/` | 200 | 0 | 2 | 4 | CSP / X-Content-Type-Options 不足、Clickjacking/Referrer/Permissionsヘッダ不足 |
+
+機微パス（`.env`、`.git/config`、OAuth/credentials系ファイル、Claudeローカル設定）の限定プローブは 14 件実施し、secret-like値露出は 0 件だった。
+
 ## 検出事項と対応状況
 
 | ID | 重要度 | 内容 | 状態 | 期限 |
@@ -82,7 +94,8 @@ npm audit: ルート `package.json` なしのため対象外。
 | SEC-005 (R49) | HIGH | starlette CVE-2026-48710 → ≥1.0.1 へ更新 | **修正済**（T802、2026-06-13） | — |
 | SEC-006 (R50) | MED | B113: requests timeout 未指定 17 箇所 | **修正済**（T802、2026-06-13） | — |
 | SEC-007 | LOW | B310 / B108 | **修正済**（T802、2026-06-13） | — |
+| SEC-008 (R94) | MED | 公開URLの CSP / X-Content-Type-Options 等のヘッダhardening不足 | **継続**（T835、2026-06-25予定） | 2026-06-25 |
 
 ## 次回監査予定: 2026-09（2026-Q3 / 第 2 回）
 
-持ち越し事項: Semgrep・gitleaks の CI 組み込み、Bandit Low 24 件の棚卸し、外部ペネトレーションテスト（T805）結果の反映。
+持ち越し事項: Semgrep・gitleaks の CI 組み込み、Bandit Low 24 件の棚卸し、T835 の公開URLヘッダhardening完了確認。

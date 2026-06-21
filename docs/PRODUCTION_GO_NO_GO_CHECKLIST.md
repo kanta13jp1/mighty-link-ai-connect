@@ -22,13 +22,15 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 | Scope | 判定 | 理由 |
 | --- | --- | --- |
 | `controlled_demo` | `GO` | GitHub Pages公開デモ、本番URL、問い合わせ窓口、DR/Incident/Rollback、監視・クォータRunbookの証跡が揃っている |
-| `public_paid_launch` | `NO_GO` | リリースノート/バージョニング運用は整備済みだが、法務/CEO承認、規約同意UI、オンボーディング、法定4ページ実装、Stripe課金、負荷テスト、営業メールAIマッチング本番hardeningが未完了 |
+| `public_paid_launch` | `NO_GO` | リリースノート/バージョニング運用とT805外部疑似診断は整備済みだが、法務/CEO承認、規約同意UI、オンボーディング、法定4ページ実装、Stripe課金、負荷テスト、公開URLヘッダhardening、営業メールAIマッチング本番hardeningが未完了 |
 
 つまり、現状は「社長説明・限定デモは継続可。一般公開・有償ローンチは未承認」である。
 
 2026-06-17の小林社長・梅澤打ち合わせで、共有営業アドレスに毎日約1,000通届く営業メールから案件要件や要員情報を抽出し、エンジニア候補と照合するAIマッチング機能が最優先開発項目になった。文字起こし照合では、エンジニア/経歴書から案件を探す方向に加えて、案件要件から候補人材を探す逆方向も要望として確認した。これに伴い、営業メールAIマッチングMVPは `public_paid_launch` の追加ゲートとして扱う。T817_6までで安全な取り込みPoC、DB/RLS、抽出、候補検索、人間レビュー保存は完了した。限定デモのGo判定は維持するが、本機能を売りにした一般公開、有償提供、営業利用はT817_7の実メール接続後hardening完了後に再判定する。
 
 2026-06-19にT806を前倒し完了し、`VERSION`、`CHANGELOG.md`、GitHub Releases用のRunbook、release versioning verifierを整備した。初回タグ `v0.1.0-controlled-demo.1` は管理下デモ用prereleaseであり、GAや有償ローンチを意味しない。
+
+2026-06-21にT805を前倒し完了し、OWASP WSTG / OWASP ZAP baseline相当の非破壊疑似診断を `scripts/run_external_pentest_review.py` で実施した。CEO共有GitHub Pages URLと `mightylink-app.com` は到達可能で、High 0、secret-like値露出 0 を確認した。CSP / X-Content-Type-Options 等のヘッダhardeningは R94 / T835 として公開・有償ローンチ前の継続ゲートにする。
 
 ---
 
@@ -70,11 +72,12 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T777 | 法定4ページ実装とフッター常時リンク | `BLOCKED` |
 | T776 / T791 | Stripe課金設計・Billing Meters/Webhook検証 | `BLOCKED` |
 | T770 | 同時100ユーザー想定の負荷テスト | `BLOCKED` |
+| T835 | 公開URLセキュリティヘッダhardening | `WARNING` |
 | T817_7 | 共有営業メールAIマッチングMVPの個人情報/監査/負荷確認、実メール接続後の運用hardening | `BLOCKED` |
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 
-完了済みの公開前ゲート: T806 リリースノート・SemVer・git tag・GitHub Releases運用。
+完了済みの公開前ゲート: T806 リリースノート・SemVer・git tag・GitHub Releases運用、T805 外部ペネトレーション疑似診断（High 0 / secret-like値露出 0）。
 
 ---
 

@@ -1,13 +1,14 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-21T08:11:46Z",
+  "generated_at": "2026-06-21T13:33:00Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
     "total": 17,
     "counts": {
-      "PASS": 9,
+      "PASS": 8,
+      "WARNING": 1,
       "HUMAN_GATE": 2,
       "BLOCKED": 6
     },
@@ -26,7 +27,8 @@
       "recommendation": "NO_GO",
       "worst_state": "BLOCKED",
       "counts": {
-        "PASS": 4,
+        "WARNING": 1,
+        "PASS": 3,
         "HUMAN_GATE": 2,
         "BLOCKED": 6
       },
@@ -139,19 +141,21 @@
       "criterion_id": "PUBLIC-01",
       "scope": "public_paid_launch",
       "category": "セキュリティ",
-      "criterion": "四半期セキュリティ監査と監査検出事項修正が完了している",
-      "evidence_source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md; requirements.txt",
+      "criterion": "四半期セキュリティ監査・外部疑似診断と監査検出事項修正が完了している",
+      "evidence_source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md; docs/EXTERNAL_PENTEST_RUNBOOK.md; exports/external_pentest_review.md; requirements.txt",
       "required_state": "PASS",
-      "current_state": "PASS",
+      "current_state": "WARNING",
       "owner": "Claude + Codex",
       "decision_authority": "開発責任者",
-      "related_wbs": "T789;T802",
-      "related_issue": "R49;R50;R52",
-      "last_checked": "2026-06-17",
-      "notes": "Bandit High/Medium 0、pip-audit 0をT802で確認済み。",
+      "related_wbs": "T789;T802;T805;T835",
+      "related_issue": "R49;R50;R52;R94",
+      "last_checked": "2026-06-21",
+      "notes": "Bandit High/Medium 0、pip-audit 0、T805 High 0 / secret-like値露出 0を確認済み。CSP / X-Content-Type-Options等の公開URLヘッダhardeningはR94/T835へ継続。",
       "wbs_statuses": {
         "T789": "完了",
-        "T802": "完了"
+        "T802": "完了",
+        "T805": "完了",
+        "T835": "未着手"
       },
       "missing_evidence": []
     },
