@@ -1,14 +1,13 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-21T13:33:00Z",
+  "generated_at": "2026-06-23T13:59:36Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
     "total": 17,
     "counts": {
-      "PASS": 8,
-      "WARNING": 1,
+      "PASS": 9,
       "HUMAN_GATE": 2,
       "BLOCKED": 6
     },
@@ -27,8 +26,7 @@
       "recommendation": "NO_GO",
       "worst_state": "BLOCKED",
       "counts": {
-        "WARNING": 1,
-        "PASS": 3,
+        "PASS": 4,
         "HUMAN_GATE": 2,
         "BLOCKED": 6
       },
@@ -142,20 +140,20 @@
       "scope": "public_paid_launch",
       "category": "セキュリティ",
       "criterion": "四半期セキュリティ監査・外部疑似診断と監査検出事項修正が完了している",
-      "evidence_source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md; docs/EXTERNAL_PENTEST_RUNBOOK.md; exports/external_pentest_review.md; requirements.txt",
+      "evidence_source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md; docs/EXTERNAL_PENTEST_RUNBOOK.md; exports/external_pentest_review.md; exports/firebase_hosting_headers_review.md; firebase.json; requirements.txt",
       "required_state": "PASS",
-      "current_state": "WARNING",
+      "current_state": "PASS",
       "owner": "Claude + Codex",
       "decision_authority": "開発責任者",
       "related_wbs": "T789;T802;T805;T835",
       "related_issue": "R49;R50;R52;R94",
-      "last_checked": "2026-06-21",
-      "notes": "Bandit High/Medium 0、pip-audit 0、T805 High 0 / secret-like値露出 0を確認済み。CSP / X-Content-Type-Options等の公開URLヘッダhardeningはR94/T835へ継続。",
+      "last_checked": "2026-06-23",
+      "notes": "Bandit High/Medium 0、pip-audit 0、T805 High 0 / secret-like値露出 0を確認済み。T835でFirebase Hosting本番URLのCSP / X-Content-Type-Options等ヘッダhardeningを完了。GitHub Pagesはcontrolled demo mirrorとして制約をdocsへ記録。public_paid_launch全体は他のBLOCKED/HUMAN_GATE項目で別途No-Go判定。",
       "wbs_statuses": {
         "T789": "完了",
         "T802": "完了",
         "T805": "完了",
-        "T835": "未着手"
+        "T835": "完了"
       },
       "missing_evidence": []
     },

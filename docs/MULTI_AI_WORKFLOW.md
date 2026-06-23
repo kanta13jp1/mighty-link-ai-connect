@@ -1,6 +1,6 @@
 # Multi-AI 開発ワークフロー
 
-更新日: 2026-06-21  
+更新日: 2026-06-23
 担当レーン: VSCode + Codex  
 関連: [WBS.md](WBS.md) / [WBS_SYNC_GUIDE.md](WBS_SYNC_GUIDE.md) / [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) / [CODEX_CONTINUATION_NOTES.md](CODEX_CONTINUATION_NOTES.md)
 
@@ -76,7 +76,7 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 - Stripe Customer Portal は、サブスクリプション管理、支払方法、請求書、解約を顧客が管理できるHosted UIとして扱う。T829でアプリ側セッションAPIとdry-run導線を整備済みで、T807でStripe Dashboard live有効化・本番検証を完了する。
 - Supabase は Postgres 14 サポート終了が 2026-07-01 に迫るため、T811を前倒しして本番/stagingのメジャーバージョン確認を優先する。
 - InsForge は導入判断前に `skill.md` を確認する。現行バックエンド方針は Firebase、DBは Supabase のままにする。
-- OWASP WSTG / ZAP 相当の外部疑似診断はT805で実施済み。High 0 / secret-like値露出 0 を維持し、CSP等のヘッダhardeningはT835で扱う。
+- OWASP WSTG / ZAP 相当の外部疑似診断はT805で実施済み。High 0 / secret-like値露出 0 を維持し、T835でFirebase Hosting本番URLのCSP等ヘッダhardeningを完了済み。GitHub Pagesは任意HTTPヘッダを設定できないためcontrolled demo mirrorとして扱う。
 
 ---
 
@@ -122,4 +122,4 @@ python scripts/upload_notebooklm_docs_to_drive.py
 
 - T827として、毎セッションの公式Docs確認対象と3ツール運用ゲートを再整備した。
 - T805として、非破壊の外部ペネトレーション疑似診断を実施し、High 0 / secret-like値露出 0 を確認した。
-- T805で見えた公開URLヘッダhardeningをR94/T835へ切り出し、後続WBSを前倒しリスケした。
+- T835として、Firebase Hosting本番URLにCSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTSを設定し、R94/SEC-008を解決した。

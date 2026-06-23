@@ -40,6 +40,8 @@
 
 2026-06-21 追記: T805を前倒し完了し、OWASP WSTG / OWASP ZAP baseline相当の非破壊疑似診断で High 0 / secret-like値露出 0 を確認した。検出されたCSP / X-Content-Type-Options 等の公開URLヘッダ不足は、R94および新規WBS T835として公開・有償ローンチ前hardeningへ切り出した。
 
+2026-06-23 追記: T835を前倒し完了し、Firebase Hosting本番URLへCSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTSを設定した。GitHub Pagesは任意HTTPヘッダを設定できないため、CEO向けcontrolled demo mirrorとして制約をRunbookへ記録した。
+
 ## 4. 前倒しリスケ（第3回）
 
 前提となる実績: T712/T714/T716/T733/T735（予定終期 6/13〜6/16）がすべて 6/13 までに完了し、Codex / Antigravity レーンの 6/13〜6/16 枠が解放された。T764 も 6/13 完了。これにより未着手タスクをレーン別直列で約 2 日ずつ前倒しできる。
@@ -59,7 +61,7 @@
 | T776 → T791 → T807（Stripe チェーン） | 7/1〜7/7 | 6/28〜7/5 | T804 前倒しに連動 |
 | T781 / T782 / T778 | 7/6〜7/9 | 7/1〜7/6 | |
 | T805 ペンテスト | 7/6〜7/10 | 6/21完了 | 非破壊疑似診断を前倒し完了。High 0 / secret-like値露出 0、ヘッダhardeningはT835へ分離 |
-| T835 公開URLセキュリティヘッダhardening | - | 6/24〜6/25 | T805のMED/LOW検出をFirebase Hosting・GitHub Pages方針に合わせて解消 |
+| T835 公開URLセキュリティヘッダhardening | - | 6/23完了 | T805のMED/LOW検出をFirebase Hosting・GitHub Pages方針に合わせて解消 |
 | T769 / T780（Gemini モデル移行） | 7/9〜7/12 | 7/4〜7/7 | |
 | T800 | 7/12〜7/13 | 7/2〜7/3 | T805完了分を前倒し。T819定例資料と並走 |
 | **T793 ローンチアナウンス** | **7/13〜7/14** | **7/7〜7/8** | ペンテスト（〜7/6）・課金（〜7/3）完了後 |

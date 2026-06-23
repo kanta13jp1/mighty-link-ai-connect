@@ -17,9 +17,9 @@
 | 依存ライブラリ脆弱性 (pip-audit 2.10.1) | ✅ PASS（T802 で修正完了） | 0 件 | 0 件 |
 | RLS ポリシー検証 (pytest + SQL レビュー) | ✅ PASS | 0 件 | 0 件 |
 | シークレット漏洩 (パターンスキャン + git 追跡確認) | ✅ PASS | 0 件（誤検知 1 件のみ） | 0 件 |
-| 外部ペネトレーション疑似診断 (T805) | ⚠️ WARNING | High 0 / Medium 4 / Low 7 | R94 |
+| 外部ペネトレーション疑似診断 (T805/T835) | ✅ PASS（Firebase本番URLヘッダ修正済） | High 0 / secret-like値露出 0 | 0 件 |
 
-**総合判定**: PASS（controlled demo） / WARNING（public paid launch） — High 検出は監査セッション内で修正完了し、未解決だった R49（starlette CVE）/ R50（requests timeout）/ R52（FastAPI startup deprecated）も T802 で修正完了。2026-06-13 の再スキャンで Bandit High/Medium 0 件、pip-audit 0 件、pytest 21 件通過を確認した。2026-06-21 の T805 疑似診断では High 0 / secret-like値露出 0 を確認したが、CSP / X-Content-Type-Options 等の公開URLヘッダhardeningを R94 / T835 へ継続する。
+**総合判定**: PASS（controlled demo / public paid launch のセキュリティヘッダ観点） — High 検出は監査セッション内で修正完了し、未解決だった R49（starlette CVE）/ R50（requests timeout）/ R52（FastAPI startup deprecated）も T802 で修正完了。2026-06-13 の再スキャンで Bandit High/Medium 0 件、pip-audit 0 件、pytest 21 件通過を確認した。2026-06-21 の T805 疑似診断では High 0 / secret-like値露出 0 を確認し、2026-06-23 の T835 で Firebase Hosting 本番URLへ CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS を設定した。GitHub Pages は controlled demo mirror とし、任意HTTPヘッダを設定できない制約を [EXTERNAL_PENTEST_RUNBOOK.md](EXTERNAL_PENTEST_RUNBOOK.md) に記録済み。public paid launch 全体は法務、同意UI、課金live検証、負荷試験、営業メールAIマッチング実メールhardening等の別ゲートが残るため、リリース総合判定は引き続きGo/No-Goチェックリストで扱う。
 
 ---
 
@@ -86,6 +86,8 @@ npm audit: ルート `package.json` なしのため対象外。
 
 機微パス（`.env`、`.git/config`、OAuth/credentials系ファイル、Claudeローカル設定）の限定プローブは 14 件実施し、secret-like値露出は 0 件だった。
 
+2026-06-23 に T835 として Firebase Hosting の `headers` 設定を追加し、`scripts/validate_firebase_hosting_headers.py` と `tests/test_firebase_hosting_headers.py` で CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS の静的検証を追加した。検証成果物は `exports/firebase_hosting_headers_review.*` に保存する。
+
 ## 検出事項と対応状況
 
 | ID | 重要度 | 内容 | 状態 | 期限 |
@@ -94,8 +96,8 @@ npm audit: ルート `package.json` なしのため対象外。
 | SEC-005 (R49) | HIGH | starlette CVE-2026-48710 → ≥1.0.1 へ更新 | **修正済**（T802、2026-06-13） | — |
 | SEC-006 (R50) | MED | B113: requests timeout 未指定 17 箇所 | **修正済**（T802、2026-06-13） | — |
 | SEC-007 | LOW | B310 / B108 | **修正済**（T802、2026-06-13） | — |
-| SEC-008 (R94) | MED | 公開URLの CSP / X-Content-Type-Options 等のヘッダhardening不足 | **継続**（T835、2026-06-25予定） | 2026-06-25 |
+| SEC-008 (R94) | MED | 公開URLの CSP / X-Content-Type-Options 等のヘッダhardening不足 | **修正済**（T835、2026-06-23） | — |
 
 ## 次回監査予定: 2026-09（2026-Q3 / 第 2 回）
 
-持ち越し事項: Semgrep・gitleaks の CI 組み込み、Bandit Low 24 件の棚卸し、T835 の公開URLヘッダhardening完了確認。
+持ち越し事項: Semgrep・gitleaks の CI 組み込み、Bandit Low 24 件の棚卸し、CSP の `unsafe-inline` を nonce/hash 方式へ寄せるフロントエンドbundle化検討。
