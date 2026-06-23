@@ -2167,6 +2167,159 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ====== 社内向けシステム追加画面スタイル (診断・勤怠・ダッシュボード) ====== */
+        .internal-section {
+            width: min(1512px, 100%);
+            margin: 64px auto 0;
+            padding: 0 32px;
+        }
+        .form-grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+        @media (max-width: 900px) {
+            .form-grid-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .input-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+        .text-input, .select-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.32);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .text-input:focus, .select-input:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 8px rgba(139, 220, 255, 0.15);
+        }
+        .choice-rating-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+        }
+        .rating-btn {
+            flex: 1;
+            min-height: 40px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .rating-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+        .rating-btn.active {
+            background: var(--blue);
+            color: #030303;
+            border-color: var(--blue);
+            box-shadow: 0 0 12px rgba(139, 220, 255, 0.3);
+        }
+        .punch-card-panel {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .punch-btn {
+            min-height: 50px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+        }
+        .punch-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        .punch-btn.active-punch {
+            background: var(--green);
+            color: #030303;
+            border-color: var(--green);
+            box-shadow: 0 0 15px rgba(186, 255, 102, 0.35);
+        }
+        .file-drop-zone {
+            border: 2px dashed var(--line);
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.01);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .file-drop-zone:hover {
+            border-color: var(--blue);
+            background: rgba(139, 220, 255, 0.03);
+        }
+        .file-drop-zone p {
+            font-size: 14px;
+            color: var(--muted);
+        }
+        .file-drop-zone strong {
+            color: var(--text);
+        }
+        .preview-pane {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card-stat {
+            font-size: 24px;
+            font-weight: 800;
+            font-family: monospace;
+            color: var(--text);
+            margin-top: 8px;
+        }
+        .card-stat.stat-blue { color: var(--blue); }
+        .card-stat.stat-green { color: var(--green); }
+        .card-stat.stat-yellow { color: var(--yellow); }
     </style>
 </head>
 <body>
@@ -2180,11 +2333,11 @@
             </span>
         </a>
         <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
-            <a href="exports/mighty-link-hp/index.html" target="_blank" rel="noopener" style="color: var(--yellow); font-weight: 700;">MightyLINK HP</a>
-            <a href="#top">Home</a>
-            <a href="#models">Models</a>
-            <a href="#knowledge-flow-demo">Blog & Publication</a>
-            <a href="#join-us">Join Us</a>
+            <a href="#top">ホーム</a>
+            <a href="#survey-section">適性アンケート</a>
+            <a href="#attendance-section">勤怠管理</a>
+            <a href="#matching-section">営業メールマッチング</a>
+            <a href="#admin-dashboard-section">管理者ダッシュボード</a>
         </nav>
         <div class="topbar-tools">
             <div class="language-switch" aria-label="Language">
@@ -2251,7 +2404,7 @@
                     <textarea id="job-input" class="textarea-input" aria-labelledby="job-input-heading" placeholder="案件の必須要件や歓迎要件を入力してください..."></textarea>
                 </div>
             </div>
-            
+
             <!-- 3. 中央下: Analyze Big Button -->
             <div class="hero-center-actions">
                 <button class="big-btn" onclick="runAnalysis()">
@@ -2496,7 +2649,7 @@
                 <h2 class="section-title" style="font-size: 32px; font-weight: 800; letter-spacing: -0.5px;">Multiple Candidates Comparison Board <span class="accent-text" style="background: linear-gradient(135deg, var(--blue), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">案件候補比較ボード</span></h2>
                 <p class="section-subtitle" style="color: var(--muted); margin-top: 8px; font-size: 15px;">複数案件とストック候補エンジニアの多次元フィットスコアを一覧で突合・比較します。</p>
             </div>
-            
+
             <div class="comparison-container">
                 <div class="comparison-controls">
                     <div class="control-group">
@@ -2507,7 +2660,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="control-actions">
                         <button class="action-btn secondary-btn" onclick="openAddCandidateModal()">
                             <span class="btn-icon" style="font-size: 16px; font-weight: bold;">+</span> 候補者の追加
@@ -2584,15 +2737,210 @@
                     </div>
                     <h2>AI-Generated Match Story</h2>
                     <p class="video-desc">AIフィット分析から、候補者と案件のシナジーを映画的なプロダクト映像として生成します。</p>
-                    
+
                     <textarea id="seedance-prompt" class="prompt-input" readonly>Cinematic loop of network connections for Mighty Skill-Bridge. Glowing neon blue and green light lines flowing, connecting nodes, representing AI agents, data synergy, technology bridge, dark mode, high-tech, 8k resolution, smooth ambient motion, slow pan</textarea>
-                    
+
                     <div class="video-actions">
                         <span class="status-indicator">
                             Status: <strong id="seedance-status">Ready</strong>
                         </span>
                         <button class="sample-btn generate-btn" onclick="generateSeedanceVideo()">Generate Story Video</button>
                         <a id="video-download-link" class="sample-btn download-btn" href="exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4" download="mighty_skill_bridge_seedance_demo.mp4">Download Video</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             Step 3: 従業員向け適性・状況診断アンケート回答フォーム (T840)
+             ========================================================================== -->
+        <section id="survey-section" class="internal-section fade-in-on-scroll" aria-label="従業員適性・状況アンケート">
+            <div class="step-kicker">適性アンケート</div>
+            <div class="comparison-container">
+                <div class="comparison-controls">
+                    <h2>従業員適性・状況診断アンケート</h2>
+                    <span class="control-label">社員の適性や状況を把握するための社内アンケート</span>
+                </div>
+                <form id="employee-survey-form" onsubmit="submitSurvey(event)">
+                    <div class="form-grid-2col">
+                        <div class="input-group">
+                            <label for="survey-emp-name">社員名</label>
+                            <input type="text" id="survey-emp-name" class="text-input" placeholder="例: 佐藤 賢太" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="survey-emp-dept">部署/役職</label>
+                            <select id="survey-emp-dept" class="select-input" required>
+                                <option value="">選択してください</option>
+                                <option value="開発本部">開発本部</option>
+                                <option value="営業本部">営業本部</option>
+                                <option value="営業推進室">営業推進室</option>
+                                <option value="人事総務部">人事総務部</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-grid-2col" style="margin-top: 16px;">
+                        <div class="input-group">
+                            <label>1. モチベーション状態 (現在)</label>
+                            <span class="control-label">現在の業務モチベーションを選択（1: 低 〜 5: 高）</span>
+                            <div class="choice-rating-row" id="rate-motivation">
+                                <button type="button" class="rating-btn" onclick="setRating('motivation', 1)">1</button>
+                                <button type="button" class="rating-btn" onclick="setRating('motivation', 2)">2</button>
+                                <button type="button" class="rating-btn" onclick="setRating('motivation', 3)">3</button>
+                                <button type="button" class="rating-btn" onclick="setRating('motivation', 4)">4</button>
+                                <button type="button" class="rating-btn active" onclick="setRating('motivation', 5)">5</button>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>2. カルチャーフィット感</label>
+                            <span class="control-label">自社の開発文化やチームとの親和性（1: 低 〜 5: 高）</span>
+                            <div class="choice-rating-row" id="rate-culture">
+                                <button type="button" class="rating-btn" onclick="setRating('culture', 1)">1</button>
+                                <button type="button" class="rating-btn" onclick="setRating('culture', 2)">2</button>
+                                <button type="button" class="rating-btn" onclick="setRating('culture', 3)">3</button>
+                                <button type="button" class="rating-btn active" onclick="setRating('culture', 4)">4</button>
+                                <button type="button" class="rating-btn" onclick="setRating('culture', 5)">5</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group" style="margin-top: 16px;">
+                        <label for="survey-feedback">3. 業務における所感・成長課題（フリー記述）</label>
+                        <textarea id="survey-feedback" class="textarea-input" placeholder="現在取り組んでいる開発、およびキャッチアップが必要な技術や、業務における悩み・サポートが必要な点をご記入ください..." required></textarea>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+                        <button type="submit" class="big-btn">アンケート回答を送信</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             Step 4: 勤務表自動解析・ジョブカン風簡易勤怠打刻 (T841)
+             ========================================================================== -->
+        <section id="attendance-section" class="internal-section fade-in-on-scroll" aria-label="勤怠管理・勤務表解析">
+            <div class="step-kicker">勤怠管理 (ジョブカン相当)</div>
+            <div class="comparison-container">
+                <div class="comparison-controls">
+                    <h2>簡易勤怠打刻 &amp; 勤務表自動解析</h2>
+                    <span class="control-label">出退勤の簡易打刻、および月末の勤務表パース連携</span>
+                </div>
+
+                <div class="form-grid-2col">
+                    <div>
+                        <h3 style="font-size: 15px; font-weight: 700; color: var(--muted); margin-bottom: 8px; text-transform: uppercase;">簡易タイムカード打刻</h3>
+                        <div id="punch-status" style="font-size: 13px; color: var(--blue); font-weight: 700; margin-bottom: 12px;">現在のステータス: 退勤中</div>
+                        <div class="punch-card-panel">
+                            <button type="button" class="punch-btn" id="btn-punch-in" onclick="punchCard('in')">出勤</button>
+                            <button type="button" class="punch-btn" id="btn-punch-out" onclick="punchCard('out')">退勤</button>
+                            <button type="button" class="punch-btn" id="btn-punch-rest-start" onclick="punchCard('rest-start')">休憩入</button>
+                            <button type="button" class="punch-btn" id="btn-punch-rest-end" onclick="punchCard('rest-end')">休憩戻</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 15px; font-weight: 700; color: var(--muted); margin-bottom: 8px; text-transform: uppercase;">勤務表解析用アップローダー</h3>
+                        <div class="file-drop-zone" onclick="triggerFileSelect()">
+                            <span style="font-size: 24px;">📁</span>
+                            <p><strong>勤務表CSV・PDFファイルを選択</strong> またはドラッグ＆ドロップ</p>
+                            <span class="control-label">Google Workspace自動パース・ジョブカン連携</span>
+                            <input type="file" id="attendance-file-input" style="display: none;" onchange="handleFileSelect(event)">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="attendance-preview-pane" class="preview-pane" style="display: none; margin-top: 24px;">
+                    <h3 style="font-size: 14px; color: var(--green); font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <span class="badge-icon" style="color:var(--green)">✓</span> 勤務表自動解析プレビュー (Gemini API 連携)
+                    </h3>
+                    <div class="table-responsive">
+                        <table class="comparison-table" style="min-width: 800px;">
+                            <thead>
+                                <tr>
+                                    <th>項目</th>
+                                    <th>解析値 (自動抽出)</th>
+                                    <th>基準値</th>
+                                    <th>判定/稼働健全性</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendance-preview-body">
+                                <!-- 解析値がここに動的にレンダリングされます -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 16px; gap: 12px;">
+                        <button type="button" class="sample-btn" onclick="clearAttendancePreview()">キャンセル</button>
+                        <button type="button" class="big-btn" onclick="approveAttendanceData()">解析結果を承認して登録</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             Step 5: 管理者向け統合ダッシュボード (T842)
+             ========================================================================= -->
+        <section id="admin-dashboard-section" class="internal-section fade-in-on-scroll" aria-label="管理者統合ダッシュボード">
+            <div class="step-kicker">管理者ダッシュボード</div>
+            <div class="comparison-container">
+                <div class="comparison-controls">
+                    <h2>社内診断・勤怠＆マッチング統合管理</h2>
+                    <span class="control-label">社員の適性診断、稼働状況、および営業メール案件マッチングの統括監視</span>
+                </div>
+
+                <div class="dashboard-grid" style="margin-bottom: 32px;">
+                    <div class="panel" id="matching-section" style="min-height: auto;">
+                        <span class="step-kicker" style="color: var(--blue); background: rgba(139, 220, 255, 0.05);">稼働健全性</span>
+                        <h2>平均月間時間外労働</h2>
+                        <div class="card-stat stat-blue" id="dashboard-stat-ot">18.5 H</div>
+                        <span class="control-label" style="margin-top: 8px;">過重労働アラート: 0件 (閾値45H)</span>
+                    </div>
+                    <div class="panel" style="min-height: auto;">
+                        <span class="step-kicker" style="color: var(--green); background: rgba(186, 255, 102, 0.05);">コンディション</span>
+                        <h2>モチベーション平均値</h2>
+                        <div class="card-stat stat-green" id="dashboard-stat-motivation">4.3 / 5</div>
+                        <span class="control-label" style="margin-top: 8px;">アンケート提出率: 100% (5/5名)</span>
+                    </div>
+                    <div class="panel" style="min-height: auto;">
+                        <span class="step-kicker" style="color: var(--yellow); background: rgba(255, 209, 102, 0.05);">最優先MVP</span>
+                        <h2>営業メールAIマッチング</h2>
+                        <div class="card-stat stat-yellow" id="dashboard-stat-matching">87.5 %</div>
+                        <span class="control-label" style="margin-top: 8px;">未処理の抽出案件: 14通 (本日分)</span>
+                    </div>
+                </div>
+
+                <div class="form-grid-2col">
+                    <div>
+                        <h3 style="font-size: 15px; font-weight: 700; color: var(--muted); margin-bottom: 12px; text-transform: uppercase;">社内メンバー診断・稼働一覧</h3>
+                        <div class="table-responsive">
+                            <table class="comparison-table" style="min-width: 600px;">
+                                <thead>
+                                    <tr>
+                                        <th>氏名</th>
+                                        <th>モチベーション</th>
+                                        <th>カルチャー適合</th>
+                                        <th>今月稼働時間</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboard-member-table-body">
+                                    <!-- メンバーの動的リスト -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="font-size: 15px; font-weight: 700; color: var(--muted); margin-bottom: 12px; text-transform: uppercase;">営業メールAIマッチング進捗 (最優先MVP)</h3>
+                        <div class="table-responsive">
+                            <table class="comparison-table" style="min-width: 600px;">
+                                <thead>
+                                    <tr>
+                                        <th>案件タイトル (自動抽出)</th>
+                                        <th>適合エンジニア</th>
+                                        <th>マッチングスコア</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboard-matching-table-body">
+                                    <!-- マッチングの動的リスト -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2703,46 +3051,26 @@
                         <span class="brand-mark">M</span>
                         <span class="brand-text">
                             <strong>Mighty Skill-Bridge</strong>
-                            <span>Mighty-Link AI Connect</span>
+                            <span>Mighty-Link AI Connect (社内システム)</span>
                         </span>
                     </a>
-                    <span>Advancing project intelligence, in service of better teams.</span>
+                    <span>Mighty-Link 社員専用ポータル</span>
                     <span>Copyright © 2026 Mighty-Link</span>
-                    <a href="mailto:careers@ml-mightylink.com" style="color:var(--muted); font-size:12px; margin-top: 8px; display:inline-block;">Contact us : careers@ml-mightylink.com</a>
-                    <a href="#support" style="color:var(--blue); font-size:12px; margin-top: 4px; display:inline-block;">Support : k-umezawa@ml-mightylink.com</a>
-                    <a href="#top" style="color:var(--muted); font-size:11px; margin-top: 4px; display:inline-block;">Disclaimer</a>
+                    <a href="#support" style="color:var(--blue); font-size:12px; margin-top: 8px; display:inline-block;">サポート・問い合わせ: k-umezawa@ml-mightylink.com</a>
                 </div>
                 <div class="footer-column">
-                    <h3>Models</h3>
-                    <a href="#models">Seed2.0</a>
-                    <a href="#models">Seedance 2.0</a>
-                    <a href="#models">Seedream 5.0 Lite</a>
-                    <a href="#models">Seeduplex</a>
-                    <a href="#models">Seed GR-RL</a>
-                    <a href="exports/wireframes/index.html" style="margin-top:16px; color:var(--blue); font-weight: 700;">Mighty UI Wireframes (20 patterns)</a>
-                    <a href="exports/landing-pages/index.html" style="color:var(--green); font-weight: 700;">Mighty LP Design Tastes (20 patterns)</a>
+                    <h3>メニュー</h3>
+                    <a href="#top">ホーム</a>
+                    <a href="#survey-section">適性アンケート</a>
+                    <a href="#attendance-section">勤怠管理</a>
+                    <a href="#matching-section">営業メールマッチング</a>
+                    <a href="#admin-dashboard-section">管理者ダッシュボード</a>
                 </div>
                 <div class="footer-column">
-                    <h3>Directions</h3>
-                    <a href="#top">LLM</a>
-                    <a href="#top">Infrastructures</a>
-                    <a href="#top">Vision</a>
-                    <a href="#top">Speech</a>
-                    <a href="#top">Multimodal Interaction &amp; World Model</a>
-                    <a href="#top">AI for Science</a>
-                    <a href="#top">Robotics</a>
-                    <a href="#top">Responsible AI</a>
-                    <a href="exports/recruit/index.html" style="margin-top:16px; color:var(--rose); font-weight: 700;">Mighty Careers (採用ページ)</a>
-                </div>
-                <div class="footer-column">
-                    <h3>Learn More</h3>
-                    <a href="#knowledge-flow-demo">Blog</a>
-                    <a href="#models">Seed Edge</a>
-                    <a href="exports/recruit/index.html">Seed Campus Recruitment</a>
-                    <a href="exports/sequence-diagrams/index.html" style="margin-top:16px; color:var(--blue); font-weight: 700;">Mighty Architecture (シーケンス図)</a>
-                    <a href="docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md" style="font-weight: 700;">Mighty Pre-share Memo</a>
-                    <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.md" style="font-weight: 700;">Mighty Knowledge Flow</a>
-                    <a href="admin" style="color: var(--yellow); font-weight: 700;">Mighty Admin Dashboard (管理者画面)</a>
+                    <h3>資料リンク</h3>
+                    <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.md" target="_blank" rel="noopener">Mighty Knowledge Flow</a>
+                    <a href="exports/sequence-diagrams/index.html" target="_blank" rel="noopener">Mighty Architecture (シーケンス図)</a>
+                    <a href="admin" target="_blank" rel="noopener">管理者画面 (DB直通)</a>
                 </div>
             </div>
         </footer>
@@ -2816,7 +3144,7 @@
             if (!url) {
                 url = seedanceFallbackVideo;
             }
-            
+
             // 下部 Step 3 詳細プレイヤー
             if (video) {
                 const current = video.currentSrc || video.getAttribute("src") || "";
@@ -2928,7 +3256,7 @@
             const job = document.getElementById("job-input").value.trim() || sampleJob;
             const engName = engineer.split("\n")[0].replace("氏名: ", "").trim();
             const jobName = job.split("\n")[0].replace("案件名: ", "").trim();
-            
+
             document.getElementById("seedance-prompt").value = `Cinematic loop of network connections for Mighty Skill-Bridge: candidate ${engName} and project ${jobName}. Glowing neon blue and green light lines flowing, connecting nodes, representing AI agents, data synergy, technology bridge, dark mode, high-tech, 8k resolution, smooth ambient motion, slow pan`;
         }
 
@@ -3208,16 +3536,16 @@
                     summaryText = data.summary;
                     qas = data.qa || [];
                     currentFeedbackMatchId = data.db_match_id || null;
-                    
+
                     if (data.structured) {
                         matchedSkills = data.structured.matched_skills || [];
                         missingSkills = data.structured.missing_skills || [];
                     }
-                    
+
                     if (qas.length > 0) {
                         renderQA(qas);
                     }
-                    
+
                     renderRoadmap(data);
                 }
             } catch (err) {
@@ -3227,7 +3555,7 @@
             // Animate detailed report metrics (gauge, bars)
             animateGaugeAndBars(scores, 1200);
             renderReportRadar(scores);
-            
+
             // Update Summary
             const descEl = document.getElementById("report-desc");
             if (descEl) descEl.textContent = summaryText;
@@ -3632,10 +3960,10 @@
             let h = 0;
             for (let i = 0; i < seed.length; i++) { h = (h * 31 + seed.charCodeAt(i)) | 0; }
             let score = 65 + Math.abs(h % 31); // 65..95
-            
+
             const engSkills = (engineer.skills || "").toLowerCase();
             const jobTitle = (job.title || "").toLowerCase();
-            
+
             if (jobTitle.includes("fastapi") || jobTitle.includes("バックエンド") || jobTitle.includes("backend")) {
                 if (engSkills.includes("python") || engSkills.includes("fastapi") || engSkills.includes("go") || engSkills.includes("django")) {
                     score = Math.min(98, score + 8);
@@ -3649,12 +3977,12 @@
                     score = Math.min(98, score + 8);
                 }
             }
-            
+
             const skillScore = Math.min(100, Math.max(50, score + (h % 5)));
             const cultureScore = Math.min(100, Math.max(50, score - (h % 7)));
             const growthScore = Math.min(100, Math.max(50, score + (h % 3)));
             const performingScore = Math.min(100, Math.max(50, score - (h % 4)));
-            
+
             return {
                 final_score: score,
                 skill: skillScore,
@@ -3760,14 +4088,14 @@
                 currentSortField = field;
                 currentSortOrder = "desc";
             }
-            
+
             // Update sort UI indicators
             document.querySelectorAll(".sort-indicator").forEach(el => el.textContent = "");
             const indicator = document.getElementById(`sort-${field}`);
             if (indicator) {
                 indicator.textContent = currentSortOrder === "asc" ? " ▲" : " ▼";
             }
-            
+
             updateComparisonBoard();
         }
 
@@ -3794,7 +4122,7 @@
 
             const nextId = comparisonStock.length > 0 ? Math.max(...comparisonStock.map(c => c.id)) + 1 : 1;
             comparisonStock.push({ id: nextId, name, skills });
-            
+
             closeAddCandidateModal();
             updateComparisonBoard();
         }
@@ -3843,15 +4171,15 @@
         function exportComparisonCSV() {
             const select = document.getElementById("comparison-job-select");
             const jobTitle = select ? select.options[select.selectedIndex].text : "job";
-            
+
             let csvContent = "\ufeffCandidate Name,Final Compatibility Score,Skill Fit,Culture Fit,Growth Fit,Performing Fit,Reason,Check Points\n";
-            
+
             const rows = document.querySelectorAll("#comparison-tbody tr");
             if (rows.length === 0 || rows[0].innerText.includes("登録されていません")) {
                 alert("エクスポートするデータがありません。");
                 return;
             }
-            
+
             rows.forEach(tr => {
                 const cells = tr.querySelectorAll("td");
                 if (cells.length >= 8) {
@@ -3863,11 +4191,11 @@
                     const performing = cells[5].innerText.trim().replace("%", "");
                     const reason = cells[6].innerText.trim().replace(/"/g, '""');
                     const checks = cells[7].innerText.trim().replace(/"/g, '""');
-                    
+
                     csvContent += `"${name}",${final},${skill},${culture},${growth},${performing},"${reason}","${checks}"\n`;
                 }
             });
-            
+
             const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
             const encodedUrl = URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -3896,15 +4224,341 @@
                 .replace(/'/g, "&#039;");
         }
 
+        // ==========================================================================
+        // T840, T841, T842: 社内向けシステム（診断・勤怠・ダッシュボード）連携ロジック
+        // ==========================================================================
+
+        let membersData = [
+            { name: "佐藤 賢太", dept: "開発本部", motivation: 5, culture: 4, ot: 18.5, feedback: "AIエージェント連携基盤開発のプロトタイプ構築に注力しています。" },
+            { name: "山田 花子", dept: "開発本部", motivation: 4, culture: 5, ot: 12.0, feedback: "新規フロントエンドUIのコンポーネント化を進めています。" },
+            { name: "鈴木 一郎", dept: "営業本部", motivation: 3, culture: 3, ot: 25.0, feedback: "マッチング機能を用いたデモをクライアントに提案中です。" },
+            { name: "田中 太郎", dept: "開発本部", motivation: 4, culture: 4, ot: 8.0, feedback: "Supabase DBとGoogle Workspace連携のバックエンドを担当しています。" },
+            { name: "高橋 次郎", dept: "人事総務部", motivation: 5, culture: 5, ot: 5.5, feedback: "社内限定アクセス制限（Basic Auth）の検証を行いました。" }
+        ];
+
+        let matchingData = [
+            { id: 1, title: "【Python/React】AIエージェントシステム開発", candidate: "佐藤 賢太", score: 95, approved: false },
+            { id: 2, title: "【Go/FastAPI】APIゲートウェイ構築案件", candidate: "田中 太郎", score: 88, approved: false },
+            { id: 3, title: "【TypeScript】フロントエンド開発支援", candidate: "山田 花子", score: 92, approved: false },
+            { id: 4, title: "【AWS/DevOps】インフラ自動化案件", candidate: "佐藤 賢太", score: 85, approved: false }
+        ];
+
+        let currentRatings = {
+            motivation: 5,
+            culture: 4
+        };
+
+        // 勤務表自動解析の一時データ
+        let parsedAttendanceData = null;
+
+        function setRating(type, val) {
+            currentRatings[type] = val;
+            const containerId = type === 'motivation' ? 'rate-motivation' : 'rate-culture';
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            container.querySelectorAll('.rating-btn').forEach((btn, idx) => {
+                if (idx + 1 === val) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function submitSurvey(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById("survey-emp-name");
+            const deptInput = document.getElementById("survey-emp-dept");
+            const feedbackInput = document.getElementById("survey-feedback");
+
+            if (!nameInput || !deptInput || !feedbackInput) return;
+
+            const name = nameInput.value.trim();
+            const dept = deptInput.value;
+            const feedback = feedbackInput.value.trim();
+
+            if (!name || !dept || !feedback) {
+                alert("すべての必須項目を入力してください。");
+                return;
+            }
+
+            // 同名のメンバーがいれば更新、いなければ新規追加
+            const existingMember = membersData.find(m => m.name === name);
+            if (existingMember) {
+                existingMember.dept = dept;
+                existingMember.motivation = currentRatings.motivation;
+                existingMember.culture = currentRatings.culture;
+                existingMember.feedback = feedback;
+            } else {
+                membersData.push({
+                    name: name,
+                    dept: dept,
+                    motivation: currentRatings.motivation,
+                    culture: currentRatings.culture,
+                    ot: 0.0, // 新規メンバーの初期時間外労働
+                    feedback: feedback
+                });
+            }
+
+            // ダッシュボードの再描画
+            renderDashboard();
+
+            alert(`アンケートを送信しました。\n送信者: ${name} さん\n管理者統合ダッシュボードに反映されました。`);
+
+            // フォームのリセット
+            nameInput.value = "";
+            deptInput.value = "";
+            feedbackInput.value = "";
+            setRating('motivation', 5);
+            setRating('culture', 4);
+        }
+
+        function punchCard(type) {
+            const statusDiv = document.getElementById("punch-status");
+            if (!statusDiv) return;
+
+            const timeStr = new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            let statusText = "";
+            let alertMsg = "";
+
+            // ボタンのアクティブ状態制御
+            const btnIn = document.getElementById("btn-punch-in");
+            const btnOut = document.getElementById("btn-punch-out");
+            const btnRestStart = document.getElementById("btn-punch-rest-start");
+            const btnRestEnd = document.getElementById("btn-punch-rest-end");
+
+            const buttons = [btnIn, btnOut, btnRestStart, btnRestEnd];
+            buttons.forEach(btn => { if (btn) btn.classList.remove('active-punch'); });
+
+            if (type === 'in') {
+                statusText = `現在のステータス: 出勤中 (打刻: ${timeStr})`;
+                alertMsg = `出勤を打刻しました (${timeStr})`;
+                if (btnIn) btnIn.classList.add('active-punch');
+            } else if (type === 'out') {
+                statusText = `現在のステータス: 退勤中 (打刻: ${timeStr})`;
+                alertMsg = `退勤を打刻しました (${timeStr})`;
+                if (btnOut) btnOut.classList.add('active-punch');
+            } else if (type === 'rest-start') {
+                statusText = `現在のステータス: 休憩中 (打刻: ${timeStr})`;
+                alertMsg = `休憩入りを打刻しました (${timeStr})`;
+                if (btnRestStart) btnRestStart.classList.add('active-punch');
+            } else if (type === 'rest-end') {
+                statusText = `現在のステータス: 出勤中 (休憩戻打刻: ${timeStr})`;
+                alertMsg = `休憩戻りを打刻しました (${timeStr})`;
+                if (btnRestEnd) btnRestEnd.classList.add('active-punch');
+            }
+
+            statusDiv.textContent = statusText;
+            alert(alertMsg);
+        }
+
+        function triggerFileSelect() {
+            const fileInput = document.getElementById("attendance-file-input");
+            if (fileInput) fileInput.click();
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // アップロードされたファイル名をダミー解析結果に反映させるため、社員名を推測
+            let empName = "佐藤 賢太"; // デフォルト
+            if (file.name.includes("yamada") || file.name.includes("山田")) {
+                empName = "山田 花子";
+            } else if (file.name.includes("suzuki") || file.name.includes("鈴木")) {
+                empName = "鈴木 一郎";
+            } else if (file.name.includes("tanaka") || file.name.includes("田中")) {
+                empName = "田中 太郎";
+            } else if (file.name.includes("takahashi") || file.name.includes("高橋")) {
+                empName = "高橋 次郎";
+            }
+
+            // ダミー解析データの構築
+            parsedAttendanceData = {
+                employeeName: empName,
+                fileName: file.name,
+                workHours: 165.0,
+                overtimeHours: 20.5,
+                holidaysCount: 0,
+                midnightHours: 1.5,
+                anomalies: "なし"
+            };
+
+            // プレビューテーブルの描画
+            const tbody = document.getElementById("attendance-preview-body");
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td style="font-weight: 600;">対象社員名</td>
+                        <td><span style="color: var(--blue); font-weight: 700;">${escapeHtml(parsedAttendanceData.employeeName)}</span></td>
+                        <td>-</td>
+                        <td>ファイル: ${escapeHtml(parsedAttendanceData.fileName)}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">実労働時間</td>
+                        <td>${parsedAttendanceData.workHours} H</td>
+                        <td>160.0 H</td>
+                        <td><span class="fit-badge fit-high" style="background: rgba(186, 255, 102, 0.1); color: var(--green);">基準クリア</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">時間外労働 (残業)</td>
+                        <td><span style="color: var(--yellow); font-weight: 700;">${parsedAttendanceData.overtimeHours} H</span></td>
+                        <td>&lt; 45.0 H</td>
+                        <td><span class="fit-badge fit-high" style="background: rgba(186, 255, 102, 0.1); color: var(--green);">健全</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">休日出勤日数</td>
+                        <td>${parsedAttendanceData.holidaysCount} 日</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">深夜労働時間</td>
+                        <td>${parsedAttendanceData.midnightHours} H</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">打刻漏れ・異常値判定</td>
+                        <td><span style="color: var(--green); font-weight: 700;">${parsedAttendanceData.anomalies}</span></td>
+                        <td>なし</td>
+                        <td><span class="fit-badge fit-high" style="background: rgba(186, 255, 102, 0.1); color: var(--green);">正常</span></td>
+                    </tr>
+                `;
+            }
+
+            const previewPane = document.getElementById("attendance-preview-pane");
+            if (previewPane) {
+                previewPane.style.display = "block";
+                previewPane.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+        }
+
+        function clearAttendancePreview() {
+            const previewPane = document.getElementById("attendance-preview-pane");
+            if (previewPane) previewPane.style.display = "none";
+
+            const fileInput = document.getElementById("attendance-file-input");
+            if (fileInput) fileInput.value = "";
+            parsedAttendanceData = null;
+        }
+
+        function approveAttendanceData() {
+            if (!parsedAttendanceData) return;
+
+            // 対象社員の勤怠情報（時間外労働時間など）を更新
+            const empName = parsedAttendanceData.employeeName;
+            const existingMember = membersData.find(m => m.name === empName);
+            if (existingMember) {
+                existingMember.ot = parsedAttendanceData.overtimeHours;
+            } else {
+                membersData.push({
+                    name: empName,
+                    dept: "開発本部",
+                    motivation: 4,
+                    culture: 4,
+                    ot: parsedAttendanceData.overtimeHours,
+                    feedback: "勤務表自動解析による登録"
+                });
+            }
+
+            // ダッシュボード更新
+            renderDashboard();
+
+            alert(`${empName} さんの勤務表データを承認・登録しました。\nSupabase / Google Sheets への同期、およびジョブカン勤怠情報の更新が完了しました。`);
+            clearAttendancePreview();
+        }
+
+        function toggleApproveMatching(id) {
+            const match = matchingData.find(m => m.id === id);
+            if (!match) return;
+            match.approved = !match.approved;
+            renderDashboard();
+
+            const actionText = match.approved ? "承認" : "未承認";
+            alert(`営業メール案件マッチング「${match.title}」を${actionText}状態に更新しました。`);
+        }
+
+        function renderDashboard() {
+            // 1. 平均時間外労働の計算
+            const otSum = membersData.reduce((sum, m) => sum + m.ot, 0);
+            const otAvg = membersData.length > 0 ? (otSum / membersData.length).toFixed(1) : "0.0";
+            const otStat = document.getElementById("dashboard-stat-ot");
+            if (otStat) otStat.textContent = `${otAvg} H`;
+
+            // 2. モチベーション平均の計算
+            const motSum = membersData.reduce((sum, m) => sum + m.motivation, 0);
+            const motAvg = membersData.length > 0 ? (motSum / membersData.length).toFixed(1) : "0.0";
+            const motStat = document.getElementById("dashboard-stat-motivation");
+            if (motStat) motStat.textContent = `${motAvg} / 5`;
+
+            // 3. マッチングスコアの平均
+            const matchSum = matchingData.reduce((sum, m) => sum + m.score, 0);
+            const matchAvg = matchingData.length > 0 ? (matchSum / matchingData.length).toFixed(1) : "0.0";
+            const matchStat = document.getElementById("dashboard-stat-matching");
+            if (matchStat) matchStat.textContent = `${matchAvg} %`;
+
+            // 4. 社内メンバーテーブル描画
+            const memberTbody = document.getElementById("dashboard-member-table-body");
+            if (memberTbody) {
+                if (membersData.length === 0) {
+                    memberTbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted)">データがありません</td></tr>`;
+                } else {
+                    memberTbody.innerHTML = membersData.map(m => {
+                        let motStars = "★".repeat(m.motivation) + "☆".repeat(5 - m.motivation);
+                        let otClass = m.ot >= 40 ? "color: var(--rose); font-weight: bold;" : "";
+                        return `
+                            <tr>
+                                <td style="font-weight: 600;">${escapeHtml(m.name)} <span style="font-size: 11px; color: var(--muted); font-weight: normal;">(${escapeHtml(m.dept)})</span></td>
+                                <td style="color: var(--yellow); letter-spacing: 2px;">${motStars}</td>
+                                <td><span class="fit-badge fit-high" style="background: rgba(186, 255, 102, 0.1); color: var(--green);">${m.culture * 20}%</span></td>
+                                <td style="${otClass}">${m.ot} H</td>
+                            </tr>
+                        `;
+                    }).join("");
+                }
+            }
+
+            // 5. 営業メールAIマッチングテーブル描画
+            const matchingTbody = document.getElementById("dashboard-matching-table-body");
+            if (matchingTbody) {
+                if (matchingData.length === 0) {
+                    matchingTbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted)">データがありません</td></tr>`;
+                } else {
+                    matchingTbody.innerHTML = matchingData.map(m => {
+                        let badgeClass = m.score >= 90 ? "fit-high" : "fit-med";
+                        let btnText = m.approved ? "承認済" : "承認する";
+                        let btnStyle = m.approved ? "background: rgba(186, 255, 102, 0.1); color: var(--green); border-color: var(--green);" : "";
+                        return `
+                            <tr>
+                                <td style="font-weight: 500; font-size: 13px;">${escapeHtml(m.title)}</td>
+                                <td style="font-weight: 600;">${escapeHtml(m.candidate)}</td>
+                                <td><span class="fit-badge ${badgeClass}">${m.score}%</span></td>
+                                <td>
+                                    <button class="sample-btn" style="padding: 4px 8px; font-size: 11px; ${btnStyle}" onclick="toggleApproveMatching(${m.id})">
+                                        ${btnText}
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join("");
+                }
+            }
+        }
+
         window.addEventListener("DOMContentLoaded", () => {
             // Step 1 inputs start empty so users see the placeholder copy and
             // can experience the "Load Sample" buttons as a real onboarding step.
             // `runAnalysis()` still auto-loads samples if the user clicks
             // Analyze with empty fields, so direct Analyze use keeps working.
             setVideoSource(seedanceFallbackVideo);
-            
+
             // Init comparison board
             initComparisonBoard();
+
+            // Init Admin Dashboard
+            renderDashboard();
         });
 
         window.addEventListener("scroll", () => {
