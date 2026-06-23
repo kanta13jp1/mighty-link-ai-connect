@@ -1,6 +1,6 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-23T13:59:36Z",
+  "generated_at": "2026-06-23T15:48:06Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
@@ -140,7 +140,7 @@
       "scope": "public_paid_launch",
       "category": "セキュリティ",
       "criterion": "四半期セキュリティ監査・外部疑似診断と監査検出事項修正が完了している",
-      "evidence_source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md; docs/EXTERNAL_PENTEST_RUNBOOK.md; exports/external_pentest_review.md; exports/firebase_hosting_headers_review.md; firebase.json; requirements.txt",
+      "evidence_source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md; docs/EXTERNAL_PENTEST_RUNBOOK.md; exports/external_pentest_review.md; exports/firebase_hosting_headers_review.md; exports/external_pentest_review_t835_mightylink_app.md; firebase.json; requirements.txt",
       "required_state": "PASS",
       "current_state": "PASS",
       "owner": "Claude + Codex",
@@ -148,7 +148,7 @@
       "related_wbs": "T789;T802;T805;T835",
       "related_issue": "R49;R50;R52;R94",
       "last_checked": "2026-06-23",
-      "notes": "Bandit High/Medium 0、pip-audit 0、T805 High 0 / secret-like値露出 0を確認済み。T835でFirebase Hosting本番URLのCSP / X-Content-Type-Options等ヘッダhardeningを完了。GitHub Pagesはcontrolled demo mirrorとして制約をdocsへ記録。public_paid_launch全体は他のBLOCKED/HUMAN_GATE項目で別途No-Go判定。",
+      "notes": "Bandit High/Medium 0、pip-audit 0、T805 High 0 / secret-like値露出 0を確認済み。T835でFirebase Hosting本番URLのCSP / X-Content-Type-Options等ヘッダhardeningを完了し、デプロイ後のmightylink-app.com再診断もHIGH/MED/LOW 0でPASS。GitHub Pagesはcontrolled demo mirrorとして制約をdocsへ記録。public_paid_launch全体は他のBLOCKED/HUMAN_GATE項目で別途No-Go判定。",
       "wbs_statuses": {
         "T789": "完了",
         "T802": "完了",

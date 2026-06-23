@@ -19,7 +19,7 @@
 | シークレット漏洩 (パターンスキャン + git 追跡確認) | ✅ PASS | 0 件（誤検知 1 件のみ） | 0 件 |
 | 外部ペネトレーション疑似診断 (T805/T835) | ✅ PASS（Firebase本番URLヘッダ修正済） | High 0 / secret-like値露出 0 | 0 件 |
 
-**総合判定**: PASS（controlled demo / public paid launch のセキュリティヘッダ観点） — High 検出は監査セッション内で修正完了し、未解決だった R49（starlette CVE）/ R50（requests timeout）/ R52（FastAPI startup deprecated）も T802 で修正完了。2026-06-13 の再スキャンで Bandit High/Medium 0 件、pip-audit 0 件、pytest 21 件通過を確認した。2026-06-21 の T805 疑似診断では High 0 / secret-like値露出 0 を確認し、2026-06-23 の T835 で Firebase Hosting 本番URLへ CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS を設定した。GitHub Pages は controlled demo mirror とし、任意HTTPヘッダを設定できない制約を [EXTERNAL_PENTEST_RUNBOOK.md](EXTERNAL_PENTEST_RUNBOOK.md) に記録済み。public paid launch 全体は法務、同意UI、課金live検証、負荷試験、営業メールAIマッチング実メールhardening等の別ゲートが残るため、リリース総合判定は引き続きGo/No-Goチェックリストで扱う。
+**総合判定**: PASS（controlled demo / public paid launch のセキュリティヘッダ観点） — High 検出は監査セッション内で修正完了し、未解決だった R49（starlette CVE）/ R50（requests timeout）/ R52（FastAPI startup deprecated）も T802 で修正完了。2026-06-13 の再スキャンで Bandit High/Medium 0 件、pip-audit 0 件、pytest 21 件通過を確認した。2026-06-21 の T805 疑似診断では High 0 / secret-like値露出 0 を確認し、2026-06-23 の T835 で Firebase Hosting 本番URLへ CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS を設定した。デプロイ後の `https://mightylink-app.com/` 再診断も HIGH 0 / MED 0 / LOW 0 / INFO 0 でPASS。GitHub Pages は controlled demo mirror とし、任意HTTPヘッダを設定できない制約を [EXTERNAL_PENTEST_RUNBOOK.md](EXTERNAL_PENTEST_RUNBOOK.md) に記録済み。public paid launch 全体は法務、同意UI、課金live検証、負荷試験、営業メールAIマッチング実メールhardening等の別ゲートが残るため、リリース総合判定は引き続きGo/No-Goチェックリストで扱う。
 
 ---
 
@@ -86,7 +86,7 @@ npm audit: ルート `package.json` なしのため対象外。
 
 機微パス（`.env`、`.git/config`、OAuth/credentials系ファイル、Claudeローカル設定）の限定プローブは 14 件実施し、secret-like値露出は 0 件だった。
 
-2026-06-23 に T835 として Firebase Hosting の `headers` 設定を追加し、`scripts/validate_firebase_hosting_headers.py` と `tests/test_firebase_hosting_headers.py` で CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS の静的検証を追加した。検証成果物は `exports/firebase_hosting_headers_review.*` に保存する。
+2026-06-23 に T835 として Firebase Hosting の `headers` 設定を追加し、`scripts/validate_firebase_hosting_headers.py` と `tests/test_firebase_hosting_headers.py` で CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS の静的検証を追加した。検証成果物は `exports/firebase_hosting_headers_review.*` に保存する。デプロイ後の `https://mightylink-app.com/` については `exports/external_pentest_review_t835_mightylink_app.*` に再診断証跡を保存し、HIGH/MED/LOW 0 を確認した。
 
 ## 検出事項と対応状況
 

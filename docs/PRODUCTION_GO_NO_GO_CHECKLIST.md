@@ -32,7 +32,7 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 
 2026-06-21にT805を前倒し完了し、OWASP WSTG / OWASP ZAP baseline相当の非破壊疑似診断を `scripts/run_external_pentest_review.py` で実施した。CEO共有GitHub Pages URLと `mightylink-app.com` は到達可能で、High 0、secret-like値露出 0 を確認した。
 
-2026-06-23にT835を前倒し完了し、Firebase Hosting本番URLへ CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS を設定した。GitHub Pagesは任意HTTPヘッダを設定できないため、CEO向けcontrolled demo mirrorとして制約を [EXTERNAL_PENTEST_RUNBOOK.md](EXTERNAL_PENTEST_RUNBOOK.md) に記録した。PUBLIC-01はPASSへ戻す。
+2026-06-23にT835を前倒し完了し、Firebase Hosting本番URLへ CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS を設定した。デプロイ後の `https://mightylink-app.com/` 再診断も HIGH 0 / MED 0 / LOW 0 / INFO 0 でPASS。GitHub Pagesは任意HTTPヘッダを設定できないため、CEO向けcontrolled demo mirrorとして制約を [EXTERNAL_PENTEST_RUNBOOK.md](EXTERNAL_PENTEST_RUNBOOK.md) に記録した。PUBLIC-01はPASSへ戻す。
 
 ---
 
