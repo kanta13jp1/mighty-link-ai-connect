@@ -2764,11 +2764,11 @@
                 <form id="employee-survey-form" onsubmit="submitSurvey(event)">
                     <div class="form-grid-2col">
                         <div class="input-group">
-                            <label for="survey-emp-name">社員名</label>
-                            <input type="text" id="survey-emp-name" class="text-input" placeholder="例: 佐藤 賢太" required>
+                            <label for="survey-emp-code">社内確認コード</label>
+                            <input type="text" id="survey-emp-code" class="text-input" placeholder="例: emp-2026-001" autocomplete="off" required>
                         </div>
                         <div class="input-group">
-                            <label for="survey-emp-dept">部署/役職</label>
+                            <label for="survey-emp-dept">部署カテゴリ</label>
                             <select id="survey-emp-dept" class="select-input" required>
                                 <option value="">選択してください</option>
                                 <option value="開発本部">開発本部</option>
@@ -2804,10 +2804,15 @@
                     </div>
                     <div class="input-group" style="margin-top: 16px;">
                         <label for="survey-feedback">3. 業務における所感・成長課題（フリー記述）</label>
-                        <textarea id="survey-feedback" class="textarea-input" placeholder="現在取り組んでいる開発、およびキャッチアップが必要な技術や、業務における悩み・サポートが必要な点をご記入ください..." required></textarea>
+                        <textarea id="survey-feedback" class="textarea-input" placeholder="現在取り組んでいる開発、キャッチアップが必要な技術、サポートが必要な業務上の論点を記入してください。健康情報や病歴、連絡先、認証情報は入力しないでください。" required></textarea>
                     </div>
-                    <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
-                        <button type="submit" class="big-btn">アンケート回答を送信</button>
+                    <label class="control-label" style="display: flex; gap: 10px; align-items: flex-start; margin-top: 16px;">
+                        <input type="checkbox" id="survey-consent" required style="margin-top: 3px;">
+                        <span>社内確認コードを匿名キー化し、業務支援目的の最小項目だけを保存することに同意します。医療・心理診断や自動評価には使いません。</span>
+                    </label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 16px;">
+                        <span class="support-status" id="survey-status">未送信</span>
+                        <button type="submit" class="big-btn" id="survey-submit">アンケート回答を送信</button>
                     </div>
                 </form>
             </div>
@@ -4266,52 +4271,95 @@
             });
         }
 
-        function submitSurvey(event) {
+        function setSurveyStatus(text, colorVar) {
+            const status = document.getElementById("survey-status");
+            if (!status) return;
+            status.textContent = text;
+            status.style.color = colorVar || "var(--muted)";
+        }
+
+        async function submitSurvey(event) {
             event.preventDefault();
-            const nameInput = document.getElementById("survey-emp-name");
+            const codeInput = document.getElementById("survey-emp-code");
             const deptInput = document.getElementById("survey-emp-dept");
             const feedbackInput = document.getElementById("survey-feedback");
+            const consentInput = document.getElementById("survey-consent");
+            const submitButton = document.getElementById("survey-submit");
 
-            if (!nameInput || !deptInput || !feedbackInput) return;
+            if (!codeInput || !deptInput || !feedbackInput || !consentInput) return;
 
-            const name = nameInput.value.trim();
+            const employeeCode = codeInput.value.trim();
             const dept = deptInput.value;
             const feedback = feedbackInput.value.trim();
 
-            if (!name || !dept || !feedback) {
+            if (!employeeCode || !dept || !feedback || !consentInput.checked) {
                 alert("すべての必須項目を入力してください。");
                 return;
             }
 
-            // 同名のメンバーがいれば更新、いなければ新規追加
-            const existingMember = membersData.find(m => m.name === name);
-            if (existingMember) {
-                existingMember.dept = dept;
-                existingMember.motivation = currentRatings.motivation;
-                existingMember.culture = currentRatings.culture;
-                existingMember.feedback = feedback;
-            } else {
-                membersData.push({
-                    name: name,
-                    dept: dept,
-                    motivation: currentRatings.motivation,
-                    culture: currentRatings.culture,
-                    ot: 0.0, // 新規メンバーの初期時間外労働
-                    feedback: feedback
+            const payload = {
+                employee_identifier: employeeCode,
+                department: dept,
+                motivation_level: currentRatings.motivation,
+                culture_level: currentRatings.culture,
+                growth_feedback: feedback,
+                consented: true,
+                consent_version: "MSB-EMP-ASSESS-2026-06",
+                source: "employee_assessment_form",
+                page_url: `${window.location.pathname}${window.location.search}`,
+                session_id: getFeedbackSessionId()
+            };
+
+            if (submitButton) submitButton.disabled = true;
+            setSurveyStatus("送信中", "var(--yellow)");
+
+            try {
+                const response = await fetch("/api/employee-assessment/responses", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(payload)
                 });
+                if (!response.ok) {
+                    throw new Error("Employee assessment endpoint unavailable");
+                }
+                const data = await response.json();
+                const displayKey = data.subject_pseudonym || "emp-assess-saved";
+
+                // 匿名キー単位でダッシュボードに反映する。
+                const existingMember = membersData.find(m => m.name === displayKey);
+                if (existingMember) {
+                    existingMember.dept = dept;
+                    existingMember.motivation = currentRatings.motivation;
+                    existingMember.culture = currentRatings.culture;
+                    existingMember.feedback = feedback;
+                } else {
+                    membersData.push({
+                        name: displayKey,
+                        dept: dept,
+                        motivation: currentRatings.motivation,
+                        culture: currentRatings.culture,
+                        ot: 0.0,
+                        feedback: feedback
+                    });
+                }
+
+                renderDashboard();
+                setSurveyStatus("保存済み", "var(--green)");
+                alert(`アンケートを保存しました。\n匿名キー: ${displayKey}\n管理者統合ダッシュボードに反映されました。`);
+
+                codeInput.value = "";
+                deptInput.value = "";
+                feedbackInput.value = "";
+                consentInput.checked = false;
+                setRating('motivation', 5);
+                setRating('culture', 4);
+            } catch (error) {
+                console.warn("Employee assessment API unavailable.", error);
+                setSurveyStatus("送信失敗", "var(--rose)");
+                alert("アンケート保存APIへ接続できませんでした。入力内容は保存されていません。");
+            } finally {
+                if (submitButton) submitButton.disabled = false;
             }
-
-            // ダッシュボードの再描画
-            renderDashboard();
-
-            alert(`アンケートを送信しました。\n送信者: ${name} さん\n管理者統合ダッシュボードに反映されました。`);
-
-            // フォームのリセット
-            nameInput.value = "";
-            deptInput.value = "";
-            feedbackInput.value = "";
-            setRating('motivation', 5);
-            setRating('culture', 4);
         }
 
         function punchCard(type) {

@@ -225,6 +225,84 @@ def test_feedback_submission_and_summary(client):
     assert any(item["match_result_id"] == db_match_id for item in summary["recent"])
 
 
+def test_employee_assessment_response_submission_summary_and_redaction(client):
+    response = client.post(
+        "/api/employee-assessment/responses",
+        json={
+            "employee_identifier": "emp-001-yamada",
+            "department": "開発本部",
+            "motivation_level": 4,
+            "culture_level": 5,
+            "growth_feedback": (
+                "FastAPIの設計レビュー支援が必要です。連絡先 test@example.test、"
+                "電話 090-1234-5678、token=secret-value は保存時に消してください。"
+            ),
+            "consented": True,
+            "source": "employee_assessment_form",
+            "page_url": "/",
+            "session_id": "employee-assessment-test-session",
+        },
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert data["response_id"] > 0
+    assert data["subject_pseudonym"].startswith("emp-assess-")
+    assert "emp-001-yamada" not in data["subject_pseudonym"]
+    assert data["privacy_controls"]["raw_identifier_stored"] is False
+    assert data["privacy_controls"]["sensitive_text_redacted"] is True
+
+    missing_consent = client.post(
+        "/api/employee-assessment/responses",
+        json={
+            "employee_identifier": "emp-002",
+            "department": "営業本部",
+            "motivation_level": 3,
+            "culture_level": 3,
+            "growth_feedback": "同意なしの送信は保存されないことを確認します。",
+            "consented": False,
+        },
+    )
+    assert missing_consent.status_code == 400
+
+    invalid_score = client.post(
+        "/api/employee-assessment/responses",
+        json={
+            "employee_identifier": "emp-003",
+            "department": "営業本部",
+            "motivation_level": 6,
+            "culture_level": 3,
+            "growth_feedback": "範囲外スコアは保存されないことを確認します。",
+            "consented": True,
+        },
+    )
+    assert invalid_score.status_code == 400
+
+    unauthorized_summary = client.get("/api/employee-assessment/responses/summary")
+    assert unauthorized_summary.status_code == 401
+
+    summary_response = client.get(
+        "/api/employee-assessment/responses/summary",
+        auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD),
+    )
+    assert summary_response.status_code == 200
+    summary = summary_response.json()
+    assert summary["status"] == "success"
+    assert summary["total"] >= 1
+    assert summary["averages"]["motivation_level"] >= 4
+    assert summary["department_counts"]["開発本部"] >= 1
+    assert summary["privacy_controls"]["raw_identifier_stored"] is False
+    recent = summary["recent"][0]
+    serialized = str(summary)
+    assert "emp-001-yamada" not in serialized
+    assert "test@example.test" not in serialized
+    assert "090-1234-5678" not in serialized
+    assert "token=secret-value" not in serialized
+    assert "<email:redacted>" in recent["growth_support_excerpt"]
+    assert "<phone:redacted>" in recent["growth_support_excerpt"]
+    assert "<secret:redacted>" in recent["growth_support_excerpt"]
+
+
 def test_support_request_submission_and_summary(client):
     support_response = client.post(
         "/api/support/request",

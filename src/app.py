@@ -375,6 +375,7 @@ RATE_LIMIT_EXEMPT_PATHS = {
 RATE_LIMIT_EXPENSIVE_API_PATHS = {
     "/api/parse",
     "/api/match",
+    "/api/employee-assessment/responses",
     "/api/feedback",
     "/api/support/request",
     "/api/billing/customer-portal/session",
@@ -942,6 +943,41 @@ def init_db():
             cursor.execute("ALTER TABLE match_results ENABLE ROW LEVEL SECURITY;")
             cursor.execute("ALTER TABLE feedback_events ENABLE ROW LEVEL SECURITY;")
             cursor.execute("ALTER TABLE support_requests ENABLE ROW LEVEL SECURITY;")
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS employee_assessment_responses (
+                id SERIAL PRIMARY KEY,
+                subject_pseudonym VARCHAR(120) NOT NULL,
+                department_bucket VARCHAR(80) NOT NULL,
+                motivation_level INTEGER NOT NULL CHECK (motivation_level BETWEEN 1 AND 5),
+                culture_level INTEGER NOT NULL CHECK (culture_level BETWEEN 1 AND 5),
+                growth_support_excerpt TEXT NOT NULL DEFAULT '',
+                consent_version VARCHAR(80) NOT NULL,
+                consented_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                status VARCHAR(32) NOT NULL DEFAULT 'pending_review'
+                    CHECK (status IN ('pending_review', 'reviewed', 'deleted')),
+                source VARCHAR(80) NOT NULL DEFAULT 'employee_assessment_form',
+                page_url TEXT,
+                session_id VARCHAR(120),
+                metadata JSONB DEFAULT '{}'::jsonb,
+                deletion_due_at TIMESTAMP,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_employee_assessment_subject ON employee_assessment_responses(subject_pseudonym);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_employee_assessment_created_at ON employee_assessment_responses(created_at);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_employee_assessment_status ON employee_assessment_responses(status);")
+            cursor.execute("ALTER TABLE employee_assessment_responses ENABLE ROW LEVEL SECURITY;")
+            cursor.execute("""
+            DO $$
+            BEGIN
+                IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'anon') THEN
+                    REVOKE ALL ON TABLE employee_assessment_responses FROM anon;
+                END IF;
+                IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'authenticated') THEN
+                    REVOKE ALL ON TABLE employee_assessment_responses FROM authenticated;
+                END IF;
+            END $$;
+            """)
         else:
             # SQLite DDL
             cursor.execute("""
@@ -1018,6 +1054,29 @@ def init_db():
             """)
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_status_priority ON support_requests(status, priority);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_created_at ON support_requests(created_at);")
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS employee_assessment_responses (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                subject_pseudonym VARCHAR(120) NOT NULL,
+                department_bucket VARCHAR(80) NOT NULL,
+                motivation_level INTEGER NOT NULL CHECK (motivation_level BETWEEN 1 AND 5),
+                culture_level INTEGER NOT NULL CHECK (culture_level BETWEEN 1 AND 5),
+                growth_support_excerpt TEXT NOT NULL DEFAULT '',
+                consent_version VARCHAR(80) NOT NULL,
+                consented_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                status VARCHAR(32) NOT NULL DEFAULT 'pending_review'
+                    CHECK (status IN ('pending_review', 'reviewed', 'deleted')),
+                source VARCHAR(80) NOT NULL DEFAULT 'employee_assessment_form',
+                page_url TEXT,
+                session_id VARCHAR(120),
+                metadata TEXT DEFAULT '{}',
+                deletion_due_at TIMESTAMP,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_employee_assessment_subject ON employee_assessment_responses(subject_pseudonym);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_employee_assessment_created_at ON employee_assessment_responses(created_at);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_employee_assessment_status ON employee_assessment_responses(status);")
         init_sales_email_review_tables(cursor, db_type)
         conn.commit()
         print(f"[+] Database tables initialized successfully ({db_type}).")
@@ -1128,6 +1187,21 @@ SUPPORT_STATUSES = {"new", "triaged", "in_progress", "escalated", "closed"}
 MAX_SUPPORT_SUBJECT_LENGTH = 160
 MAX_SUPPORT_MESSAGE_LENGTH = 3000
 SUPPORT_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+EMPLOYEE_ASSESSMENT_CONSENT_VERSION = "MSB-EMP-ASSESS-2026-06"
+EMPLOYEE_ASSESSMENT_PSEUDONYM_SALT = os.environ.get(
+    "EMPLOYEE_ASSESSMENT_PSEUDONYM_SALT",
+    "mighty-link-employee-assessment-local-salt-v1",
+)
+MAX_EMPLOYEE_IDENTIFIER_LENGTH = 120
+MAX_EMPLOYEE_DEPARTMENT_LENGTH = 80
+MAX_EMPLOYEE_ASSESSMENT_FEEDBACK_LENGTH = 1000
+EMPLOYEE_ASSESSMENT_RETENTION_DAYS = env_int("EMPLOYEE_ASSESSMENT_RETENTION_DAYS", 180, 1, 1095)
+SENSITIVE_EMAIL_RE = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
+SENSITIVE_PHONE_RE = re.compile(r"(?<!\d)(?:\+?\d[\d\s().-]{7,}\d)(?!\d)")
+SENSITIVE_SECRET_RE = re.compile(
+    r"(Bearer\s+[A-Za-z0-9._=-]+|(?:api[_-]?key|token|secret|password)\s*[:=]\s*[A-Za-z0-9._=-]+)",
+    re.IGNORECASE,
+)
 
 
 def clean_feedback_text(value: Optional[str], limit: int) -> str:
@@ -1135,6 +1209,14 @@ def clean_feedback_text(value: Optional[str], limit: int) -> str:
         return ""
     normalized = re.sub(r"\s+", " ", str(value)).strip()
     return normalized[:limit]
+
+
+def redact_sensitive_text(value: Optional[str], limit: int) -> str:
+    text = clean_feedback_text(value, limit)
+    text = SENSITIVE_EMAIL_RE.sub("<email:redacted>", text)
+    text = SENSITIVE_PHONE_RE.sub("<phone:redacted>", text)
+    text = SENSITIVE_SECRET_RE.sub("<secret:redacted>", text)
+    return text[:limit]
 
 
 def db_insert_feedback_event(
@@ -1289,6 +1371,213 @@ def db_get_feedback_summary(limit: int = 20) -> dict:
             "rating_counts": {"helpful": 0, "not_helpful": 0},
             "nps": {"average": None, "count": 0},
             "recent": [],
+            "error": str(e),
+        }
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def employee_assessment_pseudonym(employee_identifier: str) -> str:
+    clean_identifier = clean_feedback_text(employee_identifier, MAX_EMPLOYEE_IDENTIFIER_LENGTH).lower()
+    digest = stable_digest(f"{EMPLOYEE_ASSESSMENT_PSEUDONYM_SALT}:{clean_identifier}")
+    return f"emp-assess-{digest}"
+
+
+def db_insert_employee_assessment_response(
+    employee_identifier: str,
+    department: str,
+    motivation_level: int,
+    culture_level: int,
+    growth_feedback: Optional[str],
+    consent_version: str,
+    source: str,
+    page_url: Optional[str],
+    session_id: Optional[str],
+    metadata: Optional[dict] = None,
+) -> dict:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    subject_pseudonym = employee_assessment_pseudonym(employee_identifier)
+    clean_department = clean_feedback_text(department, MAX_EMPLOYEE_DEPARTMENT_LENGTH)
+    clean_feedback = redact_sensitive_text(growth_feedback, MAX_EMPLOYEE_ASSESSMENT_FEEDBACK_LENGTH)
+    clean_consent_version = clean_feedback_text(consent_version, 80) or EMPLOYEE_ASSESSMENT_CONSENT_VERSION
+    clean_source = clean_feedback_text(source, 80) or "employee_assessment_form"
+    clean_page_url = clean_feedback_text(page_url, 500)
+    clean_session_id = clean_feedback_text(session_id, 120)
+    deletion_due_at = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(
+        days=EMPLOYEE_ASSESSMENT_RETENTION_DAYS
+    )
+    metadata_payload = {
+        "api_version": "2026-06-24",
+        "wbs_task": "T840",
+        "assessment_scope": "work_support_self_report",
+        "raw_identifier_stored": False,
+        "sensitive_text_redacted": True,
+        "pseudonym_salt_configured": bool(os.environ.get("EMPLOYEE_ASSESSMENT_PSEUDONYM_SALT")),
+        **(metadata or {}),
+    }
+    metadata_json = json.dumps(metadata_payload, ensure_ascii=False)
+    try:
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                INSERT INTO employee_assessment_responses
+                    (subject_pseudonym, department_bucket, motivation_level, culture_level,
+                     growth_support_excerpt, consent_version, source, page_url, session_id,
+                     metadata, deletion_due_at)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb, %s)
+                RETURNING id;
+                """,
+                (
+                    subject_pseudonym,
+                    clean_department,
+                    motivation_level,
+                    culture_level,
+                    clean_feedback,
+                    clean_consent_version,
+                    clean_source,
+                    clean_page_url,
+                    clean_session_id,
+                    metadata_json,
+                    deletion_due_at,
+                ),
+            )
+            inserted_id = int(cursor.fetchone()[0])
+        else:
+            cursor.execute(
+                """
+                INSERT INTO employee_assessment_responses
+                    (subject_pseudonym, department_bucket, motivation_level, culture_level,
+                     growth_support_excerpt, consent_version, source, page_url, session_id,
+                     metadata, deletion_due_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                """,
+                (
+                    subject_pseudonym,
+                    clean_department,
+                    motivation_level,
+                    culture_level,
+                    clean_feedback,
+                    clean_consent_version,
+                    clean_source,
+                    clean_page_url,
+                    clean_session_id,
+                    metadata_json,
+                    deletion_due_at.isoformat(timespec="seconds"),
+                ),
+            )
+            inserted_id = int(cursor.lastrowid)
+        conn.commit()
+        return {
+            "id": inserted_id,
+            "subject_pseudonym": subject_pseudonym,
+            "deletion_due_at": deletion_due_at.isoformat(timespec="seconds"),
+            "stored_feedback_excerpt": clean_feedback,
+        }
+    except Exception as e:
+        print(f"[-] Database insert employee assessment response failed: {e}")
+        return {"id": 0, "subject_pseudonym": subject_pseudonym, "error": str(e)}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def db_get_employee_assessment_summary(limit: int = 20) -> dict:
+    limit = max(1, min(limit, 100))
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT COUNT(*) FROM employee_assessment_responses;")
+        total = int(_scalar(cursor.fetchone()) or 0)
+
+        cursor.execute("SELECT AVG(motivation_level), AVG(culture_level) FROM employee_assessment_responses;")
+        avg_row = cursor.fetchone()
+        motivation_average = float(avg_row[0]) if avg_row and avg_row[0] is not None else None
+        culture_average = float(avg_row[1]) if avg_row and avg_row[1] is not None else None
+
+        cursor.execute("SELECT department_bucket, COUNT(*) FROM employee_assessment_responses GROUP BY department_bucket;")
+        department_counts = {}
+        for row in cursor.fetchall():
+            department_counts[str(row[0])] = int(row[1])
+
+        columns = [
+            "id",
+            "subject_pseudonym",
+            "department_bucket",
+            "motivation_level",
+            "culture_level",
+            "growth_support_excerpt",
+            "consent_version",
+            "status",
+            "created_at",
+            "deletion_due_at",
+        ]
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                SELECT id, subject_pseudonym, department_bucket, motivation_level, culture_level,
+                       growth_support_excerpt, consent_version, status, created_at, deletion_due_at
+                FROM employee_assessment_responses
+                ORDER BY id DESC
+                LIMIT %s;
+                """,
+                (limit,),
+            )
+        else:
+            cursor.execute(
+                """
+                SELECT id, subject_pseudonym, department_bucket, motivation_level, culture_level,
+                       growth_support_excerpt, consent_version, status, created_at, deletion_due_at
+                FROM employee_assessment_responses
+                ORDER BY id DESC
+                LIMIT ?;
+                """,
+                (limit,),
+            )
+
+        recent = []
+        for row in cursor.fetchall():
+            row_dict = dict(row) if isinstance(row, sqlite3.Row) else dict(zip(columns, row))
+            recent.append({
+                "id": row_dict.get("id"),
+                "subject_pseudonym": row_dict.get("subject_pseudonym"),
+                "department_bucket": row_dict.get("department_bucket"),
+                "motivation_level": row_dict.get("motivation_level"),
+                "culture_level": row_dict.get("culture_level"),
+                "growth_support_excerpt": clean_feedback_text(row_dict.get("growth_support_excerpt"), 180),
+                "consent_version": row_dict.get("consent_version"),
+                "status": row_dict.get("status"),
+                "created_at": str(row_dict.get("created_at") or ""),
+                "deletion_due_at": str(row_dict.get("deletion_due_at") or ""),
+            })
+
+        return {
+            "total": total,
+            "averages": {
+                "motivation_level": round(motivation_average, 2) if motivation_average is not None else None,
+                "culture_level": round(culture_average, 2) if culture_average is not None else None,
+            },
+            "department_counts": department_counts,
+            "recent": recent,
+            "privacy_controls": {
+                "raw_identifier_stored": False,
+                "sensitive_text_redacted": True,
+                "admin_summary_requires_basic_auth": True,
+            },
+        }
+    except Exception as e:
+        print(f"[-] Database employee assessment summary failed: {e}")
+        return {
+            "total": 0,
+            "averages": {"motivation_level": None, "culture_level": None},
+            "department_counts": {},
+            "recent": [],
+            "privacy_controls": {
+                "raw_identifier_stored": False,
+                "sensitive_text_redacted": True,
+                "admin_summary_requires_basic_auth": True,
+            },
             "error": str(e),
         }
     finally:
@@ -4305,6 +4594,19 @@ class SalesEmailMatchReviewRequest(BaseModel):
     next_action: Optional[str] = ""
 
 
+class EmployeeAssessmentResponseRequest(BaseModel):
+    employee_identifier: str
+    department: str
+    motivation_level: int
+    culture_level: int
+    growth_feedback: str
+    consented: bool
+    consent_version: str = EMPLOYEE_ASSESSMENT_CONSENT_VERSION
+    source: str = "employee_assessment_form"
+    page_url: Optional[str] = ""
+    session_id: Optional[str] = ""
+
+
 class SupportRequest(BaseModel):
     category: str = "general"
     priority: Optional[str] = None
@@ -4666,6 +4968,82 @@ async def submit_feedback(req: FeedbackRequest):
 async def get_feedback_summary(limit: int = 20, username: str = Depends(verify_credentials)):
     """Authenticated feedback summary for operations and quality review."""
     return {"status": "success", **db_get_feedback_summary(limit=limit)}
+
+
+@app.post("/api/employee-assessment/responses")
+async def submit_employee_assessment_response(req: EmployeeAssessmentResponseRequest):
+    """Store a consented, pseudonymized employee self-report response for T840."""
+    if not req.consented:
+        raise HTTPException(status_code=400, detail="consent is required before storing the response")
+
+    employee_identifier = clean_feedback_text(req.employee_identifier, MAX_EMPLOYEE_IDENTIFIER_LENGTH)
+    if len(employee_identifier) < 3:
+        raise HTTPException(status_code=400, detail="employee_identifier must be at least 3 characters")
+
+    department = clean_feedback_text(req.department, MAX_EMPLOYEE_DEPARTMENT_LENGTH)
+    if len(department) < 2:
+        raise HTTPException(status_code=400, detail="department is required")
+
+    if not 1 <= req.motivation_level <= 5:
+        raise HTTPException(status_code=400, detail="motivation_level must be between 1 and 5")
+    if not 1 <= req.culture_level <= 5:
+        raise HTTPException(status_code=400, detail="culture_level must be between 1 and 5")
+
+    feedback = clean_feedback_text(req.growth_feedback, MAX_EMPLOYEE_ASSESSMENT_FEEDBACK_LENGTH)
+    if len(feedback) < 10:
+        raise HTTPException(status_code=400, detail="growth_feedback must be at least 10 characters")
+    if req.growth_feedback and len(req.growth_feedback) > MAX_EMPLOYEE_ASSESSMENT_FEEDBACK_LENGTH:
+        raise HTTPException(
+            status_code=400,
+            detail=f"growth_feedback must be {MAX_EMPLOYEE_ASSESSMENT_FEEDBACK_LENGTH} characters or fewer",
+        )
+
+    db_result = db_insert_employee_assessment_response(
+        employee_identifier=employee_identifier,
+        department=department,
+        motivation_level=req.motivation_level,
+        culture_level=req.culture_level,
+        growth_feedback=feedback,
+        consent_version=req.consent_version,
+        source=req.source,
+        page_url=req.page_url,
+        session_id=req.session_id,
+    )
+    if not db_result.get("id"):
+        raise HTTPException(status_code=500, detail="Failed to store employee assessment response")
+
+    audit_event = write_audit_event(
+        "employee_assessment_response",
+        {
+            "wbs_task": "T840",
+            "response_id": db_result["id"],
+            "subject_pseudonym": db_result["subject_pseudonym"],
+            "department_bucket": department,
+            "motivation_level": req.motivation_level,
+            "culture_level": req.culture_level,
+            "raw_identifier_stored": False,
+            "sensitive_text_redacted": True,
+        },
+    )
+
+    return {
+        "status": "success",
+        "response_id": db_result["id"],
+        "subject_pseudonym": db_result["subject_pseudonym"],
+        "deletion_due_at": db_result["deletion_due_at"],
+        "audit_event_id": audit_event["event_id"],
+        "privacy_controls": {
+            "raw_identifier_stored": False,
+            "sensitive_text_redacted": True,
+            "consent_version": clean_feedback_text(req.consent_version, 80) or EMPLOYEE_ASSESSMENT_CONSENT_VERSION,
+        },
+    }
+
+
+@app.get("/api/employee-assessment/responses/summary")
+async def get_employee_assessment_response_summary(limit: int = 20, username: str = Depends(verify_credentials)):
+    """Authenticated, redacted summary of T840 employee self-report responses."""
+    return {"status": "success", **db_get_employee_assessment_summary(limit=limit)}
 
 
 @app.post("/api/support/request")

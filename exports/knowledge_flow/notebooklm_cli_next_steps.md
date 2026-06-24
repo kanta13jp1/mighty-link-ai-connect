@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-24T00:52:20+09:00
+Generated: 2026-06-24T09:19:02+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `99`
-- Drive docs uploaded: `4`
-- Drive docs skipped unchanged: `95`
+- Drive docs discovered: `100`
+- Drive docs uploaded: `2`
+- Drive docs skipped unchanged: `98`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -41,6 +41,7 @@ Generated: 2026-06-24T00:52:20+09:00
 - `docs/DEMO_SECURITY_AND_AUTH_DESIGN.md`: https://docs.google.com/document/d/1C606e1yesSIVlZfOrRjZ_4hkgr4OQQ_axpYjBFvrUEc/edit?usp=drivesdk
 - `docs/DEVELOPMENT_KNOWLEDGE_FLOW.md`: https://docs.google.com/document/d/1SS44DK0H57KFdX4jHDucbYe6PRN2ofUllaaLr5zioYU/edit?usp=drivesdk
 - `docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md`: https://docs.google.com/document/d/1yHVwrsZ_TZyEMa1wSfoxaSv85w7pyPqGP7VZUHTwhQU/edit?usp=drivesdk
+- `docs/EMPLOYEE_ASSESSMENT_RESPONSE_RUNBOOK.md`: https://docs.google.com/document/d/1c9nAmqw9Rt48UnGLsOK1bz8BsXeIiGfZnJY5ttxmjTs/edit?usp=drivesdk
 - `docs/EMPLOYEE_ASSESSMENT_SHORTLIST_POC_PLAN.md`: https://docs.google.com/document/d/1jw7K0C8pFoZJ0IM3eZVLNj6J0yp3MBpWlrIrdBiYy9A/edit?usp=drivesdk
 - `docs/EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md`: https://docs.google.com/document/d/1btkSsKS8Z9GHsOS11oaEhT2P2V0vogPR-Z37oWQ7N_M/edit?usp=drivesdk
 - `docs/EXTERNAL_PENTEST_RUNBOOK.md`: https://docs.google.com/document/d/1D9ZXT66SfFv-JBV0GtqWLrGgcLqgpWe6emW_ELGubu8/edit?usp=drivesdk
