@@ -303,6 +303,107 @@ def test_employee_assessment_response_submission_summary_and_redaction(client):
     assert "<secret:redacted>" in recent["growth_support_excerpt"]
 
 
+def test_attendance_punch_timesheet_parse_approval_and_summary(client):
+    punch_response = client.post(
+        "/api/attendance/punch",
+        json={
+            "employee_identifier": "emp-004-attendance",
+            "event_type": "in",
+            "consented": True,
+            "source": "attendance_widget",
+            "page_url": "/",
+            "session_id": "attendance-test-session",
+        },
+    )
+    assert punch_response.status_code == 200
+    punch_data = punch_response.json()
+    assert punch_data["status"] == "success"
+    assert punch_data["punch_id"] > 0
+    assert punch_data["event_type"] == "clock_in"
+    assert punch_data["subject_pseudonym"].startswith("att-")
+    assert "emp-004-attendance" not in punch_data["subject_pseudonym"]
+
+    missing_consent = client.post(
+        "/api/attendance/punch",
+        json={"employee_identifier": "emp-004", "event_type": "out", "consented": False},
+    )
+    assert missing_consent.status_code == 400
+
+    invalid_event = client.post(
+        "/api/attendance/punch",
+        json={"employee_identifier": "emp-004", "event_type": "vacation", "consented": True},
+    )
+    assert invalid_event.status_code == 400
+
+    csv_payload = (
+        "date,work_hours,overtime_hours,midnight_hours,holiday_work,anomaly\n"
+        "2026-06-01,8.0,1.5,0,0,なし\n"
+        "2026-06-02,9.0,2.0,0.5,1,打刻漏れ\n"
+    ).encode("utf-8")
+    parse_response = client.post(
+        "/api/attendance/timesheet/parse",
+        data={
+            "employee_identifier": "emp-004-attendance",
+            "consented": "true",
+            "consent_version": "MSB-ATTENDANCE-2026-06",
+            "source": "attendance_timesheet_upload",
+            "page_url": "/",
+            "session_id": "attendance-test-session",
+        },
+        files={"file": ("timesheet-yamada.csv", csv_payload, "text/csv")},
+    )
+    assert parse_response.status_code == 200
+    parse_data = parse_response.json()
+    assert parse_data["status"] == "success"
+    assert parse_data["import_id"] > 0
+    assert parse_data["approval_status"] == "pending_approval"
+    assert parse_data["summary"]["work_hours"] == 17.0
+    assert parse_data["summary"]["overtime_hours"] == 3.5
+    assert parse_data["summary"]["midnight_hours"] == 0.5
+    assert parse_data["summary"]["holiday_work_days"] == 1
+    assert parse_data["summary"]["anomaly_count"] == 1
+    serialized_parse = str(parse_data)
+    assert "emp-004-attendance" not in serialized_parse
+    assert "timesheet-yamada.csv" not in serialized_parse
+    assert parse_data["privacy_controls"]["raw_file_stored"] is False
+    assert parse_data["privacy_controls"]["original_filename_stored"] is False
+
+    unauthorized_approval = client.post(
+        "/api/attendance/timesheet/approve",
+        json={"import_id": parse_data["import_id"], "decision": "approved"},
+    )
+    assert unauthorized_approval.status_code == 401
+
+    approval_response = client.post(
+        "/api/attendance/timesheet/approve",
+        json={"import_id": parse_data["import_id"], "decision": "approved"},
+        auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD),
+    )
+    assert approval_response.status_code == 200
+    approval_data = approval_response.json()
+    assert approval_data["status"] == "success"
+    assert approval_data["attendance_import"]["status"] == "approved"
+    assert approval_data["attendance_import"]["summary"]["overtime_hours"] == 3.5
+
+    unauthorized_summary = client.get("/api/attendance/summary")
+    assert unauthorized_summary.status_code == 401
+
+    summary_response = client.get(
+        "/api/attendance/summary",
+        auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD),
+    )
+    assert summary_response.status_code == 200
+    summary = summary_response.json()
+    assert summary["status"] == "success"
+    assert summary["punch_total"] >= 1
+    assert summary["import_total"] >= 1
+    assert summary["status_counts"]["approved"] >= 1
+    assert summary["privacy_controls"]["raw_identifier_stored"] is False
+    assert summary["privacy_controls"]["raw_file_stored"] is False
+    assert "emp-004-attendance" not in str(summary)
+    assert "timesheet-yamada.csv" not in str(summary)
+
+
 def test_support_request_submission_and_summary(client):
     support_response = client.post(
         "/api/support/request",

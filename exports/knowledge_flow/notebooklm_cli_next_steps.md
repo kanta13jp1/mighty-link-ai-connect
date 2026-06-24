@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-24T09:19:02+09:00
+Generated: 2026-06-24T10:43:42+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `100`
+- Drive docs discovered: `101`
 - Drive docs uploaded: `2`
-- Drive docs skipped unchanged: `98`
+- Drive docs skipped unchanged: `99`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -21,6 +21,7 @@ Generated: 2026-06-24T09:19:02+09:00
 - `docs/ANTIGRAVITY_HOOKS_SYNC_POC.md`: https://docs.google.com/document/d/17zvd4fsOXx3hhgMHeZdTKUNaZlWz7-JzvU-1zS0SLDw/edit?usp=drivesdk
 - `docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md`: https://docs.google.com/document/d/1eDY92cqtEk4ocGZCcAxRtHPlupia8UQNZi8OEY1bSto/edit?usp=drivesdk
 - `docs/API_RATE_LIMIT_AND_DDOS_RUNBOOK.md`: https://docs.google.com/document/d/1X18Bm0OmNuRlhmkS8PVDo-3ojRRrc4gVbxVGUhQ-Q40/edit?usp=drivesdk
+- `docs/ATTENDANCE_WORKFLOW_RUNBOOK.md`: https://docs.google.com/document/d/1fzdqnNNfAbwFFcitwoCBNX7nxQzNtpuvIPulMnXKMLo/edit?usp=drivesdk
 - `docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md`: https://docs.google.com/document/d/1yCaiaUtEAnY2CsQ7spugwdRfNwf-etTYxe96ZunS0uE/edit?usp=drivesdk
 - `docs/BACKEND_AI_PIPELINE.md`: https://docs.google.com/document/d/1duxDhC6yjS-XlyWxse_XdaiRjq88cZz8aBCt0GRxUWg/edit?usp=drivesdk
 - `docs/BILLING_AND_REFUND_POLICY.md`: https://docs.google.com/document/d/1qXQ8UVCo4AJN2DLeYq_CO13GDM8e_9prJhl8Mym6rPM/edit?usp=drivesdk

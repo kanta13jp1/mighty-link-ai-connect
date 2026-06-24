@@ -18,6 +18,7 @@ import sys
 import datetime
 import json
 import io
+import csv
 import re
 import hashlib
 import uuid
@@ -376,6 +377,9 @@ RATE_LIMIT_EXPENSIVE_API_PATHS = {
     "/api/parse",
     "/api/match",
     "/api/employee-assessment/responses",
+    "/api/attendance/punch",
+    "/api/attendance/timesheet/parse",
+    "/api/attendance/timesheet/approve",
     "/api/feedback",
     "/api/support/request",
     "/api/billing/customer-portal/session",
@@ -978,6 +982,62 @@ def init_db():
                 END IF;
             END $$;
             """)
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS attendance_punch_events (
+                id SERIAL PRIMARY KEY,
+                subject_pseudonym VARCHAR(120) NOT NULL,
+                event_type VARCHAR(32) NOT NULL
+                    CHECK (event_type IN ('clock_in', 'clock_out', 'break_start', 'break_end')),
+                recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                source VARCHAR(80) NOT NULL DEFAULT 'attendance_widget',
+                page_url TEXT,
+                session_id VARCHAR(120),
+                metadata JSONB DEFAULT '{}'::jsonb,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS attendance_timesheet_imports (
+                id SERIAL PRIMARY KEY,
+                subject_pseudonym VARCHAR(120) NOT NULL,
+                file_digest VARCHAR(80) NOT NULL,
+                file_extension VARCHAR(16) NOT NULL,
+                work_minutes INTEGER NOT NULL DEFAULT 0 CHECK (work_minutes >= 0),
+                overtime_minutes INTEGER NOT NULL DEFAULT 0 CHECK (overtime_minutes >= 0),
+                holiday_work_days INTEGER NOT NULL DEFAULT 0 CHECK (holiday_work_days >= 0),
+                midnight_minutes INTEGER NOT NULL DEFAULT 0 CHECK (midnight_minutes >= 0),
+                anomaly_count INTEGER NOT NULL DEFAULT 0 CHECK (anomaly_count >= 0),
+                status VARCHAR(32) NOT NULL DEFAULT 'pending_approval'
+                    CHECK (status IN ('pending_approval', 'approved', 'rejected', 'manual_review')),
+                consent_version VARCHAR(80) NOT NULL,
+                source VARCHAR(80) NOT NULL DEFAULT 'attendance_timesheet_upload',
+                page_url TEXT,
+                session_id VARCHAR(120),
+                metadata JSONB DEFAULT '{}'::jsonb,
+                approved_at TIMESTAMP,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_attendance_punch_subject ON attendance_punch_events(subject_pseudonym);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_attendance_punch_recorded_at ON attendance_punch_events(recorded_at);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_attendance_timesheet_subject ON attendance_timesheet_imports(subject_pseudonym);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_attendance_timesheet_status ON attendance_timesheet_imports(status);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_attendance_timesheet_created_at ON attendance_timesheet_imports(created_at);")
+            cursor.execute("ALTER TABLE attendance_punch_events ENABLE ROW LEVEL SECURITY;")
+            cursor.execute("ALTER TABLE attendance_timesheet_imports ENABLE ROW LEVEL SECURITY;")
+            cursor.execute("""
+            DO $$
+            BEGIN
+                IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'anon') THEN
+                    REVOKE ALL ON TABLE attendance_punch_events FROM anon;
+                    REVOKE ALL ON TABLE attendance_timesheet_imports FROM anon;
+                END IF;
+                IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'authenticated') THEN
+                    REVOKE ALL ON TABLE attendance_punch_events FROM authenticated;
+                    REVOKE ALL ON TABLE attendance_timesheet_imports FROM authenticated;
+                END IF;
+            END $$;
+            """)
         else:
             # SQLite DDL
             cursor.execute("""
@@ -1077,6 +1137,47 @@ def init_db():
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_employee_assessment_subject ON employee_assessment_responses(subject_pseudonym);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_employee_assessment_created_at ON employee_assessment_responses(created_at);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_employee_assessment_status ON employee_assessment_responses(status);")
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS attendance_punch_events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                subject_pseudonym VARCHAR(120) NOT NULL,
+                event_type VARCHAR(32) NOT NULL
+                    CHECK (event_type IN ('clock_in', 'clock_out', 'break_start', 'break_end')),
+                recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                source VARCHAR(80) NOT NULL DEFAULT 'attendance_widget',
+                page_url TEXT,
+                session_id VARCHAR(120),
+                metadata TEXT DEFAULT '{}',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS attendance_timesheet_imports (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                subject_pseudonym VARCHAR(120) NOT NULL,
+                file_digest VARCHAR(80) NOT NULL,
+                file_extension VARCHAR(16) NOT NULL,
+                work_minutes INTEGER NOT NULL DEFAULT 0 CHECK (work_minutes >= 0),
+                overtime_minutes INTEGER NOT NULL DEFAULT 0 CHECK (overtime_minutes >= 0),
+                holiday_work_days INTEGER NOT NULL DEFAULT 0 CHECK (holiday_work_days >= 0),
+                midnight_minutes INTEGER NOT NULL DEFAULT 0 CHECK (midnight_minutes >= 0),
+                anomaly_count INTEGER NOT NULL DEFAULT 0 CHECK (anomaly_count >= 0),
+                status VARCHAR(32) NOT NULL DEFAULT 'pending_approval'
+                    CHECK (status IN ('pending_approval', 'approved', 'rejected', 'manual_review')),
+                consent_version VARCHAR(80) NOT NULL,
+                source VARCHAR(80) NOT NULL DEFAULT 'attendance_timesheet_upload',
+                page_url TEXT,
+                session_id VARCHAR(120),
+                metadata TEXT DEFAULT '{}',
+                approved_at TIMESTAMP,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_attendance_punch_subject ON attendance_punch_events(subject_pseudonym);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_attendance_punch_recorded_at ON attendance_punch_events(recorded_at);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_attendance_timesheet_subject ON attendance_timesheet_imports(subject_pseudonym);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_attendance_timesheet_status ON attendance_timesheet_imports(status);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_attendance_timesheet_created_at ON attendance_timesheet_imports(created_at);")
         init_sales_email_review_tables(cursor, db_type)
         conn.commit()
         print(f"[+] Database tables initialized successfully ({db_type}).")
@@ -1196,6 +1297,30 @@ MAX_EMPLOYEE_IDENTIFIER_LENGTH = 120
 MAX_EMPLOYEE_DEPARTMENT_LENGTH = 80
 MAX_EMPLOYEE_ASSESSMENT_FEEDBACK_LENGTH = 1000
 EMPLOYEE_ASSESSMENT_RETENTION_DAYS = env_int("EMPLOYEE_ASSESSMENT_RETENTION_DAYS", 180, 1, 1095)
+ATTENDANCE_CONSENT_VERSION = "MSB-ATTENDANCE-2026-06"
+ATTENDANCE_PSEUDONYM_SALT = os.environ.get(
+    "ATTENDANCE_PSEUDONYM_SALT",
+    "mighty-link-attendance-local-salt-v1",
+)
+MAX_ATTENDANCE_IDENTIFIER_LENGTH = 120
+MAX_ATTENDANCE_FILE_BYTES = env_int("MAX_ATTENDANCE_FILE_BYTES", 200_000, 1_000, 2_000_000)
+ATTENDANCE_EVENT_TYPE_ALIASES = {
+    "in": "clock_in",
+    "clock_in": "clock_in",
+    "clock-in": "clock_in",
+    "out": "clock_out",
+    "clock_out": "clock_out",
+    "clock-out": "clock_out",
+    "rest-start": "break_start",
+    "rest_start": "break_start",
+    "break-start": "break_start",
+    "break_start": "break_start",
+    "rest-end": "break_end",
+    "rest_end": "break_end",
+    "break-end": "break_end",
+    "break_end": "break_end",
+}
+VALID_ATTENDANCE_DECISIONS = {"approved", "rejected"}
 SENSITIVE_EMAIL_RE = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
 SENSITIVE_PHONE_RE = re.compile(r"(?<!\d)(?:\+?\d[\d\s().-]{7,}\d)(?!\d)")
 SENSITIVE_SECRET_RE = re.compile(
@@ -1576,6 +1701,419 @@ def db_get_employee_assessment_summary(limit: int = 20) -> dict:
             "privacy_controls": {
                 "raw_identifier_stored": False,
                 "sensitive_text_redacted": True,
+                "admin_summary_requires_basic_auth": True,
+            },
+            "error": str(e),
+        }
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def attendance_pseudonym(employee_identifier: str) -> str:
+    clean_identifier = clean_feedback_text(employee_identifier, MAX_ATTENDANCE_IDENTIFIER_LENGTH).lower()
+    digest = stable_digest(f"{ATTENDANCE_PSEUDONYM_SALT}:{clean_identifier}")
+    return f"att-{digest}"
+
+
+def normalize_attendance_event_type(event_type: str) -> str:
+    normalized = clean_feedback_text(event_type, 32).lower().replace(" ", "_")
+    return ATTENDANCE_EVENT_TYPE_ALIASES.get(normalized, "")
+
+
+def minutes_to_hours(minutes: int) -> float:
+    return round(max(0, int(minutes)) / 60.0, 2)
+
+
+def hours_to_minutes(value: Any) -> int:
+    try:
+        numeric = float(str(value).replace("時間", "").replace("h", "").replace("H", "").strip())
+    except (TypeError, ValueError):
+        return 0
+    return max(0, int(round(numeric * 60)))
+
+
+def truthy_attendance_flag(value: Any) -> bool:
+    text = clean_feedback_text(str(value or ""), 40).lower()
+    return text not in {"", "0", "false", "no", "none", "なし", "-", "無"}
+
+
+def row_value(row: Dict[str, Any], candidates: List[str]) -> Any:
+    normalized = {str(key).strip().lower().replace(" ", "").replace("_", ""): value for key, value in row.items()}
+    for candidate in candidates:
+        key = candidate.strip().lower().replace(" ", "").replace("_", "")
+        if key in normalized:
+            return normalized[key]
+    return ""
+
+
+def parse_attendance_csv_bytes(raw_bytes: bytes) -> dict:
+    text = raw_bytes.decode("utf-8-sig", errors="ignore")
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+    rows = list(csv.DictReader(io.StringIO(text)))
+    if not rows:
+        raise ValueError("CSV header and at least one data row are required")
+
+    work_minutes = 0
+    overtime_minutes = 0
+    midnight_minutes = 0
+    holiday_work_days = 0
+    anomaly_count = 0
+    parsed_rows = 0
+
+    for row in rows:
+        if not any(str(value or "").strip() for value in row.values()):
+            continue
+        parsed_rows += 1
+        work_minutes += hours_to_minutes(row_value(row, ["work_hours", "actual_hours", "working_hours", "実労働時間", "労働時間", "勤務時間"]))
+        overtime_minutes += hours_to_minutes(row_value(row, ["overtime_hours", "overtime", "残業時間", "時間外労働", "時間外労働時間"]))
+        midnight_minutes += hours_to_minutes(row_value(row, ["midnight_hours", "late_night_hours", "深夜労働", "深夜労働時間"]))
+        if truthy_attendance_flag(row_value(row, ["holiday_work", "holiday_worked", "休日出勤", "休日出勤日数"])):
+            raw_holiday = row_value(row, ["holiday_work", "holiday_worked", "休日出勤", "休日出勤日数"])
+            try:
+                holiday_work_days += max(0, int(float(str(raw_holiday))))
+            except (TypeError, ValueError):
+                holiday_work_days += 1
+        anomaly_text = clean_feedback_text(str(row_value(row, ["anomaly", "anomalies", "打刻漏れ", "異常", "異常値判定"]) or ""), 120)
+        if truthy_attendance_flag(anomaly_text):
+            anomaly_count += 1
+
+    if parsed_rows == 0:
+        raise ValueError("CSV has no usable rows")
+
+    return {
+        "work_minutes": work_minutes,
+        "overtime_minutes": overtime_minutes,
+        "holiday_work_days": holiday_work_days,
+        "midnight_minutes": midnight_minutes,
+        "anomaly_count": anomaly_count,
+        "parsed_rows": parsed_rows,
+        "parser": "csv_header_sum_v1",
+    }
+
+
+def attendance_summary_payload(row: dict) -> dict:
+    return {
+        "work_hours": minutes_to_hours(int(row.get("work_minutes") or 0)),
+        "overtime_hours": minutes_to_hours(int(row.get("overtime_minutes") or 0)),
+        "holiday_work_days": int(row.get("holiday_work_days") or 0),
+        "midnight_hours": minutes_to_hours(int(row.get("midnight_minutes") or 0)),
+        "anomaly_count": int(row.get("anomaly_count") or 0),
+    }
+
+
+def db_insert_attendance_punch(
+    employee_identifier: str,
+    event_type: str,
+    source: str,
+    page_url: Optional[str],
+    session_id: Optional[str],
+    metadata: Optional[dict] = None,
+) -> dict:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    subject_pseudonym = attendance_pseudonym(employee_identifier)
+    normalized_event_type = normalize_attendance_event_type(event_type)
+    recorded_at = datetime.datetime.now(datetime.timezone.utc)
+    metadata_json = json.dumps({
+        "api_version": "2026-06-24",
+        "wbs_task": "T841",
+        "raw_identifier_stored": False,
+        **(metadata or {}),
+    }, ensure_ascii=False)
+    try:
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                INSERT INTO attendance_punch_events
+                    (subject_pseudonym, event_type, recorded_at, source, page_url, session_id, metadata)
+                VALUES (%s, %s, %s, %s, %s, %s, %s::jsonb)
+                RETURNING id;
+                """,
+                (
+                    subject_pseudonym,
+                    normalized_event_type,
+                    recorded_at,
+                    clean_feedback_text(source, 80) or "attendance_widget",
+                    clean_feedback_text(page_url, 500),
+                    clean_feedback_text(session_id, 120),
+                    metadata_json,
+                ),
+            )
+            inserted_id = int(cursor.fetchone()[0])
+        else:
+            cursor.execute(
+                """
+                INSERT INTO attendance_punch_events
+                    (subject_pseudonym, event_type, recorded_at, source, page_url, session_id, metadata)
+                VALUES (?, ?, ?, ?, ?, ?, ?);
+                """,
+                (
+                    subject_pseudonym,
+                    normalized_event_type,
+                    recorded_at.isoformat(timespec="seconds"),
+                    clean_feedback_text(source, 80) or "attendance_widget",
+                    clean_feedback_text(page_url, 500),
+                    clean_feedback_text(session_id, 120),
+                    metadata_json,
+                ),
+            )
+            inserted_id = int(cursor.lastrowid)
+        conn.commit()
+        return {
+            "id": inserted_id,
+            "subject_pseudonym": subject_pseudonym,
+            "event_type": normalized_event_type,
+            "recorded_at": recorded_at.isoformat(timespec="seconds"),
+        }
+    except Exception as e:
+        print(f"[-] Database insert attendance punch failed: {e}")
+        return {"id": 0, "subject_pseudonym": subject_pseudonym, "error": str(e)}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def db_insert_attendance_timesheet_import(
+    employee_identifier: str,
+    file_name: str,
+    file_bytes: bytes,
+    parse_result: dict,
+    consent_version: str,
+    source: str,
+    page_url: Optional[str],
+    session_id: Optional[str],
+) -> dict:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    subject_pseudonym = attendance_pseudonym(employee_identifier)
+    file_extension = Path(file_name or "").suffix.lower().lstrip(".")[:16] or "csv"
+    file_digest = stable_digest(file_bytes.hex())
+    metadata_json = json.dumps({
+        "api_version": "2026-06-24",
+        "wbs_task": "T841",
+        "parser": parse_result.get("parser"),
+        "parsed_rows": parse_result.get("parsed_rows", 0),
+        "raw_file_stored": False,
+        "original_filename_stored": False,
+        "jobcan_equivalent_status": "approval_log_ready",
+    }, ensure_ascii=False)
+    values = (
+        subject_pseudonym,
+        file_digest,
+        file_extension,
+        int(parse_result.get("work_minutes") or 0),
+        int(parse_result.get("overtime_minutes") or 0),
+        int(parse_result.get("holiday_work_days") or 0),
+        int(parse_result.get("midnight_minutes") or 0),
+        int(parse_result.get("anomaly_count") or 0),
+        clean_feedback_text(consent_version, 80) or ATTENDANCE_CONSENT_VERSION,
+        clean_feedback_text(source, 80) or "attendance_timesheet_upload",
+        clean_feedback_text(page_url, 500),
+        clean_feedback_text(session_id, 120),
+        metadata_json,
+    )
+    try:
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                INSERT INTO attendance_timesheet_imports
+                    (subject_pseudonym, file_digest, file_extension, work_minutes, overtime_minutes,
+                     holiday_work_days, midnight_minutes, anomaly_count, consent_version, source,
+                     page_url, session_id, metadata)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s::jsonb)
+                RETURNING id;
+                """,
+                values,
+            )
+            inserted_id = int(cursor.fetchone()[0])
+        else:
+            cursor.execute(
+                """
+                INSERT INTO attendance_timesheet_imports
+                    (subject_pseudonym, file_digest, file_extension, work_minutes, overtime_minutes,
+                     holiday_work_days, midnight_minutes, anomaly_count, consent_version, source,
+                     page_url, session_id, metadata)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                """,
+                values,
+            )
+            inserted_id = int(cursor.lastrowid)
+        conn.commit()
+        return {
+            "id": inserted_id,
+            "subject_pseudonym": subject_pseudonym,
+            "status": "pending_approval",
+            "summary": attendance_summary_payload(parse_result),
+        }
+    except Exception as e:
+        print(f"[-] Database insert attendance timesheet failed: {e}")
+        return {"id": 0, "subject_pseudonym": subject_pseudonym, "error": str(e)}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def db_update_attendance_timesheet_decision(import_id: int, decision: str) -> dict:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    approved_at = datetime.datetime.now(datetime.timezone.utc)
+    try:
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                UPDATE attendance_timesheet_imports
+                SET status = %s, approved_at = %s
+                WHERE id = %s
+                RETURNING id, subject_pseudonym, work_minutes, overtime_minutes,
+                          holiday_work_days, midnight_minutes, anomaly_count, status, approved_at;
+                """,
+                (decision, approved_at, import_id),
+            )
+        else:
+            cursor.execute(
+                """
+                UPDATE attendance_timesheet_imports
+                SET status = ?, approved_at = ?
+                WHERE id = ?;
+                """,
+                (decision, approved_at.isoformat(timespec="seconds"), import_id),
+            )
+            cursor.execute(
+                """
+                SELECT id, subject_pseudonym, work_minutes, overtime_minutes,
+                       holiday_work_days, midnight_minutes, anomaly_count, status, approved_at
+                FROM attendance_timesheet_imports
+                WHERE id = ?;
+                """,
+                (import_id,),
+            )
+        row = cursor.fetchone()
+        if not row:
+            return {"id": 0, "error": "not_found"}
+        columns = [
+            "id",
+            "subject_pseudonym",
+            "work_minutes",
+            "overtime_minutes",
+            "holiday_work_days",
+            "midnight_minutes",
+            "anomaly_count",
+            "status",
+            "approved_at",
+        ]
+        row_dict = dict(row) if isinstance(row, sqlite3.Row) else dict(zip(columns, row))
+        conn.commit()
+        return {
+            "id": int(row_dict["id"]),
+            "subject_pseudonym": row_dict["subject_pseudonym"],
+            "status": row_dict["status"],
+            "approved_at": str(row_dict.get("approved_at") or ""),
+            "summary": attendance_summary_payload(row_dict),
+        }
+    except Exception as e:
+        print(f"[-] Database update attendance decision failed: {e}")
+        return {"id": 0, "error": str(e)}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def db_get_attendance_summary(limit: int = 20) -> dict:
+    limit = max(1, min(limit, 100))
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT COUNT(*) FROM attendance_punch_events;")
+        punch_total = int(_scalar(cursor.fetchone()) or 0)
+        cursor.execute("SELECT COUNT(*) FROM attendance_timesheet_imports;")
+        import_total = int(_scalar(cursor.fetchone()) or 0)
+        cursor.execute("SELECT status, COUNT(*) FROM attendance_timesheet_imports GROUP BY status;")
+        status_counts = {"pending_approval": 0, "approved": 0, "rejected": 0, "manual_review": 0}
+        for row in cursor.fetchall():
+            status_counts[str(row[0])] = int(row[1])
+        cursor.execute("SELECT AVG(overtime_minutes), AVG(work_minutes), SUM(anomaly_count) FROM attendance_timesheet_imports WHERE status = 'approved';")
+        aggregate_row = cursor.fetchone()
+        avg_overtime = float(aggregate_row[0]) if aggregate_row and aggregate_row[0] is not None else None
+        avg_work = float(aggregate_row[1]) if aggregate_row and aggregate_row[1] is not None else None
+        anomaly_sum = int(aggregate_row[2]) if aggregate_row and aggregate_row[2] is not None else 0
+
+        columns = [
+            "id",
+            "subject_pseudonym",
+            "work_minutes",
+            "overtime_minutes",
+            "holiday_work_days",
+            "midnight_minutes",
+            "anomaly_count",
+            "status",
+            "created_at",
+            "approved_at",
+        ]
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                SELECT id, subject_pseudonym, work_minutes, overtime_minutes, holiday_work_days,
+                       midnight_minutes, anomaly_count, status, created_at, approved_at
+                FROM attendance_timesheet_imports
+                ORDER BY id DESC
+                LIMIT %s;
+                """,
+                (limit,),
+            )
+        else:
+            cursor.execute(
+                """
+                SELECT id, subject_pseudonym, work_minutes, overtime_minutes, holiday_work_days,
+                       midnight_minutes, anomaly_count, status, created_at, approved_at
+                FROM attendance_timesheet_imports
+                ORDER BY id DESC
+                LIMIT ?;
+                """,
+                (limit,),
+            )
+        recent_imports = []
+        for row in cursor.fetchall():
+            row_dict = dict(row) if isinstance(row, sqlite3.Row) else dict(zip(columns, row))
+            recent_imports.append({
+                "id": row_dict.get("id"),
+                "subject_pseudonym": row_dict.get("subject_pseudonym"),
+                "status": row_dict.get("status"),
+                "summary": attendance_summary_payload(row_dict),
+                "created_at": str(row_dict.get("created_at") or ""),
+                "approved_at": str(row_dict.get("approved_at") or ""),
+            })
+
+        return {
+            "punch_total": punch_total,
+            "import_total": import_total,
+            "status_counts": status_counts,
+            "approved_averages": {
+                "overtime_hours": minutes_to_hours(avg_overtime or 0) if avg_overtime is not None else None,
+                "work_hours": minutes_to_hours(avg_work or 0) if avg_work is not None else None,
+            },
+            "approved_anomaly_count": anomaly_sum,
+            "recent_imports": recent_imports,
+            "privacy_controls": {
+                "raw_identifier_stored": False,
+                "raw_file_stored": False,
+                "original_filename_stored": False,
+                "admin_summary_requires_basic_auth": True,
+            },
+        }
+    except Exception as e:
+        print(f"[-] Database attendance summary failed: {e}")
+        return {
+            "punch_total": 0,
+            "import_total": 0,
+            "status_counts": {"pending_approval": 0, "approved": 0, "rejected": 0, "manual_review": 0},
+            "approved_averages": {"overtime_hours": None, "work_hours": None},
+            "approved_anomaly_count": 0,
+            "recent_imports": [],
+            "privacy_controls": {
+                "raw_identifier_stored": False,
+                "raw_file_stored": False,
+                "original_filename_stored": False,
                 "admin_summary_requires_basic_auth": True,
             },
             "error": str(e),
@@ -4607,6 +5145,20 @@ class EmployeeAssessmentResponseRequest(BaseModel):
     session_id: Optional[str] = ""
 
 
+class AttendancePunchRequest(BaseModel):
+    employee_identifier: str
+    event_type: str
+    consented: bool
+    source: str = "attendance_widget"
+    page_url: Optional[str] = ""
+    session_id: Optional[str] = ""
+
+
+class AttendanceTimesheetApprovalRequest(BaseModel):
+    import_id: int
+    decision: str = "approved"
+
+
 class SupportRequest(BaseModel):
     category: str = "general"
     priority: Optional[str] = None
@@ -5044,6 +5596,157 @@ async def submit_employee_assessment_response(req: EmployeeAssessmentResponseReq
 async def get_employee_assessment_response_summary(limit: int = 20, username: str = Depends(verify_credentials)):
     """Authenticated, redacted summary of T840 employee self-report responses."""
     return {"status": "success", **db_get_employee_assessment_summary(limit=limit)}
+
+
+@app.post("/api/attendance/punch")
+async def submit_attendance_punch(req: AttendancePunchRequest):
+    """Store a pseudonymized attendance punch event for the T841 internal timecard."""
+    if not req.consented:
+        raise HTTPException(status_code=400, detail="consent is required before storing attendance data")
+
+    employee_identifier = clean_feedback_text(req.employee_identifier, MAX_ATTENDANCE_IDENTIFIER_LENGTH)
+    if len(employee_identifier) < 3:
+        raise HTTPException(status_code=400, detail="employee_identifier must be at least 3 characters")
+
+    event_type = normalize_attendance_event_type(req.event_type)
+    if not event_type:
+        raise HTTPException(status_code=400, detail="event_type must be one of in, out, rest-start, or rest-end")
+
+    db_result = db_insert_attendance_punch(
+        employee_identifier=employee_identifier,
+        event_type=event_type,
+        source=req.source,
+        page_url=req.page_url,
+        session_id=req.session_id,
+    )
+    if not db_result.get("id"):
+        raise HTTPException(status_code=500, detail="Failed to store attendance punch")
+
+    audit_event = write_audit_event(
+        "attendance_punch",
+        {
+            "wbs_task": "T841",
+            "punch_id": db_result["id"],
+            "subject_pseudonym": db_result["subject_pseudonym"],
+            "event_type": db_result["event_type"],
+            "raw_identifier_stored": False,
+        },
+    )
+    return {
+        "status": "success",
+        "punch_id": db_result["id"],
+        "subject_pseudonym": db_result["subject_pseudonym"],
+        "event_type": db_result["event_type"],
+        "recorded_at": db_result["recorded_at"],
+        "audit_event_id": audit_event["event_id"],
+        "privacy_controls": {"raw_identifier_stored": False},
+    }
+
+
+@app.post("/api/attendance/timesheet/parse")
+async def parse_attendance_timesheet(
+    file: UploadFile = File(...),
+    employee_identifier: str = Form(...),
+    consented: bool = Form(...),
+    consent_version: str = Form(ATTENDANCE_CONSENT_VERSION),
+    source: str = Form("attendance_timesheet_upload"),
+    page_url: str = Form(""),
+    session_id: str = Form(""),
+):
+    """Parse and store a pending approval attendance timesheet import without saving the raw file."""
+    if not consented:
+        raise HTTPException(status_code=400, detail="consent is required before parsing attendance data")
+
+    clean_identifier = clean_feedback_text(employee_identifier, MAX_ATTENDANCE_IDENTIFIER_LENGTH)
+    if len(clean_identifier) < 3:
+        raise HTTPException(status_code=400, detail="employee_identifier must be at least 3 characters")
+
+    raw_bytes = await file.read()
+    if not raw_bytes:
+        raise HTTPException(status_code=400, detail="timesheet file is empty")
+    if len(raw_bytes) > MAX_ATTENDANCE_FILE_BYTES:
+        raise HTTPException(status_code=400, detail=f"timesheet file must be {MAX_ATTENDANCE_FILE_BYTES} bytes or fewer")
+
+    extension = Path(file.filename or "").suffix.lower()
+    if extension not in {".csv", ".txt"}:
+        raise HTTPException(status_code=400, detail="only CSV or text timesheets are supported in this T841 PoC")
+
+    try:
+        parse_result = parse_attendance_csv_bytes(raw_bytes)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    db_result = db_insert_attendance_timesheet_import(
+        employee_identifier=clean_identifier,
+        file_name=file.filename or "timesheet.csv",
+        file_bytes=raw_bytes,
+        parse_result=parse_result,
+        consent_version=consent_version,
+        source=source,
+        page_url=page_url,
+        session_id=session_id,
+    )
+    if not db_result.get("id"):
+        raise HTTPException(status_code=500, detail="Failed to store attendance timesheet import")
+
+    audit_event = write_audit_event(
+        "attendance_timesheet_parse",
+        {
+            "wbs_task": "T841",
+            "import_id": db_result["id"],
+            "subject_pseudonym": db_result["subject_pseudonym"],
+            "summary": db_result["summary"],
+            "raw_file_stored": False,
+            "original_filename_stored": False,
+        },
+    )
+    return {
+        "status": "success",
+        "import_id": db_result["id"],
+        "subject_pseudonym": db_result["subject_pseudonym"],
+        "approval_status": db_result["status"],
+        "summary": db_result["summary"],
+        "audit_event_id": audit_event["event_id"],
+        "privacy_controls": {
+            "raw_identifier_stored": False,
+            "raw_file_stored": False,
+            "original_filename_stored": False,
+        },
+    }
+
+
+@app.post("/api/attendance/timesheet/approve")
+async def approve_attendance_timesheet(req: AttendanceTimesheetApprovalRequest, username: str = Depends(verify_credentials)):
+    """Approve or reject a parsed attendance import through the admin-gated workflow."""
+    decision = clean_feedback_text(req.decision, 32).lower()
+    if decision not in VALID_ATTENDANCE_DECISIONS:
+        raise HTTPException(status_code=400, detail="decision must be approved or rejected")
+    if req.import_id <= 0:
+        raise HTTPException(status_code=400, detail="import_id must be positive")
+
+    db_result = db_update_attendance_timesheet_decision(req.import_id, decision)
+    if db_result.get("error") == "not_found":
+        raise HTTPException(status_code=404, detail="attendance import not found")
+    if not db_result.get("id"):
+        raise HTTPException(status_code=500, detail="Failed to update attendance import")
+
+    audit_event = write_audit_event(
+        "attendance_timesheet_approval",
+        {
+            "wbs_task": "T841",
+            "import_id": db_result["id"],
+            "subject_pseudonym": db_result["subject_pseudonym"],
+            "decision": db_result["status"],
+            "reviewer_id": username,
+        },
+    )
+    return {"status": "success", "attendance_import": db_result, "audit_event_id": audit_event["event_id"]}
+
+
+@app.get("/api/attendance/summary")
+async def get_attendance_summary(limit: int = 20, username: str = Depends(verify_credentials)):
+    """Authenticated attendance punch/import summary for T841 operations review."""
+    return {"status": "success", **db_get_attendance_summary(limit=limit)}
 
 
 @app.post("/api/support/request")

@@ -2826,13 +2826,25 @@
             <div class="comparison-container">
                 <div class="comparison-controls">
                     <h2>簡易勤怠打刻 &amp; 勤務表自動解析</h2>
-                    <span class="control-label">出退勤の簡易打刻、および月末の勤務表パース連携</span>
+                    <span class="control-label">出退勤の簡易打刻、および月末の勤務表CSVパース連携</span>
+                </div>
+
+                <div class="form-grid-2col" style="margin-bottom: 16px;">
+                    <div class="input-group">
+                        <label for="attendance-emp-code">社内確認コード</label>
+                        <input type="text" id="attendance-emp-code" class="text-input" placeholder="例: emp-2026-001" autocomplete="off" required>
+                    </div>
+                    <label class="control-label" style="display: flex; gap: 10px; align-items: flex-start; margin-top: 28px;">
+                        <input type="checkbox" id="attendance-consent" style="margin-top: 3px;">
+                        <span>社内確認コードを匿名キー化し、勤怠メタデータだけを保存することに同意します。CSV原本とファイル名は保存しません。</span>
+                    </label>
                 </div>
 
                 <div class="form-grid-2col">
                     <div>
                         <h3 style="font-size: 15px; font-weight: 700; color: var(--muted); margin-bottom: 8px; text-transform: uppercase;">簡易タイムカード打刻</h3>
                         <div id="punch-status" style="font-size: 13px; color: var(--blue); font-weight: 700; margin-bottom: 12px;">現在のステータス: 退勤中</div>
+                        <div class="support-status" id="attendance-status" style="margin-bottom: 12px;">未送信</div>
                         <div class="punch-card-panel">
                             <button type="button" class="punch-btn" id="btn-punch-in" onclick="punchCard('in')">出勤</button>
                             <button type="button" class="punch-btn" id="btn-punch-out" onclick="punchCard('out')">退勤</button>
@@ -2844,9 +2856,9 @@
                         <h3 style="font-size: 15px; font-weight: 700; color: var(--muted); margin-bottom: 8px; text-transform: uppercase;">勤務表解析用アップローダー</h3>
                         <div class="file-drop-zone" onclick="triggerFileSelect()">
                             <span style="font-size: 24px;">📁</span>
-                            <p><strong>勤務表CSV・PDFファイルを選択</strong> またはドラッグ＆ドロップ</p>
-                            <span class="control-label">Google Workspace自動パース・ジョブカン連携</span>
-                            <input type="file" id="attendance-file-input" style="display: none;" onchange="handleFileSelect(event)">
+                            <p><strong>勤務表CSVファイルを選択</strong> またはドラッグ＆ドロップ</p>
+                            <span class="control-label">CSV解析、承認ログ保存、ジョブカン相当ワークフロー</span>
+                            <input type="file" id="attendance-file-input" accept=".csv,.txt,text/csv,text/plain" style="display: none;" onchange="handleFileSelect(event)">
                         </div>
                     </div>
                 </div>
@@ -4362,9 +4374,29 @@
             }
         }
 
-        function punchCard(type) {
+        function setAttendanceStatus(text, colorVar) {
+            const status = document.getElementById("attendance-status");
+            if (!status) return;
+            status.textContent = text;
+            status.style.color = colorVar || "var(--muted)";
+        }
+
+        function getAttendanceInputs() {
+            const codeInput = document.getElementById("attendance-emp-code");
+            const consentInput = document.getElementById("attendance-consent");
+            const employeeCode = codeInput ? codeInput.value.trim() : "";
+            const consented = Boolean(consentInput && consentInput.checked);
+            return { employeeCode, consented };
+        }
+
+        async function punchCard(type) {
             const statusDiv = document.getElementById("punch-status");
             if (!statusDiv) return;
+            const { employeeCode, consented } = getAttendanceInputs();
+            if (!employeeCode || !consented) {
+                alert("社内確認コードを入力し、勤怠データ保存への同意にチェックしてください。");
+                return;
+            }
 
             const timeStr = new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             let statusText = "";
@@ -4397,8 +4429,32 @@
                 if (btnRestEnd) btnRestEnd.classList.add('active-punch');
             }
 
-            statusDiv.textContent = statusText;
-            alert(alertMsg);
+            setAttendanceStatus("打刻送信中", "var(--yellow)");
+            try {
+                const response = await fetch("/api/attendance/punch", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        employee_identifier: employeeCode,
+                        event_type: type,
+                        consented: true,
+                        source: "attendance_widget",
+                        page_url: `${window.location.pathname}${window.location.search}`,
+                        session_id: getFeedbackSessionId()
+                    })
+                });
+                if (!response.ok) {
+                    throw new Error("Attendance punch endpoint unavailable");
+                }
+                const data = await response.json();
+                statusDiv.textContent = `${statusText} / 匿名キー: ${data.subject_pseudonym}`;
+                setAttendanceStatus("打刻保存済み", "var(--green)");
+                alert(`${alertMsg}\n匿名キー: ${data.subject_pseudonym}`);
+            } catch (error) {
+                console.warn("Attendance punch API unavailable.", error);
+                setAttendanceStatus("打刻保存失敗", "var(--rose)");
+                alert("打刻保存APIへ接続できませんでした。打刻は保存されていません。");
+            }
         }
 
         function triggerFileSelect() {
@@ -4406,42 +4462,62 @@
             if (fileInput) fileInput.click();
         }
 
-        function handleFileSelect(event) {
+        async function handleFileSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
-
-            // アップロードされたファイル名をダミー解析結果に反映させるため、社員名を推測
-            let empName = "佐藤 賢太"; // デフォルト
-            if (file.name.includes("yamada") || file.name.includes("山田")) {
-                empName = "山田 花子";
-            } else if (file.name.includes("suzuki") || file.name.includes("鈴木")) {
-                empName = "鈴木 一郎";
-            } else if (file.name.includes("tanaka") || file.name.includes("田中")) {
-                empName = "田中 太郎";
-            } else if (file.name.includes("takahashi") || file.name.includes("高橋")) {
-                empName = "高橋 次郎";
+            const { employeeCode, consented } = getAttendanceInputs();
+            if (!employeeCode || !consented) {
+                alert("社内確認コードを入力し、勤怠データ保存への同意にチェックしてください。");
+                event.target.value = "";
+                return;
             }
 
-            // ダミー解析データの構築
-            parsedAttendanceData = {
-                employeeName: empName,
-                fileName: file.name,
-                workHours: 165.0,
-                overtimeHours: 20.5,
-                holidaysCount: 0,
-                midnightHours: 1.5,
-                anomalies: "なし"
-            };
+            setAttendanceStatus("勤務表解析中", "var(--yellow)");
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("employee_identifier", employeeCode);
+            formData.append("consented", "true");
+            formData.append("consent_version", "MSB-ATTENDANCE-2026-06");
+            formData.append("source", "attendance_timesheet_upload");
+            formData.append("page_url", `${window.location.pathname}${window.location.search}`);
+            formData.append("session_id", getFeedbackSessionId());
+
+            try {
+                const response = await fetch("/api/attendance/timesheet/parse", {
+                    method: "POST",
+                    body: formData
+                });
+                if (!response.ok) {
+                    throw new Error("Attendance parse endpoint unavailable");
+                }
+                const data = await response.json();
+                parsedAttendanceData = {
+                    importId: data.import_id,
+                    subjectPseudonym: data.subject_pseudonym,
+                    workHours: data.summary.work_hours,
+                    overtimeHours: data.summary.overtime_hours,
+                    holidaysCount: data.summary.holiday_work_days,
+                    midnightHours: data.summary.midnight_hours,
+                    anomalyCount: data.summary.anomaly_count
+                };
+                setAttendanceStatus("解析済み・承認待ち", "var(--green)");
+            } catch (error) {
+                console.warn("Attendance parse API unavailable.", error);
+                setAttendanceStatus("勤務表解析失敗", "var(--rose)");
+                alert("勤務表解析APIへ接続できませんでした。CSV原本は保存されていません。");
+                event.target.value = "";
+                return;
+            }
 
             // プレビューテーブルの描画
             const tbody = document.getElementById("attendance-preview-body");
             if (tbody) {
                 tbody.innerHTML = `
                     <tr>
-                        <td style="font-weight: 600;">対象社員名</td>
-                        <td><span style="color: var(--blue); font-weight: 700;">${escapeHtml(parsedAttendanceData.employeeName)}</span></td>
+                        <td style="font-weight: 600;">対象匿名キー</td>
+                        <td><span style="color: var(--blue); font-weight: 700;">${escapeHtml(parsedAttendanceData.subjectPseudonym)}</span></td>
                         <td>-</td>
-                        <td>ファイル: ${escapeHtml(parsedAttendanceData.fileName)}</td>
+                        <td>import_id: ${parsedAttendanceData.importId}</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">実労働時間</td>
@@ -4469,7 +4545,7 @@
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">打刻漏れ・異常値判定</td>
-                        <td><span style="color: var(--green); font-weight: 700;">${parsedAttendanceData.anomalies}</span></td>
+                        <td><span style="color: var(--green); font-weight: 700;">${parsedAttendanceData.anomalyCount} 件</span></td>
                         <td>なし</td>
                         <td><span class="fit-badge fit-high" style="background: rgba(186, 255, 102, 0.1); color: var(--green);">正常</span></td>
                     </tr>
@@ -4492,30 +4568,47 @@
             parsedAttendanceData = null;
         }
 
-        function approveAttendanceData() {
+        async function approveAttendanceData() {
             if (!parsedAttendanceData) return;
 
-            // 対象社員の勤怠情報（時間外労働時間など）を更新
-            const empName = parsedAttendanceData.employeeName;
-            const existingMember = membersData.find(m => m.name === empName);
-            if (existingMember) {
-                existingMember.ot = parsedAttendanceData.overtimeHours;
-            } else {
-                membersData.push({
-                    name: empName,
-                    dept: "開発本部",
-                    motivation: 4,
-                    culture: 4,
-                    ot: parsedAttendanceData.overtimeHours,
-                    feedback: "勤務表自動解析による登録"
+            setAttendanceStatus("承認保存中", "var(--yellow)");
+            try {
+                const response = await fetch("/api/attendance/timesheet/approve", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        import_id: parsedAttendanceData.importId,
+                        decision: "approved"
+                    })
                 });
+                if (!response.ok) {
+                    throw new Error("Attendance approval endpoint unavailable or requires admin auth");
+                }
+                const data = await response.json();
+                const approved = data.attendance_import;
+                const displayKey = approved.subject_pseudonym;
+                const existingMember = membersData.find(m => m.name === displayKey);
+                if (existingMember) {
+                    existingMember.ot = approved.summary.overtime_hours;
+                } else {
+                    membersData.push({
+                        name: displayKey,
+                        dept: "勤怠CSV",
+                        motivation: 4,
+                        culture: 4,
+                        ot: approved.summary.overtime_hours,
+                        feedback: "勤務表CSV承認ログによる登録"
+                    });
+                }
+                renderDashboard();
+                setAttendanceStatus("承認保存済み", "var(--green)");
+                alert(`${displayKey} の勤務表データを承認・登録しました。`);
+                clearAttendancePreview();
+            } catch (error) {
+                console.warn("Attendance approval API unavailable.", error);
+                setAttendanceStatus("承認保存失敗", "var(--rose)");
+                alert("承認保存APIへ接続できませんでした。管理者Basic Authが必要です。");
             }
-
-            // ダッシュボード更新
-            renderDashboard();
-
-            alert(`${empName} さんの勤務表データを承認・登録しました。\nSupabase / Google Sheets への同期、およびジョブカン勤怠情報の更新が完了しました。`);
-            clearAttendancePreview();
         }
 
         function toggleApproveMatching(id) {
