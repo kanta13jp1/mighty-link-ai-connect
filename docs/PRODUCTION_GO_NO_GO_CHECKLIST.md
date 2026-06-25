@@ -22,7 +22,7 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 | Scope | 判定 | 理由 |
 | --- | --- | --- |
 | `controlled_demo` | `GO` | GitHub Pages公開デモ、本番URL、問い合わせ窓口、DR/Incident/Rollback、監視・クォータRunbookの証跡が揃っている |
-| `public_paid_launch` | `NO_GO` | リリースノート/バージョニング運用、T805外部疑似診断、T835公開URLヘッダhardeningは整備済みだが、法務/CEO承認、規約同意UI、オンボーディング、法定4ページ実装、Stripe課金、負荷テスト、営業メールAIマッチング本番hardeningが未完了 |
+| `public_paid_launch` | `NO_GO` | リリースノート/バージョニング運用、T805外部疑似診断、T835公開URLヘッダhardeningは整備済みだが、法務/CEO承認、規約同意UI、オンボーディング、法定4ページ実装、Stripe課金、負荷テスト、営業メールAIマッチング本番hardening、全機能最終UAT、最新ユーザー/管理者docs、全テーブル保持/削除照合、外部SaaS棚卸し、会社運用引継ぎ、サイト開発完了総合判定が未完了 |
 
 つまり、現状は「社長説明・限定デモは継続可。一般公開・有償ローンチは未承認」である。
 
@@ -33,6 +33,8 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 2026-06-21にT805を前倒し完了し、OWASP WSTG / OWASP ZAP baseline相当の非破壊疑似診断を `scripts/run_external_pentest_review.py` で実施した。CEO共有GitHub Pages URLと `mightylink-app.com` は到達可能で、High 0、secret-like値露出 0 を確認した。
 
 2026-06-23にT835を前倒し完了し、Firebase Hosting本番URLへ CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS を設定した。デプロイ後の `https://mightylink-app.com/` 再診断も HIGH 0 / MED 0 / LOW 0 / INFO 0 でPASS。GitHub Pagesは任意HTTPヘッダを設定できないため、CEO向けcontrolled demo mirrorとして制約を [EXTERNAL_PENTEST_RUNBOOK.md](EXTERNAL_PENTEST_RUNBOOK.md) に記録した。PUBLIC-01はPASSへ戻す。
+
+2026-06-25にT844としてWBS工程網羅性監査（第3回）を実施し、全WBS完了をサイト開発完了条件にするための横断ゲートを追加した。T845全機能E2E/UAT、T846ユーザー/管理者docs最終更新、T847全テーブル保持/削除照合、T848外部SaaS/AIモデル棚卸し、T850会社運用引継ぎ、T849サイト開発完了総合判定が完了するまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。PUBLIC-13を追加済み。
 
 ---
 
@@ -75,6 +77,12 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T776 / T791 | Stripe課金設計・Billing Meters/Webhook検証 | `BLOCKED` |
 | T770 | 同時100ユーザー想定の負荷テスト | `BLOCKED` |
 | T817_7 | 共有営業メールAIマッチングMVPの個人情報/監査/負荷確認、実メール接続後の運用hardening | `BLOCKED` |
+| T845 | 全機能本番受入E2E/UAT最終再検証 | `BLOCKED` |
+| T846 | ユーザー操作ガイド・管理者Runbook・FAQの全機能最終更新 | `BLOCKED` |
+| T847 | 本番データ保持・削除・匿名化ポリシーの全テーブル実装照合 | `BLOCKED` |
+| T848 | AIモデル・外部SaaS・連携サービス棚卸しとGA時点利用可否の最終凍結 | `BLOCKED` |
+| T850 | 会社運用引継ぎリハーサル・権限棚卸し・Break-glass確認 | `BLOCKED` |
+| T849 | サイト開発完了総合判定・WBS全完了証跡化・GAリリース閉鎖 | `BLOCKED` |
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 

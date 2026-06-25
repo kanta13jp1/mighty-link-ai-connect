@@ -1,15 +1,15 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-24T10:43:42+09:00
+Generated: 2026-06-25T20:58:11+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `101`
-- Drive docs uploaded: `2`
-- Drive docs skipped unchanged: `99`
-- NotebookLM CLI status: `ready`
+- Drive docs discovered: `102`
+- Drive docs uploaded: `1`
+- Drive docs skipped unchanged: `101`
+- NotebookLM CLI status: `auth_required`
 
 ## Google Docs Synced From docs/
 
@@ -112,31 +112,13 @@ Generated: 2026-06-24T10:43:42+09:00
 - `docs/USER_GUIDE_AND_FAQ.md`: https://docs.google.com/document/d/1qawKzp2UdanwIbnWqbVnRaRq4YIQlTEXxlj7mwhmfRk/edit?usp=drivesdk
 - `docs/WBS.md`: https://docs.google.com/document/d/16s5eoPSBLInfS6Kr9Hj4Qgc3y4QXjyjNSbojvZNxBuQ/edit?usp=drivesdk
 - `docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md`: https://docs.google.com/document/d/1U_VJfbWxl-akmnrFOngfFlOU_pQIpsG5af7bUtODigg/edit?usp=drivesdk
+- `docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-25.md`: https://docs.google.com/document/d/1KoWmq5lExtMSfItWTNV18I8WHEvwwLVxD94QQBB0qlo/edit?usp=drivesdk
 - `docs/WBS_SYNC_GUIDE.md`: https://docs.google.com/document/d/1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY/edit?usp=drivesdk
 - `docs/WEEKLY_COST_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1Sg3jtNziaRKU5lqgZ254BvrEXW0L6KPkhE8hmb-8Cwg/edit?usp=drivesdk
 
-## NotebookLM Sync Result
-
-NotebookLM CLI is authenticated and the docs source set has been synced.
-
-- Notebook: `4934c12b-b270-4739-97a1-b04b5b84eaaf`
-- Ask generation: `skipped`
-- Agent brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
-- Agent brief JSON: `exports/knowledge_flow/notebooklm_agent_brief.json`
-- CEO slide outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
-- CEO slide outline JSON: `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
-
-## Optional Ask Generation
-
-If ask generation was skipped or timed out, keep the synced sources and rerun only the long NotebookLM summary/ask phase when needed:
-
-```powershell
-python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900
-```
-
 ## Re-authentication
 
-If NotebookLM authentication expires later, run:
+NotebookLM CLI currently needs browser re-authentication before sources can be added to NotebookLM.
 
 ```powershell
 python scripts/notebooklm_login_workspace.py
@@ -144,3 +126,20 @@ python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --so
 ```
 
 During browser login, select `k-umezawa@ml-mightylink.com`.
+
+## Last CLI Error
+
+```text
+Authentication expired or invalid. Run 'notebooklm login' to re-authenticate.
+```
+
+## Agent Retrieval Command
+
+After authentication, the script will add the Drive docs as NotebookLM sources and write:
+
+- `exports/knowledge_flow/notebooklm_agent_brief.md`
+- `exports/knowledge_flow/notebooklm_agent_brief.json`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
+
+These files are the agent-facing design and roadmap summary for subsequent Codex work.

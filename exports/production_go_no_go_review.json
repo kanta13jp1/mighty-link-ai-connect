@@ -1,15 +1,15 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-23T15:48:06Z",
+  "generated_at": "2026-06-25T11:53:49Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
-    "total": 17,
+    "total": 18,
     "counts": {
       "PASS": 9,
       "HUMAN_GATE": 2,
-      "BLOCKED": 6
+      "BLOCKED": 7
     },
     "evidence_warnings": 0
   },
@@ -28,9 +28,9 @@
       "counts": {
         "PASS": 4,
         "HUMAN_GATE": 2,
-        "BLOCKED": 6
+        "BLOCKED": 7
       },
-      "total": 12
+      "total": 13
     }
   },
   "criteria": [
@@ -377,6 +377,31 @@
       "notes": "v0.1.0-controlled-demo.1は管理下デモ用prerelease。public_paid_launchはNo-Goのまま維持し、GAタグは全ゲート完了後に発行する。",
       "wbs_statuses": {
         "T806": "完了"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-13",
+      "scope": "public_paid_launch",
+      "category": "完成判定",
+      "criterion": "全機能E2E/UAT、最新ユーザー/管理者docs、全テーブル保持/削除照合、外部SaaS棚卸し、会社運用引継ぎ、サイト開発完了総合判定が完了している",
+      "evidence_source": "docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-25.md; docs/USER_GUIDE_AND_FAQ.md; docs/USER_DATA_DELETION_FLOW.md; docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md; exports/production_go_no_go_review.md; GitHub Project #1",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Codex + Claude Code + 人間",
+      "decision_authority": "CEO / 法務 / 開発責任者",
+      "related_wbs": "T844;T845;T846;T847;T848;T849;T850",
+      "related_issue": "R99;#131;#132;#133;#134;#135;#136;#137",
+      "last_checked": "2026-06-25",
+      "notes": "WBS全完了をサイト開発完了条件にするための最終横断ゲート。T844で不足タスクを追加済み。T849完了までpublic_paid_launchと開発完了宣言はNo-Go。",
+      "wbs_statuses": {
+        "T844": "完了",
+        "T845": "未着手",
+        "T846": "未着手",
+        "T847": "未着手",
+        "T848": "未着手",
+        "T849": "未着手",
+        "T850": "未着手"
       },
       "missing_evidence": []
     }

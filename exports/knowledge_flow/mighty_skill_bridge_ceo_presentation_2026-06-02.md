@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge CEO Presentation Deck
 
-Generated: 2026-06-24T10:43:47+09:00
+Generated: 2026-06-25T20:58:22+09:00
 
 ## Output
 
@@ -8,7 +8,7 @@ Generated: 2026-06-24T10:43:47+09:00
 - Google Drive: https://docs.google.com/presentation/d/1XGHnQHBpJyyhh_Y3I2lq2UThPRC-2dcL/edit?usp=drivesdk&ouid=117190324786156797159&rtpof=true&sd=true
 - Generator: `scripts/generate_ceo_presentation_deck.py`
 - NotebookLM outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
-- NotebookLM notebook: `4934c12b-b270-4739-97a1-b04b5b84eaaf`
+- NotebookLM notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
 - Workspace account: `k-umezawa@ml-mightylink.com`
 
 ## Slide List
