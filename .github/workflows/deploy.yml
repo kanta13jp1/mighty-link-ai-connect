@@ -49,7 +49,7 @@ jobs:
     name: Deploy to Firebase
     needs: test
     runs-on: ubuntu-latest
-    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     concurrency:
       group: firebase-deploy-mighty-link-ai-connect-13d22
       cancel-in-progress: false
@@ -164,4 +164,3 @@ jobs:
             echo "::error title=Firebase deploy failed::Could not deploy '$FIREBASE_DEPLOY_TARGETS' to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists and credentials have deploy permissions. Set FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true and FIREBASE_DEPLOY_TARGETS=hosting,functions only after the Firebase project and CI service account can update Cloud Functions IAM."
             exit 2
           fi
-
