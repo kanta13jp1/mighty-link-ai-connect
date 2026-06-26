@@ -1,15 +1,15 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-26T10:29:41Z",
+  "generated_at": "2026-06-26T10:47:11Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
-    "total": 19,
+    "total": 20,
     "counts": {
       "PASS": 9,
       "HUMAN_GATE": 2,
-      "BLOCKED": 8
+      "BLOCKED": 9
     },
     "evidence_warnings": 0
   },
@@ -28,9 +28,9 @@
       "counts": {
         "PASS": 4,
         "HUMAN_GATE": 2,
-        "BLOCKED": 8
+        "BLOCKED": 9
       },
-      "total": 14
+      "total": 15
     }
   },
   "criteria": [
@@ -421,6 +421,25 @@
       "notes": "2026-06-26時点でWIF/ADCがFirebase CLI認証に失敗し、legacy FIREBASE_TOKENも再認証期限切れ。docs/data/exportsのみの変更ではdeployをskipする暫定ガードを入れたが、public_paid_launch前に会社管理のWIF/service account/secret経路で本番deploy greenを確認する。",
       "wbs_statuses": {
         "T852": "未着手"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-15",
+      "scope": "public_paid_launch",
+      "category": "品質管理",
+      "criterion": "課題管理表・QA表の開発必須open/未回答が0である",
+      "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; Google Sheets 課題管理表; Google Sheets QA表; GitHub Project #1; docs/WBS_REVIEW_2026-06-26_SESSION2.md",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Codex + Claude Code + 人間",
+      "decision_authority": "開発責任者 / CEO",
+      "related_wbs": "T854",
+      "related_issue": "R101;#141",
+      "last_checked": "2026-06-26",
+      "notes": "WBS全完了をサイト開発完了とみなすには、GitHub Issues/Projectだけでなく、Sheets正本の課題管理表とQA表も開発必須open/未回答が0、または明示承認済みである必要がある。",
+      "wbs_statuses": {
+        "T854": "未着手"
       },
       "missing_evidence": []
     }

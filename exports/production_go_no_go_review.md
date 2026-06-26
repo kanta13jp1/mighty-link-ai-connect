@@ -1,6 +1,6 @@
 # 本番リリース Go/No-Go 判定レビュー (T746)
 
-- 生成時刻(UTC): 2026-06-26T10:29:41Z
+- 生成時刻(UTC): 2026-06-26T10:47:11Z
 - 正本TSV: `data/release_go_no_go_criteria.tsv`
 - WBS正本: `data/WBS.tsv`
 - 総合判定: **NO_GO**
@@ -10,7 +10,7 @@
 | スコープ | 判定 | 件数 | 状態内訳 |
 | :--- | :--- | ---: | :--- |
 | controlled_demo | GO | 5 | PASS:5 |
-| public_paid_launch | NO_GO | 14 | BLOCKED:8, HUMAN_GATE:2, PASS:4 |
+| public_paid_launch | NO_GO | 15 | BLOCKED:9, HUMAN_GATE:2, PASS:4 |
 
 ## 判定基準
 
@@ -35,6 +35,7 @@
 | PUBLIC-12 | public_paid_launch | リリース | PASS | CHANGELOG・SemVer・git tag・GitHub Releases運用が整備済み | CHANGELOG.md; VERSION; docs/RELEASE_VERSIONING_RUNBOOK.md; exports/release_versioning_review.md | T806 | 開発責任者 | v0.1.0-controlled-demo.1は管理下デモ用prerelease。public_paid_launchはNo-Goのまま維持し、GAタグは全ゲート完了後に発行する。 |
 | PUBLIC-13 | public_paid_launch | 完成判定 | BLOCKED | 全機能E2E/UAT、最新ユーザー/管理者docs、全テーブル保持/削除照合、外部SaaS棚卸し、会社運用引継ぎ、サイト開発完了総合判定が完了している | docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-25.md; docs/USER_GUIDE_AND_FAQ.md; docs/USER_DATA_DELETION_FLOW.md; docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md; exports/production_go_no_go_review.md; GitHub Project #1 | T844;T845;T846;T847;T848;T849;T850 | CEO / 法務 / 開発責任者 | WBS全完了をサイト開発完了条件にするための最終横断ゲート。T844で不足タスクを追加済み。T849完了までpublic_paid_launchと開発完了宣言はNo-Go。 |
 | PUBLIC-14 | public_paid_launch | リリース | BLOCKED | Firebase/GitHub Actionsの本番デプロイ認証経路が正規化され、アプリ変更時のmain deployがgreenである | .github/workflows/deploy.yml; GitHub Actions CI/CD Pipeline; Firebase Hosting/Functions; docs/WBS_REVIEW_2026-06-26.md | T852 | 開発責任者 / 会社管理者 | 2026-06-26時点でWIF/ADCがFirebase CLI認証に失敗し、legacy FIREBASE_TOKENも再認証期限切れ。docs/data/exportsのみの変更ではdeployをskipする暫定ガードを入れたが、public_paid_launch前に会社管理のWIF/service account/secret経路で本番deploy greenを確認する。 |
+| PUBLIC-15 | public_paid_launch | 品質管理 | BLOCKED | 課題管理表・QA表の開発必須open/未回答が0である | data/issues_tracker.tsv; data/qa_tracker.tsv; Google Sheets 課題管理表; Google Sheets QA表; GitHub Project #1; docs/WBS_REVIEW_2026-06-26_SESSION2.md | T854 | 開発責任者 / CEO | WBS全完了をサイト開発完了とみなすには、GitHub Issues/Projectだけでなく、Sheets正本の課題管理表とQA表も開発必須open/未回答が0、または明示承認済みである必要がある。 |
 
 ## 承認プロセス
 

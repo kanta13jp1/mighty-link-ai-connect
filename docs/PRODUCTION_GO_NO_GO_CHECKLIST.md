@@ -38,6 +38,8 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 
 2026-06-26のWBS再レビュー後、main CIのFirebase deployでWorkload Identity Federation経由ADCがFirebase CLIに認識されず、legacy `FIREBASE_TOKEN` も再認証期限切れであることを確認した。docs/data/exportsのみの変更ではFirebase deployをskipする暫定ガードを入れたが、これは本番デプロイ成功の代替ではない。T852で会社管理のWIF/service account/secret経路を再構成し、アプリ変更時のmain deploy greenを確認するまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。PUBLIC-14を追加済み。
 
+同じく2026-06-26の第2セッションで、T849の完了条件にGitHub Issues/Projectだけでなく、Sheets正本である課題管理表とQA表の開発必須open/未回答ゼロ確認を明示する必要があると確認した。T854で `data/issues_tracker.tsv`、`data/qa_tracker.tsv`、Google Sheets、GitHub Issues/Projectを突合し、開発必須open課題0、未回答/未承認QA 0、または人間承認済みの非ブロッカー化を証跡化するまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。PUBLIC-15を追加済み。
+
 ---
 
 ## 正本と生成物
@@ -86,6 +88,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T850 | 会社運用引継ぎリハーサル・権限棚卸し・Break-glass確認 | `BLOCKED` |
 | T849 | サイト開発完了総合判定・WBS全完了証跡化・GAリリース閉鎖 | `BLOCKED` |
 | T852 | Firebase/GitHub Actionsの本番デプロイ認証経路を会社管理のWIF/service account/secret経路へ再構成し、アプリ変更時のmain deploy greenを証跡化 | `BLOCKED` |
+| T854 | 課題管理表・QA表の未解決/未回答棚卸しと開発ブロッカーゼロ化 | `BLOCKED` |
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 
