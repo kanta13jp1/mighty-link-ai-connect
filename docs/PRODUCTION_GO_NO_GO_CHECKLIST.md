@@ -36,6 +36,8 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 
 2026-06-25にT844としてWBS工程網羅性監査（第3回）を実施し、全WBS完了をサイト開発完了条件にするための横断ゲートを追加した。T845全機能E2E/UAT、T846ユーザー/管理者docs最終更新、T847全テーブル保持/削除照合、T848外部SaaS/AIモデル棚卸し、T850会社運用引継ぎ、T849サイト開発完了総合判定が完了するまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。PUBLIC-13を追加済み。
 
+2026-06-26のWBS再レビュー後、main CIのFirebase deployでWorkload Identity Federation経由ADCがFirebase CLIに認識されず、legacy `FIREBASE_TOKEN` も再認証期限切れであることを確認した。docs/data/exportsのみの変更ではFirebase deployをskipする暫定ガードを入れたが、これは本番デプロイ成功の代替ではない。T852で会社管理のWIF/service account/secret経路を再構成し、アプリ変更時のmain deploy greenを確認するまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。PUBLIC-14を追加済み。
+
 ---
 
 ## 正本と生成物
@@ -83,6 +85,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T848 | AIモデル・外部SaaS・連携サービス棚卸しとGA時点利用可否の最終凍結 | `BLOCKED` |
 | T850 | 会社運用引継ぎリハーサル・権限棚卸し・Break-glass確認 | `BLOCKED` |
 | T849 | サイト開発完了総合判定・WBS全完了証跡化・GAリリース閉鎖 | `BLOCKED` |
+| T852 | Firebase/GitHub Actionsの本番デプロイ認証経路を会社管理のWIF/service account/secret経路へ再構成し、アプリ変更時のmain deploy greenを証跡化 | `BLOCKED` |
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 
@@ -115,12 +118,13 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 
 ## 公式ドキュメント確認メモ
 
-2026-06-19時点の確認対象:
+2026-06-26時点の確認対象:
 
 - Firebase Hosting / Functions: https://firebase.google.com/docs/hosting / https://firebase.google.com/docs/functions
+- Firebase CLI / Hosting GitHub integration: https://firebase.google.com/docs/cli / https://firebase.google.com/docs/hosting/github-integration
 - Gmail API: https://developers.google.com/workspace/gmail/api/guides
 - Google Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate
-- GitHub Actions: https://docs.github.com/actions
+- GitHub Actions / OIDC for Google Cloud / workflow triggers: https://docs.github.com/actions / https://docs.github.com/en/actions/how-tos/secure-your-work/security-harden-deployments/oidc-in-google-cloud-platform / https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
 - GitHub Releases: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
 - SemVer 2.0.0: https://semver.org/
 - Supabase: https://supabase.com/docs/guides/getting-started

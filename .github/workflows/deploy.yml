@@ -62,9 +62,36 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - name: Detect Firebase deploy changes
+        id: firebase_changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          BEFORE="${{ github.event.before }}"
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            BEFORE="$(git rev-parse HEAD^ 2>/dev/null || true)"
+          fi
+
+          if [ -z "$BEFORE" ]; then
+            echo "[!] Could not resolve previous commit; enabling Firebase deploy."
+            echo "firebase_deploy=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          CHANGED_FILES="$(git diff --name-only "$BEFORE" "$GITHUB_SHA" || true)"
+          echo "$CHANGED_FILES"
+
+          if printf '%s\n' "$CHANGED_FILES" | grep -Eq '^(index\.html|firebase\.json|src/|main\.py|requirements\.txt|package(-lock)?\.json|functions/)'; then
+            echo "firebase_deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "firebase_deploy=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Authenticate to Google Cloud via WIF
-        if: ${{ env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
+        if: ${{ steps.firebase_changes.outputs.firebase_deploy == 'true' && env.GCP_WORKLOAD_IDENTITY_PROVIDER != '' }}
         uses: google-github-actions/auth@v3
         with:
           create_credentials_file: true
@@ -72,20 +99,24 @@ jobs:
           service_account: ${{ env.GCP_SERVICE_ACCOUNT_EMAIL }}
 
       - name: Set up Node.js (for Firebase CLI)
+        if: ${{ steps.firebase_changes.outputs.firebase_deploy == 'true' }}
         uses: actions/setup-node@v6
         with:
           node-version: "24"
           package-manager-cache: false
 
       - name: Install Firebase CLI
+        if: ${{ steps.firebase_changes.outputs.firebase_deploy == 'true' }}
         run: npm install -g firebase-tools
 
       - name: Set up Python (for Firebase Functions SDK)
+        if: ${{ steps.firebase_changes.outputs.firebase_deploy == 'true' }}
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
       - name: Set up Python Virtual Environment and Install Dependencies
+        if: ${{ steps.firebase_changes.outputs.firebase_deploy == 'true' }}
         run: |
           python -m venv venv
           source venv/bin/activate
@@ -93,6 +124,7 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: Verify Python Environment and Source Imports
+        if: ${{ steps.firebase_changes.outputs.firebase_deploy == 'true' }}
         run: |
           source venv/bin/activate
           echo "[*] Python executable: $(which python)"
@@ -102,6 +134,7 @@ jobs:
           python -c "import main; print('Import check passed!')"
 
       - name: Deploy to Firebase
+        if: ${{ steps.firebase_changes.outputs.firebase_deploy == 'true' }}
         env:
           FIREBASE_DEPLOY_TARGETS: ${{ vars.FIREBASE_DEPLOY_TARGETS || 'hosting' }}
           FIREBASE_FUNCTIONS_DEPLOY_ENABLED: ${{ vars.FIREBASE_FUNCTIONS_DEPLOY_ENABLED || 'false' }}
@@ -132,9 +165,8 @@ jobs:
             echo "[!] WARNING: FIREBASE_TOKEN is legacy. Prefer FIREBASE_SERVICE_ACCOUNT_JSON with Application Default Credentials."
             AUTH_FLAGS=(--token "$FIREBASE_TOKEN")
           else
-            echo "[!] WARNING: Firebase credentials are not set. Skipping real deployment."
-            echo "[*] Firebase configuration file dry-run validation passed."
-            exit 0
+            echo "::error title=Missing Firebase deploy credentials::Deploy-affecting files changed, but neither Workload Identity Federation, service account JSON, nor FIREBASE_TOKEN credentials are available."
+            exit 2
           fi
 
           FUNCTIONS_DEPLOY_ENABLED="$(printf '%s' "${FIREBASE_FUNCTIONS_DEPLOY_ENABLED:-false}" | tr '[:upper:]' '[:lower:]')"
@@ -172,3 +204,7 @@ jobs:
             echo "::error title=Firebase deploy failed::Could not deploy '$FIREBASE_DEPLOY_TARGETS' to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists and credentials have deploy permissions. Set FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true and FIREBASE_DEPLOY_TARGETS=hosting,functions only after the Firebase project and CI service account can update Cloud Functions IAM."
             exit 2
           fi
+
+      - name: Skip Firebase deploy
+        if: ${{ steps.firebase_changes.outputs.firebase_deploy != 'true' }}
+        run: echo "[*] Firebase deploy skipped because no deploy-affecting files changed."

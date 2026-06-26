@@ -1,15 +1,15 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-25T11:53:49Z",
+  "generated_at": "2026-06-26T10:29:41Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
-    "total": 18,
+    "total": 19,
     "counts": {
       "PASS": 9,
       "HUMAN_GATE": 2,
-      "BLOCKED": 7
+      "BLOCKED": 8
     },
     "evidence_warnings": 0
   },
@@ -28,9 +28,9 @@
       "counts": {
         "PASS": 4,
         "HUMAN_GATE": 2,
-        "BLOCKED": 7
+        "BLOCKED": 8
       },
-      "total": 13
+      "total": 14
     }
   },
   "criteria": [
@@ -402,6 +402,25 @@
         "T848": "未着手",
         "T849": "未着手",
         "T850": "未着手"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-14",
+      "scope": "public_paid_launch",
+      "category": "リリース",
+      "criterion": "Firebase/GitHub Actionsの本番デプロイ認証経路が正規化され、アプリ変更時のmain deployがgreenである",
+      "evidence_source": ".github/workflows/deploy.yml; GitHub Actions CI/CD Pipeline; Firebase Hosting/Functions; docs/WBS_REVIEW_2026-06-26.md",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Codex + 寛太梅澤",
+      "decision_authority": "開発責任者 / 会社管理者",
+      "related_wbs": "T852",
+      "related_issue": "R100;#139",
+      "last_checked": "2026-06-26",
+      "notes": "2026-06-26時点でWIF/ADCがFirebase CLI認証に失敗し、legacy FIREBASE_TOKENも再認証期限切れ。docs/data/exportsのみの変更ではdeployをskipする暫定ガードを入れたが、public_paid_launch前に会社管理のWIF/service account/secret経路で本番deploy greenを確認する。",
+      "wbs_statuses": {
+        "T852": "未着手"
       },
       "missing_evidence": []
     }
