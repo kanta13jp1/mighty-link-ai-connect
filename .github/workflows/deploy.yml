@@ -116,6 +116,7 @@ jobs:
           source venv/bin/activate
 
           AUTH_FLAGS=()
+          LEGACY_FIREBASE_TOKEN="${FIREBASE_TOKEN:-}"
 
           if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]; then
             echo "[*] Using Google Application Default Credentials from Workload Identity Federation."
@@ -161,6 +162,13 @@ jobs:
           echo "[*] Initiating deploy to Firebase project: $FIREBASE_PROJECT_ID"
           echo "[*] Deploy targets: $FIREBASE_DEPLOY_TARGETS"
           if ! firebase deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_DEPLOY_TARGETS" --non-interactive --force "${AUTH_FLAGS[@]}"; then
+            if [ ${#AUTH_FLAGS[@]} -eq 0 ] && [ -n "$LEGACY_FIREBASE_TOKEN" ]; then
+              echo "[!] Firebase deploy with Application Default Credentials failed. Retrying with legacy FIREBASE_TOKEN fallback."
+              unset GOOGLE_APPLICATION_CREDENTIALS
+              if firebase deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_DEPLOY_TARGETS" --non-interactive --force --token "$LEGACY_FIREBASE_TOKEN"; then
+                exit 0
+              fi
+            fi
             echo "::error title=Firebase deploy failed::Could not deploy '$FIREBASE_DEPLOY_TARGETS' to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists and credentials have deploy permissions. Set FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true and FIREBASE_DEPLOY_TARGETS=hosting,functions only after the Firebase project and CI service account can update Cloud Functions IAM."
             exit 2
           fi
