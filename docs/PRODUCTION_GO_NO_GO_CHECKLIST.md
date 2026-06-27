@@ -50,6 +50,8 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 
 同じく2026-06-27のT854クローズアウト中に、Public Uptime Monitorと `python scripts/check_uptime_targets.py` が販売URL `https://mightylink-app.com/` のDNS解決失敗を検出した。GitHub Pages公開デモとFirebase Hosting default URLはOKだが、特商法販売URLとして扱うcustom domainがstrict HTTPS監視でgreenになるまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。T855、R103、QA-83、PUBLIC-16を追加し、詳細は [CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md](CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md) を正本とする。
 
+同じく2026-06-27にT856として `scripts/diagnose_custom_domain_dns.py` を追加し、RDAPとGoogle/Cloudflare Public DNSの診断を `exports/custom_domain_dns_diagnostic.*` へ証跡化した。結果はRDAP `client hold` とPublic DNS `NXDOMAIN` であり、T855ではお名前.com側のhold解除、権威DNS委任、Firebase Hosting required records再確認を優先する。T856は完了だが、PUBLIC-16はT855復旧まで `BLOCKED` のまま維持する。
+
 ---
 
 ## 正本と生成物

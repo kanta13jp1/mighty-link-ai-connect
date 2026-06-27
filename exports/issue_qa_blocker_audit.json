@@ -1,16 +1,16 @@
 {
   "status": "pass",
-  "generated_at": "2026-06-27T12:03:42Z",
-  "issue_total": 146,
-  "qa_total": 112,
+  "generated_at": "2026-06-27T12:28:57Z",
+  "issue_total": 147,
+  "qa_total": 113,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "resolved": 125,
+    "resolved": 126,
     "transferred": 18
   },
   "qa_status_counts": {
-    "回答済": 73,
+    "回答済": 74,
     "想定済": 39
   },
   "issue_blocker_count": 0,

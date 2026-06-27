@@ -1,6 +1,6 @@
 # 本番リリース Go/No-Go 判定レビュー (T746)
 
-- 生成時刻(UTC): 2026-06-27T11:57:39Z
+- 生成時刻(UTC): 2026-06-27T12:28:57Z
 - 正本TSV: `data/release_go_no_go_criteria.tsv`
 - WBS正本: `data/WBS.tsv`
 - 総合判定: **NO_GO**
@@ -36,7 +36,7 @@
 | PUBLIC-13 | public_paid_launch | 完成判定 | BLOCKED | 全機能E2E/UAT、最新ユーザー/管理者docs、全テーブル保持/削除照合、外部SaaS棚卸し、会社運用引継ぎ、サイト開発完了総合判定が完了している | docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-25.md; docs/USER_GUIDE_AND_FAQ.md; docs/DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md; docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md; docs/USER_DATA_DELETION_FLOW.md; docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md; exports/production_go_no_go_review.md; GitHub Project #1 | T844;T845;T846;T847;T848;T849;T850 | CEO / 法務 / 開発責任者 | T846でUSER_GUIDE_AND_FAQを最新機能へ全面更新、T847で全テーブル保持・削除・匿名化照合、T848でAIモデル・外部SaaS・連携サービスGA凍結を完了。残るT845/T850/T849完了までpublic_paid_launchと開発完了宣言はNo-Go。 |
 | PUBLIC-14 | public_paid_launch | リリース | BLOCKED | Firebase/GitHub Actionsの本番デプロイ認証経路が正規化され、アプリ変更時のmain deployがgreenである | .github/workflows/deploy.yml; GitHub Actions CI/CD Pipeline; Firebase Hosting/Functions; docs/WBS_REVIEW_2026-06-26.md | T852 | 開発責任者 / 会社管理者 | 2026-06-26時点でWIF/ADCがFirebase CLI認証に失敗し、legacy FIREBASE_TOKENも再認証期限切れ。docs/data/exportsのみの変更ではdeployをskipする暫定ガードを入れたが、public_paid_launch前に会社管理のWIF/service account/secret経路で本番deploy greenを確認する。 |
 | PUBLIC-15 | public_paid_launch | 品質管理 | PASS | 課題管理表・QA表の開発必須open/未回答が0である | data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Issue #141; GitHub Project #1 | T853;T854;T849 | 開発責任者 / CEO | T854で課題管理表の状態=openを0、QA表の未回答/未承認を0へ整理。残るFirebase CI/CD、UAT、会社運用引継ぎ、最終総合判定はPUBLIC-13/PUBLIC-14およびWBSで管理し、課題表openとして二重管理しない。 |
-| PUBLIC-16 | public_paid_launch | 運用監視 | BLOCKED | 販売URL `https://mightylink-app.com/` のDNS解決とstrict HTTPS uptimeがgreenである | data/uptime_targets.tsv; scripts/check_uptime_targets.py; exports/uptime_monitor_report.json; .github/workflows/uptime-monitor.yml; docs/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md; GitHub Issue #143 | T855 | 開発責任者 / CEO | 2026-06-27のPublic Uptime Monitorとローカル再実行で、GitHub Pages公開デモとFirebase Hosting default URLはOKだが、販売URLmightylink-app.comがgetaddrinfo failedでDNS解決失敗。お名前.com/Firebase Hostingレコード確認とstrict HTTPS監視green化までpublic_paid_launchとサイト開発完了宣言はNo-Go。 |
+| PUBLIC-16 | public_paid_launch | 運用監視 | BLOCKED | 販売URL `https://mightylink-app.com/` のDNS解決とstrict HTTPS uptimeがgreenである | data/uptime_targets.tsv; scripts/check_uptime_targets.py; exports/uptime_monitor_report.json; scripts/diagnose_custom_domain_dns.py; exports/custom_domain_dns_diagnostic.md; exports/custom_domain_dns_diagnostic.json; .github/workflows/uptime-monitor.yml; docs/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md; GitHub Issue #143 | T855;T856 | 開発責任者 / CEO | 2026-06-27のPublic Uptime Monitorとローカル再実行で、GitHub Pages公開デモとFirebase Hosting default URLはOKだが、販売URLmightylink-app.comがgetaddrinfo failedでDNS解決失敗。T856診断でRDAP client holdとPublic DNS NXDOMAINを確認。お名前.com側のhold解除、権威DNS委任、Firebase Hostingレコード再確認、strict HTTPS監視green化までpublic_paid_launchとサイト開発完了宣言はNo-Go。 |
 
 ## 承認プロセス
 

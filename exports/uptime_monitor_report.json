@@ -1,6 +1,6 @@
 {
   "task_id": "T743",
-  "generated_at_utc": "2026-06-27T11:53:50Z",
+  "generated_at_utc": "2026-06-27T12:16:39Z",
   "targets_path": "data\\uptime_targets.tsv",
   "summary": {
     "total": 3,
@@ -19,7 +19,7 @@
       "owner": "Codex",
       "status": "ok",
       "http_status": 200,
-      "elapsed_ms": 256.43,
+      "elapsed_ms": 260.62,
       "final_url": "https://kanta13jp1.github.io/mighty-link-ai-connect/",
       "tls_verification": "strict",
       "error": null,
@@ -34,7 +34,7 @@
       "owner": "Codex",
       "status": "ok",
       "http_status": 200,
-      "elapsed_ms": 48.38,
+      "elapsed_ms": 40.9,
       "final_url": "https://mighty-link-ai-connect-13d22.web.app/",
       "tls_verification": "strict",
       "error": null,
