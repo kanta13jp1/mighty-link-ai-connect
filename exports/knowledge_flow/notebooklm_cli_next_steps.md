@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-27T12:22:59+09:00
+Generated: 2026-06-27T14:42:17+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `106`
-- Drive docs uploaded: `6`
-- Drive docs skipped unchanged: `100`
+- Drive docs discovered: `107`
+- Drive docs uploaded: `2`
+- Drive docs skipped unchanged: `105`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -17,6 +17,7 @@ Generated: 2026-06-27T12:22:59+09:00
 - `docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1vZkDFnO5AhW1oEC3pif_bO9kCLQg8xh4iqdPXfm0QmI/edit?usp=drivesdk
 - `docs/ADMIN_OPERATIONS_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1xH0kZK698mtCkj9YDSEou5xdbENZ_nC5Pm4-Tib-f_Q/edit?usp=drivesdk
 - `docs/AI_COST_MONITORING_AND_QUOTA_DESIGN.md`: https://docs.google.com/document/d/1MaQDg52OsPPzpDVlfAMi4xdqSENRc8tWYNV729uytQ4/edit?usp=drivesdk
+- `docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md`: https://docs.google.com/document/d/1NUNTGs7qYYjoGv4f4G6OcJ7nS8fCeH2Ph1R_fdUYkkc/edit?usp=drivesdk
 - `docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md`: https://docs.google.com/document/d/1bBNOphS-rJbJMWiYJGba-3ZGE-FEHqHrE4dDbKDPsew/edit?usp=drivesdk
 - `docs/ANTIGRAVITY_GUIDE.md`: https://docs.google.com/document/d/1d0SMuvOQXnGLxmNj7d1ktfWczSmxlWL0wblxlYDMH4E/edit?usp=drivesdk
 - `docs/ANTIGRAVITY_HOOKS_SYNC_POC.md`: https://docs.google.com/document/d/17zvd4fsOXx3hhgMHeZdTKUNaZlWz7-JzvU-1zS0SLDw/edit?usp=drivesdk

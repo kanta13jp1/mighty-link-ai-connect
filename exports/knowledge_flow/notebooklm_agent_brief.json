@@ -4,7 +4,7 @@
     "action": "used_existing",
     "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-06-27 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
   },
-  "source_count": 106,
+  "source_count": 107,
   "source_results": [
     {
       "title": "Mighty Skill-Bridge docs/docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
@@ -42,6 +42,16 @@
       "action": "skipped_existing_refresh",
       "reason": "--skip-source-refresh",
       "source_id": "3cb003e7-07ba-4f57-b587-6b192d93d98a",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "title": "Mighty Skill-Bridge docs/docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md",
+      "drive_file_id": "1NUNTGs7qYYjoGv4f4G6OcJ7nS8fCeH2Ph1R_fdUYkkc",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "c7ef0d42-f647-45a7-92c4-26c157dafd9f",
       "returncode": null,
       "stdout": "",
       "stderr": ""
@@ -259,9 +269,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md",
       "drive_file_id": "1z342WkM3spdRi9nNP17b_A1SYxGgVpYkFtk_WP9K7uI",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: fd13dd65-0694-4476-a5c2-db2eee0e02aa\nTitle: Mighty Skill-Bridge \ndocs/docs/DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "fd13dd65-0694-4476-a5c2-db2eee0e02aa",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -1068,10 +1080,10 @@
   "ask_generation": {
     "status": "skipped",
     "reason": "--skip-asks",
-    "generated_at_jst": "2026-06-27T12:22:59+09:00",
+    "generated_at_jst": "2026-06-27T14:42:17+09:00",
     "ask_timeout_seconds": 900,
     "next_command": "python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900",
-    "source_count": 106
+    "source_count": 107
   },
   "question": "このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、\nCodex/AIエージェントが次に開発を進めるための要約を作ってください。\n\n必ず以下を含めてください。\n1. 現在のプロダクト方向性で確定していること\n2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク\n3. 6/2で社長に決めてもらうべき事項\n4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提\n5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題\n6. WBSへ追加すべき次アクション\n",
   "summary_returncode": null,

@@ -17,7 +17,7 @@ T847では、現行サイトで作成済みのSupabaseテーブル、SQLite fall
 - 高感度の新規テーブルはSupabase RLSを有効化し、`anon` / `authenticated` の直接テーブル権限をrevoke済み、またはRLS有効かつ公開REST policyなしのAPI proxy限定運用とする。
 - 本人確認付きセルフエクスポートは `GET /api/user-data/export` で実装済み。ただし旧デモテーブルの完全な本人スコープはT752の `owner_uid` / `tenant_id` 追加まで制限付きで扱う。
 - 退会・完全削除はT742の契約を正本とし、一般公開前にはT752/T745/T798の認証・同意・法務ゲートと合わせて再検証する。
-- T847は完了したが、`public_paid_launch` はT845/T848/T850/T849/T852/T854などの残ゲート完了までNo-Goのまま維持する。
+- T847は完了したが、`public_paid_launch` はT845/T850/T849/T852/T854などの残ゲート完了までNo-Goのまま維持する。
 
 ## 参照した正本
 
@@ -83,4 +83,3 @@ T847では、現行サイトで作成済みのSupabaseテーブル、SQLite fall
 ## 公式ドキュメント確認メモ
 
 2026-06-27のT847反映では、Supabase RLS/production、Firebase Hosting/Functions、Google Cloud Logging retention、Google Sheets API batchUpdate、GitHub Actions/Projects、Stripe Customer Portal/Billing、OpenAI Codex、Anthropic Claude Code、Google Gemini、Microsoft Azure AI Foundry、Slack、Notion、Firecrawl、InsForge、Discord、Figma、Canva、Reddit、Unity、Apple Machine Learning/HIG、AWS Bedrock、Meta Llama、xAI、Kimi、MiMo、DeepSeek、BytePlus、お名前.comの公式情報を確認した。
-

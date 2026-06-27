@@ -40,7 +40,9 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 
 同じく2026-06-26の第2セッションで、T849の完了条件にGitHub Issues/Projectだけでなく、Sheets正本である課題管理表とQA表の開発必須open/未回答ゼロ確認を明示する必要があると確認した。T854で `data/issues_tracker.tsv`、`data/qa_tracker.tsv`、Google Sheets、GitHub Issues/Projectを突合し、開発必須open課題0、未回答/未承認QA 0、または人間承認済みの非ブロッカー化を証跡化するまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。PUBLIC-15を追加済み。
 
-2026-06-27にT846としてユーザー操作ガイド・管理者Runbook・FAQを現行機能へ全面更新し、T847として [DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md) を追加した。T847では `profiles` / `matches` / `audits` / `usage_ledgers`、feedback/support、`sales_email_*`、`employee_assessment_responses`、`attendance_*`、Stripe Portal、セルフエクスポート、ローカル/Cloud Loggingについて、保持・削除・匿名化・RLS・原本非保存を照合した。これによりPUBLIC-13内のT846/T847部分は完了したが、T845/T848/T850/T849が残るため `public_paid_launch` とサイト開発完了宣言はNo-Goのまま維持する。
+2026-06-27にT846としてユーザー操作ガイド・管理者Runbook・FAQを現行機能へ全面更新し、T847として [DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md) を追加した。T847では `profiles` / `matches` / `audits` / `usage_ledgers`、feedback/support、`sales_email_*`、`employee_assessment_responses`、`attendance_*`、Stripe Portal、セルフエクスポート、ローカル/Cloud Loggingについて、保持・削除・匿名化・RLS・原本非保存を照合した。
+
+同じく2026-06-27にT848として [AI_SAAS_SERVICE_FREEZE_RUNBOOK.md](AI_SAAS_SERVICE_FREEZE_RUNBOOK.md) を追加し、Anthropic/OpenAI/Google/Microsoft/Meta/Amazon/Apple/xAI/Kimi/MiMo/DeepSeek/BytePlus/GitHub/Slack/Notion/Obsidian/Unity/Figma/Canva/Reddit/InsForge/FireCrawl/Discord/Stripe/Supabase/Firebase/お名前.com の採用/非採用、モデル/API、fallback、secret管理、会社請求移管状態を凍結した。これによりPUBLIC-13内のT846/T847/T848部分は完了したが、T845/T850/T849が残るため `public_paid_launch` とサイト開発完了宣言はNo-Goのまま維持する。
 
 ---
 
@@ -84,7 +86,6 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T770 | 同時100ユーザー想定の負荷テスト | `BLOCKED` |
 | T817_7 | 共有営業メールAIマッチングMVPの個人情報/監査/負荷確認、実メール接続後の運用hardening | `BLOCKED` |
 | T845 | 全機能本番受入E2E/UAT最終再検証 | `BLOCKED` |
-| T848 | AIモデル・外部SaaS・連携サービス棚卸しとGA時点利用可否の最終凍結 | `BLOCKED` |
 | T850 | 会社運用引継ぎリハーサル・権限棚卸し・Break-glass確認 | `BLOCKED` |
 | T849 | サイト開発完了総合判定・WBS全完了証跡化・GAリリース閉鎖 | `BLOCKED` |
 | T852 | Firebase/GitHub Actionsの本番デプロイ認証経路を会社管理のWIF/service account/secret経路へ再構成し、アプリ変更時のmain deploy greenを証跡化 | `BLOCKED` |
@@ -92,7 +93,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 
-完了済みの公開前ゲート: T806 リリースノート・SemVer・git tag・GitHub Releases運用、T805 外部ペネトレーション疑似診断（High 0 / secret-like値露出 0）、T835 公開URLセキュリティヘッダhardening、T846 ユーザー/管理者docs最終更新、T847 全テーブル保持・削除・匿名化照合。
+完了済みの公開前ゲート: T806 リリースノート・SemVer・git tag・GitHub Releases運用、T805 外部ペネトレーション疑似診断（High 0 / secret-like値露出 0）、T835 公開URLセキュリティヘッダhardening、T846 ユーザー/管理者docs最終更新、T847 全テーブル保持・削除・匿名化照合、T848 AIモデル・外部SaaS・連携サービスGA凍結。
 
 ---
 
