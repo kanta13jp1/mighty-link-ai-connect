@@ -22,7 +22,7 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 | Scope | 判定 | 理由 |
 | --- | --- | --- |
 | `controlled_demo` | `GO` | GitHub Pages公開デモ、本番URL、問い合わせ窓口、DR/Incident/Rollback、監視・クォータRunbookの証跡が揃っている |
-| `public_paid_launch` | `NO_GO` | リリースノート/バージョニング運用、T805外部疑似診断、T835公開URLヘッダhardeningは整備済みだが、法務/CEO承認、規約同意UI、オンボーディング、法定4ページ実装、Stripe課金、負荷テスト、営業メールAIマッチング本番hardening、全機能最終UAT、最新ユーザー/管理者docs、全テーブル保持/削除照合、外部SaaS棚卸し、会社運用引継ぎ、サイト開発完了総合判定が未完了 |
+| `public_paid_launch` | `NO_GO` | リリースノート/バージョニング運用、T805外部疑似診断、T835公開URLヘッダhardening、T846最新ユーザー/管理者docs、T847全テーブル保持/削除照合は整備済みだが、法務/CEO承認、規約同意UI、オンボーディング、法定4ページ実装、Stripe課金、負荷テスト、営業メールAIマッチング本番hardening、全機能最終UAT、外部SaaS棚卸し、会社運用引継ぎ、サイト開発完了総合判定が未完了 |
 
 つまり、現状は「社長説明・限定デモは継続可。一般公開・有償ローンチは未承認」である。
 
@@ -39,6 +39,8 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 2026-06-26のWBS再レビュー後、main CIのFirebase deployでWorkload Identity Federation経由ADCがFirebase CLIに認識されず、legacy `FIREBASE_TOKEN` も再認証期限切れであることを確認した。docs/data/exportsのみの変更ではFirebase deployをskipする暫定ガードを入れたが、これは本番デプロイ成功の代替ではない。T852で会社管理のWIF/service account/secret経路を再構成し、アプリ変更時のmain deploy greenを確認するまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。PUBLIC-14を追加済み。
 
 同じく2026-06-26の第2セッションで、T849の完了条件にGitHub Issues/Projectだけでなく、Sheets正本である課題管理表とQA表の開発必須open/未回答ゼロ確認を明示する必要があると確認した。T854で `data/issues_tracker.tsv`、`data/qa_tracker.tsv`、Google Sheets、GitHub Issues/Projectを突合し、開発必須open課題0、未回答/未承認QA 0、または人間承認済みの非ブロッカー化を証跡化するまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。PUBLIC-15を追加済み。
+
+2026-06-27にT846としてユーザー操作ガイド・管理者Runbook・FAQを現行機能へ全面更新し、T847として [DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md) を追加した。T847では `profiles` / `matches` / `audits` / `usage_ledgers`、feedback/support、`sales_email_*`、`employee_assessment_responses`、`attendance_*`、Stripe Portal、セルフエクスポート、ローカル/Cloud Loggingについて、保持・削除・匿名化・RLS・原本非保存を照合した。これによりPUBLIC-13内のT846/T847部分は完了したが、T845/T848/T850/T849が残るため `public_paid_launch` とサイト開発完了宣言はNo-Goのまま維持する。
 
 ---
 
@@ -82,8 +84,6 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T770 | 同時100ユーザー想定の負荷テスト | `BLOCKED` |
 | T817_7 | 共有営業メールAIマッチングMVPの個人情報/監査/負荷確認、実メール接続後の運用hardening | `BLOCKED` |
 | T845 | 全機能本番受入E2E/UAT最終再検証 | `BLOCKED` |
-| T846 | ユーザー操作ガイド・管理者Runbook・FAQの全機能最終更新 | `BLOCKED` |
-| T847 | 本番データ保持・削除・匿名化ポリシーの全テーブル実装照合 | `BLOCKED` |
 | T848 | AIモデル・外部SaaS・連携サービス棚卸しとGA時点利用可否の最終凍結 | `BLOCKED` |
 | T850 | 会社運用引継ぎリハーサル・権限棚卸し・Break-glass確認 | `BLOCKED` |
 | T849 | サイト開発完了総合判定・WBS全完了証跡化・GAリリース閉鎖 | `BLOCKED` |
@@ -92,7 +92,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 
-完了済みの公開前ゲート: T806 リリースノート・SemVer・git tag・GitHub Releases運用、T805 外部ペネトレーション疑似診断（High 0 / secret-like値露出 0）、T835 公開URLセキュリティヘッダhardening。
+完了済みの公開前ゲート: T806 リリースノート・SemVer・git tag・GitHub Releases運用、T805 外部ペネトレーション疑似診断（High 0 / secret-like値露出 0）、T835 公開URLセキュリティヘッダhardening、T846 ユーザー/管理者docs最終更新、T847 全テーブル保持・削除・匿名化照合。
 
 ---
 

@@ -9,6 +9,7 @@
 | 日付 | バージョン | 内容 | 起稿者 |
 | :--- | :--- | :--- | :--- |
 | 2026-06-10 | v1.0.0 | 初版作成（論理削除・物理削除・APIエンドポイント設計） | Claude Code |
+| 2026-06-27 | v1.1.0 | T847として営業メールAI、社内アンケート、勤怠、サポート、課金、セルフエクスポートを含む全テーブル保持・削除・匿名化照合を追記 | Codex |
 
 ---
 
@@ -25,7 +26,27 @@
 | Firebase Auth | 認証情報（メール・UID） | Firebase Auth レコード削除 |
 | Firebase Functions ログ | Cloud Logging の実行ログ | GCP ログ保持ポリシーで30日後自動削除 |
 
-### 1.2 保持が必要なデータ（削除除外）
+### 1.2 T847で追加した現行テーブル群
+
+現行サイトでは、初期の `profiles` / `matches` / `audits` 以外に、営業メールAI、社内アンケート、勤怠、問い合わせ、フィードバック、課金、セルフエクスポートの保存先が追加されている。全テーブルの正本は [DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md) とし、退会・削除請求時は次の方針を併用する。
+
+| 領域 | 主な保存先 | 削除・匿名化方針 |
+| :--- | :--- | :--- |
+| 営業メールAI | `sales_email_messages`, `project_requirements`, `talent_profiles_from_email`, `email_match_results`, `email_match_feedback` | メール本文全文・連絡先実値は保存しない。hash/redacted excerpt/匿名要員keyを、案件・要員・match単位で削除または匿名集計化する。 |
+| 社内アンケート | `employee_assessment_responses` | `subject_pseudonym` 単位で削除する。心理/健康スコアや医療情報は保存しない。 |
+| 勤怠 | `attendance_punch_events`, `attendance_timesheet_imports` | `subject_pseudonym` 単位で削除する。CSV原本、元ファイル名、生明細は保存しない。 |
+| 問い合わせ/フィードバック | `support_requests`, `feedback_events` | 本人メールまたは `session_id` 単位で本文削除・匿名化する。顧客対応や法務上必要な証跡は個人識別子を外す。 |
+| 課金 | Stripe Dashboard / Portal session API | Stripe secret、カード番号、短命Portal URLはアプリDBへ保存しない。請求証跡はStripe正本とし、アプリ側はmasked previewのみ扱う。 |
+| セルフエクスポート | `GET /api/user-data/export` | Firebase本人確認済みのJSONを利用者端末へ一時生成する。GitHub/Sheets/docs/NotebookLMへ添付しない。 |
+
+### 1.3 T847照合結果
+
+- `employee_assessment_responses`、`attendance_*`、`sales_email_*` はRLS有効、匿名REST直接権限revoke済み。
+- `support_requests`、`feedback_events` はRLS有効かつ公開REST policyなしで、FastAPI proxy経由に限定する。
+- ローカル/CI監査ログは `scripts/rotate_runtime_logs.py` で7日超または10MB超を圧縮し、90日で削除する。
+- Cloud Logging `_Default` は30日保持を標準にする。90日超の長期保存は課題管理表へ起票し、承認後にGCS sink/lifecycleで管理する。
+
+### 1.4 保持が必要なデータ（削除除外）
 
 以下は法的義務・会計要件のため一定期間保持する：
 
@@ -247,5 +268,6 @@ CREATE POLICY "profiles_hide_deleted"
 
 - [Firebase / Supabase システムアーキテクチャ詳細設計書](FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md)
 - [Supabase Database 物理設計とインデックス設計](SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md)
+- [本番データ保持・削除・匿名化ポリシー全テーブル照合 Runbook](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md)
 - [個人情報同意書テンプレート](PILOT_CONSENT_TEMPLATE.md)
 - [ユーザー操作ガイド・FAQ](USER_GUIDE_AND_FAQ.md)

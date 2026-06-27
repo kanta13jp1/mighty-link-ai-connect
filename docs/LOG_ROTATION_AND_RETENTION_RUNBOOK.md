@@ -1,6 +1,7 @@
 # ログローテーション・アクセスログ保持 Runbook (T748)
 
 作成日: 2026-06-14  
+最終更新: 2026-06-27
 担当レーン: VSCode + Codex  
 対象: Firebase Hosting / Google Cloud Logging / リポジトリ内 JSONL・`.log` 監査ログ
 
@@ -26,6 +27,20 @@
 | `data/audit/*.jsonl` | ローカル/CI | 7日経過または10MB超で圧縮 | `data/log_archive/YYYY/MM/*.gz` へ移動、90日で削除 |
 | `data/external_api_usage*.jsonl` | ローカル/CI | 同上 | 同上 |
 | `logs/*.log`, `logs/*.jsonl`, repo直下 `*.log` | ローカル/CI | 同上 | 同上 |
+
+## T847 全テーブル保持・削除照合との接続
+
+T847で、アプリDB、営業メールAI、社内アンケート、勤怠、サポート、課金、セルフエクスポートを含む保持・削除・匿名化マトリクスを [DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md) に追加した。本Runbookはログ/監査証跡の保持正本として、次を保証する。
+
+| 対象 | 保持/削除の扱い | 禁止事項 |
+| --- | --- | --- |
+| 営業メールAIの処理ログ | `email_parse_runs` は件数、モデル名、fallback、error summaryのみを90日標準で保持 | 実メール本文、送信者メール実値、OAuth tokenを保存しない |
+| 勤怠CSV解析ログ | `attendance_timesheet_imports` はdigest、拡張子、集計値、承認statusのみ保持 | CSV原本、元ファイル名、生明細を保存しない |
+| 社内アンケートログ | `employee_assessment_responses` は匿名keyとredacted memoのみ保持 | 氏名、社員番号、心理/健康スコア、医療情報を保存しない |
+| サポート/フィードバック | 管理summaryは抜粋だけ返し、必要に応じ180日後に匿名化 | 問い合わせ本文全文をSheets/Issue/NotebookLMへ転載しない |
+| Stripe Portal | アプリ側は短命session URLを永続化しない | `STRIPE_SECRET_KEY`、カード番号、顧客ID実値をdocs/Sheetsへ記録しない |
+
+削除請求の証跡は、削除日時、担当者、対象キー種別、成功/失敗のみを残し、削除対象の個人データ実値はログへ書かない。
 
 ## Firebase / Google Cloud 側の設定
 
@@ -82,4 +97,5 @@ GitHub Actions 側では `.github/workflows/runtime-log-retention.yml` が週次
 - [INCIDENT_POSTMORTEM_RUNBOOK.md](INCIDENT_POSTMORTEM_RUNBOOK.md)
 - [AUDIT_LOG_MASKING_AND_ENCRYPTION.md](AUDIT_LOG_MASKING_AND_ENCRYPTION.md)
 - [SUPABASE_BACKUP_RESTORE_RUNBOOK.md](SUPABASE_BACKUP_RESTORE_RUNBOOK.md)
+- [DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md)
 - [WBS.md](WBS.md)
