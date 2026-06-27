@@ -1288,6 +1288,13 @@ SUPPORT_STATUSES = {"new", "triaged", "in_progress", "escalated", "closed"}
 MAX_SUPPORT_SUBJECT_LENGTH = 160
 MAX_SUPPORT_MESSAGE_LENGTH = 3000
 SUPPORT_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+LEGAL_CONSENT_VERSION = "MSB-LEGAL-2026-06-DRAFT"
+LEGAL_CONSENT_DOCS = (
+    "TERMS_OF_SERVICE.md",
+    "PRIVACY_POLICY.md",
+    "TOKUSHOHO_NOTATION.md",
+    "BILLING_AND_REFUND_POLICY.md",
+)
 EMPLOYEE_ASSESSMENT_CONSENT_VERSION = "MSB-EMP-ASSESS-2026-06"
 EMPLOYEE_ASSESSMENT_PSEUDONYM_SALT = os.environ.get(
     "EMPLOYEE_ASSESSMENT_PSEUDONYM_SALT",
@@ -1342,6 +1349,26 @@ def redact_sensitive_text(value: Optional[str], limit: int) -> str:
     text = SENSITIVE_PHONE_RE.sub("<phone:redacted>", text)
     text = SENSITIVE_SECRET_RE.sub("<secret:redacted>", text)
     return text[:limit]
+
+
+def validate_legal_consent(accepted: bool, consent_version: Optional[str], source: str) -> dict:
+    version = clean_feedback_text(consent_version, 80)
+    if not accepted:
+        raise HTTPException(
+            status_code=400,
+            detail="Terms of Service and Privacy Policy consent is required before running this API.",
+        )
+    if version != LEGAL_CONSENT_VERSION:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid legal consent version. Expected {LEGAL_CONSENT_VERSION}.",
+        )
+    return {
+        "accepted": True,
+        "version": version,
+        "source": clean_feedback_text(source, 80) or "unknown",
+        "docs": list(LEGAL_CONSENT_DOCS),
+    }
 
 
 def db_insert_feedback_event(
@@ -5059,10 +5086,17 @@ async def get_seedance_video_task(task_id: str):
 async def parse_document(
     file: UploadFile = File(None),
     text: str = Form(None),
-    doc_type: str = Form("engineer") # "engineer" or "job"
+    doc_type: str = Form("engineer"), # "engineer" or "job"
+    legal_consent_accepted: bool = Form(False),
+    legal_consent_version: str = Form(LEGAL_CONSENT_VERSION),
 ):
     """Parses text or binary files (PDF/Images) and structure them."""
     print(f"[*] API Parse Request received. Type: {doc_type}")
+    legal_consent = validate_legal_consent(
+        legal_consent_accepted,
+        legal_consent_version,
+        "api_parse",
+    )
     
     file_bytes = None
     file_name = None
@@ -5155,7 +5189,8 @@ async def parse_document(
                 "parsed_content": parsed_text,
                 "structured_profile": asdict(local_profile),
                 "audit_event_id": audit_event["event_id"],
-                "db_id": db_id
+                "db_id": db_id,
+                "legal_consent": legal_consent,
             }
             
         except Exception as e:
@@ -5204,13 +5239,16 @@ async def parse_document(
         "parsed_content": parsed_content,
         "structured_profile": asdict(profile),
         "audit_event_id": audit_event["event_id"],
-        "db_id": db_id
+        "db_id": db_id,
+        "legal_consent": legal_consent,
     }
 
 
 class EvaluationRequest(BaseModel):
     engineer_content: str
     job_content: str
+    legal_consent_accepted: bool = False
+    legal_consent_version: str = LEGAL_CONSENT_VERSION
 
 
 class FeedbackRequest(BaseModel):
@@ -5277,6 +5315,11 @@ class SupportRequest(BaseModel):
 async def evaluate_matching(req: EvaluationRequest):
     """Calculates multidimensional matching score and generate interview QA and roadmap."""
     print("[*] API Match Request received.")
+    legal_consent = validate_legal_consent(
+        req.legal_consent_accepted,
+        req.legal_consent_version,
+        "api_match",
+    )
     
     fallback_reason = "Gemini live mode is not configured."
 
@@ -5383,6 +5426,7 @@ async def evaluate_matching(req: EvaluationRequest):
                 eng_id, jb_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, interview_questions
             )
             match_data["db_match_id"] = db_match_id
+            match_data["legal_consent"] = legal_consent
 
             print("[+] Gemini Evaluator completed successfully.")
             return match_data
@@ -5428,6 +5472,7 @@ async def evaluate_matching(req: EvaluationRequest):
         eng_id, jb_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, interview_questions
     )
     fallback_response["db_match_id"] = db_match_id
+    fallback_response["legal_consent"] = legal_consent
     
     print("[+] Deterministic evaluator fallback completed successfully.")
     return fallback_response

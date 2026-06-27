@@ -1,15 +1,15 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-27T05:38:11Z",
+  "generated_at": "2026-06-27T10:29:11Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
     "total": 20,
     "counts": {
-      "PASS": 9,
+      "PASS": 11,
       "HUMAN_GATE": 2,
-      "BLOCKED": 9
+      "BLOCKED": 7
     },
     "evidence_warnings": 0
   },
@@ -26,9 +26,9 @@
       "recommendation": "NO_GO",
       "worst_state": "BLOCKED",
       "counts": {
-        "PASS": 4,
+        "PASS": 6,
         "HUMAN_GATE": 2,
-        "BLOCKED": 9
+        "BLOCKED": 7
       },
       "total": 15
     }
@@ -222,17 +222,17 @@
       "scope": "public_paid_launch",
       "category": "コンプライアンス",
       "criterion": "利用規約・プライバシーポリシー同意チェックボックスが本番UIに実装済み",
-      "evidence_source": "index.html; docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md",
+      "evidence_source": "index.html; src/index.html; src/app.py; tests/test_api.py; tests/test_legal_consent_ui.py; docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md",
       "required_state": "PASS",
-      "current_state": "BLOCKED",
-      "owner": "Antigravity + Gemini",
+      "current_state": "PASS",
+      "owner": "Antigravity + Gemini + Codex",
       "decision_authority": "開発責任者",
       "related_wbs": "T745",
-      "related_issue": "",
-      "last_checked": "2026-06-17",
-      "notes": "ユーザー登録/診断前に同意取得できるUIが必要。",
+      "related_issue": "R102",
+      "last_checked": "2026-06-27",
+      "notes": "Analyze実行前にドラフト規約同意チェックを必須化し、/api/parseと/api/matchでMSB-LEGAL-2026-06-DRAFTを検証。T798法務本文確定とT752ユーザー別同意履歴は別ゲートとして継続。",
       "wbs_statuses": {
-        "T745": "未着手"
+        "T745": "完了"
       },
       "missing_evidence": []
     },
@@ -260,15 +260,15 @@
       "scope": "public_paid_launch",
       "category": "コンプライアンス",
       "criterion": "法定4ページとフッター常時リンクが本番UIに統合済み",
-      "evidence_source": "docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md; docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md",
+      "evidence_source": "index.html; src/index.html; docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md; docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md; docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md",
       "required_state": "PASS",
-      "current_state": "BLOCKED",
-      "owner": "Antigravity + Gemini",
+      "current_state": "PASS",
+      "owner": "Antigravity + Gemini + Codex",
       "decision_authority": "開発責任者",
       "related_wbs": "T777",
-      "related_issue": "",
-      "last_checked": "2026-06-17",
-      "notes": "Stripe審査と販売URL案内の前提。",
+      "related_issue": "R102;R51",
+      "last_checked": "2026-06-27",
+      "notes": "フッター常時リンクとAnalyze同意パネルから4法定・規約ドラフトへ到達可能。T798法務確認、T804価格確定、Stripe live審査は別ゲートで継続。",
       "wbs_statuses": {
         "T777": "完了"
       },

@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-06-27 14:38:25 UTC+09:00
+Generated: 2026-06-27 19:31:49 UTC+09:00
 
 ## Purpose
 
@@ -11,10 +11,10 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 ## Current WBS Snapshot
 
 - Total tasks: 273
-- Done: 238
+- Done: 239
 - In progress: 1
-- Not started: 34
-- Completion rate: 87%
+- Not started: 33
+- Completion rate: 88%
 - CEO presentation phase tasks: 90
 - CEO presentation phase done: 90
 
@@ -511,13 +511,14 @@ Gemini quota 復帰後に live AI を接続した瞬間、既存の FastAPI バ�
 - `matched_skills` / `missing_skills` を含む `structured` payload を `/api/match` のレスポンスに追加。
 - Gemini live 実行時の prompt に、local deterministic pre-parse / pre-score を structured context として渡す準備を追加。
 - `/api/parse` / `/api/match` の判定結果を、後から根拠確認できるローカル監査ログへ保存。
+- `/api/parse` / `/api/match` の実行前に、`MSB-LEGAL-2026-06-DRAFT` の利用規約・プライバシーポリシー同意を必須化。
 - `/api/audit/recent` を追加し、直近の AI 判定イベントを raw document body なしで確認できるようにした。
 
 ## API 契約
 
 ### `/api/parse`
 
-従来どおり `parsed_content` を返す。追加で `structured_profile` を返す。
+従来どおり `parsed_content` を返す。追加で `structured_profile` を返す。実行時はmultipart/form-dataで `legal_consent_accepted=true` と `legal_consent_version=MSB-LEGAL-2026-06-DRAFT` を必須とする。
 
 ```json
 {
@@ -525,6 +526,11 @@ Gemini quota 復帰後に live AI を接続した瞬間、既存の FastAPI バ�
   "ai_mode": "deterministic_fallback",
   "parsed_content": "...",
   "audit_event_id": "a1b2c3d4e5f6...",
+  "legal_consent": {
+    "accepted": true,
+    "version": "MSB-LEGAL-2026-06-DRAFT",
+    "source": "api_parse"
+  },
   "structured_profile": {
     "doc_type": "engineer",
     "title": "...",
@@ -537,7 +543,7 @@ Gemini quota 復帰後に live AI を接続した瞬間、既存の FastAPI バ�
 
 ### `/api/match`
 
-従来の UI が使う `final_score`, `scores`, `summary`, `qa`, `roadmap_week1` から `roadmap_week4` は維持する。追加で AI 復帰時の橋渡しになる `structured` を返す。
+従来の UI が使う `final_score`, `scores`, `summary`, `qa`, `roadmap_week1` から `roadmap_week4` は維持する。追加で AI 復帰時の橋渡しになる `structured` を返す。JSON bodyで `legal_consent_accepted=true` と `legal_consent_version=MSB-LEGAL-2026-06-DRAFT` を必須とする。
 
 ```json
 {
@@ -550,6 +556,11 @@ Gemini quota 復帰後に live AI を接続した瞬間、既存の FastAPI バ�
   },
   "ai_mode": "deterministic_fallback",
   "audit_event_id": "a1b2c3d4e5f6...",
+  "legal_consent": {
+    "accepted": true,
+    "version": "MSB-LEGAL-2026-06-DRAFT",
+    "source": "api_match"
+  },
   "structured": {
     "candidate": {},
     "job": {},

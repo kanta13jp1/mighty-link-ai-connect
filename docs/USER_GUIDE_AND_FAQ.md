@@ -3,7 +3,7 @@
 > 対象読者: 社内利用者、営業担当、人事/管理担当、システム管理者
 > 最終更新: 2026-06-27
 > バージョン: v1.3.0
-> 関連WBS: T744 / T790 / T781 / T817 / T829 / T840 / T841 / T842 / T843 / T846
+> 関連WBS: T744 / T745 / T790 / T781 / T817 / T829 / T840 / T841 / T842 / T843 / T846
 
 ---
 
@@ -15,7 +15,7 @@ Mighty Skill-Bridge は、エンジニアと案件のフィット分析を起点
 | --- | --- |
 | 管理下デモ | CEO共有済みの GitHub Pages URL で継続利用可 |
 | 一般公開・有償ローンチ | Go/No-Go上は引き続き No-Go |
-| 主な未完了ゲート | 法務/同意/課金live検証、営業メール実接続hardening、全機能E2E/UAT、Firebase CI/CD本番デプロイ認証、会社運用引継ぎ |
+| 主な未完了ゲート | 法務本文確定、正式アカウント同意履歴、課金live検証、営業メール実接続hardening、全機能E2E/UAT、Firebase CI/CD本番デプロイ認証、会社運用引継ぎ |
 | データ方針 | secret、実メール本文、CSV原本、直接識別子、契約金額実値をGitHub/Sheets/docs/NotebookLMへ記録しない |
 
 アクセス先:
@@ -53,6 +53,7 @@ GitHub Pages は静的デモです。フォームや管理APIはFirebase/FastAPI
 
 運用上の注意:
 
+- Analyze実行前に、サービス利用規約、プライバシーポリシー、特商法表記、課金規約・返金ポリシーのドラフト確認チェックが必須です。未同意または古い同意バージョンの場合、`/api/parse` と `/api/match` は400で拒否します。
 - AI結果は補助情報であり、採用、配属、契約可否の自動判断には使いません。
 - Gemini APIが使えない場合は deterministic fallback でルールベース診断を継続します。
 - 診断結果をSheetsやIssueへ転記する場合、氏名、連絡先、契約条件の実値を含めないでください。
@@ -190,7 +191,7 @@ SLA目安:
 
 ### Q1. いま一般公開や有償ローンチをしてよいですか？
 
-いいえ。管理下デモはGoですが、`public_paid_launch` はNo-Goです。法務、同意UI、Stripe live検証、負荷テスト、営業メール実接続hardening、全機能E2E/UAT、Firebase CI/CD本番デプロイ認証などが残っています。
+いいえ。管理下デモはGoですが、`public_paid_launch` はNo-Goです。法務本文確定、正式アカウント同意履歴、Stripe live検証、負荷テスト、営業メール実接続hardening、全機能E2E/UAT、Firebase CI/CD本番デプロイ認証などが残っています。T745でドラフト規約への実行前同意UI/APIガードは実装済みですが、T798の法務確認とT752のユーザー別同意履歴は未完了です。
 
 ### Q2. 全ユーザーがBasic認証でログインしますか？
 
@@ -347,6 +348,7 @@ python scripts/upload_notebooklm_docs_to_drive.py
 | [EMPLOYEE_ASSESSMENT_RESPONSE_RUNBOOK.md](EMPLOYEE_ASSESSMENT_RESPONSE_RUNBOOK.md) | 社内アンケート保存 |
 | [ATTENDANCE_WORKFLOW_RUNBOOK.md](ATTENDANCE_WORKFLOW_RUNBOOK.md) | 勤怠打刻/CSV解析 |
 | [ADMIN_OPERATIONS_DASHBOARD_RUNBOOK.md](ADMIN_OPERATIONS_DASHBOARD_RUNBOOK.md) | 管理者統合ダッシュボード |
+| [LEGAL_CONSENT_UI_AND_API_RUNBOOK.md](LEGAL_CONSENT_UI_AND_API_RUNBOOK.md) | 規約同意UI/APIガード |
 | [STRIPE_CUSTOMER_PORTAL_RUNBOOK.md](STRIPE_CUSTOMER_PORTAL_RUNBOOK.md) | Stripe Customer Portal dry-run/live準備 |
 | [USER_DATA_SELF_EXPORT_RUNBOOK.md](USER_DATA_SELF_EXPORT_RUNBOOK.md) | ユーザーデータJSONエクスポート |
 | [USER_DATA_DELETION_FLOW.md](USER_DATA_DELETION_FLOW.md) | データ削除フロー |
@@ -358,4 +360,4 @@ python scripts/upload_notebooklm_docs_to_drive.py
 
 ## 6. 公式ドキュメント確認メモ
 
-2026-06-27のT846更新では、Claude Code、OpenAI Codex、Google Gemini/Workspace、Firebase Hosting、Supabase、Stripe Billing、Microsoft Azure AI Foundry、AWS Bedrock、Kimi、BytePlus、Slack、Unity、Firecrawlなどの公式ドキュメントと、プロジェクト内Runbookを確認した。長い引用は残さず、管理APIの認証境界、redaction済み集計、Google Workspace同期、Stripe live gate、Firebase CI/CD未解決ゲート、secret非記録方針だけを本ガイドへ反映した。
+2026-06-27のT846/T745更新では、Claude Code、OpenAI Codex、Google Gemini/Workspace、Firebase Hosting、Supabase、Stripe Billing、Microsoft Azure AI Foundry、AWS Bedrock、Kimi、BytePlus、Slack、Unity、Firecrawlなどの公式ドキュメントと、プロジェクト内Runbookを確認した。長い引用は残さず、管理APIの認証境界、規約同意UI/APIガード、redaction済み集計、Google Workspace同期、Stripe live gate、Firebase CI/CD未解決ゲート、secret非記録方針だけを本ガイドへ反映した。

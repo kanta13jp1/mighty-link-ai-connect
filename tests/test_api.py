@@ -10,6 +10,11 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "src"))
 import app
 from fastapi.testclient import TestClient
 
+LEGAL_CONSENT = {
+    "legal_consent_accepted": True,
+    "legal_consent_version": app.LEGAL_CONSENT_VERSION,
+}
+
 # Configure app to use isolated testing directory
 app.DATA_DIR = os.path.join(PROJECT_ROOT, "data_test")
 app.AUDIT_DIR = os.path.join(app.DATA_DIR, "audit")
@@ -111,11 +116,12 @@ def test_parse_and_database_persistence(client):
     resume_text = "氏名: 山田太郎\nスキル: Python, FastAPI, SQLite\n目標: フルスタック開発者"
     response = client.post(
         "/api/parse",
-        data={"text": resume_text, "doc_type": "engineer"}
+        data={"text": resume_text, "doc_type": "engineer", **LEGAL_CONSENT}
     )
     assert response.status_code == 200
     res_data = response.json()
     assert res_data["status"] == "success"
+    assert res_data["legal_consent"]["version"] == app.LEGAL_CONSENT_VERSION
     assert "db_id" in res_data
     eng_db_id = res_data["db_id"]
     assert eng_db_id > 0
@@ -124,7 +130,7 @@ def test_parse_and_database_persistence(client):
     job_text = "職種: Pythonエンジニア\n必須要件: Python, Web API開発\n勤務地: リモート"
     response = client.post(
         "/api/parse",
-        data={"text": job_text, "doc_type": "job"}
+        data={"text": job_text, "doc_type": "job", **LEGAL_CONSENT}
     )
     assert response.status_code == 200
     res_data = response.json()
@@ -152,6 +158,27 @@ def test_parse_and_database_persistence(client):
     assert len(job_list) > 0
     assert any(job["id"] == job_db_id for job in job_list)
 
+
+def test_parse_requires_current_legal_consent(client):
+    response = client.post(
+        "/api/parse",
+        data={"text": "氏名: 未同意ユーザー", "doc_type": "engineer"},
+    )
+    assert response.status_code == 400
+    assert "consent is required" in response.json()["detail"]
+
+    stale_response = client.post(
+        "/api/parse",
+        data={
+            "text": "氏名: 古い同意",
+            "doc_type": "engineer",
+            "legal_consent_accepted": True,
+            "legal_consent_version": "MSB-LEGAL-OLD",
+        },
+    )
+    assert stale_response.status_code == 400
+    assert "Invalid legal consent version" in stale_response.json()["detail"]
+
 def test_match_and_database_persistence(client):
     engineer_content = "氏名: 山田太郎\nスキル: Python, FastAPI, SQLite"
     job_content = "職種: Pythonエンジニア\n必須要件: Python, Web API開発"
@@ -159,10 +186,11 @@ def test_match_and_database_persistence(client):
     # Evaluate matching
     response = client.post(
         "/api/match",
-        json={"engineer_content": engineer_content, "job_content": job_content}
+        json={"engineer_content": engineer_content, "job_content": job_content, **LEGAL_CONSENT}
     )
     assert response.status_code == 200
     match_data = response.json()
+    assert match_data["legal_consent"]["version"] == app.LEGAL_CONSENT_VERSION
     assert "db_match_id" in match_data
     db_match_id = match_data["db_match_id"]
     assert db_match_id > 0
@@ -175,13 +203,34 @@ def test_match_and_database_persistence(client):
     assert any(m["id"] == db_match_id for m in matches_list)
 
 
+def test_match_requires_current_legal_consent(client):
+    response = client.post(
+        "/api/match",
+        json={"engineer_content": "Skills: Python", "job_content": "Needs: Python"},
+    )
+    assert response.status_code == 400
+    assert "consent is required" in response.json()["detail"]
+
+    stale_response = client.post(
+        "/api/match",
+        json={
+            "engineer_content": "Skills: Python",
+            "job_content": "Needs: Python",
+            "legal_consent_accepted": True,
+            "legal_consent_version": "MSB-LEGAL-OLD",
+        },
+    )
+    assert stale_response.status_code == 400
+    assert "Invalid legal consent version" in stale_response.json()["detail"]
+
+
 def test_feedback_submission_and_summary(client):
     engineer_content = "Name: Feedback User\nSkills: Python, FastAPI, Supabase"
     job_content = "Role: Backend Engineer\nRequirements: Python, API development"
 
     match_response = client.post(
         "/api/match",
-        json={"engineer_content": engineer_content, "job_content": job_content},
+        json={"engineer_content": engineer_content, "job_content": job_content, **LEGAL_CONSENT},
     )
     assert match_response.status_code == 200
     db_match_id = match_response.json()["db_match_id"]

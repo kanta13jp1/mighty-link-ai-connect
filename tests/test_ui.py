@@ -83,8 +83,13 @@ def test_ui_flow(fastapi_server):
         page.locator(".sample-btn", has_text="Load Sample").nth(1).click()
         assert len(job_input.input_value()) > 0
         
-        # 6. Click the "Analyze Fit" button
+        # 6. Verify Analyze requires legal consent, then accept and run
         analyze_btn = page.get_by_role("button", name="Analyze Fit & Generate Story")
+        analyze_btn.click()
+        page.wait_for_function(
+            "document.getElementById('legal-consent-status').textContent.includes('同意が必要')"
+        )
+        page.locator("#legal-consent-checkbox").check()
         analyze_btn.click()
         
         # 7. Verify that the report section is active and displays a non-zero score

@@ -1,6 +1,6 @@
 # 本番リリース Go/No-Go 判定レビュー (T746)
 
-- 生成時刻(UTC): 2026-06-27T05:38:11Z
+- 生成時刻(UTC): 2026-06-27T10:29:11Z
 - 正本TSV: `data/release_go_no_go_criteria.tsv`
 - WBS正本: `data/WBS.tsv`
 - 総合判定: **NO_GO**
@@ -10,7 +10,7 @@
 | スコープ | 判定 | 件数 | 状態内訳 |
 | :--- | :--- | ---: | :--- |
 | controlled_demo | GO | 5 | PASS:5 |
-| public_paid_launch | NO_GO | 15 | BLOCKED:9, HUMAN_GATE:2, PASS:4 |
+| public_paid_launch | NO_GO | 15 | BLOCKED:7, HUMAN_GATE:2, PASS:6 |
 
 ## 判定基準
 
@@ -25,9 +25,9 @@
 | PUBLIC-02 | public_paid_launch | バックアップ | PASS | 本番DBバックアップ・復元手順が整備され、ロールバック判定に含まれている | docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md; docs/PRODUCTION_ROLLBACK_RUNBOOK.md | T741;T812 | 開発責任者 | 破壊的migration前はbackup/PITR時刻と復元担当を記録する。 |
 | PUBLIC-03 | public_paid_launch | SLA/KPI | PASS | SLA/KPI定義、フィードバック収集、品質レポート接続方針がある | docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md | T762;T763;T790 | 開発責任者 | NPS/役立ち度は月次品質レポートへ接続予定。 |
 | PUBLIC-04 | public_paid_launch | コンプライアンス | HUMAN_GATE | 利用規約・プライバシーポリシーの法務確認と本文確定が完了している | docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md | T798 | CEO / 法務 | 法務確認完了まで一般公開・有償化はNo-Go。 |
-| PUBLIC-05 | public_paid_launch | コンプライアンス | BLOCKED | 利用規約・プライバシーポリシー同意チェックボックスが本番UIに実装済み | index.html; docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md | T745 | 開発責任者 | ユーザー登録/診断前に同意取得できるUIが必要。 |
+| PUBLIC-05 | public_paid_launch | コンプライアンス | PASS | 利用規約・プライバシーポリシー同意チェックボックスが本番UIに実装済み | index.html; src/index.html; src/app.py; tests/test_api.py; tests/test_legal_consent_ui.py; docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md | T745 | 開発責任者 | Analyze実行前にドラフト規約同意チェックを必須化し、/api/parseと/api/matchでMSB-LEGAL-2026-06-DRAFTを検証。T798法務本文確定とT752ユーザー別同意履歴は別ゲートとして継続。 |
 | PUBLIC-06 | public_paid_launch | フロントエンド | BLOCKED | ユーザーオンボーディング/アカウント登録/アクティベーションフローが実装済み | docs/USER_GUIDE_AND_FAQ.md; index.html; src/app.py | T752 | 開発責任者 | 招待制/閉域運用から一般利用へ移る前の必須導線。 |
-| PUBLIC-07 | public_paid_launch | コンプライアンス | BLOCKED | 法定4ページとフッター常時リンクが本番UIに統合済み | docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md; docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md | T777 | 開発責任者 | Stripe審査と販売URL案内の前提。 |
+| PUBLIC-07 | public_paid_launch | コンプライアンス | PASS | 法定4ページとフッター常時リンクが本番UIに統合済み | index.html; src/index.html; docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md; docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md; docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md | T777 | 開発責任者 | フッター常時リンクとAnalyze同意パネルから4法定・規約ドラフトへ到達可能。T798法務確認、T804価格確定、Stripe live審査は別ゲートで継続。 |
 | PUBLIC-08 | public_paid_launch | 収益化 | HUMAN_GATE | 料金プラン・無料枠・課金単位がCEO承認済み | docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md | T804 | CEO | 価格未確定のまま有償プランは開始しない。 |
 | PUBLIC-09 | public_paid_launch | 収益化 | BLOCKED | Stripe課金設計・Billing Meters実装・Webhook・Customer Portal live検証が完了している | docs/BILLING_AND_REFUND_POLICY.md; docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md; src/app.py; src/stripe_customer_portal.py | T776;T791;T807;T829 | 開発責任者 | T829でCustomer PortalセッションAPIとdry-run導線は完了。public_paid_launchは設計T776、Billing実装T791、Customer Portal live検証T807を通過してから判定する。 |
 | PUBLIC-10 | public_paid_launch | 品質管理 | BLOCKED | 同時100ユーザー想定の負荷テストとスケーリング方針が完了している | docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md | T770 | 開発責任者 | 一般公開前にAPI/DB/Functionsの負荷余力を確認する。 |

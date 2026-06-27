@@ -22,7 +22,7 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 | Scope | 判定 | 理由 |
 | --- | --- | --- |
 | `controlled_demo` | `GO` | GitHub Pages公開デモ、本番URL、問い合わせ窓口、DR/Incident/Rollback、監視・クォータRunbookの証跡が揃っている |
-| `public_paid_launch` | `NO_GO` | リリースノート/バージョニング運用、T805外部疑似診断、T835公開URLヘッダhardening、T846最新ユーザー/管理者docs、T847全テーブル保持/削除照合は整備済みだが、法務/CEO承認、規約同意UI、オンボーディング、法定4ページ実装、Stripe課金、負荷テスト、営業メールAIマッチング本番hardening、全機能最終UAT、外部SaaS棚卸し、会社運用引継ぎ、サイト開発完了総合判定が未完了 |
+| `public_paid_launch` | `NO_GO` | リリースノート/バージョニング運用、T805外部疑似診断、T835公開URLヘッダhardening、T846最新ユーザー/管理者docs、T847全テーブル保持/削除照合、T745ドラフト規約同意UI/APIガード、T777法定4ページリンク統合は整備済みだが、法務/CEO承認、正式アカウント同意履歴、オンボーディング、Stripe課金、負荷テスト、営業メールAIマッチング本番hardening、全機能最終UAT、会社運用引継ぎ、Firebase CI/CD、課題/QA棚卸し、サイト開発完了総合判定が未完了 |
 
 つまり、現状は「社長説明・限定デモは継続可。一般公開・有償ローンチは未承認」である。
 
@@ -43,6 +43,8 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 2026-06-27にT846としてユーザー操作ガイド・管理者Runbook・FAQを現行機能へ全面更新し、T847として [DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md) を追加した。T847では `profiles` / `matches` / `audits` / `usage_ledgers`、feedback/support、`sales_email_*`、`employee_assessment_responses`、`attendance_*`、Stripe Portal、セルフエクスポート、ローカル/Cloud Loggingについて、保持・削除・匿名化・RLS・原本非保存を照合した。
 
 同じく2026-06-27にT848として [AI_SAAS_SERVICE_FREEZE_RUNBOOK.md](AI_SAAS_SERVICE_FREEZE_RUNBOOK.md) を追加し、Anthropic/OpenAI/Google/Microsoft/Meta/Amazon/Apple/xAI/Kimi/MiMo/DeepSeek/BytePlus/GitHub/Slack/Notion/Obsidian/Unity/Figma/Canva/Reddit/InsForge/FireCrawl/Discord/Stripe/Supabase/Firebase/お名前.com の採用/非採用、モデル/API、fallback、secret管理、会社請求移管状態を凍結した。これによりPUBLIC-13内のT846/T847/T848部分は完了したが、T845/T850/T849が残るため `public_paid_launch` とサイト開発完了宣言はNo-Goのまま維持する。
+
+2026-06-27にT745として [LEGAL_CONSENT_UI_AND_API_RUNBOOK.md](LEGAL_CONSENT_UI_AND_API_RUNBOOK.md) を追加し、`index.html` / `src/index.html` のAnalyze実行前にサービス利用規約・プライバシーポリシー・特商法表記・課金規約/返金ポリシーのドラフト確認チェックを必須化した。`src/app.py` では `/api/parse` と `/api/match` が `MSB-LEGAL-2026-06-DRAFT` の同意バージョンを検証し、未同意または旧バージョンを400で拒否する。あわせてフッター常時リンクを補強したためPUBLIC-05とPUBLIC-07はPASSへ更新する。ただしT798の法務本文確定、T804の価格確定、T752のユーザー別同意履歴が残るため `public_paid_launch` はNo-Goのまま維持する。
 
 ---
 
@@ -79,9 +81,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 
 | WBS | 内容 | 現在の扱い |
 | --- | --- | --- |
-| T745 | 利用規約・プライバシーポリシー同意チェックボックス実装 | `BLOCKED` |
 | T752 | ユーザーオンボーディング / アカウント登録・アクティベーション | `BLOCKED` |
-| T777 | 法定4ページ実装とフッター常時リンク | `BLOCKED` |
 | T776 / T791 | Stripe課金設計・Billing Meters/Webhook検証 | `BLOCKED` |
 | T770 | 同時100ユーザー想定の負荷テスト | `BLOCKED` |
 | T817_7 | 共有営業メールAIマッチングMVPの個人情報/監査/負荷確認、実メール接続後の運用hardening | `BLOCKED` |
@@ -93,7 +93,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 
-完了済みの公開前ゲート: T806 リリースノート・SemVer・git tag・GitHub Releases運用、T805 外部ペネトレーション疑似診断（High 0 / secret-like値露出 0）、T835 公開URLセキュリティヘッダhardening、T846 ユーザー/管理者docs最終更新、T847 全テーブル保持・削除・匿名化照合、T848 AIモデル・外部SaaS・連携サービスGA凍結。
+完了済みの公開前ゲート: T806 リリースノート・SemVer・git tag・GitHub Releases運用、T805 外部ペネトレーション疑似診断（High 0 / secret-like値露出 0）、T835 公開URLセキュリティヘッダhardening、T745 ドラフト規約同意UI/APIガード、T777 法定4ページとフッター常時リンク、T846 ユーザー/管理者docs最終更新、T847 全テーブル保持・削除・匿名化照合、T848 AIモデル・外部SaaS・連携サービスGA凍結。
 
 ---
 
@@ -122,7 +122,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 
 ## 公式ドキュメント確認メモ
 
-2026-06-26時点の確認対象:
+2026-06-27時点の確認対象:
 
 - Firebase Hosting / Functions: https://firebase.google.com/docs/hosting / https://firebase.google.com/docs/functions
 - Firebase CLI / Hosting GitHub integration: https://firebase.google.com/docs/cli / https://firebase.google.com/docs/hosting/github-integration
@@ -133,6 +133,9 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 - SemVer 2.0.0: https://semver.org/
 - Supabase: https://supabase.com/docs/guides/getting-started
 - Stripe rate limits / API運用: https://docs.stripe.com/rate-limits
+- Stripe Docs: https://docs.stripe.com/
+- 消費者庁 特定商取引法関連情報: https://www.caa.go.jp/policies/policy/consumer_transaction/specified_commercial_transactions/
+- OpenAI Codex manual: `C:\Users\kanta\AppData\Local\Temp\openai-docs-cache\codex-manual.md`
 - Claude Code / Codex / Gemini / Notion / Slack など、プロジェクト運用で使うAI・開発ツールの公式Docs
 
 公式Docs確認は、判定基準そのものではなく「現在の実装・同期・運用手順が各サービスの現行ガイドに反していないか」を確認するために行う。

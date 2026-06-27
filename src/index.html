@@ -327,10 +327,47 @@
         }
 
         .hero-center-actions {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            justify-items: center;
+            gap: 12px;
             margin-top: 8px;
             width: 100%;
+        }
+
+        .legal-consent-panel {
+            width: min(820px, 100%);
+            border: 1px solid rgba(139, 220, 255, 0.22);
+            border-radius: 8px;
+            padding: 14px 16px;
+            background: rgba(12, 13, 15, 0.68);
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .legal-consent-panel label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .legal-consent-panel input {
+            margin-top: 5px;
+            accent-color: var(--green);
+        }
+
+        .legal-consent-panel a {
+            color: var(--blue);
+            font-weight: 800;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .legal-consent-status {
+            display: block;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 12px;
         }
 
         .big-btn {
@@ -2407,6 +2444,19 @@
 
             <!-- 3. 中央下: Analyze Big Button -->
             <div class="hero-center-actions">
+                <div class="legal-consent-panel" id="legal-consent-panel">
+                    <label for="legal-consent-checkbox">
+                        <input id="legal-consent-checkbox" type="checkbox" aria-describedby="legal-consent-status">
+                        <span>
+                            <a href="docs/TERMS_OF_SERVICE.md" target="_blank" rel="noopener">サービス利用規約</a>、
+                            <a href="docs/PRIVACY_POLICY.md" target="_blank" rel="noopener">プライバシーポリシー</a>、
+                            <a href="docs/TOKUSHOHO_NOTATION.md" target="_blank" rel="noopener">特定商取引法に基づく表記</a>、
+                            <a href="docs/BILLING_AND_REFUND_POLICY.md" target="_blank" rel="noopener">課金規約・返金ポリシー</a>
+                            のドラフト内容を確認し、AI診断・案件マッチング処理に同意します。
+                        </span>
+                    </label>
+                    <span class="legal-consent-status" id="legal-consent-status">法務確認・価格確定前のドラフト版です。一般公開・有償ローンチは引き続きNo-Goです。</span>
+                </div>
                 <button class="big-btn" onclick="runAnalysis()">
                     <span class="play-glyph"></span>Analyze Fit & Generate Story
                 </button>
@@ -3107,6 +3157,13 @@
                     <a href="exports/sequence-diagrams/index.html" target="_blank" rel="noopener">Mighty Architecture (シーケンス図)</a>
                     <a href="admin" target="_blank" rel="noopener">管理者画面 (DB直通)</a>
                 </div>
+                <div class="footer-column">
+                    <h3>法定・規約</h3>
+                    <a href="docs/TERMS_OF_SERVICE.md" target="_blank" rel="noopener">サービス利用規約</a>
+                    <a href="docs/PRIVACY_POLICY.md" target="_blank" rel="noopener">プライバシーポリシー</a>
+                    <a href="docs/TOKUSHOHO_NOTATION.md" target="_blank" rel="noopener">特定商取引法に基づく表記</a>
+                    <a href="docs/BILLING_AND_REFUND_POLICY.md" target="_blank" rel="noopener">課金規約・返金ポリシー</a>
+                </div>
             </div>
         </footer>
 
@@ -3139,6 +3196,23 @@
         let currentFeedbackMatchId = null;
         let selectedFeedbackRating = "";
         const feedbackSessionStorageKey = "mighty_feedback_session_id";
+        const legalConsentVersion = "MSB-LEGAL-2026-06-DRAFT";
+
+        function setLegalConsentStatus(text, color = "var(--muted)") {
+            const status = document.getElementById("legal-consent-status");
+            if (!status) return;
+            status.textContent = text;
+            status.style.color = color;
+        }
+
+        function getLegalConsentPayload() {
+            const checkbox = document.getElementById("legal-consent-checkbox");
+            const accepted = Boolean(checkbox && checkbox.checked);
+            return {
+                legal_consent_accepted: accepted,
+                legal_consent_version: legalConsentVersion
+            };
+        }
 
         function getFeedbackSessionId() {
             try {
@@ -3505,6 +3579,15 @@
 
             const engineerText = engineerInput.value.trim();
             const jobText = jobInput.value.trim();
+            const legalConsent = getLegalConsentPayload();
+
+            if (!legalConsent.legal_consent_accepted) {
+                setLegalConsentStatus("診断を実行するには、利用規約・プライバシーポリシー等への同意が必要です。", "var(--rose)");
+                button.disabled = false;
+                button.innerHTML = original;
+                return;
+            }
+            setLegalConsentStatus(`同意済み: ${legalConsent.legal_consent_version}`, "var(--green)");
 
             const reportSection = document.getElementById("report-section");
             const videoSection = document.getElementById("video-section");
@@ -3555,7 +3638,8 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         engineer_content: engineerText,
-                        job_content: jobText
+                        job_content: jobText,
+                        ...legalConsent
                     })
                 });
 

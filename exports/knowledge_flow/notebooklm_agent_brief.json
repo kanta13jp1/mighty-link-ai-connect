@@ -4,7 +4,7 @@
     "action": "used_existing",
     "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-06-27 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
   },
-  "source_count": 107,
+  "source_count": 108,
   "source_results": [
     {
       "title": "Mighty Skill-Bridge docs/docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
@@ -474,6 +474,14 @@
       "source_id": "52c7a4c0-3aa5-4839-9aaf-287635284abe",
       "returncode": null,
       "stdout": "",
+      "stderr": ""
+    },
+    {
+      "title": "Mighty Skill-Bridge docs/docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md",
+      "drive_file_id": "1r7xPsQ87_XlmTfj3pt9Os91dtCjR3qK8o7f0B_7aJI4",
+      "action": "added",
+      "returncode": 0,
+      "stdout": "Added Drive source: 1e458a03-5a75-4c54-a955-54720cd46353\nTitle: Mighty Skill-Bridge docs/docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md",
       "stderr": ""
     },
     {
@@ -1080,10 +1088,10 @@
   "ask_generation": {
     "status": "skipped",
     "reason": "--skip-asks",
-    "generated_at_jst": "2026-06-27T14:42:17+09:00",
+    "generated_at_jst": "2026-06-27T19:36:39+09:00",
     "ask_timeout_seconds": 900,
     "next_command": "python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900",
-    "source_count": 107
+    "source_count": 108
   },
   "question": "このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、\nCodex/AIエージェントが次に開発を進めるための要約を作ってください。\n\n必ず以下を含めてください。\n1. 現在のプロダクト方向性で確定していること\n2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク\n3. 6/2で社長に決めてもらうべき事項\n4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提\n5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題\n6. WBSへ追加すべき次アクション\n",
   "summary_returncode": null,
