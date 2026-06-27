@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-27T20:48:20+09:00
+Generated: 2026-06-27T21:02:43+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `109`
-- Drive docs uploaded: `5`
-- Drive docs skipped unchanged: `104`
+- Drive docs discovered: `110`
+- Drive docs uploaded: `3`
+- Drive docs skipped unchanged: `107`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -39,6 +39,7 @@ Generated: 2026-06-27T20:48:20+09:00
 - `docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md`: https://docs.google.com/document/d/1fMHp994ApuoGJsVmyD2PpA_ILNzDsb5RSxomC1rmeew/edit?usp=drivesdk
 - `docs/CODEX_CONTINUATION_NOTES.md`: https://docs.google.com/document/d/1akLsJ_85jkqcH3aTaae8h5u1xmHGooJn5UlklHvQyfE/edit?usp=drivesdk
 - `docs/COST_REPORT_2026-06.md`: https://docs.google.com/document/d/1CNFK4rA_lhIileO29u0MuvXQca43qkDmSdSla7JdUMY/edit?usp=drivesdk
+- `docs/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md`: https://docs.google.com/document/d/1aqjpIgxoF_BkJ0KhxVFnFngngkzFzhsCuHfH5Zuk0wE/edit?usp=drivesdk
 - `docs/DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md`: https://docs.google.com/document/d/1z342WkM3spdRi9nNP17b_A1SYxGgVpYkFtk_WP9K7uI/edit?usp=drivesdk
 - `docs/database.md`: https://docs.google.com/document/d/1WVp_vmYeiCZfFWbCpHNfmwGoUeBADuMjyLySBHrh9bI/edit?usp=drivesdk
 - `docs/DB_MIGRATION_MANAGEMENT_RUNBOOK.md`: https://docs.google.com/document/d/13d9sL_Sle75GqpBTI405P0Z5Owh5ZNVHDLvfsSvOu0U/edit?usp=drivesdk

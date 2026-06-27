@@ -1,13 +1,13 @@
 {
   "task_id": "T743",
-  "generated_at_utc": "2026-06-14T19:06:32Z",
+  "generated_at_utc": "2026-06-27T11:53:50Z",
   "targets_path": "data\\uptime_targets.tsv",
   "summary": {
     "total": 3,
-    "ok": 3,
+    "ok": 2,
     "warning": 0,
-    "failed": 0,
-    "status": "ok"
+    "failed": 1,
+    "status": "failed"
   },
   "results": [
     {
@@ -19,7 +19,7 @@
       "owner": "Codex",
       "status": "ok",
       "http_status": 200,
-      "elapsed_ms": 321.87,
+      "elapsed_ms": 256.43,
       "final_url": "https://kanta13jp1.github.io/mighty-link-ai-connect/",
       "tls_verification": "strict",
       "error": null,
@@ -34,7 +34,7 @@
       "owner": "Codex",
       "status": "ok",
       "http_status": 200,
-      "elapsed_ms": 270.28,
+      "elapsed_ms": 48.38,
       "final_url": "https://mighty-link-ai-connect-13d22.web.app/",
       "tls_verification": "strict",
       "error": null,
@@ -47,12 +47,12 @@
       "expected_status": 200,
       "severity": "P1",
       "owner": "Codex",
-      "status": "ok",
-      "http_status": 200,
-      "elapsed_ms": 66.0,
-      "final_url": "https://mightylink-app.com/",
+      "status": "failed",
+      "http_status": null,
+      "elapsed_ms": null,
+      "final_url": null,
       "tls_verification": "strict",
-      "error": null,
+      "error": "URLError: <urlopen error [Errno 11001] getaddrinfo failed>",
       "notes": "T740_3完了済み。Google Trust Services証明書のSubject CN=mightylink-app.comを確認したためstrict TLSで監視する。"
     }
   ]

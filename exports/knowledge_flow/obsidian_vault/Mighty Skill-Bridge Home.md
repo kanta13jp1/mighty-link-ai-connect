@@ -2,7 +2,7 @@
 
 ## Current Status
 
-- WBS total: 273
+- WBS total: 274
 - Done: 240
 - In progress: 1
 - Completion: 88%

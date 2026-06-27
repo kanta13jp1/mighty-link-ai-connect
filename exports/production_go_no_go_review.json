@@ -1,15 +1,15 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-27T11:50:23Z",
+  "generated_at": "2026-06-27T11:57:39Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
-    "total": 20,
+    "total": 21,
     "counts": {
       "PASS": 12,
       "HUMAN_GATE": 2,
-      "BLOCKED": 6
+      "BLOCKED": 7
     },
     "evidence_warnings": 0
   },
@@ -28,9 +28,9 @@
       "counts": {
         "PASS": 7,
         "HUMAN_GATE": 2,
-        "BLOCKED": 6
+        "BLOCKED": 7
       },
-      "total": 15
+      "total": 16
     }
   },
   "criteria": [
@@ -442,6 +442,25 @@
         "T853": "完了",
         "T854": "完了",
         "T849": "未着手"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-16",
+      "scope": "public_paid_launch",
+      "category": "運用監視",
+      "criterion": "販売URL `https://mightylink-app.com/` のDNS解決とstrict HTTPS uptimeがgreenである",
+      "evidence_source": "data/uptime_targets.tsv; scripts/check_uptime_targets.py; exports/uptime_monitor_report.json; .github/workflows/uptime-monitor.yml; docs/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md; GitHub Issue #143",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Codex + 寛太梅澤",
+      "decision_authority": "開発責任者 / CEO",
+      "related_wbs": "T855",
+      "related_issue": "R103;#143",
+      "last_checked": "2026-06-27",
+      "notes": "2026-06-27のPublic Uptime Monitorとローカル再実行で、GitHub Pages公開デモとFirebase Hosting default URLはOKだが、販売URLmightylink-app.comがgetaddrinfo failedでDNS解決失敗。お名前.com/Firebase Hostingレコード確認とstrict HTTPS監視green化までpublic_paid_launchとサイト開発完了宣言はNo-Go。",
+      "wbs_statuses": {
+        "T855": "未着手"
       },
       "missing_evidence": []
     }

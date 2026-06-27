@@ -48,6 +48,8 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 
 同じく2026-06-27にT854として [ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md](ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md) を追加し、課題管理表とQA表の未分類open/未回答を棚卸しした。`scripts/audit_issue_qa_blockers.py --fail-on-blockers` により、課題ブロッカー0件、QAブロッカー0件を `exports/issue_qa_blocker_audit.*` へ証跡化したためPUBLIC-15はPASSへ更新する。ただし、T845/T849/T850/T852や法務・価格・課金・負荷・実メール接続などの残ゲートは別管理であり、`public_paid_launch` はNo-Goのまま維持する。
 
+同じく2026-06-27のT854クローズアウト中に、Public Uptime Monitorと `python scripts/check_uptime_targets.py` が販売URL `https://mightylink-app.com/` のDNS解決失敗を検出した。GitHub Pages公開デモとFirebase Hosting default URLはOKだが、特商法販売URLとして扱うcustom domainがstrict HTTPS監視でgreenになるまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。T855、R103、QA-83、PUBLIC-16を追加し、詳細は [CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md](CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md) を正本とする。
+
 ---
 
 ## 正本と生成物
@@ -91,6 +93,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T850 | 会社運用引継ぎリハーサル・権限棚卸し・Break-glass確認 | `BLOCKED` |
 | T849 | サイト開発完了総合判定・WBS全完了証跡化・GAリリース閉鎖 | `BLOCKED` |
 | T852 | Firebase/GitHub Actionsの本番デプロイ認証経路を会社管理のWIF/service account/secret経路へ再構成し、アプリ変更時のmain deploy greenを証跡化 | `BLOCKED` |
+| T855 | mightylink-app.com DNS/HTTPS死活監視復旧とお名前.com/Firebase Hostingレコード再確認 | `BLOCKED` |
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 
