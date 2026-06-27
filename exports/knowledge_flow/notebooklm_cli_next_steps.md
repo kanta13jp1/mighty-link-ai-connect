@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-27T21:27:55+09:00
+Generated: 2026-06-27T22:17:52+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `110`
-- Drive docs uploaded: `3`
-- Drive docs skipped unchanged: `107`
+- Drive docs discovered: `111`
+- Drive docs uploaded: `7`
+- Drive docs skipped unchanged: `104`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -112,6 +112,7 @@ Generated: 2026-06-27T21:27:55+09:00
 - `docs/TERMS_OF_SERVICE.md`: https://docs.google.com/document/d/1bGSpEdgRyw06UaUQfwGsjLfS1qDimmSAsrN-yQvg2v0/edit?usp=drivesdk
 - `docs/TOKUSHOHO_NOTATION.md`: https://docs.google.com/document/d/1LUwRooXcdyrGB4AsuQo70Auz8DoQ-E5eyPV5cYUPWLk/edit?usp=drivesdk
 - `docs/UPTIME_MONITORING_AND_ALERT_RUNBOOK.md`: https://docs.google.com/document/d/1loht22D5jpIbl5Hcb8JAgGhdK_odNrAha6BzSFXhplA/edit?usp=drivesdk
+- `docs/USAGE_ANALYTICS_KPI_RUNBOOK.md`: https://docs.google.com/document/d/16o2kXqyN9XE0AoqZ5r_vJmHAKqDwE5dMhjEPqwIQcPY/edit?usp=drivesdk
 - `docs/USER_DATA_DELETION_FLOW.md`: https://docs.google.com/document/d/1-2u-qFsKNwrE9Jpl3dovC0fr_Prk4JZUF23xz1e1zQQ/edit?usp=drivesdk
 - `docs/USER_DATA_SELF_EXPORT_RUNBOOK.md`: https://docs.google.com/document/d/1J4X3KQMpUzzcHV57CDYHrRGLvg2h0bHC1JHHFvknnqw/edit?usp=drivesdk
 - `docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md`: https://docs.google.com/document/d/1E44oW3XLOkEwyNSq5kweNe4Jujx4RoBiG598C_gTr5M/edit?usp=drivesdk

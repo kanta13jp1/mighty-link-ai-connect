@@ -80,11 +80,11 @@ python scripts/manage_db_migrations.py validate --engine supabase
 - コメント欄には個人情報を入力しない前提でUI/運用を案内する。
 - 管理者向け集計APIはコメント全文ではなく `comment_excerpt` を返す。
 - Supabase anon RESTから直接読ませないため、RLSポリシーは追加しない。
-- 将来T800のイベント計測導入時に、個人識別子ではなくセッション単位の匿名集計へ寄せる。
+- T800のイベント計測では、個人識別子ではなく疑似ID化したセッション単位の匿名集計へ寄せる。フィードバックコメント本文や連絡先を `usage_analytics_events` に保存しない。
 
 ## 後続タスクへの接続
 
 - T790: 問い合わせフォーム/サポート導線へ、否定評価時の問い合わせ誘導を追加できる。
 - T778: SLA/品質ビューにNPS平均と否定評価率を追加できる。
-- T800: Firebase Analytics / Supabaseイベント計測のKPI設計に統合する。
+- T800: Supabase/FastAPIベースの匿名イベント計測KPIへ統合済み。Firebase Analytics SDKを使う場合は同意UIとプライバシーポリシーを再確認する。
 - T808: 月次品質レポート自動配信へNPS集計を接続する。

@@ -376,6 +376,7 @@ RATE_LIMIT_EXEMPT_PATHS = {
 RATE_LIMIT_EXPENSIVE_API_PATHS = {
     "/api/parse",
     "/api/match",
+    "/api/analytics/event",
     "/api/employee-assessment/responses",
     "/api/attendance/punch",
     "/api/attendance/timesheet/parse",
@@ -939,6 +940,23 @@ def init_db():
             """)
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_status_priority ON support_requests(status, priority);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_created_at ON support_requests(created_at);")
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS usage_analytics_events (
+                id SERIAL PRIMARY KEY,
+                event_name VARCHAR(80) NOT NULL
+                    CHECK (event_name IN ('page_view', 'section_view', 'cta_click', 'form_submit', 'form_success', 'form_error', 'dashboard_export')),
+                event_surface VARCHAR(80) NOT NULL DEFAULT 'public_demo'
+                    CHECK (event_surface IN ('public_demo', 'firebase_app', 'internal_console')),
+                page_path TEXT,
+                session_pseudonym VARCHAR(120) NOT NULL,
+                user_agent_family VARCHAR(40) NOT NULL DEFAULT 'unknown',
+                metadata JSONB DEFAULT '{}'::jsonb,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_usage_analytics_event_name ON usage_analytics_events(event_name);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_usage_analytics_created_at ON usage_analytics_events(created_at);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_usage_analytics_session ON usage_analytics_events(session_pseudonym);")
             # Supabase exposes public-schema tables through the anon REST API.
             # Enabling RLS with no policies denies anon access entirely, while
             # the app (table owner via the postgres role) bypasses RLS.
@@ -947,6 +965,18 @@ def init_db():
             cursor.execute("ALTER TABLE match_results ENABLE ROW LEVEL SECURITY;")
             cursor.execute("ALTER TABLE feedback_events ENABLE ROW LEVEL SECURITY;")
             cursor.execute("ALTER TABLE support_requests ENABLE ROW LEVEL SECURITY;")
+            cursor.execute("ALTER TABLE usage_analytics_events ENABLE ROW LEVEL SECURITY;")
+            cursor.execute("""
+            DO $$
+            BEGIN
+                IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'anon') THEN
+                    REVOKE ALL ON TABLE usage_analytics_events FROM anon;
+                END IF;
+                IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'authenticated') THEN
+                    REVOKE ALL ON TABLE usage_analytics_events FROM authenticated;
+                END IF;
+            END $$;
+            """)
             cursor.execute("""
             CREATE TABLE IF NOT EXISTS employee_assessment_responses (
                 id SERIAL PRIMARY KEY,
@@ -1114,6 +1144,23 @@ def init_db():
             """)
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_status_priority ON support_requests(status, priority);")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_support_requests_created_at ON support_requests(created_at);")
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS usage_analytics_events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                event_name VARCHAR(80) NOT NULL
+                    CHECK (event_name IN ('page_view', 'section_view', 'cta_click', 'form_submit', 'form_success', 'form_error', 'dashboard_export')),
+                event_surface VARCHAR(80) NOT NULL DEFAULT 'public_demo'
+                    CHECK (event_surface IN ('public_demo', 'firebase_app', 'internal_console')),
+                page_path TEXT,
+                session_pseudonym VARCHAR(120) NOT NULL,
+                user_agent_family VARCHAR(40) NOT NULL DEFAULT 'unknown',
+                metadata TEXT DEFAULT '{}',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            """)
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_usage_analytics_event_name ON usage_analytics_events(event_name);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_usage_analytics_created_at ON usage_analytics_events(created_at);")
+            cursor.execute("CREATE INDEX IF NOT EXISTS idx_usage_analytics_session ON usage_analytics_events(session_pseudonym);")
             cursor.execute("""
             CREATE TABLE IF NOT EXISTS employee_assessment_responses (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1328,6 +1375,21 @@ ATTENDANCE_EVENT_TYPE_ALIASES = {
     "break_end": "break_end",
 }
 VALID_ATTENDANCE_DECISIONS = {"approved", "rejected"}
+VALID_USAGE_ANALYTICS_EVENTS = {
+    "page_view",
+    "section_view",
+    "cta_click",
+    "form_submit",
+    "form_success",
+    "form_error",
+    "dashboard_export",
+}
+VALID_USAGE_ANALYTICS_SURFACES = {"public_demo", "firebase_app", "internal_console"}
+MAX_USAGE_ANALYTICS_METADATA_KEYS = 12
+USAGE_ANALYTICS_PSEUDONYM_SALT = os.environ.get(
+    "USAGE_ANALYTICS_PSEUDONYM_SALT",
+    "mighty-link-usage-analytics-local-salt-v1",
+)
 SENSITIVE_EMAIL_RE = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
 SENSITIVE_PHONE_RE = re.compile(r"(?<!\d)(?:\+?\d[\d\s().-]{7,}\d)(?!\d)")
 SENSITIVE_SECRET_RE = re.compile(
@@ -1523,6 +1585,256 @@ def db_get_feedback_summary(limit: int = 20) -> dict:
             "rating_counts": {"helpful": 0, "not_helpful": 0},
             "nps": {"average": None, "count": 0},
             "recent": [],
+            "error": str(e),
+        }
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def usage_analytics_session_pseudonym(session_id: Optional[str]) -> str:
+    clean_session = clean_feedback_text(session_id, 120)
+    if not clean_session:
+        clean_session = "anonymous-session"
+    digest = stable_digest(f"{USAGE_ANALYTICS_PSEUDONYM_SALT}:{clean_session.lower()}")
+    return f"usage-{digest}"
+
+
+def usage_analytics_page_path(page_url: Optional[str]) -> str:
+    clean_page_url = clean_feedback_text(page_url, 500)
+    if not clean_page_url:
+        return "/"
+    parsed = urlparse(clean_page_url)
+    if parsed.scheme or parsed.netloc:
+        path = parsed.path or "/"
+        fragment = f"#{parsed.fragment}" if parsed.fragment else ""
+        return clean_feedback_text(f"{path}{fragment}", 500)
+    path_without_query = clean_page_url.split("?", 1)[0]
+    return clean_feedback_text(path_without_query or "/", 500)
+
+
+def usage_analytics_user_agent_family(user_agent: Optional[str]) -> str:
+    clean_user_agent = clean_feedback_text(user_agent, 300).lower()
+    if not clean_user_agent:
+        return "unknown"
+    if "bot" in clean_user_agent or "crawler" in clean_user_agent or "spider" in clean_user_agent:
+        return "bot"
+    if "edg/" in clean_user_agent or "edge/" in clean_user_agent:
+        return "edge"
+    if "chrome/" in clean_user_agent or "crios/" in clean_user_agent:
+        return "chrome"
+    if "firefox/" in clean_user_agent or "fxios/" in clean_user_agent:
+        return "firefox"
+    if "safari/" in clean_user_agent:
+        return "safari"
+    return "other"
+
+
+def sanitize_usage_analytics_metadata(metadata: Optional[dict]) -> dict:
+    if not isinstance(metadata, dict):
+        return {}
+
+    safe_metadata: dict = {}
+    for key, value in metadata.items():
+        if len(safe_metadata) >= MAX_USAGE_ANALYTICS_METADATA_KEYS:
+            break
+        safe_key = re.sub(r"[^a-zA-Z0-9_.:-]", "_", str(key).strip())[:40]
+        if not safe_key:
+            continue
+        lower_key = safe_key.lower()
+        if any(token in lower_key for token in ("email", "phone", "name", "token", "secret", "password")):
+            safe_metadata[safe_key] = "<redacted>"
+            continue
+        if isinstance(value, bool) or isinstance(value, int) or isinstance(value, float):
+            safe_metadata[safe_key] = value
+        elif value is None:
+            safe_metadata[safe_key] = None
+        else:
+            safe_metadata[safe_key] = redact_sensitive_text(value, 160)
+    return safe_metadata
+
+
+def db_insert_usage_analytics_event(
+    event_name: str,
+    event_surface: str,
+    page_url: Optional[str],
+    session_id: Optional[str],
+    user_agent: Optional[str],
+    metadata: Optional[dict] = None,
+) -> dict:
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    clean_event_name = clean_feedback_text(event_name, 80).lower()
+    clean_event_surface = clean_feedback_text(event_surface, 80).lower() or "public_demo"
+    page_path = usage_analytics_page_path(page_url)
+    session_pseudonym = usage_analytics_session_pseudonym(session_id)
+    user_agent_family = usage_analytics_user_agent_family(user_agent)
+    metadata_json = json.dumps(sanitize_usage_analytics_metadata(metadata), ensure_ascii=False)
+    try:
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                INSERT INTO usage_analytics_events
+                    (event_name, event_surface, page_path, session_pseudonym, user_agent_family, metadata)
+                VALUES (%s, %s, %s, %s, %s, %s::jsonb)
+                RETURNING id;
+                """,
+                (
+                    clean_event_name,
+                    clean_event_surface,
+                    page_path,
+                    session_pseudonym,
+                    user_agent_family,
+                    metadata_json,
+                ),
+            )
+            inserted_id = int(cursor.fetchone()[0])
+        else:
+            cursor.execute(
+                """
+                INSERT INTO usage_analytics_events
+                    (event_name, event_surface, page_path, session_pseudonym, user_agent_family, metadata)
+                VALUES (?, ?, ?, ?, ?, ?);
+                """,
+                (
+                    clean_event_name,
+                    clean_event_surface,
+                    page_path,
+                    session_pseudonym,
+                    user_agent_family,
+                    metadata_json,
+                ),
+            )
+            inserted_id = int(cursor.lastrowid)
+        conn.commit()
+        return {
+            "id": inserted_id,
+            "event_name": clean_event_name,
+            "event_surface": clean_event_surface,
+            "page_path": page_path,
+            "session_pseudonym": session_pseudonym,
+            "user_agent_family": user_agent_family,
+        }
+    except Exception as e:
+        print(f"[-] Database insert usage analytics event failed: {e}")
+        return {"id": 0, "error": str(e)}
+    finally:
+        cursor.close()
+        conn.close()
+
+
+def db_get_usage_analytics_summary(limit: int = 20) -> dict:
+    limit = max(1, min(limit, 100))
+    conn, db_type = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT COUNT(*) FROM usage_analytics_events;")
+        total = int(_scalar(cursor.fetchone()) or 0)
+
+        cursor.execute("SELECT event_name, COUNT(*) FROM usage_analytics_events GROUP BY event_name;")
+        event_counts = {event_name: 0 for event_name in sorted(VALID_USAGE_ANALYTICS_EVENTS)}
+        for row in cursor.fetchall():
+            event_counts[str(row[0])] = int(row[1])
+
+        cursor.execute("SELECT event_surface, COUNT(*) FROM usage_analytics_events GROUP BY event_surface;")
+        surface_counts = {surface_name: 0 for surface_name in sorted(VALID_USAGE_ANALYTICS_SURFACES)}
+        for row in cursor.fetchall():
+            surface_counts[str(row[0])] = int(row[1])
+
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                SELECT COUNT(*), COUNT(DISTINCT session_pseudonym)
+                FROM usage_analytics_events
+                WHERE created_at >= CURRENT_TIMESTAMP - INTERVAL '7 days';
+                """
+            )
+        else:
+            cursor.execute(
+                """
+                SELECT COUNT(*), COUNT(DISTINCT session_pseudonym)
+                FROM usage_analytics_events
+                WHERE datetime(created_at) >= datetime('now', '-7 days');
+                """
+            )
+        recent_row = cursor.fetchone()
+        events_last_7_days = int(recent_row[0]) if recent_row and recent_row[0] is not None else 0
+        unique_sessions_last_7_days = int(recent_row[1]) if recent_row and recent_row[1] is not None else 0
+
+        columns = [
+            "id",
+            "event_name",
+            "event_surface",
+            "page_path",
+            "session_pseudonym",
+            "user_agent_family",
+            "created_at",
+        ]
+        if db_type == "postgres":
+            cursor.execute(
+                """
+                SELECT id, event_name, event_surface, page_path, session_pseudonym, user_agent_family, created_at
+                FROM usage_analytics_events
+                ORDER BY id DESC
+                LIMIT %s;
+                """,
+                (limit,),
+            )
+        else:
+            cursor.execute(
+                """
+                SELECT id, event_name, event_surface, page_path, session_pseudonym, user_agent_family, created_at
+                FROM usage_analytics_events
+                ORDER BY id DESC
+                LIMIT ?;
+                """,
+                (limit,),
+            )
+
+        recent = []
+        for row in cursor.fetchall():
+            row_dict = dict(row) if isinstance(row, sqlite3.Row) else dict(zip(columns, row))
+            recent.append({
+                "id": row_dict.get("id"),
+                "event_name": row_dict.get("event_name"),
+                "event_surface": row_dict.get("event_surface"),
+                "page_path": row_dict.get("page_path"),
+                "session_pseudonym": row_dict.get("session_pseudonym"),
+                "user_agent_family": row_dict.get("user_agent_family"),
+                "created_at": str(row_dict.get("created_at") or ""),
+            })
+
+        return {
+            "total": total,
+            "events_last_7_days": events_last_7_days,
+            "unique_sessions_last_7_days": unique_sessions_last_7_days,
+            "event_counts": event_counts,
+            "surface_counts": surface_counts,
+            "recent": recent,
+            "privacy_controls": {
+                "raw_session_id_stored": False,
+                "ip_address_stored": False,
+                "raw_user_agent_stored": False,
+                "form_contents_stored": False,
+                "metadata_sensitive_fields_redacted": True,
+            },
+        }
+    except Exception as e:
+        print(f"[-] Database usage analytics summary failed: {e}")
+        return {
+            "total": 0,
+            "events_last_7_days": 0,
+            "unique_sessions_last_7_days": 0,
+            "event_counts": {event_name: 0 for event_name in sorted(VALID_USAGE_ANALYTICS_EVENTS)},
+            "surface_counts": {surface_name: 0 for surface_name in sorted(VALID_USAGE_ANALYTICS_SURFACES)},
+            "recent": [],
+            "privacy_controls": {
+                "raw_session_id_stored": False,
+                "ip_address_stored": False,
+                "raw_user_agent_stored": False,
+                "form_contents_stored": False,
+                "metadata_sensitive_fields_redacted": True,
+            },
             "error": str(e),
         }
     finally:
@@ -2517,6 +2829,7 @@ def build_operations_dashboard_summary(limit: int = 20) -> dict:
     employee_assessment = db_get_employee_assessment_summary(limit=limit)
     attendance = db_get_attendance_summary(limit=limit)
     sales_email_review = db_get_sales_email_review_summary(limit=limit)
+    usage_analytics = db_get_usage_analytics_summary(limit=limit)
 
     sales_status_counts = sales_email_review.get("status_counts", {}) or {}
     reviewed_sales_count = sum(
@@ -2528,7 +2841,7 @@ def build_operations_dashboard_summary(limit: int = 20) -> dict:
 
     return {
         "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
-        "wbs_task": "T842",
+        "wbs_task": "T842;T800",
         "kpis": {
             "employee_assessment_responses": int(employee_assessment.get("total", 0) or 0),
             "motivation_average": employee_assessment.get("averages", {}).get("motivation_level"),
@@ -2541,11 +2854,16 @@ def build_operations_dashboard_summary(limit: int = 20) -> dict:
             "sales_email_reviews": sales_total,
             "sales_email_needs_review": int(sales_status_counts.get("needs_review", 0) or 0),
             "sales_email_review_completion_rate": sales_review_completion_rate,
+            "usage_analytics_events": int(usage_analytics.get("total", 0) or 0),
+            "usage_events_last_7_days": int(usage_analytics.get("events_last_7_days", 0) or 0),
+            "usage_unique_sessions_last_7_days": int(usage_analytics.get("unique_sessions_last_7_days", 0) or 0),
+            "usage_page_views": int(usage_analytics.get("event_counts", {}).get("page_view", 0) or 0),
         },
         "sources": {
             "employee_assessment": employee_assessment,
             "attendance": attendance,
             "sales_email_review": sales_email_review,
+            "usage_analytics": usage_analytics,
         },
         "security": {
             "admin_summary_requires_basic_auth": True,
@@ -2553,6 +2871,10 @@ def build_operations_dashboard_summary(limit: int = 20) -> dict:
             "raw_identifiers_excluded": True,
             "raw_attendance_files_excluded": True,
             "sales_email_body_excluded": True,
+            "usage_analytics_pseudonymized_sessions": True,
+            "usage_analytics_ip_address_excluded": True,
+            "usage_analytics_raw_user_agent_excluded": True,
+            "usage_analytics_form_contents_excluded": True,
             "secret_like_values_redacted": True,
         },
     }
@@ -2571,6 +2893,7 @@ def build_operations_dashboard_csv(summary: dict) -> str:
     employee_assessment = sources.get("employee_assessment", {})
     attendance = sources.get("attendance", {})
     sales_email_review = sources.get("sales_email_review", {})
+    usage_analytics = sources.get("usage_analytics", {})
 
     writer.writerow(["employee_assessment", "responses", employee_assessment.get("total", 0), "api_summary"])
     for dept_name, count in sorted((employee_assessment.get("department_counts") or {}).items()):
@@ -2584,6 +2907,13 @@ def build_operations_dashboard_csv(summary: dict) -> str:
     writer.writerow(["sales_email_review", "reviews", sales_email_review.get("total", 0), "api_summary"])
     for status_name, count in sorted((sales_email_review.get("status_counts") or {}).items()):
         writer.writerow(["sales_email_review_status", status_name, count, "api_summary"])
+
+    writer.writerow(["usage_analytics", "events", usage_analytics.get("total", 0), "api_summary"])
+    writer.writerow(["usage_analytics", "unique_sessions_last_7_days", usage_analytics.get("unique_sessions_last_7_days", 0), "api_summary"])
+    for event_name, count in sorted((usage_analytics.get("event_counts") or {}).items()):
+        writer.writerow(["usage_analytics_event", event_name, count, "api_summary"])
+    for surface_name, count in sorted((usage_analytics.get("surface_counts") or {}).items()):
+        writer.writerow(["usage_analytics_surface", surface_name, count, "api_summary"])
 
     security = summary.get("security", {})
     for flag_name in sorted(security):
@@ -4682,7 +5012,7 @@ async def admin_usage_export(username: str = Depends(verify_credentials)):
 
 @app.get("/api/admin/operations-dashboard")
 async def admin_operations_dashboard(limit: int = 20, username: str = Depends(verify_credentials)):
-    """Authenticated T842 dashboard summary across assessment, attendance, and sales email review."""
+    """Authenticated T842/T800 dashboard summary across operations and usage analytics."""
     return {
         "status": "success",
         "viewer": username,
@@ -4692,7 +5022,7 @@ async def admin_operations_dashboard(limit: int = 20, username: str = Depends(ve
 
 @app.get("/api/admin/operations-dashboard/report.csv", response_class=PlainTextResponse)
 async def admin_operations_dashboard_report(limit: int = 20, username: str = Depends(verify_credentials)):
-    """CSV export for the T842 admin dashboard without raw identifiers or source files."""
+    """CSV export for the T842/T800 admin dashboard without raw identifiers or source files."""
     summary = build_operations_dashboard_summary(limit=limit)
     csv_text = build_operations_dashboard_csv(summary)
     return PlainTextResponse(
@@ -5261,6 +5591,14 @@ class FeedbackRequest(BaseModel):
     session_id: Optional[str] = ""
 
 
+class UsageAnalyticsEventRequest(BaseModel):
+    event_name: str
+    event_surface: str = "public_demo"
+    page_url: Optional[str] = ""
+    session_id: Optional[str] = ""
+    metadata: Optional[Dict[str, Any]] = None
+
+
 class SalesEmailMatchReviewRequest(BaseModel):
     match_key: Optional[str] = ""
     project_key: Optional[str] = ""
@@ -5634,6 +5972,43 @@ async def get_sales_email_match_review_summary(limit: int = 20, username: str = 
         "review_log": os.path.relpath(str(Path(SALES_EMAIL_REVIEW_LOG_FILE)), PROJECT_ROOT),
         **db_get_sales_email_review_summary(limit=limit),
         **file_summary,
+    }
+
+
+@app.post("/api/analytics/event")
+async def submit_usage_analytics_event(req: UsageAnalyticsEventRequest, request: Request):
+    """Store a privacy-preserving product usage event for T800 KPI aggregation."""
+    event_name = clean_feedback_text(req.event_name, 80).lower()
+    event_surface = clean_feedback_text(req.event_surface, 80).lower() or "public_demo"
+    if event_name not in VALID_USAGE_ANALYTICS_EVENTS:
+        raise HTTPException(status_code=400, detail="unsupported analytics event_name")
+    if event_surface not in VALID_USAGE_ANALYTICS_SURFACES:
+        raise HTTPException(status_code=400, detail="unsupported analytics event_surface")
+
+    db_result = db_insert_usage_analytics_event(
+        event_name=event_name,
+        event_surface=event_surface,
+        page_url=req.page_url,
+        session_id=req.session_id,
+        user_agent=request.headers.get("user-agent", ""),
+        metadata={
+            **(req.metadata or {}),
+            "api_version": "2026-06-27",
+            "wbs_task": "T800",
+        },
+    )
+    if not db_result.get("id"):
+        raise HTTPException(status_code=500, detail="Failed to store analytics event")
+    return {
+        "status": "success",
+        "event_id": db_result["id"],
+        "event_name": db_result["event_name"],
+        "privacy": {
+            "session_pseudonymized": True,
+            "ip_address_stored": False,
+            "raw_user_agent_stored": False,
+            "form_contents_stored": False,
+        },
     }
 
 

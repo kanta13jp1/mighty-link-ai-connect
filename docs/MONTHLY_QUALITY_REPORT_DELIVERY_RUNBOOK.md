@@ -54,7 +54,9 @@ Notion は `NOTION_DATABASE_ID` / `NOTION_DATA_SOURCE_ID` / `NOTION_PARENT_PAGE_
 
 ## 未計測KPIの扱い
 
-2026-06時点では、SLA稼働率、P95レスポンス、5xxエラー率、Firebase費用、Supabase費用の live source は未接続のため、`未計測` としてSheetsに保持する。T800/T807/T811で実データ連携が完了したら同じ月行をupsertし、値だけを更新する。
+2026-06-27時点では、T800の利用状況アナリティクスは `POST /api/analytics/event`、`usage_analytics_events`、管理ダッシュボードCSVへ接続済み。月次品質レポートへ取り込む場合は、`/api/admin/operations-dashboard/report.csv` の `usage_analytics` 行を利用する。
+
+SLA稼働率、P95レスポンス、5xxエラー率、Firebase費用、Supabase費用の live source はまだ未接続のため、`未計測` としてSheetsに保持する。T807/T811およびCloud Monitoring/Billing連携が完了したら同じ月行をupsertし、値だけを更新する。
 
 パイロット実績から取得できる値は以下を使う。
 

@@ -4,7 +4,7 @@
     "action": "used_existing",
     "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-06-27 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
   },
-  "source_count": 110,
+  "source_count": 111,
   "source_results": [
     {
       "title": "Mighty Skill-Bridge docs/docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
@@ -997,6 +997,14 @@
       "stderr": ""
     },
     {
+      "title": "Mighty Skill-Bridge docs/docs/USAGE_ANALYTICS_KPI_RUNBOOK.md",
+      "drive_file_id": "16o2kXqyN9XE0AoqZ5r_vJmHAKqDwE5dMhjEPqwIQcPY",
+      "action": "added",
+      "returncode": 0,
+      "stdout": "Added Drive source: 64ee710f-fc8c-4461-b354-d077535d1949\nTitle: Mighty Skill-Bridge docs/docs/USAGE_ANALYTICS_KPI_RUNBOOK.md",
+      "stderr": ""
+    },
+    {
       "title": "Mighty Skill-Bridge docs/docs/USER_DATA_DELETION_FLOW.md",
       "drive_file_id": "1-2u-qFsKNwrE9Jpl3dovC0fr_Prk4JZUF23xz1e1zQQ",
       "action": "skipped_existing_refresh",
@@ -1110,10 +1118,10 @@
   "ask_generation": {
     "status": "skipped",
     "reason": "--skip-asks",
-    "generated_at_jst": "2026-06-27T21:27:55+09:00",
+    "generated_at_jst": "2026-06-27T22:17:52+09:00",
     "ask_timeout_seconds": 900,
     "next_command": "python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900",
-    "source_count": 110
+    "source_count": 111
   },
   "question": "6/2の社長打ち合わせで使う、8枚以内のプレゼン草案を作ってください。\n\n前提:\n- 実際の企画・サービス内容は6/2の打ち合わせで決定する\n- それまではプロトタイプ、WBS、Google Workspace同期、NotebookLM/Slack/Notion/Obsidian/GitHub連携の「実際にやった状態」を見せる\n- 社長に決めてもらう事項と、6/2後すぐにWBSへ反映する事項を明確にする\n\n出力形式:\n1. スライド番号とタイトル\n2. 各スライドの要点3つ以内\n3. 話すメモ\n4. 見せる証跡URL/ファイル\n5. 社長への質問\n",
   "answer_returncode": null

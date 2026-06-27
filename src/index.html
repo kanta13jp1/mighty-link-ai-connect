@@ -4927,6 +4927,112 @@
             }
         }
 
+        const USAGE_ANALYTICS_SESSION_KEY = "msb_usage_session_v1";
+        const USAGE_ANALYTICS_OPT_OUT_KEY = "msb_analytics_opt_out";
+
+        function getUsageAnalyticsSessionId() {
+            try {
+                let sessionId = localStorage.getItem(USAGE_ANALYTICS_SESSION_KEY);
+                if (!sessionId) {
+                    sessionId = `usage-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+                    localStorage.setItem(USAGE_ANALYTICS_SESSION_KEY, sessionId);
+                }
+                return sessionId;
+            } catch (_error) {
+                return "usage-storage-unavailable";
+            }
+        }
+
+        function isUsageAnalyticsOptedOut() {
+            try {
+                return localStorage.getItem(USAGE_ANALYTICS_OPT_OUT_KEY) === "1";
+            } catch (_error) {
+                return false;
+            }
+        }
+
+        function usageAnalyticsEndpoint() {
+            if (location.protocol === "file:" || location.hostname.endsWith("github.io")) {
+                return "";
+            }
+            return "/api/analytics/event";
+        }
+
+        function sendUsageAnalyticsEvent(eventName, metadata = {}) {
+            if (isUsageAnalyticsOptedOut()) return;
+            const endpoint = usageAnalyticsEndpoint();
+            if (!endpoint) return;
+            const payload = {
+                event_name: eventName,
+                event_surface: "public_demo",
+                page_url: `${location.pathname}${location.hash || ""}`,
+                session_id: getUsageAnalyticsSessionId(),
+                metadata,
+            };
+            fetch(endpoint, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(payload),
+                keepalive: true,
+            }).catch(() => {});
+        }
+
+        function initUsageAnalytics() {
+            sendUsageAnalyticsEvent("page_view", {surface: "home"});
+
+            const sectionIds = [
+                "survey-section",
+                "attendance-section",
+                "matching-section",
+                "admin-dashboard-section",
+                "support",
+            ];
+            const sectionTargets = sectionIds
+                .map(id => document.getElementById(id))
+                .filter(Boolean);
+            if ("IntersectionObserver" in window) {
+                const seenSections = new Set();
+                const sectionObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !seenSections.has(entry.target.id)) {
+                            seenSections.add(entry.target.id);
+                            sendUsageAnalyticsEvent("section_view", {section_id: entry.target.id});
+                            sectionObserver.unobserve(entry.target);
+                        }
+                    });
+                }, {threshold: 0.25});
+                sectionTargets.forEach(section => sectionObserver.observe(section));
+            }
+
+            document.addEventListener("click", (event) => {
+                const target = event.target.closest("button, a[href]");
+                if (!target) return;
+                const href = target.getAttribute("href") || "";
+                sendUsageAnalyticsEvent("cta_click", {
+                    element: target.tagName.toLowerCase(),
+                    element_id: target.id || "",
+                    href: href.startsWith("#") ? href : "",
+                });
+            }, {passive: true});
+
+            document.addEventListener("submit", (event) => {
+                const form = event.target;
+                if (!form || form.tagName !== "FORM") return;
+                sendUsageAnalyticsEvent("form_submit", {
+                    form_id: form.id || "",
+                });
+            }, {capture: true});
+        }
+
+        window.mightyLinkAnalyticsOptOut = function () {
+            try {
+                localStorage.setItem(USAGE_ANALYTICS_OPT_OUT_KEY, "1");
+                return true;
+            } catch (_error) {
+                return false;
+            }
+        };
+
         window.addEventListener("DOMContentLoaded", () => {
             // Step 1 inputs start empty so users see the placeholder copy and
             // can experience the "Load Sample" buttons as a real onboarding step.
@@ -4939,6 +5045,9 @@
 
             // Init Admin Dashboard
             renderDashboard();
+
+            // Init privacy-preserving T800 product usage analytics
+            initUsageAnalytics();
         });
 
         window.addEventListener("scroll", () => {

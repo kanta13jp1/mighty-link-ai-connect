@@ -494,6 +494,34 @@ def test_admin_operations_dashboard_requires_auth_aggregates_and_exports_csv(cli
     )
     assert approval_response.status_code == 200
 
+    analytics_response = client.post(
+        "/api/analytics/event",
+        json={
+            "event_name": "page_view",
+            "event_surface": "public_demo",
+            "page_url": "https://mightylink-app.com/?utm_source=test#survey-section",
+            "session_id": "dashboard-analytics-session@example.test",
+            "metadata": {
+                "section_id": "survey-section",
+                "email": "customer@example.test",
+                "secret": "token=should-not-leak",
+            },
+        },
+        headers={"User-Agent": "Mozilla/5.0 Chrome/120.0 raw-agent-secret"},
+    )
+    assert analytics_response.status_code == 200
+    analytics_data = analytics_response.json()
+    assert analytics_data["status"] == "success"
+    assert analytics_data["privacy"]["session_pseudonymized"] is True
+    assert analytics_data["privacy"]["ip_address_stored"] is False
+    assert analytics_data["privacy"]["raw_user_agent_stored"] is False
+
+    invalid_analytics = client.post(
+        "/api/analytics/event",
+        json={"event_name": "raw_form_body", "session_id": "dashboard-analytics-session@example.test"},
+    )
+    assert invalid_analytics.status_code == 400
+
     unauthorized = client.get("/api/admin/operations-dashboard")
     assert unauthorized.status_code == 401
     unauthorized_csv = client.get("/api/admin/operations-dashboard/report.csv")
@@ -506,17 +534,29 @@ def test_admin_operations_dashboard_requires_auth_aggregates_and_exports_csv(cli
     assert response.status_code == 200
     payload = response.json()
     assert payload["status"] == "success"
-    assert payload["wbs_task"] == "T842"
+    assert payload["wbs_task"] == "T842;T800"
     assert payload["security"]["admin_summary_requires_basic_auth"] is True
     assert payload["security"]["report_export_requires_basic_auth"] is True
     assert payload["security"]["raw_identifiers_excluded"] is True
+    assert payload["security"]["usage_analytics_pseudonymized_sessions"] is True
+    assert payload["security"]["usage_analytics_ip_address_excluded"] is True
+    assert payload["security"]["usage_analytics_raw_user_agent_excluded"] is True
     assert payload["kpis"]["employee_assessment_responses"] >= 1
     assert payload["kpis"]["attendance_timesheet_imports"] >= 1
+    assert payload["kpis"]["usage_analytics_events"] >= 1
+    assert payload["kpis"]["usage_page_views"] >= 1
     assert "employee_assessment" in payload["sources"]
     assert "attendance" in payload["sources"]
     assert "sales_email_review" in payload["sources"]
+    assert "usage_analytics" in payload["sources"]
+    assert payload["sources"]["usage_analytics"]["privacy_controls"]["raw_session_id_stored"] is False
+    assert payload["sources"]["usage_analytics"]["privacy_controls"]["raw_user_agent_stored"] is False
     assert "emp-dashboard-001" not in str(payload)
     assert "dashboard-timesheet.csv" not in str(payload)
+    assert "dashboard-analytics-session@example.test" not in str(payload)
+    assert "raw-agent-secret" not in str(payload)
+    assert "customer@example.test" not in str(payload)
+    assert "should-not-leak" not in str(payload)
 
     csv_response = client.get(
         "/api/admin/operations-dashboard/report.csv",
@@ -528,9 +568,13 @@ def test_admin_operations_dashboard_requires_auth_aggregates_and_exports_csv(cli
     assert "employee_assessment,responses" in csv_text
     assert "attendance,timesheet_imports" in csv_text
     assert "sales_email_review,reviews" in csv_text
+    assert "usage_analytics,events" in csv_text
+    assert "usage_analytics_event,page_view" in csv_text
     assert "raw_identifiers_excluded,True" in csv_text
     assert "emp-dashboard-001" not in csv_text
     assert "dashboard-timesheet.csv" not in csv_text
+    assert "dashboard-analytics-session@example.test" not in csv_text
+    assert "raw-agent-secret" not in csv_text
 
 
 def test_support_request_submission_and_summary(client):

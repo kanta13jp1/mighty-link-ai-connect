@@ -1,6 +1,6 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-27T12:28:57Z",
+  "generated_at": "2026-06-27T13:03:08Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
@@ -181,20 +181,21 @@
       "criterion_id": "PUBLIC-03",
       "scope": "public_paid_launch",
       "category": "SLA/KPI",
-      "criterion": "SLA/KPI定義、フィードバック収集、品質レポート接続方針がある",
-      "evidence_source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md",
+      "criterion": "SLA/KPI定義、フィードバック収集、品質レポート接続方針、匿名利用状況アナリティクスがある",
+      "evidence_source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md; docs/USAGE_ANALYTICS_KPI_RUNBOOK.md",
       "required_state": "PASS",
       "current_state": "PASS",
       "owner": "Codex",
       "decision_authority": "開発責任者",
-      "related_wbs": "T762;T763;T790",
+      "related_wbs": "T762;T763;T790;T800",
       "related_issue": "R70;R71",
-      "last_checked": "2026-06-17",
-      "notes": "NPS/役立ち度は月次品質レポートへ接続予定。",
+      "last_checked": "2026-06-27",
+      "notes": "NPS/役立ち度に加え、T800の匿名page_view/section_view/cta_click KPIを管理ダッシュボードCSVへ接続済み。",
       "wbs_statuses": {
         "T762": "完了",
         "T763": "完了",
-        "T790": "完了"
+        "T790": "完了",
+        "T800": "完了"
       },
       "missing_evidence": []
     },

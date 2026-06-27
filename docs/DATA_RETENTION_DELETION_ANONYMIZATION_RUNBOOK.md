@@ -4,7 +4,7 @@
 - 完了日: 2026-06-27
 - レーン: VSCode + Codex / VSCode + Claude Code
 - 技術前提: Firebase Hosting / Firebase Functions, Supabase PostgreSQL, FastAPI, Google Workspace Sheets
-- 関連: T742, T748, T756, T781, T817, T840, T841, T842, T846, PUBLIC-13
+- 関連: T742, T748, T756, T781, T800, T817, T840, T841, T842, T846, PUBLIC-13
 
 ## 結論
 
@@ -13,7 +13,7 @@ T847では、現行サイトで作成済みのSupabaseテーブル、SQLite fall
 現時点の結論は次のとおり。
 
 - 共有営業メール本文全文、勤務表CSV原本、元ファイル名、Stripe secret、OAuth token、API key、service account JSONはDB、GitHub、Sheets、docs、NotebookLMへ保存しない。
-- `employee_assessment_responses`、`attendance_*`、`sales_email_*` は匿名キー、ハッシュ、redacted excerpt、集計値のみを保存する。
+- `employee_assessment_responses`、`attendance_*`、`sales_email_*`、`usage_analytics_events` は匿名キー、ハッシュ、redacted excerpt、集計値のみを保存する。
 - 高感度の新規テーブルはSupabase RLSを有効化し、`anon` / `authenticated` の直接テーブル権限をrevoke済み、またはRLS有効かつ公開REST policyなしのAPI proxy限定運用とする。
 - 本人確認付きセルフエクスポートは `GET /api/user-data/export` で実装済み。ただし旧デモテーブルの完全な本人スコープはT752の `owner_uid` / `tenant_id` 追加まで制限付きで扱う。
 - 退会・完全削除はT742の契約を正本とし、一般公開前にはT752/T745/T798の認証・同意・法務ゲートと合わせて再検証する。
@@ -43,6 +43,7 @@ T847では、現行サイトで作成済みのSupabaseテーブル、SQLite fall
 | マッチング | `matches` | fit score、score details、matched/missing skills | 原本ファイル、secret | 利用中 | `profiles` 削除に連動して物理削除 | RLSで本人のみ | 照合済 |
 | AI監査 | `audits` | prompt/response監査、token数 | API key、OAuth token | 30日から90日を標準。障害時のみ延長 | match削除時は `match_id` null化またはT756方針で暗号化/削除 | RLS有効、公開REST policyなし | 照合済。T845で本番データ混入を再確認 |
 | 使用量 | `usage_ledgers` | daily calls/tokens、limit state | 請求カード、secret | 課金/不正調査に必要な期間 | 退会処理では `user_id` 匿名化を先行。FK cascadeは最後の安全網 | RLSで本人のみ | 照合済 |
+| 利用状況アナリティクス | `usage_analytics_events` | event name、surface、page path、session pseudonym、browser family、sanitized metadata | IPアドレス、生User-Agent、氏名、メール、電話、フォーム本文、URLクエリ、secret | 180日。月次KPI集計後は匿名集計へ移行 | `session_pseudonym` 単位削除、またはイベント集計だけ保持 | RLS有効、anon/authenticated revoke、API proxy経由 | 照合済 |
 | フィードバック | `feedback_events` | rating、NPS、redacted comment、session id | 氏名、連絡先、secret | 180日。品質集計後は匿名集計へ移行 | `session_id` 単位削除またはコメント匿名化 | RLS有効、公開REST policyなし、API proxy経由 | 照合済 |
 | サポート | `support_requests` | 問い合わせ分類、返信先、件名、本文、status | 添付原本、認証情報、カード情報 | 問い合わせ終了後180日。請求/法務は7年まで別管理 | 本人請求で本文削除または匿名化。会計証跡は個人識別子を外して保持 | RLS有効、公開REST policyなし、管理summaryはBasic Auth | 照合済 |
 | 営業メール取込元 | `sales_mailbox_sources` | source key、source type、保持日数、metadata | mailbox password、OAuth token | 90日標準 | 取込元停止時にmetadata匿名化、必要に応じ削除 | RLS有効、anon/authenticated revoke | 照合済 |
