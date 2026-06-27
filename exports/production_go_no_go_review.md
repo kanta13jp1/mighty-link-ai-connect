@@ -1,6 +1,6 @@
 # 本番リリース Go/No-Go 判定レビュー (T746)
 
-- 生成時刻(UTC): 2026-06-26T10:47:11Z
+- 生成時刻(UTC): 2026-06-27T01:56:26Z
 - 正本TSV: `data/release_go_no_go_criteria.tsv`
 - WBS正本: `data/WBS.tsv`
 - 総合判定: **NO_GO**

@@ -404,6 +404,86 @@ def test_attendance_punch_timesheet_parse_approval_and_summary(client):
     assert "timesheet-yamada.csv" not in str(summary)
 
 
+def test_admin_operations_dashboard_requires_auth_aggregates_and_exports_csv(client):
+    assessment_response = client.post(
+        "/api/employee-assessment/responses",
+        json={
+            "employee_identifier": "emp-dashboard-001",
+            "department": "operations",
+            "motivation_level": 5,
+            "culture_level": 4,
+            "growth_feedback": "Dashboard aggregation smoke test with no raw identifier exposure.",
+            "consented": True,
+            "source": "employee_assessment_form",
+            "page_url": "/",
+            "session_id": "dashboard-test-session",
+        },
+    )
+    assert assessment_response.status_code == 200
+
+    csv_payload = (
+        "date,work_hours,overtime_hours,midnight_hours,holiday_work,anomaly\n"
+        "2026-06-03,8.0,2.0,0,0,\n"
+    ).encode("utf-8")
+    parse_response = client.post(
+        "/api/attendance/timesheet/parse",
+        data={
+            "employee_identifier": "emp-dashboard-001",
+            "consented": "true",
+            "source": "attendance_timesheet_upload",
+            "page_url": "/",
+            "session_id": "dashboard-test-session",
+        },
+        files={"file": ("dashboard-timesheet.csv", csv_payload, "text/csv")},
+    )
+    assert parse_response.status_code == 200
+    import_id = parse_response.json()["import_id"]
+    approval_response = client.post(
+        "/api/attendance/timesheet/approve",
+        json={"import_id": import_id, "decision": "approved"},
+        auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD),
+    )
+    assert approval_response.status_code == 200
+
+    unauthorized = client.get("/api/admin/operations-dashboard")
+    assert unauthorized.status_code == 401
+    unauthorized_csv = client.get("/api/admin/operations-dashboard/report.csv")
+    assert unauthorized_csv.status_code == 401
+
+    response = client.get(
+        "/api/admin/operations-dashboard",
+        auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD),
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "success"
+    assert payload["wbs_task"] == "T842"
+    assert payload["security"]["admin_summary_requires_basic_auth"] is True
+    assert payload["security"]["report_export_requires_basic_auth"] is True
+    assert payload["security"]["raw_identifiers_excluded"] is True
+    assert payload["kpis"]["employee_assessment_responses"] >= 1
+    assert payload["kpis"]["attendance_timesheet_imports"] >= 1
+    assert "employee_assessment" in payload["sources"]
+    assert "attendance" in payload["sources"]
+    assert "sales_email_review" in payload["sources"]
+    assert "emp-dashboard-001" not in str(payload)
+    assert "dashboard-timesheet.csv" not in str(payload)
+
+    csv_response = client.get(
+        "/api/admin/operations-dashboard/report.csv",
+        auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD),
+    )
+    assert csv_response.status_code == 200
+    assert csv_response.headers["content-type"].startswith("text/csv")
+    csv_text = csv_response.text
+    assert "employee_assessment,responses" in csv_text
+    assert "attendance,timesheet_imports" in csv_text
+    assert "sales_email_review,reviews" in csv_text
+    assert "raw_identifiers_excluded,True" in csv_text
+    assert "emp-dashboard-001" not in csv_text
+    assert "dashboard-timesheet.csv" not in csv_text
+
+
 def test_support_request_submission_and_summary(client):
     support_response = client.post(
         "/api/support/request",

@@ -1,6 +1,6 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-26T10:47:11Z",
+  "generated_at": "2026-06-27T01:56:26Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",

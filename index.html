@@ -2901,6 +2901,24 @@
                     <span class="control-label">社員の適性診断、稼働状況、および営業メール案件マッチングの統括監視</span>
                 </div>
 
+                <div class="panel" style="min-height: auto; margin-bottom: 24px;">
+                    <div class="form-grid-2col">
+                        <div>
+                            <label for="admin-dashboard-username" class="control-label">Admin username</label>
+                            <input type="text" id="admin-dashboard-username" class="text-input" autocomplete="username" placeholder="admin">
+                        </div>
+                        <div>
+                            <label for="admin-dashboard-password" class="control-label">Admin password</label>
+                            <input type="password" id="admin-dashboard-password" class="text-input" autocomplete="current-password" placeholder="********">
+                        </div>
+                    </div>
+                    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:16px;">
+                        <button type="button" class="big-btn" onclick="loadOperationsDashboard()">Load real data</button>
+                        <button type="button" class="sample-btn" onclick="downloadOperationsDashboardCsv(event)">CSV export</button>
+                        <span class="support-status" id="admin-dashboard-status">Static demo data</span>
+                    </div>
+                </div>
+
                 <div class="dashboard-grid" style="margin-bottom: 32px;">
                     <div class="panel" id="matching-section" style="min-height: auto;">
                         <span class="step-kicker" style="color: var(--blue); background: rgba(139, 220, 255, 0.05);">稼働健全性</span>
@@ -4619,6 +4637,143 @@
 
             const actionText = match.approved ? "承認" : "未承認";
             alert(`営業メール案件マッチング「${match.title}」を${actionText}状態に更新しました。`);
+        }
+
+        function getAdminDashboardAuthHeader() {
+            const usernameInput = document.getElementById("admin-dashboard-username");
+            const passwordInput = document.getElementById("admin-dashboard-password");
+            const username = usernameInput ? usernameInput.value.trim() : "";
+            const password = passwordInput ? passwordInput.value : "";
+            if (!username || !password) {
+                throw new Error("Admin credentials are required");
+            }
+            return {"Authorization": `Basic ${btoa(`${username}:${password}`)}`};
+        }
+
+        function setAdminDashboardStatus(text, colorVar) {
+            const status = document.getElementById("admin-dashboard-status");
+            if (!status) return;
+            status.textContent = text;
+            status.style.color = colorVar || "var(--muted)";
+        }
+
+        function renderDashboardFromApi(payload) {
+            const kpis = payload.kpis || {};
+            const sources = payload.sources || {};
+            const assessment = sources.employee_assessment || {};
+            const attendance = sources.attendance || {};
+            const salesEmail = sources.sales_email_review || {};
+
+            const otStat = document.getElementById("dashboard-stat-ot");
+            if (otStat) {
+                const overtimeAverage = kpis.attendance_approved_overtime_average;
+                otStat.textContent = overtimeAverage === null || overtimeAverage === undefined
+                    ? "0.0 H"
+                    : `${Number(overtimeAverage).toFixed(1)} H`;
+            }
+
+            const motStat = document.getElementById("dashboard-stat-motivation");
+            if (motStat) {
+                const motivationAverage = kpis.motivation_average;
+                motStat.textContent = motivationAverage === null || motivationAverage === undefined
+                    ? "0.0 / 5"
+                    : `${Number(motivationAverage).toFixed(1)} / 5`;
+            }
+
+            const matchStat = document.getElementById("dashboard-stat-matching");
+            if (matchStat) {
+                matchStat.textContent = `${Number(kpis.sales_email_review_completion_rate || 0).toFixed(1)} %`;
+            }
+
+            const memberRows = [
+                ...(assessment.recent || []).map(row => ({
+                    key: row.subject_pseudonym || "emp-assess",
+                    scope: row.department_bucket || "assessment",
+                    motivation: row.motivation_level ?? "-",
+                    culture: row.culture_level ? `${Number(row.culture_level) * 20}%` : "-",
+                    overtime: "-"
+                })),
+                ...(attendance.recent_imports || []).map(row => ({
+                    key: row.subject_pseudonym || "attendance",
+                    scope: row.status || "timesheet",
+                    motivation: "-",
+                    culture: "-",
+                    overtime: `${Number((row.summary || {}).overtime_hours || 0).toFixed(1)} H`
+                }))
+            ];
+
+            const memberTbody = document.getElementById("dashboard-member-table-body");
+            if (memberTbody) {
+                memberTbody.innerHTML = memberRows.length
+                    ? memberRows.slice(0, 20).map(row => `
+                        <tr>
+                            <td style="font-weight: 600;">${escapeHtml(row.key)} <span style="font-size: 11px; color: var(--muted); font-weight: normal;">(${escapeHtml(row.scope)})</span></td>
+                            <td>${escapeHtml(String(row.motivation))}</td>
+                            <td><span class="fit-badge fit-high" style="background: rgba(186, 255, 102, 0.1); color: var(--green);">${escapeHtml(String(row.culture))}</span></td>
+                            <td>${escapeHtml(String(row.overtime))}</td>
+                        </tr>
+                    `).join("")
+                    : `<tr><td colspan="4" style="text-align:center;color:var(--muted)">No real data yet</td></tr>`;
+            }
+
+            const matchingTbody = document.getElementById("dashboard-matching-table-body");
+            if (matchingTbody) {
+                const rows = salesEmail.recent || [];
+                matchingTbody.innerHTML = rows.length
+                    ? rows.slice(0, 20).map(row => `
+                        <tr>
+                            <td style="font-weight: 500; font-size: 13px;">${escapeHtml(row.match_key || `review-${row.id}`)}</td>
+                            <td style="font-weight: 600;">${escapeHtml(row.reviewer_id || "admin")}</td>
+                            <td><span class="fit-badge ${row.feedback_status === "accepted" ? "fit-high" : "fit-med"}">${escapeHtml(row.feedback_status || "pending")}</span></td>
+                            <td>${escapeHtml(row.next_action || row.notes_excerpt || "-")}</td>
+                        </tr>
+                    `).join("")
+                    : `<tr><td colspan="4" style="text-align:center;color:var(--muted)">No review data yet</td></tr>`;
+            }
+        }
+
+        async function loadOperationsDashboard() {
+            setAdminDashboardStatus("Loading real data", "var(--yellow)");
+            try {
+                const response = await fetch("/api/admin/operations-dashboard?limit=20", {
+                    headers: getAdminDashboardAuthHeader()
+                });
+                if (!response.ok) {
+                    throw new Error("Operations dashboard endpoint unavailable");
+                }
+                const data = await response.json();
+                renderDashboardFromApi(data);
+                setAdminDashboardStatus(`Real data loaded: ${data.generated_at || "ready"}`, "var(--green)");
+            } catch (error) {
+                console.warn("Operations dashboard API unavailable.", error);
+                setAdminDashboardStatus("Real data unavailable; static demo remains", "var(--rose)");
+            }
+        }
+
+        async function downloadOperationsDashboardCsv(event) {
+            if (event) event.preventDefault();
+            setAdminDashboardStatus("Preparing CSV", "var(--yellow)");
+            try {
+                const response = await fetch("/api/admin/operations-dashboard/report.csv?limit=100", {
+                    headers: getAdminDashboardAuthHeader()
+                });
+                if (!response.ok) {
+                    throw new Error("Operations dashboard CSV endpoint unavailable");
+                }
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = "mighty-operations-dashboard.csv";
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                URL.revokeObjectURL(url);
+                setAdminDashboardStatus("CSV exported", "var(--green)");
+            } catch (error) {
+                console.warn("Operations dashboard CSV export unavailable.", error);
+                setAdminDashboardStatus("CSV export unavailable", "var(--rose)");
+            }
         }
 
         function renderDashboard() {

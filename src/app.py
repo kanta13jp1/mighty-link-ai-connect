@@ -2485,6 +2485,86 @@ def db_get_sales_email_review_summary(limit: int = 20) -> dict:
         conn.close()
 
 
+def build_operations_dashboard_summary(limit: int = 20) -> dict:
+    limit = max(1, min(limit, 100))
+    employee_assessment = db_get_employee_assessment_summary(limit=limit)
+    attendance = db_get_attendance_summary(limit=limit)
+    sales_email_review = db_get_sales_email_review_summary(limit=limit)
+
+    sales_status_counts = sales_email_review.get("status_counts", {}) or {}
+    reviewed_sales_count = sum(
+        int(sales_status_counts.get(status_name, 0) or 0)
+        for status_name in ("accepted", "rejected", "corrected")
+    )
+    sales_total = int(sales_email_review.get("total", 0) or 0)
+    sales_review_completion_rate = round((reviewed_sales_count / sales_total) * 100, 2) if sales_total else 0.0
+
+    return {
+        "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+        "wbs_task": "T842",
+        "kpis": {
+            "employee_assessment_responses": int(employee_assessment.get("total", 0) or 0),
+            "motivation_average": employee_assessment.get("averages", {}).get("motivation_level"),
+            "culture_average": employee_assessment.get("averages", {}).get("culture_level"),
+            "attendance_punch_events": int(attendance.get("punch_total", 0) or 0),
+            "attendance_timesheet_imports": int(attendance.get("import_total", 0) or 0),
+            "attendance_pending_approval": int(attendance.get("status_counts", {}).get("pending_approval", 0) or 0),
+            "attendance_approved_overtime_average": attendance.get("approved_averages", {}).get("overtime_hours"),
+            "attendance_approved_anomaly_count": int(attendance.get("approved_anomaly_count", 0) or 0),
+            "sales_email_reviews": sales_total,
+            "sales_email_needs_review": int(sales_status_counts.get("needs_review", 0) or 0),
+            "sales_email_review_completion_rate": sales_review_completion_rate,
+        },
+        "sources": {
+            "employee_assessment": employee_assessment,
+            "attendance": attendance,
+            "sales_email_review": sales_email_review,
+        },
+        "security": {
+            "admin_summary_requires_basic_auth": True,
+            "report_export_requires_basic_auth": True,
+            "raw_identifiers_excluded": True,
+            "raw_attendance_files_excluded": True,
+            "sales_email_body_excluded": True,
+            "secret_like_values_redacted": True,
+        },
+    }
+
+
+def build_operations_dashboard_csv(summary: dict) -> str:
+    output = io.StringIO()
+    writer = csv.writer(output, lineterminator="\n")
+    writer.writerow(["category", "metric", "value", "source"])
+
+    kpis = summary.get("kpis", {})
+    for metric_name in sorted(kpis):
+        writer.writerow(["kpi", metric_name, kpis.get(metric_name), "operations_dashboard"])
+
+    sources = summary.get("sources", {})
+    employee_assessment = sources.get("employee_assessment", {})
+    attendance = sources.get("attendance", {})
+    sales_email_review = sources.get("sales_email_review", {})
+
+    writer.writerow(["employee_assessment", "responses", employee_assessment.get("total", 0), "api_summary"])
+    for dept_name, count in sorted((employee_assessment.get("department_counts") or {}).items()):
+        writer.writerow(["employee_assessment_department", dept_name, count, "api_summary"])
+
+    writer.writerow(["attendance", "punch_events", attendance.get("punch_total", 0), "api_summary"])
+    writer.writerow(["attendance", "timesheet_imports", attendance.get("import_total", 0), "api_summary"])
+    for status_name, count in sorted((attendance.get("status_counts") or {}).items()):
+        writer.writerow(["attendance_status", status_name, count, "api_summary"])
+
+    writer.writerow(["sales_email_review", "reviews", sales_email_review.get("total", 0), "api_summary"])
+    for status_name, count in sorted((sales_email_review.get("status_counts") or {}).items()):
+        writer.writerow(["sales_email_review_status", status_name, count, "api_summary"])
+
+    security = summary.get("security", {})
+    for flag_name in sorted(security):
+        writer.writerow(["security", flag_name, security.get(flag_name), "operations_dashboard"])
+
+    return output.getvalue()
+
+
 def db_insert_support_request(
     category: str,
     priority: str,
@@ -4571,6 +4651,28 @@ async def admin_usage_export(username: str = Depends(verify_credentials)):
         return PlainTextResponse("", media_type="application/jsonl")
     with open(EXTERNAL_API_USAGE_LOG_FILE, "r", encoding="utf-8") as f:
         return PlainTextResponse(f.read(), media_type="application/jsonl")
+
+
+@app.get("/api/admin/operations-dashboard")
+async def admin_operations_dashboard(limit: int = 20, username: str = Depends(verify_credentials)):
+    """Authenticated T842 dashboard summary across assessment, attendance, and sales email review."""
+    return {
+        "status": "success",
+        "viewer": username,
+        **build_operations_dashboard_summary(limit=limit),
+    }
+
+
+@app.get("/api/admin/operations-dashboard/report.csv", response_class=PlainTextResponse)
+async def admin_operations_dashboard_report(limit: int = 20, username: str = Depends(verify_credentials)):
+    """CSV export for the T842 admin dashboard without raw identifiers or source files."""
+    summary = build_operations_dashboard_summary(limit=limit)
+    csv_text = build_operations_dashboard_csv(summary)
+    return PlainTextResponse(
+        csv_text,
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": 'attachment; filename="mighty-operations-dashboard.csv"'},
+    )
 
 
 @app.get("/api/admin/managed-agents/cost-simulation")

@@ -51,10 +51,22 @@ def test_ui_flow(fastapi_server):
         # 1. Verify Page Title
         assert "Mighty Skill-Bridge" in page.title()
         
-        # 2. Verify "MightyLINK HP" navigation link is present and correct
-        hp_link = page.locator("a:has-text('MightyLINK HP')")
-        assert hp_link.count() > 0
-        assert hp_link.first.get_attribute("href") == "exports/mighty-link-hp/index.html"
+        # 2. Verify the internal employee-system navigation links are present
+        expected_links = {
+            "#survey-section",
+            "#attendance-section",
+            "#matching-section",
+            "#admin-dashboard-section",
+        }
+        actual_links = {
+            href for href in page.locator("#primary-navigation a").evaluate_all(
+                "(links) => links.map((link) => link.getAttribute('href'))"
+            )
+        }
+        assert expected_links.issubset(actual_links)
+        assert page.locator("#admin-dashboard-username").count() == 1
+        assert page.locator("#admin-dashboard-password").count() == 1
+        assert page.locator("#support").count() == 1
         
         # 3. Check text areas are initially empty
         eng_input = page.locator("#engineer-input")
@@ -72,7 +84,7 @@ def test_ui_flow(fastapi_server):
         assert len(job_input.input_value()) > 0
         
         # 6. Click the "Analyze Fit" button
-        analyze_btn = page.locator("button.big-btn")
+        analyze_btn = page.get_by_role("button", name="Analyze Fit & Generate Story")
         analyze_btn.click()
         
         # 7. Verify that the report section is active and displays a non-zero score

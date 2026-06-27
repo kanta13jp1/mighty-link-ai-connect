@@ -1,20 +1,21 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-26T19:52:26+09:00
+Generated: 2026-06-27T11:04:47+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `104`
-- Drive docs uploaded: `3`
-- Drive docs skipped unchanged: `101`
+- Drive docs discovered: `105`
+- Drive docs uploaded: `2`
+- Drive docs skipped unchanged: `103`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
 
 - `docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md`: https://docs.google.com/document/d/1vJ8XPvZviNxlRVMwabTQeaTrTgzwuL9AMkkIFR43V-s/edit?usp=drivesdk
 - `docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1vZkDFnO5AhW1oEC3pif_bO9kCLQg8xh4iqdPXfm0QmI/edit?usp=drivesdk
+- `docs/ADMIN_OPERATIONS_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1xH0kZK698mtCkj9YDSEou5xdbENZ_nC5Pm4-Tib-f_Q/edit?usp=drivesdk
 - `docs/AI_COST_MONITORING_AND_QUOTA_DESIGN.md`: https://docs.google.com/document/d/1MaQDg52OsPPzpDVlfAMi4xdqSENRc8tWYNV729uytQ4/edit?usp=drivesdk
 - `docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md`: https://docs.google.com/document/d/1bBNOphS-rJbJMWiYJGba-3ZGE-FEHqHrE4dDbKDPsew/edit?usp=drivesdk
 - `docs/ANTIGRAVITY_GUIDE.md`: https://docs.google.com/document/d/1d0SMuvOQXnGLxmNj7d1ktfWczSmxlWL0wblxlYDMH4E/edit?usp=drivesdk
