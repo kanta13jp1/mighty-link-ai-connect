@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-06-27 19:31:49 UTC+09:00
+Generated: 2026-06-27 20:44:13 UTC+09:00
 
 ## Purpose
 
@@ -11,9 +11,9 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 ## Current WBS Snapshot
 
 - Total tasks: 273
-- Done: 239
+- Done: 240
 - In progress: 1
-- Not started: 33
+- Not started: 32
 - Completion rate: 88%
 - CEO presentation phase tasks: 90
 - CEO presentation phase done: 90
@@ -123,7 +123,7 @@ python scripts/verify_google_workspace_account.py
 - [6/2 社長打ち合わせ 論点・選択肢・確認質問リスト](docs/CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md) - T605 deliverable
 - [6/2 社長打ち合わせ 想定 QA パック](docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md) - T607 deliverable
 - [6/2 社長打ち合わせ 運用・体制・リスク・費用感 論点](docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) - T606 deliverable
-- [6/2 決定後ロードマップ枠](docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md) - T615 deliverable
+- [6/2 決定後ロードマップ枠](docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md) - T615 deliverable、2026-06-27以降は歴史的テンプレ扱い
 - [6/2 社長 事前共有メモ + 当日アジェンダ短文](docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md) - T614 deliverable
 - [6/2 社長プレゼン Canva / Figma リデザイン手順 + 8 枚コピペカード](docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md) - T658-extend (手動版)
 - [Canva / Figma MCP セットアップ + 自動化フロー](docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md) - T658-mcp-extend (自動化版、推奨)

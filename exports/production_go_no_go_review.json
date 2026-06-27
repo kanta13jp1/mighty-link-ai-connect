@@ -1,15 +1,15 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-06-27T10:29:11Z",
+  "generated_at": "2026-06-27T11:50:23Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
     "total": 20,
     "counts": {
-      "PASS": 11,
+      "PASS": 12,
       "HUMAN_GATE": 2,
-      "BLOCKED": 7
+      "BLOCKED": 6
     },
     "evidence_warnings": 0
   },
@@ -26,9 +26,9 @@
       "recommendation": "NO_GO",
       "worst_state": "BLOCKED",
       "counts": {
-        "PASS": 6,
+        "PASS": 7,
         "HUMAN_GATE": 2,
-        "BLOCKED": 7
+        "BLOCKED": 6
       },
       "total": 15
     }
@@ -429,17 +429,19 @@
       "scope": "public_paid_launch",
       "category": "品質管理",
       "criterion": "課題管理表・QA表の開発必須open/未回答が0である",
-      "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; Google Sheets 課題管理表; Google Sheets QA表; GitHub Project #1; docs/WBS_REVIEW_2026-06-26_SESSION2.md",
+      "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Issue #141; GitHub Project #1",
       "required_state": "PASS",
-      "current_state": "BLOCKED",
+      "current_state": "PASS",
       "owner": "Codex + Claude Code + 人間",
       "decision_authority": "開発責任者 / CEO",
-      "related_wbs": "T854",
+      "related_wbs": "T853;T854;T849",
       "related_issue": "R101;#141",
-      "last_checked": "2026-06-26",
-      "notes": "WBS全完了をサイト開発完了とみなすには、GitHub Issues/Projectだけでなく、Sheets正本の課題管理表とQA表も開発必須open/未回答が0、または明示承認済みである必要がある。",
+      "last_checked": "2026-06-27",
+      "notes": "T854で課題管理表の状態=openを0、QA表の未回答/未承認を0へ整理。残るFirebase CI/CD、UAT、会社運用引継ぎ、最終総合判定はPUBLIC-13/PUBLIC-14およびWBSで管理し、課題表openとして二重管理しない。",
       "wbs_statuses": {
-        "T854": "未着手"
+        "T853": "完了",
+        "T854": "完了",
+        "T849": "未着手"
       },
       "missing_evidence": []
     }

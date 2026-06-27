@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-27T19:36:39+09:00
+Generated: 2026-06-27T20:48:20+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `108`
-- Drive docs uploaded: `11`
-- Drive docs skipped unchanged: `97`
+- Drive docs discovered: `109`
+- Drive docs uploaded: `5`
+- Drive docs skipped unchanged: `104`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -60,6 +60,7 @@ Generated: 2026-06-27T19:36:39+09:00
 - `docs/INCIDENT_POSTMORTEM_RUNBOOK.md`: https://docs.google.com/document/d/1nfuwYTaxVnadProXz1I6U-qVVK8mECRDmoJWdecFLr8/edit?usp=drivesdk
 - `docs/INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1sbnNMCbBwpPyuLj60FNwEE3L1UAq8mZ79n7Zlv9Huco/edit?usp=drivesdk
 - `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
+- `docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md`: https://docs.google.com/document/d/1dwBuo8xE95v9zeo2Z2rcoN1-3W-1qkzkAFx0lGYc39o/edit?usp=drivesdk
 - `docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md`: https://docs.google.com/document/d/1r7xPsQ87_XlmTfj3pt9Os91dtCjR3qK8o7f0B_7aJI4/edit?usp=drivesdk
 - `docs/LOCAL_DEV_EMULATOR_STACK_RUNBOOK.md`: https://docs.google.com/document/d/1_jywSbN49MBBiyGRd89HguBrj-2ktZkB9SWiS3FaBuU/edit?usp=drivesdk
 - `docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md`: https://docs.google.com/document/d/1EKarbQEJc11rMLWXU4L9TL994vPp5dawHyjf-y3HPJg/edit?usp=drivesdk

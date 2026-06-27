@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "generated_at": "2026-06-27T11:50:23Z",
+  "issue_total": 145,
+  "qa_total": 111,
+  "issue_status_counts": {
+    "accepted_non_blocker": 2,
+    "closed": 1,
+    "resolved": 125,
+    "transferred": 17
+  },
+  "qa_status_counts": {
+    "回答済": 72,
+    "想定済": 39
+  },
+  "issue_blocker_count": 0,
+  "qa_blocker_count": 0,
+  "issue_blockers": [],
+  "qa_blockers": []
+}

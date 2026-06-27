@@ -18,10 +18,16 @@ T844からT852までで、企画、設計、実装、テスト、リリース、
 | ID | 内容 | 状態 |
 | --- | --- | --- |
 | T853 | 本レビュー。課題/QA最終ゼロゲートの追加判定 | 完了 |
-| T854 | 課題管理表・QA表の未解決/未回答棚卸しと開発ブロッカーゼロ化 | 未着手 |
-| PUBLIC-15 | 課題管理表・QA表の開発必須open/未回答が0であることをpublic_paid_launchゲートへ追加 | BLOCKED |
-| R101 | 課題管理表・QA表の未解決/未回答が最終完了条件に明示されていないリスク | open |
+| T854 | 課題管理表・QA表の未解決/未回答棚卸しと開発ブロッカーゼロ化 | 完了 |
+| PUBLIC-15 | 課題管理表・QA表の開発必須open/未回答が0であることをpublic_paid_launchゲートへ追加 | PASS |
+| R101 | 課題管理表・QA表の未解決/未回答が最終完了条件に明示されていないリスク | resolved |
 | QA-78 | 課題管理表やQA表にopen/未回答が残っていてもWBS全完了時に完了と言えるかへの回答 | 回答済 |
+
+## 2026-06-27 T854実施結果
+
+`data/issues_tracker.tsv`、`data/qa_tracker.tsv`、GitHub Issues/Projectを棚卸しし、古いopen課題を解決済み、非ブロッカー、または後続WBS/Go-NoGoゲートへ移管した。QA表の英語 `answered` 表記は `回答済` へ正規化した。
+
+`python scripts/audit_issue_qa_blockers.py --fail-on-blockers` の結果は `pass` であり、課題ブロッカー0件、QAブロッカー0件を `exports/issue_qa_blocker_audit.*` に証跡化した。詳細は [ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md](ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md) を正本とする。
 
 ## 補強後の完了定義
 

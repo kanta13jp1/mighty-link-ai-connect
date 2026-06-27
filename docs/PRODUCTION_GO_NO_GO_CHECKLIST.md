@@ -38,13 +38,15 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 
 2026-06-26のWBS再レビュー後、main CIのFirebase deployでWorkload Identity Federation経由ADCがFirebase CLIに認識されず、legacy `FIREBASE_TOKEN` も再認証期限切れであることを確認した。docs/data/exportsのみの変更ではFirebase deployをskipする暫定ガードを入れたが、これは本番デプロイ成功の代替ではない。T852で会社管理のWIF/service account/secret経路を再構成し、アプリ変更時のmain deploy greenを確認するまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。PUBLIC-14を追加済み。
 
-同じく2026-06-26の第2セッションで、T849の完了条件にGitHub Issues/Projectだけでなく、Sheets正本である課題管理表とQA表の開発必須open/未回答ゼロ確認を明示する必要があると確認した。T854で `data/issues_tracker.tsv`、`data/qa_tracker.tsv`、Google Sheets、GitHub Issues/Projectを突合し、開発必須open課題0、未回答/未承認QA 0、または人間承認済みの非ブロッカー化を証跡化するまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。PUBLIC-15を追加済み。
+同じく2026-06-26の第2セッションで、T849の完了条件にGitHub Issues/Projectだけでなく、Sheets正本である課題管理表とQA表の開発必須open/未回答ゼロ確認を明示する必要があると確認した。この時点でPUBLIC-15を追加し、T854で `data/issues_tracker.tsv`、`data/qa_tracker.tsv`、Google Sheets、GitHub Issues/Projectを突合する方針にした。
 
 2026-06-27にT846としてユーザー操作ガイド・管理者Runbook・FAQを現行機能へ全面更新し、T847として [DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md) を追加した。T847では `profiles` / `matches` / `audits` / `usage_ledgers`、feedback/support、`sales_email_*`、`employee_assessment_responses`、`attendance_*`、Stripe Portal、セルフエクスポート、ローカル/Cloud Loggingについて、保持・削除・匿名化・RLS・原本非保存を照合した。
 
 同じく2026-06-27にT848として [AI_SAAS_SERVICE_FREEZE_RUNBOOK.md](AI_SAAS_SERVICE_FREEZE_RUNBOOK.md) を追加し、Anthropic/OpenAI/Google/Microsoft/Meta/Amazon/Apple/xAI/Kimi/MiMo/DeepSeek/BytePlus/GitHub/Slack/Notion/Obsidian/Unity/Figma/Canva/Reddit/InsForge/FireCrawl/Discord/Stripe/Supabase/Firebase/お名前.com の採用/非採用、モデル/API、fallback、secret管理、会社請求移管状態を凍結した。これによりPUBLIC-13内のT846/T847/T848部分は完了したが、T845/T850/T849が残るため `public_paid_launch` とサイト開発完了宣言はNo-Goのまま維持する。
 
 2026-06-27にT745として [LEGAL_CONSENT_UI_AND_API_RUNBOOK.md](LEGAL_CONSENT_UI_AND_API_RUNBOOK.md) を追加し、`index.html` / `src/index.html` のAnalyze実行前にサービス利用規約・プライバシーポリシー・特商法表記・課金規約/返金ポリシーのドラフト確認チェックを必須化した。`src/app.py` では `/api/parse` と `/api/match` が `MSB-LEGAL-2026-06-DRAFT` の同意バージョンを検証し、未同意または旧バージョンを400で拒否する。あわせてフッター常時リンクを補強したためPUBLIC-05とPUBLIC-07はPASSへ更新する。ただしT798の法務本文確定、T804の価格確定、T752のユーザー別同意履歴が残るため `public_paid_launch` はNo-Goのまま維持する。
+
+同じく2026-06-27にT854として [ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md](ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md) を追加し、課題管理表とQA表の未分類open/未回答を棚卸しした。`scripts/audit_issue_qa_blockers.py --fail-on-blockers` により、課題ブロッカー0件、QAブロッカー0件を `exports/issue_qa_blocker_audit.*` へ証跡化したためPUBLIC-15はPASSへ更新する。ただし、T845/T849/T850/T852や法務・価格・課金・負荷・実メール接続などの残ゲートは別管理であり、`public_paid_launch` はNo-Goのまま維持する。
 
 ---
 
@@ -89,7 +91,6 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | T850 | 会社運用引継ぎリハーサル・権限棚卸し・Break-glass確認 | `BLOCKED` |
 | T849 | サイト開発完了総合判定・WBS全完了証跡化・GAリリース閉鎖 | `BLOCKED` |
 | T852 | Firebase/GitHub Actionsの本番デプロイ認証経路を会社管理のWIF/service account/secret経路へ再構成し、アプリ変更時のmain deploy greenを証跡化 | `BLOCKED` |
-| T854 | 課題管理表・QA表の未解決/未回答棚卸しと開発ブロッカーゼロ化 | `BLOCKED` |
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 
