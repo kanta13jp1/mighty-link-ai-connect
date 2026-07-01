@@ -2,9 +2,9 @@
   "notebook_id": "4934c12b-b270-4739-97a1-b04b5b84eaaf",
   "notebook_info": {
     "action": "used_existing",
-    "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-06-27 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
+    "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-07-01 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
   },
-  "source_count": 111,
+  "source_count": 115,
   "source_results": [
     {
       "title": "Mighty Skill-Bridge docs/docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
@@ -257,6 +257,16 @@
       "stderr": ""
     },
     {
+      "title": "Mighty Skill-Bridge docs/docs/COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md",
+      "drive_file_id": "1F9T3gfAwYvrd3pK72oHpHa4bNkZoo05lZ4xHktjaLh8",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "98e5fc87-0159-4b19-8dfb-ef63a4f21122",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
       "title": "Mighty Skill-Bridge docs/docs/COST_REPORT_2026-06.md",
       "drive_file_id": "1CNFK4rA_lhIileO29u0MuvXQca43qkDmSdSla7JdUMY",
       "action": "skipped_existing_refresh",
@@ -412,6 +422,16 @@
       "action": "skipped_existing_refresh",
       "reason": "--skip-source-refresh",
       "source_id": "638c7783-2a53-4298-a49c-6c3b76742041",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "title": "Mighty Skill-Bridge docs/docs/GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md",
+      "drive_file_id": "1tzGuPKQ5GWw-AGokf351BO6SqPz4bas8wf-fecnkDPY",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "4aa9ffe2-03a4-4aa7-a9a2-a23274601a4b",
       "returncode": null,
       "stdout": "",
       "stderr": ""
@@ -887,6 +907,16 @@
       "stderr": ""
     },
     {
+      "title": "Mighty Skill-Bridge docs/docs/STRIPE_BILLING_INTEGRATION_DESIGN.md",
+      "drive_file_id": "1f1QPs3EtANfAiFIJaQw0TpInTznVI7cNr4fLHydw9W0",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "c22e986a-e8af-4eef-a95f-569a3557d5e1",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
       "title": "Mighty Skill-Bridge docs/docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md",
       "drive_file_id": "19Lr08_Uww54iQerNJMSWSf81SY7TSGoQbRSPjvXdXIM",
       "action": "skipped_existing_refresh",
@@ -999,9 +1029,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/USAGE_ANALYTICS_KPI_RUNBOOK.md",
       "drive_file_id": "16o2kXqyN9XE0AoqZ5r_vJmHAKqDwE5dMhjEPqwIQcPY",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 64ee710f-fc8c-4461-b354-d077535d1949\nTitle: Mighty Skill-Bridge docs/docs/USAGE_ANALYTICS_KPI_RUNBOOK.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "64ee710f-fc8c-4461-b354-d077535d1949",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -1095,6 +1127,16 @@
       "stderr": ""
     },
     {
+      "title": "Mighty Skill-Bridge docs/docs/WBS_REVIEW_2026-07-01.md",
+      "drive_file_id": "1dMIc1sFFRnLtmUJMJOO9hPBGsnxyU68rFhv0tmnIG1c",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "6b946e4b-80c0-4899-ab2b-099236331ceb",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
       "title": "Mighty Skill-Bridge docs/docs/WBS_SYNC_GUIDE.md",
       "drive_file_id": "1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY",
       "action": "skipped_existing_refresh",
@@ -1118,10 +1160,10 @@
   "ask_generation": {
     "status": "skipped",
     "reason": "--skip-asks",
-    "generated_at_jst": "2026-06-27T22:17:52+09:00",
+    "generated_at_jst": "2026-07-01T20:45:59+09:00",
     "ask_timeout_seconds": 900,
     "next_command": "python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900",
-    "source_count": 111
+    "source_count": 115
   },
   "question": "このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、\nCodex/AIエージェントが次に開発を進めるための要約を作ってください。\n\n必ず以下を含めてください。\n1. 現在のプロダクト方向性で確定していること\n2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク\n3. 6/2で社長に決めてもらうべき事項\n4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提\n5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題\n6. WBSへ追加すべき次アクション\n",
   "summary_returncode": null,

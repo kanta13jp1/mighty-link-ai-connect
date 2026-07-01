@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-06-27T22:17:52+09:00
+Generated: 2026-07-01T20:45:59+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `111`
-- Drive docs uploaded: `7`
-- Drive docs skipped unchanged: `104`
+- Drive docs discovered: `115`
+- Drive docs uploaded: `2`
+- Drive docs skipped unchanged: `113`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -38,6 +38,7 @@ Generated: 2026-06-27T22:17:52+09:00
 - `docs/CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md`: https://docs.google.com/document/d/1f46OjAqnCphcg24U--3ro8Om40RdydQpISIUlO9gRoY/edit?usp=drivesdk
 - `docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md`: https://docs.google.com/document/d/1fMHp994ApuoGJsVmyD2PpA_ILNzDsb5RSxomC1rmeew/edit?usp=drivesdk
 - `docs/CODEX_CONTINUATION_NOTES.md`: https://docs.google.com/document/d/1akLsJ_85jkqcH3aTaae8h5u1xmHGooJn5UlklHvQyfE/edit?usp=drivesdk
+- `docs/COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md`: https://docs.google.com/document/d/1F9T3gfAwYvrd3pK72oHpHa4bNkZoo05lZ4xHktjaLh8/edit?usp=drivesdk
 - `docs/COST_REPORT_2026-06.md`: https://docs.google.com/document/d/1CNFK4rA_lhIileO29u0MuvXQca43qkDmSdSla7JdUMY/edit?usp=drivesdk
 - `docs/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md`: https://docs.google.com/document/d/1aqjpIgxoF_BkJ0KhxVFnFngngkzFzhsCuHfH5Zuk0wE/edit?usp=drivesdk
 - `docs/DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md`: https://docs.google.com/document/d/1z342WkM3spdRi9nNP17b_A1SYxGgVpYkFtk_WP9K7uI/edit?usp=drivesdk
@@ -54,6 +55,7 @@ Generated: 2026-06-27T22:17:52+09:00
 - `docs/FIREBASE_SUPABASE_QUOTA_ERROR_ALERT_RUNBOOK.md`: https://docs.google.com/document/d/10dbRSFj2mRlF9OdKfsdAT4QCT_GSZv8is3Otu1nTf5Q/edit?usp=drivesdk
 - `docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md`: https://docs.google.com/document/d/1chyqUHbGFZ41CPKhR6sY5HUTG397IxnmPCuQdUHa5rA/edit?usp=drivesdk
 - `docs/GEMINI_CLI_MIGRATION_AUDIT_2026-06-17.md`: https://docs.google.com/document/d/1f-Y6v0WBFliNpYUtY6Hv_rjo4_87_lBDZawhw6pyr4s/edit?usp=drivesdk
+- `docs/GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1tzGuPKQ5GWw-AGokf351BO6SqPz4bas8wf-fecnkDPY/edit?usp=drivesdk
 - `docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1xb9e3AQt7uGSvQvu-D12CGqchlh5Z01FFn44Dkhza8I/edit?usp=drivesdk
 - `docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md`: https://docs.google.com/document/d/1sNtUB-fmge59PdRumkD0Ug6z9KPEF_QQw2PfX4qxnKo/edit?usp=drivesdk
 - `docs/GROWTH_STRATEGY_ROADMAP.md`: https://docs.google.com/document/d/1Pp3Tf_r4G2-pxJDFVw5FhFheCgZHZcscsnotmX6vDgQ/edit?usp=drivesdk
@@ -101,6 +103,7 @@ Generated: 2026-06-27T22:17:52+09:00
 - `docs/SHEETS_TRACKERS_SCHEMA.md`: https://docs.google.com/document/d/11uhVT03zDzAnXLVHrcZAQCwQ4z4e0PbFjBcOOOEdvU8/edit?usp=drivesdk
 - `docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md`: https://docs.google.com/document/d/1jEicYb_uJHFTY5_RGJSN1PMGKilCpznOsKXWx9EIbbg/edit?usp=drivesdk
 - `docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md`: https://docs.google.com/document/d/1cZdaWmWxszmTRIcva3T3-GRkMpXa9qjT7MR-TIL7yHk/edit?usp=drivesdk
+- `docs/STRIPE_BILLING_INTEGRATION_DESIGN.md`: https://docs.google.com/document/d/1f1QPs3EtANfAiFIJaQw0TpInTznVI7cNr4fLHydw9W0/edit?usp=drivesdk
 - `docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md`: https://docs.google.com/document/d/19Lr08_Uww54iQerNJMSWSf81SY7TSGoQbRSPjvXdXIM/edit?usp=drivesdk
 - `docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md`: https://docs.google.com/document/d/11N-1PlKMV4nr2I1SBeMQISbbPZOAOVmhkqMKCf8Pg74/edit?usp=drivesdk
 - `docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md`: https://docs.google.com/document/d/135y0TSQWMvp-nBsUrIRUzDlRLWzlvRFF82D-56IQkHg/edit?usp=drivesdk
@@ -122,6 +125,7 @@ Generated: 2026-06-27T22:17:52+09:00
 - `docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-25.md`: https://docs.google.com/document/d/1KoWmq5lExtMSfItWTNV18I8WHEvwwLVxD94QQBB0qlo/edit?usp=drivesdk
 - `docs/WBS_REVIEW_2026-06-26.md`: https://docs.google.com/document/d/1T6YKzX36GnV3ggc1gCCTur4RvUMMr8bf5mAtREqwPh4/edit?usp=drivesdk
 - `docs/WBS_REVIEW_2026-06-26_SESSION2.md`: https://docs.google.com/document/d/1hxWlysrTSQFvIOQWyJqFLyy4JVW11XFMe_fJndG0aOk/edit?usp=drivesdk
+- `docs/WBS_REVIEW_2026-07-01.md`: https://docs.google.com/document/d/1dMIc1sFFRnLtmUJMJOO9hPBGsnxyU68rFhv0tmnIG1c/edit?usp=drivesdk
 - `docs/WBS_SYNC_GUIDE.md`: https://docs.google.com/document/d/1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY/edit?usp=drivesdk
 - `docs/WEEKLY_COST_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1Sg3jtNziaRKU5lqgZ254BvrEXW0L6KPkhE8hmb-8Cwg/edit?usp=drivesdk
 
