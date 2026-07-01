@@ -175,6 +175,15 @@ pg_restore \
 | バックアップからのリストア実機訓練 | 半年 | 開発担当（T771 参照） |
 | P1 障害シミュレーション（Chaos Engineering） | 年次 | 開発担当 |
 
+### 4.6 T771 リストア訓練記録
+
+2026-07-01 に `scripts/run_supabase_restore_drill.py` で、production data を使わない synthetic snapshot のリストア訓練を実施した。訓練では `psql --single-transaction`、`ON_ERROR_STOP=1`、`session_replication_role = replica`、DB URL のマスク、RPO 24h / P1 RTO 2h、バックアップ workflow の存在を確認し、実DBへの復元は行っていない。
+
+- 訓練レポート: `exports/supabase_restore_drill_2026-07-01.md`
+- 機械可読ログ: `exports/supabase_restore_drill_2026-07-01.json`
+- 検証コマンド: `python -m pytest tests/test_supabase_restore_drill.py tests/test_supabase_backup_scripts.py -q`
+- 次回の実機訓練: 会社アカウント配下の新規Supabase projectへ非本番snapshotを復元し、RLS/API/public demo guardを通してから本番復元判断へ進む。
+
 ---
 
 ## 5. ポストモーテム テンプレート

@@ -225,7 +225,7 @@ gantt
 | **T768** | 9. 長期保守・拡張 | フロントエンド | 多言語対応（i18n）設計と英語/中国語/韓国語UIの実装 | Antigravity | Antigravity + Gemini | i18nライブラリ選定・翻訳リソースファイル生成・4言語切替UIの実装。T752後に主要導線を固定してから着手 | 未着手 |
 | **T769** | 9. 長期保守・拡張 | バックエンド開発 | Gemini API モデルバージョン追従および新モデル移行プロセスの標準化 | Codex + Claude | VSCode + Codex | 公式リリースノート監視・移行テスト手順のdocs化・プロンプト互換性検証パイプライン整備 | 未着手 |
 | **T770** | 9. 長期保守・拡張 | 品質管理 | 負荷テスト（同時100ユーザー想定）の実施と結果に基づくスケーリング方針策定 | Codex | VSCode + Codex | k6/Locust 等による負荷シナリオ設計・実行・レポート docs 同期 | 未着手 |
-| **T771** | 9. 長期保守・拡張 | 運用保守 | 定期的なバックアップからのリストア（復旧）訓練の実施およびDR手順の有効性確認 | Codex | VSCode + Codex | DR復旧手順書に基づくテスト実行ログの記録 | 未着手 |
+| **T771** | 9. 長期保守・拡張 | 運用保守 | 定期的なバックアップからのリストア（復旧）訓練の実施およびDR手順の有効性確認 | Codex | VSCode + Codex | scripts/run_supabase_restore_drill.pyでsynthetic snapshotのdry-run訓練とRPO/RTO/secret redaction/backup workflow検証を実施し、exports/supabase_restore_drill_2026-07-01.*へ記録 | 完了 |
 | **T772** | 9. 長期保守・拡張 | コンプライアンス | 最新の法改正（個人情報保護法等）に伴う利用規約・プライバシーポリシーの年次見直しと改定プロセスの整備 | Claude | VSCode + Claude Code | 法改正チェックリストと改定スケジュールのdocs同期 | 完了 |
 | **T773** | 9. 長期保守・拡張 | 運用保守 | 年間を通したシステム稼働ログおよび監査ログのコールドストレージ退避・長期保存プロセスの自動化 | Codex | VSCode + Codex | scripts/archive_audit_logs_to_cold_storage.py、docs/COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md、tests/test_cold_storage_log_archive.pyを追加。SHA-256 manifest、GCS lifecycle template、任意ZIP、明示--upload、secret/OAuth/DBスナップショット除外、secret-like警告時のGCSアップロード拒否を実装。R107/QA-87/Issue #146へ証跡化 | 完了 |
 | **T774** | 7. 決定後実行 | セキュリティ | docs/SECURITY_AUDIT_RUNBOOK.md 新規作成（四半期セキュリティ監査手順書） | Claude + Codex | VSCode + Claude Code | セキュリティ監査チェックリストのSheets連携 | 完了 |

@@ -1,0 +1,67 @@
+{
+  "task_id": "T771",
+  "generated_at_utc": "2026-07-01T10:01:51.779307+00:00",
+  "status": "pass",
+  "source": "synthetic_snapshot",
+  "snapshot": {
+    "path": "<synthetic_snapshot>/20260701T000000Z",
+    "required_files": [
+      "roles.sql",
+      "schema.sql",
+      "data.sql"
+    ],
+    "production_data_included": false
+  },
+  "restore_dry_run": {
+    "command": "psql --single-transaction --variable ON_ERROR_STOP=1 --file <synthetic_snapshot>/20260701T000000Z\\roles.sql --file <synthetic_snapshot>/20260701T000000Z\\schema.sql --command \"SET session_replication_role = replica\" --file <synthetic_snapshot>/20260701T000000Z\\data.sql --dbname postgresql://postgres:***@example.invalid:5432/postgres",
+    "real_restore_performed": false,
+    "real_restore_gate": "Use scripts/restore_supabase_database.py --confirm-restore only after human Go/No-Go."
+  },
+  "rpo_rto": {
+    "rpo_target": "24h",
+    "rto_target": "2h for P1",
+    "validated_against": [
+      "docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md",
+      "docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md",
+      "docs/PRODUCTION_ROLLBACK_RUNBOOK.md"
+    ]
+  },
+  "checks": [
+    {
+      "name": "restore_dry_run_command",
+      "status": "pass",
+      "detail": "restore command is single-transaction and redacted"
+    },
+    {
+      "name": "docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md",
+      "status": "pass",
+      "detail": "all required markers present"
+    },
+    {
+      "name": "docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md",
+      "status": "pass",
+      "detail": "all required markers present"
+    },
+    {
+      "name": "docs/PRODUCTION_ROLLBACK_RUNBOOK.md",
+      "status": "pass",
+      "detail": "all required markers present"
+    },
+    {
+      "name": ".github/workflows/supabase-backup.yml",
+      "status": "pass",
+      "detail": "all required markers present"
+    },
+    {
+      "name": "secret_redaction",
+      "status": "pass",
+      "detail": "no unredacted secret markers in report"
+    }
+  ],
+  "next_real_drill": [
+    "Create a new Supabase project under the company account.",
+    "Restore a non-production snapshot into that project.",
+    "Run RLS/API/public-demo checks before any production restore decision.",
+    "Record PITR target, owner, approval, and post-restore verification in GitHub/Sheets."
+  ]
+}

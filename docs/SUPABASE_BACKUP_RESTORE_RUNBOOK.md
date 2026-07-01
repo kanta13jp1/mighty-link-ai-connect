@@ -1,6 +1,7 @@
 # Supabase DB バックアップ・リストア運用 Runbook (T741)
 
 作成日: 2026-06-13  
+最終更新: 2026-07-01
 担当レーン: VSCode + Codex  
 対象: Mighty Skill-Bridge / Mighty-Link AI Connect 本番 Supabase PostgreSQL
 
@@ -101,13 +102,47 @@ python -m pytest tests/test_rls_policies.py
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
 ```
 
+## T771 リストア訓練
+
+2026-07-01にT771として、実DBへ接続しないリストア訓練を実施した。成果物は次の通り。
+
+| 種別 | パス | 役割 |
+| --- | --- | --- |
+| 訓練スクリプト | `scripts/run_supabase_restore_drill.py` | synthetic snapshotを使い、復元dry-runコマンド、Runbook、GitHub Actions、RPO/RTOを検証する |
+| JSON証跡 | `exports/supabase_restore_drill_2026-07-01.json` | 機械判定用の訓練結果 |
+| Markdown証跡 | `exports/supabase_restore_drill_2026-07-01.md` | 人間レビュー用の訓練結果 |
+| テスト | `tests/test_supabase_restore_drill.py` | secret非露出、既存snapshot対応、Runbook/Workflow契約を検証 |
+
+実行コマンド:
+
+```powershell
+python scripts/run_supabase_restore_drill.py
+python -m pytest tests/test_supabase_restore_drill.py tests/test_supabase_backup_scripts.py -q
+```
+
+T771の判定:
+
+- `psql --single-transaction --variable ON_ERROR_STOP=1` と `SET session_replication_role = replica` を含む復元dry-runコマンドを生成できる。
+- DB URLは `***` にマスクされ、secret、OAuth token、個人データ実値は証跡へ出ない。
+- `SUPABASE_BACKUP_RESTORE_RUNBOOK.md`、`DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md`、`PRODUCTION_ROLLBACK_RUNBOOK.md`、`.github/workflows/supabase-backup.yml` の必須記述を横断確認できる。
+- RPO 24時間、P1 RTO 2時間の目標は維持する。
+- production直接復元は実施していない。実機訓練は会社アカウント配下の新規Supabase projectへ非本番snapshotを復元してから行う。
+
+T771で確認した公式Docs差分:
+
+- SupabaseのDatabase Backupsでは、Pro/Team/Enterpriseで日次バックアップが提供され、PITRはより細かい復元点を選べるが、Storage APIオブジェクトはDBバックアップに含まれない。
+- Supabase CLIのbackup/restore手順は、`supabase db dump` でroles/schema/dataを分け、`psql --single-transaction --variable ON_ERROR_STOP=1` で復元する構成を維持する。
+- SupabaseのRestore to a new projectを優先し、productionへ直接戻す前に新規projectで検証する。
+- Firebase HostingはRelease historyから過去versionへrollbackできるため、DB復元訓練と合わせてUI/APIのknown-good戻し先を記録する。
+- GitHub Actions artifactは保持期間を設定できるが、長期DR証跡はGitHub artifactではなくGit管理されたredacted reportと会社GCSを正本にする。
+
 ## 運用チェックリスト
 
 - GitHub Actions の `Supabase Daily Backup` が毎日成功している
 - `manifest.json` に秘密情報が出ていない
 - GCS bucket は private、versioning / lifecycle / retention policy を設定済み
 - 破壊的 migration 前に直近 backup / PITR 時刻を記録する
-- 半年に1回、復元訓練を新規 Supabase project で行う
+- 半年に1回、`scripts/run_supabase_restore_drill.py` を実行し、会社アカウント配下の新規 Supabase project で復元訓練を行う
 
 ## 関連ドキュメント
 
