@@ -1,6 +1,6 @@
 # NotebookLM CEO Slide Outline
 
-Generated: 2026-07-01T22:38:19+09:00
+Generated: 2026-07-01T23:36:16+09:00
 Notebook: `4934c12b-b270-4739-97a1-b04b5b84eaaf`
 Status: `source_sync_ready`
 

@@ -36,3 +36,10 @@ def test_sla_fails_when_endpoint_has_error():
     assert summary["total_errors"] == 1
     assert sla["overall_pass"] is False
     assert sla["endpoint_results"]["/api/parse"]["error_free"] is False
+
+
+def test_load_probe_configures_fast_deterministic_delays(tmp_path):
+    app_module = load_probe.configure_test_app(tmp_path)
+
+    assert app_module.DETERMINISTIC_PARSE_DELAY_SECONDS == load_probe.DEFAULT_PARSE_DELAY_SECONDS
+    assert app_module.DETERMINISTIC_MATCH_DELAY_SECONDS == load_probe.DEFAULT_MATCH_DELAY_SECONDS

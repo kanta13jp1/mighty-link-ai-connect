@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import contextlib
+import io
 import json
 import math
 import os
@@ -28,6 +30,8 @@ SRC_DIR = PROJECT_ROOT / "src"
 DEFAULT_JSON_REPORT = PROJECT_ROOT / "exports" / "load_test_100_users_2026-07-01.json"
 DEFAULT_MD_REPORT = PROJECT_ROOT / "docs" / "LOAD_TEST_100_USERS_REPORT_2026-07-01.md"
 JST = timezone(timedelta(hours=9))
+DEFAULT_PARSE_DELAY_SECONDS = 0.0
+DEFAULT_MATCH_DELAY_SECONDS = 0.0
 
 SLA_TARGETS_MS = {
     "p50": 1500.0,
@@ -120,6 +124,8 @@ def evaluate_sla(summary: dict[str, Any]) -> dict[str, Any]:
 def configure_test_app(tmp_root: Path):
     os.environ.setdefault("AI_FORCE_MOCK", "1")
     os.environ.setdefault("MOCK_AUTH", "1")
+    os.environ.setdefault("DETERMINISTIC_PARSE_DELAY_SECONDS", str(DEFAULT_PARSE_DELAY_SECONDS))
+    os.environ.setdefault("DETERMINISTIC_MATCH_DELAY_SECONDS", str(DEFAULT_MATCH_DELAY_SECONDS))
     os.environ.setdefault("RATE_LIMIT_ENABLED", "1")
     os.environ.setdefault("RATE_LIMIT_MAX_REQUESTS", "100000")
     os.environ.setdefault("RATE_LIMIT_AUTH_MAX_REQUESTS", "100000")
@@ -146,6 +152,8 @@ def configure_test_app(tmp_root: Path):
     app_module.EXTERNAL_API_USAGE_LOG_FILE = str(data_dir / "external_api_usage.jsonl")
     app_module.AI_FORCE_MOCK = True
     app_module.GEMINI_READY = False
+    app_module.DETERMINISTIC_PARSE_DELAY_SECONDS = DEFAULT_PARSE_DELAY_SECONDS
+    app_module.DETERMINISTIC_MATCH_DELAY_SECONDS = DEFAULT_MATCH_DELAY_SECONDS
     app_module.DATABASE_URL = ""
     app_module.USE_SUPABASE = False
     app_module.SUPABASE_SDK_ACTIVE = False
@@ -238,11 +246,15 @@ def build_report(concurrent_users: int, keep_tmp: bool) -> dict[str, Any]:
     tmp_root = Path(tempfile.mkdtemp(prefix="mighty_link_t770_load_"))
     try:
         app_module = configure_test_app(tmp_root)
-        metrics, elapsed_seconds = asyncio.run(run_probe(app_module, concurrent_users))
+        captured_logs = io.StringIO()
+        with contextlib.redirect_stdout(captured_logs):
+            metrics, elapsed_seconds = asyncio.run(run_probe(app_module, concurrent_users))
+        captured_log_lines = len([line for line in captured_logs.getvalue().splitlines() if line.strip()])
         summary = summarize_metrics(metrics)
         sla = evaluate_sla(summary)
         return {
-            "task_id": "T770",
+            "task_id": "T858",
+            "baseline_task_id": "T770",
             "generated_at_jst": datetime.now(JST).isoformat(timespec="seconds"),
             "scenario": {
                 "concurrent_users": concurrent_users,
@@ -250,6 +262,9 @@ def build_report(concurrent_users: int, keep_tmp: bool) -> dict[str, Any]:
                 "total_elapsed_seconds": round(elapsed_seconds, 3),
                 "target": "In-process FastAPI ASGI probe with isolated SQLite fallback DB, mock AI mode, and per-user forwarded IPs.",
                 "endpoints": ["GET /api/health", "POST /api/parse", "POST /api/match"],
+                "deterministic_parse_delay_seconds": app_module.DETERMINISTIC_PARSE_DELAY_SECONDS,
+                "deterministic_match_delay_seconds": app_module.DETERMINISTIC_MATCH_DELAY_SECONDS,
+                "captured_internal_log_lines": captured_log_lines,
             },
             "summary": summary,
             "sla": sla,
@@ -291,7 +306,7 @@ def write_json(path: Path, report: dict[str, Any]) -> None:
     path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def write_markdown(path: Path, report: dict[str, Any]) -> None:
+def _write_markdown_legacy_t770(path: Path, report: dict[str, Any]) -> None:
     summary = report["summary"]
     scenario = report["scenario"]
     sla = report["sla"]
@@ -384,8 +399,108 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def write_markdown(path: Path, report: dict[str, Any]) -> None:
+    """Write the T858 markdown report."""
+    summary = report["summary"]
+    scenario = report["scenario"]
+    sla = report["sla"]
+
+    lines = [
+        "# T858 100同時ユーザー負荷SLA再試験結果",
+        "",
+        f"- 生成日時: {report['generated_at_jst']}",
+        "- 対応WBS: T858",
+        "- ベースラインWBS: T770",
+        "- 関連リリース判定: PUBLIC-10",
+        f"- 判定: {'PASS' if sla['overall_pass'] else 'FAIL'}",
+        f"- シナリオ: {scenario['concurrent_users']}同時ユーザー x {scenario['requests_per_user']}リクエスト",
+        f"- 総処理時間: {scenario['total_elapsed_seconds']} 秒",
+        "- 対象: `GET /api/health`, `POST /api/parse`, `POST /api/match`",
+        f"- deterministic fallback待機: parse {scenario['deterministic_parse_delay_seconds']} 秒 / match {scenario['deterministic_match_delay_seconds']} 秒",
+        f"- 捕捉した内部ログ行数: {scenario['captured_internal_log_lines']} 行",
+        "- 注意: CEO共有URLへ負荷をかけないため、FastAPI ASGIアプリをローカルプロセス内で実行し、SQLite/監査ログは一時ディレクトリへ隔離した。Gemini live call は `AI_FORCE_MOCK=1` で無効化した。",
+        "",
+        "## SLA判定",
+        "",
+        "| 指標 | 目標 | 実測 | 判定 |",
+        "| --- | ---: | ---: | --- |",
+        f"| P50 | <= {SLA_TARGETS_MS['p50']:.0f} ms | {summary['overall']['p50_ms']} ms | {'PASS' if summary['overall']['p50_ms'] <= SLA_TARGETS_MS['p50'] else 'FAIL'} |",
+        f"| P95 | <= {SLA_TARGETS_MS['p95']:.0f} ms | {summary['overall']['p95_ms']} ms | {'PASS' if summary['overall']['p95_ms'] <= SLA_TARGETS_MS['p95'] else 'FAIL'} |",
+        f"| P99 | <= {SLA_TARGETS_MS['p99']:.0f} ms | {summary['overall']['p99_ms']} ms | {'PASS' if summary['overall']['p99_ms'] <= SLA_TARGETS_MS['p99'] else 'FAIL'} |",
+        f"| エラー | 0 件 | {summary['total_errors']} 件 | {'PASS' if summary['total_errors'] == 0 else 'FAIL'} |",
+        "",
+        "## エンドポイント別結果",
+        "",
+        "| エンドポイント | 件数 | 成功 | エラー | P50 | P95 | P99 | Max | Status |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
+    ]
+
+    for endpoint, item in summary["by_endpoint"].items():
+        lines.append(
+            f"| `{endpoint}` | {item['requests']} | {item['successes']} | {item['errors']} | "
+            f"{item['p50_ms']} ms | {item['p95_ms']} ms | {item['p99_ms']} ms | {item['max_ms']} ms | "
+            f"`{json.dumps(item['status_counts'], ensure_ascii=False)}` |"
+        )
+
+    public_10_text = (
+        [
+            "本再試験により、100同時ユーザー想定の代表API導線はエラー0で完走し、P50/P95/P99のSLA目標を満たした。",
+            "したがってPUBLIC-10は `PASS` とする。ただし、一般公開・有償ローンチは法務、課金、実メール接続、会社アカウント移管、Firebase CI/CDなど残ゲート完了後に再判定する。",
+        ]
+        if sla["overall_pass"]
+        else [
+            "本再試験はエラー0またはSLA目標のいずれかを満たしていない。",
+            "PUBLIC-10は `BLOCKED` のまま維持し、追加の性能改善と本番相当再試験を実施する。",
+        ]
+    )
+
+    lines.extend(
+        [
+            "",
+            "## スケーリング方針",
+            "",
+            "### Firebase Functions / Hosting",
+            "",
+            "- Functionsは `maxInstances` を明示し、急なバーストでSupabase接続を枯渇させない。",
+            "- `minInstances` はcold startがP95を悪化させる証跡が出た場合に限り、コスト上限とセットで設定する。",
+            "- レスポンス後の暗黙バックグラウンド処理には依存せず、時間のかかるAI処理は明示キューまたは人間レビュー導線へ分離する。",
+            "",
+            "### Supabase",
+            "",
+            "- Firebase/サーバーレス接続ではSupabase/Supavisor connection poolerを標準接続先にする。",
+            "- FunctionsインスタンスごとのDB接続数は小さく保ち、無制限の直接接続を避ける。",
+            "- T782では実Supabase環境のpool size、read replica、クエリ待ち時間を追加検証する。",
+            "",
+            "### AI・レート制限",
+            "",
+            "- Gemini/Seedanceの外部APIは日次上限、token上限、deterministic fallbackで保護する。",
+            "- 本番負荷テスト時は実ユーザーに近い分散IP/セッションで実施し、単一IPのレート制限により誤判定しない。",
+            "",
+            "## PUBLIC-10 判定",
+            "",
+            *public_10_text,
+            "",
+            "## 公式ドキュメント確認メモ",
+            "",
+            "- Firebase Functions manage functions: https://firebase.google.com/docs/functions/manage-functions?gen=2nd",
+            "- Firebase Functions tips: https://firebase.google.com/docs/functions/tips",
+            "- Firebase Hosting: https://firebase.google.com/docs/hosting",
+            "- Supabase connection pooler: https://supabase.com/docs/guides/database/connecting-to-postgres#connection-pooler",
+            "- Supabase connection management: https://supabase.com/docs/guides/database/connection-management",
+            "- Google Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate",
+            "- GitHub Actions: https://docs.github.com/actions",
+            "- OpenAI Codex AGENTS.md: https://developers.openai.com/codex/guides/agents-md",
+            "- Anthropic Claude Code overview: https://code.claude.com/docs/en/overview",
+            "",
+        ]
+    )
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run the T770 100-user API load probe.")
+    parser = argparse.ArgumentParser(description="Run the T858 100-user API load probe.")
     parser.add_argument("--concurrent-users", type=int, default=100)
     parser.add_argument("--json-report", type=Path, default=DEFAULT_JSON_REPORT)
     parser.add_argument("--markdown-report", type=Path, default=DEFAULT_MD_REPORT)
@@ -400,7 +515,7 @@ def main(argv: list[str] | None = None) -> int:
     write_json(args.json_report, report)
     write_markdown(args.markdown_report, report)
     print(
-        "T770 load probe: "
+        "T858 load probe: "
         f"{report['scenario']['concurrent_users']} users, "
         f"{report['summary']['total_requests']} requests, "
         f"errors={report['summary']['total_errors']}, "

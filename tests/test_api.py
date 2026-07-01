@@ -52,7 +52,10 @@ def test_app_uses_lifespan_without_deprecated_startup_handlers():
 def test_health_check(client):
     response = client.get("/api/health")
     assert response.status_code == 200
-    assert response.json()["status"] == "healthy"
+    payload = response.json()
+    assert payload["status"] == "healthy"
+    assert payload["deterministic_parse_delay_seconds"] == app.DETERMINISTIC_PARSE_DELAY_SECONDS
+    assert payload["deterministic_match_delay_seconds"] == app.DETERMINISTIC_MATCH_DELAY_SECONDS
 
 def test_rate_limit_exempts_health_and_blocks_expensive_api():
     original_settings = (

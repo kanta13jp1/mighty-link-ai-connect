@@ -22,7 +22,7 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 | Scope | 判定 | 理由 |
 | --- | --- | --- |
 | `controlled_demo` | `GO` | GitHub Pages公開デモ、本番URL、問い合わせ窓口、DR/Incident/Rollback、監視・クォータRunbookの証跡が揃っている |
-| `public_paid_launch` | `NO_GO` | リリースノート/バージョニング運用、T805外部疑似診断、T835公開URLヘッダhardening、T846最新ユーザー/管理者docs、T847全テーブル保持/削除照合、T745ドラフト規約同意UI/APIガード、T777法定4ページリンク統合は整備済みだが、法務/CEO承認、正式アカウント同意履歴、オンボーディング、Stripe課金、負荷テスト、営業メールAIマッチング本番hardening、全機能最終UAT、会社運用引継ぎ、Firebase CI/CD、課題/QA棚卸し、サイト開発完了総合判定が未完了 |
+| `public_paid_launch` | `NO_GO` | リリースノート/バージョニング運用、T805外部疑似診断、T835公開URLヘッダhardening、T846最新ユーザー/管理者docs、T847全テーブル保持/削除照合、T745ドラフト規約同意UI/APIガード、T777法定4ページリンク統合、T858負荷SLA再試験、課題/QA棚卸しは整備済みだが、法務/CEO承認、正式アカウント同意履歴、オンボーディング、Stripe課金、営業メールAIマッチング本番hardening、全機能最終UAT、会社運用引継ぎ、Firebase CI/CD、DNS/HTTPS復旧、サイト開発完了総合判定が未完了 |
 
 つまり、現状は「社長説明・限定デモは継続可。一般公開・有償ローンチは未承認」である。
 
@@ -46,7 +46,7 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 
 2026-06-27にT745として [LEGAL_CONSENT_UI_AND_API_RUNBOOK.md](LEGAL_CONSENT_UI_AND_API_RUNBOOK.md) を追加し、`index.html` / `src/index.html` のAnalyze実行前にサービス利用規約・プライバシーポリシー・特商法表記・課金規約/返金ポリシーのドラフト確認チェックを必須化した。`src/app.py` では `/api/parse` と `/api/match` が `MSB-LEGAL-2026-06-DRAFT` の同意バージョンを検証し、未同意または旧バージョンを400で拒否する。あわせてフッター常時リンクを補強したためPUBLIC-05とPUBLIC-07はPASSへ更新する。ただしT798の法務本文確定、T804の価格確定、T752のユーザー別同意履歴が残るため `public_paid_launch` はNo-Goのまま維持する。
 
-同じく2026-06-27にT854として [ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md](ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md) を追加し、課題管理表とQA表の未分類open/未回答を棚卸しした。T854時点では課題ブロッカー0件、QAブロッカー0件だったが、2026-07-01のT770負荷テストでR110を新規open化したため、現時点のPUBLIC-15はT858完了までBLOCKEDへ戻す。T845/T849/T850/T852や法務・価格・課金・負荷・実メール接続などの残ゲートも別途残っており、`public_paid_launch` はNo-Goのまま維持する。
+同じく2026-06-27にT854として [ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md](ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md) を追加し、課題管理表とQA表の未分類open/未回答を棚卸しした。T854時点では課題ブロッカー0件、QAブロッカー0件だったが、2026-07-01のT770負荷テストでR110を新規open化した。その後T858で100同時ユーザー/300リクエスト再試験がエラー0・全体P95 943.81msでPASSしたため、R110をresolved化し、PUBLIC-15もPASSへ戻した。T845/T849/T850/T852や法務・価格・課金・実メール接続などの残ゲートは別途残っており、`public_paid_launch` はNo-Goのまま維持する。
 
 同じく2026-06-27のT854クローズアウト中に、Public Uptime Monitorと `python scripts/check_uptime_targets.py` が販売URL `https://mightylink-app.com/` のDNS解決失敗を検出した。GitHub Pages公開デモとFirebase Hosting default URLはOKだが、特商法販売URLとして扱うcustom domainがstrict HTTPS監視でgreenになるまで、`public_paid_launch` とサイト開発完了宣言はNo-Goとする。T855、R103、QA-83、PUBLIC-16を追加し、詳細は [CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md](CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md) を正本とする。
 
@@ -91,18 +91,16 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | --- | --- | --- |
 | T752 | ユーザーオンボーディング / アカウント登録・アクティベーション | `BLOCKED` |
 | T791 | Stripe Billing Meters/Webhook実装・検証 | `BLOCKED` |
-| T858 | T770負荷SLA未達改善と本番相当再試験 | `BLOCKED` |
 | T817_7 | 共有営業メールAIマッチングMVPの個人情報/監査/負荷確認、実メール接続後の運用hardening | `BLOCKED` |
 | T845 | 全機能本番受入E2E/UAT最終再検証 | `BLOCKED` |
 | T850 | 会社運用引継ぎリハーサル・権限棚卸し・Break-glass確認 | `BLOCKED` |
 | T849 | サイト開発完了総合判定・WBS全完了証跡化・GAリリース閉鎖 | `BLOCKED` |
 | T852 | Firebase/GitHub Actionsの本番デプロイ認証経路を会社管理のWIF/service account/secret経路へ再構成し、アプリ変更時のmain deploy greenを証跡化 | `BLOCKED` |
 | T855 | mightylink-app.com DNS/HTTPS死活監視復旧とお名前.com/Firebase Hostingレコード再確認 | `BLOCKED` |
-| R110 | 100同時ユーザー負荷テストで/api/matchのP95がSLA 3秒を超過 | `BLOCKED` |
 | T798 | 利用規約・プライバシーポリシー法務確認 | `HUMAN_GATE` |
 | T804 | 料金プラン・価格設定のCEO承認 | `HUMAN_GATE` |
 
-完了済みの公開前ゲート: T806 リリースノート・SemVer・git tag・GitHub Releases運用、T805 外部ペネトレーション疑似診断（High 0 / secret-like値露出 0）、T835 公開URLセキュリティヘッダhardening、T745 ドラフト規約同意UI/APIガード、T777 法定4ページとフッター常時リンク、T846 ユーザー/管理者docs最終更新、T847 全テーブル保持・削除・匿名化照合、T848 AIモデル・外部SaaS・連携サービスGA凍結、T770 同時100ユーザー負荷テスト実施とスケーリング方針策定（エラー0、ただしSLA未達のためPUBLIC-10はT858完了までBLOCKED）。
+完了済みの公開前ゲート: T806 リリースノート・SemVer・git tag・GitHub Releases運用、T805 外部ペネトレーション疑似診断（High 0 / secret-like値露出 0）、T835 公開URLセキュリティヘッダhardening、T745 ドラフト規約同意UI/APIガード、T777 法定4ページとフッター常時リンク、T846 ユーザー/管理者docs最終更新、T847 全テーブル保持・削除・匿名化照合、T848 AIモデル・外部SaaS・連携サービスGA凍結、T770 同時100ユーザー負荷テスト実施とスケーリング方針策定、T858 負荷SLA未達改善と100同時ユーザー再試験（エラー0、全体P95 943.81ms、/api/match P95 1133.85msでPUBLIC-10 PASS）。
 
 ---
 

@@ -45,6 +45,14 @@ def env_int(name: str, default: int, minimum: int, maximum: int) -> int:
     return max(minimum, min(value, maximum))
 
 
+def env_float(name: str, default: float, minimum: float, maximum: float) -> float:
+    try:
+        value = float(os.environ.get(name, str(default)))
+    except (TypeError, ValueError):
+        return default
+    return max(minimum, min(value, maximum))
+
+
 def env_flag(name: str, default: bool = False) -> bool:
     raw_value = os.environ.get(name)
     if raw_value is None:
@@ -688,7 +696,7 @@ def get_db_connection():
     else:
         # Check if local directory is writable, fallback to /tmp if not
         try:
-            test_file = os.path.join(DATA_DIR, ".write_test")
+            test_file = os.path.join(DATA_DIR, f".write_test_{threading.get_ident()}_{uuid.uuid4().hex}")
             with open(test_file, "w") as f:
                 f.write("test")
             os.remove(test_file)
@@ -696,7 +704,10 @@ def get_db_connection():
         except Exception:
             db_path = tmp_db_path
             
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(db_path, timeout=30.0)
+    conn.execute("PRAGMA journal_mode=WAL;")
+    conn.execute("PRAGMA synchronous=NORMAL;")
+    conn.execute("PRAGMA busy_timeout=30000;")
     # Ensure row-factory is dictionary-like
     conn.row_factory = sqlite3.Row
     return conn, "sqlite"
@@ -4305,6 +4316,8 @@ API_KEY = os.environ.get("GEMINI_API_KEY")
 AI_FORCE_MOCK = os.environ.get("AI_FORCE_MOCK", "").lower() in {"1", "true", "yes", "on"}
 GEMINI_READY = API_KEY is not None and GEMINI_LIB_AVAILABLE and not AI_FORCE_MOCK
 GEMINI_CLIENT = None
+DETERMINISTIC_PARSE_DELAY_SECONDS = env_float("DETERMINISTIC_PARSE_DELAY_SECONDS", 0.0, 0.0, 5.0)
+DETERMINISTIC_MATCH_DELAY_SECONDS = env_float("DETERMINISTIC_MATCH_DELAY_SECONDS", 0.0, 0.0, 5.0)
 
 if GEMINI_READY:
     GEMINI_CLIENT = genai.Client(api_key=API_KEY)
@@ -4741,6 +4754,8 @@ async def health_check():
         "gemini_live": GEMINI_READY,
         "ai_mode": "gemini_live" if GEMINI_READY else "deterministic_fallback",
         "ai_force_mock": AI_FORCE_MOCK,
+        "deterministic_parse_delay_seconds": DETERMINISTIC_PARSE_DELAY_SECONDS,
+        "deterministic_match_delay_seconds": DETERMINISTIC_MATCH_DELAY_SECONDS,
         "seedance_live": SEEDANCE_READY,
         "seedance_api_enabled": SEEDANCE_API_ENABLED,
         "seedance_credentials_configured": SEEDANCE_CONFIGURED,
@@ -5541,13 +5556,16 @@ async def parse_document(
         fallback_reason = "AI_FORCE_MOCK is enabled to avoid Gemini quota usage."
 
     # --- Quota-safe deterministic parser fallback ---
-    await asyncio.sleep(1.0) # Simulating AI processing time without blocking the event loop.
+    if DETERMINISTIC_PARSE_DELAY_SECONDS > 0:
+        await asyncio.sleep(DETERMINISTIC_PARSE_DELAY_SECONDS)
 
-    profile = build_profile(source_text, doc_type)
-    parsed_content = format_profile(profile)
-    audit_event = write_audit_event(
+    profile = await asyncio.to_thread(build_profile, source_text, doc_type)
+    parsed_content = await asyncio.to_thread(format_profile, profile)
+    audit_payload = profile_audit_payload(profile, "deterministic_fallback", fallback_reason, source_text, file_name)
+    audit_event = await asyncio.to_thread(
+        write_audit_event,
         "parse",
-        profile_audit_payload(profile, "deterministic_fallback", fallback_reason, source_text, file_name)
+        audit_payload,
     )
     
     # Save to database
@@ -5555,11 +5573,18 @@ async def parse_document(
     if doc_type == "engineer":
         parsed_skills = profile.skills_by_category
         career_goals = {"strengths": profile.strengths, "risk_flags": profile.risk_flags}
-        db_id = db_insert_engineer(profile.title, source_text, parsed_skills, career_goals)
+        db_id = await asyncio.to_thread(db_insert_engineer, profile.title, source_text, parsed_skills, career_goals)
     else:
         parsed_requirements = {"mandatory": profile.all_skills, "preferred": []}
         company_culture = {"summary": profile.summary}
-        db_id = db_insert_job(profile.title, "Mighty-Link", source_text, parsed_requirements, company_culture)
+        db_id = await asyncio.to_thread(
+            db_insert_job,
+            profile.title,
+            "Mighty-Link",
+            source_text,
+            parsed_requirements,
+            company_culture,
+        )
         
     print(f"[+] Deterministic parser fallback completed successfully.")
     return {
@@ -5786,15 +5811,24 @@ async def evaluate_matching(req: EvaluationRequest):
         fallback_reason = "AI_FORCE_MOCK is enabled to avoid Gemini quota usage."
 
     # --- Quota-safe deterministic evaluator fallback ---
-    await asyncio.sleep(1.5) # Simulating AI processing time without blocking the event loop.
+    if DETERMINISTIC_MATCH_DELAY_SECONDS > 0:
+        await asyncio.sleep(DETERMINISTIC_MATCH_DELAY_SECONDS)
 
-    fallback_response = build_fallback_match(req.engineer_content, req.job_content, fallback_reason)
-    audit_event = write_audit_event("match", match_audit_payload(fallback_response))
+    fallback_response = await asyncio.to_thread(
+        build_fallback_match,
+        req.engineer_content,
+        req.job_content,
+        fallback_reason,
+    )
+    audit_payload = match_audit_payload(fallback_response)
+    audit_event = await asyncio.to_thread(write_audit_event, "match", audit_payload)
     fallback_response["audit_event_id"] = audit_event["event_id"]
     
     # Resolve database records and save match result
-    eng_id = resolve_or_insert_engineer(req.engineer_content)
-    jb_id = resolve_or_insert_job(req.job_content)
+    eng_id, jb_id = await asyncio.gather(
+        asyncio.to_thread(resolve_or_insert_engineer, req.engineer_content),
+        asyncio.to_thread(resolve_or_insert_job, req.job_content),
+    )
     
     fit_ratio = float(fallback_response.get("final_score", 75)) / 100.0
     scores = fallback_response.get("scores", {})
@@ -5805,8 +5839,17 @@ async def evaluate_matching(req: EvaluationRequest):
     match_summary = fallback_response.get("summary", "")
     interview_questions = fallback_response.get("qa", [])
     
-    db_match_id = db_insert_match_result(
-        eng_id, jb_id, fit_ratio, score_skill, score_culture, score_growth, score_performing, match_summary, interview_questions
+    db_match_id = await asyncio.to_thread(
+        db_insert_match_result,
+        eng_id,
+        jb_id,
+        fit_ratio,
+        score_skill,
+        score_culture,
+        score_growth,
+        score_performing,
+        match_summary,
+        interview_questions,
     )
     fallback_response["db_match_id"] = db_match_id
     fallback_response["legal_consent"] = legal_consent

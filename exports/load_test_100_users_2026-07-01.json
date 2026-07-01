@@ -1,16 +1,20 @@
 {
-  "task_id": "T770",
-  "generated_at_jst": "2026-07-01T22:25:12+09:00",
+  "task_id": "T858",
+  "baseline_task_id": "T770",
+  "generated_at_jst": "2026-07-01T23:28:28+09:00",
   "scenario": {
     "concurrent_users": 100,
     "requests_per_user": 3,
-    "total_elapsed_seconds": 5.952,
+    "total_elapsed_seconds": 2.082,
     "target": "In-process FastAPI ASGI probe with isolated SQLite fallback DB, mock AI mode, and per-user forwarded IPs.",
     "endpoints": [
       "GET /api/health",
       "POST /api/parse",
       "POST /api/match"
-    ]
+    ],
+    "deterministic_parse_delay_seconds": 0.0,
+    "deterministic_match_delay_seconds": 0.0,
+    "captured_internal_log_lines": 500
   },
   "summary": {
     "total_requests": 300,
@@ -20,11 +24,11 @@
       "200": 300
     },
     "overall": {
-      "min_ms": 40.04,
-      "p50_ms": 2324.88,
-      "p95_ms": 3576.44,
-      "p99_ms": 3583.86,
-      "max_ms": 3585.1
+      "min_ms": 47.64,
+      "p50_ms": 508.52,
+      "p95_ms": 943.81,
+      "p99_ms": 1155.32,
+      "max_ms": 1615.74
     },
     "by_endpoint": {
       "/api/health": {
@@ -34,11 +38,11 @@
         "status_counts": {
           "200": 100
         },
-        "min_ms": 40.04,
-        "p50_ms": 45.09,
-        "p95_ms": 50.65,
-        "p99_ms": 51.16,
-        "max_ms": 51.27
+        "min_ms": 47.64,
+        "p50_ms": 52.52,
+        "p95_ms": 59.55,
+        "p99_ms": 60.44,
+        "max_ms": 60.65
       },
       "/api/match": {
         "requests": 100,
@@ -47,11 +51,11 @@
         "status_counts": {
           "200": 100
         },
-        "min_ms": 3480.58,
-        "p50_ms": 3561.68,
-        "p95_ms": 3581.88,
-        "p99_ms": 3584.77,
-        "max_ms": 3585.1
+        "min_ms": 707.13,
+        "p50_ms": 863.05,
+        "p95_ms": 1133.85,
+        "p99_ms": 1554.45,
+        "max_ms": 1615.74
       },
       "/api/parse": {
         "requests": 100,
@@ -60,11 +64,11 @@
         "status_counts": {
           "200": 100
         },
-        "min_ms": 2295.37,
-        "p50_ms": 2324.88,
-        "p95_ms": 2410.57,
-        "p99_ms": 2413.79,
-        "max_ms": 2414.02
+        "min_ms": 281.0,
+        "p50_ms": 508.52,
+        "p95_ms": 789.79,
+        "p99_ms": 857.71,
+        "max_ms": 868.59
       }
     }
   },
@@ -74,7 +78,7 @@
       "p95": 3000.0,
       "p99": 8000.0
     },
-    "overall_pass": false,
+    "overall_pass": true,
     "endpoint_results": {
       "/api/health": {
         "p50_pass": true,
@@ -83,13 +87,13 @@
         "error_free": true
       },
       "/api/match": {
-        "p50_pass": false,
-        "p95_pass": false,
+        "p50_pass": true,
+        "p95_pass": true,
         "p99_pass": true,
         "error_free": true
       },
       "/api/parse": {
-        "p50_pass": false,
+        "p50_pass": true,
         "p95_pass": true,
         "p99_pass": true,
         "error_free": true

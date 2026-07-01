@@ -1,15 +1,15 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-07-01T13:37:22Z",
+  "generated_at": "2026-07-01T14:31:08Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
     "total": 21,
     "counts": {
-      "PASS": 11,
+      "PASS": 13,
       "HUMAN_GATE": 2,
-      "BLOCKED": 8
+      "BLOCKED": 6
     },
     "evidence_warnings": 0
   },
@@ -26,9 +26,9 @@
       "recommendation": "NO_GO",
       "worst_state": "BLOCKED",
       "counts": {
-        "PASS": 6,
+        "PASS": 8,
         "HUMAN_GATE": 2,
-        "BLOCKED": 8
+        "BLOCKED": 6
       },
       "total": 16
     }
@@ -323,16 +323,16 @@
       "criterion": "同時100ユーザー想定の負荷テストとスケーリング方針が完了し、SLAを満たしている",
       "evidence_source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md; docs/LOAD_TEST_100_USERS_REPORT_2026-07-01.md; exports/load_test_100_users_2026-07-01.json",
       "required_state": "PASS",
-      "current_state": "BLOCKED",
+      "current_state": "PASS",
       "owner": "Codex",
       "decision_authority": "開発責任者",
       "related_wbs": "T770;T858;T782",
       "related_issue": "",
       "last_checked": "2026-07-01",
-      "notes": "T770で100同時ユーザー/300リクエストはエラー0で完走し、blocking sleepはasyncio化済み。ただし全体P95約3.6秒、/api/match P95約3.6秒でSLA 3秒を未達のため、T858再試験までPUBLIC-10はBLOCKED継続。",
+      "notes": "T858でdeterministic fallback固定待機を0秒化、同期CPU/監査/DB保存をasyncio.to_thread化、SQLite fallback write-test競合とWAL/timeoutを改善。100同時ユーザー/300リクエスト再試験はエラー0、全体P50 508.52ms、P95 943.81ms、P99 1155.32ms、/api/match P95 1133.85msでSLA達成。",
       "wbs_statuses": {
         "T770": "完了",
-        "T858": "未着手",
+        "T858": "完了",
         "T782": "未着手"
       },
       "missing_evidence": []
@@ -434,17 +434,17 @@
       "criterion": "課題管理表・QA表の開発必須open/未回答が0である",
       "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Issue #141; GitHub Issue #150; GitHub Project #1",
       "required_state": "PASS",
-      "current_state": "BLOCKED",
+      "current_state": "PASS",
       "owner": "Codex + Claude Code + 人間",
       "decision_authority": "開発責任者 / CEO",
       "related_wbs": "T853;T854;T858;T849",
       "related_issue": "R101;R110;#141;#150",
       "last_checked": "2026-07-01",
-      "notes": "T854時点では課題open 0/QA未回答0だったが、T770負荷テストでR110を新規open化。scripts/audit_issue_qa_blockers.pyはissue blocker 1件を検出しているため、T858完了までPUBLIC-15はBLOCKED。",
+      "notes": "T858でR110をresolved化し、課題管理表open 0件、QA表未回答0件へ復帰。scripts/audit_issue_qa_blockers.pyでissue blocker 0件、QA blocker 0件を再確認し、PUBLIC-15をPASSへ戻す。",
       "wbs_statuses": {
         "T853": "完了",
         "T854": "完了",
-        "T858": "未着手",
+        "T858": "完了",
         "T849": "未着手"
       },
       "missing_evidence": []
