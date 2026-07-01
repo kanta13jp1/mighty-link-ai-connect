@@ -1,20 +1,30 @@
 {
-  "status": "pass",
-  "generated_at": "2026-07-01T11:33:42Z",
-  "issue_total": 152,
-  "qa_total": 118,
+  "status": "blocked",
+  "generated_at": "2026-07-01T13:36:24Z",
+  "issue_total": 153,
+  "qa_total": 119,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
+    "open": 1,
     "resolved": 130,
     "transferred": 19
   },
   "qa_status_counts": {
-    "回答済": 79,
+    "回答済": 80,
     "想定済": 39
   },
-  "issue_blocker_count": 0,
+  "issue_blocker_count": 1,
   "qa_blocker_count": 0,
-  "issue_blockers": [],
+  "issue_blockers": [
+    {
+      "id": "R110",
+      "severity": "HIGH",
+      "category": "performance",
+      "title": "100同時ユーザー負荷テストで/api/matchのP95がSLA 3秒を超過",
+      "related_wbs": "T770;T858;T782",
+      "related_issue": "#150"
+    }
+  ],
   "qa_blockers": []
 }

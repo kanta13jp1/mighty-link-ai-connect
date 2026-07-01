@@ -1,15 +1,15 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-07-01T09:55:52Z",
+  "generated_at": "2026-07-01T13:37:22Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
     "total": 21,
     "counts": {
-      "PASS": 12,
+      "PASS": 11,
       "HUMAN_GATE": 2,
-      "BLOCKED": 7
+      "BLOCKED": 8
     },
     "evidence_warnings": 0
   },
@@ -26,9 +26,9 @@
       "recommendation": "NO_GO",
       "worst_state": "BLOCKED",
       "counts": {
-        "PASS": 7,
+        "PASS": 6,
         "HUMAN_GATE": 2,
-        "BLOCKED": 7
+        "BLOCKED": 8
       },
       "total": 16
     }
@@ -320,18 +320,20 @@
       "criterion_id": "PUBLIC-10",
       "scope": "public_paid_launch",
       "category": "品質管理",
-      "criterion": "同時100ユーザー想定の負荷テストとスケーリング方針が完了している",
-      "evidence_source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md",
+      "criterion": "同時100ユーザー想定の負荷テストとスケーリング方針が完了し、SLAを満たしている",
+      "evidence_source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md; docs/LOAD_TEST_100_USERS_REPORT_2026-07-01.md; exports/load_test_100_users_2026-07-01.json",
       "required_state": "PASS",
       "current_state": "BLOCKED",
       "owner": "Codex",
       "decision_authority": "開発責任者",
-      "related_wbs": "T770",
+      "related_wbs": "T770;T858;T782",
       "related_issue": "",
-      "last_checked": "2026-06-17",
-      "notes": "一般公開前にAPI/DB/Functionsの負荷余力を確認する。",
+      "last_checked": "2026-07-01",
+      "notes": "T770で100同時ユーザー/300リクエストはエラー0で完走し、blocking sleepはasyncio化済み。ただし全体P95約3.6秒、/api/match P95約3.6秒でSLA 3秒を未達のため、T858再試験までPUBLIC-10はBLOCKED継続。",
       "wbs_statuses": {
-        "T770": "未着手"
+        "T770": "完了",
+        "T858": "未着手",
+        "T782": "未着手"
       },
       "missing_evidence": []
     },
@@ -430,18 +432,19 @@
       "scope": "public_paid_launch",
       "category": "品質管理",
       "criterion": "課題管理表・QA表の開発必須open/未回答が0である",
-      "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Issue #141; GitHub Project #1",
+      "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Issue #141; GitHub Issue #150; GitHub Project #1",
       "required_state": "PASS",
-      "current_state": "PASS",
+      "current_state": "BLOCKED",
       "owner": "Codex + Claude Code + 人間",
       "decision_authority": "開発責任者 / CEO",
-      "related_wbs": "T853;T854;T849",
-      "related_issue": "R101;#141",
-      "last_checked": "2026-06-27",
-      "notes": "T854で課題管理表の状態=openを0、QA表の未回答/未承認を0へ整理。残るFirebase CI/CD、UAT、会社運用引継ぎ、最終総合判定はPUBLIC-13/PUBLIC-14およびWBSで管理し、課題表openとして二重管理しない。",
+      "related_wbs": "T853;T854;T858;T849",
+      "related_issue": "R101;R110;#141;#150",
+      "last_checked": "2026-07-01",
+      "notes": "T854時点では課題open 0/QA未回答0だったが、T770負荷テストでR110を新規open化。scripts/audit_issue_qa_blockers.pyはissue blocker 1件を検出しているため、T858完了までPUBLIC-15はBLOCKED。",
       "wbs_statuses": {
         "T853": "完了",
         "T854": "完了",
+        "T858": "未着手",
         "T849": "未着手"
       },
       "missing_evidence": []

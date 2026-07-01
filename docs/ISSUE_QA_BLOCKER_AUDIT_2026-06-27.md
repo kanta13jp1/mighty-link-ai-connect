@@ -8,6 +8,24 @@
 
 ---
 
+## 2026-07-01 追記
+
+2026-06-27のT854時点では `PUBLIC-15` は `PASS` だったが、2026-07-01のT770負荷テストにより `R110`（100同時ユーザー負荷テストで`/api/match`のP95がSLA 3秒を超過）を新規open化した。
+
+最新の `python scripts/audit_issue_qa_blockers.py` 実行結果は次のとおり。
+
+| 対象 | 結果 |
+| --- | --- |
+| 課題行数 | 153 |
+| QA行数 | 119 |
+| 課題ブロッカー数 | 1 |
+| QAブロッカー数 | 0 |
+| 監査判定 | `blocked` |
+
+したがって、現時点の `PUBLIC-15` はT858完了まで `BLOCKED` として扱う。T854の棚卸し結果は履歴証跡として保持するが、現在の開発完了判定は `exports/issue_qa_blocker_audit.*` と `data/release_go_no_go_criteria.tsv` を正本とする。
+
+---
+
 ## 目的
 
 WBS全完了時に「サイト開発完了」と宣言できるよう、Sheets正本である `data/issues_tracker.tsv` と `data/qa_tracker.tsv` を棚卸しし、未分類の開発必須open課題と未回答/未承認QAをゼロにする。

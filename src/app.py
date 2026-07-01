@@ -15,6 +15,7 @@ This FastAPI application provides:
 
 import os
 import sys
+import asyncio
 import datetime
 import json
 import io
@@ -5540,8 +5541,7 @@ async def parse_document(
         fallback_reason = "AI_FORCE_MOCK is enabled to avoid Gemini quota usage."
 
     # --- Quota-safe deterministic parser fallback ---
-    import time
-    time.sleep(1.0) # Simulating AI processing time
+    await asyncio.sleep(1.0) # Simulating AI processing time without blocking the event loop.
 
     profile = build_profile(source_text, doc_type)
     parsed_content = format_profile(profile)
@@ -5786,8 +5786,7 @@ async def evaluate_matching(req: EvaluationRequest):
         fallback_reason = "AI_FORCE_MOCK is enabled to avoid Gemini quota usage."
 
     # --- Quota-safe deterministic evaluator fallback ---
-    import time
-    time.sleep(1.5) # Simulating AI processing time
+    await asyncio.sleep(1.5) # Simulating AI processing time without blocking the event loop.
 
     fallback_response = build_fallback_match(req.engineer_content, req.job_content, fallback_reason)
     audit_event = write_audit_event("match", match_audit_payload(fallback_response))
