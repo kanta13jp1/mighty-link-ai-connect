@@ -227,7 +227,7 @@ gantt
 | **T770** | 9. 長期保守・拡張 | 品質管理 | 負荷テスト（同時100ユーザー想定）の実施と結果に基づくスケーリング方針策定 | Codex | VSCode + Codex | k6/Locust 等による負荷シナリオ設計・実行・レポート docs 同期 | 未着手 |
 | **T771** | 9. 長期保守・拡張 | 運用保守 | 定期的なバックアップからのリストア（復旧）訓練の実施およびDR手順の有効性確認 | Codex | VSCode + Codex | DR復旧手順書に基づくテスト実行ログの記録 | 未着手 |
 | **T772** | 9. 長期保守・拡張 | コンプライアンス | 最新の法改正（個人情報保護法等）に伴う利用規約・プライバシーポリシーの年次見直しと改定プロセスの整備 | Claude | VSCode + Claude Code | 法改正チェックリストと改定スケジュールのdocs同期 | 完了 |
-| **T773** | 9. 長期保守・拡張 | 運用保守 | 年間を通したシステム稼働ログおよび監査ログのコールドストレージ退避・長期保存プロセスの自動化 | Codex | VSCode + Codex | Log Archiverスクリプトの実装およびGCSコールドストレージ転送設定 | 未着手 |
+| **T773** | 9. 長期保守・拡張 | 運用保守 | 年間を通したシステム稼働ログおよび監査ログのコールドストレージ退避・長期保存プロセスの自動化 | Codex | VSCode + Codex | scripts/archive_audit_logs_to_cold_storage.py、docs/COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md、tests/test_cold_storage_log_archive.pyを追加。SHA-256 manifest、GCS lifecycle template、任意ZIP、明示--upload、secret/OAuth/DBスナップショット除外、secret-like警告時のGCSアップロード拒否を実装。R107/QA-87/Issue #146へ証跡化 | 完了 |
 | **T774** | 7. 決定後実行 | セキュリティ | docs/SECURITY_AUDIT_RUNBOOK.md 新規作成（四半期セキュリティ監査手順書） | Claude + Codex | VSCode + Claude Code | セキュリティ監査チェックリストのSheets連携 | 完了 |
 | **T776** | 8. 本番運用・品質管理 | 収益化 | Stripe 決済統合の設計（有料プラン課金フロー・Webhook・領収書メール） | Codex | VSCode + Codex + Stripe official docs | docs/STRIPE_BILLING_INTEGRATION_DESIGN.mdでCheckout/Subscription/Billing Meters/Webhook/領収書・請求書/Sheets同期/Secret非記録/RLS境界を設計。Webhook raw payloadや実Stripe IDはSheets/docs/Issueへ出さず、T791/T807/T813の受け入れ条件へ接続。Issue #145 / R106 / QA-86 | 完了 |
 | **T777** | 8. 本番運用・品質管理 | フロントエンド | 法定ページ（利用規約・プライバシーポリシー・特商法表記・課金規約/返金ポリシー）の実装とフッターリンク統合 | AIエージェント | Antigravity + Gemini | T787/T792 起草ドラフト準拠で法定4ページを実装しフッターへ常時リンク（T798/T804 確定後に本文差し替え）。特商法ページ公開は Stripe 審査 (T791) の前提要件。公開確認を Sheets 記録 | 完了 |

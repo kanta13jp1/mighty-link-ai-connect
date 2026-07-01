@@ -1,0 +1,41 @@
+{
+  "lifecycle": {
+    "rule": [
+      {
+        "action": {
+          "type": "SetStorageClass",
+          "storageClass": "COLDLINE"
+        },
+        "condition": {
+          "age": 30,
+          "matchesPrefix": [
+            "mighty-link/log-archives/"
+          ]
+        }
+      },
+      {
+        "action": {
+          "type": "SetStorageClass",
+          "storageClass": "ARCHIVE"
+        },
+        "condition": {
+          "age": 365,
+          "matchesPrefix": [
+            "mighty-link/log-archives/"
+          ]
+        }
+      },
+      {
+        "action": {
+          "type": "Delete"
+        },
+        "condition": {
+          "age": 2555,
+          "matchesPrefix": [
+            "mighty-link/log-archives/"
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,307 @@
+{
+  "task_id": "T773",
+  "generated_at_utc": "2026-07-01T03:08:25.612398+00:00",
+  "archive_date": "2026-07-01",
+  "root": ".",
+  "sources": [
+    {
+      "path": "data/audit/ai_audit.jsonl",
+      "category": "local_audit_jsonl",
+      "size_bytes": 569429,
+      "sha256": "1c27c7a7843bfa71eecd2161cce2c320ea9b7b48161d109c685fe5fde546ba80",
+      "modified_utc": "2026-07-01T03:07:47.674208+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "data/deploy_log.tsv",
+      "category": "project_control_log",
+      "size_bytes": 610,
+      "sha256": "e35383235032c0b9acde2a03b11a41c9be77df27ea4a3604b88a9cf9fddee762",
+      "modified_utc": "2026-06-14T05:26:38.712072+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "data/external_api_usage.jsonl",
+      "category": "project_control_log",
+      "size_bytes": 60071,
+      "sha256": "de588013da9874d4fdbe14cbc1c287e1798cc115df204f3c146c310053ec5264",
+      "modified_utc": "2026-07-01T03:07:47.827701+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "data/security_log.tsv",
+      "category": "project_control_log",
+      "size_bytes": 2839,
+      "sha256": "9e74a5f0f2c69430d7a12012c28b3b685596aa8e853aa337e071408bda336a1c",
+      "modified_utc": "2026-06-23T15:47:11.331738+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/custom_domain_dns_diagnostic.json",
+      "category": "operations_evidence",
+      "size_bytes": 8443,
+      "sha256": "89df76b2d28a691b863e4cd62a1434479a81ede7efb6c493277681213713d0e9",
+      "modified_utc": "2026-06-27T12:33:20.012715+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/custom_domain_dns_diagnostic.md",
+      "category": "operations_evidence",
+      "size_bytes": 1391,
+      "sha256": "096d3edf0eeeac99c0230b2e156892f380819a95f33c3d95f72a56a480284f4a",
+      "modified_utc": "2026-06-27T12:33:20.013762+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/external_pentest_review.json",
+      "category": "security_evidence",
+      "size_bytes": 11289,
+      "sha256": "a2e4b7c9531baa9d3f5177a23c4ae196836ec21a9949e7229505682f1845acd7",
+      "modified_utc": "2026-06-21T10:51:09.679275+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/external_pentest_review.md",
+      "category": "security_evidence",
+      "size_bytes": 4012,
+      "sha256": "44bb4f6241271bb0dfac32e4a9b1264c9c73aa32b81d55475c875c331a348ba1",
+      "modified_utc": "2026-06-21T10:51:09.681276+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/external_pentest_review_t835_mightylink_app.json",
+      "category": "security_evidence",
+      "size_bytes": 1164,
+      "sha256": "34a25635dc3929e0061bfe061d10e73631ad24d593c48696c952a21d393a3840",
+      "modified_utc": "2026-06-23T15:45:41.268734+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/external_pentest_review_t835_mightylink_app.md",
+      "category": "security_evidence",
+      "size_bytes": 1170,
+      "sha256": "8874633e8c403f66cbc133b3d761ba34e22dfd8bf8122b5832d1c27edd75a89b",
+      "modified_utc": "2026-06-23T15:45:41.271970+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/firebase_hosting_headers_review.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 1532,
+      "sha256": "56a581ea06940dc4ed5d29e42fc40d043dbc49c70856c39e34d95d8399c49615",
+      "modified_utc": "2026-06-23T15:48:06.876887+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/firebase_hosting_headers_review.md",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 1592,
+      "sha256": "cb99c59b0d5e51bcb6ee5599413e00ca2457989693cad1efab2865084cb4b123",
+      "modified_utc": "2026-06-23T15:48:06.877890+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/infra_monitoring_dashboard.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 4002,
+      "sha256": "13c60d1c670f5cd93821cf19aa81b36230441c59c2ded2da92c11fd6636aaf22",
+      "modified_utc": "2026-06-14T19:06:40.371131+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/infra_monitoring_dashboard.md",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 2667,
+      "sha256": "39058a09e0d91375cb5eb22b77ebdc12cd7156efd892b7fc55f6da312ed8055f",
+      "modified_utc": "2026-06-14T19:06:40.372155+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/issue_qa_blocker_audit.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 417,
+      "sha256": "97c26ddb7dcdd7244a99499ac5544b38037f14ef1fdcb6c7f90ddd84c9bf974d",
+      "modified_utc": "2026-07-01T03:06:41.080629+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/issue_qa_blocker_audit.md",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 375,
+      "sha256": "52ba63d954ebc7778aee9aaa3614645364a60b282dfd95cb93bf58dc16e336f4",
+      "modified_utc": "2026-07-01T03:06:41.080629+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/log_rotation_report.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 685,
+      "sha256": "68750cc28c50a15cc94c1db528a193d80f802a1d2f4f2028c2521e605ea85df1",
+      "modified_utc": "2026-06-14T19:06:32.131799+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/monthly_quality_kpi_2026-06.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 1948,
+      "sha256": "4113db4d5f072dfd169eaac7c4c1b450f54a96e9970479143fbfa8c27771d39e",
+      "modified_utc": "2026-06-21T10:06:29.256220+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/monthly_quality_notion_payload_2026-06.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 2649,
+      "sha256": "464727dc34a4aacc9e96a924b3f7c6461f5a92df35615fc478c5054a04697a0e",
+      "modified_utc": "2026-06-21T10:06:29.256220+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/monthly_quality_notion_status_2026-06.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 272,
+      "sha256": "4f7556b79e1f8bf7325acdf0b999b73eda4ad5c81fb81e8f5c5caae8086471e9",
+      "modified_utc": "2026-06-21T10:06:29.257222+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/monthly_quality_slack_payload_2026-06.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 1369,
+      "sha256": "49469f662548136c33cdb27bbbfec6a4b926fbffb6d83031f8b5c5ff174396c3",
+      "modified_utc": "2026-06-21T10:06:29.255209+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/monthly_quality_slack_status_2026-06.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 262,
+      "sha256": "1b6fc7b47589898eccd16c5c3e5ae3fd23671617b62190d143d5774082161b13",
+      "modified_utc": "2026-06-21T10:06:29.257222+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/production_go_no_go_review.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 22597,
+      "sha256": "706656beaf0274ba968e1e642e3eee3d25a3307b42a33b104148e8e3ac819a7f",
+      "modified_utc": "2026-07-01T03:03:14.703304+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/production_go_no_go_review.md",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 12001,
+      "sha256": "b9f2a5b166573f5d68201f3a96e4213ec461d85dfe7bf843178a0a77f7fe221a",
+      "modified_utc": "2026-07-01T03:03:14.704304+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/secret_rotation_report.json",
+      "category": "security_evidence",
+      "size_bytes": 15150,
+      "sha256": "23d8ed1fd39aabcc412650a2c13e311c293d305af3547b1a0ab10bd50b493dd3",
+      "modified_utc": "2026-06-13T19:06:34.415509+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/uptime_monitor_report.json",
+      "category": "operations_evidence",
+      "size_bytes": 1931,
+      "sha256": "4fce7d9ccc4da795a5bc1b63faaf7177dda13eabadbfebdc6d8fcdd97af2c757",
+      "modified_utc": "2026-06-27T12:16:39.010088+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/weekly_cost_dashboard.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 5019,
+      "sha256": "230596356b4902b9b6577b516f2b2e029d828f0248ebde8243e1cd598d7553b0",
+      "modified_utc": "2026-06-14T19:06:32.267651+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    },
+    {
+      "path": "exports/weekly_cost_slack_payload.json",
+      "category": "release_or_quality_evidence",
+      "size_bytes": 135,
+      "sha256": "6ee800d45860e38800f28302bdb21456bb7f0608974ca8d1644a62bc2cc59dbf",
+      "modified_utc": "2026-06-14T19:06:32.270730+00:00",
+      "retention_days": 2555,
+      "storage_class_after_30_days": "COLDLINE",
+      "storage_class_after_365_days": "ARCHIVE"
+    }
+  ],
+  "excluded": [],
+  "secret_scan_warnings": [],
+  "archive_path": null,
+  "gcs": {
+    "uri": null,
+    "upload_requested": false,
+    "upload_performed": false,
+    "target_storage_classes": [
+      "COLDLINE",
+      "ARCHIVE"
+    ],
+    "retention_days": 2555,
+    "lifecycle_policy_file": "gcs_lifecycle_policy_template.json",
+    "setup_commands": [
+      "gcloud storage buckets create gs://<company-bucket> --location=asia-northeast1 --uniform-bucket-level-access",
+      "gcloud storage buckets update gs://<company-bucket> --lifecycle-file=exports/cold_storage/gcs_lifecycle_policy_template.json",
+      "python scripts/archive_audit_logs_to_cold_storage.py --gcs-uri <company-bucket>/mighty-link/log-archives/ --upload"
+    ]
+  }
+}

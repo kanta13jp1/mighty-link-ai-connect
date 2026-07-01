@@ -1,7 +1,7 @@
 # ログローテーション・アクセスログ保持 Runbook (T748)
 
 作成日: 2026-06-14  
-最終更新: 2026-06-27
+最終更新: 2026-07-01
 担当レーン: VSCode + Codex  
 対象: Firebase Hosting / Google Cloud Logging / リポジトリ内 JSONL・`.log` 監査ログ
 
@@ -53,6 +53,24 @@ gcloud logging buckets describe _Default --location=global
 
 監査・法務・障害対応で 30 日を超える証跡が必要になった場合は、Logging sink を作成し private GCS bucket へエクスポートする。90 日を超える保持はコスト影響を WBS/課題管理表に登録してから実施する。
 
+## T773 コールドストレージ退避
+
+短期ローテーション済みログ、監査JSONL、Go/No-Go、死活監視、DNS診断、セキュリティhardening、品質/コスト運用証跡を年次で会社GCSへ退避する正本は [COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md](COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md) とする。
+
+T773では `scripts/archive_audit_logs_to_cold_storage.py` を追加し、SHA-256付きmanifest、GCS lifecycle policy template、任意ZIP、明示オプションによるGCSアップロードを実装した。OAuth token、service account JSON、API key、DBスナップショット、実メール本文、CSV原本、個人データ実値は対象外にし、secret-like値を検出した場合はGCSアップロードを拒否する。
+
+月次確認:
+
+```powershell
+python scripts/archive_audit_logs_to_cold_storage.py --archive-date 2026-07-01 --manifest-only
+```
+
+会社GCP移管後の年次退避:
+
+```powershell
+python scripts/archive_audit_logs_to_cold_storage.py --archive-date 2026-07-01 --gcs-uri gs://<company-bucket>/mighty-link/log-archives/2026-07-01/ --upload
+```
+
 ## ローカル/CI ログローテーション
 
 dry-run:
@@ -98,4 +116,5 @@ GitHub Actions 側では `.github/workflows/runtime-log-retention.yml` が週次
 - [AUDIT_LOG_MASKING_AND_ENCRYPTION.md](AUDIT_LOG_MASKING_AND_ENCRYPTION.md)
 - [SUPABASE_BACKUP_RESTORE_RUNBOOK.md](SUPABASE_BACKUP_RESTORE_RUNBOOK.md)
 - [DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md)
+- [COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md](COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md)
 - [WBS.md](WBS.md)
