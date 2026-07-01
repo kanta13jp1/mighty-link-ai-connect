@@ -52,6 +52,8 @@ T746 は、Mighty-Link AI Connect を本番公開または有償提供へ進め�
 
 同じく2026-06-27にT856として `scripts/diagnose_custom_domain_dns.py` を追加し、RDAPとGoogle/Cloudflare Public DNSの診断を `exports/custom_domain_dns_diagnostic.*` へ証跡化した。結果はRDAP `client hold` とPublic DNS `NXDOMAIN` であり、T855ではお名前.com側のhold解除、権威DNS委任、Firebase Hosting required records再確認を優先する。T856は完了だが、PUBLIC-16はT855復旧まで `BLOCKED` のまま維持する。
 
+2026-07-01にT776として [STRIPE_BILLING_INTEGRATION_DESIGN.md](STRIPE_BILLING_INTEGRATION_DESIGN.md) を追加し、Checkout/Subscription/Billing Meters/Webhook/領収書・請求書/Sheets同期/Secret非記録/RLS境界を設計した。これにより課金設計ゲートは完了したが、T791のBilling実装・Webhook検証、T807のCustomer Portal live検証、T804価格承認、T798法務確認が残るため、PUBLIC-09と `public_paid_launch` は `BLOCKED` を継続する。
+
 ---
 
 ## 正本と生成物
@@ -88,7 +90,7 @@ WBSの正本は [../data/WBS.tsv](../data/WBS.tsv) であり、[WBS.md](WBS.md) 
 | WBS | 内容 | 現在の扱い |
 | --- | --- | --- |
 | T752 | ユーザーオンボーディング / アカウント登録・アクティベーション | `BLOCKED` |
-| T776 / T791 | Stripe課金設計・Billing Meters/Webhook検証 | `BLOCKED` |
+| T791 | Stripe Billing Meters/Webhook実装・検証 | `BLOCKED` |
 | T770 | 同時100ユーザー想定の負荷テスト | `BLOCKED` |
 | T817_7 | 共有営業メールAIマッチングMVPの個人情報/監査/負荷確認、実メール接続後の運用hardening | `BLOCKED` |
 | T845 | 全機能本番受入E2E/UAT最終再検証 | `BLOCKED` |

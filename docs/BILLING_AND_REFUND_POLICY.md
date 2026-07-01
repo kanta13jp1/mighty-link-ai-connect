@@ -6,7 +6,7 @@
 > 【要確認】マーカーは法務確認または T804 価格決定で埋める箇所です。
 
 - 起草日: 2026-06-12（Claude Code レーン）
-- 根拠ドキュメント: `docs/TERMS_OF_SERVICE.md` / `docs/TOKUSHOHO_NOTATION.md` / Stripe 公式ドキュメント（Refunds / Checkout、API version `2026-05-27.dahlia` 前提 = T791）
+- 根拠ドキュメント: `docs/TERMS_OF_SERVICE.md` / `docs/TOKUSHOHO_NOTATION.md` / `docs/STRIPE_BILLING_INTEGRATION_DESIGN.md` / Stripe 公式ドキュメント（Billing / Checkout / Webhooks / Customer Portal / Invoicing / Tax）
 
 ---
 
@@ -63,7 +63,8 @@
 
 ## 実装メモ（公開ページには掲載しない / T791・T807 向け）
 
-- Stripe API version は `2026-05-27.dahlia` に固定（T791。Billing Meters イベント値 15 桁制限・`billed_until` 明示 expand に注意）。
+- Stripe API version は、T791の実装開始時点でStripe Dashboardと公式ドキュメントを再確認し、コード・Runbook側で明示的に固定する。過去メモのAPI version文字列だけを根拠にしない。
+- 課金本体、Webhook、Billing Meters、Sheets同期、Secret非記録境界は [Stripe Billing 統合設計（T776）](STRIPE_BILLING_INTEGRATION_DESIGN.md) を正本とする。
 - 申込み最終確認画面の特商法 6 項目表示は `docs/TOKUSHOHO_NOTATION.md` の実装要件セクションに従う（自動更新サブスクである旨の明示が必須）。
 - **特商法表記ページの正式公開は Stripe アカウント審査（JCB 審査含む）の前提要件**のため、T791 の本番適用前にT798/T804の確定結果を反映すること。T777のフッターリンク統合は完了済み。
 - 解約導線は Stripe カスタマーポータルを採用し、T829でセッション生成APIとdry-run導線を整備済み。T807でStripe Dashboard live設定・テスト顧客検証・本番UI導線を完了し、「解約方法が分かりにくい」ダークパターンを避ける（消費者庁ガイドライン準拠）。
@@ -71,6 +72,7 @@
 ## 関連ドキュメント
 
 - [特定商取引法に基づく表記（初版ドラフト）](TOKUSHOHO_NOTATION.md)
+- [Stripe Billing 統合設計（T776）](STRIPE_BILLING_INTEGRATION_DESIGN.md)
 - [サービス利用規約（初版ドラフト）](TERMS_OF_SERVICE.md)
 - [ユーザーガイド・FAQ](USER_GUIDE_AND_FAQ.md)
 - [SLA/KPI 定義と計測基盤](SLA_KPI_DEFINITION_AND_MEASUREMENT.md)

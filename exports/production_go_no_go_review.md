@@ -1,6 +1,6 @@
 # 本番リリース Go/No-Go 判定レビュー (T746)
 
-- 生成時刻(UTC): 2026-06-27T13:03:08Z
+- 生成時刻(UTC): 2026-07-01T00:09:17Z
 - 正本TSV: `data/release_go_no_go_criteria.tsv`
 - WBS正本: `data/WBS.tsv`
 - 総合判定: **NO_GO**
@@ -29,7 +29,7 @@
 | PUBLIC-06 | public_paid_launch | フロントエンド | BLOCKED | ユーザーオンボーディング/アカウント登録/アクティベーションフローが実装済み | docs/USER_GUIDE_AND_FAQ.md; index.html; src/app.py | T752 | 開発責任者 | 招待制/閉域運用から一般利用へ移る前の必須導線。 |
 | PUBLIC-07 | public_paid_launch | コンプライアンス | PASS | 法定4ページとフッター常時リンクが本番UIに統合済み | index.html; src/index.html; docs/TERMS_OF_SERVICE.md; docs/PRIVACY_POLICY.md; docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md; docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md | T777 | 開発責任者 | フッター常時リンクとAnalyze同意パネルから4法定・規約ドラフトへ到達可能。T798法務確認、T804価格確定、Stripe live審査は別ゲートで継続。 |
 | PUBLIC-08 | public_paid_launch | 収益化 | HUMAN_GATE | 料金プラン・無料枠・課金単位がCEO承認済み | docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md | T804 | CEO | 価格未確定のまま有償プランは開始しない。 |
-| PUBLIC-09 | public_paid_launch | 収益化 | BLOCKED | Stripe課金設計・Billing Meters実装・Webhook・Customer Portal live検証が完了している | docs/BILLING_AND_REFUND_POLICY.md; docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md; src/app.py; src/stripe_customer_portal.py | T776;T791;T807;T829 | 開発責任者 | T829でCustomer PortalセッションAPIとdry-run導線は完了。public_paid_launchは設計T776、Billing実装T791、Customer Portal live検証T807を通過してから判定する。 |
+| PUBLIC-09 | public_paid_launch | 収益化 | BLOCKED | Stripe課金設計・Billing Meters実装・Webhook・Customer Portal live検証が完了している | docs/BILLING_AND_REFUND_POLICY.md; docs/STRIPE_BILLING_INTEGRATION_DESIGN.md; docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md; src/app.py; src/stripe_customer_portal.py | T776;T791;T807;T829 | 開発責任者 | T776でCheckout/Subscription/Billing Meters/Webhook/Sheets同期/Secret非記録の設計は完了。public_paid_launchはBilling実装T791とCustomer Portal live検証T807を通過してから再判定する。 |
 | PUBLIC-10 | public_paid_launch | 品質管理 | BLOCKED | 同時100ユーザー想定の負荷テストとスケーリング方針が完了している | docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md; docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md | T770 | 開発責任者 | 一般公開前にAPI/DB/Functionsの負荷余力を確認する。 |
 | PUBLIC-11 | public_paid_launch | コア機能 | BLOCKED | 6/17打ち合わせで最優先化された営業メールAIマッチングMVPが検証済み | docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md; docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md; docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md; docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md; docs/SALES_EMAIL_MATCHING_API_UI_RUNBOOK.md; docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md; exports/sales_email_match_review.md; exports/sales_email_review_log.md; docs/meetings/2026-06-17_CEO_Meeting_Minutes.md | T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7;T821 | CEO / 開発責任者 | T817_2で安全な.eml/.txt/CSV取り込みPoCと重複排除、T817_3でSupabaseスキーマ/RLS/migration/seed/rollback、T817_4でAI抽出deterministic fallback、T817_5で双方向検索API/UI、T817_6で人間レビュー/評価ログは完了。一般公開・有償化前にはT817_7の実メール接続後の個人情報/監査/負荷/権限確認が引き続き必要。 |
 | PUBLIC-12 | public_paid_launch | リリース | PASS | CHANGELOG・SemVer・git tag・GitHub Releases運用が整備済み | CHANGELOG.md; VERSION; docs/RELEASE_VERSIONING_RUNBOOK.md; exports/release_versioning_review.md | T806 | 開発責任者 | v0.1.0-controlled-demo.1は管理下デモ用prerelease。public_paid_launchはNo-Goのまま維持し、GAタグは全ゲート完了後に発行する。 |

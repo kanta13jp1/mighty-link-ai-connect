@@ -32,7 +32,7 @@
 | Supabase | 採用 | Postgres、RLS、Supavisor pooler、migration | `SUPABASE_DB_URL`、service role、anon keyは環境変数/GitHub Secretsのみ | T823/T850で会社Organizationへ移管 | RLS/REVOKEはT847で照合済み。T845でE2E再確認 |
 | Google Workspace / Sheets / Calendar / Drive / NotebookLM | 採用 | Sheets API batchUpdate、Calendar API、Drive/Docs同期、NotebookLM source同期 | OAuth filesとtokenはGit対象外。`k-umezawa@ml-mightylink.com` を検証 | 会社提供Googleアカウントを使用中 | sync失敗時はOAuth再認証Runbookに従う |
 | GitHub / Actions / Issues / Project / Pages | 採用 | GitHub Actions、Issues、Project #1、Pages mirror | GitHub Secrets/Varsのみ。secret実値はIssue/Sheets/docsへ記録しない | T823/T850で会社Organization/権限へ移管 | main/master同期とActions greenを毎回確認 |
-| Stripe | 条件付き採用 | Customer Portal session API、Billing/WebhookはT807/T791側で残確認 | `STRIPE_SECRET_KEY`、webhook secretはSecretsのみ | 会社Stripeアカウント・会社請求へ移管 | live課金はT807/T791/法務ゲート完了までNo-Go |
+| Stripe | 条件付き採用 | Customer Portal session API、T776課金統合設計は完了。Billing/Webhook実装はT791、Customer Portal liveはT807で残確認 | `STRIPE_SECRET_KEY`、webhook secretはSecretsのみ | 会社Stripeアカウント・会社請求へ移管 | live課金はT807/T791/法務ゲート完了までNo-Go |
 | Gemini API | 採用 | 現行コードは `gemini-2.5-flash` を営業メール抽出/NotebookLM補助の既定候補として固定。公式Docs上の最新安定版候補はT769/T780で移行検証する | `GEMINI_API_KEY` は環境変数/GitHub Secretsのみ | T823/T850で会社契約/請求へ移管 | key未設定時はdeterministic fallback。モデル変更は別WBS |
 | Antigravity + Gemini | 採用 | フロントエンドpolish、ブラウザエージェント確認、視覚デモ | IDE/CLI認証情報はローカル/会社管理のみ | T850で運用引継ぎ | 実装正本はGitとWBSに残す |
 | VSCode + Codex | 採用 | バックエンド、同期、GitHub CLI、Google Workspace自動化、CI/guard | Codex設定とtokenはローカル/管理対象。実値非記録 | T850で運用引継ぎ | AGENTS.mdとCodex manualに従う |
