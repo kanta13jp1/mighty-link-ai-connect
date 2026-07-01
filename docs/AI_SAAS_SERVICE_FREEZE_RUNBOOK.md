@@ -33,7 +33,7 @@
 | Google Workspace / Sheets / Calendar / Drive / NotebookLM | 採用 | Sheets API batchUpdate、Calendar API、Drive/Docs同期、NotebookLM source同期 | OAuth filesとtokenはGit対象外。`k-umezawa@ml-mightylink.com` を検証 | 会社提供Googleアカウントを使用中 | sync失敗時はOAuth再認証Runbookに従う |
 | GitHub / Actions / Issues / Project / Pages | 採用 | GitHub Actions、Issues、Project #1、Pages mirror | GitHub Secrets/Varsのみ。secret実値はIssue/Sheets/docsへ記録しない | T823/T850で会社Organization/権限へ移管 | main/master同期とActions greenを毎回確認 |
 | Stripe | 条件付き採用 | Customer Portal session API、T776課金統合設計は完了。Billing/Webhook実装はT791、Customer Portal liveはT807で残確認 | `STRIPE_SECRET_KEY`、webhook secretはSecretsのみ | 会社Stripeアカウント・会社請求へ移管 | live課金はT807/T791/法務ゲート完了までNo-Go |
-| Gemini API | 採用 | 現行コードは `gemini-2.5-flash` を営業メール抽出/NotebookLM補助の既定候補として固定。公式Docs上の最新安定版候補はT769/T780で移行検証する | `GEMINI_API_KEY` は環境変数/GitHub Secretsのみ | T823/T850で会社契約/請求へ移管 | key未設定時はdeterministic fallback。モデル変更は別WBS |
+| Gemini API | 採用 | 現行コードの本番既定は `gemini-3.5-flash`。モデル方針は `data/gemini_model_policy.json`、移行手順は `docs/GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md` を正本とする | `GEMINI_API_KEY` は環境変数/GitHub Secretsのみ | T823/T850で会社契約/請求へ移管 | key未設定時はdeterministic fallback。モデル変更はT769/T780の監査・評価ゲートを通す |
 | Antigravity + Gemini | 採用 | フロントエンドpolish、ブラウザエージェント確認、視覚デモ | IDE/CLI認証情報はローカル/会社管理のみ | T850で運用引継ぎ | 実装正本はGitとWBSに残す |
 | VSCode + Codex | 採用 | バックエンド、同期、GitHub CLI、Google Workspace自動化、CI/guard | Codex設定とtokenはローカル/管理対象。実値非記録 | T850で運用引継ぎ | AGENTS.mdとCodex manualに従う |
 | VSCode + Claude Code | 採用 | docs、review、triage、checklist、第三者レビュー | Claude Code設定はローカル/管理対象。実値非記録 | T850で運用引継ぎ | docs正本とWBS更新を必須にする |
@@ -74,7 +74,7 @@
 5. 会社請求/会社所有へ移管できないサービスは、public_paid_launch前に非採用または人間承認済み非ブロッカーへ分類する。
 6. DeepSeekを将来採用する場合、廃止予定の `deepseek-chat` / `deepseek-reasoner` は使わず、現行モデルIDで再設計する。
 7. Firebase/GCP、Supabase、Stripe、Google Workspace、GitHubはT823/T850で会社運用引継ぎを完了するまで属人化リスクを残す。
-8. Geminiの新しい安定版/previewへ移行する場合、既存の `gemini-2.5-flash` を黙って差し替えず、T769/T780で抽出精度、費用、rate limit、fallback、prompt差分を検証してから変更する。
+8. Geminiの新しい安定版/previewへ移行する場合、`gemini-3.5-flash` の本番既定を黙って差し替えず、T769/T780で抽出精度、費用、rate limit、fallback、prompt差分を検証してから変更する。`latest` aliasは本番既定値として使わない。
 
 ## T849への申し送り
 

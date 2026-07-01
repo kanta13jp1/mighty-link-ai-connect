@@ -61,7 +61,8 @@ def test_t848_runbook_freezes_runtime_and_non_adopted_boundaries():
 
 def test_deepseek_deprecation_and_gemini_model_are_explicit():
     content = read_runbook()
-    assert "gemini-2.5-flash" in content
+    assert "gemini-3.5-flash" in content
+    assert "GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md" in content
     assert "deepseek-chat" in content
     assert "deepseek-reasoner" in content
     assert "2026-07-24 15:59 UTC" in content

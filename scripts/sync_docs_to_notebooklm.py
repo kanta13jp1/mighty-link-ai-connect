@@ -959,7 +959,7 @@ def sync_gemini_context_cache(google_docs: dict[str, Any]) -> dict[str, Any]:
         char_count = len(combined_text)
         print(f"[*] Compiling {len(discover_docs())} docs for context caching. Total characters: {char_count}")
         
-        # Current stable model (gemini-1.5 series is retired); explicit caching
+        # Current stable model; explicit caching
         # on 3.5 Flash requires a minimum of 4,096 tokens per the caching docs
         model_name = "gemini-3.5-flash"
         ttl_seconds = 3600

@@ -16,7 +16,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from supabase_client import get_supabase_client, is_supabase_configured  # noqa: E402
-from sales_email_parser import SalesEmailParser  # noqa: E402
+from sales_email_parser import SalesEmailParser, get_gemini_model_name  # noqa: E402
 
 def get_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
@@ -248,7 +248,7 @@ def main() -> int:
         "status": "running",
         "input_count": len(messages),
         "started_at": get_now_iso(),
-        "model_name": "gemini-2.5-flash" if os.getenv("GEMINI_API_KEY") else "deterministic_fallback",
+        "model_name": get_gemini_model_name() if os.getenv("GEMINI_API_KEY") else "deterministic_fallback",
         "fallback_used": not bool(os.getenv("GEMINI_API_KEY"))
     })
 

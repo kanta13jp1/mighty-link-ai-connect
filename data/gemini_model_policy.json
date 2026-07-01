@@ -1,0 +1,66 @@
+{
+  "policy_id": "GEMINI_MODEL_POLICY_2026_07_01",
+  "checked_at": "2026-07-01",
+  "official_docs": {
+    "models_url": "https://ai.google.dev/gemini-api/docs/models",
+    "context_caching_url": "https://ai.google.dev/gemini-api/docs/caching",
+    "models_last_updated_utc": "2026-06-30"
+  },
+  "production_default": "gemini-3.5-flash",
+  "stable_production_models": [
+    "gemini-3.5-flash",
+    "gemini-3.1-flash-lite",
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-2.5-pro"
+  ],
+  "evaluation_only_models": [
+    "gemini-3.1-pro",
+    "gemini-3-flash",
+    "gemini-3.5-live-translate",
+    "gemini-3.1-flash-live",
+    "gemini-3.1-flash-tts",
+    "gemini-2.5-flash-live-preview",
+    "gemini-2.5-flash-tts-preview",
+    "gemini-2.5-pro-tts-preview"
+  ],
+  "blocked_model_patterns": [
+    "^gemini-.*-latest$",
+    "^gemini-2\\.0-.*",
+    "^gemini-3-pro-preview$",
+    "^gemini-3\\.1-flash-lite-preview$"
+  ],
+  "active_scan_roots": [
+    "src",
+    "scripts",
+    ".github"
+  ],
+  "current_truth_paths": [
+    "docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md",
+    "data/WBS.tsv",
+    "data/qa_tracker.tsv"
+  ],
+  "current_truth_context_markers": [
+    "現行",
+    "既定",
+    "デフォルト",
+    "固定",
+    "正本化",
+    "current",
+    "default"
+  ],
+  "current_truth_non_current_markers": [
+    "preview",
+    "評価",
+    "専用",
+    "禁止",
+    "候補",
+    "移行",
+    "T780",
+    "使わない"
+  ],
+  "notes": [
+    "Production defaults must use a specific stable Gemini model string, not a latest alias.",
+    "Preview models are allowed only for evaluation tasks such as T780 until Go/No-Go approval."
+  ]
+}

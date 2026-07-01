@@ -10,6 +10,13 @@ from pydantic import BaseModel, Field
 from google import genai
 from google.genai import types as genai_types
 
+DEFAULT_GEMINI_MODEL = "gemini-3.5-flash"
+
+
+def get_gemini_model_name() -> str:
+    return os.environ.get("GEMINI_MODEL", DEFAULT_GEMINI_MODEL).strip() or DEFAULT_GEMINI_MODEL
+
+
 # Pydantic models for structured JSON output from Gemini
 class ProjectRequirementJSON(BaseModel):
     title: str = Field(description="案件名。明示されていない場合は件名などから推測")
@@ -49,6 +56,7 @@ class EmailParseResultJSON(BaseModel):
 class SalesEmailParser:
     def __init__(self, api_key: str | None = None):
         self.api_key = api_key or os.getenv("GEMINI_API_KEY")
+        self.model_name = get_gemini_model_name()
         self.client = None
         if self.api_key:
             try:
@@ -69,9 +77,8 @@ class SalesEmailParser:
 {body}
 """
         try:
-            # We use gemini-2.5-flash as the standard default model.
             response = self.client.models.generate_content(
-                model="gemini-2.5-flash",
+                model=self.model_name,
                 contents=prompt,
                 config=genai_types.GenerateContentConfig(
                     response_mime_type="application/json",

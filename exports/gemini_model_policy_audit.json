@@ -1,0 +1,155 @@
+{
+  "audit": "gemini_model_policy",
+  "status": "ok",
+  "checked_at": "2026-07-01",
+  "policy": {
+    "policy_id": "GEMINI_MODEL_POLICY_2026_07_01",
+    "checked_at": "2026-07-01",
+    "official_docs": {
+      "models_url": "https://ai.google.dev/gemini-api/docs/models",
+      "context_caching_url": "https://ai.google.dev/gemini-api/docs/caching",
+      "models_last_updated_utc": "2026-06-30"
+    },
+    "production_default": "gemini-3.5-flash",
+    "stable_production_models": [
+      "gemini-3.5-flash",
+      "gemini-3.1-flash-lite",
+      "gemini-2.5-flash",
+      "gemini-2.5-flash-lite",
+      "gemini-2.5-pro"
+    ],
+    "evaluation_only_models": [
+      "gemini-3.1-pro",
+      "gemini-3-flash",
+      "gemini-3.5-live-translate",
+      "gemini-3.1-flash-live",
+      "gemini-3.1-flash-tts",
+      "gemini-2.5-flash-live-preview",
+      "gemini-2.5-flash-tts-preview",
+      "gemini-2.5-pro-tts-preview"
+    ],
+    "blocked_model_patterns": [
+      "^gemini-.*-latest$",
+      "^gemini-2\\.0-.*",
+      "^gemini-3-pro-preview$",
+      "^gemini-3\\.1-flash-lite-preview$"
+    ],
+    "active_scan_roots": [
+      "src",
+      "scripts",
+      ".github"
+    ],
+    "current_truth_paths": [
+      "docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md",
+      "data/WBS.tsv",
+      "data/qa_tracker.tsv"
+    ],
+    "current_truth_context_markers": [
+      "現行",
+      "既定",
+      "デフォルト",
+      "固定",
+      "正本化",
+      "current",
+      "default"
+    ],
+    "current_truth_non_current_markers": [
+      "preview",
+      "評価",
+      "専用",
+      "禁止",
+      "候補",
+      "移行",
+      "T780",
+      "使わない"
+    ],
+    "notes": [
+      "Production defaults must use a specific stable Gemini model string, not a latest alias.",
+      "Preview models are allowed only for evaluation tasks such as T780 until Go/No-Go approval."
+    ]
+  },
+  "summary": {
+    "production_default": "gemini-3.5-flash",
+    "app_default": "gemini-3.5-flash",
+    "blockers": 0,
+    "warnings": 0,
+    "runtime_references": 3,
+    "current_truth_references": 5
+  },
+  "default_finding": {
+    "severity": "ok",
+    "path": "src/app.py",
+    "model": "gemini-3.5-flash",
+    "reason": "app_default_matches_policy"
+  },
+  "runtime_findings": [
+    {
+      "path": "src/app.py",
+      "line": 352,
+      "model": "gemini-3.5-flash",
+      "context": "USER_EMAIL = \"k-umezawa@ml-mightylink.com\" GEMINI_MODEL = os.environ.get(\"GEMINI_MODEL\", \"gemini-3.5-flash\") GEMINI_DAILY_CALL_LIMIT = env_int(\"GEMINI_DAILY_CALL_LIMIT\", 20, 0, 100",
+      "severity": "ok",
+      "reason": "stable_production_model"
+    },
+    {
+      "path": "src/sales_email_parser.py",
+      "line": 13,
+      "model": "gemini-3.5-flash",
+      "context": "oogle import genai from google.genai import types as genai_types DEFAULT_GEMINI_MODEL = \"gemini-3.5-flash\" def get_gemini_model_name() -> str: return os.environ.get(\"GEMINI_",
+      "severity": "ok",
+      "reason": "stable_production_model"
+    },
+    {
+      "path": "scripts/sync_docs_to_notebooklm.py",
+      "line": 964,
+      "model": "gemini-3.5-flash",
+      "context": "n 3.5 Flash requires a minimum of 4,096 tokens per the caching docs model_name = \"gemini-3.5-flash\" ttl_seconds = 3600 print(f\"[*] Creating explici",
+      "severity": "ok",
+      "reason": "stable_production_model"
+    }
+  ],
+  "current_truth_findings": [
+    {
+      "path": "docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md",
+      "line": 36,
+      "model": "gemini-3.5-flash",
+      "context": "社Stripeアカウント・会社請求へ移管 | live課金はT807/T791/法務ゲート完了までNo-Go | | Gemini API | 採用 | 現行コードの本番既定は `gemini-3.5-flash`。モデル方針は `data/gemini_model_policy.json`、移行手順は `docs/GEMINI_MODEL_VERSION_",
+      "severity": "ok",
+      "reason": "current_truth_reference_allowed"
+    },
+    {
+      "path": "docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md",
+      "line": 77,
+      "model": "gemini-3.5-flash",
+      "context": "ogle Workspace、GitHubはT823/T850で会社運用引継ぎを完了するまで属人化リスクを残す。 8. Geminiの新しい安定版/previewへ移行する場合、`gemini-3.5-flash` の本番既定を黙って差し替えず、T769/T780で抽出精度、費用、rate limit、fallback、prompt差分を検証してから変更する",
+      "severity": "ok",
+      "reason": "current_truth_reference_allowed"
+    },
+    {
+      "path": "data/qa_tracker.tsv",
+      "line": 111,
+      "model": "gemini-3.5-flash",
+      "context": "ookLM/Drive/Obsidian、Slack/Notion/Figma/Canva、お名前.com、および非採用・保留サービスを横断棚卸ししました。Gemini現行実装は`gemini-3.5-flash`とdeterministic fallbackを正本化し、最新安定版/previewへの移行はT769/T780で監査・評価します。DeepSee",
+      "severity": "ok",
+      "reason": "current_truth_reference_allowed"
+    },
+    {
+      "path": "data/qa_tracker.tsv",
+      "line": 119,
+      "model": "gemini-3.5-flash",
+      "context": "-01 QA-89 tech-ai Gemini APIの本番既定モデルは何で、previewやlatest aliasは使ってよいですか？ 2026-07-01時点の本番既定は`gemini-3.5-flash`です。公式Gemini models docsでstable/preview/latest/experimentalの分類と2026-06-30",
+      "severity": "ok",
+      "reason": "current_truth_reference_allowed"
+    },
+    {
+      "path": "data/qa_tracker.tsv",
+      "line": 119,
+      "model": "gemini-3.1-pro",
+      "context": "uction defaultはspecific stable model stringのみ許可します。`latest` aliasはhot-swapされるため本番既定では禁止し、`gemini-3.1-pro`などpreviewはT780の評価専用として扱います。 モデル変更時は`data/gemini_model_policy.json`更新、`pytho",
+      "severity": "ok",
+      "reason": "current_truth_reference_allowed"
+    }
+  ],
+  "blockers": [],
+  "warnings": []
+}
