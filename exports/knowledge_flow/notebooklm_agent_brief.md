@@ -1,6 +1,6 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-07-03T01:51:32+09:00
+Generated: 2026-07-03T02:12:05+09:00
 Notebook: `4934c12b-b270-4739-97a1-b04b5b84eaaf`
 Status: `source_sync_ready`
 
@@ -8,7 +8,7 @@ NotebookLM source sync completed. The summary/ask generation phase was skipped b
 
 ## Synced Sources
 
-- Source rows processed: `117`
+- Source rows processed: `118`
 
 ## Optional Ask Generation
 

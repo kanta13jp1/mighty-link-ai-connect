@@ -4,7 +4,7 @@
     "action": "used_existing",
     "output": "┌────────────────────────────┬───────────────────────────┬───────┬────────────┐\n│ ID                         │ Title                     │ Owner │ Created    │\n├────────────────────────────┼───────────────────────────┼───────┼────────────┤\n│ 4934c12b-b270-4739-97a1-b… │ Mighty Skill-Bridge       │ Owner │ 2026-07-03 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n└────────────────────────────┴───────────────────────────┴───────┴────────────┘"
   },
-  "source_count": 117,
+  "source_count": 118,
   "source_results": [
     {
       "title": "Mighty Skill-Bridge docs/docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
@@ -687,6 +687,14 @@
       "stderr": ""
     },
     {
+      "title": "Mighty Skill-Bridge docs/docs/PRICING_PLAN_PROVISIONAL_2026-07-03.md",
+      "drive_file_id": "1ZPuBp6HD3FBj0Bc2DsLxroQ5Kk_fZssuoGEbs81tJWc",
+      "action": "added",
+      "returncode": 0,
+      "stdout": "Added Drive source: dea00ad3-7c04-4f4b-8bbd-822ffce8fbfc\nTitle: Mighty Skill-Bridge docs/docs/PRICING_PLAN_PROVISIONAL_2026-07-03.md",
+      "stderr": ""
+    },
+    {
       "title": "Mighty Skill-Bridge docs/docs/PRIVACY_POLICY.md",
       "drive_file_id": "19HaoiArtdICqNktUe2do7fyFUpcQWM6yujXzXk9pKx0",
       "action": "skipped_existing_refresh",
@@ -1149,9 +1157,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/WBS_REVIEW_2026-07-03.md",
       "drive_file_id": "1WJjsNafp9kJuAIjlIsBo4W2lXn32I1SMiIzvnh_zwFk",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: b25e23fb-204f-4944-8b9d-538557b0d929\nTitle: Mighty Skill-Bridge docs/docs/WBS_REVIEW_2026-07-03.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "b25e23fb-204f-4944-8b9d-538557b0d929",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -1178,10 +1188,10 @@
   "ask_generation": {
     "status": "skipped",
     "reason": "--skip-asks",
-    "generated_at_jst": "2026-07-03T01:51:32+09:00",
+    "generated_at_jst": "2026-07-03T02:12:05+09:00",
     "ask_timeout_seconds": 900,
     "next_command": "python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900",
-    "source_count": 117
+    "source_count": 118
   },
   "question": "6/2の社長打ち合わせで使う、8枚以内のプレゼン草案を作ってください。\n\n前提:\n- 実際の企画・サービス内容は6/2の打ち合わせで決定する\n- それまではプロトタイプ、WBS、Google Workspace同期、NotebookLM/Slack/Notion/Obsidian/GitHub連携の「実際にやった状態」を見せる\n- 社長に決めてもらう事項と、6/2後すぐにWBSへ反映する事項を明確にする\n\n出力形式:\n1. スライド番号とタイトル\n2. 各スライドの要点3つ以内\n3. 話すメモ\n4. 見せる証跡URL/ファイル\n5. 社長への質問\n",
   "answer_returncode": null
