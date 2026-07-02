@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-01T23:36:16+09:00
+Generated: 2026-07-03T01:51:32+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `116`
-- Drive docs uploaded: `4`
-- Drive docs skipped unchanged: `112`
+- Drive docs discovered: `117`
+- Drive docs uploaded: `3`
+- Drive docs skipped unchanged: `114`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -127,6 +127,7 @@ Generated: 2026-07-01T23:36:16+09:00
 - `docs/WBS_REVIEW_2026-06-26.md`: https://docs.google.com/document/d/1T6YKzX36GnV3ggc1gCCTur4RvUMMr8bf5mAtREqwPh4/edit?usp=drivesdk
 - `docs/WBS_REVIEW_2026-06-26_SESSION2.md`: https://docs.google.com/document/d/1hxWlysrTSQFvIOQWyJqFLyy4JVW11XFMe_fJndG0aOk/edit?usp=drivesdk
 - `docs/WBS_REVIEW_2026-07-01.md`: https://docs.google.com/document/d/1dMIc1sFFRnLtmUJMJOO9hPBGsnxyU68rFhv0tmnIG1c/edit?usp=drivesdk
+- `docs/WBS_REVIEW_2026-07-03.md`: https://docs.google.com/document/d/1WJjsNafp9kJuAIjlIsBo4W2lXn32I1SMiIzvnh_zwFk/edit?usp=drivesdk
 - `docs/WBS_SYNC_GUIDE.md`: https://docs.google.com/document/d/1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY/edit?usp=drivesdk
 - `docs/WEEKLY_COST_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1Sg3jtNziaRKU5lqgZ254BvrEXW0L6KPkhE8hmb-8Cwg/edit?usp=drivesdk
 
