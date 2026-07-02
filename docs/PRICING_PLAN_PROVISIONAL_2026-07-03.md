@@ -2,9 +2,11 @@
 
 作成日: 2026-07-03
 担当レーン: VSCode + Claude Code
-ステータス: **仮決定（CEO承認待ち）**
-関連WBS: T860（本仮決定） / T804（CEO承認、期限 2026-07-07 T833 Go/No-Go） / T791 / T807 / T813
-関連課題/QA: R111 / QA-92
+ステータス: **承認済み（2026-07-03 プロジェクトオーナー承認・当面の正）**
+関連WBS: T860（仮決定） / T861（スコープ再定義） / T804（完了） / T862（有償化判断） / T791 / T807 / T813
+関連課題/QA: R111 / R112 / QA-92 / QA-93
+
+> 2026-07-03 追記: 本仮決定はプロジェクトオーナー承認により当面の正となった（T804 完了）。ただし当面は社内ユーザーのみが使用し、課金は Stripe test mode の仕組みのみで**実課金は発生しない**（[INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md)）。live 課金有効化と CEO の最終価格確認は有償公開判断（T862）時に実施する。以下の「CEO承認事項」は T862 時の確認項目として保持する。
 関連docs: [STRIPE_BILLING_INTEGRATION_DESIGN.md](STRIPE_BILLING_INTEGRATION_DESIGN.md) / [TOKUSHOHO_NOTATION.md](TOKUSHOHO_NOTATION.md) / [BILLING_AND_REFUND_POLICY.md](BILLING_AND_REFUND_POLICY.md) / [COST_REPORT_2026-06.md](COST_REPORT_2026-06.md)
 
 ---
