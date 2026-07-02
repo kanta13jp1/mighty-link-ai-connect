@@ -69,14 +69,16 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 | Supabase | Supabase docs、changelog、RLS、Postgres upgrade notes |
 | お名前.com | お名前.comヘルプ、ドメイン/DNS/WordPress/FTP関連 |
 
-2026-06-21 時点の確認メモ:
+2026-07-03 時点の確認メモ:
 
 - Codex manual は `fetch-codex-manual.mjs` で最新版を取得してから、AGENTS.md、MCP、skills、GitHub連携の判断に使う。
 - GitHub Projects は Project #1 `Mighty Skill-Bridge` を正とし、Issueを追加したらStatusをDoneまで更新する。
+- Gemini API の現行安定版は 3.5 Flash / 3.1 Flash-Lite。Gemini 2.0 系はシャットダウン済み。本番既定は `gemini-3.5-flash`（QA-89）で、T780 の移行評価はGA後（2026-07-09〜）に実施する。
 - Stripe Customer Portal は、サブスクリプション管理、支払方法、請求書、解約を顧客が管理できるHosted UIとして扱う。T829でアプリ側セッションAPIとdry-run導線を整備済みで、T807でStripe Dashboard live有効化・本番検証を完了する。
-- Supabase は Postgres 14 サポート終了が 2026-07-01 に迫るため、T811を前倒しして本番/stagingのメジャーバージョン確認を優先する。
+- Supabase Postgres 14 はサポート終了日（2026-07-01）を超過済み。公式ガイドはPostgres 17への移行を主対象に案内しており、T811（バージョン確認・計画）とT837（アップグレード実行）を最優先で完了する。
 - InsForge は導入判断前に `skill.md` を確認する。現行バックエンド方針は Firebase、DBは Supabase のままにする。
 - OWASP WSTG / ZAP 相当の外部疑似診断はT805で実施済み。High 0 / secret-like値露出 0 を維持し、T835でFirebase Hosting本番URLのCSP等ヘッダhardeningを完了済み。GitHub Pagesは任意HTTPヘッダを設定できないためcontrolled demo mirrorとして扱う。
+- WBSスケジュールは 2026-07-03 に再ベースライン済み（T859、[WBS_REVIEW_2026-07-03.md](WBS_REVIEW_2026-07-03.md)）。ローンチ2026-07-08・Phase 7-9最終完了2026-07-15をアンカーとし、人間依存ゲートの必着日はR111で追跡する。
 
 ---
 
