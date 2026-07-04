@@ -76,6 +76,7 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 - Gemini API の現行安定版は 3.5 Flash / 3.1 Flash-Lite。Gemini 2.0 系はシャットダウン済み。本番既定は `gemini-3.5-flash`（QA-89）で、T780 の移行評価はGA後（2026-07-09〜）に実施する。
 - Stripe は当面実課金なし。2026-07-03のT861スコープ再定義（当面社内利用のみ）により、T791は課金の仕組み実装まで、T807 live有効化・T813 Stripe Tax・T793一般告知はT862有償化判断後へ移管した。料金はT860仮決定を承認済み（docs/PRICING_PLAN_PROVISIONAL_2026-07-03.md）。Stripe公式はレガシーtest modeでなくSandboxes（live設定から完全分離・最大5個）を推奨するため、T791は専用Sandboxで実装する（2026-07-04確認）。
 - public_paid_launchゲートの社内GA向け仕分けはT863でドラフト済み（docs/GO_NO_GO_GATE_TRIAGE_2026-07-04.md）。T833（7/7）で承認後にdata/release_go_no_go_criteria.tsvへ反映する。
+- CEO定例は2026-07-08(水)15:00に確定（6/29チャット、T819）。事前レポート・アジェンダはdocs/CEO_MEETING_AGENDA_2026-07-08.md（T864）。営業メール接続情報の受領待ち（R113）が最優先協議事項で、GA扱いは案A/案Bを定例で判断する。
 - Supabase Postgres 14 はサポート終了日（2026-07-01）を超過済み。公式ガイドはPostgres 17への移行を主対象に案内しており、T811（バージョン確認・計画）とT837（アップグレード実行）を最優先で完了する。
 - InsForge は導入判断前に `skill.md` を確認する。現行バックエンド方針は Firebase、DBは Supabase のままにする。
 - OWASP WSTG / ZAP 相当の外部疑似診断はT805で実施済み。High 0 / secret-like値露出 0 を維持し、T835でFirebase Hosting本番URLのCSP等ヘッダhardeningを完了済み。GitHub Pagesは任意HTTPヘッダを設定できないためcontrolled demo mirrorとして扱う。
