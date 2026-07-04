@@ -94,6 +94,21 @@ This points first to a registrar-side hold/delegation problem, not merely a miss
 
 認証 URL、お名前.com の認証情報、Navi のスクリーンショットは GitHub、Sheets、docs、NotebookLM へ記録しない。
 
+## 2026-07-04 Resolution: RESOLVED
+
+ドメイン所有者が お名前.com Navi でドメイン情報認証（Eメール認証）を完了し、事象は解消した。
+
+- 04:25Z RDAP status: `client hold` → **`active`**（認証後ほぼ即時に解除）
+- 権威サーバー（01.DNSV.JP）・Google Public DNS とも `A 199.36.158.100`（Firebase Hosting）を返答
+- `https://mightylink-app.com/` HTTPS 200 OK（証明書有効のまま）
+- `python scripts/check_uptime_targets.py`: ok=3 / warning=0 / failed=0
+- GitHub Actions Public Uptime Monitor run `28694877615`: **success**
+- 対応: T855 完了、PUBLIC-16 → PASS、R103 → resolved、Issue #143 close
+
+補足: apex ドメインは復旧済み。`www.mightylink-app.com` にはレコードが存在しない（従来から未設定）。www サブドメインを使う場合は Firebase Hosting へ追加登録と CNAME/A 設定が必要（現時点の販売URLは apex のため対応不要）。
+
+再発防止: お名前.com からの「ドメイン情報認証」「更新」系メールは即日対応する。WHOIS 登録者メールアドレス変更時は再認証が発生する点に注意（登録者情報は会社移管 T823 で変更予定のため、移管時に認証メールを見落とさないこと）。
+
 ## Recovery Checklist
 
 1. Open the onamae.com domain/DNS management screen for `mightylink-app.com`.
