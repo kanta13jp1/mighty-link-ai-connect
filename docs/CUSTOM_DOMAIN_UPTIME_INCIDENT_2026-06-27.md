@@ -71,6 +71,29 @@ This points first to a registrar-side hold/delegation problem, not merely a miss
 
 ---
 
+## 2026-07-04 Re-diagnosis: Root Cause Confirmed
+
+`python scripts/diagnose_custom_domain_dns.py`（2026-07-04T04:05Z）の結果:
+
+- RDAP status: `client hold`（継続中）
+- expiration: **2027-06-13**（期限切れではない。1年分登録済み）
+- registration: 2026-06-13 / RDAP last changed: **2026-06-27T02:30Z**
+- 8.8.8.8 / 1.1.1.1 とも全レコード NXDOMAIN（client hold により .com ゾーンから委任が外されているため）
+
+**確定原因: お名前.com のドメイン情報認証（ICANN 登録者メールアドレス有効性確認）が未完了のまま期限を超過し、レジストラが clientHold を適用した。**
+
+根拠: お名前.com 公式ヘルプ（answer/15333）のとおり、新規取得後に登録者メールアドレスへ届く「【重要】[お名前.com] ドメイン情報認証のお願い」の URL へ **2週間（336時間）以内** にアクセスしないと clientHold になる。本ドメインは 6/13 登録 → 6/27 に status 変更で、ちょうど14日後に一致する。料金未納や abuse ではない。
+
+### 解除手順（ドメイン所有者の作業）
+
+1. ドメイン登録時に使ったメールアドレスの受信箱（迷惑メールフォルダ含む）で「【重要】[お名前.com] ドメイン情報認証のお願い」を探し、本文中の認証 URL へアクセスする。
+2. メールが見つからない場合は、お名前.com Navi にログインし、ドメイン情報認証の再送（または WHOIS 登録者メールアドレスの修正 → 認証メール再送）を行う。
+3. 認証完了後、clientHold は早ければ30分〜数時間で解除され、`01.DNSV.JP`〜`04.DNSV.JP` への委任が復活する。
+4. 解除後に Firebase Hosting custom domain の要求レコード（A/AAAA/TXT/CAA）がお名前.com の DNS ゾーンに揃っているかを確認する（下記チェックリスト 4〜8）。
+5. `python scripts/diagnose_custom_domain_dns.py` と `python scripts/check_uptime_targets.py` で green を確認し、T855/PUBLIC-16/Issue #143 を更新する。
+
+認証 URL、お名前.com の認証情報、Navi のスクリーンショットは GitHub、Sheets、docs、NotebookLM へ記録しない。
+
 ## Recovery Checklist
 
 1. Open the onamae.com domain/DNS management screen for `mightylink-app.com`.

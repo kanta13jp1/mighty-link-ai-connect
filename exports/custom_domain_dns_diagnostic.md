@@ -1,6 +1,6 @@
 # Custom Domain DNS Diagnostic
 
-- Generated: 2026-06-27T12:33:20Z
+- Generated: 2026-07-04T04:05:30Z
 - Domain: `mightylink-app.com`
 - Status: `blocked`
 - Blockers: rdap_client_hold, public_dns_nxdomain
@@ -15,7 +15,7 @@
 - registration: 2026-06-13T02:26:53Z
 - expiration: 2027-06-13T02:26:53Z
 - last changed: 2026-06-27T02:30:28Z
-- last update of RDAP database: 2026-06-27T12:33:03Z
+- last update of RDAP database: 2026-07-04T04:05:21Z
 
 ## DNS Summary
 

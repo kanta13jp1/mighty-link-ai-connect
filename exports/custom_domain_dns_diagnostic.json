@@ -2,7 +2,7 @@
   "task_id": "T856",
   "parent_task_id": "T855",
   "domain": "mightylink-app.com",
-  "generated_at_utc": "2026-06-27T12:33:20Z",
+  "generated_at_utc": "2026-07-04T04:05:30Z",
   "rdap_error": null,
   "rdap": {
     "objectClassName": "domain",
@@ -119,7 +119,7 @@
       },
       {
         "eventAction": "last update of RDAP database",
-        "eventDate": "2026-06-27T12:33:03Z"
+        "eventDate": "2026-07-04T04:05:21Z"
       }
     ],
     "secureDNS": {
