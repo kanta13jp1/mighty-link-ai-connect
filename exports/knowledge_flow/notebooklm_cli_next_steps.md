@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-04T13:32:54+09:00
+Generated: 2026-07-04T15:35:12+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `121`
-- Drive docs uploaded: `4`
-- Drive docs skipped unchanged: `117`
+- Drive docs discovered: `122`
+- Drive docs uploaded: `2`
+- Drive docs skipped unchanged: `120`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -84,6 +84,7 @@ Generated: 2026-07-04T13:32:54+09:00
 - `docs/PILOT_PARTICIPANTS_SELECTION.md`: https://docs.google.com/document/d/1BLPG7uYbtU73fQh_tAg4cBBPin3BojMl9nWTDKdWb8w/edit?usp=drivesdk
 - `docs/PILOT_REPORT_2026-06-16.md`: https://docs.google.com/document/d/1C9nAy4JmkXdPE80HKkx8z0IstqQDUzWZjyVUvnfW-NU/edit?usp=drivesdk
 - `docs/POSTMORTEM_2026-06-11_R44_PRODUCTION_API_502.md`: https://docs.google.com/document/d/1v0seY6IBvRFBoNb0vVSOY01pgzxwzGQjfATLrDYN3aM/edit?usp=drivesdk
+- `docs/POSTMORTEM_2026-07-04_R114_MISSING_PROD_TABLES.md`: https://docs.google.com/document/d/1hOmODl8UT3Pt7Vq_HODri6JanuTlfP27DMqX3B_zDWE/edit?usp=drivesdk
 - `docs/PRICING_PLAN_PROVISIONAL_2026-07-03.md`: https://docs.google.com/document/d/1ZPuBp6HD3FBj0Bc2DsLxroQ5Kk_fZssuoGEbs81tJWc/edit?usp=drivesdk
 - `docs/PRIVACY_POLICY.md`: https://docs.google.com/document/d/19HaoiArtdICqNktUe2do7fyFUpcQWM6yujXzXk9pKx0/edit?usp=drivesdk
 - `docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md`: https://docs.google.com/document/d/1T4KOHtWeKJRm1HGYCHOm3ey2Pqhmpb_4WHk92lBqvSU/edit?usp=drivesdk
