@@ -1,7 +1,7 @@
 {
   "audit": "gemini_model_policy",
   "status": "ok",
-  "checked_at": "2026-07-01",
+  "checked_at": "2026-07-04",
   "policy": {
     "policy_id": "GEMINI_MODEL_POLICY_2026_07_01",
     "checked_at": "2026-07-01",
@@ -85,7 +85,7 @@
   "runtime_findings": [
     {
       "path": "src/app.py",
-      "line": 352,
+      "line": 361,
       "model": "gemini-3.5-flash",
       "context": "USER_EMAIL = \"k-umezawa@ml-mightylink.com\" GEMINI_MODEL = os.environ.get(\"GEMINI_MODEL\", \"gemini-3.5-flash\") GEMINI_DAILY_CALL_LIMIT = env_int(\"GEMINI_DAILY_CALL_LIMIT\", 20, 0, 100",
       "severity": "ok",

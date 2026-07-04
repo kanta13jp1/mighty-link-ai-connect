@@ -1,20 +1,46 @@
 {
-  "status": "pass",
-  "generated_at": "2026-07-01T14:31:08Z",
-  "issue_total": 153,
-  "qa_total": 119,
+  "status": "blocked",
+  "generated_at": "2026-07-04T07:50:47Z",
+  "issue_total": 157,
+  "qa_total": 123,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "resolved": 131,
-    "transferred": 19
+    "open": 3,
+    "resolved": 133,
+    "transferred": 18
   },
   "qa_status_counts": {
-    "回答済": 80,
+    "回答済": 84,
     "想定済": 39
   },
-  "issue_blocker_count": 0,
+  "issue_blocker_count": 3,
   "qa_blocker_count": 0,
-  "issue_blockers": [],
+  "issue_blockers": [
+    {
+      "id": "R111",
+      "severity": "HIGH",
+      "category": "schedule",
+      "title": "期限超過の人間依存ゲートが2026-07-08ローンチのクリティカルパスに集中しているリスク",
+      "related_wbs": "T859;T804;T798;T823;T836;T855;T834;T831;T819;T833;T849;T860;T861;T862",
+      "related_issue": "#151"
+    },
+    {
+      "id": "R112",
+      "severity": "MED",
+      "category": "release",
+      "title": "有償公開延期に伴うpublic_paid_launchゲートの再定義が必要",
+      "related_wbs": "T833;T849;T861;T862;T863",
+      "related_issue": "#153;#154;#155"
+    },
+    {
+      "id": "R113",
+      "severity": "HIGH",
+      "category": "external-dependency",
+      "title": "営業メール接続情報の受領待ちが7/8社内GAのクリティカルパスに影響するリスク",
+      "related_wbs": "T836;T817;T817_7;T845;T849;T819;T864",
+      "related_issue": "#156"
+    }
+  ],
   "qa_blockers": []
 }
