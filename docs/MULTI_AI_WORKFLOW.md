@@ -77,7 +77,8 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 - Stripe は当面実課金なし。2026-07-03のT861スコープ再定義（当面社内利用のみ）により、T791は課金の仕組み実装まで、T807 live有効化・T813 Stripe Tax・T793一般告知はT862有償化判断後へ移管した。料金はT860仮決定を承認済み（docs/PRICING_PLAN_PROVISIONAL_2026-07-03.md）。Stripe公式はレガシーtest modeでなくSandboxes（live設定から完全分離・最大5個）を推奨するため、T791は専用Sandboxで実装する（2026-07-04確認）。
 - public_paid_launchゲートの社内GA向け仕分けはT863でドラフト済み（docs/GO_NO_GO_GATE_TRIAGE_2026-07-04.md）。T833（7/7）で承認後にdata/release_go_no_go_criteria.tsvへ反映する。
 - CEO定例は2026-07-08(水)15:00に確定（6/29チャット、T819）。事前レポート・アジェンダはdocs/CEO_MEETING_AGENDA_2026-07-08.md（T864）。営業メール接続情報の受領待ち（R113）が最優先協議事項で、GA扱いは案A/案Bを定例で判断する。
-- Supabase Postgres 14 はサポート終了日（2026-07-01）を超過済み。公式ガイドはPostgres 17への移行を主対象に案内しており、T811（バージョン確認・計画）とT837（アップグレード実行）を最優先で完了する。
+- 本番Supabaseは**PostgreSQL 17.6**（2026-07-04 T811で確認、T837不要判定・完了）。PG14 EOLの影響なし。将来のメジャーアップグレードはSUPABASE_POSTGRES_UPGRADE_RUNBOOK.mdを使う。
+- Supabase Daily Backup CIは6/22以降未稼働（R116）。WIFが旧プロジェクト（d7fa2）へ誤バインドされておりT852と同根。恒久修復はT870、暫定ローカルバックアップは7/4取得済み。本番スキーマの残存migration適用はT871（R117）。
 - InsForge は導入判断前に `skill.md` を確認する。現行バックエンド方針は Firebase、DBは Supabase のままにする。
 - OWASP WSTG / ZAP 相当の外部疑似診断はT805で実施済み。High 0 / secret-like値露出 0 を維持し、T835でFirebase Hosting本番URLのCSP等ヘッダhardeningを完了済み。GitHub Pagesは任意HTTPヘッダを設定できないためcontrolled demo mirrorとして扱う。
 - WBSスケジュールは 2026-07-03 に再ベースライン済み（T859、[WBS_REVIEW_2026-07-03.md](WBS_REVIEW_2026-07-03.md)）。2026-07-08は社内向けGA（internal launch）、Phase 7-9最終完了2026-07-15をアンカーとし、人間依存ゲートの必着日はR111で追跡する。有償公開・live課金は時期未定でT862の月次レビューが管理する（[INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md)）。

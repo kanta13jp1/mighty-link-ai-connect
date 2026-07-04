@@ -1,8 +1,8 @@
 # Supabase Postgres Version Check
 
 - Task: T828 (related: T811)
-- Generated: 2026-06-21T07:46:40Z
-- Status: needs_credentials
+- Generated: 2026-07-04T14:12:54Z
+- Status: needs_review
 - PG14 EOL date: 2026-07-01
 - SQL: `select version();`
 
@@ -11,7 +11,7 @@
 | Target | State | Major | Source | Action |
 | --- | --- | --- | --- | --- |
 | staging | missing-env | - | SUPABASE_STAGING_DB_URL | Set SUPABASE_STAGING_DB_URL locally or paste sanitized Supabase SQL Editor `select version();` output with --offline-version staging=... |
-| production | missing-env | - | SUPABASE_PROD_DB_URL | Set SUPABASE_PROD_DB_URL locally or paste sanitized Supabase SQL Editor `select version();` output with --offline-version production=... |
+| production | ok | 17 | SUPABASE_PROD_DB_URL | Postgres 17 is above the PG14 EOL risk threshold. Keep normal upgrade monitoring. |
 
 ## Pre-Upgrade Gate
 

@@ -1,9 +1,9 @@
 {
   "task_id": "T828",
   "related_task_id": "T811",
-  "generated_at_utc": "2026-06-21T07:46:40Z",
-  "dry_run": true,
-  "status": "needs_credentials",
+  "generated_at_utc": "2026-07-04T14:12:54Z",
+  "dry_run": false,
+  "status": "needs_review",
   "pg14_eol_date": "2026-07-01",
   "version_sql": "select version();",
   "checks": [
@@ -19,11 +19,11 @@
     {
       "target": "production",
       "source": "SUPABASE_PROD_DB_URL",
-      "state": "missing-env",
-      "major": null,
-      "version_text": null,
-      "action": "Set SUPABASE_PROD_DB_URL locally or paste sanitized Supabase SQL Editor `select version();` output with --offline-version production=...",
-      "database_url": null
+      "state": "ok",
+      "major": 17,
+      "version_text": "PostgreSQL 17.6 on aarch64-unknown-linux-gnu, compiled by gcc (GCC) 15.2.0, 64-bit",
+      "action": "Postgres 17 is above the PG14 EOL risk threshold. Keep normal upgrade monitoring.",
+      "database_url": "postgresql://postgres.gnwhsuydebhvvfhyfsjx:***@aws-1-ap-southeast-1.pooler.supabase.com:5432/postgres?sslmode=require"
     }
   ],
   "pre_upgrade_gate": [
