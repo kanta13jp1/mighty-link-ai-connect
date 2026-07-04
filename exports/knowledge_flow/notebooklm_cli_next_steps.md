@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-03T02:35:29+09:00
+Generated: 2026-07-04T11:49:19+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `119`
-- Drive docs uploaded: `0`
-- Drive docs skipped unchanged: `119`
+- Drive docs discovered: `120`
+- Drive docs uploaded: `3`
+- Drive docs skipped unchanged: `117`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -56,6 +56,7 @@ Generated: 2026-07-03T02:35:29+09:00
 - `docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md`: https://docs.google.com/document/d/1chyqUHbGFZ41CPKhR6sY5HUTG397IxnmPCuQdUHa5rA/edit?usp=drivesdk
 - `docs/GEMINI_CLI_MIGRATION_AUDIT_2026-06-17.md`: https://docs.google.com/document/d/1f-Y6v0WBFliNpYUtY6Hv_rjo4_87_lBDZawhw6pyr4s/edit?usp=drivesdk
 - `docs/GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1tzGuPKQ5GWw-AGokf351BO6SqPz4bas8wf-fecnkDPY/edit?usp=drivesdk
+- `docs/GO_NO_GO_GATE_TRIAGE_2026-07-04.md`: https://docs.google.com/document/d/126lFHLMPNAiqmEqnikJvQQyqhFPbDt00T0B6YXwX3w4/edit?usp=drivesdk
 - `docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1xb9e3AQt7uGSvQvu-D12CGqchlh5Z01FFn44Dkhza8I/edit?usp=drivesdk
 - `docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md`: https://docs.google.com/document/d/1sNtUB-fmge59PdRumkD0Ug6z9KPEF_QQw2PfX4qxnKo/edit?usp=drivesdk
 - `docs/GROWTH_STRATEGY_ROADMAP.md`: https://docs.google.com/document/d/1Pp3Tf_r4G2-pxJDFVw5FhFheCgZHZcscsnotmX6vDgQ/edit?usp=drivesdk
