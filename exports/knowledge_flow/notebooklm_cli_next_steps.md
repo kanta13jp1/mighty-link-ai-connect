@@ -1,13 +1,13 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-04T16:10:02+09:00
+Generated: 2026-07-04T16:57:29+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `123`
-- Drive docs uploaded: `2`
+- Drive docs discovered: `124`
+- Drive docs uploaded: `3`
 - Drive docs skipped unchanged: `121`
 - NotebookLM CLI status: `ready`
 
@@ -63,6 +63,7 @@ Generated: 2026-07-04T16:10:02+09:00
 - `docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md`: https://docs.google.com/document/d/1sNtUB-fmge59PdRumkD0Ug6z9KPEF_QQw2PfX4qxnKo/edit?usp=drivesdk
 - `docs/GROWTH_STRATEGY_ROADMAP.md`: https://docs.google.com/document/d/1Pp3Tf_r4G2-pxJDFVw5FhFheCgZHZcscsnotmX6vDgQ/edit?usp=drivesdk
 - `docs/HOSTING_AND_DATABASE_SELECTION.md`: https://docs.google.com/document/d/1ngrMIRYYAbR2jzpLGRSKKJBTcOPvwUSJ00MDeCbx8-Y/edit?usp=drivesdk
+- `docs/HYPOTHESIS_AUDIT_2026-07-04.md`: https://docs.google.com/document/d/1y4BM0v-4GFybLIjxrxUZW0xVOwpnzpX98BjP0wHviTY/edit?usp=drivesdk
 - `docs/INCIDENT_POSTMORTEM_RUNBOOK.md`: https://docs.google.com/document/d/1nfuwYTaxVnadProXz1I6U-qVVK8mECRDmoJWdecFLr8/edit?usp=drivesdk
 - `docs/INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1sbnNMCbBwpPyuLj60FNwEE3L1UAq8mZ79n7Zlv9Huco/edit?usp=drivesdk
 - `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
