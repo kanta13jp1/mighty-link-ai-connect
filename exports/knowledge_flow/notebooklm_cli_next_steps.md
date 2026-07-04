@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-04T22:36:24+09:00
+Generated: 2026-07-04T23:26:14+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `125`
-- Drive docs uploaded: `6`
-- Drive docs skipped unchanged: `119`
+- Drive docs discovered: `126`
+- Drive docs uploaded: `4`
+- Drive docs skipped unchanged: `122`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -117,6 +117,7 @@ Generated: 2026-07-04T22:36:24+09:00
 - `docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md`: https://docs.google.com/document/d/11N-1PlKMV4nr2I1SBeMQISbbPZOAOVmhkqMKCf8Pg74/edit?usp=drivesdk
 - `docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md`: https://docs.google.com/document/d/135y0TSQWMvp-nBsUrIRUzDlRLWzlvRFF82D-56IQkHg/edit?usp=drivesdk
 - `docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md`: https://docs.google.com/document/d/1A0g0ka5kkLZzcBVTX802y8uzKLCJjz2hJRXXXwsXm30/edit?usp=drivesdk
+- `docs/SUPABASE_INFRA_AUDIT_2026-07-04.md`: https://docs.google.com/document/d/1POwHTmzCnLfzKoppcb4PCJiAvT_K2Rt7z-uLbWS2uXY/edit?usp=drivesdk
 - `docs/SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md`: https://docs.google.com/document/d/1h_uuS5vDsOdH11h0ZelB8yzOoUMwbP7o3k2T3Qp7qJI/edit?usp=drivesdk
 - `docs/SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1Dd5nercLOqw_GlWXEmbBXW62u8Q-YgRoulbPIgEtZtM/edit?usp=drivesdk
 - `docs/SUPPORT_CONTACT_AND_ESCALATION_RUNBOOK.md`: https://docs.google.com/document/d/1aiVwihpYd92tWZQb1K19OyM2FHND6TWwq9_y43eAlqQ/edit?usp=drivesdk
