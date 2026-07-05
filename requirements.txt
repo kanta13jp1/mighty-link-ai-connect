@@ -12,6 +12,6 @@ firebase-admin>=6.0.0
 firebase-functions>=0.1.0
 a2wsgi>=1.10.0
 supabase>=2.3.0
-psycopg2-binary>=2.9.0
+psycopg2-binary>=2.9.12
 openpyxl>=3.1.0
 xlrd>=2.0.1
