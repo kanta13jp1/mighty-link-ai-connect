@@ -2907,8 +2907,8 @@
                         <div class="file-drop-zone" onclick="triggerFileSelect()">
                             <span style="font-size: 24px;">📁</span>
                             <p><strong>勤務表ファイルを選択（CSV / Excel）</strong> またはドラッグ＆ドロップ</p>
-                            <span class="control-label">CSV/Excel(.xlsx)解析、承認ログ保存、ジョブカン相当ワークフロー</span>
-                            <input type="file" id="attendance-file-input" accept=".csv,.txt,.xlsx,text/csv,text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;" onchange="handleFileSelect(event)">
+                            <span class="control-label">CSV/Excel(.xlsx/.xls)解析、承認ログ保存、ジョブカン相当ワークフロー</span>
+                            <input type="file" id="attendance-file-input" accept=".csv,.txt,.xlsx,.xls,text/csv,text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" style="display: none;" onchange="handleFileSelect(event)">
                         </div>
                     </div>
                 </div>
@@ -4568,9 +4568,9 @@
             const file = event.target.files[0];
             if (!file) return;
             const timesheetExt = (file.name || "").toLowerCase().split(".").pop();
-            if (!["csv", "txt", "xlsx"].includes(timesheetExt)) {
+            if (!["csv", "txt", "xlsx", "xls"].includes(timesheetExt)) {
                 setAttendanceStatus("勤務表解析失敗（未対応形式）", "var(--rose)");
-                alert("この形式は未対応です。勤務表はCSV・テキスト・Excel（.xlsx）に対応しています。旧形式の .xls は Excel で「.xlsx」として保存し直してからアップロードしてください。");
+                alert("この形式は未対応です。勤務表はCSV・テキスト・Excel（.xlsx / .xls）に対応しています。");
                 event.target.value = "";
                 return;
             }
@@ -4618,7 +4618,7 @@
                 const reason = error && error.message ? error.message : "";
                 let friendly;
                 if (reason.indexOf("only CSV") !== -1) {
-                    friendly = "この形式は未対応です。CSV・テキスト・Excel（.xlsx）のいずれかでアップロードしてください。";
+                    friendly = "この形式は未対応です。CSV・テキスト・Excel（.xlsx / .xls）のいずれかでアップロードしてください。";
                 } else if (reason.indexOf("usable rows") !== -1 || reason.indexOf("data row") !== -1) {
                     friendly = "CSVにヘッダー行と1行以上のデータが必要です。ファイル内容をご確認ください。";
                 } else if (reason) {

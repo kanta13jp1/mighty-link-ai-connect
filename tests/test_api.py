@@ -464,7 +464,40 @@ def test_attendance_punch_timesheet_parse_approval_and_summary(client):
     assert xlsx_data["summary"]["holiday_work_days"] == 1
     assert "timesheet-yamada.xlsx" not in str(xlsx_data)
 
-    legacy_xls = client.post(
+    # T874: real-world report format (preamble rows, 作業時間（Ｈ） header, 合計 row)
+    sra_workbook = Workbook()
+    sra_sheet = sra_workbook.active
+    sra_sheet.append(["株式会社SRA 御中", "", "", "", ""])
+    sra_sheet.append(["", "", "2026年06月", "作業報告書(兼納品書）", ""])
+    sra_sheet.append(["日付\n（曜日）", "作業時間\n（Ｈ）", "　作　業　実　績", "開始", "終了"])
+    sra_sheet.append(["01日(月)", 9.0, "次期CATS作業(9.0h)", "9:00", "19:00"])
+    sra_sheet.append(["02日(火)", 8.5, "次期CATS作業(8.5h)", "9:00", "18:30"])
+    sra_sheet.append(["06日(土)", None, "", None, None])
+    sra_sheet.append(["25日(木)", None, "休暇", None, None])
+    sra_sheet.append(["合計", 17.5, "", "", ""])
+    sra_sheet.append(["【当月の成果物】", "", "", "", ""])
+    sra_buffer = BytesIO()
+    sra_workbook.save(sra_buffer)
+    sra_response = client.post(
+        "/api/attendance/timesheet/parse",
+        data={
+            "employee_identifier": "emp-004-attendance",
+            "consented": "true",
+        },
+        files={
+            "file": (
+                "sra_report.xlsx",
+                sra_buffer.getvalue(),
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            )
+        },
+    )
+    assert sra_response.status_code == 200
+    sra_data = sra_response.json()
+    assert sra_data["summary"]["work_hours"] == 17.5  # 合計行は二重集計しない
+
+    # T874: legacy .xls is accepted; corrupt bytes return a clear 400
+    corrupt_xls = client.post(
         "/api/attendance/timesheet/parse",
         data={
             "employee_identifier": "emp-004-attendance",
@@ -472,8 +505,19 @@ def test_attendance_punch_timesheet_parse_approval_and_summary(client):
         },
         files={"file": ("timesheet.xls", b"legacy", "application/vnd.ms-excel")},
     )
-    assert legacy_xls.status_code == 400
-    assert "only CSV" in legacy_xls.json()["detail"]
+    assert corrupt_xls.status_code == 400
+    assert "could not be read" in corrupt_xls.json()["detail"]
+
+    # T874: matrix helper handles legacy .xls row values directly
+    xls_matrix = [
+        ["株式会社SRA 御中", "", ""],
+        ["日付（曜日）", "作業時間（Ｈ）", "作業実績"],
+        ["01日(月)", 9.0, "次期CATS作業"],
+        ["合計", 9.0, ""],
+    ]
+    xls_rows = app.attendance_rows_from_matrix(xls_matrix)
+    assert len(xls_rows) == 1
+    assert app.aggregate_attendance_rows(xls_rows)["work_minutes"] == 540
 
     approval_response = client.post(
         "/api/attendance/timesheet/approve",

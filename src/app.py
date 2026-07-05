@@ -21,6 +21,7 @@ import json
 import io
 import csv
 import re
+import unicodedata
 import hashlib
 import uuid
 import requests
@@ -2089,19 +2090,83 @@ def truthy_attendance_flag(value: Any) -> bool:
     return text not in {"", "0", "false", "no", "none", "なし", "-", "無"}
 
 
+def normalize_attendance_key(text: Any) -> str:
+    """Normalize a header cell for matching: NFKC (full-width -> half-width),
+    strip all whitespace/newlines, drop underscores, lowercase."""
+    normalized = unicodedata.normalize("NFKC", str(text or ""))
+    return "".join(normalized.split()).replace("_", "").replace("　", "").lower()
+
+
+ATTENDANCE_HOURS_HEADER_PREFIXES = ("作業時間", "実労働時間", "労働時間", "勤務時間")
+ATTENDANCE_HOURS_HEADER_KEYS = {"workhours", "actualhours", "workinghours", "worktime"}
+ATTENDANCE_SUMMARY_ROW_KEYS = {"合計", "小計", "総計", "平均", "total", "subtotal"}
+
+
+def is_attendance_header_row(values: List[Any]) -> bool:
+    for value in values:
+        key = normalize_attendance_key(value)
+        if not key:
+            continue
+        if key in ATTENDANCE_HOURS_HEADER_KEYS or key.startswith(ATTENDANCE_HOURS_HEADER_PREFIXES):
+            return True
+    return False
+
+
+def attendance_rows_from_matrix(matrix: List[List[Any]]) -> List[Dict[str, Any]]:
+    """Build CSV-like row dicts from a cell matrix (T874).
+
+    Real-world timesheets (e.g. SRA 作業報告書様式) have title/preamble rows before
+    the header and summary/footer rows after the data. Detect the header row by its
+    hours column, and drop 合計/小計 style summary rows so totals are not doubled.
+    """
+    header: List[str] = []
+    header_index = -1
+    first_non_empty = -1
+    for index, raw_row in enumerate(matrix[:80]):
+        values = ["" if value is None else value for value in raw_row]
+        if not any(str(value).strip() for value in values):
+            continue
+        if first_non_empty < 0:
+            first_non_empty = index
+        if is_attendance_header_row(values):
+            header = [str(value or "").strip() for value in values]
+            header_index = index
+            break
+    if header_index < 0:
+        if first_non_empty < 0:
+            return []
+        header_index = first_non_empty
+        header = [str(value or "").strip() for value in matrix[first_non_empty]]
+
+    rows: List[Dict[str, Any]] = []
+    for raw_row in matrix[header_index + 1:]:
+        values = ["" if value is None else value for value in raw_row]
+        if not any(str(value).strip() for value in values):
+            continue
+        first_cell = next((value for value in values if str(value).strip()), "")
+        if normalize_attendance_key(first_cell) in ATTENDANCE_SUMMARY_ROW_KEYS:
+            continue
+        rows.append({header[i]: values[i] for i in range(min(len(header), len(values)))})
+    return rows
+
+
 def row_value(row: Dict[str, Any], candidates: List[str]) -> Any:
-    normalized = {str(key).strip().lower().replace(" ", "").replace("_", ""): value for key, value in row.items()}
+    normalized = {normalize_attendance_key(key): value for key, value in row.items()}
     for candidate in candidates:
-        key = candidate.strip().lower().replace(" ", "").replace("_", "")
+        key = normalize_attendance_key(candidate)
         if key in normalized:
             return normalized[key]
+        for row_key, value in normalized.items():
+            if key and row_key.startswith(key):
+                return value
     return ""
 
 
 def parse_attendance_csv_bytes(raw_bytes: bytes) -> dict:
     text = raw_bytes.decode("utf-8-sig", errors="ignore")
     text = text.replace("\r\n", "\n").replace("\r", "\n")
-    rows = list(csv.DictReader(io.StringIO(text)))
+    matrix = [list(record) for record in csv.reader(io.StringIO(text))]
+    rows = attendance_rows_from_matrix(matrix)
     if not rows:
         raise ValueError("CSV header and at least one data row are required")
     return aggregate_attendance_rows(rows)
@@ -2122,19 +2187,29 @@ def parse_attendance_xlsx_bytes(raw_bytes: bytes) -> dict:
         raise ValueError("Excel file could not be read; save it as .xlsx and retry") from exc
     try:
         worksheet = workbook.worksheets[0]
-        header: List[str] = []
-        rows: List[Dict[str, Any]] = []
-        for excel_row in worksheet.iter_rows(values_only=True):
-            values = ["" if cell is None else cell for cell in excel_row]
-            if not any(str(value).strip() for value in values):
-                continue
-            if not header:
-                header = [str(value).strip() for value in values]
-                continue
-            rows.append({header[i]: values[i] for i in range(min(len(header), len(values)))})
+        matrix = [list(excel_row) for excel_row in worksheet.iter_rows(values_only=True)]
     finally:
         workbook.close()
-    if not header or not rows:
+    rows = attendance_rows_from_matrix(matrix)
+    if not rows:
+        raise ValueError("Excel sheet needs a header row and at least one data row")
+    return aggregate_attendance_rows(rows)
+
+
+def parse_attendance_xls_bytes(raw_bytes: bytes) -> dict:
+    """Convert a legacy .xls timesheet via xlrd into CSV-like rows (T874)."""
+    try:
+        import xlrd
+    except ImportError as exc:
+        raise ValueError("legacy Excel support requires xlrd on the server") from exc
+    try:
+        workbook = xlrd.open_workbook(file_contents=raw_bytes)
+        worksheet = workbook.sheet_by_index(0)
+        matrix = [worksheet.row_values(index) for index in range(worksheet.nrows)]
+    except Exception as exc:
+        raise ValueError("Excel(.xls) file could not be read; save it as .xlsx or CSV and retry") from exc
+    rows = attendance_rows_from_matrix(matrix)
+    if not rows:
         raise ValueError("Excel sheet needs a header row and at least one data row")
     return aggregate_attendance_rows(rows)
 
@@ -2151,7 +2226,7 @@ def aggregate_attendance_rows(rows: List[Dict[str, Any]]) -> dict:
         if not any(str(value or "").strip() for value in row.values()):
             continue
         parsed_rows += 1
-        work_minutes += hours_to_minutes(row_value(row, ["work_hours", "actual_hours", "working_hours", "実労働時間", "労働時間", "勤務時間"]))
+        work_minutes += hours_to_minutes(row_value(row, ["work_hours", "actual_hours", "working_hours", "実労働時間", "労働時間", "勤務時間", "作業時間"]))
         overtime_minutes += hours_to_minutes(row_value(row, ["overtime_hours", "overtime", "残業時間", "時間外労働", "時間外労働時間"]))
         midnight_minutes += hours_to_minutes(row_value(row, ["midnight_hours", "late_night_hours", "深夜労働", "深夜労働時間"]))
         if truthy_attendance_flag(row_value(row, ["holiday_work", "holiday_worked", "休日出勤", "休日出勤日数"])):
@@ -6267,15 +6342,17 @@ async def parse_attendance_timesheet(
         raise HTTPException(status_code=400, detail=f"timesheet file must be {MAX_ATTENDANCE_FILE_BYTES} bytes or fewer")
 
     extension = Path(file.filename or "").suffix.lower()
-    if extension not in {".csv", ".txt", ".xlsx"}:
+    if extension not in {".csv", ".txt", ".xlsx", ".xls"}:
         raise HTTPException(
             status_code=400,
-            detail="only CSV, text, or Excel (.xlsx) timesheets are supported (T841/T873)",
+            detail="only CSV, text, or Excel (.xlsx/.xls) timesheets are supported (T841/T873/T874)",
         )
 
     try:
         if extension == ".xlsx":
             parse_result = parse_attendance_xlsx_bytes(raw_bytes)
+        elif extension == ".xls":
+            parse_result = parse_attendance_xls_bytes(raw_bytes)
         else:
             parse_result = parse_attendance_csv_bytes(raw_bytes)
     except ValueError as exc:
