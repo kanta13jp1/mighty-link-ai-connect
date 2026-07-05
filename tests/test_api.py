@@ -426,6 +426,55 @@ def test_attendance_punch_timesheet_parse_approval_and_summary(client):
     )
     assert unauthorized_approval.status_code == 401
 
+    # T873: Excel (.xlsx) timesheets are converted internally and aggregated
+    from io import BytesIO
+
+    from openpyxl import Workbook
+
+    workbook = Workbook()
+    worksheet = workbook.active
+    worksheet.append(["日付", "実労働時間", "残業時間", "深夜労働", "休日出勤", "打刻漏れ"])
+    worksheet.append(["2026-06-03", 8.0, 1.0, 0, 0, "なし"])
+    worksheet.append(["2026-06-04", 7.5, 0, 0, 1, ""])
+    xlsx_buffer = BytesIO()
+    workbook.save(xlsx_buffer)
+    xlsx_response = client.post(
+        "/api/attendance/timesheet/parse",
+        data={
+            "employee_identifier": "emp-004-attendance",
+            "consented": "true",
+            "consent_version": "MSB-ATTENDANCE-2026-06",
+            "source": "attendance_timesheet_upload",
+            "page_url": "/",
+            "session_id": "attendance-test-session",
+        },
+        files={
+            "file": (
+                "timesheet-yamada.xlsx",
+                xlsx_buffer.getvalue(),
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            )
+        },
+    )
+    assert xlsx_response.status_code == 200
+    xlsx_data = xlsx_response.json()
+    assert xlsx_data["status"] == "success"
+    assert xlsx_data["summary"]["work_hours"] == 15.5
+    assert xlsx_data["summary"]["overtime_hours"] == 1.0
+    assert xlsx_data["summary"]["holiday_work_days"] == 1
+    assert "timesheet-yamada.xlsx" not in str(xlsx_data)
+
+    legacy_xls = client.post(
+        "/api/attendance/timesheet/parse",
+        data={
+            "employee_identifier": "emp-004-attendance",
+            "consented": "true",
+        },
+        files={"file": ("timesheet.xls", b"legacy", "application/vnd.ms-excel")},
+    )
+    assert legacy_xls.status_code == 400
+    assert "only CSV" in legacy_xls.json()["detail"]
+
     approval_response = client.post(
         "/api/attendance/timesheet/approve",
         json={"import_id": parse_data["import_id"], "decision": "approved"},

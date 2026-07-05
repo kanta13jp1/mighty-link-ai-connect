@@ -2104,7 +2104,42 @@ def parse_attendance_csv_bytes(raw_bytes: bytes) -> dict:
     rows = list(csv.DictReader(io.StringIO(text)))
     if not rows:
         raise ValueError("CSV header and at least one data row are required")
+    return aggregate_attendance_rows(rows)
 
+
+def parse_attendance_xlsx_bytes(raw_bytes: bytes) -> dict:
+    """Convert the first worksheet of an .xlsx timesheet into CSV-like rows (T873).
+
+    The workbook is read in-memory only; the raw file is never persisted.
+    """
+    try:
+        from openpyxl import load_workbook
+    except ImportError as exc:
+        raise ValueError("Excel support requires openpyxl on the server") from exc
+    try:
+        workbook = load_workbook(io.BytesIO(raw_bytes), read_only=True, data_only=True)
+    except Exception as exc:
+        raise ValueError("Excel file could not be read; save it as .xlsx and retry") from exc
+    try:
+        worksheet = workbook.worksheets[0]
+        header: List[str] = []
+        rows: List[Dict[str, Any]] = []
+        for excel_row in worksheet.iter_rows(values_only=True):
+            values = ["" if cell is None else cell for cell in excel_row]
+            if not any(str(value).strip() for value in values):
+                continue
+            if not header:
+                header = [str(value).strip() for value in values]
+                continue
+            rows.append({header[i]: values[i] for i in range(min(len(header), len(values)))})
+    finally:
+        workbook.close()
+    if not header or not rows:
+        raise ValueError("Excel sheet needs a header row and at least one data row")
+    return aggregate_attendance_rows(rows)
+
+
+def aggregate_attendance_rows(rows: List[Dict[str, Any]]) -> dict:
     work_minutes = 0
     overtime_minutes = 0
     midnight_minutes = 0
@@ -2130,7 +2165,7 @@ def parse_attendance_csv_bytes(raw_bytes: bytes) -> dict:
             anomaly_count += 1
 
     if parsed_rows == 0:
-        raise ValueError("CSV has no usable rows")
+        raise ValueError("timesheet has no usable rows")
 
     return {
         "work_minutes": work_minutes,
@@ -6232,11 +6267,17 @@ async def parse_attendance_timesheet(
         raise HTTPException(status_code=400, detail=f"timesheet file must be {MAX_ATTENDANCE_FILE_BYTES} bytes or fewer")
 
     extension = Path(file.filename or "").suffix.lower()
-    if extension not in {".csv", ".txt"}:
-        raise HTTPException(status_code=400, detail="only CSV or text timesheets are supported in this T841 PoC")
+    if extension not in {".csv", ".txt", ".xlsx"}:
+        raise HTTPException(
+            status_code=400,
+            detail="only CSV, text, or Excel (.xlsx) timesheets are supported (T841/T873)",
+        )
 
     try:
-        parse_result = parse_attendance_csv_bytes(raw_bytes)
+        if extension == ".xlsx":
+            parse_result = parse_attendance_xlsx_bytes(raw_bytes)
+        else:
+            parse_result = parse_attendance_csv_bytes(raw_bytes)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 

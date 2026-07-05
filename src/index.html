@@ -2876,7 +2876,7 @@
             <div class="comparison-container">
                 <div class="comparison-controls">
                     <h2>簡易勤怠打刻 &amp; 勤務表自動解析</h2>
-                    <span class="control-label">出退勤の簡易打刻、および月末の勤務表CSVパース連携</span>
+                    <span class="control-label">出退勤の簡易打刻、および月末の勤務表CSV/Excelパース連携</span>
                 </div>
 
                 <div class="form-grid-2col" style="margin-bottom: 16px;">
@@ -2886,7 +2886,7 @@
                     </div>
                     <label class="control-label" style="display: flex; gap: 10px; align-items: flex-start; margin-top: 28px;">
                         <input type="checkbox" id="attendance-consent" style="margin-top: 3px;">
-                        <span>社内確認コードを匿名キー化し、勤怠メタデータだけを保存することに同意します。CSV原本とファイル名は保存しません。</span>
+                        <span>社内確認コードを匿名キー化し、勤怠メタデータだけを保存することに同意します。CSV/Excel原本とファイル名は保存しません。</span>
                     </label>
                 </div>
 
@@ -2906,9 +2906,9 @@
                         <h3 style="font-size: 15px; font-weight: 700; color: var(--muted); margin-bottom: 8px; text-transform: uppercase;">勤務表解析用アップローダー</h3>
                         <div class="file-drop-zone" onclick="triggerFileSelect()">
                             <span style="font-size: 24px;">📁</span>
-                            <p><strong>勤務表CSVファイルを選択</strong> またはドラッグ＆ドロップ</p>
-                            <span class="control-label">CSV解析、承認ログ保存、ジョブカン相当ワークフロー</span>
-                            <input type="file" id="attendance-file-input" accept=".csv,.txt,text/csv,text/plain" style="display: none;" onchange="handleFileSelect(event)">
+                            <p><strong>勤務表ファイルを選択（CSV / Excel）</strong> またはドラッグ＆ドロップ</p>
+                            <span class="control-label">CSV/Excel(.xlsx)解析、承認ログ保存、ジョブカン相当ワークフロー</span>
+                            <input type="file" id="attendance-file-input" accept=".csv,.txt,.xlsx,text/csv,text/plain,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;" onchange="handleFileSelect(event)">
                         </div>
                     </div>
                 </div>
@@ -4568,9 +4568,9 @@
             const file = event.target.files[0];
             if (!file) return;
             const timesheetExt = (file.name || "").toLowerCase().split(".").pop();
-            if (!["csv", "txt"].includes(timesheetExt)) {
+            if (!["csv", "txt", "xlsx"].includes(timesheetExt)) {
                 setAttendanceStatus("勤務表解析失敗（未対応形式）", "var(--rose)");
-                alert("この形式は未対応です。勤務表はCSVまたはテキスト形式のみ対応しています。Excelファイルの場合は「名前を付けて保存」→「CSV UTF-8」で保存し直してからアップロードしてください。");
+                alert("この形式は未対応です。勤務表はCSV・テキスト・Excel（.xlsx）に対応しています。旧形式の .xls は Excel で「.xlsx」として保存し直してからアップロードしてください。");
                 event.target.value = "";
                 return;
             }
@@ -4617,8 +4617,8 @@
                 setAttendanceStatus("勤務表解析失敗", "var(--rose)");
                 const reason = error && error.message ? error.message : "";
                 let friendly;
-                if (reason.indexOf("only CSV or text") !== -1) {
-                    friendly = "この形式は未対応です。CSVまたはテキスト形式でアップロードしてください（Excelは「CSV UTF-8」で保存し直し）。";
+                if (reason.indexOf("only CSV") !== -1) {
+                    friendly = "この形式は未対応です。CSV・テキスト・Excel（.xlsx）のいずれかでアップロードしてください。";
                 } else if (reason.indexOf("usable rows") !== -1 || reason.indexOf("data row") !== -1) {
                     friendly = "CSVにヘッダー行と1行以上のデータが必要です。ファイル内容をご確認ください。";
                 } else if (reason) {
