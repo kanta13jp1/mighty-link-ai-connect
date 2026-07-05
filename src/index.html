@@ -4567,6 +4567,13 @@
         async function handleFileSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
+            const timesheetExt = (file.name || "").toLowerCase().split(".").pop();
+            if (!["csv", "txt"].includes(timesheetExt)) {
+                setAttendanceStatus("勤務表解析失敗（未対応形式）", "var(--rose)");
+                alert("この形式は未対応です。勤務表はCSVまたはテキスト形式のみ対応しています。Excelファイルの場合は「名前を付けて保存」→「CSV UTF-8」で保存し直してからアップロードしてください。");
+                event.target.value = "";
+                return;
+            }
             const { employeeCode, consented } = getAttendanceInputs();
             if (!employeeCode || !consented) {
                 alert("社内確認コードを入力し、勤怠データ保存への同意にチェックしてください。");
@@ -4590,7 +4597,9 @@
                     body: formData
                 });
                 if (!response.ok) {
-                    throw new Error("Attendance parse endpoint unavailable");
+                    let serverDetail = "";
+                    try { serverDetail = (await response.json()).detail || ""; } catch (parseError) { /* 非JSON応答 */ }
+                    throw new Error(serverDetail || `HTTP ${response.status}`);
                 }
                 const data = await response.json();
                 parsedAttendanceData = {
@@ -4604,9 +4613,20 @@
                 };
                 setAttendanceStatus("解析済み・承認待ち", "var(--green)");
             } catch (error) {
-                console.warn("Attendance parse API unavailable.", error);
+                console.warn("Attendance parse failed.", error);
                 setAttendanceStatus("勤務表解析失敗", "var(--rose)");
-                alert("勤務表解析APIへ接続できませんでした。CSV原本は保存されていません。");
+                const reason = error && error.message ? error.message : "";
+                let friendly;
+                if (reason.indexOf("only CSV or text") !== -1) {
+                    friendly = "この形式は未対応です。CSVまたはテキスト形式でアップロードしてください（Excelは「CSV UTF-8」で保存し直し）。";
+                } else if (reason.indexOf("usable rows") !== -1 || reason.indexOf("data row") !== -1) {
+                    friendly = "CSVにヘッダー行と1行以上のデータが必要です。ファイル内容をご確認ください。";
+                } else if (reason) {
+                    friendly = `サーバー応答: ${reason}`;
+                } else {
+                    friendly = "勤務表解析APIへ接続できませんでした。";
+                }
+                alert(`勤務表を解析できませんでした。${friendly}（CSV原本は保存されていません）`);
                 event.target.value = "";
                 return;
             }
