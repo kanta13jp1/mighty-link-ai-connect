@@ -9,6 +9,7 @@
 | 日付 | バージョン | 内容 | 起稿者 |
 | :--- | :--- | :--- | :--- |
 | 2026-06-10 | v1.0.0 | 初版作成（KPI/SLA定義・Supabaseビュー・月次レポート仕様） | Claude Code |
+| 2026-07-05 | v1.1.0 | T778実装: §3のビューをmigration `20260705000000_sla_measurement_views.sql` として実装（uptime_checksテーブル新設、WAUはprofiles.last_login不在のためmatchesベースへ再設計、応答時間・診断精度ビュー追加）。計測記録は `check_uptime_targets.py --record-db`、レポートは `generate_sla_measurement_report.py` | Claude Code |
 
 ---
 
@@ -80,6 +81,9 @@
 ---
 
 ## 3. Supabase ビュー設計（計測基盤）
+
+> [!NOTE]
+> **2026-07-05（T778）実装済み。** 正本は `supabase/migrations/20260705000000_sla_measurement_views.sql`。以下の初版ドラフトSQLとの差分: (1) `profiles.last_login` は実スキーマに存在しないため、WAUは `matches` ベース（=診断実行者）へ再設計。(2) `uptime_checks` テーブルを新設し、`scripts/check_uptime_targets.py --record-db` が稼働率と応答時間サンプルを記録。(3) 応答時間P50/P95ビュー（`kpi_daily_response_time`）と診断精度ビュー（`kpi_weekly_diagnosis_accuracy`、feedback_eventsのhelpful率）、匿名セッションビュー（`kpi_weekly_anonymous_sessions`）を追加。(4) 全ビューは anon/authenticated から REVOKE。SLAレポートは `python scripts/generate_sla_measurement_report.py` が `exports/sla_measurement_report.{json,md}` を生成し、月次品質フロー（T764/T808）がSheetsへ集計する。
 
 ### 3.1 日次診断件数ビュー
 

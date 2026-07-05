@@ -302,6 +302,52 @@ def send_slack_alert(webhook_url: str, payload: dict) -> None:
             raise RuntimeError(f"Slack webhook returned HTTP {response.status}")
 
 
+def record_results_to_db(results: list[TargetResult], env: dict[str, str]) -> int:
+    """Insert uptime samples into public.uptime_checks for the T778 SLA views.
+
+    Soft-fails with a warning so monitoring never breaks on DB issues.
+    """
+    database_url = env.get("SUPABASE_DB_URL", "").strip()
+    if not database_url:
+        print("[*] uptime DB recording skipped: SUPABASE_DB_URL is not configured.")
+        return 0
+    try:
+        import psycopg2
+    except ImportError:
+        print("[*] uptime DB recording skipped: psycopg2 is not installed.")
+        return 0
+    status_map = {"ok": "UP", "warning": "WARNING", "failed": "DOWN"}
+    try:
+        conn = psycopg2.connect(database_url, connect_timeout=15)
+        cursor = conn.cursor()
+        inserted = 0
+        for result in results:
+            cursor.execute(
+                """
+                INSERT INTO public.uptime_checks
+                    (target_id, url, status, http_status, response_ms, source)
+                VALUES (%s, %s, %s, %s, %s, %s);
+                """,
+                (
+                    result.target_id,
+                    result.url,
+                    status_map.get(result.status, "DOWN"),
+                    result.http_status,
+                    int(result.elapsed_ms) if result.elapsed_ms is not None else None,
+                    "check_uptime_targets",
+                ),
+            )
+            inserted += 1
+        conn.commit()
+        cursor.close()
+        conn.close()
+        print(f"[+] Recorded {inserted} uptime sample(s) into uptime_checks.")
+        return inserted
+    except Exception as exc:  # noqa: BLE001 - monitoring must not break on DB errors
+        print(f"[-] uptime DB recording failed (non-fatal): {exc}")
+        return 0
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Check public uptime targets.")
     parser.add_argument("--root", type=Path, default=Path.cwd())
@@ -310,6 +356,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--fail-on-warning", action="store_true")
     parser.add_argument("--notify-on-warning", action="store_true")
     parser.add_argument("--notify-on-failure", action="store_true")
+    parser.add_argument(
+        "--record-db",
+        action="store_true",
+        help="Record samples into Supabase uptime_checks for the T778 SLA views.",
+    )
     parser.add_argument(
         "--slack-webhook-url",
         default=None,
@@ -340,6 +391,9 @@ def main(argv: list[str] | None = None, env: dict[str, str] | None = None) -> in
         f"warning={summary['warning']} failed={summary['failed']}"
     )
     print(f"[*] Report: {report_path}")
+
+    if args.record_db:
+        record_results_to_db(results, dict(env))
 
     should_notify = (
         (summary["failed"] and args.notify_on_failure)
