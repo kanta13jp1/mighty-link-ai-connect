@@ -1,6 +1,6 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-07-05T17:50:31+09:00
+Generated: 2026-07-05T18:02:40+09:00
 Notebook: `4934c12b-b270-4739-97a1-b04b5b84eaaf`
 Status: `source_sync_ready`
 
