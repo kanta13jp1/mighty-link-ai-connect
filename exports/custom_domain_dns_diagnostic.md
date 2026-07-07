@@ -1,6 +1,6 @@
 # Custom Domain DNS Diagnostic
 
-- Generated: 2026-07-04T04:25:54Z
+- Generated: 2026-07-07T11:41:44Z
 - Domain: `mightylink-app.com`
 - Status: `ready_for_uptime_recheck`
 - Blockers: none
@@ -15,7 +15,7 @@
 - registration: 2026-06-13T02:26:53Z
 - expiration: 2027-06-13T02:26:53Z
 - last changed: 2026-07-04T04:25:31Z
-- last update of RDAP database: 2026-07-04T04:25:36Z
+- last update of RDAP database: 2026-07-07T11:41:35Z
 
 ## DNS Summary
 

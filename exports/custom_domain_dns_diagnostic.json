@@ -2,7 +2,7 @@
   "task_id": "T856",
   "parent_task_id": "T855",
   "domain": "mightylink-app.com",
-  "generated_at_utc": "2026-07-04T04:25:54Z",
+  "generated_at_utc": "2026-07-07T11:41:44Z",
   "rdap_error": null,
   "rdap": {
     "objectClassName": "domain",
@@ -119,7 +119,7 @@
       },
       {
         "eventAction": "last update of RDAP database",
-        "eventDate": "2026-07-04T04:25:36Z"
+        "eventDate": "2026-07-07T11:41:35Z"
       }
     ],
     "secureDNS": {
@@ -196,70 +196,70 @@
       "server": "8.8.8.8",
       "query_type": "NS",
       "returncode": 0,
-      "output": "Server:  dns.google\nAddress:  8.8.8.8\n\nmightylink-app.com\tnameserver = 04.dnsv.jp\nmightylink-app.com\tnameserver = 01.dnsv.jp\nmightylink-app.com\tnameserver = 02.dnsv.jp\nmightylink-app.com\tnameserver = 03.dnsv.jp\nNon-authoritative answer:",
+      "output": "�T�[�o�[:  dns.google\nAddress:  8.8.8.8\n\nmightylink-app.com\tnameserver = 04.dnsv.jp\nmightylink-app.com\tnameserver = 01.dnsv.jp\nmightylink-app.com\tnameserver = 02.dnsv.jp\nmightylink-app.com\tnameserver = 03.dnsv.jp\n�����̂Ȃ���:",
       "nxdomain": false
     },
     {
       "server": "8.8.8.8",
       "query_type": "SOA",
       "returncode": 0,
-      "output": "Server:  dns.google\nAddress:  8.8.8.8\n\nmightylink-app.com\n\tprimary name server = 01.dnsv.jp\n\tresponsible mail addr = hostmaster.dnsv.jp\n\tserial  = 1781318707\n\trefresh = 3600 (1 hour)\n\tretry   = 900 (15 mins)\n\texpire  = 604800 (7 days)\n\tdefault TTL = 300 (5 mins)\nNon-authoritative answer:",
+      "output": "�T�[�o�[:  dns.google\nAddress:  8.8.8.8\n\nmightylink-app.com\n\tprimary name server = 01.dnsv.jp\n\tresponsible mail addr = hostmaster.dnsv.jp\n\tserial  = 1781318707\n\trefresh = 3600 (1 hour)\n\tretry   = 900 (15 mins)\n\texpire  = 604800 (7 days)\n\tdefault TTL = 300 (5 mins)\n�����̂Ȃ���:",
       "nxdomain": false
     },
     {
       "server": "8.8.8.8",
       "query_type": "A",
       "returncode": 0,
-      "output": "Server:  dns.google\nAddress:  8.8.8.8\n\nName:    mightylink-app.com\nAddress:  199.36.158.100\nNon-authoritative answer:",
+      "output": "�T�[�o�[:  dns.google\nAddress:  8.8.8.8\n\n���O:    mightylink-app.com\nAddress:  199.36.158.100\n�����̂Ȃ���:",
       "nxdomain": false
     },
     {
       "server": "8.8.8.8",
       "query_type": "AAAA",
       "returncode": 0,
-      "output": "Server:  dns.google\nAddress:  8.8.8.8\n\nName:    mightylink-app.com",
+      "output": "�T�[�o�[:  dns.google\nAddress:  8.8.8.8\n\n���O:    mightylink-app.com",
       "nxdomain": false
     },
     {
       "server": "8.8.8.8",
       "query_type": "TXT",
       "returncode": 0,
-      "output": "Server:  dns.google\nAddress:  8.8.8.8\n\nmightylink-app.com\ttext =\n\n\t\"hosting-site=mighty-link-ai-connect-13d22\"\nNon-authoritative answer:",
+      "output": "�T�[�o�[:  dns.google\nAddress:  8.8.8.8\n\nmightylink-app.com\ttext =\n\n\t\"hosting-site=mighty-link-ai-connect-13d22\"\n�����̂Ȃ���:",
       "nxdomain": false
     },
     {
       "server": "1.1.1.1",
       "query_type": "NS",
       "returncode": 0,
-      "output": "Server:  one.one.one.one\nAddress:  1.1.1.1\n\nmightylink-app.com\tnameserver = 01.dnsv.jp\nmightylink-app.com\tnameserver = 02.dnsv.jp\nmightylink-app.com\tnameserver = 03.dnsv.jp\nmightylink-app.com\tnameserver = 04.dnsv.jp\nNon-authoritative answer:",
+      "output": "�T�[�o�[:  one.one.one.one\nAddress:  1.1.1.1\n\nmightylink-app.com\tnameserver = 01.dnsv.jp\nmightylink-app.com\tnameserver = 02.dnsv.jp\nmightylink-app.com\tnameserver = 03.dnsv.jp\nmightylink-app.com\tnameserver = 04.dnsv.jp\n�����̂Ȃ���:",
       "nxdomain": false
     },
     {
       "server": "1.1.1.1",
       "query_type": "SOA",
       "returncode": 0,
-      "output": "Server:  one.one.one.one\nAddress:  1.1.1.1\n\nmightylink-app.com\n\tprimary name server = 01.dnsv.jp\n\tresponsible mail addr = hostmaster.dnsv.jp\n\tserial  = 1781318707\n\trefresh = 3600 (1 hour)\n\tretry   = 900 (15 mins)\n\texpire  = 604800 (7 days)\n\tdefault TTL = 300 (5 mins)\nNon-authoritative answer:",
+      "output": "�T�[�o�[:  one.one.one.one\nAddress:  1.1.1.1\n\nmightylink-app.com\n\tprimary name server = 01.dnsv.jp\n\tresponsible mail addr = hostmaster.dnsv.jp\n\tserial  = 1781318707\n\trefresh = 3600 (1 hour)\n\tretry   = 900 (15 mins)\n\texpire  = 604800 (7 days)\n\tdefault TTL = 300 (5 mins)\n�����̂Ȃ���:",
       "nxdomain": false
     },
     {
       "server": "1.1.1.1",
       "query_type": "A",
       "returncode": 0,
-      "output": "Server:  one.one.one.one\nAddress:  1.1.1.1\n\nName:    mightylink-app.com\nAddress:  199.36.158.100\nNon-authoritative answer:",
+      "output": "�T�[�o�[:  one.one.one.one\nAddress:  1.1.1.1\n\n���O:    mightylink-app.com\nAddress:  199.36.158.100\n�����̂Ȃ���:",
       "nxdomain": false
     },
     {
       "server": "1.1.1.1",
       "query_type": "AAAA",
       "returncode": 0,
-      "output": "Server:  one.one.one.one\nAddress:  1.1.1.1\n\nName:    mightylink-app.com",
+      "output": "�T�[�o�[:  one.one.one.one\nAddress:  1.1.1.1\n\n���O:    mightylink-app.com",
       "nxdomain": false
     },
     {
       "server": "1.1.1.1",
       "query_type": "TXT",
       "returncode": 0,
-      "output": "Server:  one.one.one.one\nAddress:  1.1.1.1\n\nmightylink-app.com\ttext =\n\n\t\"hosting-site=mighty-link-ai-connect-13d22\"\nNon-authoritative answer:",
+      "output": "�T�[�o�[:  one.one.one.one\nAddress:  1.1.1.1\n\nmightylink-app.com\ttext =\n\n\t\"hosting-site=mighty-link-ai-connect-13d22\"\n�����̂Ȃ���:",
       "nxdomain": false
     }
   ],

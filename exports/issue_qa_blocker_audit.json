@@ -1,17 +1,17 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-04T07:50:47Z",
-  "issue_total": 157,
-  "qa_total": 123,
+  "generated_at": "2026-07-07T11:47:27Z",
+  "issue_total": 161,
+  "qa_total": 126,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
     "open": 3,
-    "resolved": 133,
+    "resolved": 137,
     "transferred": 18
   },
   "qa_status_counts": {
-    "回答済": 84,
+    "回答済": 87,
     "想定済": 39
   },
   "issue_blocker_count": 3,
@@ -26,20 +26,20 @@
       "related_issue": "#151"
     },
     {
-      "id": "R112",
-      "severity": "MED",
-      "category": "release",
-      "title": "有償公開延期に伴うpublic_paid_launchゲートの再定義が必要",
-      "related_wbs": "T833;T849;T861;T862;T863",
-      "related_issue": "#153;#154;#155"
-    },
-    {
       "id": "R113",
       "severity": "HIGH",
       "category": "external-dependency",
       "title": "営業メール接続情報の受領待ちが7/8社内GAのクリティカルパスに影響するリスク",
       "related_wbs": "T836;T817;T817_7;T845;T849;T819;T864",
       "related_issue": "#156"
+    },
+    {
+      "id": "R116",
+      "severity": "HIGH",
+      "category": "operations",
+      "title": "Supabase Daily Backup CIが一度も成功しておらず、本番DBの自動バックアップが存在しないリスク",
+      "related_wbs": "T870;T852;T833;T849",
+      "related_issue": "#162"
     }
   ],
   "qa_blockers": []
