@@ -85,6 +85,33 @@ T769は以下を満たしたら完了とする。
 - `docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md`、`data/WBS.tsv`、`data/qa_tracker.tsv` に古いモデルを現行既定として扱う記述が残っていない。
 - `docs/WBS.md` が `data/WBS.tsv` から再生成されている。
 
+## T780 本番切り替え手順（rollout / rollback）
+
+T769で標準化した方針に基づき、T780としてモデル移行テストと本番切り替え手順を確定した。移行評価ハーネスは `scripts/evaluate_gemini_model_migration.py`、証跡は `exports/gemini_model_migration_eval.{json,md}`。
+
+### 2026-07-07 移行判定
+
+- 公式Docs（models一覧・最終更新 2026-06-30 UTC）を再確認し、`Gemini 3.5 Flash` と `Gemini 3.1 Flash-Lite` がGemini 3系stable、`Gemini 2.0 Flash / 2.0 Flash-Lite` は **Shut down** であることを確認した。
+- 本番既定は **`gemini-3.5-flash` を維持**する（stable最上位・シャットダウン対象外）。シャットダウン済み2.0系は `blocked_model_patterns` で拒否される。
+- 移行評価ハーネスの10仮説はすべてPASS。構造化出力契約（`response_schema=EmailParseResultJSON`）はモデル非依存で、候補stableモデル間で互換であることを確認した。
+- 精度/latency/costのライブ比較は `GEMINI_API_KEY` を設定して `--live` で取得する。本番相当の実値取得は運用者/Codexレーンが実施し、結果を本Runbookとexportsへ追記する。
+
+### rollout 手順（本番切り替え時）
+
+1. 候補モデルを `data/gemini_model_policy.json` の `evaluation_only_models` に入れ、`production_default` は変更しない。
+2. `python scripts/evaluate_gemini_model_migration.py --live`（`GEMINI_API_KEY` 設定）で精度・latency・cost・schema準拠を候補モデル横断で取得する。
+3. QA表へ「なぜ切り替える/切り替えないか」を記録し、Go/No-Goで承認を得る。
+4. 承認後、`data/gemini_model_policy.json` の `production_default`、`src/app.py` の `GEMINI_MODEL` 既定値、`src/sales_email_parser.py` の `DEFAULT_GEMINI_MODEL` を **同一コミット**で更新する（本番既定値の黙示的なズレを防ぐ）。
+5. `python scripts/audit_gemini_model_policy.py`、`python scripts/evaluate_gemini_model_migration.py --fail-on-attention`、対象pytest、`python scripts/verify_public_demo.py` を通す。
+6. デプロイ後、`GEMINI_MODEL` を一時的に環境変数で新モデルへ向けたカナリア確認を行う（コード既定は据え置きのまま検証可能）。
+
+### rollback（ロールバック）手順（切り替え後に問題が出た場合）
+
+1. まず環境変数 `GEMINI_MODEL` を直前の安定モデル（例: `gemini-3.5-flash`）へ設定し、再デプロイなしで即時に挙動を戻す（H4で上書き反映を検証済み）。
+2. 恒久復旧はコード既定値・`production_default` を旧モデルへ戻す**同一コミット**のrevertで行う。
+3. `GEMINI_API_KEY` 未設定/API失敗時はdeterministic fallbackが自動的に受け皿となるため、モデル起因の全面停止は発生しない（H6で検証済み）。
+4. rollback事由と再発防止をQA表・課題管理表へ記録する。
+
 ## 公式ドキュメント確認メモ
 
 - Google Gemini models: https://ai.google.dev/gemini-api/docs/models

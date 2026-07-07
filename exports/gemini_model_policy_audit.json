@@ -1,10 +1,10 @@
 {
   "audit": "gemini_model_policy",
   "status": "ok",
-  "checked_at": "2026-07-04",
+  "checked_at": "2026-07-07",
   "policy": {
     "policy_id": "GEMINI_MODEL_POLICY_2026_07_01",
-    "checked_at": "2026-07-01",
+    "checked_at": "2026-07-07",
     "official_docs": {
       "models_url": "https://ai.google.dev/gemini-api/docs/models",
       "context_caching_url": "https://ai.google.dev/gemini-api/docs/caching",
@@ -39,6 +39,9 @@
       "scripts",
       ".github"
     ],
+    "scan_exclude_paths": [
+      "scripts/evaluate_gemini_model_migration.py"
+    ],
     "current_truth_paths": [
       "docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md",
       "data/WBS.tsv",
@@ -65,7 +68,9 @@
     ],
     "notes": [
       "Production defaults must use a specific stable Gemini model string, not a latest alias.",
-      "Preview models are allowed only for evaluation tasks such as T780 until Go/No-Go approval."
+      "Preview models are allowed only for evaluation tasks such as T780 until Go/No-Go approval.",
+      "scan_exclude_paths lists files that intentionally reference blocked/shutdown models as test fixtures (T780 migration harness); they must not be treated as runtime usage.",
+      "2026-07-07 (T780): docs (models last-updated 2026-06-30) reconfirmed. gemini-2.0 family is shut down; production stays on gemini-3.5-flash. See scripts/evaluate_gemini_model_migration.py and docs/GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md."
     ]
   },
   "summary": {
@@ -85,7 +90,7 @@
   "runtime_findings": [
     {
       "path": "src/app.py",
-      "line": 361,
+      "line": 362,
       "model": "gemini-3.5-flash",
       "context": "USER_EMAIL = \"k-umezawa@ml-mightylink.com\" GEMINI_MODEL = os.environ.get(\"GEMINI_MODEL\", \"gemini-3.5-flash\") GEMINI_DAILY_CALL_LIMIT = env_int(\"GEMINI_DAILY_CALL_LIMIT\", 20, 0, 100",
       "severity": "ok",

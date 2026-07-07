@@ -58,7 +58,8 @@ def is_text_file(path: Path) -> bool:
     return path.suffix.lower() in TEXT_EXTENSIONS or path.name in {"AGENTS.md", "CLAUDE.md"}
 
 
-def iter_files(root: Path, roots: Iterable[str]) -> Iterable[Path]:
+def iter_files(root: Path, roots: Iterable[str], exclude: Iterable[str] = ()) -> Iterable[Path]:
+    exclude_set = {Path(item).as_posix() for item in exclude}
     for item in roots:
         base = root / item
         if not base.exists():
@@ -69,6 +70,8 @@ def iter_files(root: Path, roots: Iterable[str]) -> Iterable[Path]:
             continue
         for path in base.rglob("*"):
             if any(part in SKIP_DIRS for part in path.parts):
+                continue
+            if rel_path(path, root) in exclude_set:
                 continue
             if path.is_file() and is_text_file(path):
                 yield path
@@ -211,7 +214,7 @@ def build_report(
         }
 
     runtime_findings = []
-    for path in iter_files(root, policy.get("active_scan_roots", [])):
+    for path in iter_files(root, policy.get("active_scan_roots", []), policy.get("scan_exclude_paths", [])):
         for ref in collect_model_references(path, root):
             finding = classify_runtime_reference(ref, policy)
             if finding:

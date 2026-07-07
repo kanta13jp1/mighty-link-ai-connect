@@ -1,0 +1,85 @@
+{
+  "evaluation_id": "GEMINI_MODEL_MIGRATION_T780",
+  "checked_at": "2026-07-07",
+  "production_default": "gemini-3.5-flash",
+  "official_docs": {
+    "models_url": "https://ai.google.dev/gemini-api/docs/models",
+    "context_caching_url": "https://ai.google.dev/gemini-api/docs/caching",
+    "models_last_updated_utc": "2026-06-30"
+  },
+  "shutdown_models_confirmed": [
+    "gemini-2.0-flash",
+    "gemini-2.0-flash-lite",
+    "gemini-3-pro-preview",
+    "gemini-3.1-flash-lite-preview"
+  ],
+  "status": "ok",
+  "hypotheses_total": 10,
+  "hypotheses_passed": 10,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "hypothesis": "本番既定モデルは公式docs(2026-06-30更新)のstable/GA最上位 gemini-3.5-flash である",
+      "passed": true,
+      "detail": "production_default=gemini-3.5-flash / stable先頭=gemini-3.5-flash"
+    },
+    {
+      "id": "H2",
+      "hypothesis": "シャットダウン済みモデル(2.0 Flash/Flash-Lite等)はblocked_model_patternsで拒否される",
+      "passed": true,
+      "detail": "shutdown拒否={'gemini-2.0-flash': True, 'gemini-2.0-flash-lite': True, 'gemini-3-pro-preview': True, 'gemini-3.1-flash-lite-preview': True}"
+    },
+    {
+      "id": "H3",
+      "hypothesis": "本番コード(app.py, sales_email_parser.py)の既定モデルがpolicy production_defaultと一致",
+      "passed": true,
+      "detail": "app.py=gemini-3.5-flash / parser=gemini-3.5-flash / policy=gemini-3.5-flash"
+    },
+    {
+      "id": "H4",
+      "hypothesis": "GEMINI_MODEL環境変数で本番既定を上書きでき、値がパイプラインに反映される",
+      "passed": true,
+      "detail": "env上書き解決=gemini-2.5-flash / parser.model_name=gemini-2.5-flash"
+    },
+    {
+      "id": "H5",
+      "hypothesis": "latest aliasは本番コードで未使用かつpolicyでブロックされる(hot-swap回避)",
+      "passed": true,
+      "detail": "alias拒否=True / runtime使用=なし"
+    },
+    {
+      "id": "H6",
+      "hypothesis": "API未設定時のdeterministic fallbackがEmailParseResultJSONスキーマ準拠出力を返す(モデル非依存の可用性)",
+      "passed": true,
+      "detail": "project→project(OK); talent→talent(OK); other→other(OK)"
+    },
+    {
+      "id": "H7",
+      "hypothesis": "構造化出力契約(response_schema=EmailParseResultJSON)はモデル非依存で候補モデル間互換",
+      "passed": true,
+      "detail": "response_schema固定フィールド=['category', 'confidence', 'evidence_excerpt', 'project', 'talent']"
+    },
+    {
+      "id": "H8",
+      "hypothesis": "同一入力へのfallback出力は決定的で、移行前後の回帰比較が可能",
+      "passed": true,
+      "detail": "再実行一致=True"
+    },
+    {
+      "id": "H9",
+      "hypothesis": "本番切り替え手順(rollout/rollback、既定値は同一コミットで変更)がRunbookに明記されている",
+      "passed": true,
+      "detail": "手順書マーカー={'本番切り替え手順': True, 'ロールバック': True, '同一コミット': True}"
+    },
+    {
+      "id": "H10",
+      "hypothesis": "policyのstable候補モデルは全てシャットダウン対象外で、監査上クリーン",
+      "passed": true,
+      "detail": "stable候補=['gemini-3.5-flash', 'gemini-3.1-flash-lite', 'gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-2.5-pro'] / ブロック該当=なし"
+    }
+  ],
+  "live_comparison": {
+    "executed": false,
+    "reason": "--live未指定"
+  }
+}

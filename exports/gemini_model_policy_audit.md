@@ -1,7 +1,7 @@
 # Gemini Model Policy Audit
 
 - Status: `ok`
-- Checked at: 2026-07-04
+- Checked at: 2026-07-07
 - Production default: `gemini-3.5-flash`
 - App default: `gemini-3.5-flash`
 - Blockers: 0
@@ -21,7 +21,7 @@ No blockers.
 
 | Path | Line | Model | Severity | Reason |
 | --- | ---: | --- | --- | --- |
-| src/app.py | 361 | `gemini-3.5-flash` | ok | stable_production_model |
+| src/app.py | 362 | `gemini-3.5-flash` | ok | stable_production_model |
 | src/sales_email_parser.py | 13 | `gemini-3.5-flash` | ok | stable_production_model |
 | scripts/sync_docs_to_notebooklm.py | 964 | `gemini-3.5-flash` | ok | stable_production_model |
 

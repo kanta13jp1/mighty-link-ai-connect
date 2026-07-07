@@ -67,6 +67,33 @@ def test_latest_alias_is_blocked_in_runtime(tmp_path):
     assert any("blocked_by_pattern" in finding["reason"] for finding in report["blockers"])
 
 
+def test_scan_exclude_paths_skips_test_fixture_files(tmp_path):
+    # A file that intentionally references blocked/shutdown models as fixtures
+    # (e.g. the T780 migration harness) must not be flagged when excluded.
+    policy = json.loads((write_policy(tmp_path)).read_text(encoding="utf-8"))
+    policy["scan_exclude_paths"] = ["scripts/migration_harness.py"]
+    policy_path = tmp_path / "data" / "gemini_model_policy.json"
+    write(policy_path, json.dumps(policy, ensure_ascii=False))
+
+    write(
+        tmp_path / "src" / "app.py",
+        'GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")\n',
+    )
+    write(tmp_path / "scripts" / "migration_harness.py", 'SHUTDOWN = ["gemini-2.0-flash"]\n')
+    write(tmp_path / "docs" / "current.md", "現行既定モデルは `gemini-3.5-flash` です。\n")
+
+    report = audit.build_report(tmp_path, policy_path, "2026-07-01")
+
+    assert report["status"] == "ok"
+    assert report["summary"]["blockers"] == 0
+
+    # Without the exclusion the same file must be flagged as a blocker.
+    policy.pop("scan_exclude_paths")
+    write(policy_path, json.dumps(policy, ensure_ascii=False))
+    report2 = audit.build_report(tmp_path, policy_path, "2026-07-01")
+    assert report2["status"] == "blocked"
+
+
 def test_current_truth_doc_cannot_mark_old_model_as_current(tmp_path):
     policy_path = write_policy(tmp_path)
     write(
