@@ -46,10 +46,16 @@ def run_nslookup(domain: str, query_type: str, server: str, timeout_seconds: int
             command,
             capture_output=True,
             text=True,
+            # Windows nslookup emits locale-encoded output (e.g. CP932 on Japanese
+            # Windows); decoding must never crash the diagnostic (R118).
+            encoding="utf-8",
+            errors="replace",
             timeout=timeout_seconds,
             check=False,
         )
-        output = "\n".join(part for part in [completed.stdout.strip(), completed.stderr.strip()] if part)
+        stdout = (completed.stdout or "").strip()
+        stderr = (completed.stderr or "").strip()
+        output = "\n".join(part for part in [stdout, stderr] if part)
         return {
             "server": server,
             "query_type": query_type,

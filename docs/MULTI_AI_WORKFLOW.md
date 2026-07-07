@@ -125,6 +125,7 @@ python scripts/upload_notebooklm_docs_to_drive.py
 
 ## 今回の反映
 
+- 2026-07-07（T833/T875）: 10仮説検証で社内GA Go/No-Go判定（条件付きGo・案A）を実施し、判定チェックリストのDNS診断スクリプト文字コード不具合（R118）を修正した。公式Docs refreshの要点: Claude Fable 5 GA（`claude-fable-5`・2026-06-09）/ Claude Opus 4.1 は 2026-08-05 リタイア予定 / Sonnet 5 導入価格は 2026-08-31 まで / 旧 `docs.anthropic.com` は `platform.claude.com` へ移転。Gemini 安定版最上位は 3.5 Flash（2.0 Flash 系はシャットダウン対象 → T780 で確認）。Stripe API は 2026-06-24.dahlia でレガシー従量課金 Billing・`redirectToCheckout()` を削除（T791 実装時は新 Billing/Checkout API 前提・QA-97）。Firebase Studio は deprecated。Claude Code は Routines / Channels / `--teleport` / WinGet 配布が追加。
 - T827として、毎セッションの公式Docs確認対象と3ツール運用ゲートを再整備した。
 - T805として、非破壊の外部ペネトレーション疑似診断を実施し、High 0 / secret-like値露出 0 を確認した。
 - T835として、Firebase Hosting本番URLにCSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTSを設定し、R94/SEC-008を解決した。
