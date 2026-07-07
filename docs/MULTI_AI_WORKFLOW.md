@@ -125,6 +125,7 @@ python scripts/upload_notebooklm_docs_to_drive.py
 
 ## 今回の反映
 
+- 2026-07-08（T778_1）: SLA計測ビューのオフライン検証（列ドリフトガード＋閾値ロジック10仮説）を完遂。公式Docs refreshの要点: **Stripe usage-based billingは新規実装がMetronome推奨へ転換し、Billing Metersはlegacy/メンテナンスモード扱い**（T791実装時＝T862有償化判断後は、Billing Meters前提を見直しMetronome移行ガイドを確認する。QA-97/QA-101関連）。Gemini 2.0 Flashは正式に「Shut down」で移行必須（T780の判定を再確認、本番はgemini-3.5-flash維持）。Supabase RLSはポリシーを`(select auth.uid())`でラップし対象列にインデックス推奨、PG15+ビューは`security_invoker=true`でRLS継承。Firebase HostingはSSRを次世代App Hostingへ誘導（静的/SPAは従来Hosting継続）。
 - 2026-07-07（T833/T875）: 10仮説検証で社内GA Go/No-Go判定（条件付きGo・案A）を実施し、判定チェックリストのDNS診断スクリプト文字コード不具合（R118）を修正した。公式Docs refreshの要点: Claude Fable 5 GA（`claude-fable-5`・2026-06-09）/ Claude Opus 4.1 は 2026-08-05 リタイア予定 / Sonnet 5 導入価格は 2026-08-31 まで / 旧 `docs.anthropic.com` は `platform.claude.com` へ移転。Gemini 安定版最上位は 3.5 Flash（2.0 Flash 系はシャットダウン対象 → T780 で確認）。Stripe API は 2026-06-24.dahlia でレガシー従量課金 Billing・`redirectToCheckout()` を削除（T791 実装時は新 Billing/Checkout API 前提・QA-97）。Firebase Studio は deprecated。Claude Code は Routines / Channels / `--teleport` / WinGet 配布が追加。
 - T827として、毎セッションの公式Docs確認対象と3ツール運用ゲートを再整備した。
 - T805として、非破壊の外部ペネトレーション疑似診断を実施し、High 0 / secret-like値露出 0 を確認した。
