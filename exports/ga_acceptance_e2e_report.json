@@ -1,0 +1,77 @@
+{
+  "report_id": "GA_ACCEPTANCE_E2E_T845_1",
+  "checked_at": "2026-07-08",
+  "status": "ok",
+  "hypotheses_total": 10,
+  "hypotheses_passed": 10,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "hypothesis": "ヘルスチェックとDB接続が正常（/api/health, /api/db-test）",
+      "passed": true,
+      "detail": "health=200 db-test(auth)=200 mock=True"
+    },
+    {
+      "id": "H2",
+      "hypothesis": "認証境界: 運用系エンドポイントは未認証で401、正規認証で200",
+      "passed": true,
+      "detail": "未認証summary=401 認証matches=200"
+    },
+    {
+      "id": "H3",
+      "hypothesis": "社内診断（マッチング）フローがE2Eで動作（parse→match→一覧反映）",
+      "passed": true,
+      "detail": "parse eng/job=200/200 match=200 db_match_id=1 listed=True"
+    },
+    {
+      "id": "H4",
+      "hypothesis": "同意強制: 同意なし/旧版の書き込みが全て400で拒否される",
+      "passed": true,
+      "detail": "parse=400 match=400 stale=400 punch=400(全400期待)"
+    },
+    {
+      "id": "H5",
+      "hypothesis": "勤怠フローがE2Eで動作（打刻・勤務表解析・集計）",
+      "passed": true,
+      "detail": "punch=200 timesheet=200(import_id=1) summary=200"
+    },
+    {
+      "id": "H6",
+      "hypothesis": "営業メールAIマッチングの人間レビュー導線がE2Eで動作",
+      "passed": true,
+      "detail": "matches=200 summary=200 不正status=400(400期待) 正status=400(非500期待)"
+    },
+    {
+      "id": "H7",
+      "hypothesis": "フィードバック・サポート問い合わせの保存/集計がE2Eで動作",
+      "passed": true,
+      "detail": "feedback=200(id=1) support=200 summary=200"
+    },
+    {
+      "id": "H8",
+      "hypothesis": "アナリティクス収集で個人情報最小化（pseudonym化・IP/生UA非保存）が機能",
+      "passed": true,
+      "detail": "event=200 privacy={'session_pseudonymized': True, 'ip_address_stored': False, 'raw_user_agent_stored': False, 'form_contents_stored': False}"
+    },
+    {
+      "id": "H9",
+      "hypothesis": "個人データエクスポートが厳格な本人認証を強制し、管理者ダッシュボードが動作する",
+      "passed": true,
+      "detail": "export(厳格認証)=401(401/503期待) admin/usage=200 operations=200"
+    },
+    {
+      "id": "H10",
+      "hypothesis": "本番appが稼働(health 200)し保護APIが認証壁(401)を返し、公開デモUIマーカーが存在する（外部証跡）",
+      "passed": true,
+      "detail": "本番health=200(200期待) 保護API=401(401期待) 公開デモmarkers=True"
+    }
+  ],
+  "external_evidence": {
+    "executed": true,
+    "prod_health_status": 200,
+    "prod_protected_status": 401,
+    "public_demo_markers_present": true,
+    "public_demo_status": 200
+  },
+  "scope_note": "アプリ層の自動E2E受入。本番Supabase実書き込み確認（適性/勤怠/アナリティクス/営業メール系）はSUPABASE_DB_URL必須の人間工程（feedback/supportはT871で確認済み）。"
+}

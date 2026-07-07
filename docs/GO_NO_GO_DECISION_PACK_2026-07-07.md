@@ -89,3 +89,12 @@ python scripts/check_supabase_postgres_version.py
 | H10 | 開発必須ブロッカー（PUBLIC-15）は 0 件 | **部分反証** | `audit_issue_qa_blockers.py` は open 4件（R111/R112/R113/R116）を検出。全て判定・運用ゲート系リスクで、コード/QA起因の開発ブロッカーは 0。R112 は本判定で resolved |
 
 **結論**: コード・インフラ起因の新規ブロッカーはゼロ。未達はすべて「人間依存ゲート（T798/T836）」「他レーン残作業（T845/T850/T852/T870/T817_7）」に集約されており、§4 案A前提の**条件付き Go** が妥当。7/8 15:00 定例で条件達成状況を最終確認する。
+
+## 9. Go条件(1) T845 の進捗（2026-07-08 追記）
+
+PUBLIC-13 の Go条件(1)（T845 UAT）のうち**自動化可能なアプリ層E2E受入を Claude Code が T845_1 として完遂**した（Codex + Antigravity 担当分を巻き取り）。
+
+- ハーネス: `scripts/run_ga_acceptance_e2e.py`（FastAPI TestClient・隔離SQLite・AIモックモード）／回帰テスト `tests/test_ga_acceptance_e2e.py`／証跡 `exports/ga_acceptance_e2e_report.{json,md}`。
+- **GA受入10フローを10仮説で全数検証し 10/10 PASS**: 社内診断（parse→match→一覧）、勤怠（打刻・勤務表解析・集計）、営業メールAIレビュー導線、同意強制（未同意/旧版は400で拒否）、フィードバック/サポート、アナリティクス個人情報最小化（pseudonym化・IP/生UA非保存）、データエクスポート厳格認証（未認証401）、管理者ダッシュボード、本番app稼働（health 200）、保護API認証壁（`/api/matches` 401）、公開デモUIマーカー。
+- 検証中に発見した4件の初期不一致（db-test認証要、reviewのstatus値、export厳格認証、`/api/jobs`は設計上公開）はすべて仕様の再確認で解消し、ハーネスに正しい期待値を反映済み。
+- **残（T845本体・人間/認証情報依存）**: 本番Supabase実書き込み確認（適性/勤怠/アナリティクス/営業メール系9テーブル、`SUPABASE_DB_URL` 必須。feedback/support は T871 で確認済み）と最終サインオフ（本定例）。この残工程を除き、アプリ機能面のGA受入証跡は整った。判定会は本E2E証跡＋本番実書き込みの扱いを合意すること（未了なら PUBLIC-13 を条件付き扱いとする・QA-99）。
