@@ -1,0 +1,105 @@
+{
+  "report_id": "ACCESS_INVENTORY_AUDIT_T850_1",
+  "checked_at": "2026-07-08",
+  "status": "ok",
+  "hypotheses_total": 10,
+  "hypotheses_passed": 10,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "hypothesis": "移管runbookのクリティカル領域が全て棚卸しに存在する",
+      "passed": true,
+      "detail": "必須8件 / 欠落=なし"
+    },
+    {
+      "id": "H2",
+      "hypothesis": "全システムに一次所有者(primary_owner)が定義されている",
+      "passed": true,
+      "detail": "未定義=なし"
+    },
+    {
+      "id": "H3",
+      "hypothesis": "全クリティカルシステムにBreak-glass/復旧docsが指定されている",
+      "passed": true,
+      "detail": "未指定=なし"
+    },
+    {
+      "id": "H4",
+      "hypothesis": "全システムにMFA状態が記録されている(enabled/unknown/n_a)",
+      "passed": true,
+      "detail": "MFA状態が不正/未記録=なし(許可=['enabled', 'n_a', 'unknown'])"
+    },
+    {
+      "id": "H5",
+      "hypothesis": "移管状態(transfer_state)の値が妥当である",
+      "passed": true,
+      "detail": "移管状態が不正=なし(許可=['company_managed', 'migrating', 'n_a', 'personal'])"
+    },
+    {
+      "id": "H6",
+      "hypothesis": "criticalityの値が妥当である",
+      "passed": true,
+      "detail": "criticality不正=なし"
+    },
+    {
+      "id": "H7",
+      "hypothesis": "バス係数=1の単一障害点(backup未設定のクリティカル)を検出できる",
+      "passed": true,
+      "detail": "単一障害点(backup未設定のcritical)=['domain_onamae', 'firebase_hosting', 'firebase_functions', 'gcp_iam_billing', 'supabase', 'github_repo', 'github_actions_secrets', 'google_workspace']（8件・T823/リハーサルの対象）"
+    },
+    {
+      "id": "H8",
+      "hypothesis": "secretを持つシステムが全て復旧/rotation手順に紐づく",
+      "passed": true,
+      "detail": "secret保持システム6件が全て復旧/rotation docsに紐づく"
+    },
+    {
+      "id": "H9",
+      "hypothesis": "棚卸しが参照するBreak-glass/復旧docsが全て実在する",
+      "passed": true,
+      "detail": "参照docs5種 / 実在しない=なし"
+    },
+    {
+      "id": "H10",
+      "hypothesis": "棚卸しTSVの整合性(列数・重複ID)が保たれている",
+      "passed": true,
+      "detail": "列数=12(12期待) 行数=16 重複ID=なし"
+    }
+  ],
+  "summary": {
+    "systems_total": 16,
+    "critical_total": 8,
+    "spof_systems": [
+      "domain_onamae",
+      "firebase_hosting",
+      "firebase_functions",
+      "gcp_iam_billing",
+      "supabase",
+      "github_repo",
+      "github_actions_secrets",
+      "google_workspace"
+    ],
+    "spof_count": 8,
+    "company_managed": [
+      "google_workspace",
+      "notebooklm"
+    ],
+    "personal_pending_transfer": [
+      "domain_onamae",
+      "firebase_hosting",
+      "firebase_functions",
+      "gcp_iam_billing",
+      "supabase",
+      "github_repo",
+      "github_actions_secrets",
+      "stripe",
+      "claude_code",
+      "codex",
+      "antigravity",
+      "slack",
+      "notion",
+      "obsidian"
+    ]
+  },
+  "note": "単一障害点(SPOF)はバス係数=1のクリティカルシステムで、現状(移管前)は想定内。T823会社移管と引継ぎリハーサルでbackup所有者を確立して解消する。"
+}

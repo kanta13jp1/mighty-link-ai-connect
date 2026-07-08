@@ -1,0 +1,17 @@
+system_id	category	description	primary_owner	backup_owner	mfa_required	mfa_status	criticality	transfer_state	secret_bearing	break_glass_doc	notes
+domain_onamae	domain	お名前.com レジストラ（mightylink-app.com）とDNSゾーン	梅澤寛太		yes	unknown	critical	personal	no	docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md	DNS変更権限を複数名で保持する体制が未整備（T823で会社管理へ）。Break-glass=お名前.com管理画面ログインとDNS復旧手順
+firebase_hosting	hosting	Firebase Hosting（本番URL・GitHub Pagesミラー）	梅澤寛太		yes	unknown	critical	personal	no	docs/PRODUCTION_ROLLBACK_RUNBOOK.md	個人アカウント起点。Break-glass=直前releaseへのrollback
+firebase_functions	backend	Firebase Functions / Cloud Run（FastAPIバックエンド）	梅澤寛太		yes	unknown	critical	personal	yes	docs/PRODUCTION_ROLLBACK_RUNBOOK.md	環境変数/secretはFunctions env・Secret Manager。CI/CD認証再構成はT852
+gcp_iam_billing	infra	GCP プロジェクトIAM・Billing	梅澤寛太		yes	unknown	critical	personal	no	docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md	会社Organization配下・会社請求へ移す（T823）。個人Owner依存が単一障害点
+supabase	database	Supabase（PostgreSQL・RLS・Supavisor pooler）	梅澤寛太		yes	unknown	critical	personal	yes	docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md	会社Organizationへproject transfer（T823）。Break-glass=バックアップからの復元（T870でCI復旧）
+github_repo	source	GitHub リポジトリ（コード・Issues・Project・Pages）	梅澤寛太		yes	unknown	critical	personal	no	docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md	会社Organizationへ移管し複数Owner化（T823）。単一Owner依存
+github_actions_secrets	secret	GitHub Actions secrets（GEMINI_API_KEY・SUPABASE_DB_URL・Firebase/GCP・Slack webhook等）	梅澤寛太		yes	unknown	critical	personal	yes	docs/SECRET_ROTATION_RUNBOOK.md	Organization/Environment secretへ再登録し旧値失効（T823）。rotation手順あり
+google_workspace	workspace	Google Workspace（k-umezawa@ml-mightylink.com・Sheets/Calendar/Drive同期）	梅澤寛太		yes	enabled	critical	company_managed	yes	docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md	会社提供アカウントで稼働。OAuthトークン期限切れ時はreauth手順（R121で実証）
+notebooklm	workspace	NotebookLM（会社Googleアカウント・docs同期）	梅澤寛太		yes	enabled	high	company_managed	no	docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md	Workspaceアカウント配下。Break-glass=reauthとdocs再同期
+stripe	billing	Stripe（有料化前・test中心）	梅澤寛太		yes	unknown	high	personal	yes	docs/SECRET_ROTATION_RUNBOOK.md	有償化時に会社名義化（T813/T862）。live/test key・webhook secret分離。本番売上を個人へ紐づけない
+claude_code	dev_tool	Claude Code（開発AI・ドキュメント/レビューレーン）	梅澤寛太		no	n_a	medium	personal	no	docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md	暫定個人アカウント/個人課金。会社契約へ切替（T823）
+codex	dev_tool	VSCode + Codex（バックエンド/自動化レーン）	梅澤寛太		no	n_a	medium	personal	no	docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md	暫定個人アカウント。会社契約へ切替（T823）
+antigravity	dev_tool	Antigravity + Gemini（フロント/多モーダルレーン）	梅澤寛太		no	n_a	medium	personal	no	docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md	暫定個人アカウント。会社契約へ切替（T823）
+slack	integration	Slack（通知・レポート配信）	梅澤寛太		yes	unknown	medium	personal	yes	docs/SECRET_ROTATION_RUNBOOK.md	token/Incoming Webhookは最小scope・漏洩時即時revoke
+notion	integration	Notion（ドキュメント）	梅澤寛太		no	unknown	low	personal	no	docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md	暫定個人アカウント。会社管理へ
+obsidian	integration	Obsidian（ナレッジvault）	梅澤寛太		no	n_a	low	personal	no	docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md	knowledge_flow生成物のvault。会社管理へ
