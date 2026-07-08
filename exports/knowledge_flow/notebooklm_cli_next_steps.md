@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-07T21:06:05+09:00
+Generated: 2026-07-08T15:39:18+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `126`
-- Drive docs uploaded: `3`
-- Drive docs skipped unchanged: `123`
+- Drive docs discovered: `127`
+- Drive docs uploaded: `7`
+- Drive docs skipped unchanged: `120`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
@@ -45,6 +45,7 @@ Generated: 2026-07-07T21:06:05+09:00
 - `docs/DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md`: https://docs.google.com/document/d/1z342WkM3spdRi9nNP17b_A1SYxGgVpYkFtk_WP9K7uI/edit?usp=drivesdk
 - `docs/database.md`: https://docs.google.com/document/d/1WVp_vmYeiCZfFWbCpHNfmwGoUeBADuMjyLySBHrh9bI/edit?usp=drivesdk
 - `docs/DB_MIGRATION_MANAGEMENT_RUNBOOK.md`: https://docs.google.com/document/d/13d9sL_Sle75GqpBTI405P0Z5Owh5ZNVHDLvfsSvOu0U/edit?usp=drivesdk
+- `docs/DB_READ_LOAD_BALANCING_DESIGN.md`: https://docs.google.com/document/d/1mNEOoyq8ZTwED0VzgDKPAeQ_uc2J1oQmoIoAkgI8R-I/edit?usp=drivesdk
 - `docs/DEMO_SECURITY_AND_AUTH_DESIGN.md`: https://docs.google.com/document/d/1C606e1yesSIVlZfOrRjZ_4hkgr4OQQ_axpYjBFvrUEc/edit?usp=drivesdk
 - `docs/DEVELOPMENT_KNOWLEDGE_FLOW.md`: https://docs.google.com/document/d/1SS44DK0H57KFdX4jHDucbYe6PRN2ofUllaaLr5zioYU/edit?usp=drivesdk
 - `docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md`: https://docs.google.com/document/d/1yHVwrsZ_TZyEMa1wSfoxaSv85w7pyPqGP7VZUHTwhQU/edit?usp=drivesdk

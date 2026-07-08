@@ -1,14 +1,15 @@
 {
-  "generated_at_jst": "2026-07-07T21:06:05+09:00",
+  "generated_at_jst": "2026-07-08T15:39:18+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "drive_sync": {
     "force_upload": false,
-    "docs_discovered": 126,
-    "uploaded": 3,
-    "skipped": 123,
+    "docs_discovered": 127,
+    "uploaded": 7,
+    "skipped": 120,
     "action_counts": {
-      "skipped_unchanged": 123,
-      "uploaded_updated": 3
+      "skipped_unchanged": 120,
+      "uploaded_updated": 6,
+      "uploaded_created": 1
     }
   },
   "google_docs": {
@@ -31,7 +32,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-22T00:56:19+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_account_ownership_migration_runbook_md": {
       "source": "docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md",
@@ -51,7 +52,7 @@
       "source_digest": "cecee5a3885032cc3bb595bfd0610460ffa85e1848f7089ecf07c8d49e398710",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-19T14:37:18+09:00"
     },
     "docs_admin_operations_dashboard_runbook_md": {
@@ -73,7 +74,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T10:54:15+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_ai_cost_monitoring_and_quota_design_md": {
       "source": "docs/AI_COST_MONITORING_AND_QUOTA_DESIGN.md",
@@ -93,7 +94,7 @@
       "source_digest": "b15330722b6003b5ff9bb4bf5a51417f5463ca162220fd2636260d675230ba94",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-14T08:41:10+09:00"
     },
     "docs_ai_saas_service_freeze_runbook_md": {
@@ -115,7 +116,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T19:45:51+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_antigravity_cli_evaluation_report_md": {
       "source": "docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md",
@@ -135,7 +136,7 @@
       "source_digest": "ffa1de30c94fb834498946bd42209a7a1d9342aa9bf722a7a977c42ee23c3cb6",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_antigravity_guide_md": {
@@ -156,7 +157,7 @@
       "source_digest": "5bd8b531239032d615a726d0ce593767c963a1c14ef3b9009ec6d19951f532ee",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_antigravity_hooks_sync_poc_md": {
@@ -177,7 +178,7 @@
       "source_digest": "7835ded0ce4ef8989110ee5e06e46515021f97afa2389b6aaf0db614b5e8cc9b",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-21T06:05:20+09:00"
     },
     "docs_antigravity_managed_agents_cost_policy_md": {
@@ -198,7 +199,7 @@
       "source_digest": "63c1aa237bbff4f8c5a15d563569b9d60790c44f0735d7ddadae3cb806bee829",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_api_rate_limit_and_ddos_runbook_md": {
@@ -219,7 +220,7 @@
       "source_digest": "7d54a8bf6fcba9700fe825eff86472592fc561de5c2f4e33f15405a8dd918db3",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-14T05:08:09+09:00"
     },
     "docs_attendance_workflow_runbook_md": {
@@ -241,7 +242,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-24T10:34:23+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_audit_log_masking_and_encryption_md": {
       "source": "docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md",
@@ -261,7 +262,7 @@
       "source_digest": "e622a2fc9a4a0af737fd15b6619f44cbbc81c23e85c221978448badb28f1a1ef",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-10T22:26:34+09:00"
     },
     "docs_backend_ai_pipeline_md": {
@@ -283,7 +284,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T18:05:35+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_billing_and_refund_policy_md": {
       "source": "docs/BILLING_AND_REFUND_POLICY.md",
@@ -304,7 +305,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T22:28:49+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_ceo_meeting_agenda_2026_07_08_md": {
       "source": "docs/CEO_MEETING_AGENDA_2026-07-08.md",
@@ -325,7 +326,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T13:28:37+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_ceo_presentation_backup_guide_md": {
       "source": "docs/CEO_PRESENTATION_BACKUP_GUIDE.md",
@@ -345,7 +346,7 @@
       "source_digest": "6c20c1d26e57a2e80f8fcdafc79772f20b2a396559c2ad9d8e61e136c0787e28",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_ceo_presentation_canva_figma_guide_2026_06_02_md": {
@@ -366,7 +367,7 @@
       "source_digest": "04221bd3a74e41fde776836d511ff135fc4c91619e41c75b9f03da86bd4c01e5",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_ceo_presentation_decision_pack_2026_06_02_md": {
@@ -387,7 +388,7 @@
       "source_digest": "c86b05bd1984b262d64319b805b702168ed7bde1dfedeaf5841587251f49620a",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_ceo_presentation_discussion_points_2026_06_02_md": {
@@ -408,7 +409,7 @@
       "source_digest": "70a090ec344a9f6ebaa29fdb3fe974226497e4a61a24476cd36a4b86d66103f1",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_ceo_presentation_final_review_checklist_md": {
@@ -429,7 +430,7 @@
       "source_digest": "b3e67a6be16e59a097f623205976f6aa3c3473a574114380c110bcd9a002c741",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-05-22T13:34:58+09:00"
     },
     "docs_ceo_presentation_ops_discussion_2026_06_02_md": {
@@ -450,7 +451,7 @@
       "source_digest": "4c353b17bb24546eabab5f98741ada495708bbcb7d4fc87353d507b3523d835e",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_ceo_presentation_post_decision_roadmap_2026_06_02_md": {
@@ -472,7 +473,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T20:40:21+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_ceo_presentation_prep_2026_06_02_md": {
       "source": "docs/CEO_PRESENTATION_PREP_2026-06-02.md",
@@ -492,7 +493,7 @@
       "source_digest": "4978837d4fbeeac0fe0e916da666be78ddcf6d76232b50d86c44cd31a13bf5e5",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_ceo_presentation_preshare_memo_2026_06_02_md": {
@@ -513,7 +514,7 @@
       "source_digest": "b799eb90398c6c01896ec7145c299a89f9075d3d479edf4e48834f6b38d3c730",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_ceo_presentation_qa_pack_2026_06_02_md": {
@@ -534,7 +535,7 @@
       "source_digest": "697ac9d724839438c42aef8ee6af8fe8044439beb76d2e0eca277fdf9344744a",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_codex_continuation_notes_md": {
@@ -555,7 +556,7 @@
       "source_digest": "e788d9b05da381cd607adb57005e342c849fad382dc29a7a2c7df18d3656a272",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-12T05:08:12+09:00"
     },
     "docs_cold_storage_log_archive_runbook_md": {
@@ -577,7 +578,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T12:01:49+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_cost_report_2026_06_md": {
       "source": "docs/COST_REPORT_2026-06.md",
@@ -597,7 +598,7 @@
       "source_digest": "242b3b3fdfec080492c1b590938ac932c56847f3272f1aba5fcee370f955398e",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-10T22:32:23+09:00"
     },
     "docs_custom_domain_uptime_incident_2026_06_27_md": {
@@ -619,7 +620,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T13:28:28+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_data_retention_deletion_anonymization_runbook_md": {
       "source": "docs/DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md",
@@ -640,7 +641,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T21:58:26+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00"
     },
     "docs_database_md": {
       "source": "docs/database.md",
@@ -660,7 +661,7 @@
       "source_digest": "e85f674944347985662d0bd3c364acfb5a2f703dd63bd4453d36c7837e37fd90",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:32+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_db_migration_management_runbook_md": {
@@ -677,12 +678,29 @@
         }
       ],
       "createdTime": "2026-06-13T21:03:38.375Z",
-      "modifiedTime": "2026-06-21T07:41:13.140Z",
-      "source_digest": "95e95dd967f38c8169bc4844bb5b473023ad22ed7f5d9f3e5379072525c50ebd",
-      "sync_action": "skipped_unchanged",
-      "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
-      "source_mtime_jst": "2026-06-19T12:01:16+09:00"
+      "modifiedTime": "2026-07-08T06:38:34.522Z",
+      "source_digest": "2fc4e62d53a950c55cbd31e860671abb896b13f6000513a84ea31765671cc6ca",
+      "sync_action": "uploaded_updated",
+      "source_mtime_jst": "2026-07-08T12:04:22+09:00"
+    },
+    "docs_db_read_load_balancing_design_md": {
+      "source": "docs/DB_READ_LOAD_BALANCING_DESIGN.md",
+      "id": "1mNEOoyq8ZTwED0VzgDKPAeQ_uc2J1oQmoIoAkgI8R-I",
+      "name": "Mighty Skill-Bridge docs/docs/DB_READ_LOAD_BALANCING_DESIGN.md",
+      "url": "https://docs.google.com/document/d/1mNEOoyq8ZTwED0VzgDKPAeQ_uc2J1oQmoIoAkgI8R-I/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-07-08T06:38:37.929Z",
+      "modifiedTime": "2026-07-08T06:38:37.948Z",
+      "source_digest": "3663a951abbe31a14563b1f67f8dc0a5219ced502e1a78447d5b8108933efffd",
+      "sync_action": "uploaded_created",
+      "source_mtime_jst": "2026-07-08T13:15:46+09:00"
     },
     "docs_demo_security_and_auth_design_md": {
       "source": "docs/DEMO_SECURITY_AND_AUTH_DESIGN.md",
@@ -702,7 +720,7 @@
       "source_digest": "688d983938c5fd28c1e9d9293b5f0c4be6692aa6bc23b22ee96fa6cacca4966b",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00",
       "source_mtime_jst": "2026-06-03T14:14:37+09:00"
     },
     "docs_development_knowledge_flow_md": {
@@ -723,7 +741,7 @@
       "source_digest": "4c2c20f903fb6ec2f2a5a6a6e72bb780c749504a1b9fde2093ab5cb00eaf6c85",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_disaster_recovery_and_escalation_runbook_md": {
@@ -745,7 +763,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T18:53:55+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00"
     },
     "docs_employee_assessment_response_runbook_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_RESPONSE_RUNBOOK.md",
@@ -766,7 +784,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-24T09:13:09+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00"
     },
     "docs_employee_assessment_shortlist_poc_plan_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_SHORTLIST_POC_PLAN.md",
@@ -787,7 +805,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-22T01:12:29+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00"
     },
     "docs_employee_assessment_tool_research_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md",
@@ -808,7 +826,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-22T01:12:29+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00"
     },
     "docs_external_pentest_runbook_md": {
       "source": "docs/EXTERNAL_PENTEST_RUNBOOK.md",
@@ -829,7 +847,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T19:28:05+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00"
     },
     "docs_firebase_auth_supabase_rls_security_design_md": {
       "source": "docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md",
@@ -849,7 +867,7 @@
       "source_digest": "071c6ae90c15e020620c385ea07f79f0ce13ab2167b47d9dcc57b660644d7334",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00",
       "source_mtime_jst": "2026-06-10T23:55:41+09:00"
     },
     "docs_firebase_supabase_quota_error_alert_runbook_md": {
@@ -870,7 +888,7 @@
       "source_digest": "c17959c0d6093b0dc6c9bd7dd1adf32e470baba842f1bfadc04d12b9621776e3",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00",
       "source_mtime_jst": "2026-06-15T04:04:29+09:00"
     },
     "docs_firebase_supabase_system_architecture_md": {
@@ -891,7 +909,7 @@
       "source_digest": "00e9939042610911076e358dbb9e33877b986ff81aca78dc6e24199e70f09178",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00",
       "source_mtime_jst": "2026-06-15T02:18:58+09:00"
     },
     "docs_gemini_cli_migration_audit_2026_06_17_md": {
@@ -912,7 +930,7 @@
       "source_digest": "9316f0b4951820952f1d878ef02a34ec4e7cf1f9e41ba117e0987087ff82be34",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:41+09:00",
       "source_mtime_jst": "2026-06-17T01:56:48+09:00"
     },
     "docs_gemini_model_version_migration_runbook_md": {
@@ -929,12 +947,10 @@
         }
       ],
       "createdTime": "2026-07-01T11:37:58.563Z",
-      "modifiedTime": "2026-07-01T11:37:58.584Z",
-      "source_digest": "8f87694a99d50e32577280af6197ddba60324ea780d5b9c961a521e7536a2747",
-      "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T19:45:38+09:00",
-      "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:41+09:00"
+      "modifiedTime": "2026-07-08T06:38:43.063Z",
+      "source_digest": "c5257046430daef3f2b5f962399c944cb019e366d56a31c35c9a7d86f3e7053b",
+      "sync_action": "uploaded_updated",
+      "source_mtime_jst": "2026-07-07T23:29:12+09:00"
     },
     "docs_go_no_go_decision_pack_2026_07_07_md": {
       "source": "docs/GO_NO_GO_DECISION_PACK_2026-07-07.md",
@@ -950,10 +966,10 @@
         }
       ],
       "createdTime": "2026-07-04T07:09:36.078Z",
-      "modifiedTime": "2026-07-07T12:05:43.669Z",
-      "source_digest": "8c1021aaef7c46c0cbca0e2769a4d49b22e69b693543c1b270b1082fccb67784",
+      "modifiedTime": "2026-07-08T06:38:47.681Z",
+      "source_digest": "28c5a1ab1e2eb6c6b3dfff9577a7958f51120e21d8883c976eda0de61c55024a",
       "sync_action": "uploaded_updated",
-      "source_mtime_jst": "2026-07-07T20:44:40+09:00"
+      "source_mtime_jst": "2026-07-08T00:34:25+09:00"
     },
     "docs_go_no_go_gate_triage_2026_07_04_md": {
       "source": "docs/GO_NO_GO_GATE_TRIAGE_2026-07-04.md",
@@ -974,7 +990,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T13:28:41+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_google_workspace_migration_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
@@ -994,7 +1010,7 @@
       "source_digest": "1ad5b75309b4031b81e3937b46fd49843c841062aa596e85962292ea6941d098",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00",
       "source_mtime_jst": "2026-06-19T14:38:08+09:00"
     },
     "docs_google_workspace_oauth_reauth_runbook_md": {
@@ -1015,7 +1031,7 @@
       "source_digest": "bb03d7947c9bb2fb7d2cf89a604cd588e5e2a75deaea61a3a315773b28b26564",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00",
       "source_mtime_jst": "2026-06-21T00:53:28+09:00"
     },
     "docs_growth_strategy_roadmap_md": {
@@ -1036,7 +1052,7 @@
       "source_digest": "829bd743a90969e196ef212a8397703b6a714e8f872599f302cf53f787e5b3ea",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00",
       "source_mtime_jst": "2026-06-10T18:44:33+09:00"
     },
     "docs_hosting_and_database_selection_md": {
@@ -1057,7 +1073,7 @@
       "source_digest": "8d92e64fc14138204b61866ce3c3d3efdddcbe368a2b44f9c580699c1cc15ffe",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00",
       "source_mtime_jst": "2026-06-13T10:56:54+09:00"
     },
     "docs_hypothesis_audit_2026_07_04_md": {
@@ -1079,7 +1095,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T16:53:41+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_incident_postmortem_runbook_md": {
       "source": "docs/INCIDENT_POSTMORTEM_RUNBOOK.md",
@@ -1099,7 +1115,7 @@
       "source_digest": "f464933b1747e4d0783575c013db02495a0fb62c5b420c9cd249ed8935aab0da",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00",
       "source_mtime_jst": "2026-06-13T22:52:46+09:00"
     },
     "docs_infra_telemetry_dashboard_runbook_md": {
@@ -1120,7 +1136,7 @@
       "source_digest": "07fc96bf1987c191271c2316df8c643ddc2e693c98712fe4faaaf170affb51e0",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00",
       "source_mtime_jst": "2026-06-14T06:45:26+09:00"
     },
     "docs_integration_demo_evidence_2026_06_02_md": {
@@ -1141,7 +1157,7 @@
       "source_digest": "2ed698065a3ab253cfd9f392b103b21d05d87c8a881ebdefd7e4f01bd3cc4a8c",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_internal_launch_and_billing_scope_2026_07_03_md": {
@@ -1163,7 +1179,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-03T02:25:45+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_issue_qa_blocker_audit_2026_06_27_md": {
       "source": "docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md",
@@ -1184,7 +1200,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T23:31:01+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_legal_consent_ui_and_api_runbook_md": {
       "source": "docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md",
@@ -1205,7 +1221,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T18:04:22+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_legal_docs_consistency_audit_2026_07_04_md": {
       "source": "docs/LEGAL_DOCS_CONSISTENCY_AUDIT_2026-07-04.md",
@@ -1226,7 +1242,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T22:29:53+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_load_test_100_users_report_2026_07_01_md": {
       "source": "docs/LOAD_TEST_100_USERS_REPORT_2026-07-01.md",
@@ -1247,7 +1263,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T23:28:28+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_local_dev_emulator_stack_runbook_md": {
       "source": "docs/LOCAL_DEV_EMULATOR_STACK_RUNBOOK.md",
@@ -1267,7 +1283,7 @@
       "source_digest": "c3ae1413c0ab7e18e0aadfb9bee352d5a2af7006305bebc1ac2b8005d76458b1",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00",
       "source_mtime_jst": "2026-06-15T02:18:45+09:00"
     },
     "docs_log_rotation_and_retention_runbook_md": {
@@ -1289,7 +1305,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T12:02:04+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_mcp_canva_figma_setup_guide_2026_06_02_md": {
       "source": "docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md",
@@ -1309,7 +1325,7 @@
       "source_digest": "1ede6dfd08cb15df0feffa32f161fc7b0d920c36546b62535baaa747554cc2d0",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_monthly_progress_report_and_kpi_dashboard_md": {
@@ -1331,7 +1347,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-21T19:03:22+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_monthly_quality_report_delivery_runbook_md": {
       "source": "docs/MONTHLY_QUALITY_REPORT_DELIVERY_RUNBOOK.md",
@@ -1352,7 +1368,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T21:58:49+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_monthly_report_2026_06_md": {
       "source": "docs/MONTHLY_REPORT_2026-06.md",
@@ -1373,7 +1389,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-21T19:06:21+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:45+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:51+09:00"
     },
     "docs_multi_ai_workflow_md": {
       "source": "docs/MULTI_AI_WORKFLOW.md",
@@ -1389,10 +1405,10 @@
         }
       ],
       "createdTime": "2026-05-21T18:50:39.743Z",
-      "modifiedTime": "2026-07-07T12:05:48.155Z",
-      "source_digest": "a83f9d3bf8e5b4be574d46012da8caa87cefc24b797207e307f8ba9bf11475cc",
+      "modifiedTime": "2026-07-08T06:38:51.944Z",
+      "source_digest": "1439199e63ff16f4944b1a2d3f7e7276ce0dd062fabec45049d99abdd99f2161",
       "sync_action": "uploaded_updated",
-      "source_mtime_jst": "2026-07-07T20:47:23+09:00"
+      "source_mtime_jst": "2026-07-08T01:52:41+09:00"
     },
     "docs_notebooklm_sync_timeout_runbook_md": {
       "source": "docs/NOTEBOOKLM_SYNC_TIMEOUT_RUNBOOK.md",
@@ -1413,7 +1429,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-21T17:51:41+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:55+09:00"
     },
     "docs_performance_diagnostic_and_index_optimization_runbook_md": {
       "source": "docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md",
@@ -1433,7 +1449,7 @@
       "source_digest": "9aa29e2cb2018aa3a76a0536f65f7b3807d8fd34cdb41978df322a3e2643e458",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:55+09:00",
       "source_mtime_jst": "2026-06-15T03:25:09+09:00"
     },
     "docs_personal_info_disclosure_procedures_md": {
@@ -1454,7 +1470,7 @@
       "source_digest": "17cee19e87f346f0ec77e637aae42a53bfab2b5a14798c600be95ffed02db838",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:55+09:00",
       "source_mtime_jst": "2026-06-10T22:41:22+09:00"
     },
     "docs_pilot_closed_operation_design_md": {
@@ -1475,7 +1491,7 @@
       "source_digest": "8d774c743bca628d91d7255194dc8fd692d1b963d4a726b4617dda6248880194",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:55+09:00",
       "source_mtime_jst": "2026-06-03T13:46:37+09:00"
     },
     "docs_pilot_consent_template_md": {
@@ -1496,7 +1512,7 @@
       "source_digest": "bdb4628e1e6de861834eaeb1a2302708bfe6bbd36216aaa5e64563ce5c9756a7",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:55+09:00",
       "source_mtime_jst": "2026-06-02T20:21:08+09:00"
     },
     "docs_pilot_participants_selection_md": {
@@ -1517,7 +1533,7 @@
       "source_digest": "26f9e100236e3130e87cd748d73b8011de497b27032e64a1f32e7c10859e4a71",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:55+09:00",
       "source_mtime_jst": "2026-06-03T11:40:19+09:00"
     },
     "docs_pilot_report_2026_06_16_md": {
@@ -1538,7 +1554,7 @@
       "source_digest": "f89a7e67c8568d3271aef920d5b073d6a941e988bfa6964eb5782a534faba6f4",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:55+09:00",
       "source_mtime_jst": "2026-06-06T10:58:29+09:00"
     },
     "docs_postmortem_2026_06_11_r44_production_api_502_md": {
@@ -1559,7 +1575,7 @@
       "source_digest": "0859a0082f7dcaaf4f8c3165b2627fca9bf9b5a025facfc665f9caaf30d8fb8d",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:55+09:00",
       "source_mtime_jst": "2026-06-13T22:55:38+09:00"
     },
     "docs_postmortem_2026_07_04_r114_missing_prod_tables_md": {
@@ -1576,12 +1592,10 @@
         }
       ],
       "createdTime": "2026-07-04T06:34:46.790Z",
-      "modifiedTime": "2026-07-04T06:34:46.809Z",
-      "source_digest": "addf33c5fc35af0feb9d902f9df8a2a8008b2ff4f0b7421e0382d7c0b6483097",
-      "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-04T15:30:04+09:00",
-      "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "modifiedTime": "2026-07-08T06:38:56.819Z",
+      "source_digest": "68728f5df99d991973b782811ee26db9511797a9f74df2c777cd9060c316266c",
+      "sync_action": "uploaded_updated",
+      "source_mtime_jst": "2026-07-08T12:06:02+09:00"
     },
     "docs_pricing_plan_provisional_2026_07_03_md": {
       "source": "docs/PRICING_PLAN_PROVISIONAL_2026-07-03.md",
@@ -1602,7 +1616,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-03T02:27:42+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00"
     },
     "docs_privacy_policy_md": {
       "source": "docs/PRIVACY_POLICY.md",
@@ -1623,7 +1637,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T22:27:21+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00"
     },
     "docs_production_acceptance_test_report_md": {
       "source": "docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md",
@@ -1643,7 +1657,7 @@
       "source_digest": "b0e9e81b65b422d10c1e6bb7e70d7cae09877e368b3a4b818a23ab8873d100ae",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00",
       "source_mtime_jst": "2026-06-10T21:44:01+09:00"
     },
     "docs_production_domain_setup_guide_md": {
@@ -1664,7 +1678,7 @@
       "source_digest": "ec1c5ed82d4a085b39e512860c664f28ade0814b17396cd8e828c7d65cae4adb",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00",
       "source_mtime_jst": "2026-06-15T02:19:22+09:00"
     },
     "docs_production_go_no_go_checklist_md": {
@@ -1686,7 +1700,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T23:30:51+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00"
     },
     "docs_production_rollback_runbook_md": {
       "source": "docs/PRODUCTION_ROLLBACK_RUNBOOK.md",
@@ -1706,7 +1720,7 @@
       "source_digest": "db3cba25a9e57b298f7aa0f5f12e63a3ba5420494b9cae8d362b241ba2172568",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00",
       "source_mtime_jst": "2026-06-14T14:26:33+09:00"
     },
     "docs_project_structure_md": {
@@ -1727,7 +1741,7 @@
       "source_digest": "ab7f58ac47ab87e68b95aa4ec1fabe146eaeadf5ad21c8a61e71ef7fd3c95a90",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00",
       "source_mtime_jst": "2026-05-23T21:25:00+09:00"
     },
     "docs_release_versioning_runbook_md": {
@@ -1748,7 +1762,7 @@
       "source_digest": "b0cb526ca5a38aeccf37354c93f9c6275a87c05e5fa17b680b8618baa6959910",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00",
       "source_mtime_jst": "2026-06-19T23:36:15+09:00"
     },
     "docs_requirements_md": {
@@ -1769,7 +1783,7 @@
       "source_digest": "f158cd0723abf7f2c3e64067a1c12620f8e1c8504cfcaa8948ac536f5e8101eb",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00",
       "source_mtime_jst": "2026-06-20T14:34:26+09:00"
     },
     "docs_sales_email_ai_matching_requirements_md": {
@@ -1790,7 +1804,7 @@
       "source_digest": "4a6abd49db45f36d304d1e439efa3dfda7e0198b6b259655e2c2c1310ea2ba87",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00",
       "source_mtime_jst": "2026-06-20T14:34:26+09:00"
     },
     "docs_sales_email_auto_ingest_connection_checklist_md": {
@@ -1811,7 +1825,7 @@
       "source_digest": "7429720e0c6f7a4ccd724d6363c9b4cd3d2bb7f0decf40a130bab129498f3ca1",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00",
       "source_mtime_jst": "2026-06-20T14:37:22+09:00"
     },
     "docs_sales_email_database_schema_runbook_md": {
@@ -1832,7 +1846,7 @@
       "source_digest": "141033bf90dedab24cf974506cba8c79675daf66602b09275955ddeb1cb01791",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:38:59+09:00",
       "source_mtime_jst": "2026-06-20T14:34:26+09:00"
     },
     "docs_sales_email_extraction_pipeline_runbook_md": {
@@ -1853,7 +1867,7 @@
       "source_digest": "8aa99ea505d30c9d3adbfa137fb39af8e43c901a341063175e44ed37d51fb1e1",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-20T14:34:26+09:00"
     },
     "docs_sales_email_human_review_runbook_md": {
@@ -1874,7 +1888,7 @@
       "source_digest": "5133d6e02fb6a88c7d1fb5f77c23473b898c73efdcee3de85b801e43cc6fe94d",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-20T14:31:49+09:00"
     },
     "docs_sales_email_ingestion_poc_runbook_md": {
@@ -1895,7 +1909,7 @@
       "source_digest": "80e6b001a12c768676f0446dccc230e849411061fa7cacc2b6876b10c640691d",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-20T14:31:43+09:00"
     },
     "docs_sales_email_matching_api_ui_runbook_md": {
@@ -1916,7 +1930,7 @@
       "source_digest": "5cab5f2f4d956b986fee210fbe08fc8c6e3bfa3e4845434ec15e8deea12a2a4a",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-20T14:31:57+09:00"
     },
     "docs_secret_rotation_runbook_md": {
@@ -1937,7 +1951,7 @@
       "source_digest": "98af543099d25d46086d8bcbae94b7811fbb6b1c80acab771f910c44448d48e2",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-14T04:04:53+09:00"
     },
     "docs_security_audit_report_2026_q2_md": {
@@ -1959,7 +1973,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T19:28:24+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_security_audit_runbook_md": {
       "source": "docs/SECURITY_AUDIT_RUNBOOK.md",
@@ -1979,7 +1993,7 @@
       "source_digest": "968309f94198146b742aebecfb6c4d790a82cf81733eb91748d4ebefc71dbc81",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-13T22:53:10+09:00"
     },
     "docs_sequence_diagrams_md": {
@@ -2000,7 +2014,7 @@
       "source_digest": "051165cf59973b5f79a2486a3eb62dd4e030079a02ea119b78c59e8f09c55c37",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-02T19:31:16+09:00"
     },
     "docs_setup_guide_md": {
@@ -2021,7 +2035,7 @@
       "source_digest": "fc994d8ce9fa3ea77d792a9b44dd93844c60468124649cf4047e7374e0fff665",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-21T06:05:20+09:00"
     },
     "docs_sheets_trackers_schema_md": {
@@ -2042,7 +2056,7 @@
       "source_digest": "c0d6b065984cdaf36163e2db2747bdc2a748d0a51ea92f7fe62d084a12f3fb6f",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-17T08:36:38+09:00"
     },
     "docs_sla_kpi_definition_and_measurement_md": {
@@ -2064,7 +2078,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-05T17:37:04+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_staging_environment_operation_runbook_md": {
       "source": "docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md",
@@ -2084,7 +2098,7 @@
       "source_digest": "f22443371836a7f8fe37473fca23ac9c64bf5df2cc234e9d413f3eefa4a3dcfb",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-13T16:28:13+09:00"
     },
     "docs_stripe_billing_integration_design_md": {
@@ -2106,7 +2120,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T09:18:57+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_stripe_customer_portal_runbook_md": {
       "source": "docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md",
@@ -2127,7 +2141,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T09:18:33+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_supabase_backup_restore_runbook_md": {
       "source": "docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md",
@@ -2148,7 +2162,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T19:01:02+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_supabase_connection_pooling_runbook_md": {
       "source": "docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md",
@@ -2168,7 +2182,7 @@
       "source_digest": "3166d9a98dd67d54206835a36a81519d03664b2bf57a15d6821f895bc6fee3fb",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-14T14:10:48+09:00"
     },
     "docs_supabase_database_physical_and_index_design_md": {
@@ -2189,7 +2203,7 @@
       "source_digest": "02c4df76b8771cf829e92dc9101b5ab281e7925f897d33e271bbd0b934e9b45f",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-06T14:34:16+09:00"
     },
     "docs_supabase_infra_audit_2026_07_04_md": {
@@ -2211,7 +2225,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T23:19:51+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_supabase_postgres_upgrade_runbook_md": {
       "source": "docs/SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md",
@@ -2231,7 +2245,7 @@
       "source_digest": "4e3b39757cb49cde790950a70ae454812e64fa2f932ca1c3167b77dec05f3717",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-21T16:34:07+09:00"
     },
     "docs_supabase_query_performance_dashboard_runbook_md": {
@@ -2252,7 +2266,7 @@
       "source_digest": "f76783158b1993495f75c23fccb1aa172b7a24d0155482c25ad2778d422db19f",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-15T03:24:49+09:00"
     },
     "docs_support_contact_and_escalation_runbook_md": {
@@ -2273,7 +2287,7 @@
       "source_digest": "f01151a26ccaf59c021c940c8a71893804a2ffafff602a77aba8105d42e517cd",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-16T05:35:05+09:00"
     },
     "docs_terms_and_privacy_annual_review_process_md": {
@@ -2294,7 +2308,7 @@
       "source_digest": "6f992403246732973dfaf8f9b7285f72944b770d45db05117f40b35bb73d335c",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-10T22:42:56+09:00"
     },
     "docs_terms_of_service_md": {
@@ -2316,7 +2330,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T22:27:42+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_tokushoho_notation_md": {
       "source": "docs/TOKUSHOHO_NOTATION.md",
@@ -2337,7 +2351,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T22:29:17+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_uptime_monitoring_and_alert_runbook_md": {
       "source": "docs/UPTIME_MONITORING_AND_ALERT_RUNBOOK.md",
@@ -2357,7 +2371,7 @@
       "source_digest": "71d217bfb89ee36d7c42ddf93e96587c6a8d90bf893bca0fc12f908af96dfb4c",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-14T14:26:26+09:00"
     },
     "docs_usage_analytics_kpi_runbook_md": {
@@ -2379,7 +2393,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T22:05:51+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_user_data_deletion_flow_md": {
       "source": "docs/USER_DATA_DELETION_FLOW.md",
@@ -2400,7 +2414,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T12:15:33+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_user_data_self_export_runbook_md": {
       "source": "docs/USER_DATA_SELF_EXPORT_RUNBOOK.md",
@@ -2420,7 +2434,7 @@
       "source_digest": "6de7169475c8ed1558baa5e416bd18664cea87f562eff0ef8d864999573271ba",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00",
       "source_mtime_jst": "2026-06-20T00:51:41+09:00"
     },
     "docs_user_feedback_collection_runbook_md": {
@@ -2442,7 +2456,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T21:58:57+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_user_guide_and_faq_md": {
       "source": "docs/USER_GUIDE_AND_FAQ.md",
@@ -2463,7 +2477,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T19:28:55+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:50+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:00+09:00"
     },
     "docs_wbs_md": {
       "source": "docs/WBS.md",
@@ -2479,10 +2493,10 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-07-07T12:05:52.847Z",
-      "source_digest": "c9e2a4afdc18a9db7602b9559d70467694893ac9f8478da8d20468c031c5aa25",
+      "modifiedTime": "2026-07-08T06:39:02.046Z",
+      "source_digest": "0931eaca6fc41033ca32ec311461b44a6c3d8864f21429a2c7f411e4d375bcb0",
       "sync_action": "uploaded_updated",
-      "source_mtime_jst": "2026-07-07T20:48:54+09:00"
+      "source_mtime_jst": "2026-07-08T15:26:12+09:00"
     },
     "docs_wbs_process_coverage_audit_2026_06_13_md": {
       "source": "docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md",
@@ -2503,7 +2517,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-23T22:55:57+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:55+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:06+09:00"
     },
     "docs_wbs_process_coverage_audit_2026_06_25_md": {
       "source": "docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-25.md",
@@ -2524,7 +2538,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-25T20:42:24+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:55+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:06+09:00"
     },
     "docs_wbs_review_2026_06_26_md": {
       "source": "docs/WBS_REVIEW_2026-06-26.md",
@@ -2545,7 +2559,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-26T19:29:34+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:55+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:06+09:00"
     },
     "docs_wbs_review_2026_06_26_session2_md": {
       "source": "docs/WBS_REVIEW_2026-06-26_SESSION2.md",
@@ -2566,7 +2580,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-06-27T20:40:21+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:55+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:06+09:00"
     },
     "docs_wbs_review_2026_07_01_md": {
       "source": "docs/WBS_REVIEW_2026-07-01.md",
@@ -2587,7 +2601,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-01T20:41:44+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:55+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:06+09:00"
     },
     "docs_wbs_review_2026_07_03_md": {
       "source": "docs/WBS_REVIEW_2026-07-03.md",
@@ -2608,7 +2622,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-07-04T16:52:44+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:55+09:00"
+      "skipped_at_jst": "2026-07-08T15:39:06+09:00"
     },
     "docs_wbs_sync_guide_md": {
       "source": "docs/WBS_SYNC_GUIDE.md",
@@ -2628,7 +2642,7 @@
       "source_digest": "d8cb36156daa0c2a7e1eaa47e52a22f26425843e875289641018d196f87d26db",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:55+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:06+09:00",
       "source_mtime_jst": "2026-06-12T04:20:46+09:00"
     },
     "docs_weekly_cost_dashboard_runbook_md": {
@@ -2649,20 +2663,20 @@
       "source_digest": "87417759c36089b0f0afb9d7fe93a682c14a7ecb9b815be8eda8133b5aa7d931",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-07-07T21:05:55+09:00",
+      "skipped_at_jst": "2026-07-08T15:39:06+09:00",
       "source_mtime_jst": "2026-06-14T08:38:13+09:00"
     }
   },
   "notebooklm": {
     "available": true,
     "status": "ready",
-    "status_output": "Current Context                            \n┌──────────────┬──────────────────────────────────────────────────────┐\n│ Property     │ Value                                                │\n├──────────────┼──────────────────────────────────────────────────────┤\n│ Notebook ID  │ 4934c12b-b270-4739-97a1-b04b5b84eaaf                 │\n│ Title        │ Mighty Skill-Bridge Development Knowledge 2026-06-02 │\n│ Ownership    │ Owner                                                │\n│ Created      │ 2026-07-07                                           │\n│ Conversation │ 70de1c23-00af-435a-882c-5576f6ea5e68                 │\n└──────────────┴──────────────────────────────────────────────────────┘",
-    "list_output": "Notebooks                                   \n┌────────────────────────────┬───────────────────────────┬───────┬────────────┐\n│ ID                         │ Title                     │ Owner │ Created    │\n├────────────────────────────┼───────────────────────────┼───────┼────────────┤\n│ 4934c12b-b270-4739-97a1-b… │ Mighty Skill-Bridge       │ Owner │ 2026-07-07 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 47fd2911-06e4-489d-b7df-4… │ Mighty Skill-Bridge       │ Owner │ 2026-06-21 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ fd58e18d-1c62-43c7-9425-0… │ Mighty Skill-Bridge       │ Owner │ 2026-06-19 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 3439bbed-deef-4b81-9c72-5… │ Mighty Skill-Bridge       │ Owner │ 2026-06-19 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 56932988-812c-412e-94f4-4… │ Mighty Skill-Bridge       │ Owner │ 2026-06-19 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 52c128b5-0d92-4806-b80c-3… │ Mighty Skill-Bridge       │ Owner │ 2026-06-17 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 2c7c4a2d-2731-4c8f-8136-4… │ Mighty Skill-Bridge       │ Owner │ 2026-06-14 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ e82f0b43-69aa-474a-9b6c-b… │ Mighty Skill-Bridge       │ Owner │ 2026-06-13 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ feb3c4b3-5c14-479d-b55c-a… │ Mighty Skill-Bridge       │ Owner │ 2026-06-13 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 51b951d0-de08-4ffe-9ba2-a… │ Mighty Skill-Bridge       │ Owner │ 2026-06-13 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ cd44c4ef-4c46-40b5-ace3-1… │ Mighty Skill-Bridge       │ Owner │ 2026-06-13 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ a235db10-d2c5-4ee3-9621-8… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 28804753-3266-406d-b0ae-e… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 75521ea6-6b9b-47b2-9508-5… │ Mighty Skill-Bridge       │ Owner │ 2026-06-09 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n│ 4af4503e-1085-4281-9b3e-f… │ Mighty-Link AI Connect    │ Owner │ 2026-06-09 │\n│                            │ Project Management WBS    │       │            │\n│ b0fb4be1-88fb-4079-ab65-a… │ Firebase: Building and    │ Owner │ 2026-06-03 │\n│                            │ Scaling Modern Apps with  │       │            │\n│                            │ Google Infrastructure     │       │            │\n│ 54b1bd0c-f201-4b35-9855-8… │ Strategic AI Integration  │ Owner │ 2026-06-03 │\n│                            │ and Sustainable           │       │            │\n│                            │ Development Roadmap       │       │            │\n│ 6d164541-3e0c-49a4-8728-8… │ Google I/O 2026: Building │ Owner │ 2026-06-02 │\n│                            │ the Agentic Future        │       │            │\n│ 5790a227-0187-4b6c-a88e-0… │ Dreamina Seedance 2.0     │ Owner │ 2026-05-23 │\n│                            │ Resource Pack Guide       │       │            │\n└────────────────────────────┴───────────────────────────┴───────┴────────────┘",
+    "status_output": "Current Context                            \n+---------------------------------------------------------------------+\n| Property     | Value                                                |\n|--------------+------------------------------------------------------|\n| Notebook ID  | 4934c12b-b270-4739-97a1-b04b5b84eaaf                 |\n| Title        | Mighty Skill-Bridge Development Knowledge 2026-06-02 |\n| Ownership    | Owner                                                |\n| Created      | 2026-07-08                                           |\n| Conversation | None (will auto-select on next ask)                  |\n+---------------------------------------------------------------------+",
+    "list_output": "Notebooks                                   \n+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-07-08 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 47fd2911-06e4-489d-b7df-4�c | Mighty Skill-Bridge       | Owner | 2026-06-21 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| fd58e18d-1c62-43c7-9425-0�c | Mighty Skill-Bridge       | Owner | 2026-06-19 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 3439bbed-deef-4b81-9c72-5�c | Mighty Skill-Bridge       | Owner | 2026-06-19 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 56932988-812c-412e-94f4-4�c | Mighty Skill-Bridge       | Owner | 2026-06-19 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 52c128b5-0d92-4806-b80c-3�c | Mighty Skill-Bridge       | Owner | 2026-06-17 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 2c7c4a2d-2731-4c8f-8136-4�c | Mighty Skill-Bridge       | Owner | 2026-06-14 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| e82f0b43-69aa-474a-9b6c-b�c | Mighty Skill-Bridge       | Owner | 2026-06-13 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| feb3c4b3-5c14-479d-b55c-a�c | Mighty Skill-Bridge       | Owner | 2026-06-13 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 51b951d0-de08-4ffe-9ba2-a�c | Mighty Skill-Bridge       | Owner | 2026-06-13 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| cd44c4ef-4c46-40b5-ace3-1�c | Mighty Skill-Bridge       | Owner | 2026-06-13 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| a235db10-d2c5-4ee3-9621-8�c | Mighty Skill-Bridge       | Owner | 2026-06-09 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 28804753-3266-406d-b0ae-e�c | Mighty Skill-Bridge       | Owner | 2026-06-09 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 75521ea6-6b9b-47b2-9508-5�c | Mighty Skill-Bridge       | Owner | 2026-06-09 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n| 4af4503e-1085-4281-9b3e-f�c | Mighty-Link AI Connect    | Owner | 2026-06-09 |\n|                            | Project Management WBS    |       |            |\n| b0fb4be1-88fb-4079-ab65-a�c | Firebase: Building and    | Owner | 2026-06-03 |\n|                            | Scaling Modern Apps with  |       |            |\n|                            | Google Infrastructure     |       |            |\n| 54b1bd0c-f201-4b35-9855-8�c | Strategic AI Integration  | Owner | 2026-06-03 |\n|                            | and Sustainable           |       |            |\n|                            | Development Roadmap       |       |            |\n| 6d164541-3e0c-49a4-8728-8�c | Google I/O 2026: Building | Owner | 2026-06-02 |\n|                            | the Agentic Future        |       |            |\n| 5790a227-0187-4b6c-a88e-0�c | Dreamina Seedance 2.0     | Owner | 2026-05-23 |\n|                            | Resource Pack Guide       |       |            |\n+-----------------------------------------------------------------------------+",
     "notebook_id": "4934c12b-b270-4739-97a1-b04b5b84eaaf",
     "notebook_title": "Mighty Skill-Bridge Development Knowledge 2026-06-02",
     "notebook_info": {
       "action": "used_existing",
-      "output": "┌────────────────────────────┬───────────────────────────┬───────┬────────────┐\n│ ID                         │ Title                     │ Owner │ Created    │\n├────────────────────────────┼───────────────────────────┼───────┼────────────┤\n│ 4934c12b-b270-4739-97a1-b… │ Mighty Skill-Bridge       │ Owner │ 2026-07-07 │\n│                            │ Development Knowledge     │       │            │\n│                            │ 2026-06-02                │       │            │\n└────────────────────────────┴───────────────────────────┴───────┴────────────┘"
+      "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-07-08 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
     },
     "source_results": [
       {
@@ -2981,6 +2995,16 @@
         "action": "skipped_existing_refresh",
         "reason": "--skip-source-refresh",
         "source_id": "614e3484-daf0-4533-82db-c6a4d8355985",
+        "returncode": null,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "title": "Mighty Skill-Bridge docs/docs/DB_READ_LOAD_BALANCING_DESIGN.md",
+        "drive_file_id": "1mNEOoyq8ZTwED0VzgDKPAeQ_uc2J1oQmoIoAkgI8R-I",
+        "action": "skipped_existing_refresh",
+        "reason": "--skip-source-refresh",
+        "source_id": "88e79a24-1832-47e8-ba7a-ae4aefe8680a",
         "returncode": null,
         "stdout": "",
         "stderr": ""
@@ -3928,15 +3952,15 @@
     ],
     "source_sync": {
       "refresh_existing_sources": false,
-      "source_timeout_seconds": 60
+      "source_timeout_seconds": 420
     },
     "ask_generation": {
       "status": "skipped",
       "reason": "--skip-asks",
-      "generated_at_jst": "2026-07-07T21:06:05+09:00",
+      "generated_at_jst": "2026-07-08T15:39:18+09:00",
       "ask_timeout_seconds": 900,
       "next_command": "python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900",
-      "source_count": 126
+      "source_count": 127
     },
     "summary_returncode": null,
     "answer_returncode": null,
