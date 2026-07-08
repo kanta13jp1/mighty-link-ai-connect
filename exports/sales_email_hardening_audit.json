@@ -1,0 +1,70 @@
+{
+  "report_id": "SALES_EMAIL_HARDENING_T817_7_1",
+  "checked_at": "2026-07-08",
+  "status": "ok",
+  "hypotheses_total": 10,
+  "hypotheses_passed": 10,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "hypothesis": "営業メール9テーブル全てにRLSが有効化されている",
+      "passed": true,
+      "detail": "RLS有効化 9/9"
+    },
+    {
+      "id": "H2",
+      "hypothesis": "9テーブル全てでanon/authenticatedの権限が剥奪されている",
+      "passed": true,
+      "detail": "REVOKE 9/9"
+    },
+    {
+      "id": "H3",
+      "hypothesis": "スキーマは生PII列を持たず、送信者/本文はhash+上限付きexcerptのみ保存する",
+      "passed": true,
+      "detail": "禁止列=なし hash列=True excerpt長CHECK=True"
+    },
+    {
+      "id": "H4",
+      "hypothesis": "redact/excerptユーティリティがメール・電話・secret実値を除去し240字上限を守る",
+      "passed": true,
+      "detail": "redact後PII残存なし=True excerpt長=240(<=240)"
+    },
+    {
+      "id": "H5",
+      "hypothesis": "取込は合成メールのPII実値を保存せず、sha256ハッシュとredacted excerptのみ残す",
+      "passed": true,
+      "detail": "生メール/電話の残存なし=True sender_hash/body_hash=sha256(64hex)"
+    },
+    {
+      "id": "H6",
+      "hypothesis": "抽出は要員を匿名化キーで扱い、evidenceに生連絡先を残さない",
+      "passed": true,
+      "detail": "生連絡先残存なし=True anonymized_talent_key=talent_318929b97f4d8873"
+    },
+    {
+      "id": "H7",
+      "hypothesis": "営業メールAPI全3ルートがBasic認証necessary（verify_credentials）である",
+      "passed": true,
+      "detail": "認証必須 3/3"
+    },
+    {
+      "id": "H8",
+      "hypothesis": "保持/削除runbookが9テーブル全ての保持期間と削除手順をカバーする",
+      "passed": true,
+      "detail": "runbook記載 5/5グループ 保持期間記載=True"
+    },
+    {
+      "id": "H9",
+      "hypothesis": "負荷ガード: parse CLIは既定でバッチ上限を持ち、無制限のAPI呼び出しをしない",
+      "passed": true,
+      "detail": "既定cap=50(=50期待) --max-messages指定=10"
+    },
+    {
+      "id": "H10",
+      "hypothesis": "レビュー監査証跡(exports)が存在し、証跡ファイルに生メール/電話が含まれない",
+      "passed": true,
+      "detail": "監査証跡欠落=なし 生PII検出=なし"
+    }
+  ],
+  "scope_note": "PoCデータ/スキーマ/コード/証跡のオフラインhardening監査。バックアップはfull-DB pg_dumpが9テーブルを包含（恒久CI化はT870、暫定22テーブルローカルバックアップはT871確認済み）。実メール接続後の実運用確認（実データの最小化スポット確認・実流量調整・アカウント権限実査）はT836受領後のT817_7本体工程。"
+}

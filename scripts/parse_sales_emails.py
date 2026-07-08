@@ -229,7 +229,30 @@ class DBAdapter:
                 print(f"[-] SQLite update_parse_run error: {e}")
 
 
-def main() -> int:
+DEFAULT_MAX_MESSAGES = 50
+
+
+def resolve_max_messages(argv: list[str] | None = None) -> int:
+    """Batch cap so a large backlog cannot fire unbounded Gemini calls (T817_7).
+
+    Priority: --max-messages arg > SALES_EMAIL_PARSE_MAX_MESSAGES env > default 50.
+    0 means unlimited (explicit operator opt-in only).
+    """
+    import argparse
+
+    env_default = os.environ.get("SALES_EMAIL_PARSE_MAX_MESSAGES", "").strip()
+    default = int(env_default) if env_default.isdigit() else DEFAULT_MAX_MESSAGES
+    parser = argparse.ArgumentParser(description="Parse unparsed sales emails (T817_4)")
+    parser.add_argument("--max-messages", type=int, default=default,
+                        help=f"max messages per run (0=unlimited, default {DEFAULT_MAX_MESSAGES})")
+    # parse_known_args so programmatic callers (tests import and call main()
+    # directly, leaving pytest args in sys.argv) never crash on foreign args.
+    args, _unknown = parser.parse_known_args(argv)
+    return max(0, args.max_messages)
+
+
+def main(argv: list[str] | None = None) -> int:
+    max_messages = resolve_max_messages(argv)
     sqlite_path = PROJECT_ROOT / "data" / "mighty.db"
     db = DBAdapter(sqlite_path)
 
@@ -240,6 +263,10 @@ def main() -> int:
         print("[+] No new unparsed emails found. Exiting.")
         db.close()
         return 0
+
+    if max_messages and len(messages) > max_messages:
+        print(f"[!] {len(messages)} unparsed messages exceed the batch cap; processing first {max_messages} (rerun for the rest).")
+        messages = messages[:max_messages]
 
     print(f"[*] Found {len(messages)} unparsed messages.")
 
