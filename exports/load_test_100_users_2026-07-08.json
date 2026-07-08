@@ -1,0 +1,121 @@
+{
+  "task_id": "T858",
+  "baseline_task_id": "T770",
+  "generated_at_jst": "2026-07-08T13:13:12+09:00",
+  "scenario": {
+    "concurrent_users": 100,
+    "requests_per_user": 3,
+    "total_elapsed_seconds": 2.442,
+    "target": "In-process FastAPI ASGI probe with isolated SQLite fallback DB, mock AI mode, and per-user forwarded IPs.",
+    "endpoints": [
+      "GET /api/health",
+      "POST /api/parse",
+      "POST /api/match"
+    ],
+    "deterministic_parse_delay_seconds": 0.0,
+    "deterministic_match_delay_seconds": 0.0,
+    "captured_internal_log_lines": 500
+  },
+  "summary": {
+    "total_requests": 300,
+    "total_successes": 300,
+    "total_errors": 0,
+    "status_counts": {
+      "200": 300
+    },
+    "overall": {
+      "min_ms": 112.48,
+      "p50_ms": 602.87,
+      "p95_ms": 1113.31,
+      "p99_ms": 1482.71,
+      "max_ms": 1882.46
+    },
+    "by_endpoint": {
+      "/api/health": {
+        "requests": 100,
+        "successes": 100,
+        "errors": 0,
+        "status_counts": {
+          "200": 100
+        },
+        "min_ms": 112.48,
+        "p50_ms": 122.72,
+        "p95_ms": 133.95,
+        "p99_ms": 134.49,
+        "max_ms": 134.86
+      },
+      "/api/match": {
+        "requests": 100,
+        "successes": 100,
+        "errors": 0,
+        "status_counts": {
+          "200": 100
+        },
+        "min_ms": 713.41,
+        "p50_ms": 948.56,
+        "p95_ms": 1289.29,
+        "p99_ms": 1732.46,
+        "max_ms": 1882.46
+      },
+      "/api/parse": {
+        "requests": 100,
+        "successes": 100,
+        "errors": 0,
+        "status_counts": {
+          "200": 100
+        },
+        "min_ms": 383.7,
+        "p50_ms": 602.87,
+        "p95_ms": 1051.54,
+        "p99_ms": 1212.79,
+        "max_ms": 1274.61
+      }
+    }
+  },
+  "sla": {
+    "targets_ms": {
+      "p50": 1500.0,
+      "p95": 3000.0,
+      "p99": 8000.0
+    },
+    "overall_pass": true,
+    "endpoint_results": {
+      "/api/health": {
+        "p50_pass": true,
+        "p95_pass": true,
+        "p99_pass": true,
+        "error_free": true
+      },
+      "/api/match": {
+        "p50_pass": true,
+        "p95_pass": true,
+        "p99_pass": true,
+        "error_free": true
+      },
+      "/api/parse": {
+        "p50_pass": true,
+        "p95_pass": true,
+        "p99_pass": true,
+        "error_free": true
+      }
+    }
+  },
+  "scaling_policy": {
+    "firebase_functions": [
+      "Set function-level maxInstances before public paid launch so burst traffic cannot overwhelm Supabase.",
+      "Use minInstances only after cold-start evidence shows user-facing P95 degradation.",
+      "Keep CPU-heavy AI work inside request lifecycle or move it to an explicit queue; do not rely on post-response background work."
+    ],
+    "supabase": [
+      "Use the Supabase/Supavisor connection pooler for Firebase/serverless traffic.",
+      "Keep per-instance DB pools small and scale through pooler capacity, not unbounded function connections.",
+      "T782 remains the deeper read-replica and pool-size optimization task for real Supabase load validation."
+    ],
+    "ai_and_rate_limits": [
+      "Preserve deterministic fallback and external API circuit breakers for Gemini/Seedance quota safety.",
+      "Keep per-client rate limiting enabled at the app edge; production load tests must use realistic distributed client IDs."
+    ]
+  },
+  "tmp_root": null,
+  "errors": []
+}

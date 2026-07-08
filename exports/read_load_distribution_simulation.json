@@ -1,0 +1,388 @@
+{
+  "report_id": "READ_LOAD_DISTRIBUTION_T782",
+  "checked_at": "2026-07-08",
+  "status": "ok",
+  "hypotheses_total": 10,
+  "hypotheses_passed": 10,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "hypothesis": "現行プールはThreadedConnectionPool(min1/max4/recycle1800s/Supavisor mode検出)である",
+      "passed": true,
+      "detail": "app.py実装確認: pool種別/既定値/mode検出すべて存在"
+    },
+    {
+      "id": "H2",
+      "hypothesis": "APIはread(GET)がwriteより多く、read offloadの余地がある",
+      "passed": true,
+      "detail": "read 21 / write 14 (read share=60%)"
+    },
+    {
+      "id": "H3",
+      "hypothesis": "read-after-write整合が必要なGETを特定し、それ以外をレプリカ安全群に分類できる",
+      "passed": true,
+      "detail": "primary固定=['/api/auth/me', '/api/engineers', '/api/jobs', '/api/matches'] / レプリカ安全=17件 (read内81%)"
+    },
+    {
+      "id": "H4",
+      "hypothesis": "Erlang C実装は既知の理論値と一致する",
+      "passed": true,
+      "detail": "M/M/1(ρ=0.6)→0.600(=0.6期待) M/M/2(a=1)→0.3333(=0.3333期待)"
+    },
+    {
+      "id": "H5",
+      "hypothesis": "現行実測バースト負荷では1インスタンスのプール(c=4)が飽和せず、P95待ちがプール待ち予算(SLA比10%)内",
+      "passed": true,
+      "detail": "実測バースト144.1req/s・DB占有25.0ms・c=4: 利用率90% P95待ち173.51ms(予算300ms=SLA比10%以内。ただし利用率90%で余裕薄→水平スケール前提を設計に明記)"
+    },
+    {
+      "id": "H6",
+      "hypothesis": "アクセス10倍ではprimary-only・c=4は飽和し、スケール施策が必須になる",
+      "passed": true,
+      "detail": "10倍負荷(1441.0req/s)でc=4は飽和(要スケール)"
+    },
+    {
+      "id": "H7",
+      "hypothesis": "レプリカoffloadは高負荷時のprimary必要インスタンス数を削減する",
+      "passed": true,
+      "detail": "10倍負荷(1441.0req/s)の必要インスタンス数(利用率≤80%): primary-only 12台 → レプリカoffload後 6台 (offload率49%で必要台数を削減)"
+    },
+    {
+      "id": "H8",
+      "hypothesis": "インスタンス数×プールサイズの安全式がSupavisorクライアント接続予算内に収まる",
+      "passed": true,
+      "detail": "推奨maxInstances(20) × POOL_MAX(4) = 80 ≤ Supavisor予算200"
+    },
+    {
+      "id": "H9",
+      "hypothesis": "現行コードはtransaction pooler(6543)の制約(session state不可)に抵触しない",
+      "passed": true,
+      "detail": "session state SQL(SET/LISTEN/PREPARE/DECLARE)使用=なし(transaction mode安全)"
+    },
+    {
+      "id": "H10",
+      "hypothesis": "T866同期init後の実負荷テスト(100ユーザー)がSLA greenで回帰しない",
+      "passed": true,
+      "detail": "load_test_100_users_2026-07-08.json: errors=0 p95=1113.31ms (SLA 3000ms) sla_keys=['targets_ms', 'overall_pass', 'endpoint_results']"
+    }
+  ],
+  "route_classification": {
+    "read_routes": [
+      "/api/admin/managed-agents/cost-simulation",
+      "/api/admin/operations-dashboard",
+      "/api/admin/operations-dashboard/report.csv",
+      "/api/admin/usage",
+      "/api/admin/usage/export",
+      "/api/attendance/summary",
+      "/api/audit/recent",
+      "/api/auth/me",
+      "/api/db-test",
+      "/api/employee-assessment/responses/summary",
+      "/api/engineers",
+      "/api/feedback/summary",
+      "/api/health",
+      "/api/jobs",
+      "/api/knowledge-flow/status",
+      "/api/matches",
+      "/api/sales-email/matches",
+      "/api/sales-email/reviews/summary",
+      "/api/seedance/video-task/{task_id}",
+      "/api/support/summary",
+      "/api/user-data/export"
+    ],
+    "write_routes": [
+      "/api/analytics/event",
+      "/api/attendance/punch",
+      "/api/attendance/timesheet/approve",
+      "/api/attendance/timesheet/parse",
+      "/api/billing/customer-portal/session",
+      "/api/employee-assessment/responses",
+      "/api/feedback",
+      "/api/knowledge-flow/generate",
+      "/api/match",
+      "/api/parse",
+      "/api/sales-email/reviews",
+      "/api/seedance/video-demo",
+      "/api/support/request",
+      "/api/sync"
+    ],
+    "read_share": 0.6,
+    "replica_safe_reads": [
+      "/api/admin/managed-agents/cost-simulation",
+      "/api/admin/operations-dashboard",
+      "/api/admin/operations-dashboard/report.csv",
+      "/api/admin/usage",
+      "/api/admin/usage/export",
+      "/api/attendance/summary",
+      "/api/audit/recent",
+      "/api/db-test",
+      "/api/employee-assessment/responses/summary",
+      "/api/feedback/summary",
+      "/api/health",
+      "/api/knowledge-flow/status",
+      "/api/sales-email/matches",
+      "/api/sales-email/reviews/summary",
+      "/api/seedance/video-task/{task_id}",
+      "/api/support/summary",
+      "/api/user-data/export"
+    ],
+    "primary_pinned_reads": [
+      "/api/auth/me",
+      "/api/engineers",
+      "/api/jobs",
+      "/api/matches"
+    ],
+    "replica_safe_share_of_reads": 0.8095238095238095
+  },
+  "traffic_baseline": {
+    "source": "load_test_100_users_2026-07-01.json",
+    "total_requests": 300,
+    "elapsed_seconds": 2.082,
+    "burst_rps": 144.1,
+    "overall_p95_ms": 943.81
+  },
+  "assumptions": {
+    "db_hold_ms_baseline": 25.0,
+    "supavisor_client_conn_budget": 200,
+    "pool_max_per_instance": 4,
+    "recommended_max_instances": 20
+  },
+  "scenarios": [
+    {
+      "load_multiple": 1,
+      "arrival_rps": 144.1,
+      "offload_share": 0.486,
+      "primary_only": {
+        "servers": 4,
+        "utilization": 0.901,
+        "saturated": false,
+        "queue_probability": 0.789,
+        "mean_wait_ms": 49.62,
+        "p95_wait_ms": 173.51
+      },
+      "primary_with_replica": {
+        "servers": 4,
+        "utilization": 0.463,
+        "saturated": false,
+        "queue_probability": 0.1398,
+        "mean_wait_ms": 1.63,
+        "p95_wait_ms": 11.97
+      },
+      "replica_pool": {
+        "servers": 4,
+        "utilization": 0.437,
+        "saturated": false,
+        "queue_probability": 0.1183,
+        "mean_wait_ms": 1.31,
+        "p95_wait_ms": 9.57
+      }
+    },
+    {
+      "load_multiple": 2,
+      "arrival_rps": 288.2,
+      "offload_share": 0.486,
+      "primary_only": {
+        "servers": 4,
+        "utilization": 1.801,
+        "saturated": true,
+        "queue_probability": 1.0,
+        "mean_wait_ms": null,
+        "p95_wait_ms": null
+      },
+      "primary_with_replica": {
+        "servers": 4,
+        "utilization": 0.926,
+        "saturated": false,
+        "queue_probability": 0.8418,
+        "mean_wait_ms": 71.44,
+        "p95_wait_ms": 239.63
+      },
+      "replica_pool": {
+        "servers": 4,
+        "utilization": 0.875,
+        "saturated": false,
+        "queue_probability": 0.7377,
+        "mean_wait_ms": 36.85,
+        "p95_wait_ms": 134.46
+      }
+    },
+    {
+      "load_multiple": 5,
+      "arrival_rps": 720.5,
+      "offload_share": 0.486,
+      "primary_only": {
+        "servers": 4,
+        "utilization": 4.503,
+        "saturated": true,
+        "queue_probability": 1.0,
+        "mean_wait_ms": null,
+        "p95_wait_ms": null
+      },
+      "primary_with_replica": {
+        "servers": 4,
+        "utilization": 2.316,
+        "saturated": true,
+        "queue_probability": 1.0,
+        "mean_wait_ms": null,
+        "p95_wait_ms": null
+      },
+      "replica_pool": {
+        "servers": 4,
+        "utilization": 2.187,
+        "saturated": true,
+        "queue_probability": 1.0,
+        "mean_wait_ms": null,
+        "p95_wait_ms": null
+      }
+    },
+    {
+      "load_multiple": 10,
+      "arrival_rps": 1441.0,
+      "offload_share": 0.486,
+      "primary_only": {
+        "servers": 4,
+        "utilization": 9.006,
+        "saturated": true,
+        "queue_probability": 1.0,
+        "mean_wait_ms": null,
+        "p95_wait_ms": null
+      },
+      "primary_with_replica": {
+        "servers": 4,
+        "utilization": 4.632,
+        "saturated": true,
+        "queue_probability": 1.0,
+        "mean_wait_ms": null,
+        "p95_wait_ms": null
+      },
+      "replica_pool": {
+        "servers": 4,
+        "utilization": 4.374,
+        "saturated": true,
+        "queue_probability": 1.0,
+        "mean_wait_ms": null,
+        "p95_wait_ms": null
+      }
+    }
+  ],
+  "pool_size_sweep_at_10x": [
+    {
+      "servers": 2,
+      "utilization": 18.012,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    },
+    {
+      "servers": 4,
+      "utilization": 9.006,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    },
+    {
+      "servers": 6,
+      "utilization": 6.004,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    },
+    {
+      "servers": 8,
+      "utilization": 4.503,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    },
+    {
+      "servers": 10,
+      "utilization": 3.603,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    },
+    {
+      "servers": 12,
+      "utilization": 3.002,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    },
+    {
+      "servers": 14,
+      "utilization": 2.573,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    },
+    {
+      "servers": 16,
+      "utilization": 2.252,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    },
+    {
+      "servers": 18,
+      "utilization": 2.001,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    },
+    {
+      "servers": 20,
+      "utilization": 1.801,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    }
+  ],
+  "db_hold_sensitivity_at_1x": [
+    {
+      "db_hold_ms": 10.0,
+      "servers": 4,
+      "utilization": 0.36,
+      "saturated": false,
+      "queue_probability": 0.0659,
+      "mean_wait_ms": 0.26,
+      "p95_wait_ms": 1.08
+    },
+    {
+      "db_hold_ms": 25.0,
+      "servers": 4,
+      "utilization": 0.901,
+      "saturated": false,
+      "queue_probability": 0.789,
+      "mean_wait_ms": 49.62,
+      "p95_wait_ms": 173.51
+    },
+    {
+      "db_hold_ms": 50.0,
+      "servers": 4,
+      "utilization": 1.801,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    },
+    {
+      "db_hold_ms": 100.0,
+      "servers": 4,
+      "utilization": 3.603,
+      "saturated": true,
+      "queue_probability": 1.0,
+      "mean_wait_ms": null,
+      "p95_wait_ms": null
+    }
+  ]
+}
