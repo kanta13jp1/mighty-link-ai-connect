@@ -140,7 +140,6 @@ jobs:
           FIREBASE_FUNCTIONS_DEPLOY_ENABLED: ${{ vars.FIREBASE_FUNCTIONS_DEPLOY_ENABLED || 'false' }}
           FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID || 'mighty-link-ai-connect-13d22' }}
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON || secrets.FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT }}
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_FUNCTIONS_DOTENV: ${{ secrets.FIREBASE_FUNCTIONS_DOTENV }}
         run: |
           set -euo pipefail
@@ -148,24 +147,16 @@ jobs:
           # Activate virtual environment so Firebase CLI detects it
           source venv/bin/activate
 
-          AUTH_FLAGS=()
-          LEGACY_FIREBASE_TOKEN="${FIREBASE_TOKEN:-}"
-
           if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]; then
             echo "[*] Using Google Application Default Credentials from Workload Identity Federation."
-            unset FIREBASE_TOKEN
           elif [ -n "${FIREBASE_SERVICE_ACCOUNT_JSON:-}" ]; then
             echo "[*] Using Firebase service account credentials via Application Default Credentials."
             FIREBASE_CREDENTIALS_FILE="$RUNNER_TEMP/firebase-service-account.json"
             printf '%s' "$FIREBASE_SERVICE_ACCOUNT_JSON" > "$FIREBASE_CREDENTIALS_FILE"
             chmod 600 "$FIREBASE_CREDENTIALS_FILE"
             export GOOGLE_APPLICATION_CREDENTIALS="$FIREBASE_CREDENTIALS_FILE"
-            unset FIREBASE_TOKEN
-          elif [ -n "${FIREBASE_TOKEN:-}" ]; then
-            echo "[!] WARNING: FIREBASE_TOKEN is legacy. Prefer FIREBASE_SERVICE_ACCOUNT_JSON with Application Default Credentials."
-            AUTH_FLAGS=(--token "$FIREBASE_TOKEN")
           else
-            echo "::error title=Missing Firebase deploy credentials::Deploy-affecting files changed, but neither Workload Identity Federation, service account JSON, nor FIREBASE_TOKEN credentials are available."
+            echo "::error title=Missing Firebase deploy credentials::Deploy-affecting files changed, but neither Workload Identity Federation nor service account JSON credentials are available."
             exit 2
           fi
 
@@ -193,14 +184,7 @@ jobs:
 
           echo "[*] Initiating deploy to Firebase project: $FIREBASE_PROJECT_ID"
           echo "[*] Deploy targets: $FIREBASE_DEPLOY_TARGETS"
-          if ! firebase deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_DEPLOY_TARGETS" --non-interactive --force "${AUTH_FLAGS[@]}"; then
-            if [ ${#AUTH_FLAGS[@]} -eq 0 ] && [ -n "$LEGACY_FIREBASE_TOKEN" ]; then
-              echo "[!] Firebase deploy with Application Default Credentials failed. Retrying with legacy FIREBASE_TOKEN fallback."
-              unset GOOGLE_APPLICATION_CREDENTIALS
-              if firebase deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_DEPLOY_TARGETS" --non-interactive --force --token "$LEGACY_FIREBASE_TOKEN"; then
-                exit 0
-              fi
-            fi
+          if ! firebase deploy --project "$FIREBASE_PROJECT_ID" --only "$FIREBASE_DEPLOY_TARGETS" --non-interactive --force; then
             echo "::error title=Firebase deploy failed::Could not deploy '$FIREBASE_DEPLOY_TARGETS' to Firebase project '$FIREBASE_PROJECT_ID'. Confirm the project exists and credentials have deploy permissions. Set FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true and FIREBASE_DEPLOY_TARGETS=hosting,functions only after the Firebase project and CI service account can update Cloud Functions IAM."
             exit 2
           fi
