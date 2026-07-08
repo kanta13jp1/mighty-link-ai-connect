@@ -19,6 +19,19 @@ Mighty Skill-Bridge の DB スキーマ変更を、Git 管理された migration
 3. migration file名は `YYYYMMDDHHMMSS_short_slug.sql` に統一する。
 4. 本番適用は1レーンだけが実行し、実行前に backup/PITR 時刻・Issue・WBS を記録する。
 5. 破壊的変更は staging で復元手順を確認してから実行する。
+6. **DDLの正本は `supabase/migrations/` に一本化する（T866/R114）**。`src/app.py` の `init_db` はコールドスタート時のスキーマ保証（レガシーテーブル+SQLite fallback）であり、新規テーブルのDDLをinit_dbだけに書くことは禁止。新機能テーブルは必ずmigrationファイルとして追加する。
+
+## 新規テーブル追加チェックリスト（T866/R114 再発防止）
+
+新しいテーブル・列を追加するタスクは、以下を完了条件に含める。
+
+- [ ] `supabase/migrations/YYYYMMDDHHMMSS_*.sql` を追加した（DDL正本）。
+- [ ] RLS有効化と `anon, authenticated` の REVOKE を同じmigrationに含めた。
+- [ ] **本番適用の実施証跡**（適用日時・実行者・適用後のテーブル数/カラム確認結果）を Issue または WBS 備考へ記録した。「検証のみのCI」green は適用証跡にならない（R114教訓）。
+- [ ] 適用直後に該当機能の本番POST/SELECTを1件実行し、保存成功を確認した。
+- [ ] ビュー/レポートが参照する列は `scripts/verify_sla_measurement_views.py` 型のドリフトガードまたはテストで固定した。
+
+補足（T866実装済みの保険）: `lifespan` は `yield` 前に `init_db` を完走させるため、コールドスタート直後の初回リクエストでスキーマ未初期化500は発生しない。またストレージ系insert失敗は `record_storage_failure` が `relation_missing / connection / constraint / unknown` に分類し、相関ID付きでログと500 detailへ出力する（SQL文・個人データはクライアントへ出さない）。migration未適用が再発した場合、500 detailの `category=relation_missing` が即座に根本原因を指す。
 
 ## 通常フロー
 

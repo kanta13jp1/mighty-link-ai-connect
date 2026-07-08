@@ -47,3 +47,12 @@
 - `CREATE TABLE IF NOT EXISTS` をアプリ起動時に流す設計は、サーバーレス実行環境（CPUスロットリング・即時スケールダウン）では保険にならない。スキーマ管理は deploy 時 migration に一本化する。
 - 「検証のみのCI」と「適用する運用」の間のギャップは、タスク完了条件に「本番適用の証跡」を含めることで塞ぐ。
 - 例外を握りつぶして汎用 500 に変換すると、原因特定がログアクセス保持者しかできなくなる。エラー分類は最初から仕込む。
+
+## 再発防止の実装結果（2026-07-08・T866_1・Claude Code）
+
+10仮説をテストで固定して実装した（tests/test_db_schema_guarantee.py 11件 + 全216テストgreen）。
+
+1. `lifespan` は `yield` 前に `init_db` を完走させる方式へ変更（`asyncio.to_thread`）。コールドスタート直後・明示的init_dbなしでの初回POST成功をTestClientで実証。daemon thread起動関数は削除済み（復活防止テストあり）。
+2. ストレージ系insert失敗10箇所の例外握りつぶしを廃止し、`record_storage_failure` が relation_missing / connection / constraint / unknown へ分類、相関ID（st-xxxx）をログと500 detailの両方へ付与（7エンドポイント適用）。SQL文・テーブル内部情報・個人データはクライアントへ出力しない。
+3. DDL正本のmigration一本化と「新規テーブル追加チェックリスト（本番適用の実施証跡必須）」を docs/DB_MIGRATION_MANAGEMENT_RUNBOOK.md へ明文化（教訓4に対応）。
+4. 残作業: 本番デプロイ後の T845 本番書き込み確認 green をもって T866 をクローズする（運用者工程）。

@@ -16,6 +16,7 @@ This FastAPI application provides:
 import os
 import sys
 import asyncio
+import contextvars
 import datetime
 import json
 import io
@@ -297,15 +298,18 @@ def get_current_user_for_data_export(
         )
 
 # Initialize FastAPI App
-def start_db_init_thread() -> None:
-    # init_db is defined below; lifespan runs only after module import completes.
-    thread = threading.Thread(target=init_db, daemon=True)
-    thread.start()
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    start_db_init_thread()
+    # R114/T866: the schema must be guaranteed before the first request is
+    # served. A daemon thread never completes on Cloud Run's request-scoped
+    # CPU, so init_db now runs to completion before yield (cold start pays
+    # the cost). to_thread keeps the event loop responsive while it runs.
+    try:
+        await asyncio.to_thread(init_db)
+    except Exception as exc:
+        # A transient DB outage must not crash-loop the container; storage
+        # requests will surface classified 500s (record_storage_failure).
+        print(f"[-] init_db failed during startup: {type(exc).__name__}: {exc}")
     yield
 
 
@@ -876,6 +880,57 @@ def init_sales_email_review_tables(cursor: Any, db_type: str) -> None:
         cursor.execute("CREATE INDEX IF NOT EXISTS idx_email_match_feedback_status ON email_match_feedback(feedback_status);")
 
 
+# --- Storage failure classification (T866 / R114 postmortem) -----------------
+# Insert helpers used to swallow exceptions into a generic {"id": 0}, turning
+# every schema/connection/constraint problem into an opaque 500. Each failure
+# is now classified and tagged with a correlation ID that appears both in the
+# server log and in the HTTP 500 detail (no SQL text or personal data leaves
+# the server — only the category and the ID).
+_LAST_STORAGE_FAILURE: contextvars.ContextVar = contextvars.ContextVar(
+    "last_storage_failure", default=None
+)
+
+STORAGE_ERROR_CATEGORIES = ("relation_missing", "connection", "constraint", "unknown")
+
+
+def classify_storage_error(exc: BaseException) -> str:
+    text = f"{type(exc).__name__}: {exc}".lower()
+    if "no such table" in text or "undefinedtable" in text or (
+        "relation" in text and "does not exist" in text
+    ):
+        return "relation_missing"
+    if any(marker in text for marker in (
+        "could not connect", "connection refused", "connection reset",
+        "server closed the connection", "timeout", "pool", "network",
+    )):
+        return "connection"
+    if "integrityerror" in text or "constraint" in text or "violates" in text:
+        return "constraint"
+    return "unknown"
+
+
+def record_storage_failure(operation: str, exc: BaseException) -> str:
+    """Classify + log a storage failure; returns the correlation ID."""
+    category = classify_storage_error(exc)
+    correlation_id = f"st-{uuid.uuid4().hex[:12]}"
+    _LAST_STORAGE_FAILURE.set(
+        {"operation": operation, "category": category, "correlation_id": correlation_id}
+    )
+    print(
+        f"[-] Storage failure [{correlation_id}] op={operation} category={category} "
+        f"error={type(exc).__name__}: {exc}"
+    )
+    return correlation_id
+
+
+def storage_failure_detail(message: str) -> str:
+    """HTTP 500 detail with category + correlation ID when a failure was recorded."""
+    info = _LAST_STORAGE_FAILURE.get()
+    if not info:
+        return message
+    return f"{message} (category={info['category']}, correlation_id={info['correlation_id']})"
+
+
 def init_db():
     conn, db_type = get_db_connection()
     cursor = conn.cursor()
@@ -1271,7 +1326,7 @@ def db_insert_engineer(name: str, resume_raw: str, parsed_skills: dict, career_g
         conn.commit()
         return inserted_id
     except Exception as e:
-        print(f"[-] Database insert engineer failed: {e}")
+        record_storage_failure("insert_engineer", e)
         return 0
     finally:
         cursor.close()
@@ -1301,7 +1356,7 @@ def db_insert_job(title: str, company: str, job_description: str, parsed_require
         conn.commit()
         return inserted_id
     except Exception as e:
-        print(f"[-] Database insert job failed: {e}")
+        record_storage_failure("insert_job", e)
         return 0
     finally:
         cursor.close()
@@ -1333,7 +1388,7 @@ def db_insert_match_result(engineer_id: int, job_id: int, fit_ratio: float, scor
         conn.commit()
         return inserted_id
     except Exception as e:
-        print(f"[-] Database insert match result failed: {e}")
+        record_storage_failure("insert_match_result", e)
         return 0
     finally:
         cursor.close()
@@ -1506,7 +1561,7 @@ def db_insert_feedback_event(
         conn.commit()
         return inserted_id
     except Exception as e:
-        print(f"[-] Database insert feedback event failed: {e}")
+        record_storage_failure("insert_feedback_event", e)
         return 0
     finally:
         cursor.close()
@@ -1729,7 +1784,7 @@ def db_insert_usage_analytics_event(
             "user_agent_family": user_agent_family,
         }
     except Exception as e:
-        print(f"[-] Database insert usage analytics event failed: {e}")
+        record_storage_failure("insert_usage_analytics_event", e)
         return {"id": 0, "error": str(e)}
     finally:
         cursor.close()
@@ -1953,7 +2008,7 @@ def db_insert_employee_assessment_response(
             "stored_feedback_excerpt": clean_feedback,
         }
     except Exception as e:
-        print(f"[-] Database insert employee assessment response failed: {e}")
+        record_storage_failure("insert_employee_assessment_response", e)
         return {"id": 0, "subject_pseudonym": subject_pseudonym, "error": str(e)}
     finally:
         cursor.close()
@@ -2328,7 +2383,7 @@ def db_insert_attendance_punch(
             "recorded_at": recorded_at.isoformat(timespec="seconds"),
         }
     except Exception as e:
-        print(f"[-] Database insert attendance punch failed: {e}")
+        record_storage_failure("insert_attendance_punch", e)
         return {"id": 0, "subject_pseudonym": subject_pseudonym, "error": str(e)}
     finally:
         cursor.close()
@@ -2408,7 +2463,7 @@ def db_insert_attendance_timesheet_import(
             "summary": attendance_summary_payload(parse_result),
         }
     except Exception as e:
-        print(f"[-] Database insert attendance timesheet failed: {e}")
+        record_storage_failure("insert_attendance_timesheet", e)
         return {"id": 0, "subject_pseudonym": subject_pseudonym, "error": str(e)}
     finally:
         cursor.close()
@@ -2858,7 +2913,7 @@ def db_insert_sales_email_match_review(
         }
     except Exception as e:
         conn.rollback()
-        print(f"[-] Database insert sales email match review failed: {e}")
+        record_storage_failure("insert_sales_email_match_review", e)
         return {"error": str(e), "db_type": db_type}
     finally:
         cursor.close()
@@ -3109,7 +3164,7 @@ def db_insert_support_request(
         conn.commit()
         return inserted_id
     except Exception as e:
-        print(f"[-] Database insert support request failed: {e}")
+        record_storage_failure("insert_support_request", e)
         return 0
     finally:
         cursor.close()
@@ -6068,7 +6123,7 @@ async def submit_sales_email_match_review(
             report_direction=str(report.get("direction") or "project_to_talent"),
         )
         if db_result.get("error"):
-            raise HTTPException(status_code=500, detail="Failed to store sales email review")
+            raise HTTPException(status_code=500, detail=storage_failure_detail("Failed to store sales email review"))
 
         review_log_path = Path(SALES_EMAIL_REVIEW_LOG_FILE)
         review_md_path = Path(SALES_EMAIL_REVIEW_MARKDOWN_FILE)
@@ -6150,7 +6205,7 @@ async def submit_usage_analytics_event(req: UsageAnalyticsEventRequest, request:
         },
     )
     if not db_result.get("id"):
-        raise HTTPException(status_code=500, detail="Failed to store analytics event")
+        raise HTTPException(status_code=500, detail=storage_failure_detail("Failed to store analytics event"))
     return {
         "status": "success",
         "event_id": db_result["id"],
@@ -6186,7 +6241,7 @@ async def submit_feedback(req: FeedbackRequest):
         metadata={"api_version": "2026-06-16", "wbs_task": "T763"},
     )
     if not feedback_id:
-        raise HTTPException(status_code=500, detail="Failed to store feedback")
+        raise HTTPException(status_code=500, detail=storage_failure_detail("Failed to store feedback"))
     return {"status": "success", "feedback_id": feedback_id}
 
 
@@ -6236,7 +6291,7 @@ async def submit_employee_assessment_response(req: EmployeeAssessmentResponseReq
         session_id=req.session_id,
     )
     if not db_result.get("id"):
-        raise HTTPException(status_code=500, detail="Failed to store employee assessment response")
+        raise HTTPException(status_code=500, detail=storage_failure_detail("Failed to store employee assessment response"))
 
     audit_event = write_audit_event(
         "employee_assessment_response",
@@ -6294,7 +6349,7 @@ async def submit_attendance_punch(req: AttendancePunchRequest):
         session_id=req.session_id,
     )
     if not db_result.get("id"):
-        raise HTTPException(status_code=500, detail="Failed to store attendance punch")
+        raise HTTPException(status_code=500, detail=storage_failure_detail("Failed to store attendance punch"))
 
     audit_event = write_audit_event(
         "attendance_punch",
@@ -6369,7 +6424,7 @@ async def parse_attendance_timesheet(
         session_id=session_id,
     )
     if not db_result.get("id"):
-        raise HTTPException(status_code=500, detail="Failed to store attendance timesheet import")
+        raise HTTPException(status_code=500, detail=storage_failure_detail("Failed to store attendance timesheet import"))
 
     audit_event = write_audit_event(
         "attendance_timesheet_parse",
@@ -6472,7 +6527,7 @@ async def submit_support_request(req: SupportRequest):
         metadata={"api_version": "2026-06-16", "wbs_task": "T790"},
     )
     if not support_id:
-        raise HTTPException(status_code=500, detail="Failed to store support request")
+        raise HTTPException(status_code=500, detail=storage_failure_detail("Failed to store support request"))
     return {"status": "success", "support_request_id": support_id, "priority": priority}
 
 
