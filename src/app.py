@@ -38,6 +38,14 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict, List, Optional, Set, Tuple
 
+# Session-only aptitude/motivation self-check logic (T876). Imported both as a
+# top-level module (tests put src/ on sys.path) and as src.aptitude_demo
+# (production imports the app via `from src.app import app`).
+try:
+    import aptitude_demo
+except ImportError:  # pragma: no cover - production path
+    from src import aptitude_demo
+
 
 def env_int(name: str, default: int, minimum: int, maximum: int) -> int:
     try:
@@ -72,7 +80,7 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends, Req
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.security import HTTPBasic, HTTPBasicCredentials, HTTPBearer, HTTPAuthorizationCredentials
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 try:
     from .rate_limit import SlidingWindowRateLimiter, client_identifier
 except ImportError:
@@ -5781,6 +5789,26 @@ class FeedbackRequest(BaseModel):
     session_id: Optional[str] = ""
 
 
+class AptitudeDemoQuestionRequest(BaseModel):
+    # T876: session-only aptitude/motivation self-check. No answers here — this
+    # only requests the question set. count is clamped to [10, 20].
+    count: Optional[int] = None
+    legal_consent_accepted: bool = False
+    legal_consent_version: Optional[str] = None
+
+
+class AptitudeDemoAnswer(BaseModel):
+    dimension: Optional[str] = "general"
+    value: int
+
+
+class AptitudeDemoEvaluateRequest(BaseModel):
+    answers: List[AptitudeDemoAnswer] = Field(default_factory=list)
+    consented: bool = False
+    legal_consent_accepted: bool = False
+    legal_consent_version: Optional[str] = None
+
+
 class UsageAnalyticsEventRequest(BaseModel):
     event_name: str
     event_surface: str = "public_demo"
@@ -6249,6 +6277,56 @@ async def submit_feedback(req: FeedbackRequest):
 async def get_feedback_summary(limit: int = 20, username: str = Depends(verify_credentials)):
     """Authenticated feedback summary for operations and quality review."""
     return {"status": "success", **db_get_feedback_summary(limit=limit)}
+
+
+def _aptitude_gemini_caller(prompt: str) -> Any:
+    """Bridge the pure aptitude_demo module to the app's Gemini client."""
+    if not GEMINI_READY or GEMINI_CLIENT is None:
+        raise RuntimeError("Gemini live mode is not configured; using vetted fallback questions.")
+    response = generate_gemini_content(prompt, response_mime_type="application/json")
+    return getattr(response, "text", None)
+
+
+@app.post("/api/aptitude-demo/questions")
+async def aptitude_demo_questions(req: AptitudeDemoQuestionRequest):
+    """T876: return a session-only motivation/condition self-check question set.
+
+    Requires legal consent. NEVER persists anything (要配慮個人情報 protection,
+    R119/QA-105); the aptitude_demo module has no storage access by construction.
+    Only a non-identifying count is audited — never question or answer content.
+    """
+    validate_legal_consent(req.legal_consent_accepted, req.legal_consent_version, "api_aptitude_demo_questions")
+    caller = _aptitude_gemini_caller if GEMINI_READY else None
+    result = aptitude_demo.generate_questions(count=req.count, gemini_caller=caller)
+    write_audit_event(
+        "aptitude_demo_questions_generated",
+        {"wbs_task": "T876", "question_count": result["count"], "source": result["source"],
+         "persisted": False, "answers_stored": False},
+    )
+    return {"status": "success", **result}
+
+
+@app.post("/api/aptitude-demo/evaluate")
+async def aptitude_demo_evaluate(req: AptitudeDemoEvaluateRequest):
+    """T876: evaluate 1-5 answers on-screen only. Requires consent. NEVER persists.
+
+    Answer values and the derived condition score are 要配慮個人情報 and are held
+    only in this request's memory. The audit log records that an evaluation ran
+    and how many items were answered — never the answers or the resulting score.
+    """
+    validate_legal_consent(req.legal_consent_accepted, req.legal_consent_version, "api_aptitude_demo_evaluate")
+    if not req.consented:
+        raise HTTPException(status_code=400, detail="consent is required before running the self-check evaluation")
+    try:
+        result = aptitude_demo.evaluate_responses([a.model_dump() for a in req.answers])
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    write_audit_event(
+        "aptitude_demo_evaluated",
+        {"wbs_task": "T876", "answered_count": result["answered_count"],
+         "persisted": False, "answers_stored": False, "score_stored": False},
+    )
+    return {"status": "success", **result}
 
 
 @app.post("/api/employee-assessment/responses")

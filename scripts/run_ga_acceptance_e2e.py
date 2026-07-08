@@ -52,6 +52,9 @@ def _bootstrap_app():
     app_module.DATA_DIR = str(data_dir)
     app_module.AUDIT_DIR = str(data_dir / "audit")
     app_module.EXTERNAL_API_USAGE_LOG_FILE = str(data_dir / "external_api_usage.jsonl")
+    # Self-contained audit path so a leaked global from another test module can
+    # never point our audit writes at a deleted directory.
+    app_module.AUDIT_LOG_FILE = str(data_dir / "audit" / "ai_audit.jsonl")
     app_module.AI_FORCE_MOCK = True
     app_module.GEMINI_READY = False
     os.makedirs(app_module.AUDIT_DIR, exist_ok=True)
