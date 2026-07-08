@@ -2357,6 +2357,55 @@
         .card-stat.stat-blue { color: var(--blue); }
         .card-stat.stat-green { color: var(--green); }
         .card-stat.stat-yellow { color: var(--yellow); }
+
+        /* ==========================================================================
+           T877 Light theme (ADDITIVE — default dark theme above is unchanged).
+           Opt-in via the header toggle; :root[data-theme="light"] flips the core
+           design tokens plus the few direct-value dark surfaces to a light palette.
+           ========================================================================== */
+        :root[data-theme="light"] {
+            --bg: #ffffff;
+            --panel: rgba(255, 255, 255, 0.92);
+            --panel-strong: #f4f4f5;
+            --line: rgba(15, 23, 42, 0.12);
+            --line-strong: rgba(15, 23, 42, 0.26);
+            --text: #14151a;
+            --muted: #55606f;
+            --blue: #1d6fe0;
+            --green: #3f9d1f;
+            --yellow: #b8860b;
+            --rose: #d6337e;
+            --shadow: rgba(15, 23, 42, 0.14);
+        }
+        :root[data-theme="light"] html,
+        :root[data-theme="light"] body {
+            background: #ffffff;
+        }
+        :root[data-theme="light"] .hero {
+            background: var(--panel-strong);
+        }
+        :root[data-theme="light"] .hero-video-frame,
+        :root[data-theme="light"] .play-glyph,
+        :root[data-theme="light"] .video-left,
+        :root[data-theme="light"] .seedance-video {
+            background: #0b0b0f; /* video surfaces stay dark for contrast */
+        }
+        .theme-toggle {
+            background: var(--panel-strong);
+            color: var(--text);
+            border: 1px solid var(--line-strong);
+            border-radius: 999px;
+            padding: 6px 12px;
+            font: inherit;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .theme-toggle:hover { border-color: var(--blue); }
+        .theme-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
     </style>
 </head>
 <body>
@@ -2392,6 +2441,7 @@
                 <span>/</span>
                 <a href="admin" style="color: var(--blue); font-weight: 700; text-decoration: underline;" target="_blank" rel="noopener">Admin</a>
             </div>
+            <button class="theme-toggle" type="button" id="theme-toggle" aria-label="配色モードを切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label">ライト</span></button>
             <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleNav()">☰</button>
         </div>
     </header>
@@ -3235,6 +3285,33 @@
             links.scrollIntoView({behavior: "smooth", block: "nearest", inline: "start"});
             if (firstLink) firstLink.focus({preventScroll: true});
         }
+
+        function applyTheme(theme) {
+            const root = document.documentElement;
+            if (theme === "light") {
+                root.setAttribute("data-theme", "light");
+            } else {
+                root.removeAttribute("data-theme");
+            }
+            const btn = document.getElementById("theme-toggle");
+            const label = document.getElementById("theme-toggle-label");
+            if (btn) btn.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+            if (label) label.textContent = theme === "light" ? "ダーク" : "ライト";
+        }
+
+        function toggleTheme() {
+            const isLight = document.documentElement.getAttribute("data-theme") === "light";
+            const next = isLight ? "dark" : "light";
+            try { localStorage.setItem("msb-theme", next); } catch (e) {}
+            applyTheme(next);
+        }
+
+        (function initTheme() {
+            let saved = null;
+            try { saved = localStorage.getItem("msb-theme"); } catch (e) {}
+            // Default is dark: only switch to light when explicitly saved.
+            applyTheme(saved === "light" ? "light" : "dark");
+        })();
 
         function switchLanguage(el) {
             const switcher = el.closest(".language-switch");
