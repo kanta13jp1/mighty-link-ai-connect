@@ -1,66 +1,19 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-07-08T15:46:16+09:00
+Generated: 2026-07-08T20:13:49+09:00
 Notebook: `4934c12b-b270-4739-97a1-b04b5b84eaaf`
+Status: `source_sync_ready`
 
-## Question
+NotebookLM source sync completed. The summary/ask generation phase was skipped by `--skip-asks` to keep the closeout run deterministic.
 
-このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、
-Codex/AIエージェントが次に開発を進めるための要約を作ってください。
+## Synced Sources
 
-必ず以下を含めてください。
-1. 現在のプロダクト方向性で確定していること
-2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク
-3. 6/2で社長に決めてもらうべき事項
-4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提
-5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題
-6. WBSへ追加すべき次アクション
+- Source rows processed: `128`
 
+## Optional Ask Generation
 
-## NotebookLM Answer
+```powershell
+python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900
+```
 
-現在の日付（2026年7月8日）および最新のプロジェクト状況をもとに、AIエージェント向けの最新開発ブリーフを作成します。
-
-ご指定の「6/2の社長打ち合わせ」に関する項目は、すでにフェーズが進行しているため、本日予定されている**「7/8の社内向けGA（一般公開前リリース）および社長定例打ち合わせ」**の最新ステータスに読み替えて要約しています。
-
-### 1. 現在のプロダクト方向性で確定していること
-* **社内向けGAと課金スコープ:** 7/8のリリースは「社内向けGA（internal launch）」とし、当面は社内ユーザーのみが利用します [1]。Stripe課金機能はテストモードでの仕組み実装（T791）までに留め、実課金は発生させません [1]。
-* **最優先機能の確定:** 共有営業アドレスに届く大量の営業メールから案件要件や人材情報を自動抽出し、エンジニア候補と照合する「営業メールAIマッチング」がMVPとして実装されました [2]。
-* **インフラとAIモデル:** インフラはFirebase（Hosting/Functions）とSupabase（PostgreSQL 17.6）の構成です [3]。AIモデルは `gemini-3.5-flash` を本番既定とし、勝手なモデル差し替えは禁止されています [4]。
-
-### 2. 7/8の社長打ち合わせ（GA判定）までに優先すべき準備タスク
-* **全機能E2E/UATの最終完了（T845）:** 自動化可能なアプリ層のE2Eテストは完了（T845_1）していますが、本番Supabaseへの実書き込み確認と最終サインオフを定例までに完了させる必要があります [5, 6]。
-* **CI/CD・バックアップパイプラインの再構成（T852 / T870）:** WIFが旧プロジェクトへ誤バインドされている問題を修復し、mainブランチからのFirebaseデプロイと日次バックアップを正常稼働させます [7-9]。
-* **DBスキーマ管理の再発防止（T866）のクローズ:** `init_db` を同期実行へ変更する対応は完了しており、デプロイ後の本番実書き込み確認をもって本タスクをクローズします [10, 11]。
-
-### 3. 7/8で社長に決めてもらうべき事項
-7/8 15:00の定例打ち合わせにて、以下の意思決定を求めます [12]。
-* **営業メール接続情報の提供とGA進行案（案A/B）:** 営業メールの実接続情報の提供依頼 [13]。受領が遅れる場合、「案A（検証済みPoCデータで7/8に社内GAし、実接続は後日追加検証）」で進めるかどうかの最終判断 [13, 14]。
-* **社内GA宣言とリリースゲート仕分けの承認:** 7/8での社内GA宣言、および有償化専用ゲート（Stripe live設定等）を後回しにするゲート仕分け（T863）の正式承認 [15, 16]。
-* **有償公開の進め方（T862）:** 7/31の初回レビュー以降、月次で有償公開・課金開始を判断する計画への合意 [15, 17]。
-* **会社アカウント本移管の日程調整（T823 / T850）:** 属人化解消のための、GitHubやGCP等の会社名義への本移管・引継ぎ日程の確定 [18, 19]。
-* **社長側の残作業対応:** 録画ファイルの整理（T831）と旧サイトの認証情報クリーンアップ（T834）の実施 [18]。
-
-### 4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提
-* **データ保存の最小化と機密情報の非保存:** 営業メールの本文全文、勤務表CSV原本、個人識別子、OAuthトークン、APIキー、Stripe secretなどの機微な情報は、データベース、GitHub、Sheets等へ絶対に保存・出力してはいけません [20, 21]。
-* **Supabase RLSの徹底と匿名アクセス禁止:** 全テーブルでRow Level Security (RLS) を有効化し、`anon` および `authenticated` からのREST直アクセスを `REVOKE ALL` で禁止します [20, 22]。DB書き込みはFastAPI経由（Service Role使用）に限定します [20, 23]。
-* **DDL正本のmigration一本化:** `init_db` の動的実行だけに頼らず、新規テーブルのDDLは必ずmigrationファイルとして追加して本番適用の証跡を残します（T866） [11, 24]。
-* **確定的フォールバックの維持:** Gemini API等のクォータ枯渇時や障害時でもサービスを止めないよう、同じデータスキーマで応答する確定的フォールバック（deterministic fallback）を維持します [25, 26]。
-
-### 5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題
-* **外部SaaS・AIモデルのGA凍結（T848）:** 採用ツール（Obsidian等）と条件付き採用ツール（Slack、Notion等：secret未設定時はdry-runとする）の方針がGA時点の利用可否として凍結されています [27, 28]。
-* **Google Workspaceの認証切れ対策:** Sheets等の実行アカウントは `k-umezawa@ml-mightylink.com` を正とし、認証切れの際は同期をスキップして再認証（T825）を促す運用が徹底されています [29, 30]。
-* **GitHub Project・会社アカウントへの本移管（T823）:** WBSやProject同期の運用は定着していますが、梅澤個人のアカウント依存が最大のリスクとして残っているため、GA後に速やかに会社アカウントへ本移管を行う必要があります [15, 31]。
-
-### 6. WBSへ追加すべき次アクション
-7/8の社内GA、およびその後のフェーズに向けて、以下のタスクを実行します。
-* **T845:** 全機能本番受入E2E/UAT（本番Supabaseへの実書き込み確認を含む）の最終完了 [5, 6]。
-* **T849:** サイト開発完了総合判定・社内GA宣言の実施 [32, 33]。
-* **T852 / T870:** Firebase CI/CDデプロイ認証のWIF/ADC再構成と、本番DBバックアップパイプラインの復旧 [8, 9]。
-* **T836 / T817_7:** 顧客受信メール環境の実接続と、営業メールAIマッチングの実メール運用hardeningの実施（案Aの場合は接続情報受領後に追加検証） [13, 34]。
-* **T823 / T850:** 会社アカウント本移管と運用引継ぎリハーサル [18, 35]。
-* **T862:** 有償公開・課金live有効化の実施判断（7/31初回レビュー以降、月次で判断） [15, 17]。
-
-## Notebook Summary
-
-NotebookLM summary command return code: `0`
+After the optional ask generation succeeds, this file will be replaced by a NotebookLM-generated agent brief.
