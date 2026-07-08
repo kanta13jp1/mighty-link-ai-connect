@@ -1,6 +1,6 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-08T15:39:18+09:00
+Generated: 2026-07-08T15:46:16+09:00
 
 ## Current Status
 
@@ -45,7 +45,7 @@ Generated: 2026-07-08T15:39:18+09:00
 - `docs/DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md`: https://docs.google.com/document/d/1z342WkM3spdRi9nNP17b_A1SYxGgVpYkFtk_WP9K7uI/edit?usp=drivesdk
 - `docs/database.md`: https://docs.google.com/document/d/1WVp_vmYeiCZfFWbCpHNfmwGoUeBADuMjyLySBHrh9bI/edit?usp=drivesdk
 - `docs/DB_MIGRATION_MANAGEMENT_RUNBOOK.md`: https://docs.google.com/document/d/13d9sL_Sle75GqpBTI405P0Z5Owh5ZNVHDLvfsSvOu0U/edit?usp=drivesdk
-- `docs/DB_READ_LOAD_BALANCING_DESIGN.md`: https://docs.google.com/document/d/1mNEOoyq8ZTwED0VzgDKPAeQ_uc2J1oQmoIoAkgI8R-I/edit?usp=drivesdk
+- `docs/DB_READ_LOAD_BALANCING_DESIGN.md`: https://docs.google.com/document/d/1mmsE1WyRKOSxoRPJBVX6XW26VG8PUPg_hOSgPEuvCfQ/edit?usp=drivesdk
 - `docs/DEMO_SECURITY_AND_AUTH_DESIGN.md`: https://docs.google.com/document/d/1C606e1yesSIVlZfOrRjZ_4hkgr4OQQ_axpYjBFvrUEc/edit?usp=drivesdk
 - `docs/DEVELOPMENT_KNOWLEDGE_FLOW.md`: https://docs.google.com/document/d/1SS44DK0H57KFdX4jHDucbYe6PRN2ofUllaaLr5zioYU/edit?usp=drivesdk
 - `docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md`: https://docs.google.com/document/d/1yHVwrsZ_TZyEMa1wSfoxaSv85w7pyPqGP7VZUHTwhQU/edit?usp=drivesdk
@@ -146,7 +146,7 @@ Generated: 2026-07-08T15:39:18+09:00
 NotebookLM CLI is authenticated and the docs source set has been synced.
 
 - Notebook: `4934c12b-b270-4739-97a1-b04b5b84eaaf`
-- Ask generation: `skipped`
+- Ask generation: `ready`
 - Agent brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
 - Agent brief JSON: `exports/knowledge_flow/notebooklm_agent_brief.json`
 - CEO slide outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
