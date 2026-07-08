@@ -382,8 +382,13 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--input",
         action="append",
-        required=True,
+        required=False,
         help="Input file or directory. Supported: .eml, .txt, .csv. Repeatable.",
+    )
+    parser.add_argument(
+        "--pop3",
+        action="store_true",
+        help="Fetch emails from configured POP3 server.",
     )
     parser.add_argument("--json-report", default=str(DEFAULT_JSON_REPORT))
     parser.add_argument("--markdown-report", default=str(DEFAULT_MARKDOWN_REPORT))
@@ -393,8 +398,21 @@ def build_arg_parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_arg_parser()
     args = parser.parse_args(argv)
-    input_paths = [Path(value) for value in args.input]
-    emails = load_sales_emails(input_paths)
+    
+    if not args.input and not args.pop3:
+        parser.error("At least one of --input or --pop3 must be specified.")
+
+    emails: list[RawSalesEmail] = []
+
+    if args.input:
+        input_paths = [Path(value) for value in args.input]
+        emails.extend(load_sales_emails(input_paths))
+
+    if args.pop3:
+        # Import inside function to avoid circular imports with sales_email_pop3
+        from sales_email_pop3 import fetch_pop3_emails
+        emails.extend(fetch_pop3_emails())
+
     report = build_ingest_report(emails)
     write_json_report(report, Path(args.json_report))
     write_markdown_report(report, Path(args.markdown_report))
@@ -411,3 +429,4 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
