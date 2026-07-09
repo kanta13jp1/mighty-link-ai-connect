@@ -199,6 +199,7 @@
             justify-content: flex-end;
             gap: 16px;
             min-width: 0;
+            flex-shrink: 0;
         }
 
         .language-switch {
@@ -1247,6 +1248,12 @@
 
             .stage-copy h1 {
                 font-size: 48px;
+            }
+        }
+
+        @media (max-width: 1380px) {
+            .status-strip {
+                display: none;
             }
         }
 
