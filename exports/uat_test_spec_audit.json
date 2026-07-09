@@ -1,0 +1,86 @@
+{
+  "task": "T882",
+  "spec_path": "docs\\UAT_TEST_SPECIFICATION.md",
+  "case_count": 15,
+  "case_ids": [
+    "TS-01",
+    "TS-02",
+    "TS-03",
+    "TS-04",
+    "TS-05",
+    "TS-06",
+    "TS-07",
+    "TS-08",
+    "TS-09",
+    "TS-10",
+    "TS-11",
+    "TS-12",
+    "TS-13",
+    "TS-14",
+    "TS-15"
+  ],
+  "missing_domains": [],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "テストケースが12件以上",
+      "passed": true,
+      "detail": "件数=15"
+    },
+    {
+      "id": "H2",
+      "title": "テストIDが一意かつTS-連番形式",
+      "passed": true,
+      "detail": "重複=なし, 形式OK=True"
+    },
+    {
+      "id": "H3",
+      "title": "全ケースが必須フィールドを保有(空欄なし)",
+      "passed": true,
+      "detail": "欠落=なし"
+    },
+    {
+      "id": "H4",
+      "title": "全ケースのテスト手順が2ステップ以上(人間が追える具体性)",
+      "passed": true,
+      "detail": "手順不足=なし"
+    },
+    {
+      "id": "H5",
+      "title": "全ケースにOK判定とNG判定を両方明記(合否判断可能)",
+      "passed": true,
+      "detail": "判定欠落=なし"
+    },
+    {
+      "id": "H6",
+      "title": "全ケースの関連WBSが実在(data/WBS.tsv)",
+      "passed": true,
+      "detail": "不正WBS=なし"
+    },
+    {
+      "id": "H7",
+      "title": "API記載ケースの関連APIがsrc/app.pyに実在",
+      "passed": true,
+      "detail": "不正API=なし"
+    },
+    {
+      "id": "H8",
+      "title": "GA主要ドメインを全て網羅",
+      "passed": true,
+      "detail": "未網羅=なし"
+    },
+    {
+      "id": "H9",
+      "title": "全ケースの実施結果欄にOK/NG記入マーカーがある",
+      "passed": true,
+      "detail": "記入欄欠落=なし"
+    },
+    {
+      "id": "H10",
+      "title": "仕様書全体が完全・整合(ドリフト0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ],
+  "all_passed": true
+}
