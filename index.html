@@ -2912,7 +2912,7 @@
                     </div>
                     <div class="input-group" style="margin-top: 16px;">
                         <label for="survey-feedback">3. 業務における所感・成長課題（フリー記述）</label>
-                        <textarea id="survey-feedback" class="textarea-input" placeholder="現在取り組んでいる開発、キャッチアップが必要な技術、サポートが必要な業務上の論点を記入してください。健康情報や病歴、連絡先、認証情報は入力しないでください。" required></textarea>
+                        <textarea id="survey-feedback" class="textarea-input" placeholder="現在取り組んでいる開発、キャッチアップが必要な技術、サポートが必要な業務上の論点を10文字以上で記入してください。健康情報や病歴、連絡先、認証情報は入力しないでください。" required minlength="10"></textarea>
                     </div>
                     <label class="control-label" style="display: flex; gap: 10px; align-items: flex-start; margin-top: 16px;">
                         <input type="checkbox" id="survey-consent" required style="margin-top: 3px;">
@@ -4519,7 +4519,9 @@
                     body: JSON.stringify(payload)
                 });
                 if (!response.ok) {
-                    throw new Error("Employee assessment endpoint unavailable");
+                    let serverDetail = "";
+                    try { serverDetail = (await response.json()).detail || ""; } catch (parseError) { /* 非JSON応答 */ }
+                    throw new Error(serverDetail || `HTTP ${response.status}`);
                 }
                 const data = await response.json();
                 const displayKey = data.subject_pseudonym || "emp-assess-saved";
@@ -4553,9 +4555,26 @@
                 setRating('motivation', 5);
                 setRating('culture', 4);
             } catch (error) {
-                console.warn("Employee assessment API unavailable.", error);
+                console.warn("Employee assessment submission failed.", error);
                 setSurveyStatus("送信失敗", "var(--rose)");
-                alert("アンケート保存APIへ接続できませんでした。入力内容は保存されていません。");
+                const reason = error && error.message ? error.message : "";
+                let friendly;
+                if (reason.indexOf("consent is required") !== -1) {
+                    friendly = "同意が必要です。同意チェックをオンにしてください。";
+                } else if (reason.indexOf("growth_feedback must be at least") !== -1) {
+                    friendly = "フリー記述は10文字以上で入力してください。";
+                } else if (reason.indexOf("employee_identifier must be at least") !== -1) {
+                    friendly = "社内確認コードは3文字以上で入力してください。";
+                } else if (reason.indexOf("department is required") !== -1) {
+                    friendly = "部署カテゴリを選択してください。";
+                } else if (reason.indexOf("motivation_level") !== -1 || reason.indexOf("culture_level") !== -1) {
+                    friendly = "モチベーションとカルチャーは1〜5で選択してください。";
+                } else if (reason) {
+                    friendly = `サーバー応答: ${reason}`;
+                } else {
+                    friendly = "アンケート保存APIへ接続できませんでした。";
+                }
+                alert(`アンケートを保存できませんでした。${friendly}（入力内容は保存されていません）`);
             } finally {
                 if (submitButton) submitButton.disabled = false;
             }
