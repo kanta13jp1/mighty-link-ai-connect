@@ -1,0 +1,73 @@
+{
+  "task": "T881",
+  "scope": "supabase/migrations (product schema)",
+  "fk_count": 14,
+  "covered_count": 14,
+  "gap_count": 0,
+  "gaps": [],
+  "fix_migration": "20260709000000_fk_covering_indexes.sql",
+  "new_index_count": 11,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "FK列抽出が健全(>=12件・主要FK在)",
+      "passed": true,
+      "detail": "FK列数=14"
+    },
+    {
+      "id": "H2",
+      "title": "被覆判定が完全な分割(covered∪gaps==fk, 重複なし)",
+      "passed": true,
+      "detail": "covered=14, gaps=0, fk=14"
+    },
+    {
+      "id": "H3",
+      "title": "複合indexのleftmostがFKを被覆(sales_email_entities.message_id)",
+      "passed": true,
+      "detail": "message_idはidx(message_id,entity_type)で被覆"
+    },
+    {
+      "id": "H4",
+      "title": "UNIQUE/btree単独indexがFKを被覆(usage_ledgers.user_id, matches.user_id)",
+      "passed": true,
+      "detail": "user_idはUNIQUE/idx_matches_user_createdで被覆"
+    },
+    {
+      "id": "H5",
+      "title": "監査ログFK(audits.match_id, ON DELETE SET NULL)が被覆",
+      "passed": true,
+      "detail": "削除カスケード性能"
+    },
+    {
+      "id": "H6",
+      "title": "FKインデックスギャップ0(公式Supabase advisor推奨に整合)",
+      "passed": true,
+      "detail": "残ギャップ: なし"
+    },
+    {
+      "id": "H7",
+      "title": "既知の要対応FK11件が全て被覆",
+      "passed": true,
+      "detail": "未被覆target: なし"
+    },
+    {
+      "id": "H8",
+      "title": "fix migrationのindexは全てbtree・単一plain列",
+      "passed": true,
+      "detail": "index数=11, 非btree=なし"
+    },
+    {
+      "id": "H9",
+      "title": "fix migrationのindexは全てIF NOT EXISTS(冪等・追加のみ)",
+      "passed": true,
+      "detail": "非冪等=なし"
+    },
+    {
+      "id": "H10",
+      "title": "総合ドリフト0(全FK被覆かつ全チェックgreen)",
+      "passed": true,
+      "detail": "先行ドリフト=なし, ギャップ=0"
+    }
+  ],
+  "all_passed": true
+}

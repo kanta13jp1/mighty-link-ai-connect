@@ -8,6 +8,9 @@
 | 日付 | バージョン | 内容 | 起稿者 |
 | :--- | :--- | :--- | :--- |
 | 2026-06-06 | v1.0.0 | 初版作成（テーブル DDL、インデックス、トリガー定義） | Codex / AIエージェント |
+| 2026-07-09 | v1.1.0 | 外部キー被覆 B-Tree インデックス設計（§2.3）を追加（T881）。全テーブル索引は `docs/database.md` §5 を正とする旨を明記 | Claude Code |
+
+> 本書はコア診断ドメイン4テーブルの物理・インデックス設計を詳述する。フィードバック/サポート・営業メールAIマッチング（9表）・社内HR・アナリティクス/SLA を含む**全23テーブル+6ビューの索引は `supabase/migrations` を正本**とし、俯瞰は [`docs/database.md`](./database.md) §5 の全オブジェクト索引を参照。
 
 ---
 
@@ -135,6 +138,28 @@ FOR EACH ROW EXECUTE FUNCTION trigger_set_timestamp();
    CREATE INDEX idx_profiles_resume_gin ON public.profiles USING gin (resume_profile);
    CREATE INDEX idx_matches_score_details_gin ON public.matches USING gin (score_details jsonb_path_ops);
    ```
+
+### 2.3 外部キー被覆 B-Tree インデックス（T881）
+
+PostgreSQL は PRIMARY KEY / UNIQUE 制約にのみ自動でインデックスを作成し、**外部キー列にはインデックスを張りません**。Supabase の Database Performance Advisor が「unindexed foreign keys」を検出する理由でもあり、未被覆のままだと (1) JOIN が逐次スキャンに退化し、(2) `ON DELETE CASCADE / SET NULL` の親行削除が全ての子テーブルを全走査します（データ保持・削除フロー T847 に直結）。
+
+`supabase/migrations/20260709000000_fk_covering_indexes.sql` で、被覆が無かった外部キー列 11 件に単一列 B-Tree インデックスを追加しました（`CREATE INDEX IF NOT EXISTS`＝追加のみ・冪等）。
+
+| テーブル | FK列 | 参照先 | 追加インデックス |
+| :--- | :--- | :--- | :--- |
+| `audits` | `match_id` | `matches(id)` | `idx_audits_match_id` |
+| `sales_email_messages` | `mailbox_source_id` | `sales_mailbox_sources(id)` | `idx_sales_email_messages_mailbox_source_id` |
+| `sales_email_messages` | `duplicate_of_id` | `sales_email_messages(id)` | `idx_sales_email_messages_duplicate_of_id` |
+| `project_requirements` | `message_id` | `sales_email_messages(id)` | `idx_project_requirements_message_id` |
+| `talent_profiles_from_email` | `message_id` | `sales_email_messages(id)` | `idx_talent_profiles_from_email_message_id` |
+| `requirement_skill_tags` | `project_requirement_id` | `project_requirements(id)` | `idx_requirement_skill_tags_project_requirement_id` |
+| `requirement_skill_tags` | `talent_profile_id` | `talent_profiles_from_email(id)` | `idx_requirement_skill_tags_talent_profile_id` |
+| `email_parse_runs` | `mailbox_source_id` | `sales_mailbox_sources(id)` | `idx_email_parse_runs_mailbox_source_id` |
+| `email_match_results` | `project_requirement_id` | `project_requirements(id)` | `idx_email_match_results_project_requirement_id` |
+| `email_match_results` | `talent_profile_id` | `talent_profiles_from_email(id)` | `idx_email_match_results_talent_profile_id` |
+| `email_match_feedback` | `match_result_id` | `email_match_results(id)` | `idx_email_match_feedback_match_result_id` |
+
+> `sales_email_entities.message_id` は既存の複合インデックス `idx_sales_email_entities_message_type (message_id, entity_type)` の最左列で被覆済みのため追加不要。被覆の網羅は [`scripts/audit_fk_index_coverage.py`](../scripts/audit_fk_index_coverage.py)（10仮説・ギャップ0）と `tests/test_fk_index_coverage.py` が CI で継続検証する。大規模・高書き込みテーブルへ後日適用する場合は、トランザクション外の `CREATE INDEX CONCURRENTLY` を [`docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md`](./PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md) の手順で用いる。**本番 Supabase への適用は運用者工程**（`SUPABASE_DB_URL` 必須、T778 の migration 適用バッチに合流可）。
 
 ---
 
