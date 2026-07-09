@@ -1,0 +1,113 @@
+{
+  "task": "T880",
+  "doc_path": "docs\\database.md",
+  "authoritative_table_count": 23,
+  "authoritative_view_count": 6,
+  "documented_table_count": 23,
+  "documented_view_count": 6,
+  "pending_prod_objects": [
+    "kpi_daily_diagnoses",
+    "kpi_daily_response_time",
+    "kpi_monthly_availability",
+    "kpi_weekly_active_users",
+    "kpi_weekly_anonymous_sessions",
+    "kpi_weekly_diagnosis_accuracy",
+    "uptime_checks"
+  ],
+  "authoritative_tables": [
+    "attendance_punch_events",
+    "attendance_timesheet_imports",
+    "audits",
+    "email_match_feedback",
+    "email_match_results",
+    "email_parse_runs",
+    "employee_assessment_responses",
+    "engineers",
+    "feedback_events",
+    "jobs",
+    "match_results",
+    "matches",
+    "profiles",
+    "project_requirements",
+    "requirement_skill_tags",
+    "sales_email_entities",
+    "sales_email_messages",
+    "sales_mailbox_sources",
+    "support_requests",
+    "talent_profiles_from_email",
+    "uptime_checks",
+    "usage_analytics_events",
+    "usage_ledgers"
+  ],
+  "supabase_views": [
+    "kpi_daily_diagnoses",
+    "kpi_daily_response_time",
+    "kpi_monthly_availability",
+    "kpi_weekly_active_users",
+    "kpi_weekly_anonymous_sessions",
+    "kpi_weekly_diagnosis_accuracy"
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "Supabase本番migration定義の全テーブルがdatabase.mdに記載",
+      "passed": true,
+      "detail": "未記載: なし"
+    },
+    {
+      "id": "H2",
+      "title": "アプリ実行時legacyテーブル(engineers/jobs/match_results)が記載",
+      "passed": true,
+      "detail": "未記載: なし"
+    },
+    {
+      "id": "H3",
+      "title": "database.md記載テーブルは全て実スキーマソースに存在(phantom 0)",
+      "passed": true,
+      "detail": "phantom: なし"
+    },
+    {
+      "id": "H4",
+      "title": "6つのSLA KPIビュー(kpi_*)が記載",
+      "passed": true,
+      "detail": "未記載ビュー: なし"
+    },
+    {
+      "id": "H5",
+      "title": "init_db作成テーブルは全て正規migrationソースにも定義(未管理0)",
+      "passed": true,
+      "detail": "未管理init_dbテーブル: なし"
+    },
+    {
+      "id": "H6",
+      "title": "旧アーキ(IndexedDB等)のstale記述が除去済み",
+      "passed": true,
+      "detail": "残存stale語: なし"
+    },
+    {
+      "id": "H7",
+      "title": "正本ソース(supabase/migrations・db/migrations・Runbook)を明示参照",
+      "passed": true,
+      "detail": "未参照: なし"
+    },
+    {
+      "id": "H8",
+      "title": "本番未適用(uptime_checks+6ビュー, T778)が『適用待ち』と明記",
+      "passed": true,
+      "detail": "未マーク: なし"
+    },
+    {
+      "id": "H9",
+      "title": "RLS記述があり、RLS有効化された全テーブルが記載(公式: public全表RLS必須)",
+      "passed": true,
+      "detail": "未記載RLS表: なし / RLS言及: True"
+    },
+    {
+      "id": "H10",
+      "title": "総テーブル数(23)・ビュー数(6)がdocと算出値で一致し、ドリフト0",
+      "passed": true,
+      "detail": "doc表数=23/正本=23, docビュー数=6/正本=6, 先行ドリフト=なし"
+    }
+  ],
+  "all_passed": true
+}

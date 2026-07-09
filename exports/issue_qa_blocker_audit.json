@@ -1,20 +1,20 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-07T16:52:27Z",
-  "issue_total": 161,
-  "qa_total": 129,
+  "generated_at": "2026-07-09T02:10:08Z",
+  "issue_total": 166,
+  "qa_total": 138,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "open": 3,
-    "resolved": 137,
+    "open": 6,
+    "resolved": 139,
     "transferred": 18
   },
   "qa_status_counts": {
-    "回答済": 90,
+    "回答済": 99,
     "想定済": 39
   },
-  "issue_blocker_count": 3,
+  "issue_blocker_count": 6,
   "qa_blocker_count": 0,
   "issue_blockers": [
     {
@@ -40,6 +40,30 @@
       "title": "Supabase Daily Backup CIが一度も成功しておらず、本番DBの自動バックアップが存在しないリスク",
       "related_wbs": "T870;T852;T833;T849",
       "related_issue": "#162"
+    },
+    {
+      "id": "R119",
+      "severity": "MED",
+      "category": "compliance",
+      "title": "AIアンケートにおける精神状態評価プロトタイプの法務・プライバシーリスク",
+      "related_wbs": "T876",
+      "related_issue": "#172"
+    },
+    {
+      "id": "R120",
+      "severity": "MED",
+      "category": "frontend",
+      "title": "UI/UX改善：ライトモード（背景白）対応とタブ切り替えによる複数ページ構成の画面設計",
+      "related_wbs": "T877",
+      "related_issue": "#173"
+    },
+    {
+      "id": "R122",
+      "severity": "MED",
+      "category": "operations",
+      "title": "クリティカルシステム8件がバス係数1（backup所有者未設定）の単一障害点",
+      "related_wbs": "T850;T850_1;T823",
+      "related_issue": ""
     }
   ],
   "qa_blockers": []
