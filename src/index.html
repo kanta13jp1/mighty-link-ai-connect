@@ -110,7 +110,7 @@
             align-items: center;
             gap: 22px;
             min-height: 96px;
-            padding: 40px 110px 16px;
+            padding: 40px clamp(16px, 5vw, 110px) 16px;
             border-bottom: 1px solid transparent;
             background: transparent;
             backdrop-filter: none;
@@ -119,9 +119,9 @@
 
         .topbar.scrolled {
             min-height: 64px;
-            padding: 16px 110px;
-            border-color: rgba(255, 255, 255, 0.08);
-            background: rgba(24, 25, 27, 0.88);
+            padding: 16px clamp(16px, 5vw, 110px);
+            border-color: var(--line);
+            background: var(--panel);
             backdrop-filter: blur(24px);
         }
 
@@ -181,7 +181,7 @@
             min-height: 32px;
             min-width: 32px;
             padding: 6px 4px;
-            color: rgba(247, 247, 242, 0.72);
+            color: var(--muted);
             font-size: 14px;
             font-weight: 700;
             transition: color 0.18s ease;
@@ -211,7 +211,7 @@
 
         .language-switch a.active {
             color: var(--blue) !important;
-            text-shadow: 0 0 10px rgba(139, 220, 255, 0.5);
+            text-shadow: 0 0 10px var(--blue);
             font-weight: 900;
         }
 
@@ -1250,7 +1250,7 @@
             }
         }
 
-        @media (max-width: 720px) {
+        @media (max-width: 1200px) {
             .topbar,
             .hero,
             .workspace,
