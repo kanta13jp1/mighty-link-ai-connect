@@ -1,0 +1,77 @@
+{
+  "task": "T884",
+  "handlers": [
+    "submitFeedback",
+    "submitSupportRequest",
+    "punchCard",
+    "approveAttendanceData",
+    "downloadUserDataExport"
+  ],
+  "index_files": [
+    "index.html",
+    "src\\index.html"
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "index.html: 全5ハンドラがサーバーdetailを読む",
+      "passed": true,
+      "detail": "未読取=なし"
+    },
+    {
+      "id": "H2",
+      "title": "src/index.html: 全5ハンドラがサーバーdetailを読む",
+      "passed": true,
+      "detail": "未読取=なし"
+    },
+    {
+      "id": "H3",
+      "title": "両ファイル: 全ハンドラに『サーバー応答』理由表示ブランチがある",
+      "passed": true,
+      "detail": "欠落=なし"
+    },
+    {
+      "id": "H4",
+      "title": "両ファイル: 全ハンドラが接続失敗フォールバックを保持(graceful degradation)",
+      "passed": true,
+      "detail": "欠落=なし"
+    },
+    {
+      "id": "H5",
+      "title": "旧握りつぶし表現(...endpoint unavailable のみthrow)が全ハンドラから除去済み",
+      "passed": true,
+      "detail": "残存=なし"
+    },
+    {
+      "id": "H6",
+      "title": "src/app.pyが各エンドポイントの具体的400/401 detailを実装",
+      "passed": true,
+      "detail": "未実装=なし"
+    },
+    {
+      "id": "H7",
+      "title": "index.html と src/index.html の5ハンドラがバイト等価(ミラードリフト0)",
+      "passed": true,
+      "detail": "ドリフト=なし"
+    },
+    {
+      "id": "H8",
+      "title": "WBSにT884・UAT仕様書にTS-16(T884)が実在",
+      "passed": true,
+      "detail": "WBS_T884=True, UAT_TS16=True"
+    },
+    {
+      "id": "H9",
+      "title": "5フォームのAPIパスが全てsrc/app.pyに実在",
+      "passed": true,
+      "detail": "不在=なし"
+    },
+    {
+      "id": "H10",
+      "title": "全ハンドラのエラー握りつぶし解消が完全(ドリフト0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ],
+  "all_passed": true
+}

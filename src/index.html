@@ -37,6 +37,7 @@
             background: var(--bg);
             color: var(--text);
             scroll-behavior: smooth;
+            scroll-padding-top: 100px;
         }
 
         body {
@@ -260,7 +261,7 @@
             min-height: auto;
             width: min(1512px, 100%);
             margin: 0 auto;
-            padding: 34px 32px 42px;
+            padding: 120px 32px 42px;
             display: flex;
             flex-direction: column;
             gap: 34px; /* 動画とフォームの間のマージン */
@@ -3527,7 +3528,9 @@
                     body: JSON.stringify(payload)
                 });
                 if (!response.ok) {
-                    throw new Error("Feedback endpoint unavailable");
+                    let serverDetail = "";
+                    try { serverDetail = (await response.json()).detail || ""; } catch (parseError) { /* 非JSON応答 */ }
+                    throw new Error("SERVER::" + (serverDetail || `HTTP ${response.status}`));
                 }
                 if (status) {
                     status.textContent = "送信済み";
@@ -3535,8 +3538,22 @@
                 }
             } catch (error) {
                 if (submit) submit.disabled = false;
+                const raw = error && error.message ? error.message : "";
+                const detail = raw.indexOf("SERVER::") === 0 ? raw.slice(8) : "";
+                let friendly;
+                if (detail.indexOf("nps_score") !== -1) {
+                    friendly = "送信失敗: 推奨度(NPS)は0〜10で入力してください。";
+                } else if (detail.indexOf("rating") !== -1) {
+                    friendly = "送信失敗: 評価(役立った/改善したい)を選択してください。";
+                } else if (detail.indexOf("comment") !== -1) {
+                    friendly = "送信失敗: コメントが長すぎます。文字数を減らしてください。";
+                } else if (detail && detail.indexOf("HTTP ") !== 0) {
+                    friendly = `送信失敗（サーバー応答: ${detail}）`;
+                } else {
+                    friendly = "送信失敗（接続エラー）";
+                }
                 if (status) {
-                    status.textContent = "送信失敗";
+                    status.textContent = friendly;
                     status.style.color = "var(--rose)";
                 }
             }
@@ -3577,12 +3594,30 @@
                     body: JSON.stringify(payload)
                 });
                 if (!response.ok) {
-                    throw new Error("Support endpoint unavailable");
+                    let serverDetail = "";
+                    try { serverDetail = (await response.json()).detail || ""; } catch (parseError) { /* 非JSON応答 */ }
+                    throw new Error("SERVER::" + (serverDetail || `HTTP ${response.status}`));
                 }
                 if (form) form.reset();
                 setSupportStatus("送信済み", "var(--green)");
             } catch (error) {
-                setSupportStatus("送信失敗", "var(--rose)");
+                const raw = error && error.message ? error.message : "";
+                const detail = raw.indexOf("SERVER::") === 0 ? raw.slice(8) : "";
+                let friendly;
+                if (detail.indexOf("contact_email") !== -1) {
+                    friendly = "送信失敗: 有効なメールアドレスを入力してください。";
+                } else if (detail.indexOf("subject") !== -1) {
+                    friendly = "送信失敗: 件名は3文字以上で入力してください。";
+                } else if (detail.indexOf("message") !== -1) {
+                    friendly = "送信失敗: 本文は10文字以上で入力してください。";
+                } else if (detail.indexOf("category") !== -1) {
+                    friendly = "送信失敗: カテゴリの選択が正しくありません。";
+                } else if (detail && detail.indexOf("HTTP ") !== 0) {
+                    friendly = `送信失敗（サーバー応答: ${detail}）`;
+                } else {
+                    friendly = "送信失敗（接続エラー）";
+                }
+                setSupportStatus(friendly, "var(--rose)");
             } finally {
                 if (submit) submit.disabled = false;
             }
@@ -3627,7 +3662,9 @@
                     headers: {Authorization: `Bearer ${token}`}
                 });
                 if (!response.ok) {
-                    throw new Error("Export endpoint unavailable");
+                    let serverDetail = "";
+                    try { serverDetail = (await response.json()).detail || ""; } catch (parseError) { /* 非JSON応答 */ }
+                    throw new Error("SERVER::" + (serverDetail || `HTTP ${response.status}`));
                 }
                 const blob = await response.blob();
                 const objectUrl = window.URL.createObjectURL(blob);
@@ -3640,7 +3677,17 @@
                 window.URL.revokeObjectURL(objectUrl);
                 setDataExportStatus("取得済み", "var(--green)");
             } catch (error) {
-                setDataExportStatus("取得失敗", "var(--rose)");
+                const raw = error && error.message ? error.message : "";
+                const detail = raw.indexOf("SERVER::") === 0 ? raw.slice(8) : "";
+                let friendly;
+                if (detail.indexOf("oken") !== -1 || detail.indexOf("Firebase") !== -1 || detail.indexOf("authenticat") !== -1) {
+                    friendly = "取得失敗: サインインの有効期限が切れています。再度サインインしてください。";
+                } else if (detail && detail.indexOf("HTTP ") !== 0) {
+                    friendly = `取得失敗（サーバー応答: ${detail}）`;
+                } else {
+                    friendly = "取得失敗（接続エラー）";
+                }
+                setDataExportStatus(friendly, "var(--rose)");
             } finally {
                 if (button) button.disabled = false;
             }
@@ -4650,16 +4697,32 @@
                     })
                 });
                 if (!response.ok) {
-                    throw new Error("Attendance punch endpoint unavailable");
+                    let serverDetail = "";
+                    try { serverDetail = (await response.json()).detail || ""; } catch (parseError) { /* 非JSON応答 */ }
+                    throw new Error("SERVER::" + (serverDetail || `HTTP ${response.status}`));
                 }
                 const data = await response.json();
                 statusDiv.textContent = `${statusText} / 匿名キー: ${data.subject_pseudonym}`;
                 setAttendanceStatus("打刻保存済み", "var(--green)");
                 alert(`${alertMsg}\n匿名キー: ${data.subject_pseudonym}`);
             } catch (error) {
-                console.warn("Attendance punch API unavailable.", error);
+                console.warn("Attendance punch failed.", error);
                 setAttendanceStatus("打刻保存失敗", "var(--rose)");
-                alert("打刻保存APIへ接続できませんでした。打刻は保存されていません。");
+                const raw = error && error.message ? error.message : "";
+                const detail = raw.indexOf("SERVER::") === 0 ? raw.slice(8) : "";
+                let friendly;
+                if (detail.indexOf("consent") !== -1) {
+                    friendly = "勤怠データ保存への同意が必要です。同意にチェックしてください。";
+                } else if (detail.indexOf("employee_identifier") !== -1) {
+                    friendly = "社内確認コードは3文字以上で入力してください。";
+                } else if (detail.indexOf("event_type") !== -1) {
+                    friendly = "打刻種別が正しくありません。";
+                } else if (detail && detail.indexOf("HTTP ") !== 0) {
+                    friendly = `サーバー応答: ${detail}`;
+                } else {
+                    friendly = "打刻保存APIへ接続できませんでした。打刻は保存されていません。";
+                }
+                alert(`打刻を保存できませんでした。${friendly}`);
             }
         }
 
@@ -4808,7 +4871,9 @@
                     })
                 });
                 if (!response.ok) {
-                    throw new Error("Attendance approval endpoint unavailable or requires admin auth");
+                    let serverDetail = "";
+                    try { serverDetail = (await response.json()).detail || ""; } catch (parseError) { /* 非JSON応答 */ }
+                    throw new Error("SERVER::" + response.status + "::" + (serverDetail || `HTTP ${response.status}`));
                 }
                 const data = await response.json();
                 const approved = data.attendance_import;
@@ -4831,9 +4896,30 @@
                 alert(`${displayKey} の勤務表データを承認・登録しました。`);
                 clearAttendancePreview();
             } catch (error) {
-                console.warn("Attendance approval API unavailable.", error);
+                console.warn("Attendance approval failed.", error);
                 setAttendanceStatus("承認保存失敗", "var(--rose)");
-                alert("承認保存APIへ接続できませんでした。管理者Basic Authが必要です。");
+                const raw = error && error.message ? error.message : "";
+                let friendly;
+                if (raw.indexOf("SERVER::") === 0) {
+                    const rest = raw.slice(8);
+                    const sep = rest.indexOf("::");
+                    const httpStatus = sep !== -1 ? rest.slice(0, sep) : "";
+                    const detail = sep !== -1 ? rest.slice(sep + 2) : rest;
+                    if (httpStatus === "401" || detail.indexOf("authenticat") !== -1) {
+                        friendly = "管理者Basic認証が必要です。正しい管理者資格情報でログインしてください。";
+                    } else if (detail.indexOf("decision") !== -1) {
+                        friendly = "承認/却下の判定値が正しくありません。";
+                    } else if (detail.indexOf("import_id") !== -1 || detail.indexOf("not found") !== -1) {
+                        friendly = "対象の勤務表データが見つかりません。再度アップロードしてください。";
+                    } else if (detail && detail.indexOf("HTTP ") !== 0) {
+                        friendly = `サーバー応答: ${detail}`;
+                    } else {
+                        friendly = "承認保存APIへ接続できませんでした。管理者Basic Authが必要です。";
+                    }
+                } else {
+                    friendly = "承認保存APIへ接続できませんでした。管理者Basic Authが必要です。";
+                }
+                alert(`承認を保存できませんでした。${friendly}`);
             }
         }
 
