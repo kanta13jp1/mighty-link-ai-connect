@@ -1,0 +1,70 @@
+{
+  "task": "T885",
+  "index_files": [
+    "index.html",
+    "src\\index.html"
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "index.html: runAnalysisが非OK時にサーバーdetailを読む",
+      "passed": true,
+      "detail": "OK"
+    },
+    {
+      "id": "H2",
+      "title": "src/index.html: runAnalysisが非OK時にサーバーdetailを読む",
+      "passed": true,
+      "detail": "OK"
+    },
+    {
+      "id": "H3",
+      "title": "両ファイル: 404(静的デモ)と実バックエンドエラーを区別",
+      "passed": true,
+      "detail": "未区別=なし"
+    },
+    {
+      "id": "H4",
+      "title": "両ファイル: 実エラー時にスコアを『サンプル』と明示",
+      "passed": true,
+      "detail": "未明示=なし"
+    },
+    {
+      "id": "H5",
+      "title": "両ファイル: 静的デモ/オフラインの無言サンプルフォールバックを保持",
+      "passed": true,
+      "detail": "欠落=なし"
+    },
+    {
+      "id": "H6",
+      "title": "両ファイル: バナーヘルパー定義＋実行開始時クリアがある",
+      "passed": true,
+      "detail": "欠落=なし"
+    },
+    {
+      "id": "H7",
+      "title": "index.html と src/index.html の runAnalysis がバイト等価",
+      "passed": true,
+      "detail": "一致"
+    },
+    {
+      "id": "H8",
+      "title": "WBSにT885・UAT仕様書にTS-17(T885)が実在",
+      "passed": true,
+      "detail": "WBS_T885=True, UAT_TS17=True"
+    },
+    {
+      "id": "H9",
+      "title": "src/app.py: /api/matchが実在し429(expensive rate limit)/400(consent)を返しうる",
+      "passed": true,
+      "detail": "route=True, rate_limited=True, consent400=True"
+    },
+    {
+      "id": "H10",
+      "title": "診断フォールバック透明化が完全(ドリフト0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ],
+  "all_passed": true
+}
