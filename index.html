@@ -3000,6 +3000,36 @@
         </section>
 
         <!-- ==========================================================================
+             営業メールAIマッチング (一般向け公開セクション)
+             ========================================================================= -->
+        <section id="matching-section" class="internal-section fade-in-on-scroll" aria-label="営業メールAIマッチング">
+            <div class="step-kicker">営業メールマッチング</div>
+            <div class="comparison-container">
+                <div class="comparison-controls">
+                    <h2>営業メールAIマッチング進捗</h2>
+                    <span class="control-label">営業メールから自動抽出された案件と、適合するエンジニアのAIマッチング候補一覧（閲覧専用）</span>
+                </div>
+                <div class="panel" style="min-height: auto;">
+                    <div class="table-responsive">
+                        <table class="comparison-table" style="min-width: 600px;">
+                            <thead>
+                                <tr>
+                                    <th>案件タイトル</th>
+                                    <th>適合エンジニア</th>
+                                    <th>マッチングスコア</th>
+                                    <th>ステータス</th>
+                                </tr>
+                            </thead>
+                            <tbody id="public-matching-table-body">
+                                <!-- JavaScriptで動的に描画 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
              Step 5: 管理者向け統合ダッシュボード (T842)
              ========================================================================= -->
         <section id="admin-dashboard-section" class="internal-section fade-in-on-scroll" aria-label="管理者統合ダッシュボード">
@@ -3029,7 +3059,7 @@
                 </div>
 
                 <div class="dashboard-grid" style="margin-bottom: 32px;">
-                    <div class="panel" id="matching-section" style="min-height: auto;">
+                    <div class="panel" style="min-height: auto;">
                         <span class="step-kicker" style="color: var(--blue); background: rgba(139, 220, 255, 0.05);">稼働健全性</span>
                         <h2>平均月間時間外労働</h2>
                         <div class="card-stat stat-blue" id="dashboard-stat-ot">18.5 H</div>
@@ -4145,9 +4175,13 @@
         async function initSalesEmailMatchData() {
             try {
                 const res = await fetch("/api/sales-email/matches?direction=project_to_talent&limit=50");
-                if (!res.ok) return false;
+                if (!res.ok) {
+                    renderPublicMatchingTable(matchingData);
+                    return false;
+                }
                 const data = await res.json();
                 if (data.status !== "success" || !Array.isArray(data.matches) || data.matches.length === 0) {
+                    renderPublicMatchingTable(matchingData);
                     return false;
                 }
 
@@ -4174,9 +4208,11 @@
                     evidence: talent.evidence_excerpt || "",
                     sales_email_talent_key: talent.talent_key
                 }));
+                renderPublicMatchingTable(salesEmailMatches);
                 return windowComparisonJobs.length > 0 && comparisonStock.length > 0;
             } catch (e) {
                 console.warn("Could not fetch sales email matches, using existing comparison data:", e);
+                renderPublicMatchingTable(matchingData);
                 return false;
             }
         }
@@ -4964,11 +5000,39 @@
             }
         }
 
+        function renderPublicMatchingTable(dataList) {
+            const tbody = document.getElementById("public-matching-table-body");
+            if (!tbody) return;
+            const list = (dataList && dataList.length) ? dataList : matchingData;
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted)">データがありません</td></tr>`;
+            } else {
+                tbody.innerHTML = list.map(m => {
+                    const title = m.title || m.project_title || "";
+                    const candidate = m.candidate || m.talent_name || "";
+                    const score = m.score || m.matching_score || 0;
+                    const approved = m.approved ?? false;
+                    let badgeClass = score >= 90 ? "fit-high" : "fit-med";
+                    let statusText = approved ? "承認済" : "未承認";
+                    let statusStyle = approved ? "background: rgba(186, 255, 102, 0.1); color: var(--green);" : "background: rgba(255, 209, 102, 0.1); color: var(--yellow);";
+                    return `
+                        <tr>
+                            <td style="font-weight: 500; font-size: 13px;">${escapeHtml(title)}</td>
+                            <td style="font-weight: 600;">${escapeHtml(candidate)}</td>
+                            <td><span class="fit-badge ${badgeClass}">${score}%</span></td>
+                            <td><span class="fit-badge" style="padding: 4px 8px; font-size: 11px; ${statusStyle}">${statusText}</span></td>
+                        </tr>
+                    `;
+                }).join("");
+            }
+        }
+
         function toggleApproveMatching(id) {
             const match = matchingData.find(m => m.id === id);
             if (!match) return;
             match.approved = !match.approved;
             renderDashboard();
+            renderPublicMatchingTable(salesEmailMatches);
 
             const actionText = match.approved ? "承認" : "未承認";
             alert(`営業メール案件マッチング「${match.title}」を${actionText}状態に更新しました。`);
