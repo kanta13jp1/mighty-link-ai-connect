@@ -5138,14 +5138,37 @@
                     headers: getAdminDashboardAuthHeader()
                 });
                 if (!response.ok) {
-                    throw new Error("Operations dashboard endpoint unavailable");
+                    if (response.status !== 404) {
+                        let serverDetail = "";
+                        try { serverDetail = (await response.json()).detail || ""; } catch (parseError) { /* 非JSON応答 */ }
+                        throw new Error("SERVER::" + response.status + "::" + (serverDetail || `HTTP ${response.status}`));
+                    }
+                    // status === 404 は静的GitHub Pagesデモ。従来どおり静的デモ表示にフォールバック（CEO共有デモ不変）。
+                    throw new Error("STATIC_DEMO");
                 }
                 const data = await response.json();
                 renderDashboardFromApi(data);
                 setAdminDashboardStatus(`Real data loaded: ${data.generated_at || "ready"}`, "var(--green)");
             } catch (error) {
-                console.warn("Operations dashboard API unavailable.", error);
-                setAdminDashboardStatus("Real data unavailable; static demo remains", "var(--rose)");
+                console.warn("Operations dashboard load failed.", error);
+                const raw = error && error.message ? error.message : "";
+                if (raw.indexOf("SERVER::") === 0) {
+                    const rest = raw.slice(8);
+                    const sep = rest.indexOf("::");
+                    const httpStatus = sep !== -1 ? rest.slice(0, sep) : "";
+                    const detail = sep !== -1 ? rest.slice(sep + 2) : rest;
+                    let reason;
+                    if (httpStatus === "401" || httpStatus === "403") {
+                        reason = "管理者認証が必要です。正しい管理者資格情報を入力してください。";
+                    } else if (detail && detail.indexOf("HTTP ") !== 0) {
+                        reason = `サーバー応答: ${detail}`;
+                    } else {
+                        reason = `サーバーエラー（HTTP ${httpStatus}）が発生しました。`;
+                    }
+                    setAdminDashboardStatus(`実データ読込エラー: ${reason}`, "var(--rose)");
+                } else {
+                    setAdminDashboardStatus("実データを取得できませんでした（静的デモ表示のまま）", "var(--rose)");
+                }
             }
         }
 
@@ -5157,7 +5180,13 @@
                     headers: getAdminDashboardAuthHeader()
                 });
                 if (!response.ok) {
-                    throw new Error("Operations dashboard CSV endpoint unavailable");
+                    if (response.status !== 404) {
+                        let serverDetail = "";
+                        try { serverDetail = (await response.json()).detail || ""; } catch (parseError) { /* 非JSON応答 */ }
+                        throw new Error("SERVER::" + response.status + "::" + (serverDetail || `HTTP ${response.status}`));
+                    }
+                    // status === 404 は静的GitHub Pagesデモ。CSVは実データのみ提供のため取得不可を通知（CEO共有デモ不変）。
+                    throw new Error("STATIC_DEMO");
                 }
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
@@ -5170,8 +5199,25 @@
                 URL.revokeObjectURL(url);
                 setAdminDashboardStatus("CSV exported", "var(--green)");
             } catch (error) {
-                console.warn("Operations dashboard CSV export unavailable.", error);
-                setAdminDashboardStatus("CSV export unavailable", "var(--rose)");
+                console.warn("Operations dashboard CSV export failed.", error);
+                const raw = error && error.message ? error.message : "";
+                if (raw.indexOf("SERVER::") === 0) {
+                    const rest = raw.slice(8);
+                    const sep = rest.indexOf("::");
+                    const httpStatus = sep !== -1 ? rest.slice(0, sep) : "";
+                    const detail = sep !== -1 ? rest.slice(sep + 2) : rest;
+                    let reason;
+                    if (httpStatus === "401" || httpStatus === "403") {
+                        reason = "管理者認証が必要です。正しい管理者資格情報を入力してください。";
+                    } else if (detail && detail.indexOf("HTTP ") !== 0) {
+                        reason = `サーバー応答: ${detail}`;
+                    } else {
+                        reason = `サーバーエラー（HTTP ${httpStatus}）が発生しました。`;
+                    }
+                    setAdminDashboardStatus(`CSV出力エラー: ${reason}`, "var(--rose)");
+                } else {
+                    setAdminDashboardStatus("CSVを取得できませんでした（実データが必要です）", "var(--rose)");
+                }
             }
         }
 

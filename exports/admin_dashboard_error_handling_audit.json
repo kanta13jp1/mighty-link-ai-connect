@@ -1,0 +1,74 @@
+{
+  "task": "T886",
+  "handlers": [
+    "loadOperationsDashboard",
+    "downloadOperationsDashboardCsv"
+  ],
+  "index_files": [
+    "index.html",
+    "src\\index.html"
+  ],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "index.html: 両管理者ローダーがサーバーdetailを読む",
+      "passed": true,
+      "detail": "未読取=なし"
+    },
+    {
+      "id": "H2",
+      "title": "src/index.html: 両管理者ローダーがサーバーdetailを読む",
+      "passed": true,
+      "detail": "未読取=なし"
+    },
+    {
+      "id": "H3",
+      "title": "両ファイル: 404(静的デモ)と実バックエンドエラーを区別",
+      "passed": true,
+      "detail": "未区別=なし"
+    },
+    {
+      "id": "H4",
+      "title": "両ファイル: 401時に管理者認証が必要と明示",
+      "passed": true,
+      "detail": "未明示=なし"
+    },
+    {
+      "id": "H5",
+      "title": "両ファイル: 静的デモ(404)フォールバックを保持(CEOデモ不変)",
+      "passed": true,
+      "detail": "欠落=なし"
+    },
+    {
+      "id": "H6",
+      "title": "旧握りつぶし表現(...endpoint unavailable のみthrow)が除去済み",
+      "passed": true,
+      "detail": "残存=なし"
+    },
+    {
+      "id": "H7",
+      "title": "index.html と src/index.html の両ローダーがバイト等価",
+      "passed": true,
+      "detail": "ドリフト=なし"
+    },
+    {
+      "id": "H8",
+      "title": "WBSにT886・UAT仕様書にTS-18(T886)が実在",
+      "passed": true,
+      "detail": "WBS_T886=True, UAT_TS18=True"
+    },
+    {
+      "id": "H9",
+      "title": "src/app.py: 管理者ダッシュボードAPIが実在しBasic認証(401)必須",
+      "passed": true,
+      "detail": "route=True, auth=True"
+    },
+    {
+      "id": "H10",
+      "title": "管理者ローダーのエラー握りつぶし解消が完全(ドリフト0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ],
+  "all_passed": true
+}
