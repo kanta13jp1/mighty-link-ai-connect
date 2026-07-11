@@ -291,13 +291,28 @@
 - **NG判定**: 手順1で認証失敗（401）と他の障害（500 等）が区別できない汎用文言のみが表示され、運用者が「資格情報を入れ直せばよい」と判断できない。または静的デモ/正常時に不要なエラーが出る。
 - **実施結果**: ☐ OK　☐ NG　／　実施日: ______　実施者: ______　備考: ______
 
+### TS-19 API応答契約（画面が読むフィールドの実在確認）
+- **対象機能**: フロントエンド⇔バックエンドのAPI応答契約（レスポンス構造）
+- **関連WBS**: T887
+- **関連API**: POST /api/match
+- **前提条件**: **バックエンドが稼働する本番相当URL**（`https://mightylink-app.com/` または Firebase Hosting 既定URL）で実施する。ブラウザ DevTools の Network タブでレスポンス JSON を確認できる。合成の経歴書/案件票を用意する。
+- **テスト手順**:
+  1. 同意チェックを入れて「Analyze（診断）」を実行し、DevTools Network で `POST /api/match` のレスポンス JSON を開く。
+  2. レスポンスに `scores.skill` / `scores.culture` / `scores.growth` / `scores.performing` / `final_score` / `summary` / `qa`（配列、各要素に `question`・`answer`）/ `structured.matched_skills` / `structured.missing_skills` / `roadmap_week1`〜`roadmap_week4` の各フィールドが存在することを確認する。
+  3. 画面のゲージ・4軸バー・サマリー・想定質問・育成ロードマップ・スキルバッジが、上記フィールドの値どおりに表示されている（サンプル固定値ではない）ことを確認する。
+  4. （勤怠）勤務表を1件アップロードし、`POST /api/attendance/timesheet/parse` のレスポンスに `import_id` と `summary.work_hours`/`summary.overtime_hours`/`summary.holiday_work_days`/`summary.midnight_hours`/`summary.anomaly_count` が存在し、プレビュー表の数値と一致することを確認する。
+- **期待結果**: 手順2・4のフィールドがすべて存在し、手順3の画面表示がそれらの値と一致する（フィールド欠落や名称変更により画面が空欄/サンプル固定値/`undefined` になっていない）。
+- **OK判定**: `/api/match` と `/api/attendance/timesheet/parse` のレスポンスに規定フィールドがすべて存在し、画面表示がその値と一致する。
+- **NG判定**: いずれかの規定フィールドが欠落/改名され、画面が該当箇所で空欄・`undefined`・サンプル固定値表示になる（バックエンドとフロントの契約 drift）。
+- **実施結果**: ☐ OK　☐ NG　／　実施日: ______　実施者: ______　備考: ______
+
 ---
 
 ## 5. 実施サマリ・サインオフ
 
 | 区分 | 件数 |
 | :--- | :--- |
-| 総ケース数 | 18 |
+| 総ケース数 | 19 |
 | OK | ____ |
 | NG | ____ |
 | N/A | ____ |
