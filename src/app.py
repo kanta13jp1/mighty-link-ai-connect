@@ -6051,6 +6051,129 @@ async def evaluate_matching(req: EvaluationRequest):
     return fallback_response
 
 
+def load_extraction_report_from_supabase() -> Optional[dict]:
+    """Helper to fetch and rebuild the extraction report dict directly from Supabase DB."""
+    if not is_supabase_configured():
+        return None
+    try:
+        from supabase_client import get_supabase_client
+        client = get_supabase_client()
+        if not client:
+            return None
+            
+        res_msg = client.table("sales_email_messages").select("*").eq("ingest_status", "parsed").execute()
+        messages = res_msg.data if res_msg else []
+        
+        res_proj = client.table("project_requirements").select("*").execute()
+        projects = {p["message_id"]: p for p in (res_proj.data if res_proj else [])}
+        
+        res_tal = client.table("talent_profiles_from_email").select("*").execute()
+        talents = {t["message_id"]: t for t in (res_tal.data if res_tal else [])}
+        
+        extractions = []
+        project_count = 0
+        talent_count = 0
+        skill_tag_count = 0
+        
+        for msg in messages:
+            msg_id = msg["id"]
+            proj = projects.get(msg_id)
+            tal = talents.get(msg_id)
+            
+            email_kind = "unknown"
+            proj_data = None
+            if proj:
+                email_kind = "project"
+                project_count += 1
+                skills_list = proj.get("required_skills", [])
+                if isinstance(skills_list, str):
+                    try:
+                        skills_list = json.loads(skills_list)
+                    except Exception:
+                        skills_list = []
+                skill_tag_count += len(skills_list)
+                proj_data = {
+                    "title": proj["title"],
+                    "summary": proj["summary"],
+                    "required_skills": skills_list,
+                    "nice_to_have_skills": proj.get("nice_to_have_skills") or [],
+                    "skill_categories": proj.get("skill_categories") or {},
+                    "rate_min": proj["rate_min"],
+                    "rate_max": proj["rate_max"],
+                    "rate_unit": proj["rate_unit"],
+                    "location": proj["location"],
+                    "remote_type": proj["remote_type"],
+                    "start_date_text": proj["start_date_text"],
+                    "duration_text": proj["duration_text"],
+                    "commercial_flow": proj["commercial_flow"],
+                    "restrictions": proj["restrictions"],
+                    "evidence_excerpt": proj["evidence_excerpt"],
+                    "confidence": 1.0,
+                    "review_status": proj["review_status"]
+                }
+                
+            tal_data = None
+            if tal:
+                email_kind = "talent"
+                talent_count += 1
+                skills_list = tal.get("skills", [])
+                if isinstance(skills_list, str):
+                    try:
+                        skills_list = json.loads(skills_list)
+                    except Exception:
+                        skills_list = []
+                tal_data = {
+                    "anonymized_talent_key": tal["anonymized_talent_key"],
+                    "summary": tal["summary"],
+                    "skills": skills_list,
+                    "skill_categories": tal.get("skill_categories") or {},
+                    "experience_years": tal["experience_years"],
+                    "desired_rate_min": tal["desired_rate_min"],
+                    "desired_rate_max": tal["desired_rate_max"],
+                    "desired_location": tal["desired_location"],
+                    "remote_preference": tal["remote_preference"],
+                    "availability_text": tal["availability_text"],
+                    "evidence_excerpt": tal["evidence_excerpt"],
+                    "confidence": 1.0,
+                    "review_status": tal["review_status"]
+                }
+                
+            extractions.append({
+                "source_path": msg["source_path"],
+                "source_type": msg["source_type"],
+                "dedupe_key": msg["dedupe_key"],
+                "sender_domain": msg["sender_domain"],
+                "normalized_subject": msg["normalized_subject"],
+                "email_kind": email_kind,
+                "model_name": "deterministic-sales-email-extractor-v1",
+                "fallback_used": True,
+                "project_requirement": proj_data,
+                "talent_profile": tal_data
+            })
+            
+        return {
+            "task_id": "T817_4",
+            "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "model_name": "deterministic-sales-email-extractor-v1",
+            "fallback_used": True,
+            "input_count": len(messages),
+            "project_requirement_count": project_count,
+            "talent_profile_count": talent_count,
+            "skill_tag_count": skill_tag_count,
+            "privacy_controls": [
+                "raw_email_body_not_written",
+                "email_phone_secret_patterns_redacted_from_evidence",
+                "sender_hash_or_domain_only",
+                "talent_identity_anonymized",
+                "human_review_required_before_confirmed_status"
+            ],
+            "extractions": extractions
+        }
+    except Exception as exc:
+        print(f"[-] Supabase extraction report fetch failed: {exc}")
+        return None
+
+
 @app.get("/api/sales-email/matches")
 async def list_sales_email_matches(
     direction: str = "project_to_talent",
@@ -6063,10 +6186,30 @@ async def list_sales_email_matches(
     username: Optional[str] = Depends(verify_credentials_optional),
 ):
     """Return sanitized bidirectional candidate lists from T817_4 extraction output."""
-    if build_match_report_from_file is None or criteria_from_values is None:
+    if criteria_from_values is None:
         raise HTTPException(status_code=503, detail="sales email matching module is unavailable")
 
-    report_path = Path(SALES_EMAIL_MATCH_REPORT_FILE)
+    report_data = None
+    source_report = "database"
+    if is_supabase_configured():
+        report_data = load_extraction_report_from_supabase()
+        
+    if report_data is None:
+        report_path = Path(SALES_EMAIL_MATCH_REPORT_FILE)
+        if report_path.exists():
+            try:
+                report_data = json.loads(report_path.read_text(encoding="utf-8"))
+                source_report = os.path.relpath(str(report_path), PROJECT_ROOT)
+            except Exception:
+                pass
+                
+    if report_data is None:
+        report_data = {
+            "task_id": "T817_4",
+            "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "extractions": []
+        }
+
     try:
         criteria = criteria_from_values(
             direction=direction,
@@ -6077,17 +6220,14 @@ async def list_sales_email_matches(
             project_key=project_key,
             talent_key=talent_key,
         )
-        report = build_match_report_from_file(report_path, criteria)
+        from sales_email_match import build_match_report
+        report = build_match_report(report_data, criteria)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
         print(f"[-] sales email match endpoint failed: {exc}")
         raise HTTPException(status_code=500, detail="sales email match report generation failed") from exc
 
-    try:
-        source_report = os.path.relpath(str(report_path), PROJECT_ROOT)
-    except ValueError:
-        source_report = str(report_path)
     return {
         "status": "success",
         "source_report": source_report,
@@ -6098,9 +6238,19 @@ async def list_sales_email_matches(
 @app.get("/api/sales-email/analytics")
 async def get_sales_email_analytics():
     """Return aggregated stats from extraction report for public dashboard analytics."""
-    import json
-    report_path = Path("exports/sales_email_extraction_review.json")
-    if not report_path.exists():
+    report_data = None
+    if is_supabase_configured():
+        report_data = load_extraction_report_from_supabase()
+        
+    if report_data is None:
+        report_path = Path(SALES_EMAIL_MATCH_REPORT_FILE)
+        if report_path.exists():
+            try:
+                report_data = json.loads(report_path.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+                
+    if report_data is None:
         return {
             "status": "success",
             "daily_counts": {},
@@ -6109,15 +6259,14 @@ async def get_sales_email_analytics():
         }
     
     try:
-        data = json.loads(report_path.read_text(encoding="utf-8"))
-        extractions = data.get("extractions", [])
+        extractions = report_data.get("extractions", [])
         
         daily_counts = {}
         domain_counts = {}
         skill_counts = {}
         
         for item in extractions:
-            dt = data.get("generated_at", "2026-06-18")[:10]
+            dt = report_data.get("generated_at", "2026-06-18")[:10]
             daily_counts[dt] = daily_counts.get(dt, 0) + 1
             
             dom = item.get("sender_domain", "unknown")
