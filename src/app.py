@@ -6095,6 +6095,57 @@ async def list_sales_email_matches(
     }
 
 
+@app.get("/api/sales-email/analytics")
+async def get_sales_email_analytics():
+    """Return aggregated stats from extraction report for public dashboard analytics."""
+    import json
+    report_path = Path("exports/sales_email_extraction_review.json")
+    if not report_path.exists():
+        return {
+            "status": "success",
+            "daily_counts": {},
+            "domain_counts": {},
+            "skill_counts": {}
+        }
+    
+    try:
+        data = json.loads(report_path.read_text(encoding="utf-8"))
+        extractions = data.get("extractions", [])
+        
+        daily_counts = {}
+        domain_counts = {}
+        skill_counts = {}
+        
+        for item in extractions:
+            dt = data.get("generated_at", "2026-06-18")[:10]
+            daily_counts[dt] = daily_counts.get(dt, 0) + 1
+            
+            dom = item.get("sender_domain", "unknown")
+            domain_counts[dom] = domain_counts.get(dom, 0) + 1
+            
+            req = item.get("project_requirement")
+            if req and isinstance(req, dict):
+                skills = req.get("required_skills", [])
+                for sk in skills:
+                    skill_counts[sk] = skill_counts.get(sk, 0) + 1
+                    
+            tal = item.get("talent_profile")
+            if tal and isinstance(tal, dict):
+                skills = tal.get("skills", [])
+                for sk in skills:
+                    skill_counts[sk] = skill_counts.get(sk, 0) + 1
+                    
+        return {
+            "status": "success",
+            "daily_counts": daily_counts,
+            "domain_counts": domain_counts,
+            "skill_counts": skill_counts
+        }
+    except Exception as exc:
+        print(f"[-] Analytics calculation failed: {exc}")
+        return {"status": "error", "message": "Failed to calculate analytics"}
+
+
 @app.post("/api/sales-email/reviews")
 async def submit_sales_email_match_review(
     req: SalesEmailMatchReviewRequest,

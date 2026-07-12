@@ -3046,6 +3046,39 @@
                         </table>
                     </div>
                 </div>
+
+                <!-- 営業メール多角分析パネル (T877) -->
+                <div class="panel" style="margin-top: 24px; min-height: auto;">
+                    <span class="step-kicker" style="color: var(--blue); background: rgba(139, 220, 255, 0.05); margin-bottom: 12px; display: inline-block;">ANALYTICS</span>
+                    <h3 style="font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 8px;">営業メール解析統計・トレンド</h3>
+                    <span class="control-label" style="margin-bottom: 20px; display: block;">システムで自動パースされた営業メールの多角的な統計分析</span>
+                    
+                    <div class="dashboard-grid" style="margin-top: 16px; margin-bottom: 0;">
+                        <!-- 日別受信件数カード -->
+                        <div class="panel" style="min-height: auto; background: rgba(255, 255, 255, 0.01); border: 1px solid var(--line);">
+                            <h4 style="font-size: 13px; color: var(--muted); margin-bottom: 12px; font-weight: 700;">📅 日別受信ボリューム</h4>
+                            <div id="analytics-daily-list" style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="color: var(--muted); font-size: 12px;">読み込み中...</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 送信元ドメインカード -->
+                        <div class="panel" style="min-height: auto; background: rgba(255, 255, 255, 0.01); border: 1px solid var(--line);">
+                            <h4 style="font-size: 13px; color: var(--muted); margin-bottom: 12px; font-weight: 700;">🏢 送信元ドメインランキング</h4>
+                            <div id="analytics-domain-list" style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="color: var(--muted); font-size: 12px;">読み込み中...</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 需要スキルトレンドカード -->
+                        <div class="panel" style="min-height: auto; background: rgba(255, 255, 255, 0.01); border: 1px solid var(--line);">
+                            <h4 style="font-size: 13px; color: var(--muted); margin-bottom: 12px; font-weight: 700;">⚡ 需要スキルランキング</h4>
+                            <div id="analytics-skill-list" style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="color: var(--muted); font-size: 12px;">読み込み中...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -5029,7 +5062,9 @@
             } else {
                 tbody.innerHTML = list.map(m => {
                     const title = m.title || m.project_title || "";
-                    const candidate = m.candidate || m.talent_name || "";
+                    // 営業メール由来のマッチ行は匿名ラベル talent_label を持つ (氏名は保持しない)。
+                    // 静的デモは candidate、実API成功時は talent_label を適合エンジニア列に表示する。
+                    const candidate = m.candidate || m.talent_name || m.talent_label || "";
                     const score = m.score || m.matching_score || 0;
                     const approved = m.approved ?? false;
                     let badgeClass = score >= 90 ? "fit-high" : "fit-med";
@@ -5414,6 +5449,66 @@
             }
         };
 
+        async function loadSalesEmailAnalytics() {
+            try {
+                const res = await fetch("/api/sales-email/analytics");
+                if (!res.ok) return;
+                const data = await res.json();
+                if (data.status !== "success") return;
+                
+                const dailyDiv = document.getElementById("analytics-daily-list");
+                if (dailyDiv) {
+                    const entries = Object.entries(data.daily_counts || {});
+                    if (entries.length === 0) {
+                        dailyDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">データがありません</span>`;
+                    } else {
+                        const maxCount = Math.max(...entries.map(e => e[1]), 1);
+                        dailyDiv.innerHTML = entries.map(([date, count]) => `
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 13px;">
+                                <span style="font-weight: 500; font-family: monospace;">${escapeHtml(date)}</span>
+                                <div style="display: flex; align-items: center; gap: 8px; flex: 1; margin-left: 16px; justify-content: flex-end;">
+                                    <div style="height: 6px; background: var(--blue); border-radius: 3px; width: ${Math.min(100, (count / maxCount) * 100)}px; box-shadow: 0 0 8px var(--blue);"></div>
+                                    <span style="font-weight: 600; color: var(--text); min-width: 32px; text-align: right;">${count} 件</span>
+                                </div>
+                            </div>
+                        `).join("");
+                    }
+                }
+                
+                const domainDiv = document.getElementById("analytics-domain-list");
+                if (domainDiv) {
+                    const entries = Object.entries(data.domain_counts || {}).sort((a, b) => b[1] - a[1]);
+                    if (entries.length === 0) {
+                        domainDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">データがありません</span>`;
+                    } else {
+                        domainDiv.innerHTML = entries.map(([domain, count]) => `
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 13px;">
+                                <span style="font-weight: 500; font-family: monospace; color: var(--text-light);">${escapeHtml(domain)}</span>
+                                <span style="font-weight: bold; color: var(--blue);">${count} 通</span>
+                            </div>
+                        `).join("");
+                    }
+                }
+                
+                const skillDiv = document.getElementById("analytics-skill-list");
+                if (skillDiv) {
+                    const entries = Object.entries(data.skill_counts || {}).sort((a, b) => b[1] - a[1]);
+                    if (entries.length === 0) {
+                        skillDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">データがありません</span>`;
+                    } else {
+                        skillDiv.innerHTML = entries.map(([skill, count]) => `
+                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 13px;">
+                                <span class="fit-badge fit-med" style="font-size: 11px; padding: 2px 6px;">${escapeHtml(skill)}</span>
+                                <span style="font-weight: bold; color: var(--green);">${count} 回</span>
+                            </div>
+                        `).join("");
+                    }
+                }
+            } catch (e) {
+                console.warn("Could not load sales email analytics:", e);
+            }
+        }
+
         function openMatchingHelpModal() {
             const modal = document.getElementById("matching-help-modal");
             if (modal) {
@@ -5485,6 +5580,9 @@
 
             // Init privacy-preserving T800 product usage analytics
             initUsageAnalytics();
+
+            // Load sales email analytics dashboard
+            loadSalesEmailAnalytics();
         });
 
         window.addEventListener("scroll", () => {
