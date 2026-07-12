@@ -89,6 +89,8 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 - Firebase Hosting 公式を再確認。CLI デプロイ＋Emulator Suite でのローカル検証、preview channels による staging 分離、GitHub 連携、rollback 付き一発デプロイが推奨。既存の [STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md](STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md) と整合。
 - Supabase docs トップは一般案内のみで具体的な方針変更なし。本番 PostgreSQL 17.6 継続・RLS 有効の方針は不変。
 - 工程網羅の判定を手動監査（06-13 / 06-25）から**自動10仮説ガード** [WBS_LIFECYCLE_COVERAGE_GUARD.md](WBS_LIFECYCLE_COVERAGE_GUARD.md) へ移行（T889）。企画→保守の7工程・お名前.com/Firebase/Supabaseの網羅と日程非逆転（開始日≤終了予定日）を CI で継続検証する。T811/T837 の日程逆転を検出・修正済み。
+- GitHub Issues/Projects 公式を再確認。Issue メタデータ（labels/milestones/sub-issues/dependencies）は Project #1 に統合され、ビュー/フィルタで進捗管理できる。Google Sheets API batchUpdate 公式を再確認し、バッチ一括更新・field mask による部分更新・RepeatCellRequest 等が推奨。どちらもトラッカー→Sheets/GitHub 同期の方針と整合。
+- トラッカー TSV（課題管理表/QA表/テスト結果/リリース判定）の構造・参照整合を**自動10仮説ガード** [TRACKER_INTEGRITY_GUARD.md](TRACKER_INTEGRITY_GUARD.md) で CI 検証（T890）。ラグド行・重複ID・不正状態・不正日付・WBS/QA/R 参照切れが Sheets 同期前に落ちる。現状ドリフト0。
 
 ---
 
