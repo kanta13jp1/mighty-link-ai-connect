@@ -6051,24 +6051,29 @@ async def evaluate_matching(req: EvaluationRequest):
     return fallback_response
 
 
-def load_extraction_report_from_supabase() -> Optional[dict]:
-    """Helper to fetch and rebuild the extraction report dict directly from Supabase DB."""
-    if not is_supabase_configured():
+def load_extraction_report_from_postgres() -> Optional[dict]:
+    """Helper to fetch and rebuild the extraction report dict directly from PostgreSQL DB."""
+    db_url = os.environ.get("SUPABASE_DB_URL")
+    if not db_url:
         return None
     try:
-        from supabase_client import get_supabase_client
-        client = get_supabase_client()
-        if not client:
-            return None
-            
-        res_msg = client.table("sales_email_messages").select("*").eq("ingest_status", "parsed").execute()
-        messages = res_msg.data if res_msg else []
+        import psycopg2
+        from psycopg2.extras import RealDictCursor
         
-        res_proj = client.table("project_requirements").select("*").execute()
-        projects = {p["message_id"]: p for p in (res_proj.data if res_proj else [])}
+        conn = psycopg2.connect(db_url)
+        cur = conn.cursor(cursor_factory=RealDictCursor)
         
-        res_tal = client.table("talent_profiles_from_email").select("*").execute()
-        talents = {t["message_id"]: t for t in (res_tal.data if res_tal else [])}
+        cur.execute("SELECT * FROM sales_email_messages WHERE ingest_status = 'parsed';")
+        messages = [dict(r) for r in cur.fetchall()]
+        
+        cur.execute("SELECT * FROM project_requirements;")
+        projects = {p["message_id"]: dict(p) for p in cur.fetchall()}
+        
+        cur.execute("SELECT * FROM talent_profiles_from_email;")
+        talents = {t["message_id"]: dict(t) for t in cur.fetchall()}
+        
+        cur.close()
+        conn.close()
         
         extractions = []
         project_count = 0
@@ -6170,7 +6175,7 @@ def load_extraction_report_from_supabase() -> Optional[dict]:
             "extractions": extractions
         }
     except Exception as exc:
-        print(f"[-] Supabase extraction report fetch failed: {exc}")
+        print(f"[-] PostgreSQL extraction report fetch failed: {exc}")
         return None
 
 
@@ -6191,8 +6196,8 @@ async def list_sales_email_matches(
 
     report_data = None
     source_report = "database"
-    if is_supabase_configured():
-        report_data = load_extraction_report_from_supabase()
+    if os.environ.get("SUPABASE_DB_URL"):
+        report_data = load_extraction_report_from_postgres()
         
     if report_data is None:
         report_path = Path(SALES_EMAIL_MATCH_REPORT_FILE)
@@ -6239,8 +6244,8 @@ async def list_sales_email_matches(
 async def get_sales_email_analytics():
     """Return aggregated stats from extraction report for public dashboard analytics."""
     report_data = None
-    if is_supabase_configured():
-        report_data = load_extraction_report_from_supabase()
+    if os.environ.get("SUPABASE_DB_URL"):
+        report_data = load_extraction_report_from_postgres()
         
     if report_data is None:
         report_path = Path(SALES_EMAIL_MATCH_REPORT_FILE)
