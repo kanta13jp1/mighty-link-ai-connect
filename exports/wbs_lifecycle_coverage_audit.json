@@ -1,0 +1,71 @@
+{
+  "task": "T889",
+  "wbs_path": "data\\WBS.tsv",
+  "task_count": 316,
+  "uncovered_stages": [],
+  "uncovered_stack": [],
+  "inverted_schedule": [],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "WBSタスクが50件以上かつヘッダ10列が既定どおり",
+      "passed": true,
+      "detail": "件数=316, ヘッダ一致=True"
+    },
+    {
+      "id": "H2",
+      "title": "タスクIDが一意(重複なし)",
+      "passed": true,
+      "detail": "重複=なし"
+    },
+    {
+      "id": "H3",
+      "title": "ライフサイクル7工程(企画/設計/実装/テスト/リリース/実運用/保守)を各≥1タスクで網羅",
+      "passed": true,
+      "detail": "未網羅工程=なし"
+    },
+    {
+      "id": "H4",
+      "title": "確定スタック(お名前.com/Firebase/Supabase)を各≥1タスクで網羅",
+      "passed": true,
+      "detail": "未網羅スタック=なし"
+    },
+    {
+      "id": "H5",
+      "title": "全行が必須列(ID/大フェーズ/タスク名/担当/実行エンジン/ステータス)を空欄なしで保有",
+      "passed": true,
+      "detail": "空欄=なし"
+    },
+    {
+      "id": "H6",
+      "title": "全行のステータスが許容値(完了/実行中/未着手)のみ",
+      "passed": true,
+      "detail": "不正ステータス=なし"
+    },
+    {
+      "id": "H7",
+      "title": "未完了タスクは開始日・終了予定日をYYYY-MM-DD形式で両方保有",
+      "passed": true,
+      "detail": "日付欠落/不正=なし"
+    },
+    {
+      "id": "H8",
+      "title": "全行で開始日<=終了予定日(日程の逆転なし)",
+      "passed": true,
+      "detail": "逆転=なし"
+    },
+    {
+      "id": "H9",
+      "title": "開発完了の総合判定ゲート(全WBS完了を束ねる最終判定)が存在",
+      "passed": true,
+      "detail": "完成判定ゲート=あり"
+    },
+    {
+      "id": "H10",
+      "title": "WBS全体が完全・整合(ライフサイクル/日程ギャップ0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ],
+  "all_passed": true
+}

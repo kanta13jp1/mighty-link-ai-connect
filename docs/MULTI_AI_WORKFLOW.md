@@ -83,6 +83,13 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 - OWASP WSTG / ZAP 相当の外部疑似診断はT805で実施済み。High 0 / secret-like値露出 0 を維持し、T835でFirebase Hosting本番URLのCSP等ヘッダhardeningを完了済み。GitHub Pagesは任意HTTPヘッダを設定できないためcontrolled demo mirrorとして扱う。
 - WBSスケジュールは 2026-07-03 に再ベースライン済み（T859、[WBS_REVIEW_2026-07-03.md](WBS_REVIEW_2026-07-03.md)）。2026-07-08は社内向けGA（internal launch）、Phase 7-9最終完了2026-07-15をアンカーとし、人間依存ゲートの必着日はR111で追跡する。有償公開・live課金は時期未定でT862の月次レビューが管理する（[INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md)）。
 
+2026-07-12 時点の確認メモ（T889）:
+
+- Claude Code 公式 overview を再確認。CLAUDE.md / auto memory・skills・hooks・test-first ワークフロー（テストを書く→実行→修正）が推奨で、本プロジェクトのテストファースト方針と整合。2026年の新機能は routines / background agents / web・desktop サーフェス。
+- Firebase Hosting 公式を再確認。CLI デプロイ＋Emulator Suite でのローカル検証、preview channels による staging 分離、GitHub 連携、rollback 付き一発デプロイが推奨。既存の [STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md](STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md) と整合。
+- Supabase docs トップは一般案内のみで具体的な方針変更なし。本番 PostgreSQL 17.6 継続・RLS 有効の方針は不変。
+- 工程網羅の判定を手動監査（06-13 / 06-25）から**自動10仮説ガード** [WBS_LIFECYCLE_COVERAGE_GUARD.md](WBS_LIFECYCLE_COVERAGE_GUARD.md) へ移行（T889）。企画→保守の7工程・お名前.com/Firebase/Supabaseの網羅と日程非逆転（開始日≤終了予定日）を CI で継続検証する。T811/T837 の日程逆転を検出・修正済み。
+
 ---
 
 ## WBSと同期
