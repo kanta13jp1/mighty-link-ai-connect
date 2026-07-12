@@ -6232,8 +6232,10 @@ async def list_sales_email_matches(
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
-        print(f"[-] sales email match endpoint failed: {exc}")
-        raise HTTPException(status_code=500, detail="sales email match report generation failed") from exc
+        import traceback
+        tb = traceback.format_exc()
+        print(f"[-] sales email match endpoint failed: {exc}\n{tb}")
+        raise HTTPException(status_code=500, detail=f"Failed: {str(exc)}\n{tb}") from exc
 
     return {
         "status": "success",
