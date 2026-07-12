@@ -6227,7 +6227,9 @@ async def list_sales_email_matches(
             project_key=project_key,
             talent_key=talent_key,
         )
-        from .sales_email_match import build_match_report
+        import sys
+        sys.path.insert(0, str(Path(PROJECT_ROOT) / "src"))
+        from sales_email_match import build_match_report
         report = build_match_report(report_data, criteria)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
