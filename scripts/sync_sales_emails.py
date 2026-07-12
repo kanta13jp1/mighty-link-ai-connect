@@ -236,15 +236,17 @@ def rebuild_extraction_review_json(db: DBAdapter) -> None:
         "extractions": extractions
     }
     
-    write_json_report(report, Path("exports/sales_email_extraction_review.json"))
-    write_markdown_report(report, Path("exports/sales_email_extraction_review.md"))
+    write_json_report(report, PROJECT_ROOT / "exports" / "sales_email_extraction_review.json")
+    write_markdown_report(report, PROJECT_ROOT / "exports" / "sales_email_extraction_review.md")
     print("[+] exports/sales_email_extraction_review.json rebuilt successfully.")
 
 
 def rebuild_match_review_json() -> None:
     print("[*] Rebuilding exports/sales_email_match_review.json...")
     try:
-        run_matcher(["--input-report", "exports/sales_email_extraction_review.json", "--json-report", "exports/sales_email_match_review.json"])
+        input_path = str(PROJECT_ROOT / "exports" / "sales_email_extraction_review.json")
+        output_json = str(PROJECT_ROOT / "exports" / "sales_email_match_review.json")
+        run_matcher(["--input-report", input_path, "--json-report", output_json])
         print("[+] exports/sales_email_match_review.json rebuilt successfully.")
     except Exception as e:
         print(f"[-] Rebuild match review failed: {e}")
