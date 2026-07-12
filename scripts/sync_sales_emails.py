@@ -260,12 +260,27 @@ def sync_sales_emails_pipeline() -> Dict[str, Any]:
     new_emails = sync_pop3_to_db(db)
     print(f"[+] Synced {new_emails} new emails from POP3 server.")
     
-    # 2. AI Parse (only if new emails exist)
-    if new_emails > 0:
-        print("[*] Running AI parser on new emails...")
+    # 2. AI Parse (if new emails exist, OR if there are any unparsed emails in the database)
+    has_unparsed = False
+    if db.use_supabase:
+        try:
+            res = db.sb_client.table("sales_email_messages").select("id").eq("ingest_status", "new").limit(1).execute()
+            has_unparsed = len(res.data) > 0 if res else False
+        except Exception as e:
+            print(f"[-] Supabase unparsed check failed: {e}")
+    else:
+        try:
+            cursor = db.sqlite_conn.cursor()
+            cursor.execute("SELECT id FROM sales_email_messages WHERE ingest_status = 'new' LIMIT 1")
+            has_unparsed = cursor.fetchone() is not None
+        except Exception as e:
+            print(f"[-] SQLite unparsed check failed: {e}")
+
+    if new_emails > 0 or has_unparsed:
+        print(f"[*] Running AI parser on new/unparsed emails (new={new_emails}, has_unparsed={has_unparsed})...")
         run_parser([])
     else:
-        print("[*] No new unparsed emails, skipping AI parser run.")
+        print("[*] No unparsed emails, skipping AI parser run.")
         
     # 3. Rebuild UI reports
     rebuild_extraction_review_json(db)
