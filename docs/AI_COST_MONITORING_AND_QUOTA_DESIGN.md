@@ -4,7 +4,7 @@
 **ステータス**: 完了  
 **対象フェーズ**: 7. 次期開発・運用（コスト）  
 **関連タスク**: **T687** 3 AIツール並走時のquotaメーター監視と超過レポート設計  
-**関連Issue/課題**: [R11](file:///c:/Users/kanta/GitHub/mighty-link-ai-connect/data/issues_tracker.tsv#L12) (3 AIツール並走の月額コスト超過リスク)
+**関連Issue/課題**: [R11](../data/issues_tracker.tsv#L12) (3 AIツール並走の月額コスト超過リスク)
 
 ---
 

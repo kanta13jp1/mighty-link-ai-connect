@@ -4,7 +4,7 @@
 **ステータス**: 完了  
 **対象フェーズ**: 7. 次期開発・運用（セキュリティ）  
 **関連タスク**: **T686** デモ環境へのbasic authまたはIP制限の導入設計  
-**関連Issue/課題**: [R10](file:///c:/Users/kanta/GitHub/mighty-link-ai-connect/data/issues_tracker.tsv#L11) (公開URLの外部漏洩対策)
+**関連Issue/課題**: [R10](../data/issues_tracker.tsv#L11) (公開URLの外部漏洩対策)
 
 ---
 

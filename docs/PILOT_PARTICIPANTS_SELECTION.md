@@ -5,8 +5,8 @@
 **対象フェーズ**: 7. 決定後実行（AIフィット診断パイロット準備）  
 **関連タスク**: **T711** 社内パイロット参加者の選定・依頼  
 **関連資料**: 
-- [PILOT_CONSENT_TEMPLATE.md](file:///c:/Users/kanta/GitHub/mighty-link-ai-connect/docs/PILOT_CONSENT_TEMPLATE.md) (参加同意書テンプレート)
-- [2026-06-02_CEO_Meeting_Minutes.md](file:///c:/Users/kanta/GitHub/mighty-link-ai-connect/docs/meetings/2026-06-02_CEO_Meeting_Minutes.md) (社長打ち合わせ議事録)
+- [PILOT_CONSENT_TEMPLATE.md](PILOT_CONSENT_TEMPLATE.md) (参加同意書テンプレート)
+- [2026-06-02_CEO_Meeting_Minutes.md](meetings/2026-06-02_CEO_Meeting_Minutes.md) (社長打ち合わせ議事録)
 
 ---
 
@@ -54,7 +54,7 @@
 > 本ツールはGoogle Gemini APIを使用していますが、**送信データが外部の公開学習モデルに二次利用されない安全なAPI接続**を適用しております。詳細は添付の同意書をご確認ください。
 > 
 > **▼ 参加同意書テンプレート（ご確認ください）**
-> [PILOT_CONSENT_TEMPLATE.md](file:///c:/Users/kanta/GitHub/mighty-link-ai-connect/docs/PILOT_CONSENT_TEMPLATE.md)
+> [PILOT_CONSENT_TEMPLATE.md](PILOT_CONSENT_TEMPLATE.md)
 > 
 > まずは同意書の内容をご確認いただき、本パイロットへのご協力が可能かどうか、本日中にこのスレッドまたはDMでご返信いただけますと幸いです。同意が確認でき次第、ツールのURLと操作マニュアルをお送りいたします。
 > 

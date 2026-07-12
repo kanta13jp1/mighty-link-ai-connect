@@ -573,9 +573,9 @@ Claude Code レーンは `data/WBS.tsv` を直接編集しない規約のため�
 
 ### 新 3 ルール対応の Codex 側アクション
 
-1. [feedback-session-commit-push-merge](../.claude/projects/c--Users-kanta-GitHub-mighty-link-ai-connect/memory/feedback_session_commit_push_merge.md) (memory) — Codex セッションも同様の commit/push/PR/merge フローを厳守。`[codex]` prefix で main へ短サイクル merge。
-2. [feedback-session-sheets-calendar-sync](../.claude/projects/c--Users-kanta-GitHub-mighty-link-ai-connect/memory/feedback_session_sheets_calendar_sync.md) (memory) — Codex セッション末でも `sync_wbs_to_sheets.py` + `sync_wbs_to_calendar.py` (+ 新規 2 sync スクリプト実装後はそれらも) を実行。
-3. [feedback-session-sheets-trackers](../.claude/projects/c--Users-kanta-GitHub-mighty-link-ai-connect/memory/feedback_session_sheets_trackers.md) (memory) — Codex が `data/issues_tracker.tsv` / `data/qa_tracker.tsv` を直接書き込む場合は事前に Claude Code に PR コメントで通知 (排他規約反転防止)。
+1. `feedback-session-commit-push-merge` (memory) — Codex セッションも同様の commit/push/PR/merge フローを厳守。`[codex]` prefix で main へ短サイクル merge。
+2. `feedback-session-sheets-calendar-sync` (memory) — Codex セッション末でも `sync_wbs_to_sheets.py` + `sync_wbs_to_calendar.py` (+ 新規 2 sync スクリプト実装後はそれらも) を実行。
+3. `feedback-session-sheets-trackers` (memory) — Codex が `data/issues_tracker.tsv` / `data/qa_tracker.tsv` を直接書き込む場合は事前に Claude Code に PR コメントで通知 (排他規約反転防止)。
 
 ## 2026-05-22 Codex continuation: T664 三ツール開発フロー整備
 

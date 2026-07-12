@@ -225,7 +225,7 @@ sequenceDiagram
 
 - **編集方針**: 各図は **1 画面 1 シナリオ**で完結。フェーズ番号 (①/②/③) でストーリーを区切り、関係者+システムを縦軸、時系列を縦方向に並べる。`rect rgb(...)` でフェーズの色分け。
 - **Mermaid 標準対応**: GitHub Markdown プレビュー、VSCode 拡張 (`bierner.markdown-mermaid` 等)、Notion (`/mermaid`)、Obsidian でそのまま描画可能。
-- **更新トリガ**: API endpoint 追加 / 認証フロー変更 / 開発フロー再編 が起きたら本書を更新。古いシーケンスは「Stale」セクションへ退避ではなく**物理削除**で運用する ([feedback_stale_doc_deletion](../../../.claude/projects/.../memory/feedback_stale_doc_deletion.md) 方針)。
+- **更新トリガ**: API endpoint 追加 / 認証フロー変更 / 開発フロー再編 が起きたら本書を更新。古いシーケンスは「Stale」セクションへ退避ではなく**物理削除**で運用する (`feedback_stale_doc_deletion` 方針)。
 - **関連 docs**:
   - [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) — 3-tool 体制の handoff 規約
   - [BACKEND_AI_PIPELINE.md](BACKEND_AI_PIPELINE.md) — Gemini live / fallback の設計詳細

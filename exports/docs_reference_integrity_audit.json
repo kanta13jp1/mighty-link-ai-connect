@@ -1,0 +1,68 @@
+{
+  "task": "T891",
+  "doc_count": 149,
+  "link_count": 655,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "docsが50件以上あり内部リンクを検出(sanity)",
+      "passed": true,
+      "detail": "docs数=149, 内部リンク数=584"
+    },
+    {
+      "id": "H2",
+      "title": "file:///絶対パスのリンクが0件(機種依存・非移植の排除)",
+      "passed": true,
+      "detail": "file://=なし"
+    },
+    {
+      "id": "H3",
+      "title": "リポジトリ外を指すリンクが0件(.claude等へ脱出しない)",
+      "passed": true,
+      "detail": "外部=なし"
+    },
+    {
+      "id": "H4",
+      "title": "docs→docs(*.md)リンクが全て実在に解決",
+      "passed": true,
+      "detail": "未解決docs=なし"
+    },
+    {
+      "id": "H5",
+      "title": "docs→scripts/testsリンクが全て実在に解決",
+      "passed": true,
+      "detail": "未解決code=なし"
+    },
+    {
+      "id": "H6",
+      "title": "docs→data/exportsリンクが全て実在に解決",
+      "passed": true,
+      "detail": "未解決data=なし"
+    },
+    {
+      "id": "H7",
+      "title": "docs→その他repo内(src/config等)リンクが全て実在に解決",
+      "passed": true,
+      "detail": "未解決other=なし"
+    },
+    {
+      "id": "H8",
+      "title": "アンカー付きリンク(file#section)のファイル部分が実在",
+      "passed": true,
+      "detail": "未解決アンカー=なし"
+    },
+    {
+      "id": "H9",
+      "title": "全repo-relativeリンクの未解決が0件",
+      "passed": true,
+      "detail": "未解決合計=0"
+    },
+    {
+      "id": "H10",
+      "title": "docs参照全体が完全・整合(リンクドリフト0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ],
+  "all_passed": true
+}

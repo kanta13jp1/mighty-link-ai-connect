@@ -5,8 +5,8 @@
 **対象フェーズ**: 7. 次期開発・運用（コンプライアンス）  
 **関連タスク**: **T685** 個人情報同意書テンプレート作成とクローズド運用設計  
 **関連資料**:
-- [PILOT_CONSENT_TEMPLATE.md](file:///c:/Users/kanta/GitHub/mighty-link-ai-connect/docs/PILOT_CONSENT_TEMPLATE.md) (参加同意書テンプレート)
-- [PILOT_PARTICIPANTS_SELECTION.md](file:///c:/Users/kanta/GitHub/mighty-link-ai-connect/docs/PILOT_PARTICIPANTS_SELECTION.md) (参加者選定・依頼)
+- [PILOT_CONSENT_TEMPLATE.md](PILOT_CONSENT_TEMPLATE.md) (参加同意書テンプレート)
+- [PILOT_PARTICIPANTS_SELECTION.md](PILOT_PARTICIPANTS_SELECTION.md) (参加者選定・依頼)
 
 ---
 

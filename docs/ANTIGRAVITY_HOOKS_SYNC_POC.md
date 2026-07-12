@@ -4,7 +4,7 @@
 **ステータス**: 完了  
 **対象フェーズ**: 7. 次期開発・運用（連携）  
 **関連タスク**: **T695** Antigravity hooks機能によるsyncスクリプト自動起動の可否検証  
-**関連Issue/課題**: [R4](file:///c:/Users/kanta/GitHub/mighty-link-ai-connect/data/issues_tracker.tsv#L5) (同期漏れ・セッションドリフトによる成果物不整合リスク)
+**関連Issue/課題**: [R4](../data/issues_tracker.tsv#L5) (同期漏れ・セッションドリフトによる成果物不整合リスク)
 
 ---
 
@@ -17,7 +17,7 @@ Mighty Skill-Bridge の開発は、Antigravity + Gemini、VSCode + Codex、VSCod
 ---
 
 ## 2. Hooks 構成設計（.antigravity/hooks.json）
-ワークスペースのルートに [.antigravity/hooks.json](file:///c:/Users/kanta/GitHub/mighty-link-ai-connect/.antigravity/hooks.json) を配備し、以下の2つの自律自動トリガーを定義しました。
+ワークスペースのルートに [.antigravity/hooks.json](../.antigravity/hooks.json) を配備し、以下の2つの自律自動トリガーを定義しました。
 
 ### 2.1 WBS＆カレンダー自動同期トリガー (wbs-sheets-calendar-sync)
 * **監視イベント**: `file:modified` (ファイル更新)

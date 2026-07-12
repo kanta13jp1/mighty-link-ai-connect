@@ -11,7 +11,7 @@ GitHub Actions上の本番デプロイパイプライン（`CI/CD Pipeline`）�
 
 ## 2. 移行対応内容
 
-### (1) ワークフローファイルの修正（[.github/workflows/deploy.yml](file:///c:/Users/kanta/GitHub/mighty-link-ai-connect/.github/workflows/deploy.yml)）
+### (1) ワークフローファイルの修正（[.github/workflows/deploy.yml](../.github/workflows/deploy.yml)）
 - デプロイの環境変数（`env`）から `FIREBASE_TOKEN` シークレットの読み込みを完全に削除しました。
 - デプロイ実行スクリプトから、旧 `FIREBASE_TOKEN` による認証フォールバック処理（`--token` 指定）をすべて削除し、WIF/ADC によるGoogle Cloudの認証ファイル（`GOOGLE_APPLICATION_CREDENTIALS`）経由のみで `firebase deploy` が動作するコード構成に一本化しました。
 

@@ -92,6 +92,12 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 - GitHub Issues/Projects 公式を再確認。Issue メタデータ（labels/milestones/sub-issues/dependencies）は Project #1 に統合され、ビュー/フィルタで進捗管理できる。Google Sheets API batchUpdate 公式を再確認し、バッチ一括更新・field mask による部分更新・RepeatCellRequest 等が推奨。どちらもトラッカー→Sheets/GitHub 同期の方針と整合。
 - トラッカー TSV（課題管理表/QA表/テスト結果/リリース判定）の構造・参照整合を**自動10仮説ガード** [TRACKER_INTEGRITY_GUARD.md](TRACKER_INTEGRITY_GUARD.md) で CI 検証（T890）。ラグド行・重複ID・不正状態・不正日付・WBS/QA/R 参照切れが Sheets 同期前に落ちる。現状ドリフト0。
 
+2026-07-13 時点の確認メモ（T891）:
+
+- OpenAI Codex Best Practices を再確認。AGENTS.md は「エージェント向けの open-format README」でバージョン管理下に置き、**繰り返しの誤りに気づいた時だけ更新**する恒久ガイダンス。テストは「必要時に作成→関連チェック実行→結果確認→受け入れ前レビュー」を推奨。本プロジェクトのテストファースト＋AGENTS.md 運用と整合。
+- Obsidian help を再確認（ノート相互リンクが基本機能）。docs は Markdown 相互リンクのナレッジベースであり、リンク切れ・機種依存パスは信頼性を損なう。
+- docs 内リンクの健全性を**自動10仮説ガード** [DOCS_REFERENCE_INTEGRITY_GUARD.md](DOCS_REFERENCE_INTEGRITY_GUARD.md) で CI 検証（T891）。`file:///` 絶対パス・リポジトリ外参照・リンク切れを排除。初回で21件（file:/// 10・repo外/切れ11・9docs）を検出・修正。これにより陳腐化 doc 削除も安全化（参照が残れば落ちる）。
+
 ---
 
 ## WBSと同期
