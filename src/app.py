@@ -6156,6 +6156,7 @@ def load_extraction_report_from_postgres() -> Optional[dict]:
                 "talent_profile": tal_data
             })
             
+        from datetime import datetime, timezone
         return {
             "task_id": "T817_4",
             "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
@@ -6209,6 +6210,7 @@ async def list_sales_email_matches(
                 pass
                 
     if report_data is None:
+        from datetime import datetime, timezone
         report_data = {
             "task_id": "T817_4",
             "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
