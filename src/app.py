@@ -6146,6 +6146,22 @@ async def get_sales_email_analytics():
         return {"status": "error", "message": "Failed to calculate analytics"}
 
 
+@app.post("/api/sales-email/sync")
+async def sync_sales_emails(
+    username: str = Depends(verify_credentials),
+):
+    """Sync POP3 emails to database, run AI parse pipeline, and rebuild review JSONs."""
+    try:
+        import sys
+        sys.path.insert(0, str(Path(PROJECT_ROOT) / "scripts"))
+        from sync_sales_emails import sync_sales_emails_pipeline
+        result = sync_sales_emails_pipeline()
+        return result
+    except Exception as exc:
+        print(f"[-] Sales email sync pipeline failed: {exc}")
+        raise HTTPException(status_code=500, detail=f"Sync pipeline failed: {str(exc)}")
+
+
 @app.post("/api/sales-email/reviews")
 async def submit_sales_email_match_review(
     req: SalesEmailMatchReviewRequest,
