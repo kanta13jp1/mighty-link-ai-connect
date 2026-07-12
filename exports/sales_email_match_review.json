@@ -1,6 +1,6 @@
 {
   "task_id": "T817_5",
-  "generated_at": "2026-07-12T01:31:59Z",
+  "generated_at": "2026-07-12T02:02:48Z",
   "model_name": "deterministic-sales-email-matcher-v1",
   "direction": "project_to_talent",
   "filters": {
@@ -22,10 +22,225 @@
     "match_output_uses_redacted_evidence_only",
     "human_review_required_before_outreach"
   ],
-  "project_count": 0,
-  "talent_count": 0,
-  "match_count": 0,
-  "projects": [],
-  "talents": [],
-  "matches": []
+  "project_count": 4,
+  "talent_count": 1,
+  "match_count": 4,
+  "projects": [
+    {
+      "project_key": "project_1c2d828325123303",
+      "title": "【BP要員】Java(約6年)／Spring Boot／基本設計～／マイクロサービス・DDD／銀行系大規模マイクロサービス／Vue/React／リモート併用希望【KAD清水】1246",
+      "required_skills": [
+        "JAVA",
+        "REACT",
+        "SPRING",
+        "VUE"
+      ],
+      "nice_to_have_skills": [],
+      "skill_categories": {},
+      "rate_min": null,
+      "rate_max": 75,
+      "location": "東京",
+      "remote_type": "unknown",
+      "start_date_text": "",
+      "evidence_excerpt": "株式会社マイティリンク ご担当者様 お世話になっております。 株式会社KAD営業部です。 本日は要員のご紹介をさせていただきます。 見合う案件ございましたら、ご紹介いただけますと幸いです。 ーーーーーーーーーーー ■プロフィール 氏 名：HG 年 齢：35歳 性 別：男性 (韓国籍・N1所持) 所 属：一社先契約社員 最 寄：北千住駅（JR常磐線／東京メトロ千代田線） 開 始：8月～ 単 価：75万円 常 駐：リモート併用希望 ■スキル ・経験：約6.5年／Java ・...",
+      "confidence": 1.0,
+      "source_paths": [
+        "pop3://pop2.gmoserver.jp/3"
+      ]
+    },
+    {
+      "project_key": "project_034c842f2f704461",
+      "title": "【BP要員】Java／Spring Boot(約3年半)／詳細設計～／REST API／JPA・MyBatisでの業務／常駐可【KAD清水】1277",
+      "required_skills": [
+        "JAVA",
+        "SPRING"
+      ],
+      "nice_to_have_skills": [],
+      "skill_categories": {},
+      "rate_min": null,
+      "rate_max": 63,
+      "location": "",
+      "remote_type": "unknown",
+      "start_date_text": "",
+      "evidence_excerpt": "株式会社マイティリンク ご担当者様 お世話になっております。 株式会社KAD営業部です。 本日は要員のご紹介をさせていただきます。 見合う案件ございましたら、ご紹介いただけますと幸いです。 ーーーーーーーーーーー ■プロフィール 氏 名：TS 年 齢：31歳 性 別：男性 所 属：一社先正社員 最 寄：東林間駅（小田急江ノ島線） 開 始：8月 単 価：63万円 常 駐：常駐可 (1時間圏内) ■スキル ・経験：約3年6ヶ月 ・担当工程：詳細設計～単体テスト ・Java／...",
+      "confidence": 1.0,
+      "source_paths": [
+        "pop3://pop2.gmoserver.jp/1"
+      ]
+    },
+    {
+      "project_key": "project_c9bbecc6f56a0abc",
+      "title": "【BP要員】React／Next.js(約3年半)／基本設計～／Zustand・Vitest等モダン環境経験／常駐可【KAD清水】1276",
+      "required_skills": [
+        "REACT"
+      ],
+      "nice_to_have_skills": [],
+      "skill_categories": {},
+      "rate_min": null,
+      "rate_max": 65,
+      "location": "",
+      "remote_type": "unknown",
+      "start_date_text": "",
+      "evidence_excerpt": "株式会社マイティリンク ご担当者様 お世話になっております。 株式会社KAD営業部です。 本日は要員のご紹介をさせていただきます。 見合う案件ございましたら、ご紹介いただけますと幸いです。 ーーーーーーーーーーー ■プロフィール 氏 名：MR 年 齢：29歳 性 別：男性 所 属：一社先正社員 最 寄：新桜台駅（西武有楽町線） 開 始：8月～ 単 価：65万円 常 駐：常駐可 面 談：終日対応可能 ■スキル ・経験：約3年9ヶ月 ・React／Next.js ・Type...",
+      "confidence": 1.0,
+      "source_paths": [
+        "pop3://pop2.gmoserver.jp/2"
+      ]
+    },
+    {
+      "project_key": "project_d0dd4f8716e489cd",
+      "title": "【BP要員】React／TypeScript(約3年半)／基本設計～／Storybook／Vitest経験／EC・SaaS開発経験／常駐可【KAD清水】1278",
+      "required_skills": [
+        "REACT",
+        "Typescript"
+      ],
+      "nice_to_have_skills": [],
+      "skill_categories": {},
+      "rate_min": null,
+      "rate_max": 60,
+      "location": "",
+      "remote_type": "unknown",
+      "start_date_text": "",
+      "evidence_excerpt": "株式会社マイティリンク ご担当者様 お世話になっております。 株式会社KAD営業部です。 本日は要員のご紹介をさせていただきます。 見合う案件ございましたら、ご紹介いただけますと幸いです。 ーーーーーーーーーーー ■プロフィール 氏 名：HA 年 齢：24歳 性 別：女性 所 属：一社先正社員 最 寄：長後駅（小田急江ノ島線） 開 始：8月 単 価：60万円 常 駐：常駐可 (1時間圏内) ■スキル ・経験：約3年6ヶ月 ・担当工程：基本設計～単体テスト ・React／...",
+      "confidence": 1.0,
+      "source_paths": [
+        "pop3://pop2.gmoserver.jp/7"
+      ]
+    }
+  ],
+  "talents": [
+    {
+      "talent_key": "技術者（AWS等）",
+      "display_name": "技術者（AWS等）",
+      "skills": [
+        "AWS",
+        "AZURE",
+        "LINUX"
+      ],
+      "skill_categories": {},
+      "desired_rate_min": null,
+      "desired_rate_max": 115,
+      "desired_location": "",
+      "remote_preference": "unknown",
+      "availability_text": "",
+      "evidence_excerpt": "ご担当者様各位 お世話になっております。 株式会社GFDの西田でございます。 下記要員様に見合う案件ございましたらご紹介頂けますと幸いです。 スキルシート：https://gf-design.box.com/s/h5oovwbnaqne7jzu7ei9deo09sedns5w ------------------------------------------ 氏名：M.K(50歳／男性) 最寄駅：和光市駅 所属：一社先正社員 単金額：115万円 参画日：2026年 8...",
+      "confidence": 1.0,
+      "source_paths": [
+        "pop3://pop2.gmoserver.jp/4"
+      ]
+    }
+  ],
+  "matches": [
+    {
+      "project_key": "project_1c2d828325123303",
+      "project_title": "【BP要員】Java(約6年)／Spring Boot／基本設計～／マイクロサービス・DDD／銀行系大規模マイクロサービス／Vue/React／リモート併用希望【KAD清水】1246",
+      "talent_key": "技術者（AWS等）",
+      "talent_label": "技術者（AWS等）",
+      "score": 23,
+      "score_breakdown": {
+        "required_skill_fit": 0,
+        "nice_skill_fit": 50,
+        "condition_fit": 35,
+        "evidence_confidence": 100
+      },
+      "matched_skills": [],
+      "missing_skills": [
+        "JAVA",
+        "REACT",
+        "SPRING",
+        "VUE"
+      ],
+      "matched_conditions": [
+        "location:東京"
+      ],
+      "mismatch_reasons": [
+        "missing required skills: JAVA, REACT, SPRING, VUE",
+        "rate below talent preference"
+      ],
+      "match_reason": "conditions: location:東京",
+      "project_evidence": "株式会社マイティリンク ご担当者様 お世話になっております。 株式会社KAD営業部です。 本日は要員のご紹介をさせていただきます。 見合う案件ございましたら、ご紹介いただけますと幸いです。 ーーーーーーーーーーー ■プロフィール 氏 名：HG 年 齢：35歳 性 別：男性 (韓国籍・N1所持) 所 属：一社先契約社員 最 寄：北千住駅（JR常磐線／東京メトロ千代田線） 開 始：8月～ 単 価：75万円 常 駐：リモート併用希望 ■スキル ・経験：約6.5年／Java ・...",
+      "talent_evidence": "ご担当者様各位 お世話になっております。 株式会社GFDの西田でございます。 下記要員様に見合う案件ございましたらご紹介頂けますと幸いです。 スキルシート：https://gf-design.box.com/s/h5oovwbnaqne7jzu7ei9deo09sedns5w ------------------------------------------ 氏名：M.K(50歳／男性) 最寄駅：和光市駅 所属：一社先正社員 単金額：115万円 参画日：2026年 8...",
+      "review_status": "pending"
+    },
+    {
+      "project_key": "project_034c842f2f704461",
+      "project_title": "【BP要員】Java／Spring Boot(約3年半)／詳細設計～／REST API／JPA・MyBatisでの業務／常駐可【KAD清水】1277",
+      "talent_key": "技術者（AWS等）",
+      "talent_label": "技術者（AWS等）",
+      "score": 16,
+      "score_breakdown": {
+        "required_skill_fit": 0,
+        "nice_skill_fit": 50,
+        "condition_fit": 0,
+        "evidence_confidence": 100
+      },
+      "matched_skills": [],
+      "missing_skills": [
+        "JAVA",
+        "SPRING"
+      ],
+      "matched_conditions": [],
+      "mismatch_reasons": [
+        "missing required skills: JAVA, SPRING",
+        "rate below talent preference"
+      ],
+      "match_reason": "review sanitized evidence before outreach",
+      "project_evidence": "株式会社マイティリンク ご担当者様 お世話になっております。 株式会社KAD営業部です。 本日は要員のご紹介をさせていただきます。 見合う案件ございましたら、ご紹介いただけますと幸いです。 ーーーーーーーーーーー ■プロフィール 氏 名：TS 年 齢：31歳 性 別：男性 所 属：一社先正社員 最 寄：東林間駅（小田急江ノ島線） 開 始：8月 単 価：63万円 常 駐：常駐可 (1時間圏内) ■スキル ・経験：約3年6ヶ月 ・担当工程：詳細設計～単体テスト ・Java／...",
+      "talent_evidence": "ご担当者様各位 お世話になっております。 株式会社GFDの西田でございます。 下記要員様に見合う案件ございましたらご紹介頂けますと幸いです。 スキルシート：https://gf-design.box.com/s/h5oovwbnaqne7jzu7ei9deo09sedns5w ------------------------------------------ 氏名：M.K(50歳／男性) 最寄駅：和光市駅 所属：一社先正社員 単金額：115万円 参画日：2026年 8...",
+      "review_status": "pending"
+    },
+    {
+      "project_key": "project_c9bbecc6f56a0abc",
+      "project_title": "【BP要員】React／Next.js(約3年半)／基本設計～／Zustand・Vitest等モダン環境経験／常駐可【KAD清水】1276",
+      "talent_key": "技術者（AWS等）",
+      "talent_label": "技術者（AWS等）",
+      "score": 16,
+      "score_breakdown": {
+        "required_skill_fit": 0,
+        "nice_skill_fit": 50,
+        "condition_fit": 0,
+        "evidence_confidence": 100
+      },
+      "matched_skills": [],
+      "missing_skills": [
+        "REACT"
+      ],
+      "matched_conditions": [],
+      "mismatch_reasons": [
+        "missing required skills: REACT",
+        "rate below talent preference"
+      ],
+      "match_reason": "review sanitized evidence before outreach",
+      "project_evidence": "株式会社マイティリンク ご担当者様 お世話になっております。 株式会社KAD営業部です。 本日は要員のご紹介をさせていただきます。 見合う案件ございましたら、ご紹介いただけますと幸いです。 ーーーーーーーーーーー ■プロフィール 氏 名：MR 年 齢：29歳 性 別：男性 所 属：一社先正社員 最 寄：新桜台駅（西武有楽町線） 開 始：8月～ 単 価：65万円 常 駐：常駐可 面 談：終日対応可能 ■スキル ・経験：約3年9ヶ月 ・React／Next.js ・Type...",
+      "talent_evidence": "ご担当者様各位 お世話になっております。 株式会社GFDの西田でございます。 下記要員様に見合う案件ございましたらご紹介頂けますと幸いです。 スキルシート：https://gf-design.box.com/s/h5oovwbnaqne7jzu7ei9deo09sedns5w ------------------------------------------ 氏名：M.K(50歳／男性) 最寄駅：和光市駅 所属：一社先正社員 単金額：115万円 参画日：2026年 8...",
+      "review_status": "pending"
+    },
+    {
+      "project_key": "project_d0dd4f8716e489cd",
+      "project_title": "【BP要員】React／TypeScript(約3年半)／基本設計～／Storybook／Vitest経験／EC・SaaS開発経験／常駐可【KAD清水】1278",
+      "talent_key": "技術者（AWS等）",
+      "talent_label": "技術者（AWS等）",
+      "score": 16,
+      "score_breakdown": {
+        "required_skill_fit": 0,
+        "nice_skill_fit": 50,
+        "condition_fit": 0,
+        "evidence_confidence": 100
+      },
+      "matched_skills": [],
+      "missing_skills": [
+        "REACT",
+        "Typescript"
+      ],
+      "matched_conditions": [],
+      "mismatch_reasons": [
+        "missing required skills: REACT, Typescript",
+        "rate below talent preference"
+      ],
+      "match_reason": "review sanitized evidence before outreach",
+      "project_evidence": "株式会社マイティリンク ご担当者様 お世話になっております。 株式会社KAD営業部です。 本日は要員のご紹介をさせていただきます。 見合う案件ございましたら、ご紹介いただけますと幸いです。 ーーーーーーーーーーー ■プロフィール 氏 名：HA 年 齢：24歳 性 別：女性 所 属：一社先正社員 最 寄：長後駅（小田急江ノ島線） 開 始：8月 単 価：60万円 常 駐：常駐可 (1時間圏内) ■スキル ・経験：約3年6ヶ月 ・担当工程：基本設計～単体テスト ・React／...",
+      "talent_evidence": "ご担当者様各位 お世話になっております。 株式会社GFDの西田でございます。 下記要員様に見合う案件ございましたらご紹介頂けますと幸いです。 スキルシート：https://gf-design.box.com/s/h5oovwbnaqne7jzu7ei9deo09sedns5w ------------------------------------------ 氏名：M.K(50歳／男性) 最寄駅：和光市駅 所属：一社先正社員 単金額：115万円 参画日：2026年 8...",
+      "review_status": "pending"
+    }
+  ]
 }
