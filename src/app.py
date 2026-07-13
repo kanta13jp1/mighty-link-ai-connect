@@ -6143,12 +6143,25 @@ def load_extraction_report_from_postgres() -> Optional[dict]:
                     "review_status": tal["review_status"]
                 }
                 
+            msg_received_at = "2026-06-18T00:00:00Z"
+            if msg.get("received_at"):
+                if isinstance(msg["received_at"], datetime):
+                    msg_received_at = msg["received_at"].isoformat().replace("+00:00", "Z")
+                else:
+                    msg_received_at = str(msg["received_at"])
+            elif msg.get("created_at"):
+                if isinstance(msg["created_at"], datetime):
+                    msg_received_at = msg["created_at"].isoformat().replace("+00:00", "Z")
+                else:
+                    msg_received_at = str(msg["created_at"])
+
             extractions.append({
                 "source_path": msg["source_path"],
                 "source_type": msg["source_type"],
                 "dedupe_key": msg["dedupe_key"],
                 "sender_domain": msg["sender_domain"],
                 "normalized_subject": msg["normalized_subject"],
+                "received_at": msg_received_at,
                 "email_kind": email_kind,
                 "model_name": "deterministic-sales-email-extractor-v1",
                 "fallback_used": True,
@@ -6275,7 +6288,8 @@ async def get_sales_email_analytics():
         skill_counts = {}
         
         for item in extractions:
-            dt = report_data.get("generated_at", "2026-06-18")[:10]
+            dt_str = item.get("received_at") or report_data.get("generated_at") or "2026-06-18"
+            dt = dt_str[:10]
             daily_counts[dt] = daily_counts.get(dt, 0) + 1
             
             dom = item.get("sender_domain", "unknown")

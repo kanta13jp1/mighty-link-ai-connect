@@ -82,13 +82,25 @@ def sync_pop3_to_db(db: DBAdapter) -> int:
         body = canonical_body(email.body)
         body_exc = safe_excerpt(body, max_chars=240)
         
+        # Parse original email date or fallback to now
+        original_received_at = None
+        if email.received_at:
+            try:
+                from email.utils import parsedate_to_datetime
+                parsed_dt = parsedate_to_datetime(email.received_at)
+                original_received_at = parsed_dt.isoformat().replace("+00:00", "Z")
+            except Exception:
+                pass
+        if not original_received_at:
+            original_received_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
         payload = {
             "message_id_hash": sha256_hex(email.message_id or f"pop3-{key}"),
             "dedupe_key": key,
             "sender_hash": sha256_hex(email.sender),
             "sender_domain": sender_domain(email.sender),
             "normalized_subject": safe_excerpt(subj, max_chars=160),
-            "received_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "received_at": original_received_at,
             "body_hash": sha256_hex(body),
             "body_excerpt": body_exc,
             "source_path": email.source_path,
