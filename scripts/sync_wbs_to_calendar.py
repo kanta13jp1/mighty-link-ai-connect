@@ -152,7 +152,7 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】GitHub Project権限復旧チェック",
-        "description": "gh auth refresh -s read:project 実行後にProject board取得/作成とIssue #1-#11/#13/#14/#16の配置可否を確認します。",
+        "description": "GitHub Project OAuth復旧とProject #1へのIssue配置を確認します。現在は復旧済みで対象限定同期へ移行しています。",
         "start_time": "2026-05-24T10:00:00",
         "end_time": "2026-05-24T11:00:00",
         "time_zone": "Asia/Tokyo",
@@ -261,7 +261,7 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】GitHub Issues/Project再追跡",
-        "description": "PowerPoint生成Issueを追加し、GitHub Projectはread:project/projectスコープ不足としてIssue #8/#5で復旧待ちを継続します。",
+        "description": "PowerPoint生成IssueとGitHub Project #1の同期状態を確認します。OAuth課題は解消済みです。",
         "start_time": "2026-05-24T13:00:00",
         "end_time": "2026-05-24T14:00:00",
         "time_zone": "Asia/Tokyo",

@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-07-13 22:12:28 UTC+09:00
+Generated: 2026-07-13 23:44:24 UTC+09:00
 
 ## Purpose
 
@@ -398,7 +398,7 @@ GET  /api/knowledge-flow/status
 | Google Drive / NotebookLM Presentation | `notebooklm_presentation_brief.txt` をLocal OAuth Drive APIでGoogle Docsへ変換 | <https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit> |
 | Notion | 連携証跡ページをNotion MCPで作成 | <https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951> |
 | GitHub Issues | CEOデモ向け連携タスクを8件起票 | <https://github.com/kanta13jp1/mighty-link-ai-connect/issues> |
-| GitHub Project | `gh project list` と `gh auth refresh` を再試行 | `read:project` / `project` スコープ復旧が必要。Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` で管理 |
+| GitHub Project | 2026-05-21時点ではOAuthスコープ復旧待ち | 後続のT644/T652/T794で復旧済み。現行運用はProject #1と対象限定WBS同期 |
 | Slack | CLI/MCP利用可否を確認 | Slack CLI未検出、送信先チャンネル未確定。Issue #2 / WBS `T636` で管理 |
 
 ## 2026-05-22 Workspace OAuth Google Docs 再作成
@@ -409,7 +409,7 @@ Google Docsホームで資料が見えない問題に対応するため、Google
 - 検証コマンド: `python scripts/verify_google_workspace_account.py`
 - 再作成コマンド: `python scripts/upload_notebooklm_docs_to_drive.py`
 - Source Pack: <https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit>
-- Presentation Brief: <https://docs.google.com/do
+- Presentation Brief: <https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/ed
 
 ## Source: docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md
 

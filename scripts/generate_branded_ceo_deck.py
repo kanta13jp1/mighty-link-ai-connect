@@ -231,9 +231,9 @@ SLIDES = [
     {
         "num": 3,
         "title": "Google Workspace で進捗が回る基盤",
-        "subtitle": "5 タブ Sheets + 完了済自動削除 Calendar",
+        "subtitle": "10 タブ Sheets + 完了済自動削除 Calendar",
         "points": [
-            "WBS / Summary / Gantt 風 Timeline / 課題管理表 / QA 表 の計 5 タブを一括自動同期",
+            "WBS / Summary / Timeline / 課題 / QA / テスト / セキュリティ / デプロイ / パイロット / リリース判定の計10タブを一括同期",
             "Google Calendar は 完了済イベントを自動削除 し未完了タスクだけが視覚的に残る",
             "OAuth アカウント検証 (k-umezawa@ml-mightylink.com) でセキュアな API 連携を固定",
         ],

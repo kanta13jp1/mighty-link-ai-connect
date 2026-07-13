@@ -199,7 +199,7 @@ NotebookLM の Agent Brief / CEO Slide Outline を再生成したい場合のみ
 
 - Notion証跡ページ: `https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951`
 - GitHub Issues: `https://github.com/kanta13jp1/mighty-link-ai-connect/issues`
-- GitHub Projectは `gh auth refresh -h github.com -s read:project -s project` 後に正式連携する。
+- GitHub Project #1は連携済み。毎セッションで更新したWBS IDを `python scripts/sync_wbs_to_github.py TXXX --dry-run` で確認後、実同期する。
 - Slackは投稿先チャンネルと共有範囲を確認してから送信連携する。
 
 FastAPI 起動中は、画面の「開発ナレッジ連携デモ」からも生成できます。

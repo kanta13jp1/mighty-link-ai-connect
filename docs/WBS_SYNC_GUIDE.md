@@ -9,13 +9,18 @@
 
 本プロジェクトでは、プロジェクト管理の円滑化と **Google Workspace API (Sheets/Docs/Calendar) ＆ Gemini API 連携** の体現のため、ローカルの `data/WBS.tsv` の変更を自動で Google スプレッドシートに反映し、動画生成デモUIと整合する管理表として自動装飾する Python 同期システムを構築しました。
 
-2026-05-22 時点では、参考ファイル `【次期CATS】WBS_分析計画工程(後半).xlsx` の思想に寄せ、単純な TSV 一覧ではなく、以下の 5 タブを自動生成します。
+2026-07-13 時点では、参考ファイル `【次期CATS】WBS_分析計画工程(後半).xlsx` の思想に寄せ、単純な TSV 一覧ではなく、以下の 10 タブを自動生成します。
 
 - `Mighty-Link WBS`: 階層WBS、フェーズ行、予定開始/終了、工数、進捗率、アラート、フィルタ、固定ヘッダーを含む管理表。
 - `WBS Summary`: フェーズ別の総数、完了、実行中、未着手、完了率、対象期間の自動集計表。
 - `WBS Timeline`: タスクごとの開始/終了/期間/進捗を横断確認する軽量タイムライン表。
 - `課題管理表`: `data/issues_tracker.tsv` を正本とする課題・ブロッカー管理表。
 - `QA表`: `data/qa_tracker.tsv` を正本とする社長/顧客向け想定QA・実問管理表。
+- `テスト結果`: `data/test_results.tsv` を正本とするテスト実行・合否管理表。
+- `セキュリティ`: `data/security_log.tsv` を正本とするセキュリティ検証記録。
+- `デプロイ結果`: `data/deploy_log.tsv` を正本とするデプロイ・ロールバック証跡。
+- `パイロット集計`: `data/pilot_summary.tsv` を正本とするパイロットKPI集計。
+- `リリース判定`: `data/release_go_no_go_criteria.tsv` を正本とするGo/No-Go判定表。
 
 その過程で直面する Google API の主要なセキュリティ・クォータ制約を完全に克服した手順を、今後の再現性のために記録します。
 
@@ -40,8 +45,8 @@
 2. User Type で **「外部 (External)」** を選択し、**「作成」** をクリックします。
 3. **アプリ情報** を入力します：
    - アプリ名: `Mighty-Link AI Connect`
-   - ユーザーサポートメール: `kanta13jp@gmail.com`
-   - デベロッパーの連絡先情報: `kanta13jp@gmail.com`
+   - ユーザーサポートメール: `k-umezawa@ml-mightylink.com`
+   - デベロッパーの連絡先情報: `k-umezawa@ml-mightylink.com`
 4. 他の項目はデフォルトのまま「保存して次へ」を進めます。
 5. **テストユーザー (Test users)** ステップで、**「+ ADD USERS」** をクリックし、認証を行う Google アカウント (`k-umezawa@ml-mightylink.com`) を追加して保存します。*(※このテストユーザーの追加を行わないと、認証時に「このアプリは承認されていません」のエラーが発生します)*
 6. 最後の「終了」画面で、一番下にある **「作成」** ボタンをクリックして同意画面の構築を完了させます。

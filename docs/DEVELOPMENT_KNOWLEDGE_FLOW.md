@@ -104,7 +104,7 @@ GET  /api/knowledge-flow/status
 | Google Drive / NotebookLM Presentation | `notebooklm_presentation_brief.txt` をLocal OAuth Drive APIでGoogle Docsへ変換 | <https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit> |
 | Notion | 連携証跡ページをNotion MCPで作成 | <https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951> |
 | GitHub Issues | CEOデモ向け連携タスクを8件起票 | <https://github.com/kanta13jp1/mighty-link-ai-connect/issues> |
-| GitHub Project | `gh project list` と `gh auth refresh` を再試行 | `read:project` / `project` スコープ復旧が必要。Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` で管理 |
+| GitHub Project | 2026-05-21時点ではOAuthスコープ復旧待ち | 後続のT644/T652/T794で復旧済み。現行運用はProject #1と対象限定WBS同期 |
 | Slack | CLI/MCP利用可否を確認 | Slack CLI未検出、送信先チャンネル未確定。Issue #2 / WBS `T636` で管理 |
 
 ## 2026-05-22 Workspace OAuth Google Docs 再作成
@@ -190,4 +190,4 @@ python scripts/sync_docs_to_notebooklm.py
 - Google Driveへのアップロード対象にPPTXを追加し、`exports/knowledge_flow/google_drive_workspace_docs.json` の `files.ceo_presentation_pptx` にURLを記録する運用にした。
 - Drive URL: `https://docs.google.com/presentation/d/1XGHnQHBpJyyhh_Y3I2lq2UThPRC-2dcL/edit?usp=drivesdk&ouid=117190324786156797159&rtpof=true&sd=true`
 - SlackはローカルCLI未検出、送信MCP未露出のため、実送信ではなく投稿案生成と権限確認を継続する。実送信は投稿先チャンネル・共有範囲の承認後に行う。
-- GitHub Projectは `read:project` / `project` OAuth scope不足が継続している。Issue #8 / #5で復旧待ちとして扱い、Issueは実装タスク管理、WBSは日程・報告管理として先行運用する。
+- GitHub ProjectのOAuth scope不足は後続タスクで解消済み。2026-07-13以降は `scripts/sync_wbs_to_github.py` で更新対象WBSだけをIssueとProject #1のStatus/Start date/Target dateへ同期する。

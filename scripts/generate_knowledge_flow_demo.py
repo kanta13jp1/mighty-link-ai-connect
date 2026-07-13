@@ -172,14 +172,14 @@ and which development knowledge-flow tools should become official.
 
 - Public demo remains guarded by Public Demo Guard and GitHub Pages deployment.
 - WBS is synced to Google Sheets and Google Calendar.
-- GitHub Issues #1-#11/#13/#14/#16 track the CEO demo integration backlog.
+- Updated WBS tasks are synchronized to GitHub Issues and Project #1 with status and date fields.
 - NotebookLM source pack was uploaded to Google Docs for source ingestion.
 - NotebookLM CLI is authenticated as the Workspace account and generated an agent brief plus CEO slide outline.
 - CEO PowerPoint deck was generated from the NotebookLM slide outline.
 - Notion MCP created an integration evidence page.
 - Obsidian vault starter exists locally with `.obsidian` settings.
-- Slack post draft exists, while channel and write permission remain pending.
-- GitHub Project requires `read:project` / `project` OAuth scope refresh.
+- Slack posting remains approval-gated by destination channel and sharing scope.
+- GitHub Project OAuth is operational; targeted synchronization avoids bulk historical issue creation.
 
 ## WBS Snapshot
 

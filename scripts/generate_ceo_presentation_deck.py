@@ -379,8 +379,8 @@ def build_slides(prs: Presentation, context: dict[str, Any]) -> None:
     add_header(slide, 7, "Risks and Boundaries", "運用・リスク論点と未完了項目", source_note)
     risks = [
         ("公開URL", "社長共有済み。UIデグレは許容しない。", "Public Demo Guardをpush前後で実行"),
-        ("Slack", "CLI未検出、送信MCP未露出。", "投稿先と共有範囲をIssue #2で管理"),
-        ("GitHub Project", "read:project / project scope不足。", "Issue #8でOAuth復旧後に配置"),
+        ("Slack", "投稿先と共有範囲の承認が必要。", "承認後に公式コネクタで送信"),
+        ("GitHub Project", "Project #1へWBS対象限定同期済み。", "完了・更新タスクだけを継続同期"),
         ("外部投入情報", "認証情報・個人情報・未承認顧客情報は投入禁止。", "docs/とWBSに安全ルールを明記"),
     ]
     y = 1.82
@@ -394,7 +394,7 @@ def build_slides(prs: Presentation, context: dict[str, Any]) -> None:
         add_text(slide, topic, 0.96, row_y + 0.15, 1.35, 0.2, size=11, color=COLORS["ink"], bold=True)
         add_text(slide, status, 2.5, row_y + 0.12, 4.45, 0.24, size=10, color=COLORS["muted"])
         add_text(slide, action, 7.42, row_y + 0.12, 4.45, 0.24, size=10, color=COLORS["ink"])
-    add_evidence_panel(slide, ["GitHub Project check: gh project list -> missing read:project", "Slack check: local slack CLI not found; connector send tool not exposed", "Issue #8 / #2で残課題化"])
+    add_evidence_panel(slide, ["GitHub Project: Project #1 operational", "WBS sync: scripts/sync_wbs_to_github.py", "Slack: destination approval required before posting"])
 
     # 8
     slide = prs.slides.add_slide(blank)
@@ -428,7 +428,7 @@ def build_slides(prs: Presentation, context: dict[str, Any]) -> None:
         0.82,
         size=15,
     )
-    add_evidence_panel(slide, ["WBS: data/WBS.tsv / docs/WBS.md", "Calendar sync: scripts/sync_wbs_to_calendar.py", "Issue tracking: GitHub Issues #1-#11/#13/#14/#16"])
+    add_evidence_panel(slide, ["WBS: data/WBS.tsv / docs/WBS.md", "Calendar sync: scripts/sync_wbs_to_calendar.py", "Issue/Project sync: scripts/sync_wbs_to_github.py"])
 
 
 def verify_pptx(path: Path, expected_slides: int) -> None:
