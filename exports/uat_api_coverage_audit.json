@@ -1,0 +1,70 @@
+{
+  "task": "T892",
+  "endpoint_count": 39,
+  "uat_case_count": 22,
+  "required_count": 21,
+  "exempt_count": 18,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "エンドポイント30件以上かつUATケース20件以上(sanity)",
+      "passed": true,
+      "detail": "endpoints=39, UATケース=22"
+    },
+    {
+      "id": "H2",
+      "title": "UAT参照APIが全てsrc/app.pyに実在(forward整合)",
+      "passed": true,
+      "detail": "未実在=なし"
+    },
+    {
+      "id": "H3",
+      "title": "全REQUIRED(GAユーザー向け)エンドポイントがUATで被覆(reverse)",
+      "passed": true,
+      "detail": "未被覆=なし"
+    },
+    {
+      "id": "H4",
+      "title": "全app.pyエンドポイントがREQUIRED∪EXEMPTに分類済み(未分類0)",
+      "passed": true,
+      "detail": "未分類=なし"
+    },
+    {
+      "id": "H5",
+      "title": "REQUIRED∩EXEMPT=∅(二重分類なし)",
+      "passed": true,
+      "detail": "重複=なし"
+    },
+    {
+      "id": "H6",
+      "title": "全REQUIREDがapp.pyに実在(stale required無し)",
+      "passed": true,
+      "detail": "stale=なし"
+    },
+    {
+      "id": "H7",
+      "title": "全EXEMPTがapp.pyに実在(stale exempt無し)",
+      "passed": true,
+      "detail": "stale=なし"
+    },
+    {
+      "id": "H8",
+      "title": "GA中核ドメインが各≥1の被覆エンドポイントを保有",
+      "passed": true,
+      "detail": "未被覆ドメイン=なし"
+    },
+    {
+      "id": "H9",
+      "title": "REQUIREDカバレッジ率=100%",
+      "passed": true,
+      "detail": "被覆=21/21 (100%)"
+    },
+    {
+      "id": "H10",
+      "title": "UAT-API網羅が完全・整合(トレーサビリティドリフト0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ],
+  "all_passed": true
+}
