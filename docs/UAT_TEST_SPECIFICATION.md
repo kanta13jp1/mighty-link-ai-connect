@@ -329,9 +329,9 @@
 - **対象機能**: 適性・モチベーション自己診断デモ（AI質問生成＋オンスクリーン評価）
 - **関連WBS**: T876
 - **関連API**: POST /api/aptitude-demo/questions ・ POST /api/aptitude-demo/evaluate
-- **前提条件**: **バックエンドが稼働する本番相当URL**（`https://mightylink-app.com/` またはローカル `http://127.0.0.1:8000/`）で実施する。法定同意（`LEGAL_CONSENT_VERSION`）を満たす。ブラウザ DevTools の Network タブでレスポンス JSON を確認できる。合成の回答（1〜5）を用意する。
+- **前提条件**: **バックエンドが稼働する本番相当URL**（`https://mightylink-app.com/` またはローカル `http://127.0.0.1:8000/`）で実施する。`#aptitude-demo-section` を開き、上部の法定同意（`LEGAL_CONSENT_VERSION`）と自己診断デモ同意を満たす。ブラウザ DevTools の Network タブでレスポンス JSON を確認できる。合成の回答（1〜5）を用意する。
 - **テスト手順**:
-  1. 同意チェックを入れて「質問を生成」（`POST /api/aptitude-demo/questions`）を実行し、レスポンスに `status:"success"` と質問セット（`count` 件）が返り、画面に質問が表示されることを確認する。
+  1. 上部の法定同意と自己診断デモ同意を入れて「質問を生成」（`POST /api/aptitude-demo/questions`）を実行し、レスポンスに `status:"success"` と質問セット（`count` 件）が返り、画面に質問が表示されることを確認する。
   2. 各設問に 1〜5 で回答し「評価」（`POST /api/aptitude-demo/evaluate`）を実行し、レスポンスに `status:"success"` と `answered_count` が返り、画面にコンディション評価が表示されることを確認する。
   3. 同意チェックを外した状態で評価を実行し、HTTP 400（`consent is required before running the self-check evaluation`）で拒否されることを確認する。
   4. DevTools のレスポンスおよびサーバー監査（`/api/audit/recent`）で、回答値・診断スコアが保存されていない（`persisted:false` / `answers_stored:false` / `score_stored:false`、監査には件数のみ）ことを確認する。

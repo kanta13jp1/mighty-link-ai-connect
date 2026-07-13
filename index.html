@@ -2282,6 +2282,127 @@
             border-color: var(--blue);
             box-shadow: 0 0 12px rgba(139, 220, 255, 0.3);
         }
+        .aptitude-demo-grid {
+            display: grid;
+            grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+            gap: 24px;
+            align-items: start;
+        }
+        @media (max-width: 1024px) {
+            .aptitude-demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .aptitude-demo-panel {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 18px;
+        }
+        .aptitude-demo-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-top: 16px;
+        }
+        .aptitude-demo-actions .big-btn {
+            min-height: 44px;
+            padding: 0 20px;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+        .aptitude-demo-notice,
+        .aptitude-demo-empty {
+            border: 1px solid rgba(139, 220, 255, 0.18);
+            border-radius: 8px;
+            background: rgba(139, 220, 255, 0.04);
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            padding: 12px;
+        }
+        .aptitude-demo-question-list {
+            display: grid;
+            gap: 12px;
+        }
+        .aptitude-demo-question {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.18);
+        }
+        .aptitude-demo-question-title {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            color: var(--text);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        .aptitude-demo-question-title strong {
+            color: var(--blue);
+            font-family: monospace;
+        }
+        .aptitude-demo-options {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(42px, 1fr));
+            gap: 8px;
+        }
+        @media (max-width: 560px) {
+            .aptitude-demo-options {
+                grid-template-columns: repeat(5, minmax(36px, 1fr));
+                gap: 6px;
+            }
+        }
+        .aptitude-demo-options label {
+            min-height: 42px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.04);
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 13px;
+        }
+        .aptitude-demo-options input {
+            accent-color: var(--blue);
+        }
+        .aptitude-demo-result {
+            display: none;
+            margin-top: 16px;
+            border-color: rgba(186, 255, 102, 0.24);
+            background: rgba(186, 255, 102, 0.04);
+        }
+        .aptitude-demo-result.active {
+            display: block;
+        }
+        .aptitude-score-row {
+            display: grid;
+            grid-template-columns: minmax(110px, 0.42fr) minmax(0, 1fr) auto;
+            gap: 10px;
+            align-items: center;
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+        .aptitude-score-track {
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+        .aptitude-score-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--blue), var(--green));
+        }
         .punch-card-panel {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -2430,6 +2551,7 @@
         <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
             <a href="#top">ホーム</a>
             <a href="#survey-section">適性アンケート</a>
+            <a href="#aptitude-demo-section">自己診断デモ</a>
             <a href="#attendance-section">勤怠管理</a>
             <a href="#matching-section">営業メールマッチング</a>
             <a href="#admin-dashboard-section">管理者ダッシュボード</a>
@@ -2928,6 +3050,51 @@
         </section>
 
         <!-- ==========================================================================
+             Step 3.5: 適性・モチベーション自己診断デモ (T876)
+             ========================================================================== -->
+        <section id="aptitude-demo-section" class="internal-section fade-in-on-scroll" aria-label="適性・モチベーション自己診断デモ">
+            <div class="step-kicker">自己診断デモ</div>
+            <div class="comparison-container">
+                <div class="comparison-controls">
+                    <div>
+                        <h2>適性・モチベーション自己診断デモ</h2>
+                        <span class="control-label">回答と結果は保存せず、この画面のセッション内だけで評価します</span>
+                    </div>
+                    <span class="support-status" id="aptitude-demo-status">未生成</span>
+                </div>
+
+                <div class="aptitude-demo-grid">
+                    <div class="aptitude-demo-panel">
+                        <div class="input-group">
+                            <label for="aptitude-demo-count">質問数</label>
+                            <input type="number" id="aptitude-demo-count" class="text-input" min="10" max="20" value="12" inputmode="numeric">
+                            <span class="control-label">10〜20問。Gemini未設定時や静的デモでは安全な固定設問を使います。</span>
+                        </div>
+                        <label class="control-label" style="display: flex; gap: 10px; align-items: flex-start;">
+                            <input type="checkbox" id="aptitude-demo-consent" style="margin-top: 3px;">
+                            <span>この結果は医療・心理診断ではなくセルフケア用の参考情報です。回答・スコアをDB保存しない前提で、画面上の評価だけを実行します。</span>
+                        </label>
+                        <div class="aptitude-demo-notice" id="aptitude-demo-privacy" style="margin-top: 14px;">
+                            上部の規約同意と、この自己診断デモの同意を入れると質問を生成できます。
+                        </div>
+                        <div class="aptitude-demo-actions">
+                            <button type="button" class="big-btn" id="aptitude-demo-generate" onclick="loadAptitudeQuestions()">質問を生成</button>
+                            <button type="button" class="big-btn" id="aptitude-demo-evaluate" onclick="evaluateAptitudeDemo()">評価する</button>
+                            <button type="button" class="sample-btn" onclick="resetAptitudeDemo()">リセット</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="aptitude-demo-questions" class="aptitude-demo-question-list" aria-live="polite">
+                            <div class="aptitude-demo-empty">質問はまだ生成されていません。</div>
+                        </div>
+                        <div id="aptitude-demo-result" class="aptitude-demo-panel aptitude-demo-result" aria-live="polite"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
              Step 4: 勤務表自動解析・ジョブカン風簡易勤怠打刻 (T841)
              ========================================================================== -->
         <section id="attendance-section" class="internal-section fade-in-on-scroll" aria-label="勤怠管理・勤務表解析">
@@ -3290,6 +3457,7 @@
                     <h3>メニュー</h3>
                     <a href="#top">ホーム</a>
                     <a href="#survey-section">適性アンケート</a>
+                    <a href="#aptitude-demo-section">自己診断デモ</a>
                     <a href="#attendance-section">勤怠管理</a>
                     <a href="#matching-section">営業メールマッチング</a>
                     <a href="#admin-dashboard-section">管理者ダッシュボード</a>
@@ -4758,6 +4926,331 @@
             }
         }
 
+        const aptitudeStaticQuestions = [
+            {id: "q_energy_1", dimension: "energy", text: "最近1週間、仕事に取り組むエネルギーが十分にあると感じましたか。"},
+            {id: "q_energy_2", dimension: "energy", text: "朝、仕事を始めるときに前向きな気持ちで臨めていますか。"},
+            {id: "q_focus_1", dimension: "focus", text: "業務に集中して取り組めている時間が多いと感じますか。"},
+            {id: "q_focus_2", dimension: "focus", text: "やるべきことの優先順位を落ち着いて整理できていますか。"},
+            {id: "q_workload_1", dimension: "workload", text: "現在の業務量は無理なくこなせる範囲だと感じますか。"},
+            {id: "q_workload_2", dimension: "workload", text: "休憩や区切りを取りながら働けていますか。"},
+            {id: "q_recovery_1", dimension: "recovery", text: "睡眠や休息で十分に回復できていると感じますか。"},
+            {id: "q_recovery_2", dimension: "recovery", text: "仕事から離れてリフレッシュする時間を確保できていますか。"},
+            {id: "q_connection_1", dimension: "connection", text: "困ったときに周囲へ相談しやすい環境だと感じますか。"},
+            {id: "q_connection_2", dimension: "connection", text: "チームの中で自分の意見を伝えやすいと感じますか。"},
+            {id: "q_motivation_1", dimension: "motivation", text: "今の仕事にやりがいや成長を感じられていますか。"},
+            {id: "q_motivation_2", dimension: "motivation", text: "今後の目標に向けて前向きに取り組めていますか。"},
+            {id: "q_balance_1", dimension: "workload", text: "仕事とプライベートのバランスが取れていると感じますか。"},
+            {id: "q_focus_3", dimension: "focus", text: "落ち着いて物事を判断できる状態だと感じますか。"},
+            {id: "q_energy_3", dimension: "energy", text: "一日を通して気力を保てていると感じますか。"},
+            {id: "q_connection_3", dimension: "connection", text: "職場で孤立せず、つながりを感じられていますか。"},
+            {id: "q_recovery_3", dimension: "recovery", text: "週末や休暇で気持ちを切り替えられていますか。"},
+            {id: "q_motivation_3", dimension: "motivation", text: "自分の仕事が誰かの役に立っていると実感できますか。"},
+            {id: "q_workload_3", dimension: "workload", text: "締め切りや納期に過度なプレッシャーを感じずに済んでいますか。"},
+            {id: "q_focus_4", dimension: "focus", text: "新しいことに前向きに取り組む余裕がありますか。"},
+        ];
+        const aptitudeScaleLabels = {
+            1: "とてもそう思わない",
+            2: "あまりそう思わない",
+            3: "どちらともいえない",
+            4: "ややそう思う",
+            5: "とてもそう思う",
+        };
+        const aptitudePrivacyNotice = "この診断は体験用プロトタイプです。回答および結果はサーバーやデータベースに一切保存されず、この画面のセッション内でのみ評価されます。本結果は医療的診断ではなく、セルフケアのための一般的な気づきを目的としています。";
+        let aptitudeDemoQuestions = [];
+
+        function setAptitudeDemoStatus(text, colorVar) {
+            const status = document.getElementById("aptitude-demo-status");
+            if (!status) return;
+            status.textContent = text;
+            status.style.color = colorVar || "var(--muted)";
+        }
+
+        function getAptitudeQuestionCount() {
+            const input = document.getElementById("aptitude-demo-count");
+            const parsed = Number(input ? input.value : 12);
+            if (!Number.isFinite(parsed)) return 12;
+            return Math.max(10, Math.min(20, Math.round(parsed)));
+        }
+
+        function shouldUseAptitudeBrowserFallback() {
+            return location.protocol === "file:" || location.hostname.endsWith("github.io");
+        }
+
+        function buildBrowserAptitudeQuestions(count) {
+            const selected = aptitudeStaticQuestions.slice(0, count);
+            return {
+                status: "success",
+                questions: selected,
+                count: selected.length,
+                source: "browser_fallback",
+                scale: {min: 1, max: 5, labels: aptitudeScaleLabels},
+                privacy_notice: aptitudePrivacyNotice,
+                persisted: false,
+            };
+        }
+
+        async function readAptitudeDemoError(response) {
+            try {
+                const data = await response.json();
+                return data.detail || data.message || `HTTP ${response.status}`;
+            } catch (_error) {
+                return `HTTP ${response.status}`;
+            }
+        }
+
+        function friendlyAptitudeDemoError(reason) {
+            if (!reason) return "自己診断APIへ接続できませんでした。";
+            if (reason.indexOf("legal consent") !== -1 || reason.indexOf("LEGAL_CONSENT") !== -1) {
+                return "上部の利用規約・プライバシーポリシー同意を入れてから実行してください。";
+            }
+            if (reason.indexOf("consent is required") !== -1) {
+                return "自己診断デモの同意チェックを入れてから評価してください。";
+            }
+            if (reason.indexOf("valid 1-5 answer") !== -1) {
+                return "各質問に1〜5で回答してください。";
+            }
+            return `サーバー応答: ${reason}`;
+        }
+
+        function renderAptitudeQuestions(questions, scale) {
+            const container = document.getElementById("aptitude-demo-questions");
+            const result = document.getElementById("aptitude-demo-result");
+            if (result) {
+                result.classList.remove("active");
+                result.innerHTML = "";
+            }
+            if (!container) return;
+            if (!questions.length) {
+                container.innerHTML = `<div class="aptitude-demo-empty">質問はまだ生成されていません。</div>`;
+                return;
+            }
+            const labels = (scale && scale.labels) || aptitudeScaleLabels;
+            container.innerHTML = questions.map((q, index) => {
+                const questionNo = index + 1;
+                const text = escapeHtml(q.text || "");
+                const dimension = escapeHtml(q.dimension || "general");
+                const options = [1, 2, 3, 4, 5].map(value => {
+                    const id = `aptitude-q-${questionNo}-${value}`;
+                    const label = escapeHtml(labels[value] || String(value));
+                    return `
+                        <label for="${id}" title="${label}">
+                            <input id="${id}" type="radio" name="aptitude-q-${questionNo}" value="${value}" data-aptitude-question="${index}" data-dimension="${dimension}">
+                            <span>${value}</span>
+                        </label>
+                    `;
+                }).join("");
+                return `
+                    <div class="aptitude-demo-question">
+                        <div class="aptitude-demo-question-title">
+                            <strong>Q${questionNo}</strong>
+                            <span>${text}<br><small class="control-label">${dimension}</small></span>
+                        </div>
+                        <div class="aptitude-demo-options" aria-label="Q${questionNo} rating">${options}</div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        async function loadAptitudeQuestions() {
+            const legalConsent = getLegalConsentPayload();
+            const consentInput = document.getElementById("aptitude-demo-consent");
+            const generateButton = document.getElementById("aptitude-demo-generate");
+            const privacy = document.getElementById("aptitude-demo-privacy");
+            if (!legalConsent.legal_consent_accepted) {
+                setAptitudeDemoStatus("規約同意が必要", "var(--rose)");
+                if (privacy) privacy.textContent = "上部の利用規約・プライバシーポリシー同意を入れてから質問を生成してください。";
+                return;
+            }
+            if (!consentInput || !consentInput.checked) {
+                setAptitudeDemoStatus("自己診断同意が必要", "var(--rose)");
+                if (privacy) privacy.textContent = "自己診断デモの同意チェックを入れてから質問を生成してください。";
+                return;
+            }
+
+            const count = getAptitudeQuestionCount();
+            if (generateButton) generateButton.disabled = true;
+            setAptitudeDemoStatus("質問生成中", "var(--yellow)");
+            try {
+                let data;
+                if (shouldUseAptitudeBrowserFallback()) {
+                    data = buildBrowserAptitudeQuestions(count);
+                } else {
+                    const requestPayload = {
+                        count,
+                        legal_consent_accepted: legalConsent.legal_consent_accepted,
+                        legal_consent_version: legalConsent.legal_consent_version,
+                    };
+                    const response = await fetch("/api/aptitude-demo/questions", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(requestPayload),
+                    });
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            data = buildBrowserAptitudeQuestions(count);
+                        } else {
+                            throw new Error(await readAptitudeDemoError(response));
+                        }
+                    } else {
+                        data = await response.json();
+                    }
+                }
+                aptitudeDemoQuestions = Array.isArray(data.questions) ? data.questions : [];
+                renderAptitudeQuestions(aptitudeDemoQuestions, data.scale);
+                if (privacy) {
+                    const source = data.source === "ai_generated" ? "Gemini生成" : "安全な固定設問";
+                    privacy.textContent = `${data.privacy_notice || aptitudePrivacyNotice} 生成元: ${source} / 保存: ${data.persisted === false ? "なし" : "未確認"}`;
+                }
+                setAptitudeDemoStatus(`${aptitudeDemoQuestions.length}問生成済み`, "var(--green)");
+            } catch (error) {
+                console.warn("Aptitude demo question loading failed.", error);
+                setAptitudeDemoStatus("生成失敗", "var(--rose)");
+                if (privacy) privacy.textContent = friendlyAptitudeDemoError(error && error.message ? error.message : "");
+            } finally {
+                if (generateButton) generateButton.disabled = false;
+            }
+        }
+
+        function collectAptitudeAnswers() {
+            return aptitudeDemoQuestions.map((question, index) => {
+                const checked = document.querySelector(`input[name="aptitude-q-${index + 1}"]:checked`);
+                return checked ? {
+                    dimension: question.dimension || checked.dataset.dimension || "general",
+                    value: Number(checked.value),
+                } : null;
+            });
+        }
+
+        function evaluateAptitudeLocally(answers) {
+            const valid = answers.filter(Boolean).filter(answer => Number.isFinite(answer.value) && answer.value >= 1 && answer.value <= 5);
+            if (!valid.length) throw new Error("at least one valid 1-5 answer is required");
+            const byDimension = {};
+            valid.forEach(answer => {
+                const key = answer.dimension || "general";
+                if (!byDimension[key]) byDimension[key] = [];
+                byDimension[key].push(answer.value);
+            });
+            const dimensionScores = {};
+            Object.keys(byDimension).sort().forEach(key => {
+                const values = byDimension[key];
+                dimensionScores[key] = Math.round((values.reduce((sum, value) => sum + value, 0) / values.length) * 100) / 100;
+            });
+            const overall = Math.round((valid.reduce((sum, answer) => sum + answer.value, 0) / valid.length) * 100) / 100;
+            const conditionIndex = Math.round(((overall - 1) / 4) * 1000) / 10;
+            const band = overall >= 4 ? "good" : overall >= 3 ? "moderate" : "watch";
+            const reflection = band === "good"
+                ? "全体として前向きな状態が見えます。良いリズムを保てている要素を言語化して、継続しやすい働き方につなげてください。"
+                : band === "moderate"
+                    ? "いくつかの領域にばらつきがあります。点数が低めの領域は、休憩・相談・業務量調整の候補として振り返ってください。"
+                    : "負荷が高い可能性があります。ひとりで抱え込まず、上長や信頼できる相手へ早めに状況を共有してください。";
+            return {
+                status: "success",
+                answered_count: valid.length,
+                dimension_scores: dimensionScores,
+                overall_score: overall,
+                condition_index: conditionIndex,
+                band,
+                reflection,
+                disclaimer: "この結果は医療的診断ではありません。体調や安全に関わる不安がある場合は専門家や社内相談窓口に相談してください。",
+                privacy_notice: aptitudePrivacyNotice,
+                persisted: false,
+            };
+        }
+
+        function renderAptitudeResult(data) {
+            const result = document.getElementById("aptitude-demo-result");
+            if (!result) return;
+            const dimensionRows = Object.entries(data.dimension_scores || {}).map(([dimension, score]) => {
+                const pct = Math.max(0, Math.min(100, (Number(score) / 5) * 100));
+                return `
+                    <div class="aptitude-score-row">
+                        <span>${escapeHtml(dimension)}</span>
+                        <span class="aptitude-score-track"><span class="aptitude-score-fill" style="width:${pct}%"></span></span>
+                        <strong>${Number(score).toFixed(1)}</strong>
+                    </div>
+                `;
+            }).join("");
+            result.innerHTML = `
+                <h3 style="font-size: 18px; color: var(--text); margin-bottom: 8px;">評価結果</h3>
+                <div class="card-stat stat-green">${Number(data.condition_index || 0).toFixed(1)} / 100</div>
+                <span class="control-label">回答数: ${Number(data.answered_count || 0)} / 総合平均: ${Number(data.overall_score || 0).toFixed(2)} / 判定帯: ${escapeHtml(data.band || "-")}</span>
+                ${dimensionRows}
+                <p style="margin-top: 14px; color: var(--text); line-height: 1.8;">${escapeHtml(data.reflection || "")}</p>
+                <p class="control-label" style="margin-top: 10px;">${escapeHtml(data.disclaimer || "")}</p>
+                <p class="control-label" style="margin-top: 8px;">${escapeHtml(data.privacy_notice || aptitudePrivacyNotice)} 保存: ${data.persisted === false ? "なし" : "未確認"}</p>
+            `;
+            result.classList.add("active");
+        }
+
+        async function evaluateAptitudeDemo() {
+            const legalConsent = getLegalConsentPayload();
+            const consentInput = document.getElementById("aptitude-demo-consent");
+            const evaluateButton = document.getElementById("aptitude-demo-evaluate");
+            if (!aptitudeDemoQuestions.length) {
+                setAptitudeDemoStatus("質問未生成", "var(--rose)");
+                return;
+            }
+            if (!legalConsent.legal_consent_accepted) {
+                setAptitudeDemoStatus("規約同意が必要", "var(--rose)");
+                return;
+            }
+            if (!consentInput || !consentInput.checked) {
+                setAptitudeDemoStatus("自己診断同意が必要", "var(--rose)");
+                return;
+            }
+            const answers = collectAptitudeAnswers();
+            if (answers.some(answer => !answer)) {
+                setAptitudeDemoStatus("未回答があります", "var(--rose)");
+                return;
+            }
+            if (evaluateButton) evaluateButton.disabled = true;
+            setAptitudeDemoStatus("評価中", "var(--yellow)");
+            try {
+                let data;
+                if (shouldUseAptitudeBrowserFallback()) {
+                    data = evaluateAptitudeLocally(answers);
+                } else {
+                    const requestPayload = {
+                        consented: true,
+                        answers,
+                        legal_consent_accepted: legalConsent.legal_consent_accepted,
+                        legal_consent_version: legalConsent.legal_consent_version,
+                    };
+                    const response = await fetch("/api/aptitude-demo/evaluate", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(requestPayload),
+                    });
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            data = evaluateAptitudeLocally(answers);
+                        } else {
+                            throw new Error(await readAptitudeDemoError(response));
+                        }
+                    } else {
+                        data = await response.json();
+                    }
+                }
+                renderAptitudeResult(data);
+                setAptitudeDemoStatus("評価済み・保存なし", "var(--green)");
+            } catch (error) {
+                console.warn("Aptitude demo evaluation failed.", error);
+                setAptitudeDemoStatus("評価失敗", "var(--rose)");
+                const privacy = document.getElementById("aptitude-demo-privacy");
+                if (privacy) privacy.textContent = friendlyAptitudeDemoError(error && error.message ? error.message : "");
+            } finally {
+                if (evaluateButton) evaluateButton.disabled = false;
+            }
+        }
+
+        function resetAptitudeDemo() {
+            aptitudeDemoQuestions = [];
+            renderAptitudeQuestions([], {labels: aptitudeScaleLabels});
+            const privacy = document.getElementById("aptitude-demo-privacy");
+            if (privacy) privacy.textContent = "上部の規約同意と、この自己診断デモの同意を入れると質問を生成できます。";
+            setAptitudeDemoStatus("未生成", "var(--muted)");
+        }
+
         function setAttendanceStatus(text, colorVar) {
             const status = document.getElementById("attendance-status");
             if (!status) return;
@@ -5414,6 +5907,7 @@
 
             const sectionIds = [
                 "survey-section",
+                "aptitude-demo-section",
                 "attendance-section",
                 "matching-section",
                 "admin-dashboard-section",

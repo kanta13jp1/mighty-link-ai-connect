@@ -3,7 +3,7 @@
 - 作成日: 2026-07-08
 - 対象WBS: T876（法務配慮プロトタイプ）/ 実装: T876_1（Claude Codeレーン巻き取り）
 - 関連課題/QA: R119（精神状態評価AIの法務・プライバシーリスク）/ QA-105（要配慮個人情報の安全な取り扱い境界）
-- 実装: `src/aptitude_demo.py`（純ロジック）/ `src/app.py`（API）/ テスト: `tests/test_aptitude_demo.py`（10仮説・13件）
+- 実装: `src/aptitude_demo.py`（純ロジック）/ `src/app.py`（API）/ `index.html`・`src/index.html`（UI）/ テスト: `tests/test_aptitude_demo.py`（10仮説・13件）・`tests/test_aptitude_demo_frontend.py`
 - 由来: 2026-07-08 CEO定例で「AIで精神状態を可視化するアンケート設問生成」の要望
 
 ## 1. 位置づけと法的前提
@@ -38,10 +38,12 @@
 
 - 要配慮個人情報を保存・分析する場合の取得同意・利用目的特定・保管期間・アクセス制御・不利益取扱い禁止の規約整備（法務レビュー）。
 - 保存する場合のRLS・匿名化・保持/削除（[DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md)への追記）。
-- フロントエンドUI（画面のみで完結する回答フォーム・結果表示）はAntigravityレーンで実装（T876本体）。本APIはブラウザメモリ内で完結する前提の契約（persisted=false）を提供する。
+- フロントエンドUI（画面のみで完結する回答フォーム・結果表示）はT876本体として実装済み。`index.html`・`src/index.html` の `aptitude-demo-section` は、上部の法務同意と自己診断デモ同意を確認し、`/api/aptitude-demo/questions` と `/api/aptitude-demo/evaluate` に法務同意ペイロードを送る。回答値はDOM上のラジオ選択から評価時だけ集め、`localStorage` / `sessionStorage` / `IndexedDB` / cookie へ保存しない。
+- GitHub PagesやローカルHTML直開きでは、API 404で失敗表示だけにならないよう、同じ安全設計の固定設問とブラウザ内評価へフォールバックする。このフォールバックも `persisted=false` と「保存なし」を表示し、サーバー・DB・ブラウザ永続ストレージに回答/スコアを残さない。
 
 ## 7. 検証コマンド
 
 ```powershell
 python -m pytest tests/test_aptitude_demo.py -q
+python -m pytest tests/test_aptitude_demo_frontend.py -q
 ```
