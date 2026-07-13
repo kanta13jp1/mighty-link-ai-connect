@@ -1,15 +1,15 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-08T20:13:49+09:00
+Generated: 2026-07-13T22:34:49+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `128`
-- Drive docs uploaded: `2`
-- Drive docs skipped unchanged: `126`
-- NotebookLM CLI status: `ready`
+- Drive docs discovered: `135`
+- Drive docs uploaded: `23`
+- Drive docs skipped unchanged: `112`
+- NotebookLM CLI status: `auth_required`
 
 ## Google Docs Synced From docs/
 
@@ -50,15 +50,18 @@ Generated: 2026-07-08T20:13:49+09:00
 - `docs/DEMO_SECURITY_AND_AUTH_DESIGN.md`: https://docs.google.com/document/d/1C606e1yesSIVlZfOrRjZ_4hkgr4OQQ_axpYjBFvrUEc/edit?usp=drivesdk
 - `docs/DEVELOPMENT_KNOWLEDGE_FLOW.md`: https://docs.google.com/document/d/1SS44DK0H57KFdX4jHDucbYe6PRN2ofUllaaLr5zioYU/edit?usp=drivesdk
 - `docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md`: https://docs.google.com/document/d/1yHVwrsZ_TZyEMa1wSfoxaSv85w7pyPqGP7VZUHTwhQU/edit?usp=drivesdk
+- `docs/DOCS_REFERENCE_INTEGRITY_GUARD.md`: https://docs.google.com/document/d/1jMKp5Ic3fdq8jPiNcUbr5nu7EbMKw4gX7TGXDxH8Z9s/edit?usp=drivesdk
 - `docs/EMPLOYEE_ASSESSMENT_RESPONSE_RUNBOOK.md`: https://docs.google.com/document/d/1c9nAmqw9Rt48UnGLsOK1bz8BsXeIiGfZnJY5ttxmjTs/edit?usp=drivesdk
 - `docs/EMPLOYEE_ASSESSMENT_SHORTLIST_POC_PLAN.md`: https://docs.google.com/document/d/1jw7K0C8pFoZJ0IM3eZVLNj6J0yp3MBpWlrIrdBiYy9A/edit?usp=drivesdk
 - `docs/EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md`: https://docs.google.com/document/d/1btkSsKS8Z9GHsOS11oaEhT2P2V0vogPR-Z37oWQ7N_M/edit?usp=drivesdk
 - `docs/EXTERNAL_PENTEST_RUNBOOK.md`: https://docs.google.com/document/d/1D9ZXT66SfFv-JBV0GtqWLrGgcLqgpWe6emW_ELGubu8/edit?usp=drivesdk
 - `docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md`: https://docs.google.com/document/d/1aZ9XMhnsTBYkfhaGh-UppNcEW8FjgKLv9dzB6cenerE/edit?usp=drivesdk
+- `docs/FIREBASE_CI_CD_WIF_MIGRATION_REPORT.md`: https://docs.google.com/document/d/1G2_zGfCkVe9sgIle5ypyLyMH80UqLfFQaXbK7hl5Qvs/edit?usp=drivesdk
 - `docs/FIREBASE_SUPABASE_QUOTA_ERROR_ALERT_RUNBOOK.md`: https://docs.google.com/document/d/10dbRSFj2mRlF9OdKfsdAT4QCT_GSZv8is3Otu1nTf5Q/edit?usp=drivesdk
 - `docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md`: https://docs.google.com/document/d/1chyqUHbGFZ41CPKhR6sY5HUTG397IxnmPCuQdUHa5rA/edit?usp=drivesdk
 - `docs/GEMINI_CLI_MIGRATION_AUDIT_2026-06-17.md`: https://docs.google.com/document/d/1f-Y6v0WBFliNpYUtY6Hv_rjo4_87_lBDZawhw6pyr4s/edit?usp=drivesdk
 - `docs/GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1tzGuPKQ5GWw-AGokf351BO6SqPz4bas8wf-fecnkDPY/edit?usp=drivesdk
+- `docs/GITHUB_WBS_SYNC_RUNBOOK.md`: https://docs.google.com/document/d/1S2wfZJHGb9Avhg3pOdvRcxYaTH272x--VSpYqz2Ygng/edit?usp=drivesdk
 - `docs/GO_NO_GO_DECISION_PACK_2026-07-07.md`: https://docs.google.com/document/d/1wWgLOehQHlP7V5WGTlCXHC0602VBow1Iu_we4NPUY5A/edit?usp=drivesdk
 - `docs/GO_NO_GO_GATE_TRIAGE_2026-07-04.md`: https://docs.google.com/document/d/126lFHLMPNAiqmEqnikJvQQyqhFPbDt00T0B6YXwX3w4/edit?usp=drivesdk
 - `docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1xb9e3AQt7uGSvQvu-D12CGqchlh5Z01FFn44Dkhza8I/edit?usp=drivesdk
@@ -82,6 +85,7 @@ Generated: 2026-07-08T20:13:49+09:00
 - `docs/MONTHLY_REPORT_2026-06.md`: https://docs.google.com/document/d/1v6aM1DSB5rGL-gYelOq9ZjKWa834Lc3ztBh1SrXFyFs/edit?usp=drivesdk
 - `docs/MULTI_AI_WORKFLOW.md`: https://docs.google.com/document/d/1WfBfLEpbTV6zcB4AuA4RbeXaJ99qw6h0UGq9D_1oJ_Q/edit?usp=drivesdk
 - `docs/NOTEBOOKLM_SYNC_TIMEOUT_RUNBOOK.md`: https://docs.google.com/document/d/1CdeYHRCiCsdoUC7nlHW9ozc1vKUNjvEv2i2nMHYKvJA/edit?usp=drivesdk
+- `docs/OPERATIONS_HANDOVER_REHEARSAL_RUNBOOK.md`: https://docs.google.com/document/d/1uRqqhJwR3ZAoXo_pJDxvwh-t_2IK6B3tO2sBfXmrbZc/edit?usp=drivesdk
 - `docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md`: https://docs.google.com/document/d/1CCKPhwbsBu-WMKQnq5JcdMR2iqrPO951tBqWfi7ZWNs/edit?usp=drivesdk
 - `docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md`: https://docs.google.com/document/d/1IM6xcwQ3t5agWAvYEzCbJqqFDC6hajUFpYJ0xyq-6FQ/edit?usp=drivesdk
 - `docs/PILOT_CLOSED_OPERATION_DESIGN.md`: https://docs.google.com/document/d/16xas5El8RUkWPEn91rjqvrCROLH3QP-NwqWNTdtuTPI/edit?usp=drivesdk
@@ -126,6 +130,9 @@ Generated: 2026-07-08T20:13:49+09:00
 - `docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md`: https://docs.google.com/document/d/1BMpsn974Ai8K3BY7GAC-XQBgY1zZlslE98ZgA9JB1ik/edit?usp=drivesdk
 - `docs/TERMS_OF_SERVICE.md`: https://docs.google.com/document/d/1bGSpEdgRyw06UaUQfwGsjLfS1qDimmSAsrN-yQvg2v0/edit?usp=drivesdk
 - `docs/TOKUSHOHO_NOTATION.md`: https://docs.google.com/document/d/1LUwRooXcdyrGB4AsuQo70Auz8DoQ-E5eyPV5cYUPWLk/edit?usp=drivesdk
+- `docs/TRACKER_INTEGRITY_GUARD.md`: https://docs.google.com/document/d/1EIT5GYhOBUtJPSqkiV3g6O_6aTpm6JHXrzDVZGXbMng/edit?usp=drivesdk
+- `docs/UAT_API_COVERAGE_GUARD.md`: https://docs.google.com/document/d/1H0DjKfeMdP8E0FnashcSvUJKHcZs4cjtoP3Hp7iIbv4/edit?usp=drivesdk
+- `docs/UAT_TEST_SPECIFICATION.md`: https://docs.google.com/document/d/1MSfSDgRaFxD8moAgMAjnNmaKSGTgfYvHVKrfftaclbk/edit?usp=drivesdk
 - `docs/UPTIME_MONITORING_AND_ALERT_RUNBOOK.md`: https://docs.google.com/document/d/1loht22D5jpIbl5Hcb8JAgGhdK_odNrAha6BzSFXhplA/edit?usp=drivesdk
 - `docs/USAGE_ANALYTICS_KPI_RUNBOOK.md`: https://docs.google.com/document/d/16o2kXqyN9XE0AoqZ5r_vJmHAKqDwE5dMhjEPqwIQcPY/edit?usp=drivesdk
 - `docs/USER_DATA_DELETION_FLOW.md`: https://docs.google.com/document/d/1-2u-qFsKNwrE9Jpl3dovC0fr_Prk4JZUF23xz1e1zQQ/edit?usp=drivesdk
@@ -133,37 +140,18 @@ Generated: 2026-07-08T20:13:49+09:00
 - `docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md`: https://docs.google.com/document/d/1E44oW3XLOkEwyNSq5kweNe4Jujx4RoBiG598C_gTr5M/edit?usp=drivesdk
 - `docs/USER_GUIDE_AND_FAQ.md`: https://docs.google.com/document/d/1qawKzp2UdanwIbnWqbVnRaRq4YIQlTEXxlj7mwhmfRk/edit?usp=drivesdk
 - `docs/WBS.md`: https://docs.google.com/document/d/16s5eoPSBLInfS6Kr9Hj4Qgc3y4QXjyjNSbojvZNxBuQ/edit?usp=drivesdk
+- `docs/WBS_LIFECYCLE_COVERAGE_GUARD.md`: https://docs.google.com/document/d/1_iokDeGMYxJrgsBFgun_UO_AUim4h0eyPoIgwzwJ8s8/edit?usp=drivesdk
 - `docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md`: https://docs.google.com/document/d/1U_VJfbWxl-akmnrFOngfFlOU_pQIpsG5af7bUtODigg/edit?usp=drivesdk
 - `docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-25.md`: https://docs.google.com/document/d/1KoWmq5lExtMSfItWTNV18I8WHEvwwLVxD94QQBB0qlo/edit?usp=drivesdk
 - `docs/WBS_REVIEW_2026-06-26.md`: https://docs.google.com/document/d/1T6YKzX36GnV3ggc1gCCTur4RvUMMr8bf5mAtREqwPh4/edit?usp=drivesdk
 - `docs/WBS_REVIEW_2026-06-26_SESSION2.md`: https://docs.google.com/document/d/1hxWlysrTSQFvIOQWyJqFLyy4JVW11XFMe_fJndG0aOk/edit?usp=drivesdk
-- `docs/WBS_REVIEW_2026-07-01.md`: https://docs.google.com/document/d/1dMIc1sFFRnLtmUJMJOO9hPBGsnxyU68rFhv0tmnIG1c/edit?usp=drivesdk
-- `docs/WBS_REVIEW_2026-07-03.md`: https://docs.google.com/document/d/1WJjsNafp9kJuAIjlIsBo4W2lXn32I1SMiIzvnh_zwFk/edit?usp=drivesdk
+- `docs/WBS_REVIEW_2026-07-13.md`: https://docs.google.com/document/d/1psTnmt3KJlh6nr2YAFxRapGO-dqvXp0sz7xx4IDFdFk/edit?usp=drivesdk
 - `docs/WBS_SYNC_GUIDE.md`: https://docs.google.com/document/d/1QFWYMFWM-_a2z8YC_hnxpAiAomzIb3t1mO_uPPPYjnY/edit?usp=drivesdk
 - `docs/WEEKLY_COST_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1Sg3jtNziaRKU5lqgZ254BvrEXW0L6KPkhE8hmb-8Cwg/edit?usp=drivesdk
 
-## NotebookLM Sync Result
-
-NotebookLM CLI is authenticated and the docs source set has been synced.
-
-- Notebook: `4934c12b-b270-4739-97a1-b04b5b84eaaf`
-- Ask generation: `skipped`
-- Agent brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
-- Agent brief JSON: `exports/knowledge_flow/notebooklm_agent_brief.json`
-- CEO slide outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
-- CEO slide outline JSON: `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
-
-## Optional Ask Generation
-
-If ask generation was skipped or timed out, keep the synced sources and rerun only the long NotebookLM summary/ask phase when needed:
-
-```powershell
-python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900
-```
-
 ## Re-authentication
 
-If NotebookLM authentication expires later, run:
+NotebookLM CLI currently needs browser re-authentication before sources can be added to NotebookLM.
 
 ```powershell
 python scripts/notebooklm_login_workspace.py
@@ -171,3 +159,20 @@ python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --so
 ```
 
 During browser login, select `k-umezawa@ml-mightylink.com`.
+
+## Last CLI Error
+
+```text
+Authentication expired or invalid. Run 'notebooklm login' to re-authenticate.
+```
+
+## Agent Retrieval Command
+
+After authentication, the script will add the Drive docs as NotebookLM sources and write:
+
+- `exports/knowledge_flow/notebooklm_agent_brief.md`
+- `exports/knowledge_flow/notebooklm_agent_brief.json`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
+- `exports/knowledge_flow/notebooklm_ceo_slide_outline.json`
+
+These files are the agent-facing design and roadmap summary for subsequent Codex work.

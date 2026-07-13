@@ -18,6 +18,7 @@
   - Seedance / ByteDance Seed: `https://seed.bytedance.com/en/seedance`
   - Obsidian: `https://help.obsidian.md/`
   - Unity: `https://docs.unity.com/`, `https://docs.unity3d.com/Manual/`
+  - Delivery integrations: GitHub Issues/Projects/Actions, Slack Developer Docs, Notion API, Figma REST/Plugin API, Canva Apps SDK, Reddit Devvit, InsForge, Firecrawl, Discord Developer Docs, Stripe Docs, Supabase Docs, Firebase Docs, BytePlus ModelArk, and お名前.com Help
 - Every development session must complete at least one WBS task and reflect it in `data/WBS.tsv` and `docs/WBS.md`.
 - Delete or rewrite stale docs aggressively. Do not preserve outdated model names, obsolete issue ranges, resolved blockers, or old sync counts as current guidance.
 - Use `k-umezawa@ml-mightylink.com` for Google OAuth. Run `python scripts/verify_google_workspace_account.py` when touching Google integrations.
@@ -31,10 +32,14 @@ Run these before finishing a session that changes project behavior or docs:
 
 ```powershell
 python scripts/generate_knowledge_flow_demo.py
+python scripts/sync_wbs_to_github.py TXXX --dry-run
+python scripts/sync_wbs_to_github.py TXXX --report exports/github_wbs_sync_report.json
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
 ```
+
+Replace `TXXX` with every WBS task completed or materially updated in the session. The GitHub sync is intentionally targeted and must not be run against the full historical WBS by default.
 
 If NotebookLM-facing docs changed, also run:
 
