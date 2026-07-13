@@ -216,12 +216,25 @@ def rebuild_extraction_review_json(db: DBAdapter) -> None:
         else:
             tal_data = None
             
+        msg_received_at = "2026-06-18T00:00:00Z"
+        if msg.get("received_at"):
+            if isinstance(msg["received_at"], datetime):
+                msg_received_at = msg["received_at"].isoformat().replace("+00:00", "Z")
+            else:
+                msg_received_at = str(msg["received_at"])
+        elif msg.get("created_at"):
+            if isinstance(msg["created_at"], datetime):
+                msg_received_at = msg["created_at"].isoformat().replace("+00:00", "Z")
+            else:
+                msg_received_at = str(msg["created_at"])
+
         extractions.append({
             "source_path": msg["source_path"],
             "source_type": msg["source_type"],
             "dedupe_key": msg["dedupe_key"],
             "sender_domain": msg["sender_domain"],
             "normalized_subject": msg["normalized_subject"],
+            "received_at": msg_received_at,
             "email_kind": email_kind,
             "model_name": "deterministic-sales-email-extractor-v1",
             "fallback_used": True,
