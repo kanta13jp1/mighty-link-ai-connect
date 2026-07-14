@@ -7,7 +7,7 @@ X-WR-CALNAME:Mighty Skill-Bridge 開発計画
 X-WR-TIMEZONE:Asia/Tokyo
 BEGIN:VEVENT
 UID:42ca8991-1e69-58a4-9cc3-18bb58901247@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T752 ユーザーオンボーディング / アカウント登録・アクティベーションフローの設計・実装
 DESCRIPTION:7. 決定後実行 / フロントエンド（担当: Antigravity / Antigravity 2.0）
 DTSTART;VALUE=DATE:20260715
@@ -15,7 +15,7 @@ DTEND;VALUE=DATE:20260717
 END:VEVENT
 BEGIN:VEVENT
 UID:3561dfd5-e7f2-572d-9ae9-ddbdd9ae29ba@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T768 多言語対応（i18n）設計と英語/中国語/韓国語UIの実装
 DESCRIPTION:9. 長期保守・拡張 / フロントエンド（担当: Antigravity / Antigravity + Gemini）
 DTSTART;VALUE=DATE:20260717
@@ -23,7 +23,7 @@ DTEND;VALUE=DATE:20260721
 END:VEVENT
 BEGIN:VEVENT
 UID:706178c3-d16f-52f7-b7be-4cc98a94f552@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T778 SLA 計測基盤（稼働率・P95レスポンス・診断精度）の Supabase ビュー実装
 DESCRIPTION:8. 本番運用・品質管理 / 品質管理（担当: Codex / VSCode + Codex）
 DTSTART;VALUE=DATE:20260713
@@ -31,7 +31,7 @@ DTEND;VALUE=DATE:20260716
 END:VEVENT
 BEGIN:VEVENT
 UID:574f484b-848a-5019-9332-0d25d6a7ed6b@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T791 Stripe Billing Meters API を用いた課金実装・Webhook 検証・本番適用
 DESCRIPTION:8. 本番運用・品質管理 / 収益化（担当: Codex / VSCode + Codex + Stripe official docs）
 DTSTART;VALUE=DATE:20260727
@@ -39,7 +39,7 @@ DTEND;VALUE=DATE:20260729
 END:VEVENT
 BEGIN:VEVENT
 UID:88f0a925-d0d5-59a4-9f4e-95d52adeed1f@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T793 本番ローンチ正式アナウンス（プレスリリース最終版・コーポレートサイト掲載・SNS告知）
 DESCRIPTION:8. 本番運用・品質管理 / リリース（担当: 人間 + AI / Gemini API 現行モデル）
 DTSTART;VALUE=DATE:20260730
@@ -47,7 +47,7 @@ DTEND;VALUE=DATE:20260801
 END:VEVENT
 BEGIN:VEVENT
 UID:39c659ea-6c3b-5367-90fd-db6c2359e28a@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T798 利用規約・プライバシーポリシーの法務確認と本文確定
 DESCRIPTION:7. 決定後実行 / コンプライアンス（担当: 人間 + Claude / VSCode + Claude Code）
 DTSTART;VALUE=DATE:20260714
@@ -55,7 +55,7 @@ DTEND;VALUE=DATE:20260717
 END:VEVENT
 BEGIN:VEVENT
 UID:bcc92823-fd2b-506d-bc08-93fec8a61b35@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T801 本番ローンチ後レトロスペクティブと教訓 docs 化
 DESCRIPTION:9. 長期保守・拡張 / 共通管理（担当: 人間 + Claude / VSCode + Claude Code）
 DTSTART;VALUE=DATE:20260721
@@ -63,7 +63,7 @@ DTEND;VALUE=DATE:20260722
 END:VEVENT
 BEGIN:VEVENT
 UID:47d36498-fe12-5e74-8abe-bf7544c8acdc@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T807 サブスクリプション解約・プラン変更フロー（Stripe カスタマーポータル）のlive有効化・本番検証
 DESCRIPTION:8. 本番運用・品質管理 / 収益化（担当: Codex / VSCode + Codex + Stripe official docs）
 DTSTART;VALUE=DATE:20260727
@@ -71,7 +71,7 @@ DTEND;VALUE=DATE:20260730
 END:VEVENT
 BEGIN:VEVENT
 UID:39357404-caa7-5c73-afed-999629efd82b@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T813 有料化に伴う適格請求書（インボイス制度）・消費税処理の確認と Stripe Tax 設定
 DESCRIPTION:8. 本番運用・品質管理 / 課金・税務（担当: 人間 + Codex / VSCode + Codex）
 DTSTART;VALUE=DATE:20260727
@@ -79,7 +79,7 @@ DTEND;VALUE=DATE:20260730
 END:VEVENT
 BEGIN:VEVENT
 UID:32145a65-f14f-50b3-a523-b0b21dfbff5a@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T819 7/8(水)15:00 定例打ち合わせの実施結果確認・議事録反映
 DESCRIPTION:7. 決定後実行 / 共通管理（担当: 寛太梅澤 / 人間 + NotebookLM + Google Workspace）
 DTSTART;VALUE=DATE:20260713
@@ -87,7 +87,7 @@ DTEND;VALUE=DATE:20260715
 END:VEVENT
 BEGIN:VEVENT
 UID:0680b82a-584b-5aba-a50a-6ca0f2455701@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T823 会社アカウント本移管・請求切替の実施
 DESCRIPTION:7. 決定後実行 / 共通管理（担当: 寛太梅澤 + Codex / 人間 + VSCode + Codex + Google Workspace）
 DTSTART;VALUE=DATE:20260715
@@ -95,7 +95,7 @@ DTEND;VALUE=DATE:20260718
 END:VEVENT
 BEGIN:VEVENT
 UID:b6551d66-78f6-5230-a649-39db85162ccc@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T831 小林雅水社長のGoogleドライブへ保存された録画ファイルの整理・移動（R30対応）
 DESCRIPTION:7. 決定後実行 / 運用管理（担当: 寛太梅澤 / 人間）
 DTSTART;VALUE=DATE:20260714
@@ -103,7 +103,7 @@ DTEND;VALUE=DATE:20260716
 END:VEVENT
 BEGIN:VEVENT
 UID:91e86fed-eea9-52e7-897c-9c785c4c08bd@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T834 ホームページ更新完了に伴うWordPress・FTP一時認証情報の安全なクリーンアップと削除（R74対応）
 DESCRIPTION:7. 決定後実行 / セキュリティ（担当: 寛太梅澤 / 人間）
 DTSTART;VALUE=DATE:20260713
@@ -111,7 +111,7 @@ DTEND;VALUE=DATE:20260715
 END:VEVENT
 BEGIN:VEVENT
 UID:d6557d73-ead9-5443-ba34-d48904c494f8@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T839 従業員適性・状態把握ツールのベンダー問い合わせ・見積/DPA確認
 DESCRIPTION:7. 決定後実行 / 調査/法務（担当: 寛太梅澤 + Claude Code + Codex / 人間 + VSCode + Claude Code + official vendor docs）
 DTSTART;VALUE=DATE:20260714
@@ -119,7 +119,7 @@ DTEND;VALUE=DATE:20260717
 END:VEVENT
 BEGIN:VEVENT
 UID:32246db6-8c45-5846-ac92-e282bb549fa0@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T845 全機能本番受入E2E/UAT最終再検証（社内診断・勤怠・営業メールAI・課金・同意・管理者）
 DESCRIPTION:8. 本番運用・品質管理 / 品質管理（担当: Codex + Antigravity / VSCode + Codex + Antigravity + Playwright）
 DTSTART;VALUE=DATE:20260717
@@ -127,7 +127,7 @@ DTEND;VALUE=DATE:20260721
 END:VEVENT
 BEGIN:VEVENT
 UID:8fff686c-d996-5ecc-acba-f848fe8f2742@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T849 サイト開発完了総合判定・WBS全完了証跡化・GAリリース閉鎖
 DESCRIPTION:9. 長期保守・拡張 / 共通管理（担当: Codex + Claude Code + 人間 / VSCode + Codex + Claude Code + GitHub + Google Workspace）
 DTSTART;VALUE=DATE:20260721
@@ -135,7 +135,7 @@ DTEND;VALUE=DATE:20260722
 END:VEVENT
 BEGIN:VEVENT
 UID:0d6d8ccb-d89b-5274-a838-1ce563cfcaa0@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T850 会社運用引継ぎリハーサル・権限棚卸し・Break-glass確認
 DESCRIPTION:8. 本番運用・品質管理 / 運用引継ぎ（担当: 寛太梅澤 + Codex + Claude Code / 人間 + VSCode + Codex + Google Workspace）
 DTSTART;VALUE=DATE:20260718
@@ -143,7 +143,7 @@ DTEND;VALUE=DATE:20260721
 END:VEVENT
 BEGIN:VEVENT
 UID:4bfa2f5f-edb7-51b8-a363-e74b14ae7a09@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T862 有償公開・課金live有効化の実施判断（経営判断・時期未定）
 DESCRIPTION:8. 本番運用・品質管理 / 収益化（担当: 人間 + Claude Code / 人間 + VSCode + Claude Code）
 DTSTART;VALUE=DATE:20260724
@@ -151,7 +151,7 @@ DTEND;VALUE=DATE:20260725
 END:VEVENT
 BEGIN:VEVENT
 UID:751c33ea-17bc-5d26-a0ee-08e67e1a541a@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T866 DBスキーマ管理の再発防止（init_db同期化またはdeploy時migration適用のCI化）
 DESCRIPTION:8. 本番運用・品質管理 / DB保守（担当: Codex / VSCode + Codex + Supabase + GitHub Actions）
 DTSTART;VALUE=DATE:20260713
@@ -159,7 +159,7 @@ DTEND;VALUE=DATE:20260716
 END:VEVENT
 BEGIN:VEVENT
 UID:b38cc02d-2d54-5f75-96a8-898a0b2bb5da@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T870 本番DBバックアップパイプライン復旧（WIF再構成・GCSバケット作成・secret登録・CI green化）
 DESCRIPTION:8. 本番運用・品質管理 / DB保守（担当: Codex + 寛太梅澤 / GitHub Actions + GCP + Supabase）
 DTSTART;VALUE=DATE:20260714
@@ -167,7 +167,7 @@ DTEND;VALUE=DATE:20260717
 END:VEVENT
 BEGIN:VEVENT
 UID:db30bd97-f065-5621-bba7-7882fc1be39f@mighty-link.ai
-DTSTAMP:20260713T152906Z
+DTSTAMP:20260714T085522Z
 SUMMARY:【Mighty Skill-Bridge】T879 7/22 13:00 次回社長定例の予定確保とアジェンダ作成
 DESCRIPTION:7. 決定後実行 / 共通管理（担当: 寛太梅澤 / Google Calendar + Sheets）
 DTSTART;VALUE=DATE:20260718
