@@ -69,13 +69,12 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 | Supabase | Supabase docs、changelog、RLS、Postgres upgrade notes |
 | お名前.com | お名前.comヘルプ、ドメイン/DNS/WordPress/FTP関連 |
 
-2026-07-13 セッション確認メモ（T893）:
+2026-07-17 セッション確認メモ（T895）:
 
-- Anthropic Claude Codeのoverview、memory、settings、securityを確認した。共有ルールは短い `CLAUDE.md` / `AGENTS.md`、反復手順はskills、機械的な強制はhooksへ分ける現行方針と、このプロジェクトの3レーン分担は整合する。
-- OpenAI Codexは公式Docs MCPと公式WebでAGENTS.md、best practices、MCPを確認した。Codex manual helperは配布レスポンスの検証ヘッダー欠落で取得できなかったため、公式Docsへフォールバックした。恒久指示、対象限定MCP、反復skill、テストと受入前レビューをT893へ反映した。
-- GitHub Issues/Projects/ActionsとGoogle Sheets `batchUpdate` を確認した。Issueを作業記録、ProjectをStatus・日付の横断ビューとし、`scripts/sync_wbs_to_github.py` で対象WBSだけを冪等同期する。Sheetsの正本同期とCalendarの完了イベント削除は従来どおり維持する。
-- Google Gemini/Workspace/Firebase、Microsoft Foundry、Meta Llama、AWS Bedrock、Apple ML/HIG、Kimi、MiMo、DeepSeek、xAI、Seedance/BytePlus、Slack、Notion、Obsidian、Unity、Figma、Canva、Reddit、InsForge、Firecrawl、Discord、Stripe、Supabase、お名前.comの公式入口を確認した。今回のGitHub同期タスクに採用変更はなく、レジストラ=お名前.com、バックエンド=Firebase、DB=Supabaseを維持する。
-- WBSは `WBS_REVIEW_2026-07-13` の判断に沿って再ベースラインした。旧7/1・7/3レビューは現行判断へ統合し、過去版はGit履歴だけに残す。
+- Anthropic Claude Codeのoverviewを確認した。共有ルールは短い `CLAUDE.md` / `AGENTS.md`、反復手順はskills、機械的な強制はhooksへ分ける方針は現行どおりで、T894プリフライトガードと3レーン分担に整合する。採用変更なし。
+- Apple HIGの入口を確認した（本文はJSレンダリングのためfetch不可）。T895の同意導線修正は「エラーの修正箇所へ利用者を直接誘導する」「アニメーションは prefers-reduced-motion を尊重する」というフィードバック設計原則に沿って実装した。
+- GitHub Issues/Projects、Google Sheets `batchUpdate`、Calendar同期の運用は2026-07-13（T893）の判断を維持する: Issue=作業記録、Project=Status・日付の横断ビュー、`scripts/sync_wbs_to_github.py` は対象WBS限定の冪等同期、Sheetsの正本同期とCalendarの完了イベント削除は従来どおり。
+- WBSは `WBS_REVIEW_2026-07-13` の再ベースラインを維持。旧7/1・7/3レビューは統合済みで過去版はGit履歴だけに残す。
 
 ---
 

@@ -373,6 +373,24 @@
             font-size: 12px;
         }
 
+        /* T895: 同意未チェックのままデモ実行した際に同意欄の場所を示すハイライト */
+        .legal-consent-panel.consent-attention {
+            border-color: var(--rose);
+            box-shadow: 0 0 0 4px rgba(255, 108, 171, 0.28);
+            animation: consent-attention-pulse 1.1s ease-in-out 2;
+        }
+
+        @keyframes consent-attention-pulse {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(255, 108, 171, 0.28); }
+            50% { box-shadow: 0 0 0 14px rgba(255, 108, 171, 0.10); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .legal-consent-panel.consent-attention {
+                animation: none;
+            }
+        }
+
         .big-btn {
             min-height: 52px;
             padding: 0 36px;
@@ -3060,7 +3078,7 @@
                         <h2>適性・モチベーション自己診断デモ</h2>
                         <span class="control-label">回答と結果は保存せず、この画面のセッション内だけで評価します</span>
                     </div>
-                    <span class="support-status" id="aptitude-demo-status">未生成</span>
+                    <span class="support-status" id="aptitude-demo-status" role="status">未生成</span>
                 </div>
 
                 <div class="aptitude-demo-grid">
@@ -3077,6 +3095,7 @@
                         <div class="aptitude-demo-notice" id="aptitude-demo-privacy" style="margin-top: 14px;">
                             上部の規約同意と、この自己診断デモの同意を入れると質問を生成できます。
                         </div>
+                        <button type="button" class="sample-btn" id="aptitude-demo-consent-jump" onclick="focusLegalConsentPanel()" style="margin-top: 10px;">↑ 上部の規約同意チェック欄へ移動</button>
                         <div class="aptitude-demo-actions">
                             <button type="button" class="big-btn" id="aptitude-demo-generate" onclick="loadAptitudeQuestions()">質問を生成</button>
                             <button type="button" class="big-btn" id="aptitude-demo-evaluate" onclick="evaluateAptitudeDemo()">評価する</button>
@@ -3523,6 +3542,39 @@
                 legal_consent_accepted: accepted,
                 legal_consent_version: legalConsentVersion
             };
+        }
+
+        // T895: 同意欄がヒーロー内にありデモセクションから見えないため、
+        // 同意エラー時はスクロールとハイライトで場所そのものを示す
+        function focusLegalConsentPanel() {
+            const panel = document.getElementById("legal-consent-panel");
+            if (!panel) return;
+            // スクリーンリーダー向け: チェックボックスのaria-describedby先へ
+            // フォーカス移動の理由を先に反映する(runAnalysisと同じ文言)
+            setLegalConsentStatus("診断を実行するには、利用規約・プライバシーポリシー等への同意が必要です。", "var(--rose)");
+            // focusはsmoothスクロールを中断するため、スクロール開始前に移す
+            const checkbox = document.getElementById("legal-consent-checkbox");
+            if (checkbox) checkbox.focus({preventScroll: true});
+            panel.classList.remove("consent-attention");
+            void panel.offsetWidth;
+            panel.classList.add("consent-attention");
+            // html{scroll-behavior:smooth}は behavior:"auto" にも効くため、
+            // reduced-motion時は "instant" で確実に即時スクロールへ落とす
+            const reduceMotion = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+            panel.scrollIntoView({behavior: reduceMotion ? "instant" : "smooth", block: "center"});
+        }
+
+        function updateLegalConsentAffordances() {
+            const accepted = getLegalConsentPayload().legal_consent_accepted;
+            const jump = document.getElementById("aptitude-demo-consent-jump");
+            if (jump) jump.style.display = accepted ? "none" : "";
+            if (accepted) {
+                const panel = document.getElementById("legal-consent-panel");
+                if (panel) panel.classList.remove("consent-attention");
+                setLegalConsentStatus(`同意済み: ${legalConsentVersion}`, "var(--green)");
+            } else {
+                setLegalConsentStatus("法務確認・価格確定前のドラフト版です。一般公開・有償ローンチは引き続きNo-Goです。");
+            }
         }
 
         function getFeedbackSessionId() {
@@ -5000,8 +5052,13 @@
 
         function friendlyAptitudeDemoError(reason) {
             if (!reason) return "自己診断APIへ接続できませんでした。";
+            if (reason.indexOf("Invalid legal consent version") !== -1) {
+                // 同意版数の不一致はチェック操作では解消できない(古いHTMLが原因)
+                return "利用規約の版が更新されています。ページを再読み込みしてから、もう一度同意して実行してください。";
+            }
             if (reason.indexOf("legal consent") !== -1 || reason.indexOf("LEGAL_CONSENT") !== -1) {
-                return "上部の利用規約・プライバシーポリシー同意を入れてから実行してください。";
+                focusLegalConsentPanel();
+                return "ページ上部の同意チェック欄をハイライトしました。利用規約・プライバシーポリシーへの同意を入れてから再実行してください。";
             }
             if (reason.indexOf("consent is required") !== -1) {
                 return "自己診断デモの同意チェックを入れてから評価してください。";
@@ -5058,7 +5115,8 @@
             const privacy = document.getElementById("aptitude-demo-privacy");
             if (!legalConsent.legal_consent_accepted) {
                 setAptitudeDemoStatus("規約同意が必要", "var(--rose)");
-                if (privacy) privacy.textContent = "上部の利用規約・プライバシーポリシー同意を入れてから質問を生成してください。";
+                if (privacy) privacy.textContent = "ページ上部の同意チェック欄へ移動しました。ピンク色にハイライトされたチェックを入れてから、もう一度「質問を生成」を押してください。";
+                focusLegalConsentPanel();
                 return;
             }
             if (!consentInput || !consentInput.checked) {
@@ -5192,6 +5250,9 @@
             }
             if (!legalConsent.legal_consent_accepted) {
                 setAptitudeDemoStatus("規約同意が必要", "var(--rose)");
+                const privacy = document.getElementById("aptitude-demo-privacy");
+                if (privacy) privacy.textContent = "ページ上部の同意チェック欄へ移動しました。ピンク色にハイライトされたチェックを入れてから、もう一度「評価する」を押してください。";
+                focusLegalConsentPanel();
                 return;
             }
             if (!consentInput || !consentInput.checked) {
@@ -6151,6 +6212,14 @@
 
             // Load sales email analytics dashboard
             loadSalesEmailAnalytics();
+
+            // T895: 規約同意チェックの状態にジャンプボタン表示と
+            // 同意ステータス文言を追従させる
+            const legalConsentCheckbox = document.getElementById("legal-consent-checkbox");
+            if (legalConsentCheckbox) {
+                legalConsentCheckbox.addEventListener("change", updateLegalConsentAffordances);
+            }
+            updateLegalConsentAffordances();
         });
 
         window.addEventListener("scroll", () => {
