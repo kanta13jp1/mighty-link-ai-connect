@@ -1,20 +1,20 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-09T02:10:08Z",
-  "issue_total": 166,
-  "qa_total": 138,
+  "generated_at": "2026-07-17T00:08:22Z",
+  "issue_total": 181,
+  "qa_total": 154,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "open": 6,
-    "resolved": 139,
+    "open": 7,
+    "resolved": 153,
     "transferred": 18
   },
   "qa_status_counts": {
-    "回答済": 99,
+    "回答済": 115,
     "想定済": 39
   },
-  "issue_blocker_count": 6,
+  "issue_blocker_count": 7,
   "qa_blocker_count": 0,
   "issue_blockers": [
     {
@@ -22,7 +22,7 @@
       "severity": "HIGH",
       "category": "schedule",
       "title": "期限超過の人間依存ゲートが2026-07-08ローンチのクリティカルパスに集中しているリスク",
-      "related_wbs": "T859;T804;T798;T823;T836;T855;T834;T831;T819;T833;T849;T860;T861;T862",
+      "related_wbs": "T859;T804;T798;T823;T836;T855;T834;T831;T819;T833;T849;T860;T861;T862;T893",
       "related_issue": "#151"
     },
     {
@@ -64,6 +64,14 @@
       "title": "クリティカルシステム8件がバス係数1（backup所有者未設定）の単一障害点",
       "related_wbs": "T850;T850_1;T823",
       "related_issue": ""
+    },
+    {
+      "id": "R132",
+      "severity": "MED",
+      "category": "integration",
+      "title": "T836実メール同期がPoC営業メール抽出データを空に上書きし営業メールAIマッチングが静的デモへ無言フォールバック",
+      "related_wbs": "T836;T817_7;T817;T888",
+      "related_issue": "-"
     }
   ],
   "qa_blockers": []

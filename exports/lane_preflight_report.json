@@ -1,0 +1,139 @@
+{
+  "task": "T894",
+  "mode": "full",
+  "guard_count": 15,
+  "exempt_count": 1,
+  "test_file_count": 75,
+  "guard_results": {
+    "audit_access_inventory.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_admin_dashboard_error_handling.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_diagnosis_fallback_transparency.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_docs_reference_integrity.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_fk_index_coverage.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_form_error_handling.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_frontend_api_contract.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_gemini_model_policy.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_issue_qa_blockers.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_sales_email_hardening.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_schema_doc_consistency.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_tracker_integrity.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_uat_api_coverage.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_uat_test_spec.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_wbs_lifecycle_coverage.py": {
+      "exit_code": 0,
+      "evidence": true
+    }
+  },
+  "pytest": {
+    "skipped": false,
+    "failed": 0,
+    "errors": 0,
+    "collected": 487,
+    "exit_code": 0
+  },
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "プリフライト対象ガード10件以上かつテストファイル50件以上(sanity)",
+      "passed": true,
+      "detail": "対象ガード=15, 対象外=1, テストファイル=75"
+    },
+    {
+      "id": "H2",
+      "title": "全scripts/audit_*.pyがGUARD_REGISTRY∪EXEMPT_GUARDSに分類済み(未分類0)",
+      "passed": true,
+      "detail": "未分類=なし"
+    },
+    {
+      "id": "H3",
+      "title": "分類済みガードが全て実在(stale分類0)",
+      "passed": true,
+      "detail": "stale=なし"
+    },
+    {
+      "id": "H4",
+      "title": "登録ガードの実行終了コードが全て0(全ガードPASS)",
+      "passed": true,
+      "detail": "FAIL=なし"
+    },
+    {
+      "id": "H5",
+      "title": "pytest tests/ の failed/error が0",
+      "passed": true,
+      "detail": "failed=0, errors=0"
+    },
+    {
+      "id": "H6",
+      "title": "収集テストが400件以上(スイート縮退検知)",
+      "passed": true,
+      "detail": "収集=487"
+    },
+    {
+      "id": "H7",
+      "title": "全対象ガードがtests/のいずれかからimportされている(CI実行経路あり)",
+      "passed": true,
+      "detail": "経路なし=なし"
+    },
+    {
+      "id": "H8",
+      "title": "全対象ガードが自身の宣言どおりexports/へ監査証跡(*.md)を出力済み",
+      "passed": true,
+      "detail": "証跡なし=なし"
+    },
+    {
+      "id": "H9",
+      "title": "AGENTS.mdのcloseoutにプリフライトコマンドが記載(手順ドリフト0)",
+      "passed": true,
+      "detail": "AGENTS.md記載=あり"
+    },
+    {
+      "id": "H10",
+      "title": "プリフライト全体が完全・整合(ドリフト0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ],
+  "all_passed": true
+}

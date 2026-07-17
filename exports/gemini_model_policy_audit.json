@@ -1,7 +1,7 @@
 {
   "audit": "gemini_model_policy",
   "status": "ok",
-  "checked_at": "2026-07-07",
+  "checked_at": "2026-07-17",
   "policy": {
     "policy_id": "GEMINI_MODEL_POLICY_2026_07_01",
     "checked_at": "2026-07-07",
@@ -79,7 +79,7 @@
     "blockers": 0,
     "warnings": 0,
     "runtime_references": 3,
-    "current_truth_references": 5
+    "current_truth_references": 7
   },
   "default_finding": {
     "severity": "ok",
@@ -90,7 +90,7 @@
   "runtime_findings": [
     {
       "path": "src/app.py",
-      "line": 362,
+      "line": 374,
       "model": "gemini-3.5-flash",
       "context": "USER_EMAIL = \"k-umezawa@ml-mightylink.com\" GEMINI_MODEL = os.environ.get(\"GEMINI_MODEL\", \"gemini-3.5-flash\") GEMINI_DAILY_CALL_LIMIT = env_int(\"GEMINI_DAILY_CALL_LIMIT\", 20, 0, 100",
       "severity": "ok",
@@ -131,6 +131,14 @@
       "reason": "current_truth_reference_allowed"
     },
     {
+      "path": "data/WBS.tsv",
+      "line": 194,
+      "model": "gemini-2.",
+      "context": "3.1 Pro 系）移行テストと本番切り替え手順書 Codex + Claude VSCode + Codex 公式Docs(models最終更新2026-06-30)を再確認し、gemini-2.0系がShut downであることを確認。本番既定はstable最上位のgemini-3.5-flashを維持。移行評価ハーネスscripts/evaluate_",
+      "severity": "ok",
+      "reason": "current_truth_reference_allowed"
+    },
+    {
       "path": "data/qa_tracker.tsv",
       "line": 111,
       "model": "gemini-3.5-flash",
@@ -151,6 +159,14 @@
       "line": 119,
       "model": "gemini-3.1-pro",
       "context": "uction defaultはspecific stable model stringのみ許可します。`latest` aliasはhot-swapされるため本番既定では禁止し、`gemini-3.1-pro`などpreviewはT780の評価専用として扱います。 モデル変更時は`data/gemini_model_policy.json`更新、`pytho",
+      "severity": "ok",
+      "reason": "current_truth_reference_allowed"
+    },
+    {
+      "path": "data/qa_tracker.tsv",
+      "line": 128,
+      "model": "gemini-3.5-flash",
+      "context": "ckend Geminiのモデルはどれをどうやって選定・切り替えていますか？社内GAではどのモデルですか？ 本番既定は公式Docs(2026-06-30更新)のstable最上位 gemini-3.5-flash を維持します(T780)。Gemini 2.0 Flash/Flash-Lite は公式にShut down済みのため data/gemini_m",
       "severity": "ok",
       "reason": "current_truth_reference_allowed"
     }

@@ -75,7 +75,7 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 - OpenAI Codexは公式Docs MCPと公式WebでAGENTS.md、best practices、MCPを確認した。Codex manual helperは配布レスポンスの検証ヘッダー欠落で取得できなかったため、公式Docsへフォールバックした。恒久指示、対象限定MCP、反復skill、テストと受入前レビューをT893へ反映した。
 - GitHub Issues/Projects/ActionsとGoogle Sheets `batchUpdate` を確認した。Issueを作業記録、ProjectをStatus・日付の横断ビューとし、`scripts/sync_wbs_to_github.py` で対象WBSだけを冪等同期する。Sheetsの正本同期とCalendarの完了イベント削除は従来どおり維持する。
 - Google Gemini/Workspace/Firebase、Microsoft Foundry、Meta Llama、AWS Bedrock、Apple ML/HIG、Kimi、MiMo、DeepSeek、xAI、Seedance/BytePlus、Slack、Notion、Obsidian、Unity、Figma、Canva、Reddit、InsForge、Firecrawl、Discord、Stripe、Supabase、お名前.comの公式入口を確認した。今回のGitHub同期タスクに採用変更はなく、レジストラ=お名前.com、バックエンド=Firebase、DB=Supabaseを維持する。
-- WBSは [WBS_REVIEW_2026-07-13.md](WBS_REVIEW_2026-07-13.md) へ再ベースラインした。旧7/1・7/3レビューは現行判断へ統合し、過去版はGit履歴だけに残す。
+- WBSは `WBS_REVIEW_2026-07-13` の判断に沿って再ベースラインした。旧7/1・7/3レビューは現行判断へ統合し、過去版はGit履歴だけに残す。
 
 ---
 

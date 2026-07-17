@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-07-14 17:54:10 UTC+09:00
+Generated: 2026-07-17 08:54:28 UTC+09:00
 
 ## Purpose
 
@@ -10,8 +10,8 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 
 ## Current WBS Snapshot
 
-- Total tasks: 320
-- Done: 299
+- Total tasks: 321
+- Done: 300
 - In progress: 2
 - Not started: 19
 - Completion rate: 93%

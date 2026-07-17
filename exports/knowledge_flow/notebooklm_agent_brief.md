@@ -1,6 +1,6 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-07-14T17:58:24+09:00
+Generated: 2026-07-17T09:03:01+09:00
 Status: `auth_required`
 
 NotebookLM CLI is not ready yet, so this file is a placeholder.
@@ -77,6 +77,7 @@ During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
 - `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
 - `docs/INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md`: https://docs.google.com/document/d/1To4tdFpm4vauBuLFu0oGrmEQ5wh3w0YTjgPiH5msoj4/edit?usp=drivesdk
 - `docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md`: https://docs.google.com/document/d/1dwBuo8xE95v9zeo2Z2rcoN1-3W-1qkzkAFx0lGYc39o/edit?usp=drivesdk
+- `docs/LANE_PREFLIGHT_GUARD.md`: https://docs.google.com/document/d/1kTBbjSxL58XW_2kPT1yLPUSKMrWQ80NBTgMLRJSEgzE/edit?usp=drivesdk
 - `docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md`: https://docs.google.com/document/d/1r7xPsQ87_XlmTfj3pt9Os91dtCjR3qK8o7f0B_7aJI4/edit?usp=drivesdk
 - `docs/LEGAL_DOCS_CONSISTENCY_AUDIT_2026-07-04.md`: https://docs.google.com/document/d/1yof2uNoj5--rgVSFwJq9h2eg-ZLgFn4TC4aiptHg8iI/edit?usp=drivesdk
 - `docs/LOAD_TEST_100_USERS_REPORT_2026-07-01.md`: https://docs.google.com/document/d/1p_05xdUzs-16aPBskTjCgQUIryRaHIb_cQqbpNEp_60/edit?usp=drivesdk

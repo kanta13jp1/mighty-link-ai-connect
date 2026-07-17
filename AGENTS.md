@@ -28,7 +28,17 @@
 
 ## Required Session Closeout
 
-Run these before finishing a session that changes project behavior or docs:
+Run these before finishing a session that changes project behavior or docs.
+
+**Step 1 — preflight (required first).** No lane may commit or push a red working tree. This runs all registered integrity guards plus the full test suite and fails on the first drift:
+
+```powershell
+python scripts/run_lane_preflight.py --full
+```
+
+Use the fast form (`python scripts/run_lane_preflight.py`, guards only, seconds) immediately before each commit. Spec and NG handling: `docs/LANE_PREFLIGHT_GUARD.md`. If it fails because of another lane's uncommitted work, back the work up and hand it back to that lane — do not discard it and do not bypass the preflight.
+
+**Step 2 — generate and sync** (only against a tree the preflight passed):
 
 ```powershell
 python scripts/generate_knowledge_flow_demo.py
