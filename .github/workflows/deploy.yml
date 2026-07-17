@@ -9,6 +9,7 @@ on:
     branches:
       - main
       - master
+  workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
@@ -49,7 +50,7 @@ jobs:
     name: Deploy to Firebase
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     concurrency:
       group: firebase-deploy-mighty-link-ai-connect-13d22
       cancel-in-progress: false
@@ -63,13 +64,21 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v6
         with:
-          fetch-depth: 2
+          # github.event.before はpush範囲の先頭より前を指すため、shallow
+          # cloneだと解決できずHEAD^へフォールバックし、複数コミットpushで
+          # 先頭以外のアプリ変更がデプロイ判定から漏れる (R140)
+          fetch-depth: 0
 
       - name: Detect Firebase deploy changes
         id: firebase_changes
         shell: bash
         run: |
           set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "[*] Manual dispatch; forcing Firebase deploy."
+            echo "firebase_deploy=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           BEFORE="${{ github.event.before }}"
           if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
             BEFORE="$(git rev-parse HEAD^ 2>/dev/null || true)"
