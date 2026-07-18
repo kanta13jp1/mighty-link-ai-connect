@@ -1,0 +1,67 @@
+{
+  "task": "T900",
+  "placeholder_count": 32,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "法定開示4文書(利用規約/プライバシー/特商法/課金返金)が存在",
+      "passed": true,
+      "detail": "欠落文書=なし"
+    },
+    {
+      "id": "H2",
+      "title": "特商法表記が必須表示項目を網羅",
+      "passed": true,
+      "detail": "欠落項目=なし"
+    },
+    {
+      "id": "H3",
+      "title": "プライバシーポリシーが個情法明示事項を網羅",
+      "passed": true,
+      "detail": "欠落項目=なし"
+    },
+    {
+      "id": "H4",
+      "title": "利用規約が必須条項を網羅",
+      "passed": true,
+      "detail": "欠落条項=なし"
+    },
+    {
+      "id": "H5",
+      "title": "解約/退会が特商法表記と利用規約の双方に記載",
+      "passed": true,
+      "detail": "整合=あり"
+    },
+    {
+      "id": "H6",
+      "title": "返金/キャンセルが特商法表記と課金返金ポリシーの双方に記載",
+      "passed": true,
+      "detail": "整合=あり"
+    },
+    {
+      "id": "H7",
+      "title": "事業者名が特商法表記とプライバシーポリシーで一致",
+      "passed": true,
+      "detail": "整合=あり"
+    },
+    {
+      "id": "H8",
+      "title": "保管期間がプライバシーポリシーとデータ保持Runbookの双方に記載",
+      "passed": true,
+      "detail": "整合=あり"
+    },
+    {
+      "id": "H9",
+      "title": "消費税/インボイス等の税務表示が特商法表記または課金ポリシーに存在",
+      "passed": true,
+      "detail": "税務表示=あり"
+    },
+    {
+      "id": "H10",
+      "title": "法定開示が完全・整合(必須項目網羅かつ文書間ドリフト0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ],
+  "all_passed": true
+}
