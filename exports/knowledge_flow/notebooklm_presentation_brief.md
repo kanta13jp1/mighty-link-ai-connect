@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-07-18 11:45:40 UTC+09:00
+Generated: 2026-07-18 12:09:43 UTC+09:00
 
 ## How to use this in NotebookLM
 
@@ -36,8 +36,8 @@ and which development knowledge-flow tools should become official.
 
 ## WBS Snapshot
 
-- Total tasks: 324
-- Done: 303
+- Total tasks: 325
+- Done: 304
 - In progress: 2
 - Not started: 19
 - Completion rate: 94%

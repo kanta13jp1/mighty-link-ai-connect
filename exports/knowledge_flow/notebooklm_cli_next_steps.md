@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-17T09:03:01+09:00
+Generated: 2026-07-18T12:17:30+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `136`
-- Drive docs uploaded: `0`
-- Drive docs skipped unchanged: `136`
+- Drive docs discovered: `137`
+- Drive docs uploaded: `4`
+- Drive docs skipped unchanged: `133`
 - NotebookLM CLI status: `auth_required`
 
 ## Google Docs Synced From docs/
@@ -29,6 +29,7 @@ Generated: 2026-07-17T09:03:01+09:00
 - `docs/BACKEND_AI_PIPELINE.md`: https://docs.google.com/document/d/1duxDhC6yjS-XlyWxse_XdaiRjq88cZz8aBCt0GRxUWg/edit?usp=drivesdk
 - `docs/BILLING_AND_REFUND_POLICY.md`: https://docs.google.com/document/d/1qXQ8UVCo4AJN2DLeYq_CO13GDM8e_9prJhl8Mym6rPM/edit?usp=drivesdk
 - `docs/CEO_MEETING_AGENDA_2026-07-08.md`: https://docs.google.com/document/d/1EccS4sxTSricI4Al-5LJUxfuK_cIoJ5hADf6wFnozoE/edit?usp=drivesdk
+- `docs/CEO_MEETING_AGENDA_2026-07-22.md`: https://docs.google.com/document/d/1fk0jiGg37_rhwkZzXTbZzWg122qjBNhKJ7QOSRCmDi4/edit?usp=drivesdk
 - `docs/CEO_PRESENTATION_BACKUP_GUIDE.md`: https://docs.google.com/document/d/1V0Pk334cGh22vH5YcXPepmIV8OHOFs1dtdgUQPa-VUY/edit?usp=drivesdk
 - `docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/17LQKJNaTJYn7ntsh3vIT4A1YqkkMDR_xRDNmuw__iKc/edit?usp=drivesdk
 - `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`: https://docs.google.com/document/d/1XJeHY18JEEeaz4Dc28UHrOYbA7hhZ7ENfyI3TEGPnqc/edit?usp=drivesdk
