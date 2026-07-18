@@ -1,38 +1,22 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-18T03:19:08Z",
-  "issue_total": 184,
-  "qa_total": 158,
+  "generated_at": "2026-07-18T08:44:14Z",
+  "issue_total": 185,
+  "qa_total": 160,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "open": 7,
-    "resolved": 156,
+    "open": 5,
+    "resolved": 159,
     "transferred": 18
   },
   "qa_status_counts": {
-    "回答済": 119,
+    "回答済": 121,
     "想定済": 39
   },
-  "issue_blocker_count": 7,
+  "issue_blocker_count": 5,
   "qa_blocker_count": 0,
   "issue_blockers": [
-    {
-      "id": "R111",
-      "severity": "HIGH",
-      "category": "schedule",
-      "title": "期限超過の人間依存ゲートが2026-07-08ローンチのクリティカルパスに集中しているリスク",
-      "related_wbs": "T859;T804;T798;T823;T836;T855;T834;T831;T819;T833;T849;T860;T861;T862;T893",
-      "related_issue": "#151"
-    },
-    {
-      "id": "R113",
-      "severity": "HIGH",
-      "category": "external-dependency",
-      "title": "営業メール接続情報の受領待ちが7/8社内GAのクリティカルパスに影響するリスク",
-      "related_wbs": "T836;T817;T817_7;T845;T849;T819;T864",
-      "related_issue": "#156"
-    },
     {
       "id": "R116",
       "severity": "HIGH",
@@ -50,14 +34,6 @@
       "related_issue": "#172"
     },
     {
-      "id": "R120",
-      "severity": "MED",
-      "category": "frontend",
-      "title": "UI/UX改善：ライトモード（背景白）対応とタブ切り替えによる複数ページ構成の画面設計",
-      "related_wbs": "T877",
-      "related_issue": "#173"
-    },
-    {
       "id": "R122",
       "severity": "MED",
       "category": "operations",
@@ -72,6 +48,14 @@
       "title": "T836実メール同期がPoC営業メール抽出データを空に上書きし営業メールAIマッチングが静的デモへ無言フォールバック",
       "related_wbs": "T836;T817_7;T817;T888",
       "related_issue": "-"
+    },
+    {
+      "id": "R142",
+      "severity": "MED",
+      "category": "operations",
+      "title": "カレンダー同期でタスク名変更後の旧summaryイベントが孤児として残存し、WBSと乖離する",
+      "related_wbs": "T899;T801",
+      "related_issue": ""
     }
   ],
   "qa_blockers": []

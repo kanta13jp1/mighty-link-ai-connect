@@ -1,13 +1,13 @@
 {
   "task": "T891",
-  "doc_count": 152,
-  "link_count": 654,
+  "doc_count": 153,
+  "link_count": 662,
   "hypotheses": [
     {
       "id": "H1",
       "title": "docsが50件以上あり内部リンクを検出(sanity)",
       "passed": true,
-      "detail": "docs数=152, 内部リンク数=583"
+      "detail": "docs数=153, 内部リンク数=591"
     },
     {
       "id": "H2",

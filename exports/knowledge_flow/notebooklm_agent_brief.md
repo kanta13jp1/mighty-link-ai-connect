@@ -1,6 +1,6 @@
 # NotebookLM Agent Brief
 
-Generated: 2026-07-18T12:17:30+09:00
+Generated: 2026-07-18T17:43:14+09:00
 Status: `auth_required`
 
 NotebookLM CLI is not ready yet, so this file is a placeholder.
@@ -97,6 +97,7 @@ During `notebooklm login`, select `k-umezawa@ml-mightylink.com`.
 - `docs/PILOT_CONSENT_TEMPLATE.md`: https://docs.google.com/document/d/1KExhc4UkexwUBTq--hMDmNpTA59oZFVz_c3yYl4UOBE/edit?usp=drivesdk
 - `docs/PILOT_PARTICIPANTS_SELECTION.md`: https://docs.google.com/document/d/1BLPG7uYbtU73fQh_tAg4cBBPin3BojMl9nWTDKdWb8w/edit?usp=drivesdk
 - `docs/PILOT_REPORT_2026-06-16.md`: https://docs.google.com/document/d/1C9nAy4JmkXdPE80HKkx8z0IstqQDUzWZjyVUvnfW-NU/edit?usp=drivesdk
+- `docs/POST_LAUNCH_RETROSPECTIVE_2026-07-18.md`: https://docs.google.com/document/d/1stDud7nagK0xDjuhxhHfQ0AHzGDzbPiING_UqrjimwI/edit?usp=drivesdk
 - `docs/POSTMORTEM_2026-06-11_R44_PRODUCTION_API_502.md`: https://docs.google.com/document/d/1v0seY6IBvRFBoNb0vVSOY01pgzxwzGQjfATLrDYN3aM/edit?usp=drivesdk
 - `docs/POSTMORTEM_2026-07-04_R114_MISSING_PROD_TABLES.md`: https://docs.google.com/document/d/1hOmODl8UT3Pt7Vq_HODri6JanuTlfP27DMqX3B_zDWE/edit?usp=drivesdk
 - `docs/PRICING_PLAN_PROVISIONAL_2026-07-03.md`: https://docs.google.com/document/d/1ZPuBp6HD3FBj0Bc2DsLxroQ5Kk_fZssuoGEbs81tJWc/edit?usp=drivesdk
