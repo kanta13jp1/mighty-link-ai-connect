@@ -1,13 +1,13 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-18T18:17:22+09:00
+Generated: 2026-07-18T21:29:02+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `138`
-- Drive docs uploaded: `2`
+- Drive docs discovered: `139`
+- Drive docs uploaded: `3`
 - Drive docs skipped unchanged: `136`
 - NotebookLM CLI status: `auth_required`
 
@@ -55,6 +55,7 @@ Generated: 2026-07-18T18:17:22+09:00
 - `docs/EMPLOYEE_ASSESSMENT_RESPONSE_RUNBOOK.md`: https://docs.google.com/document/d/1c9nAmqw9Rt48UnGLsOK1bz8BsXeIiGfZnJY5ttxmjTs/edit?usp=drivesdk
 - `docs/EMPLOYEE_ASSESSMENT_SHORTLIST_POC_PLAN.md`: https://docs.google.com/document/d/1jw7K0C8pFoZJ0IM3eZVLNj6J0yp3MBpWlrIrdBiYy9A/edit?usp=drivesdk
 - `docs/EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md`: https://docs.google.com/document/d/1btkSsKS8Z9GHsOS11oaEhT2P2V0vogPR-Z37oWQ7N_M/edit?usp=drivesdk
+- `docs/EMPLOYEE_ASSESSMENT_VENDOR_RFI_DPA_CHECKLIST.md`: https://docs.google.com/document/d/1Y9zU42mTff-uAqlnbupOeM898DAAYA3lG7WbODd5QHQ/edit?usp=drivesdk
 - `docs/EXTERNAL_PENTEST_RUNBOOK.md`: https://docs.google.com/document/d/1D9ZXT66SfFv-JBV0GtqWLrGgcLqgpWe6emW_ELGubu8/edit?usp=drivesdk
 - `docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md`: https://docs.google.com/document/d/1aZ9XMhnsTBYkfhaGh-UppNcEW8FjgKLv9dzB6cenerE/edit?usp=drivesdk
 - `docs/FIREBASE_CI_CD_WIF_MIGRATION_REPORT.md`: https://docs.google.com/document/d/1G2_zGfCkVe9sgIle5ypyLyMH80UqLfFQaXbK7hl5Qvs/edit?usp=drivesdk
