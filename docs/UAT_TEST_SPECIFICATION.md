@@ -355,13 +355,29 @@
 - **NG判定**: 500 等で集計が取得できない、空データで「データがありません」ではなくエラー表示になる、または本文全文/個人連絡先/氏名が表示される。
 - **実施結果**: ☐ OK　☐ NG　／　実施日: ______　実施者: ______　備考: ______
 
+### TS-23 WBS前倒し再計算ツール（スケジュール引き直しの健全性）
+- **対象機能**: WBSスケジュール前倒し再計算CLI（`scripts/recalculate_wbs_schedule.py`）。適性/勤怠等の製品機能ではなく、WBS正本（`data/WBS.tsv`）を書き換える運用ツールの受入テスト。
+- **関連WBS**: T897
+- **前提条件**: リポジトリをcloneしPython 3.xが動作する。`data/WBS.tsv` がUTF-8・CRLF・10列で存在する。`git status` で `data/WBS.tsv` と `docs/WBS.md` に未コミット変更がないこと（あれば退避してから実施）。
+- **テスト手順**:
+  1. `python scripts/recalculate_wbs_schedule.py --dry-run` を実行する。終了コード0で、変更予定タスクの一覧（タスクID・旧開始日/終了予定日 → 新開始日/終了予定日）が表示され、`git status` で `data/WBS.tsv`・`docs/WBS.md` が**無変更のまま**であることを確認する。
+  2. `python scripts/recalculate_wbs_schedule.py --apply` を実行し、終了コード0で完了することを確認する。
+  3. 引き直し結果を確認する: `data/WBS.tsv` のステータスが「未着手」「実行中」の全行で、開始日が実行日以降・開始日≦終了予定日であり、ステータス「完了」の行の開始日/終了予定日が1件も変わっていないことを確認する（`git diff data/WBS.tsv` で完了行に差分がないこと）。
+  4. ファイル健全性を確認する: 全行の列数が10、タスクIDに重複がなく、改行コードがCRLFのまま（PowerShell: `(Get-Content -Raw data/WBS.tsv) -match "`r`n"` が True、または `file data/WBS.tsv` が "CRLF" を表示）であることを確認する。
+  5. `docs/WBS.md` が正規ジェネレータ形式（先頭見出しが `# 📊 Mighty-Link AI Connect: プロジェクトWBS` で、mermaidガントを含む `scripts/generate_wbs_md.py` の出力）で再生成されていることを確認する。
+  6. `python scripts/sync_wbs_to_sheets.py <SheetID>` を実行し、同期ログに再計算実行の出力が**現れない**こと、および同期前後で `data/WBS.tsv` のハッシュ（PowerShell: `Get-FileHash data/WBS.tsv`）が不変であることを確認する（Sheets同期が正本を暗黙変更しない）。
+- **期待結果**: dry-runは無変更で差分予定のみ提示。applyでは未完了タスクのみ実行日基準へ引き直され、完了行・列数・ID一意性・CRLFは不変。`docs/WBS.md` は正規形式で再生成。Sheets同期はWBS.tsvを書き換えない。
+- **OK判定**: 手順1〜6のすべてで上記の確認事項が満たされる。
+- **NG判定**: dry-runがファイルを書き換える、完了行の日付が変わる、未完了行に日程逆転（開始日＞終了予定日）が生じる、CRLFがLFに変わる、`docs/WBS.md` が正規形式で再生成されない、またはSheets同期中にWBS.tsvが変更される。
+- **実施結果**: ☐ OK　☐ NG　／　実施日: ______　実施者: ______　備考: ______
+
 ---
 
 ## 5. 実施サマリ・サインオフ
 
 | 区分 | 件数 |
 | :--- | :--- |
-| 総ケース数 | 22 |
+| 総ケース数 | 23 |
 | OK | ____ |
 | NG | ____ |
 | N/A | ____ |

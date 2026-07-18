@@ -69,12 +69,13 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 | Supabase | Supabase docs、changelog、RLS、Postgres upgrade notes |
 | お名前.com | お名前.comヘルプ、ドメイン/DNS/WordPress/FTP関連 |
 
-2026-07-17 セッション確認メモ（T895）:
+2026-07-18 セッション確認メモ（T897）:
 
-- Anthropic Claude Codeのoverviewを確認した。共有ルールは短い `CLAUDE.md` / `AGENTS.md`、反復手順はskills、機械的な強制はhooksへ分ける方針は現行どおりで、T894プリフライトガードと3レーン分担に整合する。採用変更なし。
-- Apple HIGの入口を確認した（本文はJSレンダリングのためfetch不可）。T895の同意導線修正は「エラーの修正箇所へ利用者を直接誘導する」「アニメーションは prefers-reduced-motion を尊重する」というフィードバック設計原則に沿って実装した。
-- GitHub Issues/Projects、Google Sheets `batchUpdate`、Calendar同期の運用は2026-07-13（T893）の判断を維持する: Issue=作業記録、Project=Status・日付の横断ビュー、`scripts/sync_wbs_to_github.py` は対象WBS限定の冪等同期、Sheetsの正本同期とCalendarの完了イベント削除は従来どおり。
-- WBSは `WBS_REVIEW_2026-07-13` の再ベースラインを維持。旧7/1・7/3レビューは統合済みで過去版はGit履歴だけに残す。
+- Anthropic Claude Codeのmemory docsを確認した。`CLAUDE.md` から `@AGENTS.md` をインポートする現行構成は引き続き公式推奨どおり。auto memoryのMEMORY.md読込上限（200行/25KB）に留意。採用変更なし。
+- OpenAI Codex docsの所在変更を検出した: `developers.openai.com/codex/guides/agents-md` は `learn.chatgpt.com/docs/agent-configuration/agents-md` へ308恒久リダイレクトされる。AGENTS.mdはグローバル→プロジェクトの階層マージ（近接優先）と `AGENTS.override.md` に対応。旧URLはリダイレクトで到達可能なため一覧は変更せず、次回以降は新URLを直接参照してよい。
+- Google Sheets `batchUpdate` を確認した。バッチのアトミック性（1件失敗で全体不適用）とfield maskの選択的更新の推奨は `scripts/sync_wbs_to_sheets.py` の現行方針と整合。採用変更なし。
+- GitHub Issues/Projects、Sheetsの正本同期、Calendarの完了イベント削除の運用は2026-07-13（T893）の判断を維持する。
+- WBSは `WBS_REVIEW_2026-07-13` の再ベースラインを維持しつつ、T897で未完了タスクの日程を2026-07-18基準へ引き直した（`scripts/recalculate_wbs_schedule.py`、検証は UAT TS-23）。
 
 ---
 
