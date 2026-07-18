@@ -7,6 +7,9 @@
 関連課題/QA: R115 / R36 / R48 / R51
 関連docs: [TERMS_OF_SERVICE.md](TERMS_OF_SERVICE.md) / [PRIVACY_POLICY.md](PRIVACY_POLICY.md) / [BILLING_AND_REFUND_POLICY.md](BILLING_AND_REFUND_POLICY.md) / [TOKUSHOHO_NOTATION.md](TOKUSHOHO_NOTATION.md)
 
+> [!NOTE]
+> 本監査は 2026-07-04 時点のスナップショットです。継続的な整合検証は `scripts/audit_legal_disclosures.py`（T900・CIガード、2026-07-18 整備、preflight 登録済み）が担い、必須項目欠落・文書間ドリフト・未確定マーカー件数を毎回検証します。
+
 ---
 
 ## 方式

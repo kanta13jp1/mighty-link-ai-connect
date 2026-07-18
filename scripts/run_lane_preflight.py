@@ -60,6 +60,7 @@ GUARD_REGISTRY: dict[str, str] = {
     "audit_frontend_api_contract.py": "フロントエンドとAPI契約の整合",
     "audit_gemini_model_policy.py": "Geminiモデル版ポリシー適合",
     "audit_issue_qa_blockers.py": "課題/QAの開発ブロッカーゼロ (T854)",
+    "audit_legal_disclosures.py": "法定開示(規約/プライバシー/特商法/課金)の必須項目網羅・整合 (T900)",
     "audit_sales_email_hardening.py": "営業メール処理の堅牢化",
     "audit_schema_doc_consistency.py": "DBスキーマとdocsの整合",
     "audit_tracker_integrity.py": "課題管理表/QA表の構造・参照整合 (T890)",
