@@ -69,7 +69,9 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 | Supabase | Supabase docs、changelog、RLS、Postgres upgrade notes |
 | お名前.com | お名前.comヘルプ、ドメイン/DNS/WordPress/FTP関連 |
 
-2026-07-18 セッション確認メモ（T897）:
+2026-07-18 セッション確認メモ（T897 / T879）:
+
+- Google Calendar API events リファレンスを確認した（T879）。終日イベントは `start.date`/`end.date` で終了日が排他的という仕様は `sync_wbs_to_calendar.py` の現行実装（終了日+1日）と一致。`eventLabelVersion`/会議データの `createRequest` 推奨は現行の全日イベント同期には影響なし。採用変更なし。
 
 - Anthropic Claude Codeのmemory docsを確認した。`CLAUDE.md` から `@AGENTS.md` をインポートする現行構成は引き続き公式推奨どおり。auto memoryのMEMORY.md読込上限（200行/25KB）に留意。採用変更なし。
 - OpenAI Codex docsの所在変更を検出した: `developers.openai.com/codex/guides/agents-md` は `learn.chatgpt.com/docs/agent-configuration/agents-md` へ308恒久リダイレクトされる。AGENTS.mdはグローバル→プロジェクトの階層マージ（近接優先）と `AGENTS.override.md` に対応。旧URLはリダイレクトで到達可能なため一覧は変更せず、次回以降は新URLを直接参照してよい。
