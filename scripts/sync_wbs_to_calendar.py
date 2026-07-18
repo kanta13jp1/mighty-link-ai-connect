@@ -769,6 +769,83 @@ def remove_completed_wbs_events(headers, calendar_id, wbs_statuses):
     return remove_events_by_summary(headers, calendar_id, completed_summaries, "completed WBS")
 
 
+def orphan_event_ids(present_events, intended_summaries):
+    """Pure decision: which synced events are orphans that should be deleted.
+
+    R142/T899: when a WBS task is renamed, the old summary's event lingers
+    because create/update matches on summary and the completion cleanup only
+    removes events whose wbsIds are all 完了. An event is an orphan when it is
+    one we synced (carries wbsIds) but its summary is no longer in the set the
+    sync intends to keep.
+
+    Args:
+        present_events: list of dicts with "id", "summary", and "wbs_ids"
+            (a list; empty/None means we did not tag it with wbsIds).
+        intended_summaries: set of summaries the current sync will keep.
+
+    Safety: an empty ``intended_summaries`` means we do not know the intended
+    set (WBS unreadable, or nothing active), so we return [] rather than risk
+    mass-deleting. Events without wbs_ids are never returned, so untagged
+    static events and the user's own calendar entries are left untouched.
+    """
+    if not intended_summaries:
+        return []
+    orphans = []
+    for event in present_events:
+        if not event.get("wbs_ids"):
+            continue
+        if event.get("summary") not in intended_summaries:
+            orphans.append(event["id"])
+    return orphans
+
+
+def remove_orphan_dynamic_events(headers, calendar_id, intended_summaries):
+    """Deletes synced events whose summary no longer matches the current WBS.
+
+    Lists our syncSource-tagged events, delegates the keep/delete decision to
+    orphan_event_ids(), and deletes the orphans. This is the permanent fix for
+    R142 (renamed-task events lingering on the calendar).
+    """
+    if not intended_summaries:
+        print("[*] Skipping orphan cleanup: intended event set is empty (safety).")
+        return 0
+    list_url = f"https://www.googleapis.com/calendar/v3/calendars/{calendar_id}/events"
+    deleted_count = 0
+    page_token = None
+    while True:
+        params = {
+            "privateExtendedProperty": "syncSource=mighty-link-ai-connect",
+            "singleEvents": "true",
+            "maxResults": "2500",
+        }
+        if page_token:
+            params["pageToken"] = page_token
+        res = requests.get(list_url, headers=headers, params=params, timeout=GOOGLE_API_TIMEOUT_SECONDS)
+        if res.status_code != 200:
+            print(f"  [!] Could not list synced events for orphan cleanup: {res.text}")
+            return deleted_count
+        payload = res.json()
+        present = []
+        for item in payload.get("items", []):
+            raw_ids = item.get("extendedProperties", {}).get("private", {}).get("wbsIds", "")
+            present.append({
+                "id": item["id"],
+                "summary": item.get("summary", ""),
+                "wbs_ids": [task_id for task_id in raw_ids.split(",") if task_id],
+            })
+        by_id = {item["id"]: item for item in payload.get("items", [])}
+        for event_id in orphan_event_ids(present, intended_summaries):
+            delete_res = requests.delete(f"{list_url}/{event_id}", headers=headers, timeout=GOOGLE_API_TIMEOUT_SECONDS)
+            if delete_res.status_code in [200, 204]:
+                print(f"  [*] Removed orphan (renamed) event: {by_id.get(event_id, {}).get('summary')}")
+                deleted_count += 1
+            else:
+                print(f"  [!] Failed to remove orphan event {event_id}: {delete_res.text}")
+        page_token = payload.get("nextPageToken")
+        if not page_token:
+            return deleted_count
+
+
 def remove_completed_dynamic_events(headers, calendar_id, wbs_statuses):
     """Deletes synced events whose wbsIds private property maps to completed rows.
 
@@ -862,6 +939,11 @@ def sync_to_google_calendar(access_token, auth_mode, wbs_statuses):
     update_count = 0
     sync_events = list(iter_events_for_sync(wbs_statuses))
 
+    # Delete orphaned events left behind by WBS task renames (R142/T899) before
+    # (re)creating the current set. Uses the intended summary set as the anchor.
+    intended_summaries = {ev["summary"] for _ids, ev in sync_events}
+    orphan_deleted_count = remove_orphan_dynamic_events(headers, target_calendar_id, intended_summaries)
+
     for wbs_ids, ev in sync_events:
         event_body = build_event_body(ev, wbs_ids)
         existing_event = find_existing_event(headers, target_calendar_id, ev, event_body)
@@ -888,7 +970,8 @@ def sync_to_google_calendar(access_token, auth_mode, wbs_statuses):
     print(
         "[+] API Sync Complete! "
         f"Active: {len(sync_events)}, Success: {success_count}, Updated: {update_count}, "
-        f"Failed: {fail_count}, Deleted completed: {completed_deleted_count}, Deleted stale: {stale_deleted_count}"
+        f"Failed: {fail_count}, Deleted completed: {completed_deleted_count}, "
+        f"Deleted orphan: {orphan_deleted_count}, Deleted stale: {stale_deleted_count}"
     )
     
     if fail_count > 0 and "Service Account" in auth_mode:
