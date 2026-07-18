@@ -1,20 +1,20 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-18T08:44:14Z",
+  "generated_at": "2026-07-18T09:18:09Z",
   "issue_total": 185,
-  "qa_total": 160,
+  "qa_total": 161,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "open": 5,
-    "resolved": 159,
+    "open": 4,
+    "resolved": 160,
     "transferred": 18
   },
   "qa_status_counts": {
-    "回答済": 121,
+    "回答済": 122,
     "想定済": 39
   },
-  "issue_blocker_count": 5,
+  "issue_blocker_count": 4,
   "qa_blocker_count": 0,
   "issue_blockers": [
     {
@@ -48,14 +48,6 @@
       "title": "T836実メール同期がPoC営業メール抽出データを空に上書きし営業メールAIマッチングが静的デモへ無言フォールバック",
       "related_wbs": "T836;T817_7;T817;T888",
       "related_issue": "-"
-    },
-    {
-      "id": "R142",
-      "severity": "MED",
-      "category": "operations",
-      "title": "カレンダー同期でタスク名変更後の旧summaryイベントが孤児として残存し、WBSと乖離する",
-      "related_wbs": "T899;T801",
-      "related_issue": ""
     }
   ],
   "qa_blockers": []
