@@ -62,6 +62,7 @@ GUARD_REGISTRY: dict[str, str] = {
     "audit_issue_qa_blockers.py": "課題/QAの開発ブロッカーゼロ (T854)",
     "audit_legal_disclosures.py": "法定開示(規約/プライバシー/特商法/課金)の必須項目網羅・整合 (T900)",
     "audit_pricing_consistency.py": "料金プラン金額の複数docs横断整合(価格ドリフト検知) (T901)",
+    "audit_runbook_catalog.py": "運用Runbookカタログの網羅整合(孤児/切れリンク検知) (T902)",
     "audit_sales_email_hardening.py": "営業メール処理の堅牢化",
     "audit_schema_doc_consistency.py": "DBスキーマとdocsの整合",
     "audit_tracker_integrity.py": "課題管理表/QA表の構造・参照整合 (T890)",

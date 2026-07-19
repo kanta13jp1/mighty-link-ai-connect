@@ -1,7 +1,7 @@
 {
   "task": "T882",
   "spec_path": "docs\\UAT_TEST_SPECIFICATION.md",
-  "case_count": 31,
+  "case_count": 32,
   "case_ids": [
     "TS-01",
     "TS-02",
@@ -33,7 +33,8 @@
     "TS-28",
     "TS-29",
     "TS-30",
-    "TS-31"
+    "TS-31",
+    "TS-32"
   ],
   "missing_domains": [],
   "hypotheses": [
@@ -41,7 +42,7 @@
       "id": "H1",
       "title": "テストケースが12件以上",
       "passed": true,
-      "detail": "件数=31"
+      "detail": "件数=32"
     },
     {
       "id": "H2",

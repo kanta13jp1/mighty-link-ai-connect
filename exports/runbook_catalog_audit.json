@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "運用Runbookカタログが存在する",
+      "passed": true,
+      "detail": "カタログ=あり"
+    },
+    {
+      "id": "H2",
+      "title": "全Runbookがカタログに掲載(孤児0)",
+      "passed": true,
+      "detail": "孤児=なし"
+    },
+    {
+      "id": "H3",
+      "title": "カタログの全リンクが実在(切れリンク0)",
+      "passed": true,
+      "detail": "切れリンク=なし"
+    },
+    {
+      "id": "H4",
+      "title": "カテゴリ見出しで整理されている(2件以上)",
+      "passed": true,
+      "detail": "カテゴリ数=9"
+    },
+    {
+      "id": "H5",
+      "title": "カタログ掲載数がディスクの運用Runbook数と一致",
+      "passed": true,
+      "detail": "掲載=46 / ディスク=46"
+    },
+    {
+      "id": "H6",
+      "title": "各エントリに『いつ開くか』のトリガー記載がある",
+      "passed": true,
+      "detail": "トリガー欠落=0件"
+    },
+    {
+      "id": "H7",
+      "title": "リンクがリポジトリ相対(file:///・絶対パス無し)",
+      "passed": true,
+      "detail": "絶対パス=0件"
+    },
+    {
+      "id": "H8",
+      "title": "インシデント対応Runbook(DR/ポストモーテム/ロールバック)を掲載",
+      "passed": true,
+      "detail": "IR未掲載=なし"
+    },
+    {
+      "id": "H9",
+      "title": "カタログ内にRunbookリンクの重複が無い",
+      "passed": true,
+      "detail": "重複=なし"
+    },
+    {
+      "id": "H10",
+      "title": "カタログとディスクが完全同期(索引ドリフト0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ]
+}

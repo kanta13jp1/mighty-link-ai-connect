@@ -81,3 +81,34 @@ def test_evaluate_passes_on_the_real_repo():
     assert isinstance(results, list) and len(results) == 10
     failed = [r["id"] for r in results if not r["passed"]]
     assert not failed, f"pricing-consistency hypotheses failing on real repo: {failed}"
+
+
+def test_no_price_quoting_doc_silently_escapes_the_drift_scan():
+    """Coverage invariant (T901_1 third-party review, Claude Code).
+
+    The guard reads a plan price only from a line naming BOTH Standard and Pro
+    (a one-line restatement). That deliberately keeps AI-tool cost budgets and
+    single-tier prose out of the scan, but it also means a doc that lists each
+    plan on its own table row would escape the drift check entirely. Today every
+    price-quoting doc uses a both-tier one-line summary; this pins that
+    assumption: any docs/*.md quoting a canonical monthly amount next to a plan
+    tier name must be discovered by the guard, or its prices go unguarded and
+    this fails — forcing a both-tier summary line or a guard extension.
+    """
+    docs_dir = Path(__file__).resolve().parents[1] / "docs"
+    discovered = {p.name for p in guard.discover_pricing_docs()}
+    canon = guard.canonical_monthly_amounts(guard.read(guard.CANONICAL)) or CANON
+    tokens = {"{:,}".format(a) for a in canon} | {str(a) for a in canon}
+    escapees = []
+    for path in sorted(docs_dir.glob("*.md")):
+        if path.name in guard.EXCLUDE_DOCS or path.resolve() == guard.CANONICAL.resolve():
+            continue
+        text = guard.read(path)
+        if (any(tok in text for tok in tokens)
+                and any(tier in text for tier in guard.PLAN_TIERS)
+                and path.name not in discovered):
+            escapees.append(path.name)
+    assert not escapees, (
+        "price-quoting docs escape the drift scan (list tiers on one line or "
+        f"extend the guard): {escapees}"
+    )
