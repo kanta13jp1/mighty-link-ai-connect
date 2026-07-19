@@ -62,13 +62,26 @@ def runbook_files(docs_dir: Path = DOCS) -> set[str]:
 
 
 def cataloged_runbooks(catalog_text: str) -> set[str]:
-    """Runbook filenames linked from the catalog (basename of each link target)."""
-    return {Path(m.group(1)).name for m in _RUNBOOK_LINK_RE.finditer(catalog_text)}
+    """Runbook filenames linked from the catalog (basename of each link target).
+
+    The catalog's own filename is excluded — a self-link (e.g. a "back to index"
+    reference) is the index pointing at itself, not a cataloged runbook.
+    runbook_files() excludes the catalog too, so keeping this symmetric prevents
+    a self-link from being read as a phantom dangling entry (H3/H5).
+    """
+    return set(cataloged_runbook_links(catalog_text))
 
 
 def cataloged_runbook_links(catalog_text: str) -> list[str]:
-    """Every runbook link basename incl. duplicates (for duplicate detection)."""
-    return [Path(m.group(1)).name for m in _RUNBOOK_LINK_RE.finditer(catalog_text)]
+    """Every runbook link basename incl. duplicates (for duplicate detection).
+
+    Excludes self-links to the catalog itself (symmetric with runbook_files()).
+    """
+    return [
+        name
+        for m in _RUNBOOK_LINK_RE.finditer(catalog_text)
+        if (name := Path(m.group(1)).name) != CATALOG.name
+    ]
 
 
 def orphan_runbooks(files: set[str], cataloged: set[str]) -> set[str]:

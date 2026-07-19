@@ -72,3 +72,18 @@ def test_evaluate_passes_on_the_real_repo():
     assert isinstance(results, list) and len(results) == 10
     failed = [r["id"] for r in results if not r["passed"]]
     assert not failed, f"runbook-catalog hypotheses failing on real repo: {failed}"
+
+
+def test_catalog_self_link_is_not_a_dangling_entry():
+    """T902_1 third-party review (Claude Code): a catalog that links to itself
+    (a natural 'back to index' reference) must not be read as a cataloged
+    runbook. runbook_files() excludes the catalog, so cataloged_runbooks() must
+    be symmetric — otherwise the self-link becomes a phantom dangling entry and
+    H3/H5 falsely fail on a perfectly valid catalog.
+    """
+    text = SAMPLE_CATALOG + f"\n- [このカタログ]({guard.CATALOG.name}) — 索引に戻る\n"
+    cataloged = guard.cataloged_runbooks(text)
+    assert guard.CATALOG.name not in cataloged, "catalog self-link must be excluded"
+    assert guard.CATALOG.name not in guard.cataloged_runbook_links(text)
+    files = guard.runbook_files()
+    assert guard.CATALOG.name not in guard.dangling_entries(files, cataloged)
