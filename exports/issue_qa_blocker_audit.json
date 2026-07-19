@@ -1,12 +1,12 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-19T15:00:13Z",
-  "issue_total": 189,
+  "generated_at": "2026-07-19T15:08:19Z",
+  "issue_total": 190,
   "qa_total": 169,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "open": 5,
+    "open": 6,
     "resolved": 163,
     "transferred": 18
   },
@@ -14,7 +14,7 @@
     "回答済": 130,
     "想定済": 39
   },
-  "issue_blocker_count": 5,
+  "issue_blocker_count": 6,
   "qa_blocker_count": 0,
   "issue_blockers": [
     {
@@ -55,6 +55,14 @@
       "category": "収益化",
       "title": "Stripe公式が新規従量課金でBilling Meters→Metronome推奨へ方針変更",
       "related_wbs": "T791;T807;T862",
+      "related_issue": ""
+    },
+    {
+      "id": "R147",
+      "severity": "低",
+      "category": "品質管理",
+      "title": "tests/test_ui.py::test_ui_flow が連続実行・並行レーン稼働時にPlaywright TimeoutErrorでフレークする",
+      "related_wbs": "T905;T894",
       "related_issue": ""
     }
   ],
