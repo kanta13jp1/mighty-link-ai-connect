@@ -109,7 +109,7 @@ jobs:
 
       - name: Set up Node.js (for Firebase CLI)
         if: ${{ steps.firebase_changes.outputs.firebase_deploy == 'true' }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: "24"
           package-manager-cache: false
