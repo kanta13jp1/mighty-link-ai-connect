@@ -1,12 +1,12 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-18T13:11:11Z",
-  "issue_total": 185,
+  "generated_at": "2026-07-19T02:41:32Z",
+  "issue_total": 186,
   "qa_total": 163,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "open": 4,
+    "open": 5,
     "resolved": 160,
     "transferred": 18
   },
@@ -14,7 +14,7 @@
     "回答済": 124,
     "想定済": 39
   },
-  "issue_blocker_count": 4,
+  "issue_blocker_count": 5,
   "qa_blocker_count": 0,
   "issue_blockers": [
     {
@@ -48,6 +48,14 @@
       "title": "T836実メール同期がPoC営業メール抽出データを空に上書きし営業メールAIマッチングが静的デモへ無言フォールバック",
       "related_wbs": "T836;T817_7;T817;T888",
       "related_issue": "-"
+    },
+    {
+      "id": "R143",
+      "severity": "中",
+      "category": "収益化",
+      "title": "Stripe公式が新規従量課金でBilling Meters→Metronome推奨へ方針変更",
+      "related_wbs": "T791;T807;T862",
+      "related_issue": ""
     }
   ],
   "qa_blockers": []

@@ -79,6 +79,13 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 - GitHub Issues/Projects、Sheetsの正本同期、Calendarの完了イベント削除の運用は2026-07-13（T893）の判断を維持する。
 - WBSは `WBS_REVIEW_2026-07-13` の再ベースラインを維持しつつ、T897で未完了タスクの日程を2026-07-18基準へ引き直した（`scripts/recalculate_wbs_schedule.py`、検証は UAT TS-23）。
 
+2026-07-19 セッション確認メモ（T862_1）:
+
+- **Stripe（重要・要追跡）**: 従量課金の公式Docsを確認。Stripeは**新規の従量課金実装では Billing Meters ではなく Metronome を推奨**する方針に更新（Billing Meters は既存実装向けに継続提供。Connect/Checkout/Adaptive Pricing/Workflows との完全互換が必要な場合は Billing Meters を継続）。T791（Billing Meters API 前提・未着手）に影響しうるため R143 を起票。T791実装開始時に公式Dashboard/Docsで最終方式を再判定する（AGENTS.mdの「実装開始時にAPI version再確認」方針に包含）。当プロダクトは Customer Portal（解約：T807）/Checkout 互換を要するため、現時点では Billing Meters 継続が有力。採用は実装開始時に確定。
+- Anthropic Claude Code docs（memory/settings）を確認。`CLAUDE.md`→`@AGENTS.md` インポート構成とローカル専用設定（`.claude/settings.local.json`/`CLAUDE.local.md`非コミット）は公式推奨どおり。採用変更なし。
+- Supabase / Firebase: サーバーレス構成（インフラ固定費¥0）の前提に変更なし。有償化判断（T862）のコスト材料は `COST_REPORT_2026-06.md` を正とする。採用変更なし。
+- お名前.com / GitHub / Sheets / Calendar 運用は 2026-07-13（T893）・2026-07-18（T897/T899）の判断を維持。採用変更なし。
+
 ---
 
 ## WBSと同期
