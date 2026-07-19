@@ -118,7 +118,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | R1 | LOW | 未確認の未来モデル名や公開時期がdocsに残る | 社長説明や実装判断が古い前提に引っ張られる | 公式Docsで確認できない未来モデル前提は削除または現在形に置換。`ANTIGRAVITY_GUIDE.md` の該当セクションはT665で削除済み | Codex / Claude | 継続 |
 | R2 | HIGH | GitHub `read:project` scope 不足 (Issue #5, #8) | gh CLI で Project ボード操作不可、6/2 デモで Project ボードを見せられない | `gh auth refresh -s project` をブラウザ承認 (人間タスク)。5/27 までに未解決なら **Project ボードを 6/2 デモから除外**、Issues 一覧表示で代替 | 人間 + Codex | 5/27 |
-| R3 | MED | Slack CLI / MCP 未露出 ([CODEX_CONTINUATION_NOTES.md:453](CODEX_CONTINUATION_NOTES.md#L453)) | Slack live 送信不可 (T636/T646/T653/T662) | [exports/knowledge_flow/slack_ceo_update.md](../exports/knowledge_flow/slack_ceo_update.md) の草稿表示で代替。live send は約束しない | Codex (草稿維持) / Claude (代替説明準備) | 5/29 |
+| R3 | MED | Slack CLI / MCP 未露出 (課題管理表 `data/issues_tracker.tsv` の R3) | Slack live 送信不可 (T636/T646/T653/T662) | [exports/knowledge_flow/slack_ceo_update.md](../exports/knowledge_flow/slack_ceo_update.md) の草稿表示で代替。live send は約束しない | Codex (草稿維持) / Claude (代替説明準備) | 5/29 |
 | R4 | MED | 3 tools 並走で `data/WBS.tsv` の merge 競合 | WBS 行重複・並び順崩壊 | **`data/WBS.tsv` への書き込みは Codex のみ**。Antigravity / Claude は PR コメントで提案 | Codex | 通年 |
 | R5 | MED | 5/27 18:48 quota refresh が遅延・失敗 | デモ動画・radar polish が Antigravity で間に合わない | Codex が frontend タスクの静止画 fallback を準備、Antigravity 完成版が無くてもデモ可能な状態を維持 | Codex | 5/27-5/30 |
 | R6 | LOW | `requirements.txt` 依存ドリフト | デモ前に dependency 競合で起動失敗 | **5/30 EOD で freeze**、以降 upgrade 禁止。`requirements.txt` を編集する PR は Claude review 必須 | Claude (gate) | 5/30 |
