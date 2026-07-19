@@ -14,6 +14,7 @@
 ## DB・データ基盤
 
 - [Supabase DB バックアップ・リストア運用 Runbook（T741)](SUPABASE_BACKUP_RESTORE_RUNBOOK.md) — DBのバックアップ取得・復旧が必要なとき
+- [Supabase Daily Backup CI 復旧 Runbook（T870 / R116)](SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md) — バックアップCIが失敗し続けるとき（WIF再構成・バケット作成・secret登録・green確認）
 - [Supabase 接続プール運用 Runbook（T759)](SUPABASE_CONNECTION_POOLING_RUNBOOK.md) — 接続数枯渇・プール設定を見直すとき
 - [Supabase Postgres 14 EOL 対応](SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md) — Postgresメジャー/EOL対応を行うとき
 - [Supabase クエリ性能ダッシュボード運用 Runbook（T761)](SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK.md) — クエリが遅い・性能を監視するとき
