@@ -26,6 +26,7 @@ from typing import Any, Callable
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WBS = PROJECT_ROOT / "data" / "WBS.tsv"
 CRITERIA = PROJECT_ROOT / "data" / "release_go_no_go_criteria.tsv"
+ISSUES = PROJECT_ROOT / "data" / "issues_tracker.tsv"
 DEFAULT_JSON = PROJECT_ROOT / "exports" / "wbs_completion_evidence.json"
 DEFAULT_MD = PROJECT_ROOT / "exports" / "wbs_completion_evidence.md"
 
@@ -69,6 +70,39 @@ def load_criteria() -> list[dict[str, str]]:
     return rows
 
 
+def load_issues() -> list[dict[str, str]]:
+    _, rows = read_tsv(ISSUES)
+    return rows
+
+
+def _issue_wbs_tokens(issue: dict[str, str]) -> set[str]:
+    """Related-WBS tokens of an issue row (header is '関連 WBS'; tolerate no space)."""
+    raw = issue.get("関連 WBS") or issue.get("関連WBS") or ""
+    return {t.strip() for t in raw.split(";") if t.strip()}
+
+
+def open_issue_blockers(criterion: dict[str, str], issues: list[dict[str, str]]) -> list[str]:
+    """OPEN issue IDs that contradict a gate whose related WBS are all complete.
+
+    A gate is only safe to re-evaluate to PASS when nothing is outstanding
+    against it. An issue blocks the gate when it is still `open` AND either its
+    related-WBS set intersects the gate's related WBS, or it is named in the
+    gate's own related_issue column. Without this, "all related tasks 完了" alone
+    would recommend flipping a GA gate green while a real defect is unresolved
+    (e.g. R132 empties the sales-email PoC data behind PUBLIC-11).
+    """
+    gate_tasks = {t.strip() for t in (criterion.get("related_wbs") or "").split(";") if t.strip()}
+    gate_issues = {t.strip() for t in (criterion.get("related_issue") or "").split(";") if t.strip()}
+    blockers = []
+    for issue in issues:
+        if (issue.get("状態") or "").strip().lower() != "open":
+            continue
+        iid = (issue.get("ID") or "").strip()
+        if _issue_wbs_tokens(issue) & gate_tasks or (iid and iid in gate_issues):
+            blockers.append(iid)
+    return sorted(set(blockers))
+
+
 def build_stats(wbs: list[dict[str, str]], today: str) -> dict[str, Any]:
     status_key = "ステータス"
     end_key = "終了予定日"
@@ -100,8 +134,10 @@ def build_stats(wbs: list[dict[str, str]], today: str) -> dict[str, Any]:
     }
 
 
-def classify_remaining(criteria: list[dict[str, str]], wbs: list[dict[str, str]]) -> dict[str, Any]:
+def classify_remaining(criteria: list[dict[str, str]], wbs: list[dict[str, str]],
+                       issues: list[dict[str, str]] | None = None) -> dict[str, Any]:
     wbs_by_id = {r["タスクID"]: r for r in wbs}
+    issues = issues if issues is not None else load_issues()
     remaining = []
     reevaluate = []
     for c in criteria:
@@ -112,17 +148,24 @@ def classify_remaining(criteria: list[dict[str, str]], wbs: list[dict[str, str]]
         open_tasks = [t for t in tasks if t in wbs_by_id and wbs_by_id[t].get("ステータス") != "完了"]
         # classify by owner of the open tasks
         human = any(any(k in wbs_by_id[t].get("担当", "") for k in HUMAN_KEYWORDS) for t in open_tasks)
+        blockers = open_issue_blockers(c, issues)
         # A non-PASS gate whose related tasks are ALL complete (and is not a pure
-        # human sign-off gate) is a candidate to re-evaluate to PASS — surface it
-        # for the closure owner instead of leaving it silently non-PASS.
+        # human sign-off gate) is a candidate to re-evaluate to PASS — but only
+        # when no OPEN issue still contradicts it. Otherwise it is outstanding
+        # work, not a bookkeeping lag, and recommending PASS would flip a GA gate
+        # green over a live defect.
         gate_class = "human_or_mixed" if human else "lane"
         if not open_tasks and state != "HUMAN_GATE":
-            gate_class = "reevaluate_candidate"
-            reevaluate.append(c.get("criterion_id"))
+            if blockers:
+                gate_class = "blocked_by_open_issue"
+            else:
+                gate_class = "reevaluate_candidate"
+                reevaluate.append(c.get("criterion_id"))
         remaining.append({
             "gate": c.get("criterion_id"),
             "state": state,
             "open_tasks": open_tasks,
+            "open_issues": blockers,
             "class": gate_class,
         })
     return {"non_pass_gates": remaining,
@@ -183,19 +226,24 @@ def build_hypotheses(wbs, criteria, stats, remaining) -> list[dict[str, Any]]:
 
     def h8():
         # every non-PASS gate is accounted for: has open tasks, is a HUMAN_GATE,
-        # or is flagged as a re-evaluate candidate (all related tasks complete).
+        # is blocked by an open issue, or is a re-evaluate candidate (all related
+        # tasks complete AND nothing outstanding against it).
         unaccounted = [g["gate"] for g in remaining["non_pass_gates"]
                        if not g["open_tasks"] and g["state"] != "HUMAN_GATE"
-                       and g["class"] != "reevaluate_candidate"]
+                       and g["class"] not in {"reevaluate_candidate", "blocked_by_open_issue"}]
+        blocked = {g["gate"]: g["open_issues"] for g in remaining["non_pass_gates"]
+                   if g["class"] == "blocked_by_open_issue"}
         return not unaccounted, (
             f"説明不能な非PASSゲート={unaccounted or 'なし'} / "
-            f"再評価候補(関連全完了)={remaining['reevaluate_candidates'] or 'なし'}")
+            f"再評価候補(関連全完了かつ未解決課題なし)={remaining['reevaluate_candidates'] or 'なし'} / "
+            f"未解決課題でPASS再判定不可={blocked or 'なし'}")
 
-    record("H8", "各非PASSゲートが残タスク/HUMAN_GATE/再評価候補として説明できる", h8)
+    record("H8", "各非PASSゲートが残タスク/HUMAN_GATE/未解決課題/再評価候補として説明できる", h8)
 
     def h9():
         classified = {g["class"] for g in remaining["non_pass_gates"]}
-        return classified.issubset({"human_or_mixed", "lane", "reevaluate_candidate"}), \
+        return classified.issubset(
+            {"human_or_mixed", "lane", "reevaluate_candidate", "blocked_by_open_issue"}), \
             f"残作業の分類={sorted(classified)}"
 
     record("H9", "残作業が人間依存/レーン/再評価候補に分類できる", h9)
@@ -215,7 +263,7 @@ def build_report(today: str) -> dict[str, Any]:
     wbs = load_wbs()
     criteria = load_criteria()
     stats = build_stats(wbs, today)
-    remaining = classify_remaining(criteria, wbs)
+    remaining = classify_remaining(criteria, wbs, load_issues())
     hypotheses = build_hypotheses(wbs, criteria, stats, remaining)
     passed = sum(1 for h in hypotheses if h["passed"])
     evidence = {k: {"artifact": v, "exists": (PROJECT_ROOT / v).exists()} for k, v in EVIDENCE_INDEX.items()}
@@ -255,11 +303,17 @@ def render_markdown(report: dict[str, Any]) -> str:
     for k, v in report["evidence_index"].items():
         lines.append(f"| {k} | {v['artifact']} | {'OK' if v['exists'] else 'MISSING'} |")
     reeval = report["remaining_for_ga"].get("reevaluate_candidates") or []
-    lines += ["", f"## 再評価候補ゲート（関連WBS全完了・PASS再判定推奨）: {', '.join(reeval) or 'なし'}",
+    lines += ["", f"## 再評価候補ゲート（関連WBS全完了かつ未解決課題なし・PASS再判定推奨）: {', '.join(reeval) or 'なし'}",
+              "",
+              "> 関連WBSが全完了でも、そのWBSを参照する未解決(open)課題が残るゲートは "
+              "`blocked_by_open_issue` として再判定対象から除外する（実欠陥を抱えたままGAゲートを"
+              "greenにしないため）。",
               "", "## 残作業（非PASSゲート）", "",
-              "| ゲート | 状態 | 残WBS | 分類 |", "| --- | --- | --- | --- |"]
+              "| ゲート | 状態 | 残WBS | 未解決課題 | 分類 |", "| --- | --- | --- | --- | --- |"]
     for g in report["remaining_for_ga"]["non_pass_gates"]:
-        lines.append(f"| {g['gate']} | {g['state']} | {', '.join(g['open_tasks']) or '—'} | {g['class']} |")
+        lines.append(
+            f"| {g['gate']} | {g['state']} | {', '.join(g['open_tasks']) or '—'} | "
+            f"{', '.join(g.get('open_issues') or []) or '—'} | {g['class']} |")
     lines += ["", "## 10仮説検証", "", "| # | 仮説 | 結果 | 根拠 |", "| --- | --- | --- | --- |"]
     for h in report["hypotheses"]:
         lines.append(f"| {h['id']} | {h['hypothesis']} | {'PASS' if h['passed'] else 'FAIL'} | {h['detail'].replace('|', '/')} |")

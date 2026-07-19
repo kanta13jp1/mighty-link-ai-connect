@@ -40,12 +40,59 @@ def test_gate_related_wbs_all_exist():
                 assert t in ids, f"gate {c.get('criterion_id')} references missing WBS {t}"
 
 
-def test_reevaluate_candidates_detected():
-    # PUBLIC-11 (T836/T817_7 done) and PUBLIC-14 (T852 done) should surface as
-    # re-evaluate candidates now that their related tasks are complete.
-    report = agg.build_report("2026-07-09")
+def test_reevaluate_candidate_suppressed_by_open_blocking_issue():
+    """T849_2: 'all related WBS complete' is NOT sufficient to recommend PASS.
+
+    A gate whose related tasks are all 完了 but which still has an OPEN issue
+    touching those tasks must not be advertised as a PASS re-evaluation
+    candidate — acting on it would flip a GA gate green while a real defect is
+    outstanding. It must be classified as blocked_by_open_issue instead, naming
+    the issue so the closure owner knows what to resolve.
+    """
+    criteria = [{
+        "criterion_id": "TEST-01", "current_state": "BLOCKED",
+        "related_wbs": "TX1;TX2", "related_issue": "",
+    }]
+    wbs = [
+        {"タスクID": "TX1", "ステータス": "完了", "担当": "Codex"},
+        {"タスクID": "TX2", "ステータス": "完了", "担当": "Codex"},
+    ]
+    issues = [
+        {"ID": "R900", "状態": "open", "関連 WBS": "TX2;TX9"},
+        {"ID": "R901", "状態": "resolved", "関連 WBS": "TX1"},
+    ]
+    out = agg.classify_remaining(criteria, wbs, issues)
+    gate = out["non_pass_gates"][0]
+    assert gate["class"] == "blocked_by_open_issue", gate
+    assert gate["open_issues"] == ["R900"], gate
+    assert "TEST-01" not in out["reevaluate_candidates"]
+
+
+def test_reevaluate_candidate_kept_when_no_open_issue():
+    """The recommendation still fires when nothing is actually outstanding."""
+    criteria = [{
+        "criterion_id": "TEST-02", "current_state": "BLOCKED",
+        "related_wbs": "TY1", "related_issue": "",
+    }]
+    wbs = [{"タスクID": "TY1", "ステータス": "完了", "担当": "Codex"}]
+    issues = [{"ID": "R902", "状態": "resolved", "関連 WBS": "TY1"}]
+    out = agg.classify_remaining(criteria, wbs, issues)
+    assert out["non_pass_gates"][0]["class"] == "reevaluate_candidate"
+    assert out["reevaluate_candidates"] == ["TEST-02"]
+
+
+def test_real_repo_public11_and_public14_are_not_blind_pass_candidates():
+    """Regression on the real data: PUBLIC-11 is undermined by open R132 (the
+    sales-email PoC extraction was overwritten to empty) and PUBLIC-14 by open
+    R116 (WIF still mis-rolled). Neither may be recommended for PASS.
+    """
+    report = agg.build_report("2026-07-19")
     cands = report["remaining_for_ga"]["reevaluate_candidates"]
-    assert "PUBLIC-14" in cands
+    assert "PUBLIC-11" not in cands
+    assert "PUBLIC-14" not in cands
+    by_gate = {g["gate"]: g for g in report["remaining_for_ga"]["non_pass_gates"]}
+    assert "R132" in by_gate["PUBLIC-11"]["open_issues"], by_gate["PUBLIC-11"]
+    assert "R116" in by_gate["PUBLIC-14"]["open_issues"], by_gate["PUBLIC-14"]
 
 
 def test_overdue_detection_is_a_list():
