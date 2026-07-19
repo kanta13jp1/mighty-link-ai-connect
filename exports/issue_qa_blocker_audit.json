@@ -1,8 +1,8 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-19T02:41:32Z",
+  "generated_at": "2026-07-19T03:36:07Z",
   "issue_total": 186,
-  "qa_total": 163,
+  "qa_total": 164,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
@@ -11,7 +11,7 @@
     "transferred": 18
   },
   "qa_status_counts": {
-    "回答済": 124,
+    "回答済": 125,
     "想定済": 39
   },
   "issue_blocker_count": 5,

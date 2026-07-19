@@ -83,7 +83,10 @@ TERMS_ITEMS: list[tuple[str, list[str]]] = [
 ]
 
 _PLACEHOLDER_RE = re.compile(
-    r"（仮）|\(仮\)|（予定）|\(予定\)|確認後確定|（未定）|\(未定\)|TBD|【要法務確認】|【要確認】"
+    # 【要法務確認】 and the inline 【要法務確認: …】 form both mark an unresolved
+    # legal point; match either closing bracket or a following colon.
+    r"（仮）|\(仮\)|（予定）|\(予定\)|確認後確定|（未定）|\(未定\)|TBD"
+    r"|【要法務確認[】:：]|【要確認[】:：]"
 )
 
 

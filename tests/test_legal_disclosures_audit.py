@@ -66,6 +66,11 @@ def test_placeholder_count_counts_legal_review_markers():
     assert audit.placeholder_count("正式商号は【要法務確認】、登記情報は【要確認】") == 2
 
 
+def test_placeholder_count_counts_inline_colon_marker_form():
+    # The inline 【要法務確認: …】 form (e.g. 上限額・告知期間) must count too.
+    assert audit.placeholder_count("上限は【要法務確認: 期間・上限額】、告知は【要法務確認: 30日前】") == 2
+
+
 # --------------------------------------------------------------------------- #
 # Integration: the current statutory docs must pass the audit
 # --------------------------------------------------------------------------- #

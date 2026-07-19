@@ -1,7 +1,7 @@
 {
   "task": "T892",
   "endpoint_count": 39,
-  "uat_case_count": 29,
+  "uat_case_count": 31,
   "required_count": 21,
   "exempt_count": 18,
   "hypotheses": [
@@ -9,7 +9,7 @@
       "id": "H1",
       "title": "エンドポイント30件以上かつUATケース20件以上(sanity)",
       "passed": true,
-      "detail": "endpoints=39, UATケース=29"
+      "detail": "endpoints=39, UATケース=31"
     },
     {
       "id": "H2",
