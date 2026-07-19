@@ -59,6 +59,7 @@ GUARD_REGISTRY: dict[str, str] = {
     "audit_form_error_handling.py": "フォーム入力エラー処理",
     "audit_frontend_api_contract.py": "フロントエンドとAPI契約の整合",
     "audit_gemini_model_policy.py": "Geminiモデル版ポリシー適合",
+    "audit_guard_catalog.py": "品質ガードカタログとGUARD_REGISTRYの同期(未記載/幽霊検知) (T903)",
     "audit_issue_qa_blockers.py": "課題/QAの開発ブロッカーゼロ (T854)",
     "audit_legal_disclosures.py": "法定開示(規約/プライバシー/特商法/課金)の必須項目網羅・整合 (T900)",
     "audit_pricing_consistency.py": "料金プラン金額の複数docs横断整合(価格ドリフト検知) (T901)",

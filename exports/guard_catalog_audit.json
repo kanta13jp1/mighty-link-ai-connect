@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "品質ガードカタログが存在する",
+      "passed": true,
+      "detail": "カタログ=あり"
+    },
+    {
+      "id": "H2",
+      "title": "全登録ガードがカタログに記載(未記載0)",
+      "passed": true,
+      "detail": "未記載=なし"
+    },
+    {
+      "id": "H3",
+      "title": "カタログ記載ガードが全て登録or対象外(幽霊0)",
+      "passed": true,
+      "detail": "幽霊=なし"
+    },
+    {
+      "id": "H4",
+      "title": "記載ガード数が登録∪対象外と一致",
+      "passed": true,
+      "detail": "記載=20 / 登録∪対象外=20"
+    },
+    {
+      "id": "H5",
+      "title": "各登録ガードの記載にNG例がある",
+      "passed": true,
+      "detail": "NG例欠落=なし"
+    },
+    {
+      "id": "H6",
+      "title": "各登録ガードの記載に関連WBS(T…)がある",
+      "passed": true,
+      "detail": "WBS欠落=なし"
+    },
+    {
+      "id": "H7",
+      "title": "対象外ガード(EXEMPT)も理由付きで別掲",
+      "passed": true,
+      "detail": "対象外未記載=なし"
+    },
+    {
+      "id": "H8",
+      "title": "カタログ内にガードセクションの重複が無い",
+      "passed": true,
+      "detail": "重複=なし"
+    },
+    {
+      "id": "H9",
+      "title": "本ガード自身(audit_guard_catalog.py)も記載されている",
+      "passed": true,
+      "detail": "自己記載=あり"
+    },
+    {
+      "id": "H10",
+      "title": "カタログと機械側正本が完全同期(索引ドリフト0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ]
+}
