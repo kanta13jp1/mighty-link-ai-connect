@@ -569,13 +569,31 @@
 - **NG判定**: 過去のquota前提や日付付き作業ログが残っている、現行運用セクションが欠落している、150行を超えている、参照にリンク切れが発生している、または行番号アンカー参照が未修正。
 - **実施結果**: ☐ OK　☐ NG　／　実施日: ______　実施者: ______　備考: ______
 
+### TS-36 ユーザーオンボーディング / アカウント有効化フロー（T752）
+- **対象機能**: 管理者が発行したアカウントの初期セットアップウィザードとアクティベーション。ステップ定義をサーバ正本（`GET /api/onboarding/state`）から配信し、進捗算出（`POST /api/onboarding/progress`）と有効化ゲート（`POST /api/onboarding/activate`）が同じ定義を参照する。UIは `index.html` / `src/index.html` の `#onboarding-section`、手順は `docs/USER_GUIDE_AND_FAQ.md` §2.1.1。
+- **関連WBS**: T752（本実装・Claude Code）。関連: T745（規約同意ガード） / T798（法務確定） / T849。ゲート: PUBLIC-06。
+- **前提条件**: Python 3.x が動作する。ローカルで `python -m uvicorn src.app:app --port 8000` を起動できる。ブラウザで `http://127.0.0.1:8000/` を開ける。
+- **テスト手順**:
+  1. `GET /api/onboarding/state` を実行し、`flow_version` と `legal_consent_version` が返り、ステップが5件（必須: account / legal_consent / profile、任意: first_analysis / guide）で `required_step_ids` に必須3件が並ぶことを確認する。
+  2. `POST /api/onboarding/progress` に `{"completed_step_ids":["account","bogus"]}` を送り、`completed_step_ids=["account"]`、`ignored_step_ids=["bogus"]`、`remaining_required_step_ids` に未完了2件、`can_activate=false` が返ることを確認する（未知IDは黙って捨てず報告される）。
+  3. 必須ステップを1件欠いた状態で `POST /api/onboarding/activate` を実行し、**400** と不足ステップ名を含む `detail` が返ることを確認する。
+  4. `legal_consent_version` を旧版にして有効化を実行し、**400**（`Invalid legal consent version: expected …`）で拒否されることを確認する。`legal_consent_accepted=false` でも **400** になることを確認する。
+  5. 必須ステップ全完了・同意あり・識別子3文字以上で有効化し、`activated=true`、`subject_pseudonym` が `onb-` 始まり、`activated_at` と `audit_event_id` が返り、**入力した識別子の生値がレスポンスに含まれない**ことを確認する。
+  6. `data/audit/ai_audit.jsonl` の `onboarding_activated` イベントに `subject_pseudonym` と `raw_identifier_stored: false` が記録され、**識別子の生値が一切残っていない**ことを確認する（`grep` で0件）。
+  7. **ブラウザ実機**: `http://127.0.0.1:8000/` を開き、`#onboarding-section` に5ステップが描画され、必須3件をチェックすると進捗が 60% ・「有効化待ち」になり有効化ボタンが活性化することを確認する。規約未同意のまま有効化を押すと規約同意パネルへ誘導されること、同意後は有効化が成功して仮名化IDが表示されること、リロード後も進捗が保持される（`localStorage` の `msb_onboarding_progress_v1`）ことを確認する。
+  8. **機械検証**: `python -m pytest tests/test_onboarding_flow.py -q` を実行し、全テストがグリーン（ステップ正本/進捗/有効化400系/仮名化/UIマーカー/index.htmlミラー同一/静的フォールバックとサーバ定義の一致/ガイド記載）になることを確認する。
+- **期待結果**: 発行済みアカウントがウィザードで必須ステップを完了し、規約同意バージョンが現行と一致する場合にのみ有効化される。有効化は仮名化IDのみを監査記録し、識別子の生値と利用者単位のPII行を保存しない。UIとゲートはサーバ正本の同一定義を参照し乖離しない。
+- **OK判定**: 手順1〜8がすべて満たされ、手順8のテストが全件パスする。
+- **NG判定**: ステップ定義がUIとAPIで食い違う、必須未完了/未同意/旧同意バージョンで有効化できてしまう、識別子の生値がレスポンスや監査ログに残る、進捗が保持されない、`index.html` と `src/index.html` が不一致、または機械検証が失敗する。
+- **実施結果**: ☐ OK　☐ NG　／　実施日: ______　実施者: ______　備考: ______
+
 ---
 
 ## 5. 実施サマリ・サインオフ
 
 | 区分 | 件数 |
 | :--- | :--- |
-| 総ケース数 | 35 |
+| 総ケース数 | 36 |
 | OK | ____ |
 | NG | ____ |
 | N/A | ____ |

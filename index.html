@@ -2300,6 +2300,94 @@
             border-color: var(--blue);
             box-shadow: 0 0 12px rgba(139, 220, 255, 0.3);
         }
+        /* 初期セットアップ / アクティベーション ウィザード (T752) */
+        .onboarding-grid {
+            display: grid;
+            grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+            gap: 24px;
+            align-items: start;
+        }
+        @media (max-width: 1024px) {
+            .onboarding-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .onboarding-panel {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 18px;
+        }
+        .onboarding-progress-wrap {
+            margin-top: 16px;
+            display: grid;
+            gap: 8px;
+        }
+        .onboarding-progress-track {
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(139, 220, 255, 0.12);
+            overflow: hidden;
+        }
+        .onboarding-progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #8bdcff, #4fd1a5);
+            transition: width 240ms ease;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .onboarding-progress-fill {
+                transition: none;
+            }
+        }
+        .onboarding-step-list {
+            display: grid;
+            gap: 12px;
+        }
+        .onboarding-step {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 14px;
+        }
+        .onboarding-step.done {
+            border-color: rgba(79, 209, 165, 0.5);
+            background: rgba(79, 209, 165, 0.06);
+        }
+        .onboarding-step input[type="checkbox"] {
+            margin-top: 4px;
+            flex: 0 0 auto;
+        }
+        .onboarding-step-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .onboarding-step-desc {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin-top: 4px;
+        }
+        .onboarding-step-badge {
+            font-size: 11px;
+            border-radius: 999px;
+            padding: 2px 8px;
+            margin-left: 8px;
+            border: 1px solid rgba(139, 220, 255, 0.35);
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        .onboarding-result {
+            margin-top: 16px;
+            display: none;
+        }
+        .onboarding-result.active {
+            display: block;
+        }
         .aptitude-demo-grid {
             display: grid;
             grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
@@ -2568,6 +2656,7 @@
         </a>
         <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
             <a href="#top">ホーム</a>
+            <a href="#onboarding-section">初期セットアップ</a>
             <a href="#survey-section">適性アンケート</a>
             <a href="#aptitude-demo-section">自己診断デモ</a>
             <a href="#attendance-section">勤怠管理</a>
@@ -2995,6 +3084,55 @@
                         </span>
                         <button class="sample-btn generate-btn" onclick="generateSeedanceVideo()">Generate Story Video</button>
                         <a id="video-download-link" class="sample-btn download-btn" href="exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4" download="mighty_skill_bridge_seedance_demo.mp4">Download Video</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             Step 0: 初期セットアップ / アクティベーション ウィザード (T752)
+             ステップ定義は /api/onboarding/state をSSOTとして取得し、UIとゲート判定が
+             乖離しないようにする。進捗は localStorage のみに保持し、個人情報は保存しない。
+             ========================================================================== -->
+        <section id="onboarding-section" class="internal-section fade-in-on-scroll" aria-label="初期セットアップ・アクティベーション">
+            <div class="step-kicker">初期セットアップ</div>
+            <div class="comparison-container">
+                <div class="comparison-controls">
+                    <div>
+                        <h2>初期セットアップ / アカウント有効化</h2>
+                        <span class="control-label">管理者が発行したアカウントで、必須ステップを完了すると利用を開始できます</span>
+                    </div>
+                    <span class="support-status" id="onboarding-status" role="status">未開始</span>
+                </div>
+
+                <div class="onboarding-grid">
+                    <div class="onboarding-panel">
+                        <div class="input-group">
+                            <label for="onboarding-account-identifier">アカウント識別子</label>
+                            <input type="text" id="onboarding-account-identifier" class="text-input" maxlength="120" placeholder="社内アカウントID（氏名の入力は不要です）" autocomplete="off">
+                            <span class="control-label">監査ログには仮名化した値のみを記録し、入力値そのものは保存しません。</span>
+                        </div>
+                        <div class="onboarding-progress-wrap">
+                            <div class="onboarding-progress-track" role="progressbar" aria-labelledby="onboarding-progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="onboarding-progress-bar">
+                                <div class="onboarding-progress-fill" id="onboarding-progress-fill"></div>
+                            </div>
+                            <div class="control-label" id="onboarding-progress" aria-live="polite">進捗を読み込み中…</div>
+                        </div>
+                        <div class="aptitude-demo-notice" id="onboarding-notice" style="margin-top: 14px;">
+                            必須ステップと上部の規約同意を完了すると、アカウントを有効化できます。
+                        </div>
+                        <button type="button" class="sample-btn" onclick="focusLegalConsentPanel()" style="margin-top: 10px;">↑ 上部の規約同意チェック欄へ移動</button>
+                        <div class="aptitude-demo-actions">
+                            <button type="button" class="big-btn" id="onboarding-activate" onclick="activateOnboarding()">アカウントを有効化</button>
+                            <button type="button" class="sample-btn" onclick="resetOnboarding()">リセット</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="onboarding-steps" class="onboarding-step-list" aria-live="polite">
+                            <div class="aptitude-demo-empty">セットアップ手順を読み込み中…</div>
+                        </div>
+                        <div id="onboarding-result" class="onboarding-panel onboarding-result" aria-live="polite"></div>
                     </div>
                 </div>
             </div>
@@ -3475,6 +3613,7 @@
                 <div class="footer-column">
                     <h3>メニュー</h3>
                     <a href="#top">ホーム</a>
+                    <a href="#onboarding-section">初期セットアップ</a>
                     <a href="#survey-section">適性アンケート</a>
                     <a href="#aptitude-demo-section">自己診断デモ</a>
                     <a href="#attendance-section">勤怠管理</a>
@@ -4978,6 +5117,244 @@
             }
         }
 
+        /* ======================================================================
+           初期セットアップ / アクティベーション ウィザード (T752)
+           ステップ定義は /api/onboarding/state を SSOT とし、静的デモ(GitHub Pages)
+           では同じ内容の onboardingStaticSteps へフォールバックする。
+           進捗は localStorage のみ、個人情報はサーバへ保存しない。
+           ====================================================================== */
+        const ONBOARDING_PROGRESS_KEY = "msb_onboarding_progress_v1";
+        // 静的デモ用フォールバック。src/app.py の ONBOARDING_STEPS と同一内容を保つ
+        // (tests/test_onboarding_flow.py がサーバ定義との一致を検証する)。
+        const onboardingStaticSteps = [
+            {id: "account", title: "アカウントの受領とサインイン", description: "管理者が発行したアカウントでサインインし、本人のメールアドレスであることを確認します。", required: true},
+            {id: "legal_consent", title: "利用規約・プライバシーポリシーへの同意", description: "画面上部の同意欄で、利用規約・プライバシーポリシー・特商法表記・課金規約に同意します。", required: true},
+            {id: "profile", title: "表示名と所属の初期設定", description: "社内で識別できる表示名と所属部署を設定します。氏名などの個人情報は入力不要です。", required: true},
+            {id: "first_analysis", title: "スキルシートで初回診断を試す", description: "サンプルまたは自社のスキルシートを取り込み、フィット分析を一度実行して結果の見方を確認します。", required: false},
+            {id: "guide", title: "利用ガイドとサポート窓口の確認", description: "利用ガイド・FAQ とサポート窓口の連絡先を確認します。", required: false}
+        ];
+        let onboardingSteps = [];
+
+        function shouldUseOnboardingBrowserFallback() {
+            return location.protocol === "file:" || location.hostname.endsWith("github.io");
+        }
+
+        function setOnboardingStatus(text, colorVar) {
+            const status = document.getElementById("onboarding-status");
+            if (!status) return;
+            status.textContent = text;
+            status.style.color = colorVar || "var(--muted)";
+        }
+
+        function readOnboardingProgress() {
+            try {
+                const raw = localStorage.getItem(ONBOARDING_PROGRESS_KEY);
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function writeOnboardingProgress(completed) {
+            try {
+                localStorage.setItem(ONBOARDING_PROGRESS_KEY, JSON.stringify(completed));
+            } catch (e) {
+                /* localStorage 不可の環境では進捗を保持しない */
+            }
+        }
+
+        function getCompletedOnboardingStepIds() {
+            const known = new Set(onboardingSteps.map(s => s.id));
+            return readOnboardingProgress().filter(id => known.has(id));
+        }
+
+        function updateOnboardingProgressView() {
+            const completed = getCompletedOnboardingStepIds();
+            const total = onboardingSteps.length || 1;
+            const pct = Math.round((completed.length / total) * 1000) / 10;
+            const remainingRequired = onboardingSteps
+                .filter(s => s.required && completed.indexOf(s.id) === -1)
+                .map(s => s.title);
+
+            const fill = document.getElementById("onboarding-progress-fill");
+            if (fill) fill.style.width = pct + "%";
+            const bar = document.getElementById("onboarding-progress-bar");
+            if (bar) bar.setAttribute("aria-valuenow", String(Math.round(pct)));
+            const label = document.getElementById("onboarding-progress");
+            if (label) {
+                label.textContent = completed.length + " / " + onboardingSteps.length + " ステップ完了 (" + pct + "%)";
+            }
+
+            const notice = document.getElementById("onboarding-notice");
+            const activateButton = document.getElementById("onboarding-activate");
+            if (remainingRequired.length) {
+                if (notice) notice.textContent = "残りの必須ステップ: " + remainingRequired.join(" / ");
+                if (activateButton) activateButton.disabled = true;
+                setOnboardingStatus("セットアップ中", "var(--yellow)");
+            } else {
+                if (notice) notice.textContent = "必須ステップは完了です。上部の規約同意を入れてアカウントを有効化してください。";
+                if (activateButton) activateButton.disabled = false;
+                setOnboardingStatus("有効化待ち", "var(--yellow)");
+            }
+            return {completed, remainingRequired};
+        }
+
+        function toggleOnboardingStep(stepId, checked) {
+            const completed = new Set(getCompletedOnboardingStepIds());
+            if (checked) {
+                completed.add(stepId);
+            } else {
+                completed.delete(stepId);
+            }
+            // 正準順序で保存する
+            writeOnboardingProgress(onboardingSteps.map(s => s.id).filter(id => completed.has(id)));
+            renderOnboardingSteps(onboardingSteps);
+        }
+
+        function renderOnboardingSteps(steps) {
+            onboardingSteps = Array.isArray(steps) ? steps : [];
+            const host = document.getElementById("onboarding-steps");
+            if (!host) return;
+            if (!onboardingSteps.length) {
+                host.innerHTML = '<div class="aptitude-demo-empty">セットアップ手順を取得できませんでした。</div>';
+                return;
+            }
+            const completed = new Set(getCompletedOnboardingStepIds());
+            host.innerHTML = "";
+            onboardingSteps.forEach(step => {
+                const done = completed.has(step.id);
+                const row = document.createElement("label");
+                row.className = "onboarding-step" + (done ? " done" : "");
+
+                const box = document.createElement("input");
+                box.type = "checkbox";
+                box.checked = done;
+                box.id = "onboarding-step-" + step.id;
+                box.addEventListener("change", () => toggleOnboardingStep(step.id, box.checked));
+
+                const body = document.createElement("div");
+                const title = document.createElement("div");
+                title.className = "onboarding-step-title";
+                title.textContent = step.title;
+                const badge = document.createElement("span");
+                badge.className = "onboarding-step-badge";
+                badge.textContent = step.required ? "必須" : "任意";
+                title.appendChild(badge);
+                const desc = document.createElement("div");
+                desc.className = "onboarding-step-desc";
+                desc.textContent = step.description;
+                body.appendChild(title);
+                body.appendChild(desc);
+
+                row.appendChild(box);
+                row.appendChild(body);
+                host.appendChild(row);
+            });
+            updateOnboardingProgressView();
+        }
+
+        async function loadOnboardingState() {
+            const host = document.getElementById("onboarding-steps");
+            if (!host) return;
+            if (shouldUseOnboardingBrowserFallback()) {
+                renderOnboardingSteps(onboardingStaticSteps);
+                return;
+            }
+            try {
+                const response = await fetch("/api/onboarding/state");
+                if (!response.ok) throw new Error("state unavailable");
+                const data = await response.json();
+                renderOnboardingSteps(data.steps || onboardingStaticSteps);
+            } catch (e) {
+                renderOnboardingSteps(onboardingStaticSteps);
+            }
+        }
+
+        function showOnboardingResult(html, ok) {
+            const box = document.getElementById("onboarding-result");
+            if (!box) return;
+            box.classList.add("active");
+            box.style.borderColor = ok ? "rgba(79, 209, 165, 0.5)" : "rgba(255, 138, 168, 0.5)";
+            box.innerHTML = html;
+        }
+
+        async function activateOnboarding() {
+            const legalConsent = getLegalConsentPayload();
+            if (!legalConsent.legal_consent_accepted) {
+                setOnboardingStatus("規約同意が必要", "var(--rose)");
+                focusLegalConsentPanel();
+                return;
+            }
+            const identifierInput = document.getElementById("onboarding-account-identifier");
+            const accountIdentifier = (identifierInput && identifierInput.value || "").trim();
+            if (accountIdentifier.length < 3) {
+                setOnboardingStatus("アカウント識別子が必要", "var(--rose)");
+                showOnboardingResult("アカウント識別子を3文字以上で入力してください。", false);
+                return;
+            }
+            const {completed, remainingRequired} = updateOnboardingProgressView();
+            if (remainingRequired.length) {
+                setOnboardingStatus("必須ステップが未完了", "var(--rose)");
+                showOnboardingResult("未完了の必須ステップ: " + remainingRequired.join(" / "), false);
+                return;
+            }
+
+            const activateButton = document.getElementById("onboarding-activate");
+            if (activateButton) activateButton.disabled = true;
+            setOnboardingStatus("有効化中", "var(--yellow)");
+            try {
+                if (shouldUseOnboardingBrowserFallback()) {
+                    setOnboardingStatus("静的デモ", "var(--yellow)");
+                    showOnboardingResult(
+                        "公開デモは静的配信のため、この画面内での確認のみです。社内環境では有効化APIが監査ログに仮名化IDを記録します。",
+                        true
+                    );
+                    return;
+                }
+                const response = await fetch("/api/onboarding/activate", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        account_identifier: accountIdentifier,
+                        completed_step_ids: completed,
+                        legal_consent_accepted: legalConsent.legal_consent_accepted,
+                        legal_consent_version: legalConsent.legal_consent_version,
+                        page_url: location.href
+                    })
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) {
+                    throw new Error(data.detail || "有効化に失敗しました");
+                }
+                setOnboardingStatus("有効化済み", "var(--green)");
+                showOnboardingResult(
+                    "アカウントを有効化しました。<br>仮名化ID: <code>" + (data.subject_pseudonym || "-") +
+                    "</code><br>有効化日時: " + (data.activated_at || "-") +
+                    "<br><span class=\"control-label\">入力したアカウント識別子そのものは保存していません。</span>",
+                    true
+                );
+            } catch (e) {
+                setOnboardingStatus("有効化エラー", "var(--rose)");
+                showOnboardingResult(String(e.message || e), false);
+            } finally {
+                if (activateButton) activateButton.disabled = false;
+            }
+        }
+
+        function resetOnboarding() {
+            writeOnboardingProgress([]);
+            const identifierInput = document.getElementById("onboarding-account-identifier");
+            if (identifierInput) identifierInput.value = "";
+            const box = document.getElementById("onboarding-result");
+            if (box) {
+                box.classList.remove("active");
+                box.innerHTML = "";
+            }
+            renderOnboardingSteps(onboardingSteps.length ? onboardingSteps : onboardingStaticSteps);
+            setOnboardingStatus("未開始", "var(--muted)");
+        }
+
         const aptitudeStaticQuestions = [
             {id: "q_energy_1", dimension: "energy", text: "最近1週間、仕事に取り組むエネルギーが十分にあると感じましたか。"},
             {id: "q_energy_2", dimension: "energy", text: "朝、仕事を始めるときに前向きな気持ちで臨めていますか。"},
@@ -6149,6 +6526,11 @@
         }
 
         // Add hover effect using JS to avoid style-tag cluttering
+        // T752: 初期セットアップウィザードをサーバ定義から初期化する
+        document.addEventListener("DOMContentLoaded", () => {
+            loadOnboardingState();
+        });
+
         document.addEventListener("DOMContentLoaded", () => {
             const btn = document.querySelector(".help-trigger-btn");
             if (btn) {

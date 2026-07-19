@@ -1418,6 +1418,59 @@ LEGAL_CONSENT_DOCS = (
     "TOKUSHOHO_NOTATION.md",
     "BILLING_AND_REFUND_POLICY.md",
 )
+# --------------------------------------------------------------------------- #
+# Onboarding / activation flow (T752, gate PUBLIC-06)
+#
+# Internal GA issues accounts administratively (T833), so the flow that matters
+# is activation of an issued account rather than self-signup. The step catalogue
+# is served to the wizard (GET /api/onboarding/state) and is the same list the
+# activation validator checks, so the UI and the gate cannot drift apart.
+#
+# Progress is kept client-side (localStorage) and only a pseudonymized subject is
+# audited on activation — no per-user row is stored, keeping this flow clear of
+# the still-open T798 legal review.
+# --------------------------------------------------------------------------- #
+ONBOARDING_FLOW_VERSION = "MSB-ONBOARDING-2026-07"
+ONBOARDING_PSEUDONYM_SALT = os.environ.get(
+    "ONBOARDING_PSEUDONYM_SALT",
+    "mighty-link-onboarding-local-salt-v1",
+)
+MAX_ONBOARDING_IDENTIFIER_LENGTH = 120
+ONBOARDING_STEPS: list[dict] = [
+    {
+        "id": "account",
+        "title": "アカウントの受領とサインイン",
+        "description": "管理者が発行したアカウントでサインインし、本人のメールアドレスであることを確認します。",
+        "required": True,
+    },
+    {
+        "id": "legal_consent",
+        "title": "利用規約・プライバシーポリシーへの同意",
+        "description": "画面上部の同意欄で、利用規約・プライバシーポリシー・特商法表記・課金規約に同意します。",
+        "required": True,
+    },
+    {
+        "id": "profile",
+        "title": "表示名と所属の初期設定",
+        "description": "社内で識別できる表示名と所属部署を設定します。氏名などの個人情報は入力不要です。",
+        "required": True,
+    },
+    {
+        "id": "first_analysis",
+        "title": "スキルシートで初回診断を試す",
+        "description": "サンプルまたは自社のスキルシートを取り込み、フィット分析を一度実行して結果の見方を確認します。",
+        "required": False,
+    },
+    {
+        "id": "guide",
+        "title": "利用ガイドとサポート窓口の確認",
+        "description": "利用ガイド・FAQ とサポート窓口の連絡先を確認します。",
+        "required": False,
+    },
+]
+ONBOARDING_STEP_IDS = {step["id"] for step in ONBOARDING_STEPS}
+ONBOARDING_REQUIRED_STEP_IDS = [step["id"] for step in ONBOARDING_STEPS if step["required"]]
+
 EMPLOYEE_ASSESSMENT_CONSENT_VERSION = "MSB-EMP-ASSESS-2026-06"
 EMPLOYEE_ASSESSMENT_PSEUDONYM_SALT = os.environ.get(
     "EMPLOYEE_ASSESSMENT_PSEUDONYM_SALT",
@@ -2123,6 +2176,42 @@ def db_get_employee_assessment_summary(limit: int = 20) -> dict:
     finally:
         cursor.close()
         conn.close()
+
+
+def onboarding_pseudonym(account_identifier: str) -> str:
+    """Stable, non-reversible subject id for onboarding audit events (T752)."""
+    clean_identifier = clean_feedback_text(
+        account_identifier, MAX_ONBOARDING_IDENTIFIER_LENGTH
+    ).lower()
+    return f"onb-{stable_digest(f'{ONBOARDING_PSEUDONYM_SALT}:{clean_identifier}')}"
+
+
+def split_onboarding_step_ids(step_ids: Optional[List[str]]) -> tuple[list[str], list[str]]:
+    """Partition submitted step ids into known (deduped, canonical order) and ignored.
+
+    Unknown ids are reported rather than silently dropped so a wizard that drifts
+    from the server catalogue is visible instead of quietly under-reporting.
+    """
+    submitted = [clean_feedback_text(s, 64) for s in (step_ids or [])]
+    known = [step["id"] for step in ONBOARDING_STEPS if step["id"] in submitted]
+    ignored = sorted({s for s in submitted if s and s not in ONBOARDING_STEP_IDS})
+    return known, ignored
+
+
+def build_onboarding_progress(step_ids: Optional[List[str]]) -> dict:
+    """Progress computed against the canonical step catalogue."""
+    completed, ignored = split_onboarding_step_ids(step_ids)
+    remaining_required = [s for s in ONBOARDING_REQUIRED_STEP_IDS if s not in completed]
+    total = len(ONBOARDING_STEPS) or 1
+    return {
+        "status": "success",
+        "flow_version": ONBOARDING_FLOW_VERSION,
+        "completed_step_ids": completed,
+        "ignored_step_ids": ignored,
+        "remaining_required_step_ids": remaining_required,
+        "progress_pct": round(100.0 * len(completed) / total, 1),
+        "can_activate": not remaining_required,
+    }
 
 
 def attendance_pseudonym(employee_identifier: str) -> str:
@@ -5841,6 +5930,20 @@ class EmployeeAssessmentResponseRequest(BaseModel):
     session_id: Optional[str] = ""
 
 
+class OnboardingProgressRequest(BaseModel):
+    completed_step_ids: List[str] = []
+
+
+class OnboardingActivateRequest(BaseModel):
+    account_identifier: str
+    completed_step_ids: List[str] = []
+    legal_consent_accepted: bool = False
+    legal_consent_version: str = ""
+    source: str = "onboarding_wizard"
+    page_url: Optional[str] = ""
+    session_id: Optional[str] = ""
+
+
 class AttendancePunchRequest(BaseModel):
     employee_identifier: str
     event_type: str
@@ -6642,6 +6745,95 @@ async def submit_employee_assessment_response(req: EmployeeAssessmentResponseReq
 async def get_employee_assessment_response_summary(limit: int = 20, username: str = Depends(verify_credentials)):
     """Authenticated, redacted summary of T840 employee self-report responses."""
     return {"status": "success", **db_get_employee_assessment_summary(limit=limit)}
+
+
+@app.get("/api/onboarding/state")
+async def get_onboarding_state():
+    """Server-canonical onboarding wizard definition (T752, gate PUBLIC-06).
+
+    The wizard renders from this catalogue and the activation validator checks
+    the same list, so the UI cannot drift from the gate.
+    """
+    return {
+        "status": "success",
+        "flow_version": ONBOARDING_FLOW_VERSION,
+        "legal_consent_version": LEGAL_CONSENT_VERSION,
+        "steps": [dict(step) for step in ONBOARDING_STEPS],
+        "required_step_ids": list(ONBOARDING_REQUIRED_STEP_IDS),
+    }
+
+
+@app.post("/api/onboarding/progress")
+async def compute_onboarding_progress(req: OnboardingProgressRequest):
+    """Progress for the submitted steps, evaluated against the canonical catalogue."""
+    return build_onboarding_progress(req.completed_step_ids)
+
+
+@app.post("/api/onboarding/activate")
+async def activate_onboarding(req: OnboardingActivateRequest):
+    """Activate an administratively issued account after the required steps.
+
+    Refuses activation when a required step is outstanding or when the legal
+    consent is absent/stale, so activation cannot outrun the consent gate that
+    T745 enforces on the analysis APIs.
+    """
+    account_identifier = clean_feedback_text(
+        req.account_identifier, MAX_ONBOARDING_IDENTIFIER_LENGTH
+    )
+    if len(account_identifier) < 3:
+        raise HTTPException(
+            status_code=400,
+            detail="account_identifier must be at least 3 characters",
+        )
+
+    if not req.legal_consent_accepted:
+        raise HTTPException(
+            status_code=400,
+            detail="legal consent is required before activation",
+        )
+    if clean_feedback_text(req.legal_consent_version, 80) != LEGAL_CONSENT_VERSION:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "Invalid legal consent version: expected "
+                f"{LEGAL_CONSENT_VERSION}"
+            ),
+        )
+
+    progress = build_onboarding_progress(req.completed_step_ids)
+    if progress["remaining_required_step_ids"]:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "required onboarding steps are incomplete: "
+                + ", ".join(progress["remaining_required_step_ids"])
+            ),
+        )
+
+    subject_pseudonym = onboarding_pseudonym(account_identifier)
+    activated_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    audit_event = write_audit_event(
+        "onboarding_activated",
+        {
+            "wbs_task": "T752",
+            "flow_version": ONBOARDING_FLOW_VERSION,
+            "subject_pseudonym": subject_pseudonym,
+            "completed_step_ids": progress["completed_step_ids"],
+            "legal_consent_version": LEGAL_CONSENT_VERSION,
+            "raw_identifier_stored": False,
+        },
+    )
+    return {
+        "status": "success",
+        "activated": True,
+        "flow_version": ONBOARDING_FLOW_VERSION,
+        "subject_pseudonym": subject_pseudonym,
+        "completed_step_ids": progress["completed_step_ids"],
+        "legal_consent_version": LEGAL_CONSENT_VERSION,
+        "activated_at": activated_at,
+        "audit_event_id": audit_event["event_id"],
+        "privacy_controls": {"raw_identifier_stored": False},
+    }
 
 
 @app.post("/api/attendance/punch")

@@ -1,15 +1,15 @@
 {
   "task": "T892",
-  "endpoint_count": 39,
-  "uat_case_count": 35,
-  "required_count": 21,
+  "endpoint_count": 42,
+  "uat_case_count": 36,
+  "required_count": 24,
   "exempt_count": 18,
   "hypotheses": [
     {
       "id": "H1",
       "title": "エンドポイント30件以上かつUATケース20件以上(sanity)",
       "passed": true,
-      "detail": "endpoints=39, UATケース=35"
+      "detail": "endpoints=42, UATケース=36"
     },
     {
       "id": "H2",
@@ -57,7 +57,7 @@
       "id": "H9",
       "title": "REQUIREDカバレッジ率=100%",
       "passed": true,
-      "detail": "被覆=21/21 (100%)"
+      "detail": "被覆=24/24 (100%)"
     },
     {
       "id": "H10",
