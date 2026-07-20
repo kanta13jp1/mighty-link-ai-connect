@@ -80,25 +80,46 @@ def test_each_section_carries_draft_basis_and_required_input():
             assert cue in section, f"{row['台帳ID']} missing '{cue}'"
 
 
-def test_company_fact_markers_stay_placeholders():
-    """The four registration facts must be left blank for the company to fill."""
+def test_company_fact_sections_keep_an_outstanding_input_line():
+    """Each registration fact still names what the company must supply.
+
+    Three of the four were sourced from the company website on 2026-07-19; what
+    remains for those is the 登記事項証明書 cross-check, and for T798-11 the
+    appointment itself. Either way the section must say what is outstanding.
+    """
     text = _draft()
     for marker_id in COMPANY_FACT_IDS:
         section = _section(text, marker_id)
-        assert PLACEHOLDER in section, f"{marker_id} must keep the input placeholder"
+        assert PLACEHOLDER in section, f"{marker_id} must state the outstanding input"
         assert "会社事実の提供が必要" in section, f"{marker_id} miscategorised"
 
 
-def test_no_fabricated_corporate_identifiers():
-    """A invented address/representative in a legal draft is a real-world harm."""
+def test_pii_officer_is_still_unfilled():
+    """T798-11 was not on any public page — it must not be guessed."""
+    section = _section(_draft(), "T798-11")
+    assert "未取得" in section, "the PII officer must remain explicitly unresolved"
+
+
+def test_corporate_facts_are_attributed_to_a_source():
+    """Corporate facts may appear only WITH provenance.
+
+    An invented address in a legal draft is a real-world harm, so the rule is
+    not 'no address' but 'no unsourced address': whenever a postal code, phone
+    number or representative name is present, the document must say where it
+    came from and when, and must flag that the 登記 record is authoritative.
+    """
     text = _draft()
-    forbidden = {
-        "postal code": r"〒\s*\d{3}-?\d{4}",
-        "street address": r"\d+丁目\d+番",
-        "registration number": r"法人番号\s*[:：]?\s*\d{8,}",
-    }
-    hits = [name for name, pattern in forbidden.items() if re.search(pattern, text)]
-    assert not hits, f"draft must not contain invented corporate facts: {hits}"
+    has_fact = bool(
+        re.search(r"〒\s*\d{3}-?\d{4}", text)
+        or re.search(r"代表取締役\s*\S", text)
+        or re.search(r"\b0\d{1,4}-\d{1,4}-\d{3,4}\b", text)
+    )
+    if has_fact:
+        assert "mighty-link.com/company" in text, "corporate facts need their source"
+        assert "2026-07-19取得" in text, "corporate facts need an acquisition date"
+        assert "登記" in text, "the authoritative record must be named"
+    # a corporate number is never sourced from a marketing page — still forbidden
+    assert not re.search(r"法人番号\s*[:：]?\s*\d{8,}", text), "unsourced 法人番号"
 
 
 def test_lists_the_company_inputs_needed_in_one_place():

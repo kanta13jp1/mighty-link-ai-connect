@@ -1,7 +1,7 @@
 {
   "task": "T889",
   "wbs_path": "data\\WBS.tsv",
-  "task_count": 341,
+  "task_count": 342,
   "uncovered_stages": [],
   "uncovered_stack": [],
   "inverted_schedule": [],
@@ -10,7 +10,7 @@
       "id": "H1",
       "title": "WBSタスクが50件以上かつヘッダ10列が既定どおり",
       "passed": true,
-      "detail": "件数=341, ヘッダ一致=True"
+      "detail": "件数=342, ヘッダ一致=True"
     },
     {
       "id": "H2",
