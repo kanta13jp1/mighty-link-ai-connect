@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "運用カレンダーが存在する",
+      "passed": true,
+      "detail": "カレンダー=あり"
+    },
+    {
+      "id": "H2",
+      "title": "5頻度区分(日次/週次/月次/四半期/年次)で整理",
+      "passed": true,
+      "detail": "欠落区分=なし"
+    },
+    {
+      "id": "H3",
+      "title": "必須の定期義務を網羅",
+      "passed": true,
+      "detail": "必須項目の欠落=なし"
+    },
+    {
+      "id": "H4",
+      "title": "カレンダーの全Runbookリンクが実在(切れリンク0)",
+      "passed": true,
+      "detail": "切れリンク=なし"
+    },
+    {
+      "id": "H5",
+      "title": "定期実施Runbookが全てカレンダーに登録(未登録0)",
+      "passed": true,
+      "detail": "未登録=なし"
+    },
+    {
+      "id": "H6",
+      "title": "各エントリに担当が明記されている",
+      "passed": true,
+      "detail": "担当欠落=0件 / 全9件"
+    },
+    {
+      "id": "H7",
+      "title": "各エントリに完了確認方法が明記されている",
+      "passed": true,
+      "detail": "確認方法欠落=0件"
+    },
+    {
+      "id": "H8",
+      "title": "除外リストが理由付きで文書化され、実在Runbookのみを指す",
+      "passed": true,
+      "detail": "除外=13件 / 実在しない除外=なし"
+    },
+    {
+      "id": "H9",
+      "title": "リンクがリポジトリ相対(絶対パス無し)",
+      "passed": true,
+      "detail": "絶対パス=0件"
+    },
+    {
+      "id": "H10",
+      "title": "カレンダーとRunbookが完全整合(運用抜け0)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ]
+}
