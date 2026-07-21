@@ -1,22 +1,37 @@
 {
-  "generated_at": "2026-07-20T08:11:27.324488+00:00",
+  "generated_at": "2026-07-21T12:43:08.323160+00:00",
   "repository": "kanta13jp1/mighty-link-ai-connect",
   "project_owner": "kanta13jp1",
   "project_number": 1,
   "dry_run": false,
   "results": [
     {
-      "task_id": "T798_3",
+      "task_id": "T866",
       "wbs_status": "完了",
-      "issue_number": 218,
-      "issue_url": "https://github.com/kanta13jp1/mighty-link-ai-connect/issues/218",
+      "issue_number": 158,
+      "issue_url": "https://github.com/kanta13jp1/mighty-link-ai-connect/issues/158",
       "actions": [
-        "create_issue",
+        "update_managed_block",
+        "add_labels:github-project,wbs",
         "close_issue",
-        "add_project_item",
         "set_project_status:Done",
-        "set_project_start_date:2026-07-19",
-        "set_project_target_date:2026-07-19"
+        "set_project_start_date:2026-07-18",
+        "set_project_target_date:2026-07-18"
+      ],
+      "dry_run": false
+    },
+    {
+      "task_id": "T852",
+      "wbs_status": "完了",
+      "issue_number": 139,
+      "issue_url": "https://github.com/kanta13jp1/mighty-link-ai-connect/issues/139",
+      "actions": [
+        "update_managed_block",
+        "add_labels:github-project",
+        "close_issue",
+        "set_project_status:Done",
+        "set_project_start_date:2026-07-08",
+        "set_project_target_date:2026-07-08"
       ],
       "dry_run": false
     }

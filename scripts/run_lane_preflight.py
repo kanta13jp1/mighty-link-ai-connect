@@ -76,6 +76,9 @@ GUARD_REGISTRY: dict[str, str] = {
 
 # Guards that are NOT repo-integrity checks and must not gate a commit.
 EXEMPT_GUARDS: dict[str, str] = {
+    "audit_github_issue_wbs_sync.py":
+        "オンデマンド整合ツール(T849_3): gh認証とネットワークを必要とし、GitHub側の状態に依存するため"
+        "作業ツリー整合を対象とするプリフライトからは除外。GAクローズ判定(T849)前などに手動実行する",
     "audit_external_api_usage.py":
         "運用日次ツール(T736): 正本がgitignoreのローカル台帳 data/external_api_usage.jsonl で、"
         "レポート先も reports/。作業ツリーの整合とは無関係なためプリフライト対象外",

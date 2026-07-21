@@ -7,7 +7,7 @@
 > [!IMPORTANT]
 > 新しい `scripts/audit_*.py` ガードを `GUARD_REGISTRY` へ登録したら、必ず本カタログの該当カテゴリへセクション（ガード名・守る対象・NG例・関連WBS）を追加すること。未追加はCIガードが未記載として検知して失敗する。
 
-- 登録ガード: **21本**（プリフライトで毎回実行）/ 対象外: **1本**
+- 登録ガード: **21本**（プリフライトで毎回実行）/ 対象外: **2本**
 
 ---
 
@@ -169,4 +169,10 @@
 
 ### audit_external_api_usage.py
 - **対象外理由**: 運用日次ツール(T736)。正本がgitignoreのローカル台帳 data/external_api_usage.jsonl、レポート先も reports/ で、作業ツリー整合とは無関係なためプリフライト対象外。
+
+### audit_github_issue_wbs_sync.py
+- **対象外理由**: オンデマンド整合ツール(T849_3)。gh認証とネットワークを必要とし、GitHub側の状態に依存するため、作業ツリー整合を対象とするプリフライトからは除外。
+- **守る対象**: open GitHub Issue と WBS ステータスの整合（参照WBSが全て完了したのに開いたままの stale issue を検出）
+- **NG例（失敗する時）**: 完了済みタスクの issue が閉じられずに残っている（T849 の「GitHub Issues 未完了0」を実態より悪く見せる）
+- **実行タイミング**: GAクローズ判定（T849）前、および定期的な棚卸し時に `python scripts/audit_github_issue_wbs_sync.py`
 
