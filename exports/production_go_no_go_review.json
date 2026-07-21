@@ -1,15 +1,16 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-07-01T14:31:08Z",
+  "generated_at": "2026-07-21T12:51:39Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
     "total": 21,
     "counts": {
-      "PASS": 13,
-      "HUMAN_GATE": 2,
-      "BLOCKED": 6
+      "PASS": 12,
+      "WARNING": 4,
+      "HUMAN_GATE": 1,
+      "BLOCKED": 4
     },
     "evidence_warnings": 0
   },
@@ -26,9 +27,10 @@
       "recommendation": "NO_GO",
       "worst_state": "BLOCKED",
       "counts": {
-        "PASS": 8,
-        "HUMAN_GATE": 2,
-        "BLOCKED": 6
+        "PASS": 7,
+        "WARNING": 4,
+        "HUMAN_GATE": 1,
+        "BLOCKED": 4
       },
       "total": 16
     }
@@ -164,16 +166,17 @@
       "criterion": "本番DBバックアップ・復元手順が整備され、ロールバック判定に含まれている",
       "evidence_source": "docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md; docs/PRODUCTION_ROLLBACK_RUNBOOK.md",
       "required_state": "PASS",
-      "current_state": "PASS",
+      "current_state": "WARNING",
       "owner": "Codex",
       "decision_authority": "開発責任者",
-      "related_wbs": "T741;T812",
+      "related_wbs": "T741;T812;T870",
       "related_issue": "",
-      "last_checked": "2026-06-17",
-      "notes": "破壊的migration前はbackup/PITR時刻と復元担当を記録する。",
+      "last_checked": "2026-07-07",
+      "notes": "T833(7/7)判定: バックアップCIは7/6も失敗継続(R116)。暫定ローカルバックアップ(7/4・22テーブル)を根拠に条件付きPASS。恒久修復T870(7/8-7/9)完了でPASSへ戻す。2026-07-09: 実ブロッカーのバックアップCI復旧T870をrelated_wbsへ明示リンク",
       "wbs_statuses": {
         "T741": "完了",
-        "T812": "完了"
+        "T812": "完了",
+        "T870": "未着手"
       },
       "missing_evidence": []
     },
@@ -211,8 +214,8 @@
       "decision_authority": "CEO / 法務",
       "related_wbs": "T798",
       "related_issue": "R36;R48;R51",
-      "last_checked": "2026-06-17",
-      "notes": "法務確認完了まで一般公開・有償化はNo-Go。",
+      "last_checked": "2026-07-07",
+      "notes": "T833(7/7)判定: T869でdocs×実装の整合は検証済み。社内GAは社内利用フェーズ必須論点に限定して7/8定例までに人間確認。完全確定(【要法務確認】30箇所)は有償化前必須としてR111で管理",
       "wbs_statuses": {
         "T798": "未着手"
       },
@@ -245,14 +248,14 @@
       "evidence_source": "docs/USER_GUIDE_AND_FAQ.md; index.html; src/app.py",
       "required_state": "PASS",
       "current_state": "BLOCKED",
-      "owner": "Antigravity + Gemini",
+      "owner": "Claude Code",
       "decision_authority": "開発責任者",
       "related_wbs": "T752",
       "related_issue": "",
-      "last_checked": "2026-06-17",
-      "notes": "招待制/閉域運用から一般利用へ移る前の必須導線。",
+      "last_checked": "2026-07-19",
+      "notes": "T833(7/7)判定: T752未実装(コード内参照コメントのみ)。社内GAは管理者発行アカウントで代替し非ブロッカー、T752は7/8-7/9(Antigravity)。有償公開前には必須 2026-07-19(T752完了・Claude Code): 担当をAntigravityからClaude Codeへ変更し、オンボーディング/アクティベーションフローを実装(GET /api/onboarding/state・POST /api/onboarding/progress・POST /api/onboarding/activate、ウィザードUI、docs/USER_GUIDE_AND_FAQ.md §2.1.1、tests/test_onboarding_flow.py 16件、Playwright実機検証)。current_stateの変更は決定権者(開発責任者)の判断事項のため据え置き。関連WBS全完了かつ未解決課題なしのため、T849_2ハーネスがPASS再判定候補として提示する",
       "wbs_statuses": {
-        "T752": "未着手"
+        "T752": "完了"
       },
       "missing_evidence": []
     },
@@ -282,15 +285,16 @@
       "criterion": "料金プラン・無料枠・課金単位がCEO承認済み",
       "evidence_source": "docs/TOKUSHOHO_NOTATION.md; docs/BILLING_AND_REFUND_POLICY.md",
       "required_state": "PASS",
-      "current_state": "HUMAN_GATE",
+      "current_state": "WARNING",
       "owner": "人間",
       "decision_authority": "CEO",
-      "related_wbs": "T804",
+      "related_wbs": "T804;T862",
       "related_issue": "R51",
-      "last_checked": "2026-06-17",
-      "notes": "価格未確定のまま有償プランは開始しない。",
+      "last_checked": "2026-07-07",
+      "notes": "T833(7/7)判定: T863仕分けどおり条件付きPASSを承認(T804仮承認7/3)。有償化時はT862でCEO最終価格を再確認。2026-07-09: 有償化判断T862をrelated_wbsへ明示リンク（条件付きPASSの解除条件）",
       "wbs_statuses": {
-        "T804": "未着手"
+        "T804": "完了",
+        "T862": "未着手"
       },
       "missing_evidence": []
     },
@@ -306,8 +310,8 @@
       "decision_authority": "開発責任者",
       "related_wbs": "T776;T791;T807;T829",
       "related_issue": "R91;R106",
-      "last_checked": "2026-07-01",
-      "notes": "T776でCheckout/Subscription/Billing Meters/Webhook/Sheets同期/Secret非記録の設計は完了。public_paid_launchはBilling実装T791とCustomer Portal live検証T807を通過してから再判定する。",
+      "last_checked": "2026-07-07",
+      "notes": "T833(7/7)判定: sandbox実装(T791)含め全面T862移管を承認(社内GAは実課金なし・QA-97)。T791/T807/T813はT862判断後に日程再設定",
       "wbs_statuses": {
         "T776": "完了",
         "T791": "未着手",
@@ -333,7 +337,7 @@
       "wbs_statuses": {
         "T770": "完了",
         "T858": "完了",
-        "T782": "未着手"
+        "T782": "完了"
       },
       "missing_evidence": []
     },
@@ -349,17 +353,17 @@
       "decision_authority": "CEO / 開発責任者",
       "related_wbs": "T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7;T821",
       "related_issue": "R75;R77;R78;R80;R81;R82;R83",
-      "last_checked": "2026-06-19",
-      "notes": "T817_2で安全な.eml/.txt/CSV取り込みPoCと重複排除、T817_3でSupabaseスキーマ/RLS/migration/seed/rollback、T817_4でAI抽出deterministic fallback、T817_5で双方向検索API/UI、T817_6で人間レビュー/評価ログは完了。一般公開・有償化前にはT817_7の実メール接続後の個人情報/監査/負荷/権限確認が引き続き必要。",
+      "last_checked": "2026-07-07",
+      "notes": "T833(7/7)判定: 案A仮決定(検証済みPoCデータで7/8 GA)。T817_7 hardeningは7/8-7/9、実接続はT836受領後に追加検証(R113)",
       "wbs_statuses": {
-        "T817": "実行中",
+        "T817": "完了",
         "T817_1": "完了",
         "T817_2": "完了",
         "T817_3": "完了",
         "T817_4": "完了",
         "T817_5": "完了",
         "T817_6": "完了",
-        "T817_7": "未着手",
+        "T817_7": "完了",
         "T821": "完了"
       },
       "missing_evidence": []
@@ -395,8 +399,8 @@
       "decision_authority": "CEO / 法務 / 開発責任者",
       "related_wbs": "T844;T845;T846;T847;T848;T849;T850",
       "related_issue": "R99;#131;#132;#133;#134;#135;#136;#137",
-      "last_checked": "2026-06-27",
-      "notes": "T846でUSER_GUIDE_AND_FAQを最新機能へ全面更新、T847で全テーブル保持・削除・匿名化照合、T848でAIモデル・外部SaaS・連携サービスGA凍結を完了。残るT845/T850/T849完了までpublic_paid_launchと開発完了宣言はNo-Go。",
+      "last_checked": "2026-07-07",
+      "notes": "T833(7/7)判定: T845/T850未実施。社内GAのGo条件(1)として7/8 15:00定例までにUAT green(本番DB実書き込み確認含む)が必須",
       "wbs_statuses": {
         "T844": "完了",
         "T845": "未着手",
@@ -415,15 +419,15 @@
       "criterion": "Firebase/GitHub Actionsの本番デプロイ認証経路が正規化され、アプリ変更時のmain deployがgreenである",
       "evidence_source": ".github/workflows/deploy.yml; GitHub Actions CI/CD Pipeline; Firebase Hosting/Functions; docs/WBS_REVIEW_2026-06-26.md",
       "required_state": "PASS",
-      "current_state": "BLOCKED",
+      "current_state": "WARNING",
       "owner": "Codex + 寛太梅澤",
       "decision_authority": "開発責任者 / 会社管理者",
       "related_wbs": "T852",
       "related_issue": "R100;#139",
-      "last_checked": "2026-06-26",
-      "notes": "2026-06-26時点でWIF/ADCがFirebase CLI認証に失敗し、legacy FIREBASE_TOKENも再認証期限切れ。docs/data/exportsのみの変更ではdeployをskipする暫定ガードを入れたが、public_paid_launch前に会社管理のWIF/service account/secret経路で本番deploy greenを確認する。",
+      "last_checked": "2026-07-07",
+      "notes": "T833(7/7)判定: main/master deploy workflowは7/5 successを確認(deploy green要件は充足)。WIF/ADC正規化・FIREBASE_TOKEN廃止(T852)は7/8実施",
       "wbs_statuses": {
-        "T852": "未着手"
+        "T852": "完了"
       },
       "missing_evidence": []
     },
@@ -434,13 +438,13 @@
       "criterion": "課題管理表・QA表の開発必須open/未回答が0である",
       "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Issue #141; GitHub Issue #150; GitHub Project #1",
       "required_state": "PASS",
-      "current_state": "PASS",
+      "current_state": "WARNING",
       "owner": "Codex + Claude Code + 人間",
       "decision_authority": "開発責任者 / CEO",
       "related_wbs": "T853;T854;T858;T849",
       "related_issue": "R101;R110;#141;#150",
-      "last_checked": "2026-07-01",
-      "notes": "T858でR110をresolved化し、課題管理表open 0件、QA表未回答0件へ復帰。scripts/audit_issue_qa_blockers.pyでissue blocker 0件、QA blocker 0件を再確認し、PUBLIC-15をPASSへ戻す。",
+      "last_checked": "2026-07-07",
+      "notes": "T833(7/7)判定: blocker監査open4件はすべて判定・運用系(R111/R112/R113/R116)でコード/QA起因は0。R112は本判定でresolved、残3件は7/8定例とT870で解消予定",
       "wbs_statuses": {
         "T853": "完了",
         "T854": "完了",
@@ -456,15 +460,15 @@
       "criterion": "販売URL `https://mightylink-app.com/` のDNS解決とstrict HTTPS uptimeがgreenである",
       "evidence_source": "data/uptime_targets.tsv; scripts/check_uptime_targets.py; exports/uptime_monitor_report.json; scripts/diagnose_custom_domain_dns.py; exports/custom_domain_dns_diagnostic.md; exports/custom_domain_dns_diagnostic.json; .github/workflows/uptime-monitor.yml; docs/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md; GitHub Issue #143",
       "required_state": "PASS",
-      "current_state": "BLOCKED",
+      "current_state": "PASS",
       "owner": "Codex + 寛太梅澤",
       "decision_authority": "開発責任者 / CEO",
       "related_wbs": "T855;T856",
       "related_issue": "R103;R104;#143",
-      "last_checked": "2026-06-27",
-      "notes": "2026-06-27のPublic Uptime Monitorとローカル再実行で、GitHub Pages公開デモとFirebase Hosting default URLはOKだが、販売URLmightylink-app.comがgetaddrinfo failedでDNS解決失敗。T856診断でRDAP client holdとPublic DNS NXDOMAINを確認。お名前.com側のhold解除、権威DNS委任、Firebase Hostingレコード再確認、strict HTTPS監視green化までpublic_paid_launchとサイト開発完了宣言はNo-Go。",
+      "last_checked": "2026-07-04",
+      "notes": "2026-07-04: ドメイン所有者がお名前.comドメイン情報認証を完了しclientHold解除（RDAP active 04:25Z）。A=199.36.158.100復活、HTTPS 200、check_uptime_targets.py ok=3/failed=0、Public Uptime Monitor run 28694877615 success",
       "wbs_statuses": {
-        "T855": "未着手",
+        "T855": "完了",
         "T856": "完了"
       },
       "missing_evidence": []
