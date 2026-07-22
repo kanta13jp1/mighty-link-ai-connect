@@ -2388,6 +2388,86 @@
         .onboarding-result.active {
             display: block;
         }
+        /* T909: 評価基準点の凡例とフィードバック面談メモ */
+        .aptitude-band-legend-wrap {
+            margin-top: 16px;
+        }
+        .aptitude-band-legend {
+            display: grid;
+            gap: 8px;
+        }
+        .aptitude-band-row {
+            display: grid;
+            grid-template-columns: auto auto 1fr;
+            gap: 10px;
+            align-items: start;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+        .aptitude-band-row.active {
+            border-color: rgba(139, 220, 255, 0.55);
+            background: rgba(139, 220, 255, 0.07);
+            color: var(--text);
+        }
+        .aptitude-band-badge {
+            border-radius: 999px;
+            padding: 2px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            border: 1px solid currentColor;
+        }
+        .band-good { color: #4fd1a5; }
+        .band-moderate { color: #e6c15a; }
+        .band-watch { color: #ff8aa8; }
+        .aptitude-band-range {
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+        }
+        .aptitude-interview-guide {
+            margin-top: 16px;
+            display: none;
+        }
+        .aptitude-interview-guide.active {
+            display: block;
+        }
+        .aptitude-interview-title {
+            font-size: 15px;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        .aptitude-interview-points {
+            margin: 10px 0 0 18px;
+            color: var(--text);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+        .aptitude-interview-caution {
+            margin-top: 12px;
+            font-size: 12px;
+            line-height: 1.7;
+            color: var(--muted);
+            border-left: 3px solid rgba(255, 138, 168, 0.5);
+            padding-left: 10px;
+        }
+        /* 単独共有ビュー (#aptitude-demo-standalone): 自己診断以外を隠す */
+        body.aptitude-standalone .hero,
+        body.aptitude-standalone #report-section,
+        body.aptitude-standalone #comparison-section,
+        body.aptitude-standalone #video-section,
+        body.aptitude-standalone #onboarding-section,
+        body.aptitude-standalone #survey-section,
+        body.aptitude-standalone #attendance-section,
+        body.aptitude-standalone #matching-section,
+        body.aptitude-standalone #admin-dashboard-section,
+        body.aptitude-standalone #models,
+        body.aptitude-standalone #knowledge-flow-demo {
+            display: none;
+        }
         .aptitude-demo-grid {
             display: grid;
             grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
@@ -3233,6 +3313,11 @@
                         <div class="aptitude-demo-notice" id="aptitude-demo-privacy" style="margin-top: 14px;">
                             上部の規約同意と、この自己診断デモの同意を入れると質問を生成できます。
                         </div>
+                        <div class="aptitude-band-legend-wrap">
+                            <div class="control-label" style="margin-bottom: 8px;">評価基準点（100点換算）</div>
+                            <div id="aptitude-band-legend" class="aptitude-band-legend" aria-live="polite"></div>
+                            <p class="control-label" style="margin-top: 8px;">スコアはセルフチェックの目安です。人事評価や処遇の判断には使用しません。</p>
+                        </div>
                         <button type="button" class="sample-btn" id="aptitude-demo-consent-jump" onclick="focusLegalConsentPanel()" style="margin-top: 10px;">↑ 上部の規約同意チェック欄へ移動</button>
                         <div class="aptitude-demo-actions">
                             <button type="button" class="big-btn" id="aptitude-demo-generate" onclick="loadAptitudeQuestions()">質問を生成</button>
@@ -3246,6 +3331,7 @@
                             <div class="aptitude-demo-empty">質問はまだ生成されていません。</div>
                         </div>
                         <div id="aptitude-demo-result" class="aptitude-demo-panel aptitude-demo-result" aria-live="polite"></div>
+                        <div id="aptitude-interview-guide" class="aptitude-demo-panel aptitude-interview-guide" aria-live="polite"></div>
                     </div>
                 </div>
             </div>
@@ -5387,6 +5473,122 @@
         const aptitudePrivacyNotice = "この診断は体験用プロトタイプです。回答および結果はサーバーやデータベースに一切保存されず、この画面のセッション内でのみ評価されます。本結果は医療的診断ではなく、セルフケアのための一般的な気づきを目的としています。";
         let aptitudeDemoQuestions = [];
 
+        /* ==================================================================
+           T909: 評価基準点(正常/注意/面談目安)とフィードバック面談活用UI
+           バンド定義は src/aptitude_demo.py の SCORE_BANDS と同一に保つ
+           (tests/test_aptitude_score_bands.py が一致を検証)。
+           ================================================================== */
+        const aptitudeScoreBands = [
+            {id: "watch", label: "面談目安", min_index: 0.0, max_index: 49.9,
+             guidance: "負荷が高まっている可能性があります。早めに話を聴く機会を設けることを推奨します。",
+             follow_up: "今月中に1対1で状況を確認し、必要に応じて業務量の調整や相談窓口の案内を検討します。"},
+            {id: "moderate", label: "注意", min_index: 50.0, max_index: 74.9,
+             guidance: "おおむね安定していますが、気になる項目があれば早めに共有しておきたい状態です。",
+             follow_up: "次回の定例フィードバック面談で、低い項目を中心に様子を確認します。"},
+            {id: "good", label: "正常", min_index: 75.0, max_index: 100.0,
+             guidance: "全体として前向きなコンディションがうかがえます。",
+             follow_up: "現在の良い習慣を継続し、通常どおり月次の面談で状況を確認します。"}
+        ];
+
+        function aptitudeBandForIndex(conditionIndex) {
+            let index = Number(conditionIndex);
+            if (!Number.isFinite(index)) index = 0;
+            index = Math.max(0, Math.min(100, index));
+            return aptitudeScoreBands.find(b => index >= b.min_index && index <= b.max_index)
+                || aptitudeScoreBands[aptitudeScoreBands.length - 1];
+        }
+
+        function renderAptitudeBandLegend(bands, activeBandId) {
+            const host = document.getElementById("aptitude-band-legend");
+            if (!host) return;
+            const list = (bands && bands.length ? bands : aptitudeScoreBands).slice().reverse();
+            host.innerHTML = list.map(band => {
+                const active = band.id === activeBandId ? " active" : "";
+                return `
+                    <div class="aptitude-band-row band-${escapeHtml(band.id)}${active}">
+                        <span class="aptitude-band-badge">${escapeHtml(band.label)}</span>
+                        <span class="aptitude-band-range">${band.min_index} 〜 ${band.max_index} 点</span>
+                        <span class="aptitude-band-guidance">${escapeHtml(band.guidance || "")}</span>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        async function loadAptitudeBandLegend() {
+            if (shouldUseAptitudeBrowserFallback()) {
+                renderAptitudeBandLegend(aptitudeScoreBands);
+                return;
+            }
+            try {
+                const response = await fetch("/api/aptitude-demo/legend");
+                if (!response.ok) throw new Error("legend unavailable");
+                const data = await response.json();
+                renderAptitudeBandLegend(data.score_bands || aptitudeScoreBands);
+            } catch (e) {
+                renderAptitudeBandLegend(aptitudeScoreBands);
+            }
+        }
+
+        function buildAptitudeInterviewGuide(bandId, dimensionScores) {
+            const band = aptitudeScoreBands.find(b => b.id === bandId) || aptitudeScoreBands[0];
+            const byBand = {
+                good: ["最近うまくいっていること、続けたいことはありますか。",
+                       "今の進め方で負担に感じている部分はありませんか。",
+                       "次の1か月で挑戦したいことがあれば教えてください。"],
+                moderate: ["この1か月で、特に気力を使った場面はどこでしたか。",
+                           "業務量やスケジュールで調整できると助かる点はありますか。",
+                           "休憩や切り替えの時間は取れていますか。"],
+                watch: ["最近、負担が大きいと感じている業務はどれですか。",
+                        "手放せる作業や、分担できる作業はありますか。",
+                        "休息はとれていますか。生活リズムで気になることはありますか。",
+                        "会社として今すぐ手当てできることはありますか。"]
+            };
+            const prompts = {
+                energy: "エネルギー面のスコアが相対的に低めでした。1日の中で消耗しやすい時間帯はありますか。",
+                focus: "集中に関する項目が相対的に低めでした。集中が途切れやすい要因に心当たりはありますか。",
+                workload: "業務量の項目が相対的に低めでした。今の担当量は現実的だと感じますか。",
+                sleep: "休息に関する項目が相対的に低めでした。睡眠や休憩の確保で困っていることはありますか。",
+                team: "チーム連携の項目が相対的に低めでした。相談しやすさや情報共有で気になる点はありますか。"
+            };
+            const points = (byBand[band.id] || []).slice();
+            let focus = null;
+            const keys = Object.keys(dimensionScores || {});
+            if (keys.length) {
+                focus = keys.reduce((lo, k) => dimensionScores[k] < dimensionScores[lo] ? k : lo, keys[0]);
+                if (prompts[focus]) points.unshift(prompts[focus]);
+            }
+            return {
+                band: band.id, band_label: band.label, suggested_minutes: "10〜20分",
+                opening: "今月のセルフチェックの結果を一緒に見ながら、話せる範囲で聞かせてください。",
+                focus_dimension: focus, talking_points: points, follow_up: band.follow_up,
+                caution: "本スコアはセルフチェックの目安であり、人事評価・処遇判断の材料には使用しません。医療的な判断も行いません。会話のきっかけとしてご利用ください。"
+            };
+        }
+
+        function renderAptitudeInterviewGuide(guide) {
+            const host = document.getElementById("aptitude-interview-guide");
+            if (!host || !guide) return;
+            const points = (guide.talking_points || []).map(p => `<li>${escapeHtml(p)}</li>`).join("");
+            host.innerHTML = `
+                <h4 class="aptitude-interview-title">フィードバック面談メモ（${escapeHtml(guide.suggested_minutes || "10〜20分")}目安）</h4>
+                <p class="control-label">${escapeHtml(guide.opening || "")}</p>
+                <ul class="aptitude-interview-points">${points}</ul>
+                <p class="control-label"><strong>次のアクション:</strong> ${escapeHtml(guide.follow_up || "")}</p>
+                <p class="aptitude-interview-caution">${escapeHtml(guide.caution || "")}</p>
+            `;
+            host.classList.add("active");
+        }
+
+        // 自己診断だけを単独で共有するための導線 (#aptitude-demo-standalone)
+        function applyAptitudeStandaloneRoute() {
+            const standalone = location.hash === "#aptitude-demo-standalone";
+            document.body.classList.toggle("aptitude-standalone", standalone);
+            if (standalone) {
+                const section = document.getElementById("aptitude-demo-section");
+                if (section) section.scrollIntoView({block: "start"});
+            }
+        }
+
         function setAptitudeDemoStatus(text, colorVar) {
             const status = document.getElementById("aptitude-demo-status");
             if (!status) return;
@@ -5572,12 +5774,13 @@
             });
             const overall = Math.round((valid.reduce((sum, answer) => sum + answer.value, 0) / valid.length) * 100) / 100;
             const conditionIndex = Math.round(((overall - 1) / 4) * 1000) / 10;
-            const band = overall >= 4 ? "good" : overall >= 3 ? "moderate" : "watch";
+            const band = aptitudeBandForIndex(conditionIndex).id;
             const reflection = band === "good"
                 ? "全体として前向きな状態が見えます。良いリズムを保てている要素を言語化して、継続しやすい働き方につなげてください。"
                 : band === "moderate"
                     ? "いくつかの領域にばらつきがあります。点数が低めの領域は、休憩・相談・業務量調整の候補として振り返ってください。"
                     : "負荷が高い可能性があります。ひとりで抱え込まず、上長や信頼できる相手へ早めに状況を共有してください。";
+            const bandInfo = aptitudeBandForIndex(conditionIndex);
             return {
                 status: "success",
                 answered_count: valid.length,
@@ -5585,6 +5788,10 @@
                 overall_score: overall,
                 condition_index: conditionIndex,
                 band,
+                band_label: bandInfo.label,
+                band_range: [bandInfo.min_index, bandInfo.max_index],
+                score_bands: aptitudeScoreBands,
+                interview_guide: buildAptitudeInterviewGuide(band, dimensionScores),
                 reflection,
                 disclaimer: "この結果は医療的診断ではありません。体調や安全に関わる不安がある場合は専門家や社内相談窓口に相談してください。",
                 privacy_notice: aptitudePrivacyNotice,
@@ -5608,13 +5815,17 @@
             result.innerHTML = `
                 <h3 style="font-size: 18px; color: var(--text); margin-bottom: 8px;">評価結果</h3>
                 <div class="card-stat stat-green">${Number(data.condition_index || 0).toFixed(1)} / 100</div>
-                <span class="control-label">回答数: ${Number(data.answered_count || 0)} / 総合平均: ${Number(data.overall_score || 0).toFixed(2)} / 判定帯: ${escapeHtml(data.band || "-")}</span>
+                <span class="control-label">回答数: ${Number(data.answered_count || 0)} / 総合平均: ${Number(data.overall_score || 0).toFixed(2)} / 判定: <strong class="aptitude-band-badge band-${escapeHtml(data.band || "")}">${escapeHtml(data.band_label || data.band || "-")}</strong>${Array.isArray(data.band_range) ? ` (${data.band_range[0]}〜${data.band_range[1]}点)` : ""}</span>
                 ${dimensionRows}
                 <p style="margin-top: 14px; color: var(--text); line-height: 1.8;">${escapeHtml(data.reflection || "")}</p>
                 <p class="control-label" style="margin-top: 10px;">${escapeHtml(data.disclaimer || "")}</p>
                 <p class="control-label" style="margin-top: 8px;">${escapeHtml(data.privacy_notice || aptitudePrivacyNotice)} 保存: ${data.persisted === false ? "なし" : "未確認"}</p>
             `;
             result.classList.add("active");
+            // 判定帯を凡例側でもハイライトし、面談メモを描画する (T909)
+            renderAptitudeBandLegend(data.score_bands || aptitudeScoreBands, data.band);
+            renderAptitudeInterviewGuide(
+                data.interview_guide || buildAptitudeInterviewGuide(data.band, data.dimension_scores));
         }
 
         async function evaluateAptitudeDemo() {
@@ -6530,6 +6741,13 @@
         document.addEventListener("DOMContentLoaded", () => {
             loadOnboardingState();
         });
+
+        // T909: 評価基準点の凡例を先に表示し、単独共有ビューの導線を適用する
+        document.addEventListener("DOMContentLoaded", () => {
+            loadAptitudeBandLegend();
+            applyAptitudeStandaloneRoute();
+        });
+        window.addEventListener("hashchange", applyAptitudeStandaloneRoute);
 
         document.addEventListener("DOMContentLoaded", () => {
             const btn = document.querySelector(".help-trigger-btn");

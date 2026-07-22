@@ -5,7 +5,7 @@
       "id": "H1",
       "title": "3トラッカー(WBS/課題/QA)が読み込め非空",
       "passed": true,
-      "detail": "WBS=344 課題=147 QA=143"
+      "detail": "WBS=348 課題=148 QA=145"
     },
     {
       "id": "H2",
@@ -41,7 +41,7 @@
       "id": "H7",
       "title": "走査対象docsが十分ある(縮退検知)",
       "passed": true,
-      "detail": "走査docs=145"
+      "detail": "走査docs=146"
     },
     {
       "id": "H8",

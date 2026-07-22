@@ -32,6 +32,82 @@ QUESTION_DEFAULT = 12
 SCALE_MIN = 1
 SCALE_MAX = 5
 
+# --------------------------------------------------------------------------- #
+# Score bands (T909, 2026-07-22 社長定例決定事項(1))
+#
+# A bare score ("54.3点") tells an employee nothing. These bands are the single
+# source of truth for what counts as 正常 / 注意 / 面談目安: evaluate_responses(),
+# the /api/aptitude-demo/legend endpoint and the UI legend all read this table,
+# so the legend can never disagree with the band a person is actually shown.
+#
+# Ranges are on the 0-100 condition index and are contiguous to one decimal
+# place (indices are rounded to 0.1). They correspond to the 1-5 averages
+# 4.0 -> 75.0 and 3.0 -> 50.0.
+#
+# These are conversation prompts for self-care, NOT clinical cut-offs.
+# --------------------------------------------------------------------------- #
+SCORE_BANDS: list[dict[str, Any]] = [
+    {
+        "id": "watch",
+        "label": "面談目安",
+        "min_index": 0.0,
+        "max_index": 49.9,
+        "guidance": "負荷が高まっている可能性があります。早めに話を聴く機会を設けることを推奨します。",
+        "follow_up": "今月中に1対1で状況を確認し、必要に応じて業務量の調整や相談窓口の案内を検討します。",
+    },
+    {
+        "id": "moderate",
+        "label": "注意",
+        "min_index": 50.0,
+        "max_index": 74.9,
+        "guidance": "おおむね安定していますが、気になる項目があれば早めに共有しておきたい状態です。",
+        "follow_up": "次回の定例フィードバック面談で、低い項目を中心に様子を確認します。",
+    },
+    {
+        "id": "good",
+        "label": "正常",
+        "min_index": 75.0,
+        "max_index": 100.0,
+        "guidance": "全体として前向きなコンディションがうかがえます。",
+        "follow_up": "現在の良い習慣を継続し、通常どおり月次の面談で状況を確認します。",
+    },
+]
+
+# Talking points per band for the monthly 10-20 minute feedback conversation.
+_BAND_TALKING_POINTS: dict[str, list[str]] = {
+    "good": [
+        "最近うまくいっていること、続けたいことはありますか。",
+        "今の進め方で負担に感じている部分はありませんか。",
+        "次の1か月で挑戦したいことがあれば教えてください。",
+    ],
+    "moderate": [
+        "この1か月で、特に気力を使った場面はどこでしたか。",
+        "業務量やスケジュールで調整できると助かる点はありますか。",
+        "休憩や切り替えの時間は取れていますか。",
+    ],
+    "watch": [
+        "最近、負担が大きいと感じている業務はどれですか。",
+        "手放せる作業や、分担できる作業はありますか。",
+        "休息はとれていますか。生活リズムで気になることはありますか。",
+        "会社として今すぐ手当てできることはありますか。",
+    ],
+}
+
+# Extra prompt keyed off the weakest dimension, so the conversation starts from
+# what the person actually reported rather than from the aggregate number.
+_DIMENSION_PROMPT: dict[str, str] = {
+    "energy": "エネルギー面のスコアが相対的に低めでした。1日の中で消耗しやすい時間帯はありますか。",
+    "focus": "集中に関する項目が相対的に低めでした。集中が途切れやすい要因に心当たりはありますか。",
+    "workload": "業務量の項目が相対的に低めでした。今の担当量は現実的だと感じますか。",
+    "sleep": "休息に関する項目が相対的に低めでした。睡眠や休憩の確保で困っていることはありますか。",
+    "team": "チーム連携の項目が相対的に低めでした。相談しやすさや情報共有で気になる点はありますか。",
+}
+
+INTERVIEW_CAUTION = (
+    "本スコアはセルフチェックの目安であり、人事評価・処遇判断の材料には使用しません。"
+    "医療的な判断も行いません。会話のきっかけとしてご利用ください。"
+)
+
 PRIVACY_NOTICE = (
     "この診断は体験用プロトタイプです。回答および結果はサーバーやデータベースに"
     "一切保存されず、この画面のセッション内でのみ評価されます（要配慮個人情報の"
@@ -193,6 +269,63 @@ def generate_questions(
     }
 
 
+_REFLECTION: dict[str, str] = {
+    "good": "全体として前向きなコンディションがうかがえます。良い習慣を続けましょう。",
+    "moderate": "おおむね安定していますが、休息や相談の機会を意識するとより良いでしょう。",
+    "watch": "負荷が高まっている可能性があります。休息の確保や、信頼できる人・窓口への相談を検討してください。",
+}
+
+
+def band_for_index(condition_index: float) -> dict[str, Any]:
+    """The score band a 0-100 condition index falls into.
+
+    Out-of-range values are clamped rather than raising: this drives a UI label,
+    and refusing to render a band is worse than showing the nearest one.
+    """
+    try:
+        index = float(condition_index)
+    except (TypeError, ValueError):
+        index = 0.0
+    index = max(0.0, min(100.0, index))
+    for band in SCORE_BANDS:
+        if band["min_index"] <= index <= band["max_index"]:
+            return band
+    return SCORE_BANDS[-1]
+
+
+def score_legend() -> dict[str, Any]:
+    """Band table + scale for the UI legend (no evaluation involved)."""
+    return {"score_bands": SCORE_BANDS, "scale": question_scale()}
+
+
+def interview_guide(band_id: str, dimension_scores: dict[str, float]) -> dict[str, Any]:
+    """Material for the monthly 10-20 minute feedback conversation (T909).
+
+    Generic self-care prompts only — this is a conversation aid, never a
+    diagnosis and never an input to a personnel evaluation.
+    """
+    band = next((b for b in SCORE_BANDS if b["id"] == band_id), SCORE_BANDS[-1])
+    points = list(_BAND_TALKING_POINTS.get(band["id"], []))
+
+    focus_dimension = None
+    if dimension_scores:
+        focus_dimension = min(dimension_scores, key=lambda d: dimension_scores[d])
+        prompt = _DIMENSION_PROMPT.get(focus_dimension)
+        if prompt:
+            points.insert(0, prompt)
+
+    return {
+        "band": band["id"],
+        "band_label": band["label"],
+        "suggested_minutes": "10〜20分",
+        "opening": "今月のセルフチェックの結果を一緒に見ながら、話せる範囲で聞かせてください。",
+        "focus_dimension": focus_dimension,
+        "talking_points": points,
+        "follow_up": band["follow_up"],
+        "caution": INTERVIEW_CAUTION,
+    }
+
+
 def evaluate_responses(answers: list[dict[str, Any]]) -> dict[str, Any]:
     """Evaluate 1-5 answers on-screen only. Never persists anything.
 
@@ -220,20 +353,22 @@ def evaluate_responses(answers: list[dict[str, Any]]) -> dict[str, Any]:
     # 1-5 scale -> 0-100 condition index for display only
     condition_index = round((overall - SCALE_MIN) / (SCALE_MAX - SCALE_MIN) * 100, 1)
 
-    if overall >= 4.0:
-        band, reflection = "good", "全体として前向きなコンディションがうかがえます。良い習慣を続けましょう。"
-    elif overall >= 3.0:
-        band, reflection = "moderate", "おおむね安定していますが、休息や相談の機会を意識するとより良いでしょう。"
-    else:
-        band, reflection = "watch", "負荷が高まっている可能性があります。休息の確保や、信頼できる人・窓口への相談を検討してください。"
+    # The band comes from the shared table so the legend the employee reads and
+    # the judgement they are shown can never drift apart (T909).
+    band = band_for_index(condition_index)
+    reflection = _REFLECTION[band["id"]]
 
     return {
         "answered_count": len(valid),
         "dimension_scores": dimension_scores,
         "overall_score": overall,
         "condition_index": condition_index,
-        "band": band,
+        "band": band["id"],
+        "band_label": band["label"],
+        "band_range": [band["min_index"], band["max_index"]],
+        "score_bands": SCORE_BANDS,
         "reflection": reflection,
+        "interview_guide": interview_guide(band["id"], dimension_scores),
         "disclaimer": "本結果は医療的診断ではありません。継続的な不調がある場合は専門家にご相談ください。",
         "privacy_notice": PRIVACY_NOTICE,
         "persisted": False,

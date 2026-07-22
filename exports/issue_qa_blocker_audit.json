@@ -1,20 +1,20 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-21T12:59:21Z",
-  "issue_total": 190,
-  "qa_total": 172,
+  "generated_at": "2026-07-22T16:16:30Z",
+  "issue_total": 191,
+  "qa_total": 174,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "open": 6,
+    "open": 7,
     "resolved": 163,
     "transferred": 18
   },
   "qa_status_counts": {
-    "回答済": 133,
+    "回答済": 135,
     "想定済": 39
   },
-  "issue_blocker_count": 6,
+  "issue_blocker_count": 7,
   "qa_blocker_count": 0,
   "issue_blockers": [
     {
@@ -64,6 +64,14 @@
       "title": "tests/test_ui.py::test_ui_flow が連続実行・並行レーン稼働時にPlaywright TimeoutErrorでフレークする",
       "related_wbs": "T905;T894",
       "related_issue": ""
+    },
+    {
+      "id": "R148",
+      "severity": "MED",
+      "category": "operations",
+      "title": "2026-07-22 社長定例でのご意見・決定事項の反映（アクセス制限・営業メール1000件全件取り込み・診断評価基準点提示）",
+      "related_wbs": "T898;T909;T910;T911",
+      "related_issue": "-"
     }
   ],
   "qa_blockers": []

@@ -54,6 +54,7 @@ REQUIRED_GA_ENDPOINTS = {
     "/api/user-data/export",
     "/api/aptitude-demo/questions",
     "/api/aptitude-demo/evaluate",
+    "/api/aptitude-demo/legend",
     # T752 オンボーディング/アクティベーション (TS-36, gate PUBLIC-06)
     "/api/onboarding/state",
     "/api/onboarding/progress",

@@ -6648,6 +6648,17 @@ async def aptitude_demo_questions(req: AptitudeDemoQuestionRequest):
     return {"status": "success", **result}
 
 
+@app.get("/api/aptitude-demo/legend")
+async def aptitude_demo_legend():
+    """T909: score bands (正常/注意/面談目安) and the answer scale.
+
+    Served separately from evaluation so the UI can show the criteria BEFORE a
+    person answers, and so the legend always comes from the same table the
+    evaluator uses. Contains no personal data — no consent gate needed.
+    """
+    return {"status": "success", **aptitude_demo.score_legend()}
+
+
 @app.post("/api/aptitude-demo/evaluate")
 async def aptitude_demo_evaluate(req: AptitudeDemoEvaluateRequest):
     """T876: evaluate 1-5 answers on-screen only. Requires consent. NEVER persists.
