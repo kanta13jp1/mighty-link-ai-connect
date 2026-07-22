@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "ADR記録が存在する",
+      "passed": true,
+      "detail": "ADR数=5"
+    },
+    {
+      "id": "H2",
+      "title": "ADR番号が1..Nで一意(重複・欠番0)",
+      "passed": true,
+      "detail": "ids=[1, 2, 3, 4, 5]"
+    },
+    {
+      "id": "H3",
+      "title": "各ADRが6要素(背景/決定/代替案/影響/ステータス/根拠)を持つ",
+      "passed": true,
+      "detail": "要素欠落=なし"
+    },
+    {
+      "id": "H4",
+      "title": "各ADRに代替案と却下理由が実質的に記載",
+      "passed": true,
+      "detail": "代替案が空/希薄=なし"
+    },
+    {
+      "id": "H5",
+      "title": "必須の主要決定を網羅",
+      "passed": true,
+      "detail": "未記録=なし"
+    },
+    {
+      "id": "H6",
+      "title": "ステータスが許容集合(採用済み/見直し中/廃止)",
+      "passed": true,
+      "detail": "不正ステータス=なし"
+    },
+    {
+      "id": "H7",
+      "title": "根拠docsリンクが実在(切れリンク0)",
+      "passed": true,
+      "detail": "切れリンク=なし"
+    },
+    {
+      "id": "H8",
+      "title": "廃止ADRに後継ADRまたは廃止理由が併記",
+      "passed": true,
+      "detail": "後継/理由なし=なし"
+    },
+    {
+      "id": "H9",
+      "title": "認証情報・登記情報が混入していない",
+      "passed": true,
+      "detail": "検出=なし"
+    },
+    {
+      "id": "H10",
+      "title": "ADR記録が完全(意思決定の追跡可能性)",
+      "passed": true,
+      "detail": "先行ドリフト=なし"
+    }
+  ]
+}

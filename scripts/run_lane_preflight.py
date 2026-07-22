@@ -53,6 +53,7 @@ MIN_COLLECTED_TESTS = 400
 GUARD_REGISTRY: dict[str, str] = {
     "audit_access_inventory.py": "権限棚卸し・Break-glass・単一障害点 (T850_1)",
     "audit_admin_dashboard_error_handling.py": "管理者ダッシュボードのエラー処理",
+    "audit_architecture_decisions.py": "ADR(意思決定記録)の完全性(代替案・影響の欠落検知) (T912)",
     "audit_diagnosis_fallback_transparency.py": "診断fallbackの利用者への透明性",
     "audit_doc_id_references.py": "docsのWBS/課題/QA ID参照整合(陳腐化・リンク切れ参照検知) (T904)",
     "audit_docs_reference_integrity.py": "docs内リンクの実在・移植性 (T891)",
