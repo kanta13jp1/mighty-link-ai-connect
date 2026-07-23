@@ -76,7 +76,7 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends, Request, status
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends, Request, status, Query
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.security import HTTPBasic, HTTPBasicCredentials, HTTPBearer, HTTPAuthorizationCredentials
@@ -376,8 +376,13 @@ GEMINI_DAILY_CALL_LIMIT = env_int("GEMINI_DAILY_CALL_LIMIT", 20, 0, 10000)
 GEMINI_DAILY_REPORTED_TOKEN_LIMIT = env_int("GEMINI_DAILY_REPORTED_TOKEN_LIMIT", 100000, 0, 1_000_000_000)
 
 # Basic authentication configuration
-BASIC_AUTH_USERNAME = os.environ.get("BASIC_AUTH_USERNAME", "admin")
-BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD", "mighty-link-pass")
+IS_MANAGED_RUNTIME = bool(os.environ.get("K_SERVICE") or os.environ.get("FUNCTION_TARGET"))
+BASIC_AUTH_USERNAME = os.environ.get("BASIC_AUTH_USERNAME")
+BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD")
+
+if not IS_MANAGED_RUNTIME:
+    BASIC_AUTH_USERNAME = BASIC_AUTH_USERNAME or "admin"
+    BASIC_AUTH_PASSWORD = BASIC_AUTH_PASSWORD or "mighty-link-pass"
 
 security = HTTPBasic()
 security_optional = HTTPBasic(auto_error=False)
@@ -415,6 +420,12 @@ RATE_LIMIT_GENERATION_API_PATHS = {
 
 
 def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
+    if not BASIC_AUTH_USERNAME or not BASIC_AUTH_PASSWORD:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Site authentication is not configured",
+        )
+
     correct_username = secrets.compare_digest(credentials.username, BASIC_AUTH_USERNAME)
     correct_password = secrets.compare_digest(credentials.password, BASIC_AUTH_PASSWORD)
     if not (correct_username and correct_password):
@@ -4875,8 +4886,8 @@ async def chrome_devtools_workspace():
 
 
 @app.get("/", response_class=HTMLResponse)
-async def serve_index():
-    """Serves the main frontend page index.html."""
+async def serve_index(username: str = Depends(verify_credentials)):
+    """Serves the main frontend page index.html after HTTP Basic authentication."""
     try:
         index_path = os.path.join(ROOT_DIR, "index.html")
         if not os.path.exists(index_path):
@@ -4901,7 +4912,10 @@ async def serve_index():
                 with open(index_path, "r", encoding="cp932", errors="ignore") as f:
                     content = f.read()
                     
-        return HTMLResponse(content=content)
+        return HTMLResponse(
+            content=content,
+            headers={"Cache-Control": "private, no-store, max-age=0"},
+        )
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="index.html not found in project workspace.")
 
@@ -6423,6 +6437,7 @@ async def get_sales_email_analytics():
 
 @app.post("/api/sales-email/sync")
 async def sync_sales_emails(
+    max_messages: int | None = Query(None, description="Maximum POP3 emails to fetch (default: 1000)"),
     username: str = Depends(verify_credentials),
 ):
     """Sync POP3 emails to database, run AI parse pipeline, and rebuild review JSONs."""
@@ -6430,7 +6445,7 @@ async def sync_sales_emails(
         import sys
         sys.path.insert(0, str(Path(PROJECT_ROOT) / "scripts"))
         from sync_sales_emails import sync_sales_emails_pipeline
-        result = sync_sales_emails_pipeline()
+        result = sync_sales_emails_pipeline(max_messages=max_messages)
         return result
     except Exception as exc:
         print(f"[-] Sales email sync pipeline failed: {exc}")

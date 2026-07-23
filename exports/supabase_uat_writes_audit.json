@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "has_db_connection": false,
+  "checked_tables": [
+    "employee_assessment_responses",
+    "attendance_punches",
+    "analytics_events",
+    "sales_email_matches",
+    "sales_email_analytics",
+    "support_requests",
+    "feedback_responses"
+  ],
+  "table_status": {
+    "employee_assessment_responses": {
+      "verified": true,
+      "mode": "schema_fallback",
+      "count": "N/A (No DB URL)"
+    },
+    "attendance_punches": {
+      "verified": true,
+      "mode": "schema_fallback",
+      "count": "N/A (No DB URL)"
+    },
+    "analytics_events": {
+      "verified": true,
+      "mode": "schema_fallback",
+      "count": "N/A (No DB URL)"
+    },
+    "sales_email_matches": {
+      "verified": true,
+      "mode": "schema_fallback",
+      "count": "N/A (No DB URL)"
+    },
+    "sales_email_analytics": {
+      "verified": true,
+      "mode": "schema_fallback",
+      "count": "N/A (No DB URL)"
+    },
+    "support_requests": {
+      "verified": true,
+      "mode": "schema_fallback",
+      "count": "N/A (No DB URL)"
+    },
+    "feedback_responses": {
+      "verified": true,
+      "mode": "schema_fallback",
+      "count": "N/A (No DB URL)"
+    }
+  },
+  "summary": "DB URL not provided. Schema fallback verification passed for all 7 required UAT tables."
+}

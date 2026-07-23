@@ -62,10 +62,10 @@ def fetch_pop3_emails(
     leave_str = os.getenv("POP3_LEAVE_ON_SERVER", "true").lower()
     leave_on_server = leave_on_server if leave_on_server is not None else (leave_str == "true")
     
-    # Load limit for safety
+    # Load limit for safety (default to 1000 for daily 1000-email ingest scale)
     if max_messages is None:
-        max_messages_str = os.getenv("SALES_EMAIL_PARSE_MAX_MESSAGES", "50")
-        max_messages = int(max_messages_str) if max_messages_str else 50
+        max_messages_str = os.getenv("SALES_EMAIL_PARSE_MAX_MESSAGES", "1000")
+        max_messages = int(max_messages_str) if max_messages_str else 1000
 
     if not host or not username or not password:
         raise ValueError("POP3 host, username, and password must be configured in environment or passed directly.")

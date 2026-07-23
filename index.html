@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Synchronous Security Lockout Script (Pre-render Auth Guard) -->
+    <script>
+        (function() {
+            try {
+                var stored = localStorage.getItem('mighty_auth_session');
+                if (!stored) {
+                    var css = 'html, body { overflow: hidden !important; background: #030303 !important; } main, header, footer, .hero, .internal-section { display: none !important; visibility: hidden !important; opacity: 0 !important; } #auth-modal { opacity: 1 !important; pointer-events: auto !important; display: flex !important; } .auth-modal-close { display: none !important; }';
+                    var style = document.createElement('style');
+                    style.id = 'early-auth-lockout-style';
+                    style.innerHTML = css;
+                    document.head.appendChild(style);
+                }
+            } catch(e) {}
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mighty Skill-Bridge - エンジニア＆案件 AIフィットシミュレーター</title>
@@ -2956,23 +2971,23 @@
         <div class="auth-modal-card" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
             <button class="auth-modal-close" onclick="closeAuthModal()" aria-label="閉じる">×</button>
             <div class="auth-modal-header">
-                <h3 id="auth-modal-title">アカウント認証</h3>
-                <p style="font-size: 0.8rem; color: var(--muted);" id="auth-modal-subtitle">セキュリティ保護機能にアクセスするにはログインしてください</p>
+                <h3 id="auth-modal-title" data-i18n="auth_modal_title">アカウント認証</h3>
+                <p style="font-size: 0.8rem; color: var(--muted);" id="auth-modal-subtitle" data-i18n="admin_login_required">セキュリティ保護機能にアクセスするにはログインしてください</p>
             </div>
             <div class="auth-modal-tabs">
-                <button class="auth-tab-btn active" id="tab-login" onclick="switchAuthTab('login')">ログイン</button>
+                <button class="auth-tab-btn active" id="tab-login" onclick="switchAuthTab('login')" data-i18n="auth_login_btn">ログイン</button>
                 <button class="auth-tab-btn" id="tab-signup" onclick="switchAuthTab('signup')">新規登録</button>
             </div>
             <form id="auth-form" onsubmit="handleAuthSubmit(event)">
                 <div class="auth-form-group">
-                    <label for="auth-email">メールアドレス</label>
+                    <label for="auth-email" data-i18n="auth_email_label">メールアドレス</label>
                     <input type="email" id="auth-email" required placeholder="name@company.com" autocomplete="email">
                 </div>
                 <div class="auth-form-group">
-                    <label for="auth-password">パスワード</label>
+                    <label for="auth-password" data-i18n="auth_pass_label">パスワード</label>
                     <input type="password" id="auth-password" required placeholder="••••••••" autocomplete="current-password" minlength="6">
                 </div>
-                <button type="submit" class="auth-submit-btn" id="auth-submit-btn">ログインしてアクセス</button>
+                <button type="submit" class="auth-submit-btn" id="auth-submit-btn" data-i18n="auth_submit_btn">ログインしてアクセス</button>
                 <div class="auth-error-msg" id="auth-error-msg"></div>
             </form>
         </div>
@@ -3389,12 +3404,12 @@
              乖離しないようにする。進捗は localStorage のみに保持し、個人情報は保存しない。
              ========================================================================== -->
         <section id="onboarding-section" class="internal-section fade-in-on-scroll" aria-label="初期セットアップ・アクティベーション">
-            <div class="step-kicker">初期セットアップ</div>
+            <div class="step-kicker" data-i18n="onboard_title">初期セットアップ</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
                     <div>
-                        <h2>初期セットアップ / アカウント有効化</h2>
-                        <span class="control-label">管理者が発行したアカウントで、必須ステップを完了すると利用を開始できます</span>
+                        <h2 data-i18n="onboard_title">初期セットアップ / アカウント有効化</h2>
+                        <span class="control-label" data-i18n="onboard_subtitle">管理者が発行したアカウントで、必須ステップを完了すると利用を開始できます</span>
                     </div>
                     <span class="support-status" id="onboarding-status" role="status">未開始</span>
                 </div>
@@ -3436,11 +3451,11 @@
              Step 3: 従業員向け適性・状況診断アンケート回答フォーム (T840)
              ========================================================================== -->
         <section id="survey-section" class="internal-section fade-in-on-scroll" aria-label="従業員適性・状況アンケート">
-            <div class="step-kicker">適性アンケート</div>
+            <div class="step-kicker" data-i18n="nav_survey">適性アンケート</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
-                    <h2>従業員適性・状況診断アンケート</h2>
-                    <span class="control-label">社員の適性や状況を把握するための社内アンケート</span>
+                    <h2 data-i18n="survey_title">従業員適性・状況診断アンケート</h2>
+                    <span class="control-label" data-i18n="survey_subtitle">社員の適性や状況を把握するための社内アンケート</span>
                 </div>
                 <form id="employee-survey-form" onsubmit="submitSurvey(event)">
                     <div class="form-grid-2col">
@@ -3503,12 +3518,12 @@
              Step 3.5: 適性・モチベーション自己診断デモ (T876)
              ========================================================================== -->
         <section id="aptitude-demo-section" class="internal-section fade-in-on-scroll" aria-label="適性・モチベーション自己診断デモ">
-            <div class="step-kicker">自己診断デモ</div>
+            <div class="step-kicker" data-i18n="nav_aptitude">自己診断デモ</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
                     <div>
-                        <h2>適性・モチベーション自己診断デモ</h2>
-                        <span class="control-label">回答と結果は保存せず、この画面のセッション内だけで評価します</span>
+                        <h2 data-i18n="aptitude_title">適性・モチベーション自己診断デモ</h2>
+                        <span class="control-label" data-i18n="aptitude_subtitle">回答と結果は保存せず、この画面のセッション内だけで評価します</span>
                     </div>
                     <span class="support-status" id="aptitude-demo-status" role="status">未生成</span>
                 </div>
@@ -3555,11 +3570,11 @@
              Step 4: 勤務表自動解析・ジョブカン風簡易勤怠打刻 (T841)
              ========================================================================== -->
         <section id="attendance-section" class="internal-section fade-in-on-scroll" aria-label="勤怠管理・勤務表解析">
-            <div class="step-kicker">勤怠管理 (ジョブカン相当)</div>
+            <div class="step-kicker" data-i18n="nav_attendance">勤怠管理</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
-                    <h2>簡易勤怠打刻 &amp; 勤務表自動解析</h2>
-                    <span class="control-label">出退勤の簡易打刻、および月末の勤務表CSV/Excelパース連携</span>
+                    <h2 data-i18n="attendance_title">簡易勤怠打刻 &amp; 勤務表自動解析</h2>
+                    <span class="control-label" data-i18n="attendance_subtitle">出退勤の簡易打刻、および月末の勤務表CSV/Excelパース連携</span>
                 </div>
 
                 <div class="form-grid-2col" style="margin-bottom: 16px;">
@@ -3627,10 +3642,10 @@
              営業メールAIマッチング (一般向け公開セクション)
              ========================================================================= -->
         <section id="matching-section" class="internal-section fade-in-on-scroll" aria-label="営業メールAIマッチング">
-            <div class="step-kicker">営業メールマッチング</div>
+            <div class="step-kicker" data-i18n="nav_matching">営業メールマッチング</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
-                    <h2 style="display: flex; align-items: center;">
+                    <h2 style="display: flex; align-items: center;" data-i18n="matching_title">
                         営業メールAIマッチング進捗
                         <button type="button" class="help-trigger-btn" onclick="openMatchingHelpModal()" aria-label="営業メールマッチングの使い方を表示" style="
                             background: rgba(139, 220, 255, 0.15);
@@ -3651,7 +3666,7 @@
                             box-shadow: 0 0 10px rgba(139, 220, 255, 0.1);
                         ">?</button>
                     </h2>
-                    <span class="control-label">営業メールから自動抽出された案件と、適合するエンジニアのAIマッチング候補一覧（閲覧専用）</span>
+                    <span class="control-label" data-i18n="matching_subtitle">営業メールから自動抽出された案件と、適合するエンジニアのAIマッチング候補一覧（閲覧専用）</span>
                 </div>
                 <div class="panel" style="min-height: auto;">
                     <div class="table-responsive">
@@ -3711,11 +3726,11 @@
              Step 5: 管理者向け統合ダッシュボード (T842)
              ========================================================================= -->
         <section id="admin-dashboard-section" class="internal-section fade-in-on-scroll" aria-label="管理者統合ダッシュボード">
-            <div class="step-kicker">管理者ダッシュボード</div>
+            <div class="step-kicker" data-i18n="nav_admin">管理者ダッシュボード</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
-                    <h2>社内診断・勤怠＆マッチング統合管理</h2>
-                    <span class="control-label">社員の適性診断、稼働状況、および営業メール案件マッチングの統括監視</span>
+                    <h2 data-i18n="admin_title">社内診断・勤怠＆マッチング統合管理</h2>
+                    <span class="control-label" data-i18n="admin_subtitle">社員の適性診断、稼働状況、および営業メール案件マッチングの統括監視</span>
                 </div>
 
                 <div class="panel" style="min-height: auto; margin-bottom: 24px;">
@@ -4074,8 +4089,57 @@
                 nav_attendance: "勤怠管理",
                 nav_matching: "営業メールマッチング",
                 nav_admin: "管理者ダッシュボード",
+                hero_title: "エンジニア＆案件 AIフィットシミュレーター",
+                hero_subtitle: "AIが最適マッチングと自己診断・勤怠解析をワンストップ支援",
+                hero_badge: "次世代SESAIプラットフォーム",
+                hero_cta_survey: "適性診断を試す",
+                hero_cta_matching: "AIマッチングを開始",
+                onboard_title: "初期セットアップ",
+                onboard_subtitle: "Google / Firebase / Supabase連携の設定手順",
+                onboard_step1: "ステップ1: 認証連携",
+                onboard_step2: "ステップ2: DB接続設定",
+                onboard_step3: "ステップ3: AIモデル初期化",
+                survey_title: "適性・モチベーション自己診断アンケート",
+                survey_subtitle: "チーム適合度とモチベーション要素を評価します",
+                survey_submit_btn: "診断結果を計算する",
+                survey_q1: "Q1. 新しい技術の習得に対する意欲が高いですか？",
+                survey_q2: "Q2. チームメンバーとの積極的なコミュニュケーションを重視しますか？",
+                survey_q3: "Q3. 自律的な問題解決や改善提案が得意ですか？",
+                survey_q4: "Q4. 業務の進捗状況を透明性高く共有できますか？",
+                survey_q5: "Q5. 変化の多い環境や柔軟な役割変更に適応できますか？",
+                aptitude_title: "自己診断デモ & フィードバック面談活用ガイド",
+                aptitude_subtitle: "基準点に基づく客観評価と10〜20分の定期フィードバック面談導線",
+                aptitude_legend_normal: "正常 (75.0〜100点): 順調な状態です",
+                aptitude_legend_caution: "注意 (50.0〜74.9点): フォローを推奨します",
+                aptitude_legend_interview: "面談目安 (0〜49.9点): 10〜20分の面談実施を推奨",
+                aptitude_notice_eval: "※ 人事評価・処遇判断の材料には使用しません",
+                aptitude_notice_medical: "※ 本診断は医療的判断を行うものではありません",
+                aptitude_run_btn: "自己診断を実行する",
+                attendance_title: "勤怠管理 & 打刻解析",
+                attendance_subtitle: "勤務時間・残業時間・深夜労働のAI自動サマリー",
+                attendance_analyze_btn: "勤怠データを解析する",
+                attendance_work_hours: "総実労働時間",
+                attendance_overtime: "時間外労働時間",
+                attendance_late_night: "深夜労働時間",
+                matching_title: "営業メール AIスキルマッチング",
+                matching_subtitle: "エンジニア経歴と案件要件をAIが高精度に照合・スコアリング",
+                matching_run_btn: "AI適合度を分析・判定",
                 placeholder_engineer: "エンジニアのスキルや経歴を入力してください...",
-                placeholder_job: "案件の必須要件や歓迎要件を入力してください..."
+                placeholder_job: "案件の必須要件や歓迎要件を入力してください...",
+                matching_score_label: "総合マッチング適合度",
+                matching_tech_match: "技術要件マッチ率",
+                admin_title: "管理者ダッシュボード",
+                admin_subtitle: "システム稼働状態・監査ログ・ユーザー権限管理",
+                admin_login_required: "🔒 管理者ダッシュボード閲覧にはログインが必要です",
+                admin_export_csv: "監査ログCSVをダウンロード",
+                admin_refresh_btn: "データを最新に更新",
+                admin_status_active: "システム正常稼働中",
+                auth_login_btn: "🔑 ログイン",
+                auth_logout_btn: "🚪 ログアウト",
+                auth_modal_title: "ダッシュボード ログイン",
+                auth_email_label: "メールアドレス",
+                auth_pass_label: "パスワード",
+                auth_submit_btn: "ログインしてアクセス"
             },
             en: {
                 nav_home: "Home",
@@ -4084,9 +4148,58 @@
                 nav_aptitude: "Aptitude Demo",
                 nav_attendance: "Attendance",
                 nav_matching: "Email Matching",
-                nav_admin: "Admin",
+                nav_admin: "Admin Dashboard",
+                hero_title: "Engineer & Job AI Fit Simulator",
+                hero_subtitle: "One-stop AI platform for optimal matching, self-diagnosis, and attendance analytics",
+                hero_badge: "Next-Gen SES AI Platform",
+                hero_cta_survey: "Try Aptitude Survey",
+                hero_cta_matching: "Start AI Matching",
+                onboard_title: "Initial Setup",
+                onboard_subtitle: "Setup workflow for Google / Firebase / Supabase integrations",
+                onboard_step1: "Step 1: Auth Integration",
+                onboard_step2: "Step 2: DB Connection Setup",
+                onboard_step3: "Step 3: AI Model Initialization",
+                survey_title: "Aptitude & Motivation Self-Assessment",
+                survey_subtitle: "Evaluate team fit and motivation drivers",
+                survey_submit_btn: "Calculate Results",
+                survey_q1: "Q1. Are you highly motivated to learn new technologies?",
+                survey_q2: "Q2. Do you prioritize active communication with team members?",
+                survey_q3: "Q3. Are you skilled at autonomous problem-solving and proactive proposals?",
+                survey_q4: "Q4. Can you share work progress with high transparency?",
+                survey_q5: "Q5. Can you adapt flexibly to changing environments and shifting roles?",
+                aptitude_title: "Aptitude Demo & Feedback Interview Guide",
+                aptitude_subtitle: "Objective evaluation based on benchmarks and 10-20 min 1-on-1 interview flows",
+                aptitude_legend_normal: "Normal (75.0-100 pts): Performing well",
+                aptitude_legend_caution: "Caution (50.0-74.9 pts): Follow-up recommended",
+                aptitude_legend_interview: "Interview Guide (0-49.9 pts): 10-20 min 1-on-1 recommended",
+                aptitude_notice_eval: "* Not used for performance evaluation or compensation decisions.",
+                aptitude_notice_medical: "* This assessment does not provide medical diagnoses or advice.",
+                aptitude_run_btn: "Run Self-Diagnosis",
+                attendance_title: "Attendance & Punch Log Analytics",
+                attendance_subtitle: "AI-powered summary of work hours, overtime, and late-night shifts",
+                attendance_analyze_btn: "Analyze Attendance Data",
+                attendance_work_hours: "Total Worked Hours",
+                attendance_overtime: "Overtime Hours",
+                attendance_late_night: "Late-Night Hours",
+                matching_title: "Sales Email AI Skill Matching",
+                matching_subtitle: "High-precision AI matching between engineer profiles and job requirements",
+                matching_run_btn: "Analyze AI Fit Score",
                 placeholder_engineer: "Enter engineer's profile, skills, and experience details...",
-                placeholder_job: "Enter job requirements, welcome skills, and project conditions..."
+                placeholder_job: "Enter job requirements, welcome skills, and project conditions...",
+                matching_score_label: "Overall Fit Score",
+                matching_tech_match: "Skill Requirement Match Rate",
+                admin_title: "Admin Dashboard",
+                admin_subtitle: "Monitor system health, audit logs, and user permissions",
+                admin_login_required: "🔒 Authentication required to access Admin Dashboard",
+                admin_export_csv: "Export Audit Log CSV",
+                admin_refresh_btn: "Refresh Data",
+                admin_status_active: "System Operating Normally",
+                auth_login_btn: "🔑 Login",
+                auth_logout_btn: "🚪 Logout",
+                auth_modal_title: "Dashboard Login",
+                auth_email_label: "Email Address",
+                auth_pass_label: "Password",
+                auth_submit_btn: "Submit Login"
             },
             zh: {
                 nav_home: "首页",
@@ -4096,8 +4209,57 @@
                 nav_attendance: "考勤管理",
                 nav_matching: "邮件匹配",
                 nav_admin: "管理员后台",
+                hero_title: "工程师与职位 AI 匹配模拟器",
+                hero_subtitle: "提供一站式 AI 最优匹配、自我诊断与考勤智能分析",
+                hero_badge: "次世代 SES AI 平台",
+                hero_cta_survey: "体验自我诊断",
+                hero_cta_matching: "开始 AI 匹配",
+                onboard_title: "初始设置",
+                onboard_subtitle: "Google / Firebase / Supabase 集成配置流程",
+                onboard_step1: "步骤 1: 身份验证集成",
+                onboard_step2: "步骤 2: 数据库连接设置",
+                onboard_step3: "步骤 3: AI 模型初始化",
+                survey_title: "胜任力与积极性自我诊断问卷",
+                survey_subtitle: "评估团队契合度与职业动机要素",
+                survey_submit_btn: "计算诊断结果",
+                survey_q1: "问题 1: 您对学习新技术是否保持高度热情？",
+                survey_q2: "问题 2: 您是否重视与团队成员的积极沟通？",
+                survey_q3: "问题 3: 您是否擅长自主解决问题与提出改善建议？",
+                survey_q4: "问题 4: 您能否保持高透明度地共享工作进展？",
+                survey_q5: "问题 5: 您能否灵活适应快速变化的环境与角色调整？",
+                aptitude_title: "自我诊断演示与反馈面谈指南",
+                aptitude_subtitle: "基于标准分的客观评估与 10-20 分钟定期面谈导引",
+                aptitude_legend_normal: "正常 (75.0-100 分): 状态良好",
+                aptitude_legend_caution: "注意 (50.0-74.9 分): 建议跟进关注",
+                aptitude_legend_interview: "建议面谈 (0-49.9 分): 建议开展 10-20 分钟面谈沟通",
+                aptitude_notice_eval: "※ 本诊断结果不用于人事考核及薪酬处遇评估",
+                aptitude_notice_medical: "※ 本诊断不作任何医疗诊断或健康判断",
+                aptitude_run_btn: "运行自我诊断",
+                attendance_title: "考勤管理与打卡数据分析",
+                attendance_subtitle: "工作时间、加班时长与深夜工时的 AI 智能汇总",
+                attendance_analyze_btn: "分析考勤数据",
+                attendance_work_hours: "总实际工时",
+                attendance_overtime: "加班工时",
+                attendance_late_night: "深夜工时",
+                matching_title: "销售邮件 AI 技能精准匹配",
+                matching_subtitle: "智能比对工程师履历与职位要求，输出高精度评分",
+                matching_run_btn: "分析 AI 契合度",
                 placeholder_engineer: "请在此输入工程师的技能和简历详情...",
-                placeholder_job: "请在此输入职位的基本要求和团队条件..."
+                placeholder_job: "请在此输入职位的基本要求和团队条件...",
+                matching_score_label: "综合匹配契合度",
+                matching_tech_match: "技术要件匹配率",
+                admin_title: "管理员后台",
+                admin_subtitle: "系统运行状态、审计日志与权限管理",
+                admin_login_required: "🔒 访问管理员后台需要登录认证",
+                admin_export_csv: "导出审计日志 CSV",
+                admin_refresh_btn: "刷新最新数据",
+                admin_status_active: "系统正常运行中",
+                auth_login_btn: "🔑 登录",
+                auth_logout_btn: "🚪 退出登录",
+                auth_modal_title: "控制台登录",
+                auth_email_label: "电子邮箱",
+                auth_pass_label: "密码",
+                auth_submit_btn: "执行登录"
             },
             ko: {
                 nav_home: "홈",
@@ -4107,23 +4269,84 @@
                 nav_attendance: "근태관리",
                 nav_matching: "영업메일 매칭",
                 nav_admin: "관리자 대시보드",
+                hero_title: "엔지니어 & 프로젝트 AI 피트 시뮬레이터",
+                hero_subtitle: "최적의 매칭과 자가진단, 근태 분석을 원스톱으로 지원하는 AI 플랫폼",
+                hero_badge: "차세대 SES AI 플랫폼",
+                hero_cta_survey: "적성진단 체험하기",
+                hero_cta_matching: "AI 매칭 시작하기",
+                onboard_title: "초기 설정",
+                onboard_subtitle: "Google / Firebase / Supabase 연동 설정 절차",
+                onboard_step1: "1단계: 인증 연동",
+                onboard_step2: "2단계: DB 연결 설정",
+                onboard_step3: "3단계: AI 모델 초기화",
+                survey_title: "적성 및 동기 부여 자가진단 설문",
+                survey_subtitle: "팀 적합도와 동기 부여 요소를 평가합니다",
+                survey_submit_btn: "진단 결과 계산하기",
+                survey_q1: "Q1. 새로운 기술 습득에 대한 의욕이 높습니까?",
+                survey_q2: "Q2. 팀원들과의 적극적인 커뮤니케이션을 중요하게 생각합니까?",
+                survey_q3: "Q3. 자율적인 문제 해결과 개선 제안에 강점이 있습니까?",
+                survey_q4: "Q4. 업무 진행 상황을 투명하게 공유할 수 있습니까?",
+                survey_q5: "Q5. 변화가 많은 환경과 유연한 역할 변경에 잘 적응합니까?",
+                aptitude_title: "자가진단 데모 & 피드백 면담 활용 가이드",
+                aptitude_subtitle: "기준점 기반의 객관적 평가 및 10~20분 정기 면담 가이드라인",
+                aptitude_legend_normal: "정상 (75.0~100점): 양호한 상태입니다",
+                aptitude_legend_caution: "주의 (50.0~74.9점): 팔로우를 권장합니다",
+                aptitude_legend_interview: "면담 권장 (0~49.9점): 10~20분 피드백 면담을 권장합니다",
+                aptitude_notice_eval: "※ 본 진단 결과는 인사 평가 및 처우 판단 자료로 사용되지 않습니다",
+                aptitude_notice_medical: "※ 본 진단은 의학적 진단이나 판단을 수행하지 않습니다",
+                aptitude_run_btn: "자가진단 실행하기",
+                attendance_title: "근태 관리 & 출퇴근 분석",
+                attendance_subtitle: "근무 시간, 연장 근무, 야간 근무의 AI 자동 요약",
+                attendance_analyze_btn: "근태 데이터 분석하기",
+                attendance_work_hours: "총 실근무 시간",
+                attendance_overtime: "연장 근무 시간",
+                attendance_late_night: "야간 근무 시간",
+                matching_title: "영업 메일 AI 스킬 매칭",
+                matching_subtitle: "엔지니어 이력과 프로젝트 요건을 AI가 고밀도로 정합 및 스코어링",
+                matching_run_btn: "AI 적합도 분석·판정",
                 placeholder_engineer: "여기에 엔지니어의 스킬 및 경력 상세를 입력하세요...",
-                placeholder_job: "여기에 프로젝트 필수 요건 및 팀 우대 사항을 입력하세요..."
+                placeholder_job: "여기에 프로젝트 필수 요건 및 팀 우대 사항을 입력하세요...",
+                matching_score_label: "종합 매칭 적합도",
+                matching_tech_match: "기술 요건 일치율",
+                admin_title: "관리자 대시보드",
+                admin_subtitle: "시스템 가동 상태, 감사 로그 및 사용자 권한 관리",
+                admin_login_required: "🔒 관리자 대시보드 조회를 위해 로그인이 필요합니다",
+                admin_export_csv: "감사 로그 CSV 다운로드",
+                admin_refresh_btn: "최신 데이터로 새로고침",
+                admin_status_active: "시스템 정상 작동 중",
+                auth_login_btn: "🔑 로그인",
+                auth_logout_btn: "🚪 로그아웃",
+                auth_modal_title: "대시보드 로그인",
+                auth_email_label: "이메일 주소",
+                auth_pass_label: "비밀번호",
+                auth_submit_btn: "로그인 실행"
             }
         };
 
         function switchLanguage(el) {
-            const lang = el.getAttribute("data-lang");
+            const lang = typeof el === "string" ? el : el.getAttribute("data-lang");
             if (!lang) return;
 
-            const switcher = el.closest(".language-switch");
-            if (switcher) {
-                switcher.querySelectorAll("a").forEach(a => {
-                    a.classList.remove("active");
-                    a.removeAttribute("aria-current");
+            if (typeof el !== "string") {
+                const switcher = el.closest(".language-switch");
+                if (switcher) {
+                    switcher.querySelectorAll("a").forEach(a => {
+                        a.classList.remove("active");
+                        a.removeAttribute("aria-current");
+                    });
+                    el.classList.add("active");
+                    el.setAttribute("aria-current", "true");
+                }
+            } else {
+                document.querySelectorAll(".language-switch a").forEach(a => {
+                    if (a.getAttribute("data-lang") === lang) {
+                        a.classList.add("active");
+                        a.setAttribute("aria-current", "true");
+                    } else {
+                        a.classList.remove("active");
+                        a.removeAttribute("aria-current");
+                    }
                 });
-                el.classList.add("active");
-                el.setAttribute("aria-current", "true");
             }
 
             document.documentElement.lang = lang === "ja" ? "ja" : lang;
@@ -4136,12 +4359,37 @@
                 }
             });
 
+            document.querySelectorAll("[data-i18n-html]").forEach(node => {
+                const key = node.getAttribute("data-i18n-html");
+                if (i18nDict[lang] && i18nDict[lang][key]) {
+                    node.innerHTML = i18nDict[lang][key];
+                }
+            });
+
             document.querySelectorAll("[data-i18n-placeholder]").forEach(node => {
                 const key = node.getAttribute("data-i18n-placeholder");
                 if (i18nDict[lang] && i18nDict[lang][key]) {
                     node.placeholder = i18nDict[lang][key];
                 }
             });
+
+            document.querySelectorAll("[data-i18n-aria-label]").forEach(node => {
+                const key = node.getAttribute("data-i18n-aria-label");
+                if (i18nDict[lang] && i18nDict[lang][key]) {
+                    node.setAttribute("aria-label", i18nDict[lang][key]);
+                }
+            });
+
+            document.querySelectorAll("[data-i18n-title]").forEach(node => {
+                const key = node.getAttribute("data-i18n-title");
+                if (i18nDict[lang] && i18nDict[lang][key]) {
+                    node.title = i18nDict[lang][key];
+                }
+            });
+
+            try {
+                window.dispatchEvent(new CustomEvent("languageChanged", { detail: { lang } }));
+            } catch (e) {}
         }
 
         (function initLang() {
@@ -7143,7 +7391,7 @@
             targets.forEach(el => io.observe(el));
         })();
         /* ==========================================================================
-           Authentication & Authorization Session Manager (T898 社長定例決定事項)
+           Authentication & Authorization Session Manager (T898 / T913 ログイン必須化)
            ========================================================================== */
         let currentAuthMode = 'login';
         let currentUserSession = null;
@@ -7164,6 +7412,8 @@
             currentUserSession = session;
             if (session) {
                 localStorage.setItem('mighty_auth_session', JSON.stringify(session));
+                const earlyStyle = document.getElementById('early-auth-lockout-style');
+                if (earlyStyle) earlyStyle.remove();
             } else {
                 localStorage.removeItem('mighty_auth_session');
             }
@@ -7180,26 +7430,49 @@
                 if (openBtn) openBtn.style.display = 'none';
                 if (userInfo) userInfo.style.display = 'inline-flex';
                 if (userEmailEl) userEmailEl.textContent = session.email;
+                closeAuthModal(true); // Allow closing
             } else {
                 if (openBtn) openBtn.style.display = 'inline-flex';
                 if (userInfo) userInfo.style.display = 'none';
+                openAuthModal('login'); // Force open compulsory login wall
             }
         }
 
         function openAuthModal(mode = 'login') {
             const modal = document.getElementById('auth-modal');
+            const closeBtn = document.querySelector('.auth-modal-close');
+            const session = currentUserSession || getAuthSession();
+
             if (modal) {
                 modal.classList.add('active');
                 modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden'; // Lock background scroll
+
+                // If not logged in, hide close button to enforce lockout
+                if (!session) {
+                    if (closeBtn) closeBtn.style.display = 'none';
+                    const subtitle = document.getElementById('auth-modal-subtitle');
+                    if (subtitle) {
+                        subtitle.textContent = '🔒 セキュリティ保護のため、ログインまたは新規アカウント登録が必要です';
+                    }
+                } else {
+                    if (closeBtn) closeBtn.style.display = 'block';
+                }
                 switchAuthTab(mode);
             }
         }
 
-        function closeAuthModal() {
+        function closeAuthModal(force = false) {
+            const session = currentUserSession || getAuthSession();
+            if (!session && !force) {
+                showToastNotification('ログインが必要です。', 'error');
+                return; // Prevent closing if unauthenticated
+            }
             const modal = document.getElementById('auth-modal');
             if (modal) {
                 modal.classList.remove('active');
                 modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = ''; // Unlock scroll
             }
             const errorEl = document.getElementById('auth-error-msg');
             if (errorEl) errorEl.style.display = 'none';
@@ -7251,8 +7524,7 @@
                     loginAt: new Date().toISOString()
                 };
                 setAuthSession(session);
-                closeAuthModal();
-                showToastNotification(currentAuthMode === 'login' ? 'ログインしました。' : 'アカウントを新規登録しました。', 'success');
+                showToastNotification(currentAuthMode === 'login' ? 'ログイン成功。保護機能へアクセスできます。' : 'アカウント登録完了。ログインしました。', 'success');
             } catch (err) {
                 if (errorEl) {
                     errorEl.textContent = '認証に失敗しました: ' + (err.message || '資格情報を確認してください');
@@ -7263,7 +7535,10 @@
 
         function handleLogout() {
             setAuthSession(null);
-            showToastNotification('ログアウトしました。', 'info');
+            showToastNotification('ログアウトしました。画面をロックします。', 'info');
+            setTimeout(() => {
+                location.reload();
+            }, 500);
         }
 
         function showToastNotification(message, type = 'info') {
@@ -7271,7 +7546,7 @@
             toast.style.cssText = `
                 position: fixed; bottom: 24px; right: 24px; z-index: 10001;
                 padding: 12px 20px; border-radius: 8px; font-size: 0.88rem; font-weight: 700;
-                color: #030303; background: ${type === 'success' ? '#baff66' : '#8bdcff'};
+                color: #030303; background: ${type === 'success' ? '#baff66' : type === 'error' ? '#ff6cab' : '#8bdcff'};
                 box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.3s ease;
             `;
             toast.textContent = message;
@@ -7298,7 +7573,7 @@
             return true;
         }
 
-        // Initialize Auth UI on DOM load
+        // Initialize Auth UI & Enforce Lockout on DOM load
         document.addEventListener("DOMContentLoaded", () => {
             currentUserSession = getAuthSession();
             updateAuthUI();

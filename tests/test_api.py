@@ -93,8 +93,14 @@ def test_rate_limit_exempts_health_and_blocks_expensive_api():
         app.api_rate_limiter.reset()
 
 def test_basic_auth_protection(client):
-    # Public route
+    # Application HTML is protected at the server boundary.
     response = client.get("/")
+    assert response.status_code == 401
+
+    response = client.get(
+        "/",
+        auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD),
+    )
     assert response.status_code == 200
     
     # Secure route - /admin

@@ -123,3 +123,45 @@ def test_fetch_pop3_emails_limit(mock_pop3_ssl):
         assert len(emails) == 2
         assert emails[0].subject == "Test Subject 3"
         assert emails[1].subject == "Test Subject 2"
+
+
+def test_fetch_pop3_emails_1000_scale():
+    """Verify POP3 ingest handles 1000-email scale (T910 requirements)."""
+    with patch("poplib.POP3_SSL") as mock_class:
+        mock_client = MagicMock()
+        mock_class.return_value = mock_client
+        
+        # Simulate 1000 messages on server
+        mock_client.stat.return_value = (1000, 5000000)
+        mock_client.getwelcome.return_value = b"+OK Pop server ready"
+        mock_client.user.return_value = b"+OK User accepted"
+        mock_client.pass_.return_value = b"+OK Pass accepted"
+        
+        def mock_retr(idx):
+            msg_lines = [
+                f"From: sender{idx}@example.com".encode(),
+                f"Subject: Sales Email {idx}".encode(),
+                b"Date: Wed, 22 Jul 2026 12:00:00 +0900",
+                f"Message-ID: <msg{idx}@example.com>".encode(),
+                b"",
+                f"Body content of sales email {idx}".encode(),
+            ]
+            return (b"+OK", msg_lines, 500)
+
+        mock_client.retr.side_effect = mock_retr
+
+        env_patch = {
+            "POP3_HOST": "pop.example.com",
+            "POP3_PORT": "995",
+            "POP3_USE_SSL": "true",
+            "POP3_USERNAME": "test_user",
+            "POP3_PASSWORD": "test_password",
+            "POP3_LEAVE_ON_SERVER": "true",
+        }
+        with patch.dict(os.environ, env_patch):
+            emails = fetch_pop3_emails(max_messages=1000)
+            assert len(emails) == 1000
+            assert emails[0].subject == "Sales Email 1000"
+            assert emails[999].subject == "Sales Email 1"
+            assert emails[0].source_type == "pop3"
+

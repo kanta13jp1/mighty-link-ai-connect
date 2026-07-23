@@ -1,9 +1,9 @@
-# Mighty Skill-Bridge：デモ環境セキュリティおよび認証・アクセス制限設計書（T686）
+# Mighty Skill-Bridge：デモ環境セキュリティおよび認証・アクセス制限設計書
 
-**作成日**: 2026年6月3日  
-**ステータス**: 完了  
+**作成日**: 2026年6月3日（2026年7月23日現行化）  
+**ステータス**: 運用中  
 **対象フェーズ**: 7. 次期開発・運用（セキュリティ）  
-**関連タスク**: **T686** デモ環境へのbasic authまたはIP制限の導入設計  
+**関連タスク**: **T686** 認証設計、**T913** ログイン必須化、**T915** 静的配信バイパス解消  
 **関連Issue/課題**: [R10](../data/issues_tracker.tsv#L11) (公開URLの外部漏洩対策)
 
 ---
@@ -33,22 +33,30 @@
 ## 3. 方式A：詳細設計
 
 ### 3.1 ルーティング設計（firebase.json）
-現在、`firebase.json` は `/api/**` および `/admin/**` のみを Cloud Functions へ流していますが、静的ファイル `index.html` の直アクセスも保護するため、以下のようにすべてのリクエスト（`/**`）を `api` 関数へ書き換えます。
+Firebase Hosting は、リライトより完全一致の静的ファイルを優先します。したがって `public: "."` のまま全パスリライトを追加しても、`/` と `/index.html` は配置済みの `index.html` を直接返し、FastAPI の認証へ到達しません。
+
+`public` は実質空の専用ディレクトリへ分離し、アプリケーションHTMLやプロジェクトデータを一切配置しません。`firebase-hosting/.gitkeep` は `**/.*` の ignore 規則によりデプロイ対象外です。静的完全一致が存在しない状態で、最後の `**` リライトが全リクエストを `api` サービスへ集約します。
 
 ```json
 {
   "hosting": {
-    "public": ".",
+    "public": "firebase-hosting",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      "venv/**"
+      "venv/**",
+      "tests/**",
+      ".git/**",
+      ".github/**"
     ],
     "rewrites": [
       {
         "source": "**",
-        "function": "api"
+        "run": {
+          "serviceId": "api",
+          "region": "us-central1"
+        }
       }
     ]
   }
@@ -56,25 +64,32 @@
 ```
 
 ### 3.2 FastAPI (Python) での認証実装設計
-FastAPI 内で、静的ファイルを配信する `StaticFiles` マウントおよびルート `/` の手前に、認証依存関係を追加します。
+FastAPI のルート `/` に `HTTPBasic` の認証依存関係を追加します。未認証リクエストは `WWW-Authenticate: Basic` を伴うHTTP 401となり、HTML本文を返しません。
 
 * **セキュリティスキーマ**: `fastapi.security.HTTPBasic` を使用。
-* **認証認証情報の取得**: 環境変数 `BASIC_AUTH_USERNAME` および `BASIC_AUTH_PASSWORD` を参照。設定がない場合はデフォルトの認証情報をフォールバックとして使用。
+* **認証情報の取得**: 環境変数 `BASIC_AUTH_USERNAME` および `BASIC_AUTH_PASSWORD` を参照。
+* **fail-closed**: Cloud Functions / Cloud Run の管理ランタイムで認証情報が欠けた場合、既知の開発用デフォルト値へ戻さずHTTP 503で閉鎖します。
+* **キャッシュ制御**: 認証後のHTMLへ `Cache-Control: private, no-store, max-age=0` を付与します。
 
 ```python
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import HTMLResponse
 import os
+import secrets
 
 security = HTTPBasic()
+is_managed_runtime = bool(os.environ.get("K_SERVICE") or os.environ.get("FUNCTION_TARGET"))
+username = os.environ.get("BASIC_AUTH_USERNAME")
+password = os.environ.get("BASIC_AUTH_PASSWORD")
 
 def verify_basic_auth(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_username = os.environ.get("BASIC_AUTH_USERNAME", "mighty")
-    correct_password = os.environ.get("BASIC_AUTH_PASSWORD", "link2026")
-    
-    if credentials.username != correct_username or credentials.password != correct_password:
+    if is_managed_runtime and (not username or not password):
+        raise HTTPException(status_code=503, detail="Site authentication is not configured")
+    if not (
+        secrets.compare_digest(credentials.username, username)
+        and secrets.compare_digest(credentials.password, password)
+    ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
@@ -82,19 +97,12 @@ def verify_basic_auth(credentials: HTTPBasicCredentials = Depends(security)):
         )
     return credentials.username
 
-# ルートURL (/) にアクセスされた場合、Basic Auth認証後に index.html を返す
-@app.get("/")
-def read_root(username: str = Depends(verify_basic_auth)):
-    return FileResponse("index.html")
-
-# exports などの静的フォルダも Basic Auth の配下に置く
-class AuthenticatedStaticFiles(StaticFiles):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    async def __call__(self, scope, receive, send):
-        # 認証をフックする処理 (FastAPI のミドルウェアまたはルートレベルで検証)
-        pass
+@app.get("/", response_class=HTMLResponse)
+def read_root(authenticated_user: str = Depends(verify_basic_auth)):
+    return HTMLResponse(
+        content=load_index_html(),
+        headers={"Cache-Control": "private, no-store, max-age=0"},
+    )
 ```
 
 ### 3.3 IP制限の併用設計（将来的な拡張）
@@ -112,3 +120,7 @@ class AuthenticatedStaticFiles(StaticFiles):
    * パイロットユーザーが変更されるたび、環境変数 `BASIC_AUTH_PASSWORD` を変更し、GitHub Actions経由で再デプロイを実施します。
 2. **監査ログでの認証試行記録**:
    * 認証の成否、およびアクセス元のIPアドレスは、監査ログ（`data/audit/`）に自動記録され、不正アクセス試行の早期検出に使用されます。
+3. **継続検証**:
+   * `tests/test_firebase_hosting_auth_gate.py` が `public` 直下への通常ファイル混入と全パスリライト欠落を検知します。
+   * `tests/test_auth_security.py` が未認証401、認証済み200、管理ランタイムの認証設定欠落503、HTMLの `no-store` を検証します。
+   * 本番反映後は `https://mightylink-app.com/` が未認証で401を返し、HTMLマーカーを返さないことを外形確認します。

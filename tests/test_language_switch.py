@@ -9,42 +9,31 @@ from playwright.sync_api import sync_playwright
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "src"))
 
-@pytest.fixture(scope="module")
-def fastapi_server():
-    # Start uvicorn server in a subprocess on port 8087
-    # Note: We do not redirect stdout/stderr to PIPE, to let logs flow to pytest output or console
-    server_process = subprocess.Popen(
-        [sys.executable, "-m", "uvicorn", "app:app", "--host", "127.0.0.1", "--port", "8087"],
-        cwd=os.path.join(PROJECT_ROOT, "src")
-    )
-    
-    # Wait for the server to start
-    for _ in range(40):
-        try:
-            r = httpx.get("http://127.0.0.1:8087/api/health", timeout=1.0)
-            if r.status_code == 200:
-                break
-        except Exception:
-            pass
-        time.sleep(0.5)
-    else:
-        server_process.terminate()
-        server_process.wait()
-        raise RuntimeError("Server failed to start on port 8087.")
-        
-    yield "http://127.0.0.1:8087"
-    
-    server_process.terminate()
-    server_process.wait()
+from app import BASIC_AUTH_PASSWORD, BASIC_AUTH_USERNAME
+
 
 def test_language_switch_flow(fastapi_server):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        context = browser.new_context()
+        context = browser.new_context(
+            http_credentials={
+                "username": BASIC_AUTH_USERNAME,
+                "password": BASIC_AUTH_PASSWORD,
+            }
+        )
         page = context.new_page()
+        page.set_default_timeout(10_000)
+        page.set_default_navigation_timeout(30_000)
+        page.route("**/*.mp4", lambda route: route.abort())
         
         # Open main page
-        page.goto(fastapi_server)
+        page.goto(fastapi_server, wait_until="domcontentloaded")
+        
+        # Bypass compulsory auth modal for test execution
+        page.evaluate("""() => {
+            localStorage.setItem('msb_auth_session', JSON.stringify({ email: 'qa@mightylink-app.com', token: 'mock' }));
+            if (typeof closeAuthModal === 'function') closeAuthModal(true);
+        }""")
         
         # 1. Default should display JP text or fall back to JP
         page.wait_for_selector("#primary-navigation")
@@ -53,7 +42,7 @@ def test_language_switch_flow(fastapi_server):
         
         # 2. Click "EN" language switch
         en_btn = page.locator(".language-switch a[data-lang='en']")
-        en_btn.click()
+        en_btn.click(no_wait_after=True)
         
         # Verify DOM update
         page.wait_for_function(
@@ -68,7 +57,7 @@ def test_language_switch_flow(fastapi_server):
         
         # 3. Click "中文" (zh)
         zh_btn = page.locator(".language-switch a[data-lang='zh']")
-        zh_btn.click()
+        zh_btn.click(no_wait_after=True)
         page.wait_for_function(
             "document.documentElement.lang === 'zh'"
         )
@@ -76,17 +65,18 @@ def test_language_switch_flow(fastapi_server):
         
         # 4. Click "KO" (ko)
         ko_btn = page.locator(".language-switch a[data-lang='ko']")
-        ko_btn.click()
+        ko_btn.click(no_wait_after=True)
         page.wait_for_function(
             "document.documentElement.lang === 'ko'"
         )
         assert page.evaluate("document.documentElement.lang") == "ko"
         
         # 5. Switch back to "EN" and verify localStorage persistence
-        page.locator(".language-switch a[data-lang='en']").click()
+        page.locator(".language-switch a[data-lang='en']").click(no_wait_after=True)
         page.wait_for_function("document.documentElement.lang === 'en'")
         
-        page.reload()
+        page.reload(wait_until="domcontentloaded")
+        page.evaluate("if (typeof closeAuthModal === 'function') closeAuthModal(true);")
         page.wait_for_selector("#primary-navigation")
         
         assert page.evaluate("document.documentElement.lang") == "en"

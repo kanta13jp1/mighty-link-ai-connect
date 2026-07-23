@@ -6,47 +6,35 @@ import httpx
 import pytest
 from playwright.sync_api import sync_playwright
 
-# Ensure src directory is in path
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "src"))
 
-@pytest.fixture(scope="module")
-def fastapi_server():
-    # Start uvicorn server in a subprocess on port 8085
-    server_process = subprocess.Popen(
-        [sys.executable, "-m", "uvicorn", "app:app", "--host", "127.0.0.1", "--port", "8085"],
-        cwd=os.path.join(PROJECT_ROOT, "src"),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
-    )
-    
-    # Wait for the server to start by polling /api/health
-    for _ in range(30):
-        try:
-            r = httpx.get("http://127.0.0.1:8085/api/health")
-            if r.status_code == 200:
-                break
-        except httpx.RequestError:
-            pass
-        time.sleep(0.5)
-    else:
-        server_process.terminate()
-        stdout, stderr = server_process.communicate()
-        raise RuntimeError(f"Server failed to start on port 8085. Stdout: {stdout}, Stderr: {stderr}")
-        
-    yield "http://127.0.0.1:8085"
-    
-    server_process.terminate()
-    server_process.wait()
+from app import BASIC_AUTH_PASSWORD, BASIC_AUTH_USERNAME
+
 
 def test_ui_flow(fastapi_server):
     with sync_playwright() as p:
         # Launch headless browser
         browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
+        context = browser.new_context(
+            http_credentials={
+                "username": BASIC_AUTH_USERNAME,
+                "password": BASIC_AUTH_PASSWORD,
+            }
+        )
+        page = context.new_page()
+        page.set_default_timeout(10_000)
+        page.set_default_navigation_timeout(30_000)
+        page.route("**/*.mp4", lambda route: route.abort())
         
         # Navigate to homepage
-        page.goto(fastapi_server)
+        page.goto(fastapi_server, wait_until="domcontentloaded")
+        
+        # Bypass compulsory auth modal for test execution
+        page.evaluate("""() => {
+            localStorage.setItem('msb_auth_session', JSON.stringify({ email: 'qa@mightylink-app.com', token: 'mock' }));
+            if (typeof closeAuthModal === 'function') closeAuthModal(true);
+        }""")
         
         # 1. Verify Page Title
         assert "Mighty Skill-Bridge" in page.title()

@@ -33,7 +33,26 @@ def test_sync_sales_emails_endpoint_success(mock_pipeline):
         "status": "success",
         "new_emails_count": 3
     }
-    mock_pipeline.assert_called_once()
+    mock_pipeline.assert_called_once_with(max_messages=None)
+
+
+@patch("sync_sales_emails.sync_sales_emails_pipeline")
+def test_sync_sales_emails_endpoint_with_max_messages(mock_pipeline):
+    mock_pipeline.return_value = {
+        "status": "success",
+        "new_emails_count": 1000
+    }
+    
+    response = client.post(
+        "/api/sales-email/sync?max_messages=1000",
+        auth=(app.BASIC_AUTH_USERNAME, app.BASIC_AUTH_PASSWORD)
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "status": "success",
+        "new_emails_count": 1000
+    }
+    mock_pipeline.assert_called_once_with(max_messages=1000)
 
 
 def test_sync_sales_emails_endpoint_unauthorized():

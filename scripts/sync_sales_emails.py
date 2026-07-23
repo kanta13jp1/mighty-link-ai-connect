@@ -63,10 +63,10 @@ def insert_sales_email_message(db: DBAdapter, payload: dict) -> int:
             return 0
 
 
-def sync_pop3_to_db(db: DBAdapter) -> int:
-    print("[*] Fetching emails from POP3 server...")
+def sync_pop3_to_db(db: DBAdapter, max_messages: int | None = None) -> int:
+    print(f"[*] Fetching emails from POP3 server (max_messages={max_messages or 'default'})...")
     try:
-        raw_emails = fetch_pop3_emails()
+        raw_emails = fetch_pop3_emails(max_messages=max_messages)
     except Exception as e:
         print(f"[-] POP3 connection/fetch failed: {e}")
         return 0
@@ -277,14 +277,14 @@ def rebuild_match_review_json() -> None:
         print(f"[-] Rebuild match review failed: {e}")
 
 
-def sync_sales_emails_pipeline() -> Dict[str, Any]:
+def sync_sales_emails_pipeline(max_messages: int | None = None) -> Dict[str, Any]:
     sqlite_path = PROJECT_ROOT / "data" / "mighty.db"
     db = DBAdapter(sqlite_path)
     
     print(f"[*] Starting Sales Email Sync & Parse Pipeline. Connection Mode: {'Supabase' if db.use_supabase else 'SQLite'}")
     
     # 1. POP3 Sync
-    new_emails = sync_pop3_to_db(db)
+    new_emails = sync_pop3_to_db(db, max_messages=max_messages)
     print(f"[+] Synced {new_emails} new emails from POP3 server.")
     
     # 2. AI Parse (if new emails exist, OR if there are any unparsed emails in the database)
@@ -321,5 +321,10 @@ def sync_sales_emails_pipeline() -> Dict[str, Any]:
 
 
 if __name__ == "__main__":
-    res = sync_sales_emails_pipeline()
+    import argparse
+    parser = argparse.ArgumentParser(description="POP3 Sales Email Sync & Matching Pipeline (T910 1000-scale)")
+    parser.add_argument("--max-messages", type=int, default=None, help="Maximum POP3 emails to fetch (default: env or 1000)")
+    args = parser.parse_args()
+
+    res = sync_sales_emails_pipeline(max_messages=args.max_messages)
     print(f"[+] Complete. Result: {res}")

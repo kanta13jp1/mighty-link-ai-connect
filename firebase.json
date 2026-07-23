@@ -1,7 +1,7 @@
 {
   "hosting": {
     "site": "mighty-link-ai-connect-13d22",
-    "public": ".",
+    "public": "firebase-hosting",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -53,6 +53,10 @@
       },
       {
         "source": "/exports/**",
+        "run": { "serviceId": "api", "region": "us-central1" }
+      },
+      {
+        "source": "**",
         "run": { "serviceId": "api", "region": "us-central1" }
       }
     ]
