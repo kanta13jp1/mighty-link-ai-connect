@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -225,6 +226,8 @@ def render_markdown(report: dict[str, Any]) -> str:
 
 
 def main() -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--json", default=str(DEFAULT_JSON))
     parser.add_argument("--md", default=str(DEFAULT_MD))
