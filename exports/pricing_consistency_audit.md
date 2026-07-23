@@ -1,7 +1,7 @@
 # 料金プラン整合性監査 (T901)
 
 - 正準月額金額集合: **¥9,800, ¥10,780, ¥29,800, ¥32,780**
-- 料金参照docs: **3件** (CEO_MEETING_AGENDA_2026-07-08.md, CEO_MEETING_AGENDA_2026-07-22.md, PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md)
+- 料金参照docs: **4件** (CEO_MEETING_AGENDA_2026-07-08.md, CEO_MEETING_AGENDA_2026-07-22.md, PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md, PRICING_PLAN_SPECIFICATION.md)
 - 総合判定: ✅ PASS (ドリフト0)
 
 ## 10仮説の検証結果
@@ -16,5 +16,5 @@
 | H6 | 税込表記(¥10,780/¥32,780)使用時に正準税込額と一致 | ✅ | 税込ドリフト=なし |
 | H7 | 正本が最終価格確認をT862ゲートに紐付け(価格確定先の明示) | ✅ | T862×CEO確認=True |
 | H8 | 料金docsの未確定マーカー件数を可視化(fail条件ではない) | ✅ | 未確定マーカー=2件 (有償化前に確定対象) |
-| H9 | 料金参照docsを自動検出でき対象が空でない | ✅ | 対象docs=['CEO_MEETING_AGENDA_2026-07-08.md', 'CEO_MEETING_AGENDA_2026-07-22.md', 'PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md'] |
+| H9 | 料金参照docsを自動検出でき対象が空でない | ✅ | 対象docs=['CEO_MEETING_AGENDA_2026-07-08.md', 'CEO_MEETING_AGENDA_2026-07-22.md', 'PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md', 'PRICING_PLAN_SPECIFICATION.md'] |
 | H10 | 料金金額のドリフトゼロ(構造・参照整合) | ✅ | 先行ドリフト=なし |

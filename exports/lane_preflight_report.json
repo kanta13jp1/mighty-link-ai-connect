@@ -3,7 +3,7 @@
   "mode": "fast",
   "guard_count": 23,
   "exempt_count": 2,
-  "test_file_count": 98,
+  "test_file_count": 99,
   "guard_results": {
     "audit_access_inventory.py": {
       "exit_code": 0,
@@ -109,7 +109,7 @@
       "id": "H1",
       "title": "プリフライト対象ガード10件以上かつテストファイル50件以上(sanity)",
       "passed": true,
-      "detail": "対象ガード=23, 対象外=2, テストファイル=98"
+      "detail": "対象ガード=23, 対象外=2, テストファイル=99"
     },
     {
       "id": "H2",

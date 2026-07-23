@@ -8,6 +8,7 @@
 | 日付 | バージョン | 内容 | 起稿者 |
 | :--- | :--- | :--- | :--- |
 | 2026-06-06 | v1.0.0 | 初版作成（Firebase JWT連携、RLSポリシー定義、特権境界の定義） | Codex / AIエージェント |
+| 2026-07-23 | v1.1.0 | ロールベースアクセス制御 (RBAC) マトリックス追加・デモ認証ガード連携 | 山田 太郎 (セキュリティ/認証) |
 
 ---
 
@@ -21,6 +22,15 @@
 2. **クライアントキーの隔離**
    - クライアント（フロントエンド）に配布する API キーは、常に制限付きの **`anon` キー** (Public API Key) のみとします。
    - データベースの全操作権限を持つ **`service_role` キー** (Admin API Key) は、絶対にクライアントに露出させず、Firebase Cloud Functions の環境変数（シークレットマネージャー）内のみに隔離します。
+
+### 1.1 ロールベースアクセス制御 (RBAC: Role-Based Access Control) マトリックス
+
+| ロール (Role) | 対象ユーザー / コンポーネント | アクセス可能範囲 | 制限事項 |
+| :--- | :--- | :--- | :--- |
+| **`anonymous`** | 未認証の訪問者 | 公開LP、自己診断デモ、公開API (`/api/health`) | 管理者ダッシュボード、勤怠、営業メール、個人データへのアクセス不可（ログインモーダルへリダイレクト） |
+| **`authenticated_user`** | Firebase Auth 認証済み一般ユーザー | 自身のプロファイル (`profiles`)、自身の勤怠打刻 (`attendance_punch_events`)、自身の診断履歴 | 他人のデータは SELECT / UPDATE / DELETE 一切不可 (`firebase_uid() = user_id` RLS強制) |
+| **`admin`** | 管理者権限を付与された運用担当者 | 管理者統合ダッシュボード (`/admin`)、全社利用集計、管理サマリ | 特権ログ（`audits`）への直接SQL書き込みは不可（service_role経由のみ） |
+| **`system_service`** | バックエンド API (FastAPI / Cloud Functions) | 全テーブルへの特権クエリ、監査ログ (`audits`) 書き込み | `service_role` キーを使用し環境変数内のみで実行。フロントエンド露出不可 |
 
 ---
 

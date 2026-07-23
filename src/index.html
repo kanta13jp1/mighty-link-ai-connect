@@ -2722,6 +2722,186 @@
         }
         .theme-toggle:hover { border-color: var(--blue); }
         .theme-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+        /* Auth UI & Modal Styling */
+        .auth-btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, #8bdcff 0%, #3a82f6 100%);
+            color: #030303;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 12px rgba(139, 220, 255, 0.25);
+        }
+        .auth-btn-nav:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 18px rgba(139, 220, 255, 0.45);
+        }
+        .auth-user-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            background: var(--panel-strong);
+            border: 1px solid var(--line-strong);
+            border-radius: 20px;
+            font-size: 0.82rem;
+            color: var(--text);
+        }
+        .auth-logout-btn {
+            background: transparent;
+            border: none;
+            color: var(--rose);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .auth-logout-btn:hover {
+            background: rgba(255, 108, 171, 0.15);
+        }
+
+        /* Modal Overlay */
+        .auth-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .auth-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .auth-modal-card {
+            width: 90%;
+            max-width: 440px;
+            background: rgba(18, 20, 26, 0.95);
+            border: 1px solid rgba(139, 220, 255, 0.3);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(139, 220, 255, 0.15);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .auth-modal-overlay.active .auth-modal-card {
+            transform: translateY(0);
+        }
+        .auth-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .auth-modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .auth-modal-header h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text) 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+        .auth-modal-tabs {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .auth-tab-btn {
+            flex: 1;
+            padding: 8px;
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .auth-tab-btn.active {
+            background: var(--blue);
+            color: #030303;
+            font-weight: 800;
+        }
+        .auth-form-group {
+            margin-bottom: 16px;
+        }
+        .auth-form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+        .auth-form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--line-strong);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        .auth-form-group input:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(139, 220, 255, 0.2);
+        }
+        .auth-submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #8bdcff 0%, #3b82f6 100%);
+            color: #030303;
+            font-size: 0.95rem;
+            font-weight: 800;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s ease;
+        }
+        .auth-submit-btn:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 0 16px rgba(139, 220, 255, 0.4);
+        }
+        .auth-error-msg {
+            margin-top: 12px;
+            padding: 8px 12px;
+            background: rgba(255, 108, 171, 0.15);
+            border: 1px solid rgba(255, 108, 171, 0.4);
+            border-radius: 6px;
+            color: var(--rose);
+            font-size: 0.8rem;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -2735,23 +2915,23 @@
             </span>
         </a>
         <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
-            <a href="#top">ホーム</a>
-            <a href="#onboarding-section">初期セットアップ</a>
-            <a href="#survey-section">適性アンケート</a>
-            <a href="#aptitude-demo-section">自己診断デモ</a>
-            <a href="#attendance-section">勤怠管理</a>
-            <a href="#matching-section">営業メールマッチング</a>
-            <a href="#admin-dashboard-section">管理者ダッシュボード</a>
+            <a href="#top" data-i18n="nav_home">ホーム</a>
+            <a href="#onboarding-section" data-i18n="nav_onboarding">初期セットアップ</a>
+            <a href="#survey-section" data-i18n="nav_survey">適性アンケート</a>
+            <a href="#aptitude-demo-section" data-i18n="nav_aptitude">自己診断デモ</a>
+            <a href="#attendance-section" data-i18n="nav_attendance">勤怠管理</a>
+            <a href="#matching-section" data-i18n="nav_matching">営業メールマッチング</a>
+            <a href="#admin-dashboard-section" data-i18n="nav_admin">管理者ダッシュボード</a>
         </nav>
         <div class="topbar-tools">
             <div class="language-switch" aria-label="Language">
-                <a href="#top" class="active" onclick="switchLanguage(this)">EN</a>
+                <a href="#top" data-lang="en" onclick="switchLanguage(this)">EN</a>
                 <span>/</span>
-                <a href="#top" onclick="switchLanguage(this)">中文</a>
+                <a href="#top" data-lang="zh" onclick="switchLanguage(this)">中文</a>
                 <span>/</span>
-                <a href="#top" onclick="switchLanguage(this)">KO</a>
+                <a href="#top" data-lang="ko" onclick="switchLanguage(this)">KO</a>
                 <span>/</span>
-                <a href="#top" onclick="switchLanguage(this)">JP</a>
+                <a href="#top" class="active" data-lang="ja" onclick="switchLanguage(this)">JP</a>
             </div>
             <div class="status-strip" aria-live="polite">
                 <span class="status-dot"></span>
@@ -2759,10 +2939,44 @@
                 <span>/</span>
                 <a href="admin" style="color: var(--blue); font-weight: 700; text-decoration: underline;" target="_blank" rel="noopener">Admin</a>
             </div>
+            <div id="auth-nav-container" style="display: flex; align-items: center; gap: 8px;">
+                <button class="auth-btn-nav" id="open-login-btn" onclick="openAuthModal('login')">🔑 ログイン</button>
+                <div class="auth-user-badge" id="auth-user-info" style="display: none;">
+                    <span id="auth-user-email">user@example.com</span>
+                    <button class="auth-logout-btn" onclick="handleLogout()" title="ログアウト">🔒 ログアウト</button>
+                </div>
+            </div>
             <button class="theme-toggle" type="button" id="theme-toggle" aria-label="配色モードを切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label">ライト</span></button>
             <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleNav()">☰</button>
         </div>
     </header>
+
+    <!-- Modal: Authentication & Access Control (ログイン / 会員登録) -->
+    <div class="auth-modal-overlay" id="auth-modal" aria-hidden="true">
+        <div class="auth-modal-card" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+            <button class="auth-modal-close" onclick="closeAuthModal()" aria-label="閉じる">×</button>
+            <div class="auth-modal-header">
+                <h3 id="auth-modal-title">アカウント認証</h3>
+                <p style="font-size: 0.8rem; color: var(--muted);" id="auth-modal-subtitle">セキュリティ保護機能にアクセスするにはログインしてください</p>
+            </div>
+            <div class="auth-modal-tabs">
+                <button class="auth-tab-btn active" id="tab-login" onclick="switchAuthTab('login')">ログイン</button>
+                <button class="auth-tab-btn" id="tab-signup" onclick="switchAuthTab('signup')">新規登録</button>
+            </div>
+            <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+                <div class="auth-form-group">
+                    <label for="auth-email">メールアドレス</label>
+                    <input type="email" id="auth-email" required placeholder="name@company.com" autocomplete="email">
+                </div>
+                <div class="auth-form-group">
+                    <label for="auth-password">パスワード</label>
+                    <input type="password" id="auth-password" required placeholder="••••••••" autocomplete="current-password" minlength="6">
+                </div>
+                <button type="submit" class="auth-submit-btn" id="auth-submit-btn">ログインしてアクセス</button>
+                <div class="auth-error-msg" id="auth-error-msg"></div>
+            </form>
+        </div>
+    </div>
 
     <main id="top" tabindex="-1">
         <!-- ==========================================================================
@@ -2794,7 +3008,7 @@
                     </div>
                     <h2 id="engineer-input-heading">Engineer Skill & Experience</h2>
                     <label class="sr-only" for="engineer-input">Engineer profile, skills, and experience</label>
-                    <textarea id="engineer-input" class="textarea-input" aria-labelledby="engineer-input-heading" placeholder="エンジニアのスキルや経歴を入力してください..."></textarea>
+                    <textarea id="engineer-input" class="textarea-input" aria-labelledby="engineer-input-heading" placeholder="エンジニアのスキルや経歴を入力してください..." data-i18n-placeholder="placeholder_engineer"></textarea>
                 </div>
 
                 <!-- 右カラム: Project Requirements -->
@@ -2806,7 +3020,7 @@
                     </div>
                     <h2 id="job-input-heading">Job & Team Requirements</h2>
                     <label class="sr-only" for="job-input">Project requirements and team conditions</label>
-                    <textarea id="job-input" class="textarea-input" aria-labelledby="job-input-heading" placeholder="案件の必須要件や歓迎要件を入力してください..."></textarea>
+                    <textarea id="job-input" class="textarea-input" aria-labelledby="job-input-heading" placeholder="案件の必須要件や歓迎要件を入力してください..." data-i18n-placeholder="placeholder_job"></textarea>
                 </div>
             </div>
 
@@ -3851,16 +4065,100 @@
             applyTheme(saved === "light" ? "light" : "dark");
         })();
 
+        const i18nDict = {
+            ja: {
+                nav_home: "ホーム",
+                nav_onboarding: "初期セットアップ",
+                nav_survey: "適性アンケート",
+                nav_aptitude: "自己診断デモ",
+                nav_attendance: "勤怠管理",
+                nav_matching: "営業メールマッチング",
+                nav_admin: "管理者ダッシュボード",
+                placeholder_engineer: "エンジニアのスキルや経歴を入力してください...",
+                placeholder_job: "案件の必須要件や歓迎要件を入力してください..."
+            },
+            en: {
+                nav_home: "Home",
+                nav_onboarding: "Setup",
+                nav_survey: "Survey",
+                nav_aptitude: "Aptitude Demo",
+                nav_attendance: "Attendance",
+                nav_matching: "Email Matching",
+                nav_admin: "Admin",
+                placeholder_engineer: "Enter engineer's profile, skills, and experience details...",
+                placeholder_job: "Enter job requirements, welcome skills, and project conditions..."
+            },
+            zh: {
+                nav_home: "首页",
+                nav_onboarding: "初始设置",
+                nav_survey: "问卷调查",
+                nav_aptitude: "自我诊断",
+                nav_attendance: "考勤管理",
+                nav_matching: "邮件匹配",
+                nav_admin: "管理员后台",
+                placeholder_engineer: "请在此输入工程师的技能和简历详情...",
+                placeholder_job: "请在此输入职位的基本要求和团队条件..."
+            },
+            ko: {
+                nav_home: "홈",
+                nav_onboarding: "초기 설정",
+                nav_survey: "설문조사",
+                nav_aptitude: "자가진단 데모",
+                nav_attendance: "근태관리",
+                nav_matching: "영업메일 매칭",
+                nav_admin: "관리자 대시보드",
+                placeholder_engineer: "여기에 엔지니어의 스킬 및 경력 상세를 입력하세요...",
+                placeholder_job: "여기에 프로젝트 필수 요건 및 팀 우대 사항을 입력하세요..."
+            }
+        };
+
         function switchLanguage(el) {
+            const lang = el.getAttribute("data-lang");
+            if (!lang) return;
+
             const switcher = el.closest(".language-switch");
-            if (!switcher) return;
-            switcher.querySelectorAll("a").forEach(a => {
-                a.classList.remove("active");
-                a.removeAttribute("aria-current");
+            if (switcher) {
+                switcher.querySelectorAll("a").forEach(a => {
+                    a.classList.remove("active");
+                    a.removeAttribute("aria-current");
+                });
+                el.classList.add("active");
+                el.setAttribute("aria-current", "true");
+            }
+
+            document.documentElement.lang = lang === "ja" ? "ja" : lang;
+            try { localStorage.setItem("msb_language_preference", lang); } catch (e) {}
+
+            document.querySelectorAll("[data-i18n]").forEach(node => {
+                const key = node.getAttribute("data-i18n");
+                if (i18nDict[lang] && i18nDict[lang][key]) {
+                    node.textContent = i18nDict[lang][key];
+                }
             });
-            el.classList.add("active");
-            el.setAttribute("aria-current", "true");
+
+            document.querySelectorAll("[data-i18n-placeholder]").forEach(node => {
+                const key = node.getAttribute("data-i18n-placeholder");
+                if (i18nDict[lang] && i18nDict[lang][key]) {
+                    node.placeholder = i18nDict[lang][key];
+                }
+            });
         }
+
+        (function initLang() {
+            let savedLang = "ja";
+            try { savedLang = localStorage.getItem("msb_language_preference") || "ja"; } catch (e) {}
+            function applyLang() {
+                const targetEl = document.querySelector(`.language-switch a[data-lang='${savedLang}']`);
+                if (targetEl) {
+                    switchLanguage(targetEl);
+                }
+            }
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", applyLang);
+            } else {
+                applyLang();
+            }
+        })();
 
         function setVideoSource(url) {
             const video = document.getElementById("seedance-video");
@@ -6844,6 +7142,167 @@
             }, { rootMargin: "0px 0px -80px 0px", threshold: 0.12 });
             targets.forEach(el => io.observe(el));
         })();
+        /* ==========================================================================
+           Authentication & Authorization Session Manager (T898 社長定例決定事項)
+           ========================================================================== */
+        let currentAuthMode = 'login';
+        let currentUserSession = null;
+
+        function getAuthSession() {
+            try {
+                const stored = localStorage.getItem('mighty_auth_session');
+                if (stored) {
+                    return JSON.parse(stored);
+                }
+            } catch (e) {
+                console.warn("Failed to load auth session", e);
+            }
+            return null;
+        }
+
+        function setAuthSession(session) {
+            currentUserSession = session;
+            if (session) {
+                localStorage.setItem('mighty_auth_session', JSON.stringify(session));
+            } else {
+                localStorage.removeItem('mighty_auth_session');
+            }
+            updateAuthUI();
+        }
+
+        function updateAuthUI() {
+            const session = currentUserSession || getAuthSession();
+            const openBtn = document.getElementById('open-login-btn');
+            const userInfo = document.getElementById('auth-user-info');
+            const userEmailEl = document.getElementById('auth-user-email');
+
+            if (session && session.email) {
+                if (openBtn) openBtn.style.display = 'none';
+                if (userInfo) userInfo.style.display = 'inline-flex';
+                if (userEmailEl) userEmailEl.textContent = session.email;
+            } else {
+                if (openBtn) openBtn.style.display = 'inline-flex';
+                if (userInfo) userInfo.style.display = 'none';
+            }
+        }
+
+        function openAuthModal(mode = 'login') {
+            const modal = document.getElementById('auth-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+                switchAuthTab(mode);
+            }
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+            }
+            const errorEl = document.getElementById('auth-error-msg');
+            if (errorEl) errorEl.style.display = 'none';
+        }
+
+        function switchAuthTab(mode) {
+            currentAuthMode = mode;
+            const tabLogin = document.getElementById('tab-login');
+            const tabSignup = document.getElementById('tab-signup');
+            const titleEl = document.getElementById('auth-modal-title');
+            const submitBtn = document.getElementById('auth-submit-btn');
+
+            if (mode === 'login') {
+                if (tabLogin) tabLogin.classList.add('active');
+                if (tabSignup) tabSignup.classList.remove('active');
+                if (titleEl) titleEl.textContent = 'アカウントログイン';
+                if (submitBtn) submitBtn.textContent = 'ログインしてアクセス';
+            } else {
+                if (tabSignup) tabSignup.classList.add('active');
+                if (tabLogin) tabLogin.classList.remove('active');
+                if (titleEl) titleEl.textContent = '新規アカウント登録';
+                if (submitBtn) submitBtn.textContent = '登録してアクセスを有効化';
+            }
+        }
+
+        async function handleAuthSubmit(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('auth-email');
+            const passwordInput = document.getElementById('auth-password');
+            const errorEl = document.getElementById('auth-error-msg');
+
+            const email = emailInput ? emailInput.value.trim() : '';
+            const password = passwordInput ? passwordInput.value : '';
+
+            if (!email || !password) {
+                if (errorEl) {
+                    errorEl.textContent = 'メールアドレスとパスワードを入力してください。';
+                    errorEl.style.display = 'block';
+                }
+                return;
+            }
+
+            try {
+                // Perform auth simulation / token generation
+                const session = {
+                    uid: 'usr_' + Math.random().toString(36).substring(2, 10),
+                    email: email,
+                    token: 'mock_jwt_token_' + Date.now(),
+                    loginAt: new Date().toISOString()
+                };
+                setAuthSession(session);
+                closeAuthModal();
+                showToastNotification(currentAuthMode === 'login' ? 'ログインしました。' : 'アカウントを新規登録しました。', 'success');
+            } catch (err) {
+                if (errorEl) {
+                    errorEl.textContent = '認証に失敗しました: ' + (err.message || '資格情報を確認してください');
+                    errorEl.style.display = 'block';
+                }
+            }
+        }
+
+        function handleLogout() {
+            setAuthSession(null);
+            showToastNotification('ログアウトしました。', 'info');
+        }
+
+        function showToastNotification(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; bottom: 24px; right: 24px; z-index: 10001;
+                padding: 12px 20px; border-radius: 8px; font-size: 0.88rem; font-weight: 700;
+                color: #030303; background: ${type === 'success' ? '#baff66' : '#8bdcff'};
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function requireAuthGuard(featureName, actionCallback) {
+            const session = currentUserSession || getAuthSession();
+            if (!session) {
+                openAuthModal('login');
+                const subtitle = document.getElementById('auth-modal-subtitle');
+                if (subtitle) {
+                    subtitle.textContent = `【アクセス制限】${featureName} を利用するにはログインが必要です。`;
+                }
+                return false;
+            }
+            if (typeof actionCallback === 'function') {
+                actionCallback(session);
+            }
+            return true;
+        }
+
+        // Initialize Auth UI on DOM load
+        document.addEventListener("DOMContentLoaded", () => {
+            currentUserSession = getAuthSession();
+            updateAuthUI();
+        });
     </script>
 
     <!-- 営業メールマッチングヘルプモーダル -->
