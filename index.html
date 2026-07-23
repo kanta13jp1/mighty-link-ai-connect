@@ -7422,6 +7422,10 @@
 
         function updateAuthUI() {
             const session = currentUserSession || getAuthSession();
+            if (session) {
+                const earlyStyle = document.getElementById('early-auth-lockout-style');
+                if (earlyStyle) earlyStyle.remove();
+            }
             const openBtn = document.getElementById('open-login-btn');
             const userInfo = document.getElementById('auth-user-info');
             const userEmailEl = document.getElementById('auth-user-email');
@@ -7468,6 +7472,9 @@
                 showToastNotification('ログインが必要です。', 'error');
                 return; // Prevent closing if unauthenticated
             }
+            const earlyStyle = document.getElementById('early-auth-lockout-style');
+            if (earlyStyle) earlyStyle.remove();
+
             const modal = document.getElementById('auth-modal');
             if (modal) {
                 modal.classList.remove('active');

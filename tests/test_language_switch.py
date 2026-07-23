@@ -21,9 +21,9 @@ def test_language_switch_flow(fastapi_server):
                 "password": BASIC_AUTH_PASSWORD,
             }
         )
-        context.add_init_script("""() => {
+        context.add_init_script("""
             localStorage.setItem('mighty_auth_session', JSON.stringify({ email: 'qa@mightylink-app.com', token: 'mock' }));
-        }""")
+        """)
         page = context.new_page()
         page.set_default_timeout(10_000)
         page.set_default_navigation_timeout(30_000)
