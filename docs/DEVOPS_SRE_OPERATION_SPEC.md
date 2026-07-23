@@ -1,14 +1,15 @@
-# DevOps / SRE 運用仕様書 & アーキテクチャ決定（T896, T870, T778）
+# DevOps / SRE 運用仕様書 & アーキテクチャ決定（T896, T870, T778, コスト, ログ, パフォーマンス）
 
 作成日: 2026-07-23  
+更新日: 2026-07-23 (深掘り運用規定追加)  
 担当責任者: **DevOps / SRE スペシャリスト（鈴木 一郎）**  
-対象領域: クラウドインフラ（Firebase/GCP/Supabase）、GitHub Actions CI/CD、DBバックアップ、SLA/DR
+対象領域: クラウドインフラ（Firebase/GCP/Supabase）、GitHub Actions CI/CD、DBバックアップ、SLA/DR、コスト管理、セキュリティ鍵運用、DBパフォーマンス
 
 ---
 
 ## 1. 概要 & 基本方針
 
-本ドキュメントは、Mighty Link AI Connect プロジェクトにおける DevOps / SRE 領域の基本方針、CI/CD デプロイ制御、DBバックアップ・災害復旧（DR）運用、および SLA/稼働モニタリング設計を定めた仕様書です。
+本ドキュメントは、Mighty Link AI Connect プロジェクトにおける DevOps / SRE 領域の基本方針、CI/CD デプロイ制御、DBバックアップ・災害復旧（DR）運用、SLA/稼働モニタリング設計、クラウドコスト管理、ログ・Secretローテーション、および DB パフォーマンス診断を定めた包括的運用仕様書です。
 
 ---
 
@@ -55,7 +56,41 @@
 
 ---
 
-## 5. ガード & 健全性維持
+## 5. クラウドコスト管理 & 予算超過警告方針 (`weekly-cost-dashboard.yml`)
+
+### 5.1 コスト管理・アラート閾値
+- **注意アラート (Warning)**: 月額予算の消化率 **80% 到達時** に Slack へ自動警告。
+- **緊急アラート (Critical)**: 月額予算の消化率 **100% 超過時** に Slack へ即時緊急アラート送信。
+
+### 5.2 コストダッシュボード報告
+- 毎週月曜日 08:15 JST に `generate_weekly_cost_dashboard.py` を実行し、`exports/weekly_cost_dashboard.md` レポートを自動生成。開発チーム・PM・経営定例資料へ共有。
+
+---
+
+## 6. ログ保持 & セキュリティ Secret ローテーション方針
+
+### 6.1 ランタイムログ保持 (`runtime-log-retention.yml` / `rotate_runtime_logs.py`)
+- FastAPI / Uvicorn / アプリケーションランタイムログは **30 日間保持**。
+- 週次で過去 30 日を超過したログを自動パージし、ストレージ容量を最適化する。
+
+### 6.2 Secret ローテーション監査 (`secret-rotation-review.yml` / `check_secret_rotation_schedule.py`)
+- GitHub Secrets / API キー / Service Account Key は **90 日ごとの定期ローテーション** を義務化。
+- 週次 CI ジョブで有効期限・更新猶予を自動チェックし、更新期限超過時はビルドエラーを発行してセキュリティ担当（山田 太郎）と連携・即時更新する。
+
+---
+
+## 7. Supabase DB パフォーマンス診断 & インデックス運用 (`supabase-performance-diagnostic.yml` / T881)
+
+### 7.1 定期パフォーマンス診断
+- 毎週月曜日 05:45 JST に `diagnose_supabase_performance.py` および `generate_supabase_query_performance_review.py` を自動実行。
+- P95 レスポンスタイム **> 1,000 ms** のスロークエリを常時監視・検知。
+
+### 7.2 FK インデックス被覆監査 (T881)
+- `scripts/audit_fk_index_coverage.py` を継続実行し、製品マイグレーション (`supabase/migrations/`) の全外部キー (FK) 列がインデックスで被覆されているか機械照合（未被覆ギャップ 0 を自動維持）。
+
+---
+
+## 8. ガード & 健全性維持
 
 - **Public Demo Guard** (`scripts/verify_public_demo.py` / `public-demo-guard.yml`): デモサイトの常時正常稼働を保証。
 - **レーンプリフライト** (`scripts/run_lane_preflight.py`): コミット・プッシュ前に全 23 件の整合ガードを検証し、ドリフト 0 を維持。
