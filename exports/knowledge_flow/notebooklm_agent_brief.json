@@ -1,14 +1,7 @@
 {
   "notebook_id": "4934c12b-b270-4739-97a1-b04b5b84eaaf",
   "notebook_info": {
-    "action": "used_title_match",
-    "payload": {
-      "index": 1,
-      "id": "4934c12b-b270-4739-97a1-b04b5b84eaaf",
-      "title": "Mighty Skill-Bridge Development Knowledge 2026-06-02",
-      "is_owner": true,
-      "created_at": "2026-07-08T20:13:40"
-    },
+    "action": "used_existing",
     "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-07-24 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
   },
   "source_count": 150,
@@ -126,9 +119,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/ARCHITECTURE_DECISION_RECORDS.md",
       "drive_file_id": "1esPoKj1VCemMVLKWLoj_N6s4xKIeqAnNXr7kRlPfVVw",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 7a3e462b-666f-475c-8326-ed80e5efc113\nTitle: Mighty Skill-Bridge docs/docs/ARCHITECTURE_DECISION_RECORDS.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "7a3e462b-666f-475c-8326-ed80e5efc113",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -184,9 +179,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/CEO_MEETING_AGENDA_2026-07-22.md",
       "drive_file_id": "1fk0jiGg37_rhwkZzXTbZzWg122qjBNhKJ7QOSRCmDi4",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 98ae403e-d1b4-4e67-a38c-e253061b5866\nTitle: Mighty Skill-Bridge docs/docs/CEO_MEETING_AGENDA_2026-07-22.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "98ae403e-d1b4-4e67-a38c-e253061b5866",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -392,9 +389,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/DEVOPS_SRE_OPERATION_SPEC.md",
       "drive_file_id": "1Pu3Z01ZIxOumXe4N6GL7cpTxZ4-Bw0LQO9lH2EfyKwU",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: a6e015c8-f77f-473f-9989-bca260ed6959\nTitle: Mighty Skill-Bridge docs/docs/DEVOPS_SRE_OPERATION_SPEC.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "a6e015c8-f77f-473f-9989-bca260ed6959",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -410,9 +409,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/DOCS_REFERENCE_INTEGRITY_GUARD.md",
       "drive_file_id": "1jMKp5Ic3fdq8jPiNcUbr5nu7EbMKw4gX7TGXDxH8Z9s",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: ba9cf936-935a-469d-8a2d-a69db0c11490\nTitle: Mighty Skill-Bridge docs/docs/DOCS_REFERENCE_INTEGRITY_GUARD.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "ba9cf936-935a-469d-8a2d-a69db0c11490",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -448,9 +449,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/EMPLOYEE_ASSESSMENT_VENDOR_RFI_DPA_CHECKLIST.md",
       "drive_file_id": "1Y9zU42mTff-uAqlnbupOeM898DAAYA3lG7WbODd5QHQ",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 6eeb5e96-3c73-416e-b320-f2e4f3513760\nTitle: Mighty Skill-Bridge \ndocs/docs/EMPLOYEE_ASSESSMENT_VENDOR_RFI_DPA_CHECKLIST.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "6eeb5e96-3c73-416e-b320-f2e4f3513760",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -476,9 +479,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/FIREBASE_CI_CD_WIF_MIGRATION_REPORT.md",
       "drive_file_id": "1G2_zGfCkVe9sgIle5ypyLyMH80UqLfFQaXbK7hl5Qvs",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 44070331-9d6a-441b-80b8-6998b778489c\nTitle: Mighty Skill-Bridge docs/docs/FIREBASE_CI_CD_WIF_MIGRATION_REPORT.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "44070331-9d6a-441b-80b8-6998b778489c",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -524,9 +529,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/GITHUB_WBS_SYNC_RUNBOOK.md",
       "drive_file_id": "1S2wfZJHGb9Avhg3pOdvRcxYaTH272x--VSpYqz2Ygng",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 94c02c77-7a6c-4f5d-a290-e05e75ea956d\nTitle: Mighty Skill-Bridge docs/docs/GITHUB_WBS_SYNC_RUNBOOK.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "94c02c77-7a6c-4f5d-a290-e05e75ea956d",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -652,9 +659,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/LANE_PREFLIGHT_GUARD.md",
       "drive_file_id": "1kTBbjSxL58XW_2kPT1yLPUSKMrWQ80NBTgMLRJSEgzE",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 8653518e-41a1-46a3-953d-b579d021d3c6\nTitle: Mighty Skill-Bridge docs/docs/LANE_PREFLIGHT_GUARD.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "8653518e-41a1-46a3-953d-b579d021d3c6",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -680,17 +689,21 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md",
       "drive_file_id": "1W72bEiChTYnorjkEzf312700wvWHUnk6iG3pcRiji7c",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 7e9cd0de-c572-4f32-86a7-91b6316d014e\nTitle: Mighty Skill-Bridge docs/docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "7e9cd0de-c572-4f32-86a7-91b6316d014e",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
       "title": "Mighty Skill-Bridge docs/docs/LEGAL_REVIEW_SIGNOFF_TRACKER.md",
       "drive_file_id": "1n2Np6_gNWZEfluI28WofBdkRdI1fuEN1OCmHCx_E9eU",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: b02dc47a-abb2-454d-bb53-380f8277d069\nTitle: Mighty Skill-Bridge docs/docs/LEGAL_REVIEW_SIGNOFF_TRACKER.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "b02dc47a-abb2-454d-bb53-380f8277d069",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -786,33 +799,41 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/OPERATIONS_CADENCE_CALENDAR.md",
       "drive_file_id": "11JjJN7KAkhW-SVC1cYfLFPsNZsHW0GzK2YYEE7Kx_PE",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 30363631-3cce-4719-ac7d-72f9e80957a2\nTitle: Mighty Skill-Bridge docs/docs/OPERATIONS_CADENCE_CALENDAR.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "30363631-3cce-4719-ac7d-72f9e80957a2",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
       "title": "Mighty Skill-Bridge docs/docs/OPERATIONS_HANDOVER_REHEARSAL_RUNBOOK.md",
       "drive_file_id": "1uRqqhJwR3ZAoXo_pJDxvwh-t_2IK6B3tO2sBfXmrbZc",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 7a62a16e-96db-4e05-8e04-5bb5fe40b6ad\nTitle: Mighty Skill-Bridge docs/docs/OPERATIONS_HANDOVER_REHEARSAL_RUNBOOK.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "7a62a16e-96db-4e05-8e04-5bb5fe40b6ad",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
       "title": "Mighty Skill-Bridge docs/docs/OPERATIONS_RUNBOOK_CATALOG.md",
       "drive_file_id": "1UFsw0aQgP5NzaK2xIAZRAOuqyCgdh8vk3JMBpQXl0qg",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: e26560ac-9202-4a1e-9bd5-6756393d8ab1\nTitle: Mighty Skill-Bridge docs/docs/OPERATIONS_RUNBOOK_CATALOG.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "e26560ac-9202-4a1e-9bd5-6756393d8ab1",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
       "title": "Mighty Skill-Bridge docs/docs/PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md",
       "drive_file_id": "1w_ExP_45s1012lDjvoEV_sTfoXrs9Ogz6gCrZ2oAyzM",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 77a9335d-5005-4905-af5c-352560afe347\nTitle: Mighty Skill-Bridge \ndocs/docs/PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "77a9335d-5005-4905-af5c-352560afe347",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -878,9 +899,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/POST_LAUNCH_RETROSPECTIVE_2026-07-18.md",
       "drive_file_id": "1stDud7nagK0xDjuhxhHfQ0AHzGDzbPiING_UqrjimwI",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: ef6530e6-183f-4928-92f5-f20748f8bdcc\nTitle: Mighty Skill-Bridge docs/docs/POST_LAUNCH_RETROSPECTIVE_2026-07-18.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "ef6530e6-183f-4928-92f5-f20748f8bdcc",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -916,9 +939,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/PRICING_PLAN_SPECIFICATION.md",
       "drive_file_id": "1tpYGMZ4OcZKpdAs_lViR8vqNZSBoqN0fML-P_BD8_Co",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 67518aa9-356c-47f2-9ceb-5b2e69685589\nTitle: Mighty Skill-Bridge docs/docs/PRICING_PLAN_SPECIFICATION.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "67518aa9-356c-47f2-9ceb-5b2e69685589",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -984,9 +1009,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/QUALITY_GUARD_CATALOG.md",
       "drive_file_id": "1oBWIQjUuzvz_-WQ190Qles3PW4ODw_lc4NtBc3-x5HQ",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: bb1a0b02-1c52-4792-9367-0c0e2025007e\nTitle: Mighty Skill-Bridge docs/docs/QUALITY_GUARD_CATALOG.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "bb1a0b02-1c52-4792-9367-0c0e2025007e",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -1122,9 +1149,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/SERVICE_EOL_DECOMMISSIONING_PLAN.md",
       "drive_file_id": "1-4ot_oDWMbHSl6oiPtH6rA6iFk8RrpkinzYVb4_VWdk",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 27881bf0-c4a1-4ca4-ad85-617a966fd77a\nTitle: Mighty Skill-Bridge docs/docs/SERVICE_EOL_DECOMMISSIONING_PLAN.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "27881bf0-c4a1-4ca4-ad85-617a966fd77a",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -1190,9 +1219,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md",
       "drive_file_id": "1A5XEmjgTdNaMf7fUNJmCTruhaE1wXlLNMwFJQcL8EpU",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 25e5c5ed-5159-43a7-9a46-2454417255f1\nTitle: Mighty Skill-Bridge docs/docs/SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "25e5c5ed-5159-43a7-9a46-2454417255f1",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -1298,25 +1329,31 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/TRACKER_INTEGRITY_GUARD.md",
       "drive_file_id": "1EIT5GYhOBUtJPSqkiV3g6O_6aTpm6JHXrzDVZGXbMng",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: ff941564-9b1d-4eb1-bb7e-6e2f424598f8\nTitle: Mighty Skill-Bridge docs/docs/TRACKER_INTEGRITY_GUARD.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "ff941564-9b1d-4eb1-bb7e-6e2f424598f8",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
       "title": "Mighty Skill-Bridge docs/docs/UAT_API_COVERAGE_GUARD.md",
       "drive_file_id": "1H0DjKfeMdP8E0FnashcSvUJKHcZs4cjtoP3Hp7iIbv4",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 38b16a8a-c14f-4442-b52e-983c38d8619e\nTitle: Mighty Skill-Bridge docs/docs/UAT_API_COVERAGE_GUARD.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "38b16a8a-c14f-4442-b52e-983c38d8619e",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
       "title": "Mighty Skill-Bridge docs/docs/UAT_TEST_SPECIFICATION.md",
       "drive_file_id": "1MSfSDgRaFxD8moAgMAjnNmaKSGTgfYvHVKrfftaclbk",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: ed8860b6-3fd4-474a-b7bf-e8fa24075b86\nTitle: Mighty Skill-Bridge docs/docs/UAT_TEST_SPECIFICATION.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "ed8860b6-3fd4-474a-b7bf-e8fa24075b86",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -1392,9 +1429,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/WBS_LIFECYCLE_COVERAGE_GUARD.md",
       "drive_file_id": "1_iokDeGMYxJrgsBFgun_UO_AUim4h0eyPoIgwzwJ8s8",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: cc0b9788-7ddf-49f9-a4d2-733ff23dc3f8\nTitle: Mighty Skill-Bridge docs/docs/WBS_LIFECYCLE_COVERAGE_GUARD.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "cc0b9788-7ddf-49f9-a4d2-733ff23dc3f8",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -1440,9 +1479,11 @@
     {
       "title": "Mighty Skill-Bridge docs/docs/WBS_REVIEW_2026-07-13.md",
       "drive_file_id": "1psTnmt3KJlh6nr2YAFxRapGO-dqvXp0sz7xx4IDFdFk",
-      "action": "added",
-      "returncode": 0,
-      "stdout": "Added Drive source: 4b32806b-64c6-43c0-a10b-3946247c65c7\nTitle: Mighty Skill-Bridge docs/docs/WBS_REVIEW_2026-07-13.md",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "4b32806b-64c6-43c0-a10b-3946247c65c7",
+      "returncode": null,
+      "stdout": "",
       "stderr": ""
     },
     {
@@ -1469,7 +1510,7 @@
   "ask_generation": {
     "status": "skipped",
     "reason": "--skip-asks",
-    "generated_at_jst": "2026-07-24T00:11:58+09:00",
+    "generated_at_jst": "2026-07-24T00:26:18+09:00",
     "ask_timeout_seconds": 900,
     "next_command": "python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900",
     "source_count": 150

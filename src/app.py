@@ -376,8 +376,13 @@ GEMINI_DAILY_CALL_LIMIT = env_int("GEMINI_DAILY_CALL_LIMIT", 20, 0, 10000)
 GEMINI_DAILY_REPORTED_TOKEN_LIMIT = env_int("GEMINI_DAILY_REPORTED_TOKEN_LIMIT", 100000, 0, 1_000_000_000)
 
 # Basic authentication configuration
-BASIC_AUTH_USERNAME = os.environ.get("BASIC_AUTH_USERNAME") or "admin"
-BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD") or "mighty-link-pass"
+IS_MANAGED_RUNTIME = bool(os.environ.get("K_SERVICE") or os.environ.get("FUNCTION_TARGET"))
+BASIC_AUTH_USERNAME = os.environ.get("BASIC_AUTH_USERNAME")
+BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD")
+
+if not IS_MANAGED_RUNTIME:
+    BASIC_AUTH_USERNAME = BASIC_AUTH_USERNAME or "admin"
+    BASIC_AUTH_PASSWORD = BASIC_AUTH_PASSWORD or "mighty-link-pass"
 
 security = HTTPBasic()
 security_optional = HTTPBasic(auto_error=False)
@@ -1417,7 +1422,7 @@ SUPPORT_STATUSES = {"new", "triaged", "in_progress", "escalated", "closed"}
 MAX_SUPPORT_SUBJECT_LENGTH = 160
 MAX_SUPPORT_MESSAGE_LENGTH = 3000
 SUPPORT_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
-LEGAL_CONSENT_VERSION = "MSB-LEGAL-2026-06-DRAFT"
+LEGAL_CONSENT_VERSION = "MSB-LEGAL-2026-07-GA"
 LEGAL_CONSENT_DOCS = (
     "TERMS_OF_SERVICE.md",
     "PRIVACY_POLICY.md",

@@ -35,7 +35,7 @@
       "id": "H6",
       "title": "陳腐化ゲート(非PASSだが関連WBS全完了)が再評価待ちとして注記済み",
       "passed": true,
-      "detail": "陳腐化=['PUBLIC-06', 'PUBLIC-11', 'PUBLIC-14'] / 未注記=なし"
+      "detail": "陳腐化=['PUBLIC-04', 'PUBLIC-06', 'PUBLIC-11', 'PUBLIC-14'] / 未注記=なし"
     },
     {
       "id": "H7",

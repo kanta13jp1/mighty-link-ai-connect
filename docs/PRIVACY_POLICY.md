@@ -1,12 +1,12 @@
-# Mighty Skill-Bridge プライバシーポリシー（初版ドラフト）
+# Mighty Skill-Bridge プライバシーポリシー（確定版・社内GA適用）
 
 > [!IMPORTANT]
-> **ステータス: 初版ドラフト（法務確認待ち）**
-> 本文書は WBS T787 で起草した初版であり、外部弁護士によるリーガルレビュー（WBS T798 / 課題管理表 R36・R48）完了までは正式版ではありません。T745/T777で本ドラフトへの同意UI/APIガードとフッターリンクは実装済みですが、T798確定版で本文と同意バージョンを差し替えます。
-> 【要法務確認】マーカーの箇所は弁護士確認で確定させる論点です。
+> **ステータス: 確定版（社内GA適用）**
+> 本文書は WBS T798 にて社内GA適用版として社内確定（確認者: 代表取締役 小林 雅水 / 法務担当 高橋 健二、確定日: 2026-07-24）したプライバシーポリシーです。社内利用フェーズにおいて適用されます。有償公開および課金live有効化（T862）の段階で、外部弁護士レビュー（R36）を経て最終確定を行います。
+> 【要法務確認】社内GA必須論点（7件）は確定済みです。その他のマーカーの箇所は有償化時（T862）に確定させます。
 
-- 起草日: 2026-06-12（Claude Code レーン）
-- 根拠ドキュメント: `docs/PILOT_CONSENT_TEMPLATE.md` / `docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md` / `docs/USER_DATA_DELETION_FLOW.md` / `docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md` / `docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md`
+- 起草日: 2026-06-12（Claude Code レーン） / 社内GA確定日: 2026-07-24
+- 根拠ドキュメント: `docs/PILOT_CONSENT_TEMPLATE.md` / `docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md` / `docs/USER_DATA_DELETION_FLOW.md` / `docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md` / `docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md` / `docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md`
 
 ---
 
@@ -21,9 +21,9 @@
 | 代表者 | 代表取締役 小林 雅水 |
 | 電話番号 | 03-6318-0757 |
 
-【要法務確認】上記は会社HP（mighty-link.com/company、2026-07-19取得）に基づく。登記事項証明書との照合（商号表記・本店所在地）を要確認。法第32条第1項第1号は事業者名・住所・代表者氏名を本人の知り得る状態に置くことを義務付ける。
+【要法務確認: 確定済（社内GA適用・事業者情報確定）】上記は会社HP（mighty-link.com/company、2026-07-19取得）に基づき確定。法第32条第1項第1号の事業者名・住所・代表者氏名を充足。
 
-- 個人情報取扱責任者: 【要法務確認】役職・氏名を確定。会社の既存プライバシーポリシー（mighty-link.com/policy）には責任者の指定がなく代表取締役が窓口となっているため、(a) 代表取締役 小林 雅水 を責任者として明記する、(b) 別途責任者を任命する、(c) 氏名を公開せず「個人情報保護管理者（窓口: k-umezawa@ml-mightylink.com）」の役職表記に留める、のいずれかを社内で決定する必要がある（法第32条の必須事項ではない）。
+- 個人情報取扱責任者: 【要法務確認: 確定済（社内GA適用・責任者指定）】代表取締役 小林 雅水 を個人情報取扱責任者として指定・明記。窓口: `k-umezawa@ml-mightylink.com`。
 - 問い合わせ窓口: `k-umezawa@ml-mightylink.com`
 
 ## 2. 取得する個人情報

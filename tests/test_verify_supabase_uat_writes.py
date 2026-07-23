@@ -7,8 +7,10 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts"))
 
 from verify_supabase_uat_writes import verify_uat_db_writes, REQUIRED_UAT_TABLES
+import audit_supabase_uat_writes
 
 def test_verify_uat_db_writes_fallback():
+    assert audit_supabase_uat_writes.EVIDENCE_PATH is not None
     res = verify_uat_db_writes(db_url=None)
     assert res["status"] in ("PASS", "WARN")
     assert res["has_db_connection"] is False

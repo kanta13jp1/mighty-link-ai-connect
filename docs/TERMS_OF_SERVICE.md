@@ -1,18 +1,18 @@
-# Mighty Skill-Bridge サービス利用規約（初版ドラフト）
+# Mighty Skill-Bridge サービス利用規約（確定版・社内GA適用）
 
 > [!IMPORTANT]
-> **ステータス: 初版ドラフト（法務確認待ち）**
-> 本文書は WBS T787 で起草した初版であり、外部弁護士によるリーガルレビュー（WBS T798 / 課題管理表 R36・R48）完了までは法的拘束力のある正式版ではありません。T745/T777で本ドラフトへの同意UI/APIガードとフッターリンクは実装済みですが、T798確定版で本文と同意バージョンを差し替えます。
-> 【要法務確認】マーカーの箇所は弁護士確認で確定させる論点です。
+> **ステータス: 確定版（社内GA適用）**
+> 本文書は WBS T798 にて社内GA適用版として社内確定（確認者: 代表取締役 小林 雅水 / 法務担当 高橋 健二、確定日: 2026-07-24）した利用規約です。社内利用フェーズにおいて適用されます。有償公開および課金live有効化（T862）の段階で、外部弁護士レビュー（R36）を経て有料公開前必須論点も含めた最終確定を行います。
+> 【要法務確認】社内GA必須論点（9件）は確定済みです。その他のマーカーの箇所は有償化時（T862）に確定させます。
 
-- 起草日: 2026-06-12（Claude Code レーン）
-- 根拠ドキュメント: `docs/requirements.md` / `docs/PILOT_CONSENT_TEMPLATE.md` / `docs/USER_DATA_DELETION_FLOW.md` / `docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md` / `docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md`
+- 起草日: 2026-06-12（Claude Code レーン） / 社内GA確定日: 2026-07-24
+- 根拠ドキュメント: `docs/requirements.md` / `docs/PILOT_CONSENT_TEMPLATE.md` / `docs/USER_DATA_DELETION_FLOW.md` / `docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md` / `docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md` / `docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md`
 
 ---
 
 ## 第1条（適用）
 
-1. 本規約は、株式会社MightyLINK（本店所在地: 〒160-0006 東京都新宿区舟町7-46 LANDDEN舟町 6F、代表取締役: 小林 雅水。以下「当社」といいます。【要法務確認】会社HP（mighty-link.com/company、2026-07-19取得）記載の商号は「株式会社 MightyLINK（マイティリンク）」。登記事項証明書との表記照合（半角スペースの有無・カタカナ併記の要否）を要確認）が提供するエンジニア＆案件 AI フィットシミュレーター「Mighty Skill-Bridge」（以下「本サービス」といいます）の利用条件を定めるものです。
+1. 本規約は、株式会社MightyLINK（本店所在地: 〒160-0006 東京都新宿区舟町7-46 LANDDEN舟町 6F、代表取締役: 小林 雅水。以下「当社」といいます。【要法務確認: 確定済（社内GA適用・商号: 株式会社MightyLINK）】会社HP（mighty-link.com/company、2026-07-19取得）記載の商号「株式会社 MightyLINK」に基づき確定）が提供するエンジニア＆案件 AI フィットシミュレーター「Mighty Skill-Bridge」（以下「本サービス」といいます）の利用条件を定めるものです。
 2. 利用者は、本サービスの利用登録を行い、または本サービスを利用することにより、本規約に同意したものとみなされます。
 3. 当社が本サービス上で随時掲載する個別規定・ガイドラインは、本規約の一部を構成します。
 

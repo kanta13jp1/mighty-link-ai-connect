@@ -61,6 +61,12 @@
 - **関連WBS**: T882
 - **プリフライト説明**: UAT仕様書の完全性・実行可能性 (T882)
 
+### audit_supabase_uat_writes.py
+- **守る対象**: UAT DB実書き込みの自動検証（Supabase/PostgreSQLテーブル網羅）
+- **NG例（失敗する時）**: 実DB接続時またはスキーマ定義検証時にUAT実テーブルの整合性が破綻すると失敗
+- **関連WBS**: T845
+- **プリフライト説明**: UAT DB実書き込みの自動検証 (T845)
+
 ## 品質・メタ
 
 ### audit_guard_catalog.py

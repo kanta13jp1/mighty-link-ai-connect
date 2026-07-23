@@ -1,7 +1,7 @@
 {
   "task": "T894",
   "mode": "full",
-  "guard_count": 23,
+  "guard_count": 24,
   "exempt_count": 2,
   "test_file_count": 102,
   "guard_results": {
@@ -66,7 +66,7 @@
       "evidence": true
     },
     "audit_release_gate_currency.py": {
-      "exit_code": 0,
+      "exit_code": 1,
       "evidence": true
     },
     "audit_runbook_catalog.py": {
@@ -78,6 +78,10 @@
       "evidence": true
     },
     "audit_schema_doc_consistency.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_supabase_uat_writes.py": {
       "exit_code": 0,
       "evidence": true
     },
@@ -100,17 +104,17 @@
   },
   "pytest": {
     "skipped": false,
-    "failed": 0,
+    "failed": 1,
     "errors": 0,
-    "collected": 697,
-    "exit_code": 0
+    "collected": 698,
+    "exit_code": 1
   },
   "hypotheses": [
     {
       "id": "H1",
       "title": "プリフライト対象ガード10件以上かつテストファイル50件以上(sanity)",
       "passed": true,
-      "detail": "対象ガード=23, 対象外=2, テストファイル=102"
+      "detail": "対象ガード=24, 対象外=2, テストファイル=102"
     },
     {
       "id": "H2",
@@ -127,20 +131,20 @@
     {
       "id": "H4",
       "title": "登録ガードの実行終了コードが全て0(全ガードPASS)",
-      "passed": true,
-      "detail": "FAIL=なし"
+      "passed": false,
+      "detail": "FAIL=['audit_release_gate_currency.py']"
     },
     {
       "id": "H5",
       "title": "pytest tests/ の failed/error が0",
-      "passed": true,
-      "detail": "failed=0, errors=0"
+      "passed": false,
+      "detail": "failed=1, errors=0"
     },
     {
       "id": "H6",
       "title": "収集テストが400件以上(スイート縮退検知)",
       "passed": true,
-      "detail": "収集=697"
+      "detail": "収集=698"
     },
     {
       "id": "H7",
@@ -163,9 +167,9 @@
     {
       "id": "H10",
       "title": "プリフライト全体が完全・整合(ドリフト0)",
-      "passed": true,
-      "detail": "先行ドリフト=なし"
+      "passed": false,
+      "detail": "先行ドリフト=あり"
     }
   ],
-  "all_passed": true
+  "all_passed": false
 }

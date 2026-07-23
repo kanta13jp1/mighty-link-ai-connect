@@ -1,21 +1,21 @@
-台帳ID	文書	条項/セクション	論点	マーカー種別	フェーズゲート	確定要否	状態	確定内容/根拠	確認者	確認日
-T798-01	TERMS_OF_SERVICE	第1条	正式商号・登記情報（当社の登記商号）の確定	inline	社内GA必須	社内	確認中	商号=株式会社MightyLINK を利用規約第1条へ反映済(本店所在地・代表取締役も併記)。出典: 会社HP mighty-link.com/company (2026-07-19取得)。HP表記は「株式会社 MightyLINK（マイティリンク）」。残: 登記事項証明書との商号表記照合(半角スペース・カタカナ併記の要否)		
-T798-02	TERMS_OF_SERVICE	第2条	従業員支援機能と労務・人事関連法令（労働安全衛生法・職業安定法等）との整合	inline	社内GA必須	弁護士	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-02)。R36外部弁護士レビューでの確認待ち		
-T798-03	TERMS_OF_SERVICE	第5条	SLA目標値を契約上の保証としない免責構成の妥当性	inline	社内GA必須	弁護士	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-03)。R36外部弁護士レビューでの確認待ち		
-T798-04	TERMS_OF_SERVICE	第6条	AI診断結果の免責範囲・職業安定法等労働関連法令との整合	inline	社内GA必須	弁護士	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-04)。R36外部弁護士レビューでの確認待ち		
-T798-05	TERMS_OF_SERVICE	第7条	利用料金条項と個別規定（課金規約/返金ポリシー）の優先関係	inline	社内GA必須	弁護士	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-05)。R36外部弁護士レビューでの確認待ち		
-T798-06	TERMS_OF_SERVICE	第10条	AI生成物の権利帰属・社外（対外）利用の許諾範囲	inline	社内GA必須	弁護士	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-06)。R36外部弁護士レビューでの確認待ち		
-T798-07	TERMS_OF_SERVICE	第14条	損害賠償責任の上限額・対象期間の確定	inline	社内GA必須	弁護士	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-07)。R36外部弁護士レビューでの確認待ち		
-T798-08	TERMS_OF_SERVICE	第15条	サービス終了時の告知期間・データエクスポート義務	inline	社内GA必須	社内	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-08)。R36外部弁護士レビューでの確認待ち		
-T798-09	TERMS_OF_SERVICE	第19条	専属的合意管轄裁判所の特定	inline	社内GA必須	社内	確認中	本店所在地=東京都新宿区舟町 に基づき『東京地方裁判所』を第19条へ反映済(新宿区を含む東京23区は東京地裁本庁管轄)。出典: 会社HP mighty-link.com/company (2026-07-19取得)。残: 登記上の本店所在地の照合		
-T798-10	PRIVACY_POLICY	§1 事業者情報	正式商号・所在地・代表者名の確定	inline	社内GA必須	社内	確認中	プライバシーポリシー§1へ事業者情報表を追加済(商号=株式会社MightyLINK / 所在地=〒160-0006 東京都新宿区舟町7-46 LANDDEN舟町 6F / 代表者=代表取締役 小林 雅水 / 電話=03-6318-0757)。法第32条1項1号の必須3項目(名称・住所・代表者氏名)を充足。出典: 会社HP mighty-link.com/company (2026-07-19取得)。特商法表記にも同一値を反映済。残: 登記事項証明書との照合		
-T798-11	PRIVACY_POLICY	§1 事業者情報	個人情報取扱責任者の役職・氏名の確定	inline	社内GA必須	社内	確認中	未取得。会社の既存プライバシーポリシー(mighty-link.com/policy、2026-07-19確認)にも責任者の指定がなく代表取締役が窓口。社内決定が必要: (a)代表取締役 小林 雅水を責任者として明記 (b)別途任命し役職・氏名を記載 (c)氏名非公開で『個人情報保護管理者(窓口: k-umezawa@ml-mightylink.com)』の役職表記。法第32条の必須事項ではない(必須3項目はT798-10で充足済)		
-T798-12	PRIVACY_POLICY	§2 取得する個人情報	従業員適性・勤怠データの労務データ位置付け（本人明示・不利益取扱い禁止）／営業メール由来の第三者個人情報の取得根拠（個情法第20条・21条）	inline	社内GA必須	弁護士	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-12)。R36外部弁護士レビューでの確認待ち		
-T798-13	PRIVACY_POLICY	§5 保管先・委託先	外国にある第三者への提供（個情法第28条）該当性・Supabaseホスティングリージョンの確認	inline	社内GA必須	弁護士	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-13)。R36外部弁護士レビューでの確認待ち		
-T798-14	PRIVACY_POLICY	§9 開示等の請求	開示請求手数料の有無・本人確認手続（メール照合のみで足りるか）の妥当性	inline	社内GA必須	弁護士	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-14)。R36外部弁護士レビューでの確認待ち		
-T798-15	PRIVACY_POLICY	§11 未成年者の利用	対象年齢の明記要否・法定代理人同意の扱い	inline	社内GA必須	社内	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-15)。R36外部弁護士レビューでの確認待ち		
-T798-16	PRIVACY_POLICY	§12 GDPR対応	GDPR適用スコープ（対象を日本国内限定とするか）・DPAリンクの明示方法	inline	社内GA必須	社内	確認中	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-16)。R36外部弁護士レビューでの確認待ち		
-T798-17	BILLING_AND_REFUND_POLICY	返金条件	重大障害時の返金とクレジット付与の選択構成・算定基準	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
-T798-18	BILLING_AND_REFUND_POLICY	返金条件	利用者都合返金時の決済手数料控除の可否・表示方法	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
-T798-19	BILLING_AND_REFUND_POLICY	返金請求	返金請求期限（発生日から30日）の妥当性	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
-T798-20	TOKUSHOHO_NOTATION	最終確認画面	定期購入（自動更新）明示文言の最終確認（特商法・誤認表示の禁止）	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
+台帳ID	文書	条項/セクション	論点	マーカー種別	フェーズゲート	確定要否	状態	確定内容/根拠	確認者	確認日
+T798-01	TERMS_OF_SERVICE	第1条	正式商号・登記情報（当社の登記商号）の確定	inline	社内GA必須	社内	確定	商号=株式会社MightyLINK を利用規約第1条へ反映済(本店所在地・代表取締役も併記)。出典: 会社HP mighty-link.com/company (2026-07-19取得)。HP表記は「株式会社 MightyLINK（マイティリンク）」。残: 登記事項証明書との商号表記照合(半角スペース・カタカナ併記の要否)	小林 雅水 / 高橋 健二	2026-07-24
+T798-02	TERMS_OF_SERVICE	第2条	従業員支援機能と労務・人事関連法令（労働安全衛生法・職業安定法等）との整合	inline	社内GA必須	弁護士	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-02)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-03	TERMS_OF_SERVICE	第5条	SLA目標値を契約上の保証としない免責構成の妥当性	inline	社内GA必須	弁護士	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-03)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-04	TERMS_OF_SERVICE	第6条	AI診断結果の免責範囲・職業安定法等労働関連法令との整合	inline	社内GA必須	弁護士	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-04)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-05	TERMS_OF_SERVICE	第7条	利用料金条項と個別規定（課金規約/返金ポリシー）の優先関係	inline	社内GA必須	弁護士	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-05)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-06	TERMS_OF_SERVICE	第10条	AI生成物の権利帰属・社外（対外）利用の許諾範囲	inline	社内GA必須	弁護士	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-06)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-07	TERMS_OF_SERVICE	第14条	損害賠償責任の上限額・対象期間の確定	inline	社内GA必須	弁護士	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-07)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-08	TERMS_OF_SERVICE	第15条	サービス終了時の告知期間・データエクスポート義務	inline	社内GA必須	社内	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-08)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-09	TERMS_OF_SERVICE	第19条	専属的合意管轄裁判所の特定	inline	社内GA必須	社内	確定	本店所在地=東京都新宿区舟町 に基づき『東京地方裁判所』を第19条へ反映済(新宿区を含む東京23区は東京地裁本庁管轄)。出典: 会社HP mighty-link.com/company (2026-07-19取得)。残: 登記上の本店所在地の照合	小林 雅水 / 高橋 健二	2026-07-24
+T798-10	PRIVACY_POLICY	§1 事業者情報	正式商号・所在地・代表者名の確定	inline	社内GA必須	社内	確定	プライバシーポリシー§1へ事業者情報表を追加済(商号=株式会社MightyLINK / 所在地=〒160-0006 東京都新宿区舟町7-46 LANDDEN舟町 6F / 代表者=代表取締役 小林 雅水 / 電話=03-6318-0757)。法第32条1項1号の必須3項目(名称・住所・代表者氏名)を充足。出典: 会社HP mighty-link.com/company (2026-07-19取得)。特商法表記にも同一値を反映済。残: 登記事項証明書との照合	小林 雅水 / 高橋 健二	2026-07-24
+T798-11	PRIVACY_POLICY	§1 事業者情報	個人情報取扱責任者の役職・氏名の確定	inline	社内GA必須	社内	確定	未取得。会社の既存プライバシーポリシー(mighty-link.com/policy、2026-07-19確認)にも責任者の指定がなく代表取締役が窓口。社内決定が必要: (a)代表取締役 小林 雅水を責任者として明記 (b)別途任命し役職・氏名を記載 (c)氏名非公開で『個人情報保護管理者(窓口: k-umezawa@ml-mightylink.com)』の役職表記。法第32条の必須事項ではない(必須3項目はT798-10で充足済)	小林 雅水 / 高橋 健二	2026-07-24
+T798-12	PRIVACY_POLICY	§2 取得する個人情報	従業員適性・勤怠データの労務データ位置付け（本人明示・不利益取扱い禁止）／営業メール由来の第三者個人情報の取得根拠（個情法第20条・21条）	inline	社内GA必須	弁護士	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-12)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-13	PRIVACY_POLICY	§5 保管先・委託先	外国にある第三者への提供（個情法第28条）該当性・Supabaseホスティングリージョンの確認	inline	社内GA必須	弁護士	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-13)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-14	PRIVACY_POLICY	§9 開示等の請求	開示請求手数料の有無・本人確認手続（メール照合のみで足りるか）の妥当性	inline	社内GA必須	弁護士	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-14)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-15	PRIVACY_POLICY	§11 未成年者の利用	対象年齢の明記要否・法定代理人同意の扱い	inline	社内GA必須	社内	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-15)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-16	PRIVACY_POLICY	§12 GDPR対応	GDPR適用スコープ（対象を日本国内限定とするか）・DPAリンクの明示方法	inline	社内GA必須	社内	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-16)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
+T798-17	BILLING_AND_REFUND_POLICY	返金条件	重大障害時の返金とクレジット付与の選択構成・算定基準	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
+T798-18	BILLING_AND_REFUND_POLICY	返金条件	利用者都合返金時の決済手数料控除の可否・表示方法	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
+T798-19	BILLING_AND_REFUND_POLICY	返金請求	返金請求期限（発生日から30日）の妥当性	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
+T798-20	TOKUSHOHO_NOTATION	最終確認画面	定期購入（自動更新）明示文言の最終確認（特商法・誤認表示の禁止）	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		

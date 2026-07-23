@@ -3,10 +3,13 @@
 
 """Tests for authentication and authorization enforcement in Mighty Skill-Bridge."""
 
-import pytest
-from fastapi.testclient import TestClient
+import os
+import subprocess
 import sys
 from pathlib import Path
+
+import pytest
+from fastapi.testclient import TestClient
 
 # Add src to sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -68,11 +71,41 @@ def test_root_index_fails_closed_when_managed_credentials_are_missing(monkeypatc
     assert "Mighty Skill-Bridge" not in response.text
 
 
+def test_managed_runtime_never_loads_local_basic_auth_defaults():
+    """A managed runtime without auth env vars must remain inaccessible."""
+    env = os.environ.copy()
+    env["K_SERVICE"] = "auth-fail-closed-test"
+    env["AI_FORCE_MOCK"] = "1"
+    env["USE_SUPABASE"] = "0"
+    env.pop("BASIC_AUTH_USERNAME", None)
+    env.pop("BASIC_AUTH_PASSWORD", None)
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            (
+                "import app; "
+                "assert app.IS_MANAGED_RUNTIME is True; "
+                "assert app.BASIC_AUTH_USERNAME is None; "
+                "assert app.BASIC_AUTH_PASSWORD is None"
+            ),
+        ],
+        cwd=SRC_DIR,
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=60,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+
+
 def test_index_html_contains_early_sync_lockout():
     """Verify index.html contains synchronous early auth lockout script in head."""
     index_path = PROJECT_ROOT / "index.html"
     content = index_path.read_text(encoding="utf-8")
     assert "early-auth-lockout-style" in content
     assert "Synchronous Security Lockout Script" in content
-
 

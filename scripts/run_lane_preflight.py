@@ -70,6 +70,7 @@ GUARD_REGISTRY: dict[str, str] = {
     "audit_runbook_catalog.py": "運用Runbookカタログの網羅整合(孤児/切れリンク検知) (T902)",
     "audit_sales_email_hardening.py": "営業メール処理の堅牢化",
     "audit_schema_doc_consistency.py": "DBスキーマとdocsの整合",
+    "audit_supabase_uat_writes.py": "UAT DB実書き込みの自動検証 (T845)",
     "audit_tracker_integrity.py": "課題管理表/QA表の構造・参照整合 (T890)",
     "audit_uat_api_coverage.py": "UAT⇄API網羅トレーサビリティ (T892)",
     "audit_uat_test_spec.py": "UAT仕様書の完全性・実行可能性 (T882)",

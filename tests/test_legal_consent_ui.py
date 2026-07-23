@@ -13,7 +13,7 @@ LEGAL_DOC_LINKS = [
 def assert_legal_consent_ui(html: str):
     assert 'id="legal-consent-checkbox"' in html
     assert 'id="legal-consent-status"' in html
-    assert 'const legalConsentVersion = "MSB-LEGAL-2026-06-DRAFT";' in html
+    assert 'const legalConsentVersion = "MSB-LEGAL-2026-07-GA";' in html
     assert "legal_consent_accepted" in html
     assert "legal_consent_version" in html
     assert "getLegalConsentPayload()" in html
