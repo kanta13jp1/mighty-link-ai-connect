@@ -11,9 +11,6 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts"))
 
 import app
 
-app.BASIC_AUTH_USERNAME = "ml-admin-c10b9f"
-app.BASIC_AUTH_PASSWORD = "e83yDi0WsxcASDXHLhvvezoW4uVBCQX_"
-
 client = TestClient(app.app)
 
 @patch("sync_sales_emails.sync_sales_emails_pipeline")

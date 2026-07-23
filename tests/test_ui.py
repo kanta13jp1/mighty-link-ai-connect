@@ -22,6 +22,9 @@ def test_ui_flow(fastapi_server):
                 "password": BASIC_AUTH_PASSWORD,
             }
         )
+        context.add_init_script("""() => {
+            localStorage.setItem('mighty_auth_session', JSON.stringify({ email: 'qa@mightylink-app.com', token: 'mock' }));
+        }""")
         page = context.new_page()
         page.set_default_timeout(10_000)
         page.set_default_navigation_timeout(30_000)
@@ -29,12 +32,6 @@ def test_ui_flow(fastapi_server):
         
         # Navigate to homepage
         page.goto(fastapi_server, wait_until="domcontentloaded")
-        
-        # Bypass compulsory auth modal for test execution
-        page.evaluate("""() => {
-            localStorage.setItem('msb_auth_session', JSON.stringify({ email: 'qa@mightylink-app.com', token: 'mock' }));
-            if (typeof closeAuthModal === 'function') closeAuthModal(true);
-        }""")
         
         # 1. Verify Page Title
         assert "Mighty Skill-Bridge" in page.title()

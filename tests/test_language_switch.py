@@ -21,6 +21,9 @@ def test_language_switch_flow(fastapi_server):
                 "password": BASIC_AUTH_PASSWORD,
             }
         )
+        context.add_init_script("""() => {
+            localStorage.setItem('mighty_auth_session', JSON.stringify({ email: 'qa@mightylink-app.com', token: 'mock' }));
+        }""")
         page = context.new_page()
         page.set_default_timeout(10_000)
         page.set_default_navigation_timeout(30_000)
@@ -29,14 +32,8 @@ def test_language_switch_flow(fastapi_server):
         # Open main page
         page.goto(fastapi_server, wait_until="domcontentloaded")
         
-        # Bypass compulsory auth modal for test execution
-        page.evaluate("""() => {
-            localStorage.setItem('msb_auth_session', JSON.stringify({ email: 'qa@mightylink-app.com', token: 'mock' }));
-            if (typeof closeAuthModal === 'function') closeAuthModal(true);
-        }""")
-        
         # 1. Default should display JP text or fall back to JP
-        page.wait_for_selector("#primary-navigation")
+        page.wait_for_selector("#primary-navigation", state="attached")
         nav_text = page.locator("#primary-navigation a[href='#survey-section']").text_content()
         assert "アンケート" in nav_text or "Survey" in nav_text
         

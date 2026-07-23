@@ -9,6 +9,10 @@ import pytest
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "src"))
 
+# Keep authentication deterministic even when CI exposes managed-runtime variables.
+os.environ.setdefault("BASIC_AUTH_USERNAME", "test-admin")
+os.environ.setdefault("BASIC_AUTH_PASSWORD", "test-password")
+
 def get_free_port() -> int:
     """Find and return an available free port on localhost."""
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
