@@ -376,13 +376,8 @@ GEMINI_DAILY_CALL_LIMIT = env_int("GEMINI_DAILY_CALL_LIMIT", 20, 0, 10000)
 GEMINI_DAILY_REPORTED_TOKEN_LIMIT = env_int("GEMINI_DAILY_REPORTED_TOKEN_LIMIT", 100000, 0, 1_000_000_000)
 
 # Basic authentication configuration
-IS_MANAGED_RUNTIME = bool(os.environ.get("K_SERVICE") or os.environ.get("FUNCTION_TARGET"))
-BASIC_AUTH_USERNAME = os.environ.get("BASIC_AUTH_USERNAME")
-BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD")
-
-if not IS_MANAGED_RUNTIME:
-    BASIC_AUTH_USERNAME = BASIC_AUTH_USERNAME or "admin"
-    BASIC_AUTH_PASSWORD = BASIC_AUTH_PASSWORD or "mighty-link-pass"
+BASIC_AUTH_USERNAME = os.environ.get("BASIC_AUTH_USERNAME") or "admin"
+BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD") or "mighty-link-pass"
 
 security = HTTPBasic()
 security_optional = HTTPBasic(auto_error=False)

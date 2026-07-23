@@ -1,16 +1,15 @@
 # NotebookLM CEO Slide Outline
 
-Generated: 2026-07-23T23:37:21+09:00
-Status: `auth_required`
+Generated: 2026-07-24T00:11:58+09:00
+Notebook: `4934c12b-b270-4739-97a1-b04b5b84eaaf`
+Status: `source_sync_ready`
 
-NotebookLM CLI is not ready yet, so this file is a placeholder.
+NotebookLM source sync completed. The CEO slide outline ask was skipped by `--skip-asks` to avoid blocking the docs/Drive sync on a long NotebookLM response.
 
-## Required Action
+## Optional Ask Generation
 
 ```powershell
-notebooklm login
-python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60
+python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900
 ```
 
-After re-authentication, this file will be replaced by a NotebookLM-generated
-8-slide-or-less CEO presentation outline.
+After the optional ask generation succeeds, this file will be replaced by a NotebookLM-generated CEO presentation outline.
