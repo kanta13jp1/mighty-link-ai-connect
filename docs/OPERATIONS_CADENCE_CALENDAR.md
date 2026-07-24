@@ -30,6 +30,7 @@
 | --- | --- | --- | --- |
 | 月次品質レポートの生成・配信（診断精度・NPS・コスト・稼働率） | Codex（自動）+ 人間確認 | [月次品質レポート自動配信](MONTHLY_QUALITY_REPORT_DELIVERY_RUNBOOK.md) | レポートが生成・配信され、KPI が記録されていることを確認 |
 | 監査ログ・稼働ログのコールドストレージ退避 | Codex | [コールドストレージ退避](COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md) | 対象期間のログが退避され、退避記録が残ることを確認 |
+| 経理コスト台帳監査・インボイス/売上計上確認 | 経理担当 + Codex | [経理・税務・コスト管理](ACCOUNTING_AND_TAX_OPERATIONS_RUNBOOK.md) | 月次台帳監査が完了し、予算消化率・領収書保管・売上計上が記録されていることを確認 |
 | 有償公開・課金live有効化の月次レビュー（実施/延期/見送りの判断） | 人間（社長）+ Claude Code | [有償公開 Go/No-Go 意思決定パッケージ](PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md) | 判定結果が記録され、WBS（T862）・課題管理表へ反映されることを確認 |
 
 ## 四半期

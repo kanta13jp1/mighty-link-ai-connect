@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -152,6 +153,10 @@ def render_markdown(report: dict[str, Any]) -> str:
 
 
 def main() -> int:
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            reconfigure(encoding="utf-8", errors="replace")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--json", default=str(PROJECT_ROOT / "exports" / "docs_reference_integrity_audit.json"))
     parser.add_argument("--md", default=str(PROJECT_ROOT / "exports" / "docs_reference_integrity_audit.md"))

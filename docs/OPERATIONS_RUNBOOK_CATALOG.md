@@ -44,6 +44,7 @@
 
 ## 課金・コスト
 
+- [経理・税務・コスト管理 Runbook（T813/T823)](ACCOUNTING_AND_TAX_OPERATIONS_RUNBOOK.md) — 経理・インボイス・税務処理・コスト監査を行うとき
 - [Stripe Customer Portal](STRIPE_CUSTOMER_PORTAL_RUNBOOK.md) — 解約/プラン変更のCustomer Portalを扱うとき
 - [週次課金・コスト配分ダッシュボード Runbook（T757)](WEEKLY_COST_DASHBOARD_RUNBOOK.md) — 週次のコスト配分を確認するとき
 

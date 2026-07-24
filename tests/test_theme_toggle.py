@@ -55,7 +55,7 @@ def test_h4_light_theme_block_present(html):
     # dark default still declares near-black bg on the base :root
     assert "--bg: #030303;" in html
     # light overrides bg to white
-    light_block = html.split(':root[data-theme="light"]', 1)[1][:400]
+    light_block = html.split(':root[data-theme="light"] {', 1)[1][:400]
     assert "--bg: #ffffff;" in light_block
 
 

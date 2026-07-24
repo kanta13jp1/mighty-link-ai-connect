@@ -243,6 +243,93 @@
             cursor: pointer;
         }
 
+        /* ==========================================================================
+           Mobile Bottom Navigation & Mobile UX Optimization (@media max-width: 768px)
+           ========================================================================== */
+        .mobile-bottom-nav {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: calc(60px + env(safe-area-inset-bottom, 0px));
+                padding-bottom: env(safe-area-inset-bottom, 0px);
+                background: rgba(18, 20, 24, 0.85);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-top: 1px solid var(--line-strong);
+                z-index: 999;
+                justify-content: space-around;
+                align-items: center;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            :root[data-theme="light"] .mobile-bottom-nav {
+                background: rgba(255, 255, 255, 0.88);
+                border-top-color: rgba(0, 0, 0, 0.12);
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+            }
+
+            .mobile-nav-item {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 48px;
+                color: var(--muted);
+                text-decoration: none;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                font-size: 11px;
+                font-weight: 600;
+                gap: 3px;
+                transition: all 0.2s ease;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .mobile-nav-item:active {
+                transform: scale(0.92);
+            }
+
+            .mobile-nav-icon {
+                font-size: 18px;
+                line-height: 1;
+                transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            .mobile-nav-item.active {
+                color: var(--blue);
+            }
+
+            .mobile-nav-item.active .mobile-nav-icon {
+                transform: translateY(-2px) scale(1.15);
+                filter: drop-shadow(0 2px 8px var(--blue));
+            }
+
+            body {
+                padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+            }
+
+            .topbar {
+                padding: 10px 16px;
+            }
+
+            .topbar .nav-links {
+                display: none;
+            }
+
+            .brand-text span {
+                display: none;
+            }
+        }
+
         .status-strip {
             display: flex;
             align-items: center;
@@ -407,32 +494,58 @@
         }
 
         .big-btn {
+            position: relative;
+            overflow: hidden;
             min-height: 52px;
-            padding: 0 36px;
+            padding: 0 38px;
             font-size: 16px;
             border-radius: 30px;
             background: linear-gradient(90deg, #8bdcff, #baff66);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             color: #030303;
             font-weight: 900;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 0 30px rgba(186, 255, 102, 0.22);
+            box-shadow: 0 0 30px rgba(186, 255, 102, 0.28), 0 4px 20px rgba(0, 0, 0, 0.4);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: ctaPulse 3s infinite ease-in-out;
+        }
+
+        .big-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transform: skewX(-25deg);
+            animation: ctaShimmer 4s infinite ease-in-out;
+        }
+
+        @keyframes ctaShimmer {
+            0%, 75% { left: -100%; }
+            100% { left: 200%; }
+        }
+
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 0 25px rgba(186, 255, 102, 0.25), 0 4px 20px rgba(0, 0, 0, 0.4); }
+            50% { box-shadow: 0 0 45px rgba(186, 255, 102, 0.55), 0 8px 30px rgba(139, 220, 255, 0.35); }
         }
 
         .big-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 45px rgba(186, 255, 102, 0.4);
-            border-color: rgba(255, 255, 255, 0.45);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 0 50px rgba(186, 255, 102, 0.5), 0 8px 25px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.6);
         }
 
         .big-btn:disabled {
             cursor: progress;
             opacity: 0.72;
             transform: none;
+            animation: none;
         }
 
         .play-glyph {
@@ -446,16 +559,24 @@
         .panel {
             position: relative;
             z-index: 3; /* 前面にフローティング */
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: 12px;
             padding: 24px 28px;
-            background: rgba(12, 13, 15, 0.48); /* 強い半透明ガラス */
-            box-shadow: 0 16px 54px var(--shadow);
-            backdrop-filter: blur(22px); /* 強いボケ効果 */
+            background: rgba(12, 13, 15, 0.58); /* 強い半透明ガラス */
+            box-shadow: 0 16px 54px var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px); /* 強いボケ効果 */
+            -webkit-backdrop-filter: blur(24px);
             display: flex;
             flex-direction: column;
             gap: 12px;
             min-height: 280px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .panel:hover {
+            border-color: rgba(139, 220, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 25px rgba(139, 220, 255, 0.1);
         }
 
         .panel h2 {
@@ -2469,6 +2590,33 @@
             border-left: 3px solid rgba(255, 138, 168, 0.5);
             padding-left: 10px;
         }
+        /* 印刷・PDF保存用最適化スタイル (@media print) */
+        @media print {
+            header, footer, .topbar-tools, .hero-video-showcase, .language-switch,
+            .skip-link, .auth-modal-overlay, #onboarding-section, #attendance-section,
+            #matching-section, #admin-dashboard-section, .theme-toggle, .mobile-menu {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+            }
+            .internal-section, .comparison-container, .aptitude-demo-panel {
+                border: none !important;
+                box-shadow: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+            }
+            .aptitude-interview-guide, #aptitude-interview-guide {
+                display: block !important;
+                page-break-inside: avoid;
+            }
+            .aptitude-interview-memo, #aptitude-interview-memo {
+                border: 1px solid #ccc !important;
+                background: #fff !important;
+                color: #000 !important;
+            }
+        }
         /* 単独共有ビュー (#aptitude-demo-standalone): 自己診断以外を隠す */
         body.aptitude-standalone .hero,
         body.aptitude-standalone #report-section,
@@ -3560,7 +3708,12 @@
                             <div class="aptitude-demo-empty">質問はまだ生成されていません。</div>
                         </div>
                         <div id="aptitude-demo-result" class="aptitude-demo-panel aptitude-demo-result" aria-live="polite"></div>
-                        <div id="aptitude-interview-guide" class="aptitude-demo-panel aptitude-interview-guide" aria-live="polite"></div>
+                        <div id="aptitude-interview-guide" class="aptitude-demo-panel aptitude-interview-guide" aria-live="polite">
+                            <div class="input-group" style="margin-top: 14px;">
+                                <label for="aptitude-interview-memo" class="control-label" style="font-weight: 700;">📝 フィードバック面談メモ（10〜20分面談用・ローカル保持）</label>
+                                <textarea id="aptitude-interview-memo" class="textarea-input aptitude-interview-memo" placeholder="面談での対話メモや次回アクション目標を入力できます..." style="min-height: 80px;"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -4393,12 +4546,21 @@
         }
 
         (function initLang() {
-            let savedLang = "ja";
-            try { savedLang = localStorage.getItem("msb_language_preference") || "ja"; } catch (e) {}
+            let savedLang = "";
+            try { savedLang = localStorage.getItem("msb_language_preference") || ""; } catch (e) {}
+            if (!savedLang) {
+                const navLang = (navigator.language || navigator.userLanguage || "").toLowerCase();
+                if (navLang.startsWith("zh")) savedLang = "zh";
+                else if (navLang.startsWith("ko")) savedLang = "ko";
+                else if (navLang.startsWith("en")) savedLang = "en";
+                else savedLang = "ja";
+            }
             function applyLang() {
                 const targetEl = document.querySelector(`.language-switch a[data-lang='${savedLang}']`);
                 if (targetEl) {
                     switchLanguage(targetEl);
+                } else {
+                    switchLanguage(savedLang || "ja");
                 }
             }
             if (document.readyState === "loading") {
@@ -4407,6 +4569,29 @@
                 applyLang();
             }
         })();
+
+        // Register Global Keyboard Shortcuts (Alt+1 .. Alt+7) for Accessible Navigation
+        document.addEventListener("keydown", function(e) {
+            if (e.altKey && !e.ctrlKey && !e.metaKey) {
+                const targets = {
+                    "1": "#top",
+                    "2": "#onboarding-section",
+                    "3": "#survey-section",
+                    "4": "#aptitude-demo-section",
+                    "5": "#attendance-section",
+                    "6": "#matching-section",
+                    "7": "#admin-dashboard-section"
+                };
+                if (targets[e.key]) {
+                    e.preventDefault();
+                    const el = document.querySelector(targets[e.key]);
+                    if (el) {
+                        el.scrollIntoView({ behavior: "smooth" });
+                        el.focus({ preventScroll: true });
+                    }
+                }
+            }
+        });
 
         function setVideoSource(url) {
             const video = document.getElementById("seedance-video");
@@ -7580,10 +7765,45 @@
             return true;
         }
 
-        // Initialize Auth UI & Enforce Lockout on DOM load
+        function setActiveMobileNav(el) {
+            document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item').forEach(item => item.classList.remove('active'));
+            if (el) el.classList.add('active');
+        }
+
+        // Initialize Auth UI & Mobile Navigation Scrollspy
         document.addEventListener("DOMContentLoaded", () => {
             currentUserSession = getAuthSession();
             updateAuthUI();
+
+            const sections = [
+                { id: 'top', nav: 'top' },
+                { id: 'survey-section', nav: 'survey-section' },
+                { id: 'attendance-section', nav: 'attendance-section' },
+                { id: 'matching-section', nav: 'matching-section' }
+            ];
+
+            const handleScrollSpy = () => {
+                if (window.innerWidth > 768) return;
+                const scrollPos = window.scrollY + 200;
+                let currentNav = 'top';
+
+                for (const sec of sections) {
+                    const el = document.getElementById(sec.id);
+                    if (el && el.offsetTop <= scrollPos) {
+                        currentNav = sec.nav;
+                    }
+                }
+
+                document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item[data-nav]').forEach(item => {
+                    if (item.getAttribute('data-nav') === currentNav) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', handleScrollSpy, { passive: true });
         });
     </script>
 
@@ -7741,6 +7961,30 @@
             </div>
         </div>
     </div>
+
+    <!-- モバイル専用ボトムナビゲーションバー -->
+    <nav class="mobile-bottom-nav" aria-label="モバイル主要ナビゲーション">
+        <a href="#top" class="mobile-nav-item active" data-nav="top" onclick="setActiveMobileNav(this)">
+            <span class="mobile-nav-icon">🏠</span>
+            <span class="mobile-nav-label">ホーム</span>
+        </a>
+        <a href="#survey-section" class="mobile-nav-item" data-nav="survey-section" onclick="setActiveMobileNav(this)">
+            <span class="mobile-nav-icon">📝</span>
+            <span class="mobile-nav-label">アンケート</span>
+        </a>
+        <a href="#attendance-section" class="mobile-nav-item" data-nav="attendance-section" onclick="setActiveMobileNav(this)">
+            <span class="mobile-nav-icon">⏱️</span>
+            <span class="mobile-nav-label">勤怠</span>
+        </a>
+        <a href="#matching-section" class="mobile-nav-item" data-nav="matching-section" onclick="setActiveMobileNav(this)">
+            <span class="mobile-nav-icon">🤝</span>
+            <span class="mobile-nav-label">マッチング</span>
+        </a>
+        <button type="button" class="mobile-nav-item mobile-nav-btn" onclick="toggleNav()" aria-label="メニュー展開">
+            <span class="mobile-nav-icon">☰</span>
+            <span class="mobile-nav-label">その他</span>
+        </button>
+    </nav>
 </body>
 <!-- force deploy trigger (T877) -->
 </html>
