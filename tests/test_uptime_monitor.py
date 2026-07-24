@@ -1,3 +1,4 @@
+import io
 import json
 import ssl
 import sys
@@ -64,6 +65,26 @@ def test_check_target_ok_with_expected_status():
     assert result.status == "ok"
     assert result.http_status == 200
     assert result.tls_verification == "strict"
+
+
+def test_fetch_url_returns_http_error_status(monkeypatch):
+    error = urllib.error.HTTPError(
+        "https://example.com/",
+        401,
+        "Unauthorized",
+        {},
+        io.BytesIO(b""),
+    )
+
+    def raise_http_error(*args, **kwargs):
+        raise error
+
+    monkeypatch.setattr(uptime.urllib.request, "urlopen", raise_http_error)
+
+    result = uptime.fetch_url("https://example.com/", 5)
+
+    assert result.status_code == 401
+    assert result.final_url == "https://example.com/"
 
 
 def test_check_target_fails_on_unexpected_status():
@@ -165,3 +186,12 @@ def test_slack_payload_omits_secret_url():
 
     assert "T743 uptime monitor: FAILED" in payload["text"]
     assert "hooks.slack.com" not in payload["text"]
+
+
+def test_production_targets_cover_auth_gate_and_health():
+    targets = uptime.read_targets(PROJECT_ROOT / "data" / "uptime_targets.tsv")
+    expected_by_url = {target.url: target.expected_status for target in targets}
+
+    assert expected_by_url["https://mightylink-app.com/"] == 401
+    assert expected_by_url["https://mightylink-app.com/api/health"] == 200
+    assert expected_by_url["https://mighty-link-ai-connect-13d22.web.app/"] == 401

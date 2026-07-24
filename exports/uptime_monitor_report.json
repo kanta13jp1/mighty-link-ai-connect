@@ -1,10 +1,10 @@
 {
   "task_id": "T743",
-  "generated_at_utc": "2026-07-07T11:38:22Z",
+  "generated_at_utc": "2026-07-24T00:35:42Z",
   "targets_path": "data\\uptime_targets.tsv",
   "summary": {
-    "total": 3,
-    "ok": 3,
+    "total": 4,
+    "ok": 4,
     "warning": 0,
     "failed": 0,
     "status": "ok"
@@ -19,41 +19,56 @@
       "owner": "Codex",
       "status": "ok",
       "http_status": 200,
-      "elapsed_ms": 317.71,
+      "elapsed_ms": 78.45,
       "final_url": "https://kanta13jp1.github.io/mighty-link-ai-connect/",
       "tls_verification": "strict",
       "error": null,
       "notes": "CEO共有済みの公開デモURL。Public Demo Guardと同じ正本。"
     },
     {
-      "target_id": "UPTIME_FIREBASE_HOSTING",
-      "name": "Firebase Hosting default URL",
+      "target_id": "UPTIME_FIREBASE_AUTH_GATE",
+      "name": "Firebase Hosting auth gate",
       "url": "https://mighty-link-ai-connect-13d22.web.app/",
-      "expected_status": 200,
+      "expected_status": 401,
       "severity": "P1",
       "owner": "Codex",
       "status": "ok",
-      "http_status": 200,
-      "elapsed_ms": 456.27,
+      "http_status": 401,
+      "elapsed_ms": 281.4,
       "final_url": "https://mighty-link-ai-connect-13d22.web.app/",
       "tls_verification": "strict",
       "error": null,
-      "notes": "Firebase Hostingの標準URL。custom domain反映中も本番到達性の基準にする。"
+      "notes": "保護対象ルートが未認証リクエストを拒否することを監視する。"
     },
     {
-      "target_id": "UPTIME_CUSTOM_DOMAIN",
-      "name": "mightylink-app.com custom domain",
+      "target_id": "UPTIME_CUSTOM_AUTH_GATE",
+      "name": "mightylink-app.com auth gate",
       "url": "https://mightylink-app.com/",
+      "expected_status": 401,
+      "severity": "P1",
+      "owner": "Codex",
+      "status": "ok",
+      "http_status": 401,
+      "elapsed_ms": 325.58,
+      "final_url": "https://mightylink-app.com/",
+      "tls_verification": "strict",
+      "error": null,
+      "notes": "カスタムドメインの保護対象ルートが未認証リクエストを拒否することを監視する。"
+    },
+    {
+      "target_id": "UPTIME_CUSTOM_HEALTH",
+      "name": "mightylink-app.com API health",
+      "url": "https://mightylink-app.com/api/health",
       "expected_status": 200,
       "severity": "P1",
       "owner": "Codex",
       "status": "ok",
       "http_status": 200,
-      "elapsed_ms": 439.99,
-      "final_url": "https://mightylink-app.com/",
+      "elapsed_ms": 335.53,
+      "final_url": "https://mightylink-app.com/api/health",
       "tls_verification": "strict",
       "error": null,
-      "notes": "T740_3完了済み。Google Trust Services証明書のSubject CN=mightylink-app.comを確認したためstrict TLSで監視する。"
+      "notes": "Hostingリライト配下の公開ヘルスエンドポイントを監視する。"
     }
   ]
 }

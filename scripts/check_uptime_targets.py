@@ -137,13 +137,24 @@ def fetch_url(
         headers={"User-Agent": "Mighty-Link-Uptime-Monitor/1.0"},
         method="GET",
     )
-    with urllib.request.urlopen(request, timeout=timeout_seconds, context=context) as response:
+    try:
+        with urllib.request.urlopen(request, timeout=timeout_seconds, context=context) as response:
+            elapsed_ms = round((time.perf_counter() - started) * 1000, 2)
+            return FetchResult(
+                status_code=int(response.status),
+                final_url=str(response.geturl()),
+                elapsed_ms=elapsed_ms,
+            )
+    except urllib.error.HTTPError as exc:
         elapsed_ms = round((time.perf_counter() - started) * 1000, 2)
-        return FetchResult(
-            status_code=int(response.status),
-            final_url=str(response.geturl()),
-            elapsed_ms=elapsed_ms,
-        )
+        try:
+            return FetchResult(
+                status_code=int(exc.code),
+                final_url=str(exc.geturl()),
+                elapsed_ms=elapsed_ms,
+            )
+        finally:
+            exc.close()
 
 
 def error_message(exc: BaseException) -> str:

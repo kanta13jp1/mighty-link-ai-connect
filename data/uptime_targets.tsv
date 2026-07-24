@@ -1,4 +1,5 @@
 target_id	name	url	expected_status	timeout_seconds	allow_tls_error	severity	owner	notes
 UPTIME_PUBLIC_DEMO	GitHub Pages public demo	https://kanta13jp1.github.io/mighty-link-ai-connect/	200	15	false	P1	Codex	CEO共有済みの公開デモURL。Public Demo Guardと同じ正本。
-UPTIME_FIREBASE_HOSTING	Firebase Hosting default URL	https://mighty-link-ai-connect-13d22.web.app/	200	15	false	P1	Codex	Firebase Hostingの標準URL。custom domain反映中も本番到達性の基準にする。
-UPTIME_CUSTOM_DOMAIN	mightylink-app.com custom domain	https://mightylink-app.com/	200	15	false	P1	Codex	T740_3完了済み。Google Trust Services証明書のSubject CN=mightylink-app.comを確認したためstrict TLSで監視する。
+UPTIME_FIREBASE_AUTH_GATE	Firebase Hosting auth gate	https://mighty-link-ai-connect-13d22.web.app/	401	15	false	P1	Codex	保護対象ルートが未認証リクエストを拒否することを監視する。
+UPTIME_CUSTOM_AUTH_GATE	mightylink-app.com auth gate	https://mightylink-app.com/	401	15	false	P1	Codex	カスタムドメインの保護対象ルートが未認証リクエストを拒否することを監視する。
+UPTIME_CUSTOM_HEALTH	mightylink-app.com API health	https://mightylink-app.com/api/health	200	15	false	P1	Codex	Hostingリライト配下の公開ヘルスエンドポイントを監視する。
