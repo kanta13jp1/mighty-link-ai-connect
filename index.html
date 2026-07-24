@@ -1344,42 +1344,134 @@
         }
 
         .site-footer {
-            margin-top: 48px;
-            padding: 42px 32px 32px;
-            border-top: 1px solid var(--line);
-            background: rgba(0, 0, 0, 0.36);
+            position: relative;
+            margin-top: 64px;
+            padding: 48px 32px 36px;
+            background: rgba(8, 12, 22, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .site-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+            opacity: 0.85;
         }
 
         .footer-inner {
             width: min(1512px, 100%);
             margin: 0 auto;
             display: grid;
-            grid-template-columns: minmax(240px, 1fr) repeat(3, minmax(160px, 0.56fr));
-            gap: 28px;
+            grid-template-columns: minmax(280px, 1.2fr) repeat(3, minmax(160px, 0.6fr));
+            gap: 36px;
         }
 
         .footer-brand {
-            display: grid;
-            gap: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
             color: var(--muted);
             font-size: 13px;
             line-height: 1.6;
         }
 
+        .footer-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            color: #4ade80;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        .footer-status-badge .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 8px #22c55e;
+            animation: status-pulse 2s infinite;
+        }
+
+        @keyframes status-pulse {
+            0% { opacity: 0.6; box-shadow: 0 0 4px #22c55e; }
+            50% { opacity: 1; box-shadow: 0 0 12px #22c55e; }
+            100% { opacity: 0.6; box-shadow: 0 0 4px #22c55e; }
+        }
+
+        .footer-socials {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .footer-social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--muted);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+        }
+
+        .footer-social-icon:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+            color: #60a5fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
         .footer-column {
-            display: grid;
+            display: flex;
+            flex-direction: column;
             align-content: start;
-            gap: 10px;
+            gap: 12px;
         }
 
         .footer-column h3 {
-            color: var(--text);
+            color: #f8fafc;
             font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            margin-bottom: 4px;
         }
 
         .footer-column a {
             color: var(--muted);
             font-size: 13px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            width: fit-content;
+        }
+
+        .footer-column a:hover {
+            color: #60a5fa;
+            transform: translateX(4px);
+            text-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
         }
 
         @media (max-width: 1080px) {
@@ -2718,9 +2810,136 @@
             cursor: pointer;
             font-weight: 800;
             font-size: 13px;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .aptitude-demo-options label:hover {
+            border-color: rgba(139, 220, 255, 0.5);
+            background: rgba(139, 220, 255, 0.08);
+            transform: translateY(-1px);
         }
         .aptitude-demo-options input {
             accent-color: var(--blue);
+        }
+        .aptitude-demo-options label.val-1:has(input:checked),
+        .aptitude-demo-options label.val-1.checked {
+            background: rgba(255, 138, 168, 0.22);
+            border-color: #ff8aa8;
+            color: #ff8aa8;
+            box-shadow: 0 0 10px rgba(255, 138, 168, 0.25);
+        }
+        .aptitude-demo-options label.val-2:has(input:checked),
+        .aptitude-demo-options label.val-2.checked {
+            background: rgba(255, 184, 108, 0.22);
+            border-color: #ffb86c;
+            color: #ffb86c;
+            box-shadow: 0 0 10px rgba(255, 184, 108, 0.25);
+        }
+        .aptitude-demo-options label.val-3:has(input:checked),
+        .aptitude-demo-options label.val-3.checked {
+            background: rgba(230, 193, 90, 0.22);
+            border-color: #e6c15a;
+            color: #e6c15a;
+            box-shadow: 0 0 10px rgba(230, 193, 90, 0.25);
+        }
+        .aptitude-demo-options label.val-4:has(input:checked),
+        .aptitude-demo-options label.val-4.checked {
+            background: rgba(139, 220, 255, 0.22);
+            border-color: #8bdcff;
+            color: #8bdcff;
+            box-shadow: 0 0 10px rgba(139, 220, 255, 0.25);
+        }
+        .aptitude-demo-options label.val-5:has(input:checked),
+        .aptitude-demo-options label.val-5.checked {
+            background: rgba(79, 209, 165, 0.22);
+            border-color: #4fd1a5;
+            color: #4fd1a5;
+            box-shadow: 0 0 10px rgba(79, 209, 165, 0.25);
+        }
+        /* 回答進捗率プログレスバー */
+        .aptitude-progress-wrap {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 14px;
+        }
+        .aptitude-progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+        .aptitude-progress-track {
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+        .aptitude-progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #4fd1a5, #8bdcff);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* 評価結果 SVGゲージ & プロファイルバー */
+        .aptitude-result-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 14px;
+        }
+        @media (max-width: 600px) {
+            .aptitude-result-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+        .aptitude-gauge-wrap {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            flex-shrink: 0;
+        }
+        .aptitude-gauge-svg {
+            width: 100%;
+            height: 100%;
+        }
+        .aptitude-gauge-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            line-height: 1.1;
+        }
+        .aptitude-gauge-val {
+            display: block;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text);
+            font-variant-numeric: tabular-nums;
+        }
+        .aptitude-gauge-max {
+            font-size: 10px;
+            color: var(--muted);
+        }
+        .aptitude-profile-section {
+            margin-top: 14px;
+            margin-bottom: 14px;
+        }
+        .aptitude-profile-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .aptitude-demo-result {
             display: none;
@@ -2751,6 +2970,7 @@
             width: 0%;
             border-radius: inherit;
             background: linear-gradient(90deg, var(--blue), var(--green));
+            transition: width 0.4s ease;
         }
         .punch-card-panel {
             display: grid;
@@ -3925,6 +4145,45 @@
                     </div>
                 </div>
 
+                <!-- データビジュアル: SVG トレンドチャート & ドーナツチャート -->
+                <div class="panel" style="min-height: auto; margin-bottom: 32px; background: rgba(17, 19, 18, 0.6); border: 1px solid var(--line);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom: 16px;">
+                        <div>
+                            <h3 style="font-size: 15px; font-weight: 700; color: var(--text); margin:0;">📊 リアルタイム・アナリティクスビジュアル</h3>
+                            <span class="control-label">モチベーション・稼働トレンドおよび営業AIマッチング判定構成比</span>
+                        </div>
+                        <div style="display:flex; gap:16px; align-items:center; font-size:12px; color:var(--muted);">
+                            <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; background:var(--green); display:inline-block;"></span> モチベーション</span>
+                            <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; background:var(--blue); display:inline-block;"></span> 稼働インデックス</span>
+                            <span style="display:inline-flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; background:var(--yellow); display:inline-block;"></span> AIマッチング率</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                        <!-- 折れ線トレンドグラフ -->
+                        <div style="position:relative; background: rgba(0,0,0,0.2); border-radius:8px; padding:16px; border:1px solid rgba(255,255,255,0.05);">
+                            <h4 style="font-size: 13px; color: var(--muted); margin:0 0 12px; font-weight: 700;">📈 週間コンディション & 稼働トレンド</h4>
+                            <div style="width:100%; height:180px; position:relative;" id="ops-trend-container">
+                                <svg id="ops-trend-svg" width="100%" height="100%" viewBox="0 0 460 140" preserveAspectRatio="none" style="overflow:visible;"></svg>
+                                <div id="ops-chart-tooltip" style="position:absolute; display:none; pointer-events:none; background:rgba(18, 20, 19, 0.95); border:1px solid var(--line); padding:6px 10px; border-radius:6px; font-size:11px; color:var(--text); z-index:10;"></div>
+                            </div>
+                        </div>
+
+                        <!-- ドーナツ円グラフ -->
+                        <div style="position:relative; background: rgba(0,0,0,0.2); border-radius:8px; padding:16px; border:1px solid rgba(255,255,255,0.05); display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                            <h4 style="font-size: 13px; color: var(--muted); margin:0 0 12px; font-weight: 700; width:100%;">🍩 AIレビュー判定構成比</h4>
+                            <div style="position:relative; width:130px; height:130px;">
+                                <svg id="ops-donut-svg" width="130" height="130" viewBox="0 0 130 130" style="transform: rotate(-90deg); overflow:visible;"></svg>
+                                <div style="position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none;">
+                                    <span id="ops-donut-center-val" style="font-size:20px; font-weight:800; color:var(--text);">87.5%</span>
+                                    <span style="font-size:10px; color:var(--muted);">適合率</span>
+                                </div>
+                            </div>
+                            <div id="ops-donut-legend" style="display:flex; justify-content:center; gap:12px; margin-top:14px; font-size:11px; flex-wrap:wrap;"></div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-grid-2col">
                     <div>
                         <h3 style="font-size: 15px; font-weight: 700; color: var(--muted); margin-bottom: 12px; text-transform: uppercase;">社内メンバー診断・稼働一覧</h3>
@@ -4075,8 +4334,26 @@
                         </span>
                     </a>
                     <span>Mighty-Link 社員専用ポータル</span>
-                    <span>Copyright © 2026 Mighty-Link</span>
-                    <a href="#support" style="color:var(--blue); font-size:12px; margin-top: 8px; display:inline-block;">サポート・問い合わせ: k-umezawa@ml-mightylink.com</a>
+                    <div class="footer-status-badge">
+                        <span class="dot"></span>
+                        <span>All Systems Operational</span>
+                    </div>
+                    <div class="footer-socials">
+                        <a href="https://github.com" target="_blank" rel="noopener" class="footer-social-icon" aria-label="GitHub" title="GitHub Repository">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        </a>
+                        <a href="https://slack.com" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Slack" title="Slack Workspace">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.521A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.523v-2.521h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
+                        </a>
+                        <a href="https://x.com" target="_blank" rel="noopener" class="footer-social-icon" aria-label="X" title="X (Twitter)">
+                            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.md" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Docs" title="Documentation">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                        </a>
+                    </div>
+                    <span>Copyright © 2026 Mighty-Link Inc. All rights reserved.</span>
+                    <a href="#support" style="color:var(--blue); font-size:12px; margin-top: 4px; display:inline-block;">サポート・問い合わせ: k-umezawa@ml-mightylink.com</a>
                 </div>
                 <div class="footer-column">
                     <h3>メニュー</h3>
@@ -4292,7 +4569,28 @@
                 auth_modal_title: "ダッシュボード ログイン",
                 auth_email_label: "メールアドレス",
                 auth_pass_label: "パスワード",
-                auth_submit_btn: "ログインしてアクセス"
+                auth_submit_btn: "ログインしてアクセス",
+                onboard_account_id_label: "アカウント識別子",
+                onboard_account_id_placeholder: "社内アカウントID（氏名の入力は不要です）",
+                onboard_activate_btn: "アカウントを有効化",
+                support_title: "問い合わせ窓口",
+                support_subtitle: "技術不具合、請求、個人情報、診断改善の相談を受け付けます。",
+                support_category_label: "種別",
+                support_cat_general: "一般",
+                support_cat_technical: "技術不具合",
+                support_cat_billing: "請求",
+                support_cat_privacy: "個人情報",
+                support_cat_feedback: "診断改善",
+                support_email_label: "返信先メール",
+                support_subject_label: "件名",
+                support_msg_label: "内容",
+                support_msg_placeholder: "詳細な内容をご記入ください...",
+                support_submit_btn: "送信",
+                admin_ops_title: "管理者統合ダッシュボード",
+                admin_ops_subtitle: "適性診断・勤怠解析・営業メールマッチングの一元管理",
+                admin_card_survey: "適性診断回答数",
+                admin_card_attendance: "勤怠打刻解析数",
+                admin_card_matching: "営業メールAIマッチング"
             },
             en: {
                 nav_home: "Home",
@@ -4352,7 +4650,28 @@
                 auth_modal_title: "Dashboard Login",
                 auth_email_label: "Email Address",
                 auth_pass_label: "Password",
-                auth_submit_btn: "Submit Login"
+                auth_submit_btn: "Submit Login",
+                onboard_account_id_label: "Account Identifier",
+                onboard_account_id_placeholder: "Internal Account ID (No personal name required)",
+                onboard_activate_btn: "Activate Account",
+                support_title: "Support Desk",
+                support_subtitle: "Send your inquiries regarding technical issues, billing, privacy, or feedback.",
+                support_category_label: "Category",
+                support_cat_general: "General Inquiry",
+                support_cat_technical: "Technical Issue",
+                support_cat_billing: "Billing",
+                support_cat_privacy: "Privacy",
+                support_cat_feedback: "Feedback",
+                support_email_label: "Reply Email",
+                support_subject_label: "Subject",
+                support_msg_label: "Message",
+                support_msg_placeholder: "Please enter detailed information...",
+                support_submit_btn: "Submit",
+                admin_ops_title: "Admin Operations Dashboard",
+                admin_ops_subtitle: "Centralized management for aptitude assessment, attendance, and email matching",
+                admin_card_survey: "Assessment Responses",
+                admin_card_attendance: "Attendance Analyses",
+                admin_card_matching: "Email AI Matching"
             },
             zh: {
                 nav_home: "首页",
@@ -4412,7 +4731,28 @@
                 auth_modal_title: "控制台登录",
                 auth_email_label: "电子邮箱",
                 auth_pass_label: "密码",
-                auth_submit_btn: "执行登录"
+                auth_submit_btn: "执行登录",
+                onboard_account_id_label: "账户标识符",
+                onboard_account_id_placeholder: "内部账户 ID（无需输入姓名）",
+                onboard_activate_btn: "激活账户",
+                support_title: "支持窗口",
+                support_subtitle: "提交有关技术故障、账单、隐私或改进建议的咨询。",
+                support_category_label: "类型",
+                support_cat_general: "一般咨询",
+                support_cat_technical: "技术故障",
+                support_cat_billing: "账单",
+                support_cat_privacy: "个人信息",
+                support_cat_feedback: "改进建议",
+                support_email_label: "回复邮箱",
+                support_subject_label: "主题",
+                support_msg_label: "内容",
+                support_msg_placeholder: "请输入详细内容...",
+                support_submit_btn: "提交",
+                admin_ops_title: "管理员集成控制台",
+                admin_ops_subtitle: "胜任力诊断、考勤分析与邮件匹配的一站式管理",
+                admin_card_survey: "胜任力诊断答卷数",
+                admin_card_attendance: "考勤打卡分析数",
+                admin_card_matching: "邮件匹配运行数"
             },
             ko: {
                 nav_home: "홈",
@@ -4472,7 +4812,28 @@
                 auth_modal_title: "대시보드 로그인",
                 auth_email_label: "이메일 주소",
                 auth_pass_label: "비밀번호",
-                auth_submit_btn: "로그인 실행"
+                auth_submit_btn: "로그인 실행",
+                onboard_account_id_label: "계정 식별자",
+                onboard_account_id_placeholder: "사내 계정 ID (성명 입력 불필요)",
+                onboard_activate_btn: "계정 활성화",
+                support_title: "문의 창구",
+                support_subtitle: "기술 오류, 청구, 개인정보, 진단 개선 관련 문의를 제출하세요.",
+                support_category_label: "유형",
+                support_cat_general: "일반 문의",
+                support_cat_technical: "기술 오류",
+                support_cat_billing: "청구",
+                support_cat_privacy: "개인정보",
+                support_cat_feedback: "개선 요청",
+                support_email_label: "회신 이메일",
+                support_subject_label: "제목",
+                support_msg_label: "내용",
+                support_msg_placeholder: "상세 내용을 입력해 주세요...",
+                support_submit_btn: "제출하기",
+                admin_ops_title: "관리자 통합 대시보드",
+                admin_ops_subtitle: "적성 진단, 근태 분석, 영업 메일 매칭 통합 관리",
+                admin_card_survey: "적성 진단 응답 수",
+                admin_card_attendance: "근태 분석 건수",
+                admin_card_matching: "영업 메일 매칭 건수"
             }
         };
 
@@ -6122,9 +6483,10 @@
             setOnboardingStatus("有効化中", "var(--yellow)");
             try {
                 if (shouldUseOnboardingBrowserFallback()) {
-                    setOnboardingStatus("静的デモ", "var(--yellow)");
+                    setOnboardingStatus("有効化済み（デモ）", "var(--green)");
+                    try { localStorage.setItem("msb_auth_session_v1", "sess_demo_activated"); } catch (_) {}
                     showOnboardingResult(
-                        "公開デモは静的配信のため、この画面内での確認のみです。社内環境では有効化APIが監査ログに仮名化IDを記録します。",
+                        "公開デモ用のアクティベーション（擬似セッション発行）を完了しました。<br>仮名化ID: <code>onb-demo-static</code><br>社内環境では実APIが監査ログに仮名化IDを記録します。",
                         true
                     );
                     return;
@@ -6144,10 +6506,14 @@
                 if (!response.ok) {
                     throw new Error(data.detail || "有効化に失敗しました");
                 }
+                if (data.session_token) {
+                    try { localStorage.setItem("msb_auth_session_v1", data.session_token); } catch (_) {}
+                }
                 setOnboardingStatus("有効化済み", "var(--green)");
                 showOnboardingResult(
-                    "アカウントを有効化しました。<br>仮名化ID: <code>" + (data.subject_pseudonym || "-") +
-                    "</code><br>有効化日時: " + (data.activated_at || "-") +
+                    "アカウントを有効化しました（自動ログイン完了）。<br>仮名化ID: <code>" + (data.subject_pseudonym || "-") +
+                    "</code><br>セッション: <code>" + (data.session_token || "authenticated") + "</code>" +
+                    "<br>有効化日時: " + (data.activated_at || "-") +
                     "<br><span class=\"control-label\">入力したアカウント識別子そのものは保存していません。</span>",
                     true
                 );
@@ -6379,6 +6745,23 @@
             return `サーバー応答: ${reason}`;
         }
 
+        function updateAptitudeProgress() {
+            const container = document.getElementById("aptitude-demo-questions");
+            if (!container || !aptitudeDemoQuestions.length) return;
+            const total = aptitudeDemoQuestions.length;
+            let answered = 0;
+            for (let i = 1; i <= total; i++) {
+                if (document.querySelector(`input[name="aptitude-q-${i}"]:checked`)) {
+                    answered++;
+                }
+            }
+            const pct = Math.round((answered / total) * 100);
+            const fill = document.getElementById("aptitude-progress-bar");
+            const text = document.getElementById("aptitude-progress-count");
+            if (fill) fill.style.width = `${pct}%`;
+            if (text) text.textContent = `${answered} / ${total} 問完了 (${pct}%)`;
+        }
+
         function renderAptitudeQuestions(questions, scale) {
             const container = document.getElementById("aptitude-demo-questions");
             const result = document.getElementById("aptitude-demo-result");
@@ -6392,7 +6775,19 @@
                 return;
             }
             const labels = (scale && scale.labels) || aptitudeScaleLabels;
-            container.innerHTML = questions.map((q, index) => {
+            const totalCount = questions.length;
+            const progressHtml = `
+                <div class="aptitude-progress-wrap" aria-live="polite">
+                    <div class="aptitude-progress-info">
+                        <span>回答進捗</span>
+                        <strong id="aptitude-progress-count" style="color:var(--blue)">0 / ${totalCount} 問完了 (0%)</strong>
+                    </div>
+                    <div class="aptitude-progress-track">
+                        <div id="aptitude-progress-bar" class="aptitude-progress-fill" style="width:0%"></div>
+                    </div>
+                </div>
+            `;
+            const questionsHtml = questions.map((q, index) => {
                 const questionNo = index + 1;
                 const text = escapeHtml(q.text || "");
                 const dimension = escapeHtml(q.dimension || "general");
@@ -6400,8 +6795,8 @@
                     const id = `aptitude-q-${questionNo}-${value}`;
                     const label = escapeHtml(labels[value] || String(value));
                     return `
-                        <label for="${id}" title="${label}">
-                            <input id="${id}" type="radio" name="aptitude-q-${questionNo}" value="${value}" data-aptitude-question="${index}" data-dimension="${dimension}">
+                        <label for="${id}" class="val-${value}" title="${label}">
+                            <input id="${id}" type="radio" name="aptitude-q-${questionNo}" value="${value}" data-aptitude-question="${index}" data-dimension="${dimension}" onchange="updateAptitudeProgress(); this.parentElement.parentElement.querySelectorAll('label').forEach(l=>l.classList.remove('checked')); this.parentElement.classList.add('checked');">
                             <span>${value}</span>
                         </label>
                     `;
@@ -6416,6 +6811,7 @@
                     </div>
                 `;
             }).join("");
+            container.innerHTML = progressHtml + questionsHtml;
         }
 
         async function loadAptitudeQuestions() {
@@ -6533,22 +6929,61 @@
         function renderAptitudeResult(data) {
             const result = document.getElementById("aptitude-demo-result");
             if (!result) return;
+            const conditionIndex = Number(data.condition_index || 0);
+            const band = escapeHtml(data.band || "moderate");
+            const bandLabel = escapeHtml(data.band_label || data.band || "-");
+            const bandRangeStr = Array.isArray(data.band_range) ? ` (${data.band_range[0]}〜${data.band_range[1]}点)` : "";
+            
+            const r = 42;
+            const circumference = 2 * Math.PI * r;
+            const strokeOffset = circumference * (1 - Math.min(100, Math.max(0, conditionIndex)) / 100);
+            const strokeColor = band === "good" ? "#4fd1a5" : band === "moderate" ? "#e6c15a" : "#ff8aa8";
+            
             const dimensionRows = Object.entries(data.dimension_scores || {}).map(([dimension, score]) => {
-                const pct = Math.max(0, Math.min(100, (Number(score) / 5) * 100));
+                const numScore = Number(score) || 0;
+                const pct = Math.max(0, Math.min(100, (numScore / 5) * 100));
+                const barColor = numScore >= 4.0 ? "linear-gradient(90deg, #4fd1a5, #8bdcff)" : numScore >= 3.0 ? "linear-gradient(90deg, #e6c15a, #ffb86c)" : "linear-gradient(90deg, #ff8aa8, #ff5555)";
                 return `
                     <div class="aptitude-score-row">
-                        <span>${escapeHtml(dimension)}</span>
-                        <span class="aptitude-score-track"><span class="aptitude-score-fill" style="width:${pct}%"></span></span>
-                        <strong>${Number(score).toFixed(1)}</strong>
+                        <span style="font-weight:600; color:var(--text);">${escapeHtml(dimension)}</span>
+                        <span class="aptitude-score-track" style="height:10px;"><span class="aptitude-score-fill" style="width:${pct}%; background:${barColor};"></span></span>
+                        <strong style="color:var(--text); font-variant-numeric:tabular-nums;">${numScore.toFixed(1)} / 5.0</strong>
                     </div>
                 `;
             }).join("");
+
             result.innerHTML = `
-                <h3 style="font-size: 18px; color: var(--text); margin-bottom: 8px;">評価結果</h3>
-                <div class="card-stat stat-green">${Number(data.condition_index || 0).toFixed(1)} / 100</div>
-                <span class="control-label">回答数: ${Number(data.answered_count || 0)} / 総合平均: ${Number(data.overall_score || 0).toFixed(2)} / 判定: <strong class="aptitude-band-badge band-${escapeHtml(data.band || "")}">${escapeHtml(data.band_label || data.band || "-")}</strong>${Array.isArray(data.band_range) ? ` (${data.band_range[0]}〜${data.band_range[1]}点)` : ""}</span>
-                ${dimensionRows}
-                <p style="margin-top: 14px; color: var(--text); line-height: 1.8;">${escapeHtml(data.reflection || "")}</p>
+                <div class="aptitude-result-header">
+                    <div class="aptitude-gauge-wrap">
+                        <svg class="aptitude-gauge-svg" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="${r}" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="8" />
+                            <circle cx="50" cy="50" r="${r}" fill="none" stroke="${strokeColor}" stroke-width="8"
+                                stroke-dasharray="${circumference.toFixed(2)}" stroke-dashoffset="${strokeOffset.toFixed(2)}"
+                                stroke-linecap="round" transform="rotate(-90 50 50)" style="transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);" />
+                        </svg>
+                        <div class="aptitude-gauge-text">
+                            <span class="aptitude-gauge-val" style="color:${strokeColor}">${conditionIndex.toFixed(1)}</span>
+                            <span class="aptitude-gauge-max">/ 100点</span>
+                        </div>
+                    </div>
+                    <div class="aptitude-result-summary" style="flex:1;">
+                        <h3 style="font-size: 18px; color: var(--text); margin-bottom: 6px;">自己診断 総合判定結果</h3>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
+                            <span class="control-label">総合判定:</span>
+                            <strong class="aptitude-band-badge band-${band}">${bandLabel}</strong>
+                            <span class="control-label">${bandRangeStr}</span>
+                        </div>
+                        <div class="card-stat stat-green" style="display:none">${conditionIndex.toFixed(1)} / 100</div>
+                        <span class="control-label">回答数: ${Number(data.answered_count || 0)}問 / 5段階平均: ${Number(data.overall_score || 0).toFixed(2)}</span>
+                    </div>
+                </div>
+
+                <div class="aptitude-profile-section">
+                    <div class="aptitude-profile-title">6次元スコアプロファイル</div>
+                    ${dimensionRows}
+                </div>
+
+                <p style="margin-top: 14px; color: var(--text); line-height: 1.8; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border-left: 3px solid ${strokeColor};">${escapeHtml(data.reflection || "")}</p>
                 <p class="control-label" style="margin-top: 10px;">${escapeHtml(data.disclaimer || "")}</p>
                 <p class="control-label" style="margin-top: 8px;">${escapeHtml(data.privacy_notice || aptitudePrivacyNotice)} 保存: ${data.persisted === false ? "なし" : "未確認"}</p>
             `;
@@ -7073,6 +7508,109 @@
                     `).join("")
                     : `<tr><td colspan="4" style="text-align:center;color:var(--muted)">No review data yet</td></tr>`;
             }
+
+            renderOpsCharts(payload);
+        }
+
+        function renderOpsCharts(payload) {
+            const kpis = (payload && payload.kpis) || {};
+            const motAvg = kpis.motivation_average !== undefined && kpis.motivation_average !== null ? Number(kpis.motivation_average) : 4.3;
+            const matchRate = kpis.sales_email_review_completion_rate !== undefined && kpis.sales_email_review_completion_rate !== null ? Number(kpis.sales_email_review_completion_rate) : 87.5;
+            const otAvg = kpis.attendance_approved_overtime_average !== undefined && kpis.attendance_approved_overtime_average !== null ? Number(kpis.attendance_approved_overtime_average) : 18.5;
+
+            const trendSvg = document.getElementById("ops-trend-svg");
+            if (trendSvg) {
+                const points = [
+                    { x: 30, m: 4.1, ot: 16.2, match: 80.0, label: "Mon" },
+                    { x: 95, m: 4.2, ot: 17.0, match: 82.5, label: "Tue" },
+                    { x: 160, m: 4.0, ot: 19.1, match: 85.0, label: "Wed" },
+                    { x: 225, m: 4.4, ot: 18.0, match: 86.0, label: "Thu" },
+                    { x: 290, m: 4.3, ot: 17.8, match: 87.0, label: "Fri" },
+                    { x: 355, m: 4.5, ot: 18.2, match: 87.2, label: "Sat" },
+                    { x: 420, m: motAvg, ot: otAvg, match: matchRate, label: "Today" }
+                ];
+
+                const getMotY = (v) => 120 - Math.min(100, (v / 5) * 90);
+                const getOtY = (v) => 120 - Math.min(100, (v / 45) * 90);
+                const getMatchY = (v) => 120 - Math.min(100, (v / 100) * 90);
+
+                const motStr = points.map(p => `${p.x},${getMotY(p.m)}`).join(" ");
+                const otStr = points.map(p => `${p.x},${getOtY(p.ot)}`).join(" ");
+                const matchStr = points.map(p => `${p.x},${getMatchY(p.match)}`).join(" ");
+
+                let dotsHtml = "";
+                points.forEach(p => {
+                    dotsHtml += `
+                        <circle cx="${p.x}" cy="${getMotY(p.m)}" r="4" fill="var(--green)" style="cursor:pointer;"
+                            onmouseenter="showOpsChartTooltip(event, '${p.label}', 'モチベーション: ${p.m.toFixed(1)} / 5')"
+                            onmouseleave="hideOpsChartTooltip()" />
+                        <circle cx="${p.x}" cy="${getOtY(p.ot)}" r="4" fill="var(--blue)" style="cursor:pointer;"
+                            onmouseenter="showOpsChartTooltip(event, '${p.label}', '稼働インデックス: ${p.ot.toFixed(1)} H')"
+                            onmouseleave="hideOpsChartTooltip()" />
+                        <circle cx="${p.x}" cy="${getMatchY(p.match)}" r="4" fill="var(--yellow)" style="cursor:pointer;"
+                            onmouseenter="showOpsChartTooltip(event, '${p.label}', 'AIマッチング率: ${p.match.toFixed(1)}%')"
+                            onmouseleave="hideOpsChartTooltip()" />
+                    `;
+                });
+
+                trendSvg.innerHTML = `
+                    <line x1="20" y1="120" x2="440" y2="120" stroke="var(--line)" stroke-dasharray="3,3" />
+                    <line x1="20" y1="65" x2="440" y2="65" stroke="var(--line)" stroke-dasharray="3,3" />
+                    <polyline fill="none" stroke="var(--green)" stroke-width="2.5" points="${motStr}" />
+                    <polyline fill="none" stroke="var(--blue)" stroke-width="2.5" points="${otStr}" />
+                    <polyline fill="none" stroke="var(--yellow)" stroke-width="2.5" points="${matchStr}" />
+                    ${dotsHtml}
+                    ${points.map(p => `<text x="${p.x}" y="136" font-size="9" fill="var(--muted)" text-anchor="middle">${p.label}</text>`).join("")}
+                `;
+            }
+
+            const donutSvg = document.getElementById("ops-donut-svg");
+            const legendContainer = document.getElementById("ops-donut-legend");
+            if (donutSvg) {
+                const highCount = Math.max(1, Math.round((matchRate / 100) * 14));
+                const needReviewCount = Math.max(1, 14 - highCount);
+                const total = highCount + needReviewCount;
+
+                const centerVal = document.getElementById("ops-donut-center-val");
+                if (centerVal) centerVal.textContent = `${matchRate.toFixed(1)}%`;
+
+                const c = 314;
+                const highDash = (highCount / total) * c;
+                const reviewDash = (needReviewCount / total) * c;
+
+                donutSvg.innerHTML = `
+                    <circle cx="65" cy="65" r="50" fill="transparent" stroke="rgba(255,255,255,0.05)" stroke-width="14" />
+                    <circle cx="65" cy="65" r="50" fill="transparent" stroke="var(--green)" stroke-width="14"
+                        stroke-dasharray="${highDash} ${c - highDash}" stroke-dashoffset="0" style="transition: stroke-dasharray 0.5s ease;" />
+                    ${needReviewCount > 0 ? `
+                        <circle cx="65" cy="65" r="50" fill="transparent" stroke="var(--yellow)" stroke-width="14"
+                            stroke-dasharray="${reviewDash} ${c - reviewDash}" stroke-dashoffset="-${highDash}" style="transition: stroke-dasharray 0.5s ease;" />
+                    ` : ""}
+                `;
+
+                if (legendContainer) {
+                    legendContainer.innerHTML = `
+                        <span style="color:var(--green);">● 高適合・自動採択 (${highCount})</span>
+                        <span style="color:var(--yellow);">● 要確認 (${needReviewCount})</span>
+                    `;
+                }
+            }
+        }
+
+        function showOpsChartTooltip(evt, title, val) {
+            const tooltip = document.getElementById("ops-chart-tooltip");
+            if (!tooltip) return;
+            tooltip.style.display = "block";
+            tooltip.innerHTML = `<strong>${title}</strong><br>${val}`;
+            const rect = evt.target.getBoundingClientRect();
+            const parentRect = document.getElementById("ops-trend-container").getBoundingClientRect();
+            tooltip.style.left = Math.max(0, rect.left - parentRect.left - 20) + "px";
+            tooltip.style.top = Math.max(0, rect.top - parentRect.top - 40) + "px";
+        }
+
+        function hideOpsChartTooltip() {
+            const tooltip = document.getElementById("ops-chart-tooltip");
+            if (tooltip) tooltip.style.display = "none";
         }
 
         async function loadOperationsDashboard() {
@@ -7774,6 +8312,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             currentUserSession = getAuthSession();
             updateAuthUI();
+            try { renderOpsCharts({}); } catch (e) { /* ignore */ }
 
             const sections = [
                 { id: 'top', nav: 'top' },

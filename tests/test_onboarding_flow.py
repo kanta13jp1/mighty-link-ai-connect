@@ -115,6 +115,8 @@ def test_activate_succeeds_and_pseudonymizes_the_identifier():
     body = res.json()
     assert body["status"] == "success"
     assert body["activated"] is True
+    assert body["auth_status"] == "authenticated"
+    assert body["session_token"].startswith("sess_onb_")
     assert body["subject_pseudonym"].startswith("onb-")
     assert body["flow_version"] == app_module.ONBOARDING_FLOW_VERSION
     assert body["legal_consent_version"] == LEGAL_VERSION

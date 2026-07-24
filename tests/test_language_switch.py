@@ -68,6 +68,16 @@ def test_language_switch_flow(fastapi_server):
         )
         assert page.evaluate("document.documentElement.lang") == "ko"
         
+        # Verify Korean localized DOM elements
+        ko_nav_text = page.locator("#primary-navigation a[href='#survey-section']").text_content()
+        assert "설문조사" in ko_nav_text
+        
+        ko_btn_text = page.locator("[data-i18n='aptitude_run_btn']").text_content()
+        assert "자가진단 실행하기" in ko_btn_text
+        
+        ko_placeholder = page.locator("#engineer-input").get_attribute("placeholder")
+        assert "엔지니어" in ko_placeholder
+        
         # 5. Switch back to "EN" and verify localStorage persistence
         page.locator(".language-switch a[data-lang='en']").click(no_wait_after=True)
         page.wait_for_function("document.documentElement.lang === 'en'")

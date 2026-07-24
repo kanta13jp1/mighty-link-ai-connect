@@ -90,9 +90,12 @@ def test_i18n_section_coverage():
         "attendance_", # Attendance management
         "matching_",   # Sales email matching
         "admin_",      # Admin dashboard
+        "admin_ops_",  # Admin operations dashboard
         "auth_",       # Authentication
+        "support_",    # Support & feedback desk
     ]
     
     for prefix in expected_prefixes:
         matching_keys = [k for k in ja_keys if k.startswith(prefix)]
         assert len(matching_keys) > 0, f"Expected i18n keys with prefix '{prefix}', but none were found"
+

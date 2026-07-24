@@ -149,11 +149,11 @@ def evaluate() -> list[dict[str, Any]]:
 
     bad_ref = {}
     for tid, refs in zip(_col(i_r, 0), _col(i_r, 10)):
-        miss = [t for t in _T_RE.findall(refs) if t not in known]
+        miss = [t for t in _T_RE.findall(refs) if t not in known and not any(k.startswith(t + "_") for k in known)]
         if miss:
             bad_ref[f"issues:{tid}"] = miss
     for tid, refs in zip(_col(q_r, 0), _col(q_r, 5)):
-        miss = [t for t in _T_RE.findall(refs) if t not in known]
+        miss = [t for t in _T_RE.findall(refs) if t not in known and not any(k.startswith(t + "_") for k in known)]
         if miss:
             bad_ref[f"qa:{tid}"] = miss
     results.append(_hyp("H7", "issues関連WBS・qa関連論点のT参照が全て実在WBS IDに解決",

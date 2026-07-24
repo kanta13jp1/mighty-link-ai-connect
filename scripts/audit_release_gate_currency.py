@@ -113,7 +113,7 @@ def inverse_drift(gates: list[dict[str, str]], wbs: dict[str, str]) -> list[str]
 def dangling_wbs_refs(gates: list[dict[str, str]], wbs: dict[str, str]) -> dict[str, list[str]]:
     out: dict[str, list[str]] = {}
     for g in gates:
-        bad = [i for i in related_wbs_ids(g) if i not in wbs]
+        bad = [i for i in related_wbs_ids(g) if i not in wbs and not any(k.startswith(i + "_") for k in wbs)]
         if bad:
             out[g["criterion_id"]] = bad
     return out

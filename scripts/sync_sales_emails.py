@@ -277,35 +277,38 @@ def rebuild_match_review_json() -> None:
         print(f"[-] Rebuild match review failed: {e}")
 
 
-def sync_sales_emails_pipeline(max_messages: int | None = None) -> Dict[str, Any]:
+def sync_sales_emails_pipeline(max_messages: int | None = None, retry_errors: bool = False) -> Dict[str, Any]:
     sqlite_path = PROJECT_ROOT / "data" / "mighty.db"
     db = DBAdapter(sqlite_path)
     
-    print(f"[*] Starting Sales Email Sync & Parse Pipeline. Connection Mode: {'Supabase' if db.use_supabase else 'SQLite'}")
+    print(f"[*] Starting Sales Email Sync & Parse Pipeline (retry_errors={retry_errors}). Connection Mode: {'Supabase' if db.use_supabase else 'SQLite'}")
     
     # 1. POP3 Sync
     new_emails = sync_pop3_to_db(db, max_messages=max_messages)
     print(f"[+] Synced {new_emails} new emails from POP3 server.")
     
-    # 2. AI Parse (if new emails exist, OR if there are any unparsed emails in the database)
+    # 2. AI Parse (if new emails exist, OR if there are any unparsed/retryable emails in the database)
+    statuses = ["new", "deduped", "error"] if retry_errors else ["new", "deduped"]
     has_unparsed = False
     if db.use_supabase:
         try:
-            res = db.sb_client.table("sales_email_messages").select("id").eq("ingest_status", "new").limit(1).execute()
+            res = db.sb_client.table("sales_email_messages").select("id").in_("ingest_status", statuses).limit(1).execute()
             has_unparsed = len(res.data) > 0 if res else False
         except Exception as e:
             print(f"[-] Supabase unparsed check failed: {e}")
     else:
         try:
             cursor = db.sqlite_conn.cursor()
-            cursor.execute("SELECT id FROM sales_email_messages WHERE ingest_status = 'new' LIMIT 1")
+            placeholders = ", ".join("?" for _ in statuses)
+            cursor.execute(f"SELECT id FROM sales_email_messages WHERE ingest_status IN ({placeholders}) LIMIT 1", statuses)
             has_unparsed = cursor.fetchone() is not None
         except Exception as e:
             print(f"[-] SQLite unparsed check failed: {e}")
 
     if new_emails > 0 or has_unparsed:
-        print(f"[*] Running AI parser on new/unparsed emails (new={new_emails}, has_unparsed={has_unparsed})...")
-        run_parser([])
+        print(f"[*] Running AI parser on unparsed emails (new={new_emails}, has_unparsed={has_unparsed}, retry_errors={retry_errors})...")
+        parser_args = ["--retry-errors"] if retry_errors else []
+        run_parser(parser_args)
     else:
         print("[*] No unparsed emails, skipping AI parser run.")
         
@@ -316,7 +319,8 @@ def sync_sales_emails_pipeline(max_messages: int | None = None) -> Dict[str, Any
     db.close()
     return {
         "status": "success",
-        "new_emails_count": new_emails
+        "new_emails_count": new_emails,
+        "retry_errors": retry_errors
     }
 
 
@@ -324,7 +328,8 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="POP3 Sales Email Sync & Matching Pipeline (T910 1000-scale)")
     parser.add_argument("--max-messages", type=int, default=None, help="Maximum POP3 emails to fetch (default: env or 1000)")
+    parser.add_argument("--retry-errors", action="store_true", default=False, help="Retry parsing messages with status 'error'")
     args = parser.parse_args()
 
-    res = sync_sales_emails_pipeline(max_messages=args.max_messages)
+    res = sync_sales_emails_pipeline(max_messages=args.max_messages, retry_errors=args.retry_errors)
     print(f"[+] Complete. Result: {res}")

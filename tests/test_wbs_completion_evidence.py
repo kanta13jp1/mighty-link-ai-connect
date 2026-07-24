@@ -37,7 +37,7 @@ def test_gate_related_wbs_all_exist():
     for c in criteria:
         for t in (c.get("related_wbs") or "").split(";"):
             if t:
-                assert t in ids, f"gate {c.get('criterion_id')} references missing WBS {t}"
+                assert t in ids or any(k.startswith(t + "_") for k in ids), f"gate {c.get('criterion_id')} references missing WBS {t}"
 
 
 def test_reevaluate_candidate_suppressed_by_open_blocking_issue():

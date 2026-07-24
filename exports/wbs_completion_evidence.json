@@ -9,13 +9,13 @@
       "id": "H1",
       "hypothesis": "WBSが解析でき、ステータス内訳の合計が総数に一致する",
       "passed": true,
-      "detail": "完了318+実行中0+未着手18=336"
+      "detail": "完了341+実行中0+未着手13=354"
     },
     {
       "id": "H2",
       "hypothesis": "完了率が算出され、9割超である",
       "passed": true,
-      "detail": "完了率=94.6%（318/336）"
+      "detail": "完了率=96.3%（341/354）"
     },
     {
       "id": "H3",
@@ -51,32 +51,32 @@
       "id": "H8",
       "hypothesis": "各非PASSゲートが残タスク/HUMAN_GATE/未解決課題/再評価候補として説明できる",
       "passed": true,
-      "detail": "説明不能な非PASSゲート=なし / 再評価候補(関連全完了かつ未解決課題なし)=なし / 未解決課題でPASS再判定不可={'PUBLIC-11': ['R132'], 'PUBLIC-14': ['R116']}"
+      "detail": "説明不能な非PASSゲート=なし / 再評価候補(関連全完了かつ未解決課題なし)=['PUBLIC-06'] / 未解決課題でPASS再判定不可={'PUBLIC-11': ['R132'], 'PUBLIC-14': ['R116']}"
     },
     {
       "id": "H9",
       "hypothesis": "残作業が人間依存/レーン/再評価候補に分類できる",
       "passed": true,
-      "detail": "残作業の分類=['blocked_by_open_issue', 'human_or_mixed', 'lane']"
+      "detail": "残作業の分類=['blocked_by_open_issue', 'human_or_mixed', 'lane', 'reevaluate_candidate']"
     },
     {
       "id": "H10",
       "hypothesis": "集約出力が内部整合している（完了数の再計算一致）",
       "passed": true,
-      "detail": "完了数再計算=318(=318)"
+      "detail": "完了数再計算=341(=341)"
     }
   ],
   "wbs_stats": {
-    "total": 336,
-    "done": 318,
+    "total": 354,
+    "done": 341,
     "in_progress": 0,
-    "not_started": 18,
-    "completion_rate_pct": 94.6,
+    "not_started": 13,
+    "completion_rate_pct": 96.3,
     "overdue_incomplete": [],
     "by_phase": {
       "1. 企画・設計": {
-        "total": 2,
-        "done": 2
+        "total": 4,
+        "done": 4
       },
       "2. フロント開発": {
         "total": 2,
@@ -103,32 +103,29 @@
         "done": 9
       },
       "7. 決定後実行": {
-        "total": 122,
-        "done": 114
+        "total": 125,
+        "done": 120
       },
       "8. 本番運用・品質管理": {
-        "total": 83,
-        "done": 75
+        "total": 90,
+        "done": 83
       },
       "9. 長期保守・拡張": {
-        "total": 17,
-        "done": 15
+        "total": 23,
+        "done": 22
       }
     },
     "incomplete_by_owner": {
-      "Antigravity": 2,
       "Codex": 2,
       "人間 + AI": 1,
-      "人間 + Claude": 1,
       "人間 + Codex": 1,
-      "寛太梅澤": 4,
+      "寛太梅澤": 3,
       "寛太梅澤 + Codex": 1,
-      "寛太梅澤 + Claude Code + Codex": 1,
       "Codex + Antigravity": 1,
       "Codex + Claude Code + 人間": 1,
-      "寛太梅澤 + Codex + Claude Code": 1,
       "人間 + Claude Code": 1,
-      "Codex + 寛太梅澤": 1
+      "Codex + 寛太梅澤": 1,
+      "寛太梅澤 + Claude Code": 1
     }
   },
   "evidence_index": {
@@ -189,20 +186,16 @@
       {
         "gate": "PUBLIC-04",
         "state": "HUMAN_GATE",
-        "open_tasks": [
-          "T798"
-        ],
+        "open_tasks": [],
         "open_issues": [],
-        "class": "human_or_mixed"
+        "class": "lane"
       },
       {
         "gate": "PUBLIC-06",
         "state": "BLOCKED",
-        "open_tasks": [
-          "T752"
-        ],
+        "open_tasks": [],
         "open_issues": [],
-        "class": "lane"
+        "class": "reevaluate_candidate"
       },
       {
         "gate": "PUBLIC-08",
@@ -241,8 +234,7 @@
         "state": "BLOCKED",
         "open_tasks": [
           "T845",
-          "T849",
-          "T850"
+          "T849"
         ],
         "open_issues": [
           "R116",
@@ -272,7 +264,9 @@
       }
     ],
     "count": 9,
-    "reevaluate_candidates": []
+    "reevaluate_candidates": [
+      "PUBLIC-06"
+    ]
   },
   "note": "GAクローズ(T849本体)は非PASSゲートの解消後に人間が最終判定する。本集約はWBS完了状況とClaude Code巻き取り証跡の索引であり、ゲート判定はgenerate_production_go_no_go_review.pyが正本。"
 }

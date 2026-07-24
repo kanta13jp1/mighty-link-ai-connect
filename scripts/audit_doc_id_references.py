@@ -59,7 +59,7 @@ _R_RE = re.compile(r"\bR\d{1,3}\b")
 # to a current tracker row. Each entry documents WHY it is exempt.
 ALLOWLIST: dict[str, str] = {
     # 6/2 CEO プレゼンの「決定したら作る」提案タスク表。実WBSは別IDで起票され、
-    # これらの仮IDは作成されなかった歴史的記録（CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md）。
+    # 提案された各仮IDは作成されなかった歴史的記録（CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md）。
     "T720": "6/2決定前提案の仮タスクID（未起票の歴史的記録）",
     "T721": "6/2決定前提案の仮タスクID（未起票の歴史的記録）",
     "T722": "6/2決定前提案の仮タスクID（未起票の歴史的記録）",
@@ -125,8 +125,9 @@ def _wbs_base(i: str) -> str:
 
 
 def _resolves(i: str, valid_all: set[str]) -> bool:
-    # a T###_n subtask resolves if either the exact id or its base T### exists
-    return i in valid_all or _wbs_base(i) in valid_all
+    # a T###_n subtask resolves if either the exact id or its base T### exists,
+    # or if i is a parent T### and any T###_n subtask exists in valid_all
+    return i in valid_all or _wbs_base(i) in valid_all or any(v.startswith(i + "_") for v in valid_all)
 
 
 def _hyp(hid: str, title: str, passed: bool, detail: str) -> dict[str, Any]:

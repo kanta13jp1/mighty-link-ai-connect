@@ -15,7 +15,7 @@ T798-13	PRIVACY_POLICY	§5 保管先・委託先	外国にある第三者への�
 T798-14	PRIVACY_POLICY	§9 開示等の請求	開示請求手数料の有無・本人確認手続（メール照合のみで足りるか）の妥当性	inline	社内GA必須	弁護士	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-14)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
 T798-15	PRIVACY_POLICY	§11 未成年者の利用	対象年齢の明記要否・法定代理人同意の扱い	inline	社内GA必須	社内	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-15)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
 T798-16	PRIVACY_POLICY	§12 GDPR対応	GDPR適用スコープ（対象を日本国内限定とするか）・DPAリンクの明示方法	inline	社内GA必須	社内	確定	T798_2ドラフト回答・根拠条文あり(docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md T798-16)。R36外部弁護士レビューでの確認完了（社内GA向け社内確定）	小林 雅水 / 高橋 健二	2026-07-24
-T798-17	BILLING_AND_REFUND_POLICY	返金条件	重大障害時の返金とクレジット付与の選択構成・算定基準	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
-T798-18	BILLING_AND_REFUND_POLICY	返金条件	利用者都合返金時の決済手数料控除の可否・表示方法	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
-T798-19	BILLING_AND_REFUND_POLICY	返金請求	返金請求期限（発生日から30日）の妥当性	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
-T798-20	TOKUSHOHO_NOTATION	最終確認画面	定期購入（自動更新）明示文言の最終確認（特商法・誤認表示の禁止）	inline	有償公開前必須	弁護士	未確認	有償公開(T862)判断まで保留。確定文言はT862判断後に転記		
+T798-17	BILLING_AND_REFUND_POLICY	返金条件	重大障害時の返金とクレジット付与の選択構成・算定基準	inline	有償公開前必須	弁護士	確認中	社内ドラフト確定(原則クレジット付与優先・解約時等返金可)。T862有償化判断・R36外部弁護士パッケージ(docs/LEGAL_REVIEW_EXTERNAL_ATTORNEY_PACKAGE.md Q4-1)へ展開済	高橋 健二	2026-07-24
+T798-18	BILLING_AND_REFUND_POLICY	返金条件	利用者都合返金時の決済手数料控除の可否・表示方法	inline	有償公開前必須	弁護士	確認中	社内ドラフト確定(当社過失なし例外返金時Stripe手数料約3.6%控除)。T862有償化判断・R36外部弁護士パッケージ(docs/LEGAL_REVIEW_EXTERNAL_ATTORNEY_PACKAGE.md Q4-2)へ展開済	高橋 健二	2026-07-24
+T798-19	BILLING_AND_REFUND_POLICY	返金請求	返金請求期限（発生日から30日）の妥当性	inline	有償公開前必須	弁護士	確認中	社内ドラフト確定(請求発生日から30日期限)。T862有償化判断・R36外部弁護士パッケージ(docs/LEGAL_REVIEW_EXTERNAL_ATTORNEY_PACKAGE.md)へ展開済	高橋 健二	2026-07-24
+T798-20	TOKUSHOHO_NOTATION	最終確認画面	定期購入（自動更新）明示文言の最終確認（特商法・誤認表示の禁止）	inline	有償公開前必須	弁護士	確認中	社内ドラフト確定(改正特商法最終確認画面6項目完全明示)。T862有償化判断・R36外部弁護士パッケージ(docs/LEGAL_REVIEW_EXTERNAL_ATTORNEY_PACKAGE.md Q4-3)へ展開済	高橋 健二	2026-07-24

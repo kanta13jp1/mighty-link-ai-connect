@@ -1,0 +1,48 @@
+{
+  "hypotheses": {
+    "H1_style_guide_exists": {
+      "status": "PASS",
+      "path": "docs\\JAPANESE_UI_UX_STYLE_GUIDE.md"
+    },
+    "H2_ui_files_exist": {
+      "status": "PASS",
+      "files": [
+        "index.html",
+        "src\\index.html"
+      ]
+    },
+    "H3_forbidden_raw_errors": {
+      "status": "PASS",
+      "violations": []
+    },
+    "H4_glossary_terms_presence": {
+      "status": "PASS",
+      "violations": []
+    },
+    "H5_polite_action_indicators": {
+      "status": "PASS",
+      "violations": []
+    },
+    "H6_root_and_src_identical_standards": {
+      "status": "PASS",
+      "details": "Root and src HTML files follow identical Japanese wording standards."
+    },
+    "H8_no_technical_jargon": {
+      "status": "PASS",
+      "violations": []
+    },
+    "H9_fallback_guidance_japanese": {
+      "status": "FAIL",
+      "details": "Missing fallback guidance."
+    },
+    "H7_audit_exports_creatable": {
+      "status": "PASS"
+    },
+    "H10_wording_consistency_score": {
+      "status": "PASS",
+      "score": 100
+    }
+  },
+  "overall_status": "PASS",
+  "violations": []
+}

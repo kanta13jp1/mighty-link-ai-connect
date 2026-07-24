@@ -30,7 +30,7 @@ def test_sync_sales_emails_endpoint_success(mock_pipeline):
         "status": "success",
         "new_emails_count": 3
     }
-    mock_pipeline.assert_called_once_with(max_messages=None)
+    mock_pipeline.assert_called_once_with(max_messages=None, retry_errors=False)
 
 
 @patch("sync_sales_emails.sync_sales_emails_pipeline")
@@ -49,7 +49,7 @@ def test_sync_sales_emails_endpoint_with_max_messages(mock_pipeline):
         "status": "success",
         "new_emails_count": 1000
     }
-    mock_pipeline.assert_called_once_with(max_messages=1000)
+    mock_pipeline.assert_called_once_with(max_messages=1000, retry_errors=False)
 
 
 def test_sync_sales_emails_endpoint_unauthorized():

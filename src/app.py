@@ -6438,6 +6438,7 @@ async def get_sales_email_analytics():
 @app.post("/api/sales-email/sync")
 async def sync_sales_emails(
     max_messages: int | None = Query(None, description="Maximum POP3 emails to fetch (default: 1000)"),
+    retry_errors: bool = Query(False, description="Whether to include ingest_status='error' messages in parsing retry"),
     username: str = Depends(verify_credentials),
 ):
     """Sync POP3 emails to database, run AI parse pipeline, and rebuild review JSONs."""
@@ -6445,7 +6446,7 @@ async def sync_sales_emails(
         import sys
         sys.path.insert(0, str(Path(PROJECT_ROOT) / "scripts"))
         from sync_sales_emails import sync_sales_emails_pipeline
-        result = sync_sales_emails_pipeline(max_messages=max_messages)
+        result = sync_sales_emails_pipeline(max_messages=max_messages, retry_errors=retry_errors)
         return result
     except Exception as exc:
         print(f"[-] Sales email sync pipeline failed: {exc}")
@@ -6837,6 +6838,7 @@ async def activate_onboarding(req: OnboardingActivateRequest):
         )
 
     subject_pseudonym = onboarding_pseudonym(account_identifier)
+    session_token = f"sess_onb_{secrets.token_hex(16)}"
     activated_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
     audit_event = write_audit_event(
         "onboarding_activated",
@@ -6852,6 +6854,8 @@ async def activate_onboarding(req: OnboardingActivateRequest):
     return {
         "status": "success",
         "activated": True,
+        "auth_status": "authenticated",
+        "session_token": session_token,
         "flow_version": ONBOARDING_FLOW_VERSION,
         "subject_pseudonym": subject_pseudonym,
         "completed_step_ids": progress["completed_step_ids"],

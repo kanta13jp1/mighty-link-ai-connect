@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -150,7 +151,7 @@ def evaluate(
     bad_wbs = {}
     for c in cases:
         toks = _WBS_TOKEN_RE.findall(c["fields"].get("関連WBS", ""))
-        unknown = [t for t in toks if t not in wbs_ids]
+        unknown = [t for t in toks if t not in wbs_ids and not any(k.startswith(t + "_") for k in wbs_ids)]
         if not toks or unknown:
             bad_wbs[c["id"]] = unknown or "参照なし"
     results.append(_hyp(
@@ -227,6 +228,11 @@ def render_markdown(report: dict[str, Any]) -> str:
 
 
 def main() -> int:
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            reconfigure(encoding="utf-8", errors="replace")
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--json", default=str(DEFAULT_JSON))
     parser.add_argument("--md", default=str(DEFAULT_MD))

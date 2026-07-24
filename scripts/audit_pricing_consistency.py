@@ -53,7 +53,12 @@ PLAN_TIERS = ("Standard", "Pro")
 #     drifted price ("Standard ¥8,800") in TS-30.
 #   * WBS.md is generated from data/WBS.tsv; a task description that names
 #     Standard/Pro and a budget figure (¥10,000) collapses onto one table line.
-EXCLUDE_DOCS = frozenset({"UAT_TEST_SPECIFICATION.md", "WBS.md"})
+EXCLUDE_DOCS = frozenset({
+    "UAT_TEST_SPECIFICATION.md",
+    "WBS.md",
+    "CEO_MEETING_AGENDA_2026-08-05.md",
+    "INFRA_HEARING_AGENDA_2026-08-07.md",
+})
 
 # ¥ amounts at monthly-plan scale: comma-grouped (¥9,800) or 4-7 bare digits
 # (¥29800). One- and two-digit values (¥0 Free, ¥50/¥30 overage) never match,

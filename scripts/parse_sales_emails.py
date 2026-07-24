@@ -36,11 +36,12 @@ class DBAdapter:
         if self.sqlite_conn:
             self.sqlite_conn.close()
 
-    def get_unparsed_messages(self) -> List[Dict[str, Any]]:
-        """Get sales email messages with status 'new' or 'deduped'."""
+    def get_unparsed_messages(self, include_errors: bool = False) -> List[Dict[str, Any]]:
+        """Get sales email messages with status 'new' or 'deduped', optionally including 'error'."""
+        statuses = ["new", "deduped", "error"] if include_errors else ["new", "deduped"]
         if self.use_supabase:
             try:
-                res = self.sb_client.table("sales_email_messages").select("*").in_("ingest_status", ["new", "deduped"]).execute()
+                res = self.sb_client.table("sales_email_messages").select("*").in_("ingest_status", statuses).execute()
                 return res.data if res else []
             except Exception as e:
                 print(f"[-] Supabase get_unparsed_messages error: {e}")
@@ -48,8 +49,10 @@ class DBAdapter:
         else:
             try:
                 cursor = self.sqlite_conn.cursor()
+                placeholders = ", ".join("?" for _ in statuses)
                 cursor.execute(
-                    "SELECT * FROM sales_email_messages WHERE ingest_status IN ('new', 'deduped')"
+                    f"SELECT * FROM sales_email_messages WHERE ingest_status IN ({placeholders})",
+                    statuses
                 )
                 return [dict(row) for row in cursor.fetchall()]
             except Exception as e:
@@ -232,8 +235,8 @@ class DBAdapter:
 DEFAULT_MAX_MESSAGES = 50
 
 
-def resolve_max_messages(argv: list[str] | None = None) -> int:
-    """Batch cap so a large backlog cannot fire unbounded Gemini calls (T817_7).
+def resolve_parse_args(argv: list[str] | None = None) -> tuple[int, bool]:
+    """Resolve max_messages and retry_errors flag from argv/env with CLI overrides (T817_4 / T910).
 
     Priority: --max-messages arg > SALES_EMAIL_PARSE_MAX_MESSAGES env > default 50.
     0 means unlimited (explicit operator opt-in only).
@@ -245,20 +248,28 @@ def resolve_max_messages(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Parse unparsed sales emails (T817_4)")
     parser.add_argument("--max-messages", type=int, default=default,
                         help=f"max messages per run (0=unlimited, default {DEFAULT_MAX_MESSAGES})")
+    parser.add_argument("--retry-errors", action="store_true", default=False,
+                        help="Include messages with ingest_status='error' for parsing retry")
     # parse_known_args so programmatic callers (tests import and call main()
     # directly, leaving pytest args in sys.argv) never crash on foreign args.
     args, _unknown = parser.parse_known_args(argv)
-    return max(0, args.max_messages)
+    return max(0, args.max_messages), args.retry_errors
 
 
-def main(argv: list[str] | None = None) -> int:
-    max_messages = resolve_max_messages(argv)
+def resolve_max_messages(argv: list[str] | None = None) -> int:
+    max_msgs, _ = resolve_parse_args(argv)
+    return max_msgs
+
+
+def main(argv: list[str] | None = None, retry_errors: bool | None = None) -> int:
+    max_messages, cli_retry_errors = resolve_parse_args(argv)
+    do_retry_errors = retry_errors if retry_errors is not None else cli_retry_errors
     sqlite_path = PROJECT_ROOT / "data" / "mighty.db"
     db = DBAdapter(sqlite_path)
 
-    print(f"[*] Starting AI matching parser. Connection Mode: {'Supabase (service_role)' if db.use_supabase else 'SQLite Fallback'}")
+    print(f"[*] Starting AI matching parser (retry_errors={do_retry_errors}). Connection Mode: {'Supabase (service_role)' if db.use_supabase else 'SQLite Fallback'}")
 
-    messages = db.get_unparsed_messages()
+    messages = db.get_unparsed_messages(include_errors=do_retry_errors)
     if not messages:
         print("[+] No new unparsed emails found. Exiting.")
         db.close()
