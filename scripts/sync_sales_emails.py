@@ -16,6 +16,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from sales_email_pop3 import fetch_pop3_emails
+from sales_email_imap import fetch_imap_emails
 from sales_email_ingest import dedupe_key, normalize_subject, canonical_body, safe_excerpt, sender_domain, sha256_hex
 from parse_sales_emails import DBAdapter, main as run_parser
 from sales_email_extract import write_json_report, write_markdown_report
@@ -63,26 +64,17 @@ def insert_sales_email_message(db: DBAdapter, payload: dict) -> int:
             return 0
 
 
-def sync_pop3_to_db(db: DBAdapter, max_messages: int | None = None) -> int:
-    print(f"[*] Fetching emails from POP3 server (max_messages={max_messages or 'default'})...")
-    try:
-        raw_emails = fetch_pop3_emails(max_messages=max_messages)
-    except Exception as e:
-        print(f"[-] POP3 connection/fetch failed: {e}")
-        return 0
-
+def sync_raw_email_list(db: DBAdapter, raw_emails: List[Any]) -> int:
     new_count = 0
     for email in raw_emails:
         key = dedupe_key(email)
         if check_duplicate_key(db, key):
-            print(f"  [.] Skipping duplicate: {email.subject[:30]}...")
             continue
         
         subj = normalize_subject(email.subject)
         body = canonical_body(email.body)
         body_exc = safe_excerpt(body, max_chars=240)
         
-        # Parse original email date or fallback to now
         original_received_at = None
         if email.received_at:
             try:
@@ -95,7 +87,7 @@ def sync_pop3_to_db(db: DBAdapter, max_messages: int | None = None) -> int:
             original_received_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
         payload = {
-            "message_id_hash": sha256_hex(email.message_id or f"pop3-{key}"),
+            "message_id_hash": sha256_hex(email.message_id or f"mail-{key}"),
             "dedupe_key": key,
             "sender_hash": sha256_hex(email.sender),
             "sender_domain": sender_domain(email.sender),
@@ -112,10 +104,29 @@ def sync_pop3_to_db(db: DBAdapter, max_messages: int | None = None) -> int:
         
         msg_id = insert_sales_email_message(db, payload)
         if msg_id:
-            print(f"  [+] Inserted raw message ID {msg_id}: {email.subject[:30]}...")
             new_count += 1
             
     return new_count
+
+
+def sync_imap_to_db(db: DBAdapter, max_messages: int | None = None) -> int:
+    print(f"[*] Fetching emails via IMAP (max_messages={max_messages or 'default'})...")
+    try:
+        raw_emails = fetch_imap_emails(max_messages=max_messages)
+        return sync_raw_email_list(db, raw_emails)
+    except Exception as e:
+        print(f"[-] IMAP connection/fetch failed: {e}")
+        return 0
+
+
+def sync_pop3_to_db(db: DBAdapter, max_messages: int | None = None) -> int:
+    print(f"[*] Fetching emails via POP3 (max_messages={max_messages or 'default'})...")
+    try:
+        raw_emails = fetch_pop3_emails(max_messages=max_messages)
+        return sync_raw_email_list(db, raw_emails)
+    except Exception as e:
+        print(f"[-] POP3 connection/fetch failed: {e}")
+        return 0
 
 
 def rebuild_extraction_review_json(db: DBAdapter) -> None:
@@ -283,9 +294,13 @@ def sync_sales_emails_pipeline(max_messages: int | None = None, retry_errors: bo
     
     print(f"[*] Starting Sales Email Sync & Parse Pipeline (retry_errors={retry_errors}). Connection Mode: {'Supabase' if db.use_supabase else 'SQLite'}")
     
-    # 1. POP3 Sync
-    new_emails = sync_pop3_to_db(db, max_messages=max_messages)
-    print(f"[+] Synced {new_emails} new emails from POP3 server.")
+    # 1. Fetch via IMAP (and POP3 fallback)
+    new_emails = sync_imap_to_db(db, max_messages=max_messages)
+    if new_emails == 0:
+        pop3_new = sync_pop3_to_db(db, max_messages=max_messages)
+        new_emails += pop3_new
+
+    print(f"[+] Total new emails synced into DB: {new_emails}")
     
     # 2. AI Parse (if new emails exist, OR if there are any unparsed/retryable emails in the database)
     statuses = ["new", "deduped", "error"] if retry_errors else ["new", "deduped"]
@@ -307,7 +322,7 @@ def sync_sales_emails_pipeline(max_messages: int | None = None, retry_errors: bo
 
     if new_emails > 0 or has_unparsed:
         print(f"[*] Running AI parser on unparsed emails (new={new_emails}, has_unparsed={has_unparsed}, retry_errors={retry_errors})...")
-        parser_args = ["--retry-errors"] if retry_errors else []
+        parser_args = ["--retry-errors", "--max-messages", "0"] if retry_errors else ["--max-messages", "0"]
         run_parser(parser_args)
     else:
         print("[*] No unparsed emails, skipping AI parser run.")
@@ -326,8 +341,8 @@ def sync_sales_emails_pipeline(max_messages: int | None = None, retry_errors: bo
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="POP3 Sales Email Sync & Matching Pipeline (T910 1000-scale)")
-    parser.add_argument("--max-messages", type=int, default=None, help="Maximum POP3 emails to fetch (default: env or 1000)")
+    parser = argparse.ArgumentParser(description="Sales Email Sync & Matching Pipeline (T910 1000-scale)")
+    parser.add_argument("--max-messages", type=int, default=None, help="Maximum emails to fetch (default: env or 1000)")
     parser.add_argument("--retry-errors", action="store_true", default=False, help="Retry parsing messages with status 'error'")
     args = parser.parse_args()
 

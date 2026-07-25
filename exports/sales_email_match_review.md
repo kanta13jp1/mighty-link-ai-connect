@@ -1,16 +1,32 @@
 # Sales Email Match Review
 
 - Task: T817_5
-- Generated at: 2026-07-12T02:02:48Z
+- Generated at: 2026-07-25T04:24:32Z
 - Direction: project_to_talent
-- Projects: 4
-- Talents: 1
-- Matches: 4
+- Projects: 170
+- Talents: 102
+- Matches: 20
 - Privacy: only sanitized extraction fields and redacted evidence are used.
 
 | # | Project | Talent | Score | Matched skills | Missing skills | Reason | Review |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | 【BP要員】Java(約6年)／Spring Boot／基本設計～／マイクロサービス・DDD／銀行系大規模マイクロサービス／Vue/React／リモート併用希望【KAD清水】1246 | 技術者（AWS等） | 23% |  | JAVA, REACT, SPRING, VUE | conditions: location:東京 | pending |
-| 2 | 【BP要員】Java／Spring Boot(約3年半)／詳細設計～／REST API／JPA・MyBatisでの業務／常駐可【KAD清水】1277 | 技術者（AWS等） | 16% |  | JAVA, SPRING | review sanitized evidence before outreach | pending |
-| 3 | 【BP要員】React／Next.js(約3年半)／基本設計～／Zustand・Vitest等モダン環境経験／常駐可【KAD清水】1276 | 技術者（AWS等） | 16% |  | REACT | review sanitized evidence before outreach | pending |
-| 4 | 【BP要員】React／TypeScript(約3年半)／基本設計～／Storybook／Vitest経験／EC・SaaS開発経験／常駐可【KAD清水】1278 | 技術者（AWS等） | 16% |  | REACT, Typescript | review sanitized evidence before outreach | pending |
+| 1 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID109 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 2 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID129 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 3 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID147 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 4 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID183 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 5 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID201 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 6 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID248 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 7 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID250 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 8 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID252 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 9 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID256 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 10 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID268 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 11 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID279 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 12 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID289 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 13 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID312 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 14 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID367 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 15 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID431 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 16 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID455 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 17 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID489 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 18 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID496 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 19 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID509 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |
+| 20 | 8月開始/一社先フリーランス/PM/PMO/Java/要件定義〜/証券/損保/会計/勘定 | 技術者（JAVA等）-ID517 | 94% | JAVA |  | skill overlap: JAVA; conditions: rate compatible | pending |

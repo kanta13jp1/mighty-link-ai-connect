@@ -299,7 +299,9 @@ def main(argv: list[str] | None = None, retry_errors: bool | None = None) -> int
         subject = msg.get("normalized_subject") or ""
         body = msg.get("body_excerpt") or ""
 
-        print(f"  [*] Parsing message ID {msg_id}: '{subject[:30]}...'")
+        out_enc = sys.stdout.encoding or "utf-8"
+        safe_subject = subject[:30].encode(out_enc, errors="replace").decode(out_enc, errors="replace")
+        print(f"  [*] Parsing message ID {msg_id}: '{safe_subject}...'")
 
         try:
             result = parser.parse(subject, body)
@@ -359,9 +361,11 @@ def main(argv: list[str] | None = None, retry_errors: bool | None = None) -> int
 
             elif category == "talent" and result.talent:
                 # Insert Talent Profile
+                raw_talent_key = result.talent.anonymized_talent_key or "匿名技術者"
+                unique_talent_key = f"{raw_talent_key}-ID{msg_id}"
                 talent_payload = {
                     "message_id": msg_id,
-                    "anonymized_talent_key": result.talent.anonymized_talent_key,
+                    "anonymized_talent_key": unique_talent_key,
                     "summary": result.talent.summary,
                     "skills": result.talent.skills,
                     "experience_years": result.talent.experience_years,
