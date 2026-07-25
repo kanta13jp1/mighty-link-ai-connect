@@ -3321,6 +3321,7 @@
         <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
             <a href="#top" data-i18n="nav_home">ホーム</a>
             <a href="#onboarding-section" data-i18n="nav_onboarding">初期セットアップ</a>
+            <a href="#training-modal" onclick="openTrainingModal(event)" data-i18n="nav_training">研修ガイド</a>
             <a href="#survey-section" data-i18n="nav_survey">適性アンケート</a>
             <a href="#aptitude-demo-section" data-i18n="nav_aptitude">自己診断デモ</a>
             <a href="#attendance-section" data-i18n="nav_attendance">勤怠管理</a>
@@ -3354,6 +3355,99 @@
             <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleNav()">☰</button>
         </div>
     </header>
+
+    <!-- Training / Onboarding Modal (T919) -->
+    <div class="auth-modal-overlay" id="training-modal" aria-hidden="true">
+        <div class="auth-modal-card training-modal-card" role="dialog" aria-modal="true" aria-labelledby="training-modal-title" style="max-width: 720px; width: 92%;">
+            <button class="auth-modal-close" onclick="closeTrainingModal()" aria-label="閉じる">×</button>
+            <div class="auth-modal-header">
+                <h3 id="training-modal-title" data-i18n="training_modal_title">社内役割別研修・オンボーディングガイド</h3>
+                <p style="font-size: 0.82rem; color: var(--muted);" id="training-modal-subtitle" data-i18n="training_modal_subtitle">業務役割に応じたカリキュラムを選択し、機能解説・受講ポイント・操作手順を確認できます</p>
+            </div>
+            <div class="auth-modal-tabs" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 16px;">
+                <button type="button" class="auth-tab-btn active" id="training-tab-1" onclick="switchTrainingTab('course1')">① 全社員基礎</button>
+                <button type="button" class="auth-tab-btn" id="training-tab-2" onclick="switchTrainingTab('course2')">② 営業・HR専門</button>
+                <button type="button" class="auth-tab-btn" id="training-tab-3" onclick="switchTrainingTab('course3')">③ 管理者管理</button>
+            </div>
+
+            <!-- Course 1 Panel -->
+            <div id="training-course-1" class="training-course-panel active">
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 14px;">
+                    <h4 style="margin: 0 0 8px 0; color: var(--blue); font-size: 0.95rem;">コース①: 全社員基礎研修（オンボーディング・勤怠・アンケート）</h4>
+                    <p style="font-size: 0.83rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.5;">
+                        管理者から発行されたアカウントで初期セットアップ（アクティベーション）を完了し、適性アンケートおよび勤怠打刻・CSV解析を正しく利用する手順を学びます。
+                    </p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <a href="#onboarding-section" onclick="closeTrainingModal()" class="sample-btn" style="text-decoration:none;">初期セットアップへ移動</a>
+                        <a href="#survey-section" onclick="closeTrainingModal()" class="sample-btn" style="text-decoration:none;">適性アンケートへ移動</a>
+                        <a href="#attendance-section" onclick="closeTrainingModal()" class="sample-btn" style="text-decoration:none;">勤怠管理へ移動</a>
+                    </div>
+                    <div style="font-size: 0.8rem; background: rgba(0,210,255,0.08); padding: 8px 12px; border-radius: 6px; color: var(--blue-light);">
+                        📖 詳細マニュアル: <a href="docs/training/FOUNDATION_TRAINING_HANDBOOK.md" target="_blank" rel="noopener" style="color: var(--blue-light); text-decoration: underline;">全社員基礎研修ハンドブック (FOUNDATION_TRAINING_HANDBOOK.md)</a>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 4px;">
+                    <label style="font-size: 0.83rem; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="training-check-course1" onchange="toggleTrainingCourseProgress('course1')">
+                        <span>コース①の研修受講を完了として記録する</span>
+                    </label>
+                    <span id="training-status-course1" style="font-size: 0.78rem; color: var(--muted);">未完了</span>
+                </div>
+            </div>
+
+            <!-- Course 2 Panel -->
+            <div id="training-course-2" class="training-course-panel" style="display: none;">
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 14px;">
+                    <h4 style="margin: 0 0 8px 0; color: var(--blue); font-size: 0.95rem;">コース②: 営業・HR専門研修（4軸AI診断・営業メールマッチング）</h4>
+                    <p style="font-size: 0.83rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.5;">
+                        Skill / Culture / Growth / Performing の4軸AI診断評価、BP営業メールの案件/人材双方向マッチング、および個人情報保護・人間による最終レビュー原則を修得します。
+                    </p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <a href="#matching-section" onclick="closeTrainingModal()" class="sample-btn" style="text-decoration:none;">AIフィット分析・メールマッチングへ移動</a>
+                        <a href="#aptitude-demo-section" onclick="closeTrainingModal()" class="sample-btn" style="text-decoration:none;">自己診断デモへ移動</a>
+                    </div>
+                    <div style="font-size: 0.8rem; background: rgba(0,210,255,0.08); padding: 8px 12px; border-radius: 6px; color: var(--blue-light);">
+                        📖 詳細マニュアル: <a href="docs/training/SALES_HR_TRAINING_HANDBOOK.md" target="_blank" rel="noopener" style="color: var(--blue-light); text-decoration: underline;">営業・HR専門研修ハンドブック (SALES_HR_TRAINING_HANDBOOK.md)</a>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 4px;">
+                    <label style="font-size: 0.83rem; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="training-check-course2" onchange="toggleTrainingCourseProgress('course2')">
+                        <span>コース②の研修受講を完了として記録する</span>
+                    </label>
+                    <span id="training-status-course2" style="font-size: 0.78rem; color: var(--muted);">未完了</span>
+                </div>
+            </div>
+
+            <!-- Course 3 Panel -->
+            <div id="training-course-3" class="training-course-panel" style="display: none;">
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 14px;">
+                    <h4 style="margin: 0 0 8px 0; color: var(--blue); font-size: 0.95rem;">コース③: 管理者管理研修（統合ダッシュボード・仮名化監査・セキュリティ）</h4>
+                    <p style="font-size: 0.83rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.5;">
+                        統合管理者ダッシュボードでの全体監視、仮名化識別子（onb-digest）による監査ログ点検、Break-glass緊急対応および個人情報開示請求SLAの運用手順を修得します。
+                    </p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <a href="#admin-dashboard-section" onclick="closeTrainingModal()" class="sample-btn" style="text-decoration:none;">管理者ダッシュボードへ移動</a>
+                        <a href="admin" target="_blank" rel="noopener" class="sample-btn" style="text-decoration:none;">Admin（独立版）を開く</a>
+                    </div>
+                    <div style="font-size: 0.8rem; background: rgba(0,210,255,0.08); padding: 8px 12px; border-radius: 6px; color: var(--blue-light);">
+                        📖 詳細マニュアル: <a href="docs/training/ADMIN_MANAGEMENT_TRAINING_HANDBOOK.md" target="_blank" rel="noopener" style="color: var(--blue-light); text-decoration: underline;">管理者管理研修ハンドブック (ADMIN_MANAGEMENT_TRAINING_HANDBOOK.md)</a>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 4px;">
+                    <label style="font-size: 0.83rem; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        <input type="checkbox" id="training-check-course3" onchange="toggleTrainingCourseProgress('course3')">
+                        <span>コース③の研修受講を完了として記録する</span>
+                    </label>
+                    <span id="training-status-course3" style="font-size: 0.78rem; color: var(--muted);">未完了</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 16px; text-align: right;">
+                <button type="button" class="sample-btn" onclick="closeTrainingModal()">閉じる</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal: Authentication & Access Control (ログイン / 会員登録) -->
     <div class="auth-modal-overlay" id="auth-modal" aria-hidden="true">
@@ -3820,6 +3914,7 @@
                             必須ステップと上部の規約同意を完了すると、アカウントを有効化できます。
                         </div>
                         <button type="button" class="sample-btn" onclick="focusLegalConsentPanel()" style="margin-top: 10px;">↑ 上部の規約同意チェック欄へ移動</button>
+                        <button type="button" class="sample-btn" id="open-training-guide-btn" onclick="openTrainingModal(event)" style="margin-top: 10px; background: rgba(0, 210, 255, 0.1); border-color: var(--blue);">📖 役割別研修ガイドモーダルを開く</button>
                         <div class="aptitude-demo-actions">
                             <button type="button" class="big-btn" id="onboarding-activate" onclick="activateOnboarding()">アカウントを有効化</button>
                             <button type="button" class="sample-btn" onclick="resetOnboarding()">リセット</button>
@@ -3938,7 +4033,7 @@
                         </div>
                         <button type="button" class="sample-btn" id="aptitude-demo-consent-jump" onclick="focusLegalConsentPanel()" style="margin-top: 10px;">↑ 上部の規約同意チェック欄へ移動</button>
                         <div class="aptitude-demo-actions">
-                            <button type="button" class="big-btn" id="aptitude-demo-generate" onclick="loadAptitudeQuestions()">質問を生成</button>
+                            <button type="button" class="big-btn" id="aptitude-demo-generate" onclick="loadAptitudeQuestions()" data-i18n="aptitude_run_btn">質問を生成</button>
                             <button type="button" class="big-btn" id="aptitude-demo-evaluate" onclick="evaluateAptitudeDemo()">評価する</button>
                             <button type="button" class="sample-btn" onclick="resetAptitudeDemo()">リセット</button>
                         </div>
@@ -4535,6 +4630,9 @@
             ja: {
                 nav_home: "ホーム",
                 nav_onboarding: "初期セットアップ",
+                nav_training: "研修ガイド",
+                training_modal_title: "社内役割別研修・オンボーディングガイド",
+                training_modal_subtitle: "業務役割に応じたカリキュラムを選択し、機能解説・受講ポイント・操作手順を確認できます",
                 nav_survey: "適性アンケート",
                 nav_aptitude: "自己診断デモ",
                 nav_attendance: "勤怠管理",
@@ -4616,6 +4714,9 @@
             en: {
                 nav_home: "Home",
                 nav_onboarding: "Setup",
+                nav_training: "Training Guide",
+                training_modal_title: "Role-Based Training & Onboarding Guide",
+                training_modal_subtitle: "Select a role-based curriculum to view feature overviews, key takeaways, and action guides",
                 nav_survey: "Survey",
                 nav_aptitude: "Aptitude Demo",
                 nav_attendance: "Attendance",
@@ -4697,6 +4798,9 @@
             zh: {
                 nav_home: "首页",
                 nav_onboarding: "初始设置",
+                nav_training: "培训指南",
+                training_modal_title: "角色化培训与入门指南",
+                training_modal_subtitle: "选择与业务角色对应的课程，查看功能说明、学习重点与操作步骤",
                 nav_survey: "问卷调查",
                 nav_aptitude: "自我诊断",
                 nav_attendance: "考勤管理",
@@ -4778,6 +4882,9 @@
             ko: {
                 nav_home: "홈",
                 nav_onboarding: "초기 설정",
+                nav_training: "연수 가이드",
+                training_modal_title: "역할별 연수 및 온보딩 가이드",
+                training_modal_subtitle: "업무 역할에 맞는 커리큘럼을 선택하여 기능 설명, 수강 포인트 및 조작 절차를 확인할 수 있습니다",
                 nav_survey: "설문조사",
                 nav_aptitude: "자가진단 데모",
                 nav_attendance: "근태관리",
@@ -7632,6 +7739,70 @@
         function hideOpsChartTooltip() {
             const tooltip = document.getElementById("ops-chart-tooltip");
             if (tooltip) tooltip.style.display = "none";
+        }
+
+        function openTrainingModal(event) {
+            if (event) event.preventDefault();
+            const modal = document.getElementById('training-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+                loadTrainingCourseProgress();
+            }
+        }
+
+        function closeTrainingModal() {
+            const modal = document.getElementById('training-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        function switchTrainingTab(courseId) {
+            const courses = ['course1', 'course2', 'course3'];
+            courses.forEach((c, idx) => {
+                const btn = document.getElementById('training-tab-' + (idx + 1));
+                const panel = document.getElementById('training-course-' + (idx + 1));
+                if (c === courseId) {
+                    if (btn) btn.classList.add('active');
+                    if (panel) { panel.style.display = 'block'; panel.classList.add('active'); }
+                } else {
+                    if (btn) btn.classList.remove('active');
+                    if (panel) { panel.style.display = 'none'; panel.classList.remove('active'); }
+                }
+            });
+        }
+
+        function loadTrainingCourseProgress() {
+            try {
+                const raw = localStorage.getItem('msb_training_course_progress_v1');
+                const data = raw ? JSON.parse(raw) : {};
+                ['course1', 'course2', 'course3'].forEach((c) => {
+                    const chk = document.getElementById('training-check-' + c);
+                    const status = document.getElementById('training-status-' + c);
+                    if (chk) chk.checked = !!data[c];
+                    if (status) {
+                        status.textContent = data[c] ? '受講完了' : '未完了';
+                        status.style.color = data[c] ? 'var(--blue)' : 'var(--muted)';
+                    }
+                });
+            } catch (e) {
+                console.warn('Failed to load training progress', e);
+            }
+        }
+
+        function toggleTrainingCourseProgress(courseId) {
+            try {
+                const raw = localStorage.getItem('msb_training_course_progress_v1');
+                const data = raw ? JSON.parse(raw) : {};
+                const chk = document.getElementById('training-check-' + courseId);
+                data[courseId] = chk ? chk.checked : false;
+                localStorage.setItem('msb_training_course_progress_v1', JSON.stringify(data));
+                loadTrainingCourseProgress();
+            } catch (e) {
+                console.warn('Failed to save training progress', e);
+            }
         }
 
         async function loadOperationsDashboard() {
