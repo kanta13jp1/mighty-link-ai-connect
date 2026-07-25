@@ -1,51 +1,91 @@
 {
+  "report_id": "SUPABASE_UAT_WRITES_T845_T921",
+  "generated_at": "2026-07-25T07:44:51.555607Z",
   "status": "PASS",
+  "mode": "offline_schema_contract",
   "has_db_connection": false,
+  "live_write_verified": false,
+  "transaction_rolled_back": false,
+  "cleanup_verified": false,
+  "persisted_probe_records": null,
   "checked_tables": [
     "employee_assessment_responses",
-    "attendance_punches",
-    "analytics_events",
-    "sales_email_matches",
-    "sales_email_analytics",
-    "support_requests",
-    "feedback_responses"
+    "attendance_punch_events",
+    "attendance_timesheet_imports",
+    "usage_analytics_events",
+    "sales_mailbox_sources",
+    "sales_email_messages",
+    "sales_email_entities",
+    "project_requirements",
+    "talent_profiles_from_email",
+    "requirement_skill_tags",
+    "email_parse_runs",
+    "email_match_results",
+    "email_match_feedback",
+    "feedback_events",
+    "support_requests"
   ],
   "table_status": {
     "employee_assessment_responses": {
       "verified": true,
-      "mode": "schema_fallback",
-      "count": "N/A (No DB URL)"
+      "mode": "migration_contract"
     },
-    "attendance_punches": {
+    "attendance_punch_events": {
       "verified": true,
-      "mode": "schema_fallback",
-      "count": "N/A (No DB URL)"
+      "mode": "migration_contract"
     },
-    "analytics_events": {
+    "attendance_timesheet_imports": {
       "verified": true,
-      "mode": "schema_fallback",
-      "count": "N/A (No DB URL)"
+      "mode": "migration_contract"
     },
-    "sales_email_matches": {
+    "usage_analytics_events": {
       "verified": true,
-      "mode": "schema_fallback",
-      "count": "N/A (No DB URL)"
+      "mode": "migration_contract"
     },
-    "sales_email_analytics": {
+    "sales_mailbox_sources": {
       "verified": true,
-      "mode": "schema_fallback",
-      "count": "N/A (No DB URL)"
+      "mode": "migration_contract"
+    },
+    "sales_email_messages": {
+      "verified": true,
+      "mode": "migration_contract"
+    },
+    "sales_email_entities": {
+      "verified": true,
+      "mode": "migration_contract"
+    },
+    "project_requirements": {
+      "verified": true,
+      "mode": "migration_contract"
+    },
+    "talent_profiles_from_email": {
+      "verified": true,
+      "mode": "migration_contract"
+    },
+    "requirement_skill_tags": {
+      "verified": true,
+      "mode": "migration_contract"
+    },
+    "email_parse_runs": {
+      "verified": true,
+      "mode": "migration_contract"
+    },
+    "email_match_results": {
+      "verified": true,
+      "mode": "migration_contract"
+    },
+    "email_match_feedback": {
+      "verified": true,
+      "mode": "migration_contract"
+    },
+    "feedback_events": {
+      "verified": true,
+      "mode": "migration_contract"
     },
     "support_requests": {
       "verified": true,
-      "mode": "schema_fallback",
-      "count": "N/A (No DB URL)"
-    },
-    "feedback_responses": {
-      "verified": true,
-      "mode": "schema_fallback",
-      "count": "N/A (No DB URL)"
+      "mode": "migration_contract"
     }
   },
-  "summary": "DB URL not provided. Schema fallback verification passed for all 7 required UAT tables."
+  "summary": "Offline schema contract passed for 15 UAT tables. This does not claim a live database write."
 }
