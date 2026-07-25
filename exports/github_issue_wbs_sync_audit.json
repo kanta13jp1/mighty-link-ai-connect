@@ -1,65 +1,17 @@
 {
-  "open_count": 7,
+  "open_count": 3,
   "stale": [],
   "legitimate": [
-    {
-      "body": "このIssueはWBS正本の進捗をGitHub Projectへ同期するために作成されました。実装・検証の詳細はリポジトリ内の証跡を参照してください。\r\n\r\n<!-- mighty-link-wbs:T898:start -->\r\n## WBS同期情報\r\n\r\n- タスクID: `T898`\r\n- フェーズ: 7. 決定後実行 / 共通管理\r\n- 担当: 寛太梅澤\r\n- 実行レーン: 人間 + NotebookLM + Google Workspace\r\n- WBS状態: `未着手`\r\n- 予定: `2026-07-22` から `2026-07-23`\r\n- 正本: [data/WBS.tsv](https://github.com/kanta13jp1/mighty-link-ai-connect/blob/main/data/WBS.tsv) / [docs/WBS.md](https://github.com/kanta13jp1/mighty-link-ai-connect/blob/main/docs/WBS.md)\r\n\r\n> この範囲は同期スクリプトが管理します。secretやWBSの長文詳細は転記しません。\r\n<!-- mighty-link-wbs:T898:end -->\r\n",
-      "number": 198,
-      "title": "[T898] 7/22(水)13:00 社長定例の実施・議事録反映",
-      "url": "https://github.com/kanta13jp1/mighty-link-ai-connect/issues/198",
-      "wbs_tasks": [
-        "T898"
-      ],
-      "open_tasks": [
-        "T898"
-      ]
-    },
-    {
-      "body": "docs/SUPABASE_INFRA_AUDIT_2026-07-04.md 参照。10仮説検証の結果: (1) 本番DBはPostgreSQL 17.6でPG14 EOLリスクは誤アラーム（R53解消、T811完了・T837不要判定で完了）。(2) Supabase Daily Backup CIは6/22以降一度も成功しておらず、secret未登録・GCSバケット未作成・WIFが旧プロジェクト(d7fa2)へ誤バインドが原因（R116、T852/T870へ）。暫定ローカルバックアップ取得済み。(3) 6/16-6/18のmigration（feedback/support/営業メール9テーブル）も本番未適用（R117、適用スクリプト準備済み・ユーザー実行待ち）。PUBLIC-02は7/7判定で再評価。🤖 Generated with Claude Code",
-      "number": 162,
-      "title": "T811/T837完了: 本番はPG17.6でアップグレード不要。監査でR116（バックアップCI未稼働）/R117（migration追加未適用）を発見",
-      "url": "https://github.com/kanta13jp1/mighty-link-ai-connect/issues/162",
-      "wbs_tasks": [
-        "T811",
-        "T837",
-        "T852",
-        "T870"
-      ],
-      "open_tasks": [
-        "T870"
-      ]
-    },
-    {
-      "body": "## 概要\n\n2026-07-03 の決定（T861、docs/INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md）により、一般公開・有償化・live 課金の実施判断を本タスクで管理する。初回レビュー 2026-07-31、以後月次で再確認。\n\n## 完了条件\n\n1. 経営判断として有償公開の実施可否・時期を決定する\n2. 実施する場合: CEO の最終価格確認（PRICING_PLAN_PROVISIONAL_2026-07-03.md の再承認/修正）、T807/T813/T793 の日程再設定、public_paid_launch ゲート再有効化（R112）\n3. 実施しない場合: 次回レビュー日を設定して継続\n\n## 関連\n\n- WBS: T862 / T861 / T793 / T807 / T813\n- 課題: R112 / QA: QA-93\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
-      "number": 154,
-      "title": "T862: 有償公開・課金live有効化の実施判断（経営判断・時期未定）",
-      "url": "https://github.com/kanta13jp1/mighty-link-ai-connect/issues/154",
-      "wbs_tasks": [
-        "T793",
-        "T807",
-        "T813",
-        "T861",
-        "T862"
-      ],
-      "open_tasks": [
-        "T793",
-        "T807",
-        "T813",
-        "T862"
-      ]
-    },
     {
       "body": "## 概要\nT823の会社アカウント移管後、GitHub/Firebase/GCP/Supabase/Stripe/Google Workspace/AI開発ツールの管理者、請求、退職時権限削除、緊急時Break-glass、運用Runbookに沿った復旧/問い合わせ対応を会社側でリハーサルする。\n\n関連: T850 / R99 / QA-76",
       "number": 137,
       "title": "[T850] 会社運用引継ぎリハーサル・権限棚卸し・Break-glass確認",
       "url": "https://github.com/kanta13jp1/mighty-link-ai-connect/issues/137",
       "wbs_tasks": [
-        "T823",
-        "T850"
+        "T823"
       ],
       "open_tasks": [
-        "T823",
-        "T850"
+        "T823"
       ]
     },
     {
@@ -93,20 +45,6 @@
         "T791",
         "T807",
         "T845"
-      ]
-    },
-    {
-      "body": "## 概要\\nT838で確定した一次ショートリスト（ラフールサーベイ、HRBrain パルスサーベイ wellday、ミキワメAI 適性検査）について、公開ページだけでは確定できない契約・個人情報・連携条件を確認する。\\n\\n## 確認項目\\n- 見積、初期費用、月額、最低契約期間、PoC/トライアル条件\\n- DPA/NDA、再委託、国外移転、監査権、個人情報処理\\n- CSV/API/Webhook/SSO/監査ログの可否\\n- 管理者、人事、マネージャー、本人、産業医の権限分離\\n- 同意撤回、退職者、PoC終了時の削除SLAと証跡\\n\\n## 注意\\nsecret、認証情報、個人データ実値はGitHub/Sheets/docs/NotebookLMへ記録しない。R36/T798の外部法務レビュー完了まで、個人単位の心理・健康スコア保存と採用/配属/評価の自動判断は行わない。\\n\\n関連: T839 / R96 / docs/EMPLOYEE_ASSESSMENT_SHORTLIST_POC_PLAN.md",
-      "number": 126,
-      "title": "T839: 従業員適性・状態把握ツールのベンダー問い合わせ・見積/DPA確認",
-      "url": "https://github.com/kanta13jp1/mighty-link-ai-connect/issues/126",
-      "wbs_tasks": [
-        "T798",
-        "T839"
-      ],
-      "open_tasks": [
-        "T798",
-        "T839"
       ]
     }
   ],

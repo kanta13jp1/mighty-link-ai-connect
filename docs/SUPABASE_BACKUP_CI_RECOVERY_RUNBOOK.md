@@ -123,3 +123,13 @@ python scripts/restore_supabase_database.py backups/supabase/<snapshot> --dry-ru
 - `google-github-actions/auth`
 - Google Cloud Storage IAM roles
 - Supabase Database Backups
+
+## 2026-07-25 復旧結果
+
+- GitHub Actions run `30148170561`がsuccess。
+- WIF認証、PG17.6 dump、GCS upload、manifest再取得検証がすべて成功。
+- Snapshot `20260725T064931Z`として4 objects、2,001,119 bytesを保存。
+- Manifestは`status=created`、SQL 3ファイルのSHA-256を保持。
+- GCSから実snapshotを一時取得し、checksum検証付きrestore dry-runに成功。
+- 本番DBへのrestoreは実施していない。
+- 証跡: `exports/supabase_backup_recovery_2026-07-25.{json,md}`

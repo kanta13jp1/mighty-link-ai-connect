@@ -1,20 +1,21 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-24T00:26:18+09:00
+Generated: 2026-07-25T16:14:03+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `150`
-- Drive docs uploaded: `1`
-- Drive docs skipped unchanged: `149`
+- Drive docs discovered: `158`
+- Drive docs uploaded: `21`
+- Drive docs skipped unchanged: `137`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/
 
 - `docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md`: https://docs.google.com/document/d/1vJ8XPvZviNxlRVMwabTQeaTrTgzwuL9AMkkIFR43V-s/edit?usp=drivesdk
 - `docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1vZkDFnO5AhW1oEC3pif_bO9kCLQg8xh4iqdPXfm0QmI/edit?usp=drivesdk
+- `docs/ACCOUNTING_AND_TAX_OPERATIONS_RUNBOOK.md`: https://docs.google.com/document/d/1FB5YDVy3XZ0TGaT-w4mAlA8Yxyzq3Tk_ENgGMqw5Sis/edit?usp=drivesdk
 - `docs/ADMIN_OPERATIONS_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1xH0kZK698mtCkj9YDSEou5xdbENZ_nC5Pm4-Tib-f_Q/edit?usp=drivesdk
 - `docs/AI_COST_MONITORING_AND_QUOTA_DESIGN.md`: https://docs.google.com/document/d/1MaQDg52OsPPzpDVlfAMi4xdqSENRc8tWYNV729uytQ4/edit?usp=drivesdk
 - `docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md`: https://docs.google.com/document/d/1NUNTGs7qYYjoGv4f4G6OcJ7nS8fCeH2Ph1R_fdUYkkc/edit?usp=drivesdk
@@ -31,6 +32,7 @@ Generated: 2026-07-24T00:26:18+09:00
 - `docs/BILLING_AND_REFUND_POLICY.md`: https://docs.google.com/document/d/1qXQ8UVCo4AJN2DLeYq_CO13GDM8e_9prJhl8Mym6rPM/edit?usp=drivesdk
 - `docs/CEO_MEETING_AGENDA_2026-07-08.md`: https://docs.google.com/document/d/1EccS4sxTSricI4Al-5LJUxfuK_cIoJ5hADf6wFnozoE/edit?usp=drivesdk
 - `docs/CEO_MEETING_AGENDA_2026-07-22.md`: https://docs.google.com/document/d/1fk0jiGg37_rhwkZzXTbZzWg122qjBNhKJ7QOSRCmDi4/edit?usp=drivesdk
+- `docs/CEO_MEETING_AGENDA_2026-08-05.md`: https://docs.google.com/document/d/1S3O2YLLkyAtn-F9dWzmtGJ-sa6NR_UOZi_vi-4cxgW0/edit?usp=drivesdk
 - `docs/CEO_PRESENTATION_BACKUP_GUIDE.md`: https://docs.google.com/document/d/1V0Pk334cGh22vH5YcXPepmIV8OHOFs1dtdgUQPa-VUY/edit?usp=drivesdk
 - `docs/CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/17LQKJNaTJYn7ntsh3vIT4A1YqkkMDR_xRDNmuw__iKc/edit?usp=drivesdk
 - `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md`: https://docs.google.com/document/d/1XJeHY18JEEeaz4Dc28UHrOYbA7hhZ7ENfyI3TEGPnqc/edit?usp=drivesdk
@@ -71,16 +73,20 @@ Generated: 2026-07-24T00:26:18+09:00
 - `docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md`: https://docs.google.com/document/d/1xb9e3AQt7uGSvQvu-D12CGqchlh5Z01FFn44Dkhza8I/edit?usp=drivesdk
 - `docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md`: https://docs.google.com/document/d/1sNtUB-fmge59PdRumkD0Ug6z9KPEF_QQw2PfX4qxnKo/edit?usp=drivesdk
 - `docs/GROWTH_STRATEGY_ROADMAP.md`: https://docs.google.com/document/d/1Pp3Tf_r4G2-pxJDFVw5FhFheCgZHZcscsnotmX6vDgQ/edit?usp=drivesdk
+- `docs/HANDOVER_DOCUMENTATION_PACKAGE.md`: https://docs.google.com/document/d/1RGCe7aTSWx5jczyZtj_sHxjBMTyGAP28JNge0AeKTh4/edit?usp=drivesdk
 - `docs/HOSTING_AND_DATABASE_SELECTION.md`: https://docs.google.com/document/d/1ngrMIRYYAbR2jzpLGRSKKJBTcOPvwUSJ00MDeCbx8-Y/edit?usp=drivesdk
 - `docs/HYPOTHESIS_AUDIT_2026-07-04.md`: https://docs.google.com/document/d/1y4BM0v-4GFybLIjxrxUZW0xVOwpnzpX98BjP0wHviTY/edit?usp=drivesdk
 - `docs/INCIDENT_POSTMORTEM_RUNBOOK.md`: https://docs.google.com/document/d/1nfuwYTaxVnadProXz1I6U-qVVK8mECRDmoJWdecFLr8/edit?usp=drivesdk
+- `docs/INFRA_HEARING_AGENDA_2026-08-07.md`: https://docs.google.com/document/d/1_SOMXDQH2iTgtmTVI1a1VDs-avd7naKJvrmCpagDvVM/edit?usp=drivesdk
 - `docs/INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1sbnNMCbBwpPyuLj60FNwEE3L1UAq8mZ79n7Zlv9Huco/edit?usp=drivesdk
 - `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md`: https://docs.google.com/document/d/1AV77haOyRnghdHXeYQgUUWosS07YA5semyeOadAzfUs/edit?usp=drivesdk
 - `docs/INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md`: https://docs.google.com/document/d/1To4tdFpm4vauBuLFu0oGrmEQ5wh3w0YTjgPiH5msoj4/edit?usp=drivesdk
 - `docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md`: https://docs.google.com/document/d/1dwBuo8xE95v9zeo2Z2rcoN1-3W-1qkzkAFx0lGYc39o/edit?usp=drivesdk
+- `docs/JAPANESE_UI_UX_STYLE_GUIDE.md`: https://docs.google.com/document/d/1MGpt6joI5dUqauome4-b0-KYRkciMpJwfhIHrWwNSsg/edit?usp=drivesdk
 - `docs/LANE_PREFLIGHT_GUARD.md`: https://docs.google.com/document/d/1kTBbjSxL58XW_2kPT1yLPUSKMrWQ80NBTgMLRJSEgzE/edit?usp=drivesdk
 - `docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md`: https://docs.google.com/document/d/1r7xPsQ87_XlmTfj3pt9Os91dtCjR3qK8o7f0B_7aJI4/edit?usp=drivesdk
 - `docs/LEGAL_DOCS_CONSISTENCY_AUDIT_2026-07-04.md`: https://docs.google.com/document/d/1yof2uNoj5--rgVSFwJq9h2eg-ZLgFn4TC4aiptHg8iI/edit?usp=drivesdk
+- `docs/LEGAL_REVIEW_EXTERNAL_ATTORNEY_PACKAGE.md`: https://docs.google.com/document/d/1uJfS7u2sjDQyvjEtaw5F7TMu5JMsqr7bOWwUK5xmb24/edit?usp=drivesdk
 - `docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md`: https://docs.google.com/document/d/1W72bEiChTYnorjkEzf312700wvWHUnk6iG3pcRiji7c/edit?usp=drivesdk
 - `docs/LEGAL_REVIEW_SIGNOFF_TRACKER.md`: https://docs.google.com/document/d/1n2Np6_gNWZEfluI28WofBdkRdI1fuEN1OCmHCx_E9eU/edit?usp=drivesdk
 - `docs/LOAD_TEST_100_USERS_REPORT_2026-07-01.md`: https://docs.google.com/document/d/1p_05xdUzs-16aPBskTjCgQUIryRaHIb_cQqbpNEp_60/edit?usp=drivesdk
@@ -112,6 +118,7 @@ Generated: 2026-07-24T00:26:18+09:00
 - `docs/PRODUCTION_DOMAIN_SETUP_GUIDE.md`: https://docs.google.com/document/d/1Xj57ffoCwtqaVm68rnfiNSMEW0yuVc_nuzw8TjQmpAs/edit?usp=drivesdk
 - `docs/PRODUCTION_GO_NO_GO_CHECKLIST.md`: https://docs.google.com/document/d/1sahYuhH1nbiAhsKcuJDnn6vwlAXREbOGPzJ-MoQVGD4/edit?usp=drivesdk
 - `docs/PRODUCTION_ROLLBACK_RUNBOOK.md`: https://docs.google.com/document/d/1nFPq-gr8xdBOy0r3iSHQVNl0rgnZc1azvjIO6Q7egoE/edit?usp=drivesdk
+- `docs/PROJECT_GLOSSARY.md`: https://docs.google.com/document/d/11dIJXgo2ZfAVeMWSpU7PMW3iyV02FKi4mWevcyZazYk/edit?usp=drivesdk
 - `docs/PROJECT_STRUCTURE.md`: https://docs.google.com/document/d/1ACZgUCWCCSM6o7oNh9qsAIk5wfyq7mKsHCiyQxNsrcg/edit?usp=drivesdk
 - `docs/QUALITY_GUARD_CATALOG.md`: https://docs.google.com/document/d/1oBWIQjUuzvz_-WQ190Qles3PW4ODw_lc4NtBc3-x5HQ/edit?usp=drivesdk
 - `docs/RELEASE_VERSIONING_RUNBOOK.md`: https://docs.google.com/document/d/1rFB5wODhmZt8-8Oh2dkSEL8kmNMxGeKsLz6b6B45jrY/edit?usp=drivesdk
@@ -123,6 +130,7 @@ Generated: 2026-07-24T00:26:18+09:00
 - `docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md`: https://docs.google.com/document/d/1zq9bmhw7msxsSR447LmX_bYBxGJGryDw9QBBATExjQ4/edit?usp=drivesdk
 - `docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md`: https://docs.google.com/document/d/18zF_qKGO0e1wN5Pevda9NjnsmEpeM6JjQ8qZMHQIClE/edit?usp=drivesdk
 - `docs/SALES_EMAIL_MATCHING_API_UI_RUNBOOK.md`: https://docs.google.com/document/d/1zbBe9AuecgqpEKZQ8cBQsPUDmwOhqFKy7Zpd6kKKNto/edit?usp=drivesdk
+- `docs/SALES_PROPOSAL_EFFECTIVENESS_SUMMARY.md`: https://docs.google.com/document/d/1NApNVwa7JcGW-43zT6bajMGK92jCo6Psjz18A05hGKw/edit?usp=drivesdk
 - `docs/SECRET_ROTATION_RUNBOOK.md`: https://docs.google.com/document/d/1BuhE9B4Sc3oTzH0cBEKMs7hFbWJp8qhGplm03haUH48/edit?usp=drivesdk
 - `docs/SECURITY_AUDIT_REPORT_2026-Q2.md`: https://docs.google.com/document/d/18Giy7tbF_P5iNNbo8ornDeq38t6UPgxR9LJBJVzCs5A/edit?usp=drivesdk
 - `docs/SECURITY_AUDIT_RUNBOOK.md`: https://docs.google.com/document/d/1qld9AwkywSTLtPVT5g1HyD98FVJhKrnXoGiviN2tgyQ/edit?usp=drivesdk

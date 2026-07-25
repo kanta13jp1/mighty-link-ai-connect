@@ -81,18 +81,17 @@ def test_reevaluate_candidate_kept_when_no_open_issue():
     assert out["reevaluate_candidates"] == ["TEST-02"]
 
 
-def test_real_repo_public11_and_public14_are_not_blind_pass_candidates():
-    """Regression on the real data: PUBLIC-11 is undermined by open R132 (the
-    sales-email PoC extraction was overwritten to empty) and PUBLIC-14 by open
-    R116 (WIF still mis-rolled). Neither may be recommended for PASS.
+def test_real_repo_only_unblocked_gates_become_reevaluate_candidates():
+    """PUBLIC-11 remains blocked by open R132, while PUBLIC-14 becomes eligible
+    for human reevaluation after T870 resolves R116.
     """
-    report = agg.build_report("2026-07-19")
+    report = agg.build_report("2026-07-25")
     cands = report["remaining_for_ga"]["reevaluate_candidates"]
     assert "PUBLIC-11" not in cands
-    assert "PUBLIC-14" not in cands
+    assert "PUBLIC-14" in cands
     by_gate = {g["gate"]: g for g in report["remaining_for_ga"]["non_pass_gates"]}
     assert "R132" in by_gate["PUBLIC-11"]["open_issues"], by_gate["PUBLIC-11"]
-    assert "R116" in by_gate["PUBLIC-14"]["open_issues"], by_gate["PUBLIC-14"]
+    assert by_gate["PUBLIC-14"]["open_issues"] == [], by_gate["PUBLIC-14"]
 
 
 def test_overdue_detection_is_a_list():

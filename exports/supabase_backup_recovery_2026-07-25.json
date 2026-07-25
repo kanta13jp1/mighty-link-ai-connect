@@ -1,0 +1,46 @@
+{
+  "task_id": "T870",
+  "issue_id": "R116",
+  "status": "pass",
+  "verified_at_utc": "2026-07-25T06:51:04Z",
+  "github_actions": {
+    "workflow": "Supabase Daily Backup",
+    "run_id": 30148170561,
+    "run_url": "https://github.com/kanta13jp1/mighty-link-ai-connect/actions/runs/30148170561",
+    "ref": "master",
+    "conclusion": "success"
+  },
+  "gcp": {
+    "project_id": "mighty-link-ai-connect-13d22",
+    "project_number": "526991227996",
+    "workload_identity_pool": "github-backup-pool",
+    "workload_identity_provider": "mighty-link-backup",
+    "service_account": "supabase-backup-ci@mighty-link-ai-connect-13d22.iam.gserviceaccount.com",
+    "repository_id_condition": "1244319528",
+    "ref_condition": "refs/heads/master"
+  },
+  "storage": {
+    "bucket": "mighty-link-ai-connect-13d22-supabase-backups",
+    "location": "ASIA-NORTHEAST1",
+    "public_access_prevention": "enforced",
+    "uniform_bucket_level_access": true,
+    "retention_seconds": 604800,
+    "lifecycle_delete_age_days": 30
+  },
+  "snapshot": {
+    "id": "20260725T064931Z",
+    "object_count": 4,
+    "total_bytes": 2001119,
+    "manifest_status": "created",
+    "checksum_algorithm": "SHA-256",
+    "checksum_count": 3,
+    "database_url_redacted": true
+  },
+  "restore_verification": {
+    "source": "downloaded production snapshot",
+    "checksum_verification": "pass",
+    "restore_dry_run": "pass",
+    "production_restore_performed": false
+  },
+  "secret_values_recorded": false
+}

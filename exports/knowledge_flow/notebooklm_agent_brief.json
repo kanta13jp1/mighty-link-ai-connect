@@ -2,9 +2,9 @@
   "notebook_id": "4934c12b-b270-4739-97a1-b04b5b84eaaf",
   "notebook_info": {
     "action": "used_existing",
-    "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-07-24 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
+    "output": "+-----------------------------------------------------------------------------+\n| ID                         | Title                     | Owner | Created    |\n|----------------------------+---------------------------+-------+------------|\n| 4934c12b-b270-4739-97a1-b�c | Mighty Skill-Bridge       | Owner | 2026-07-25 |\n|                            | Development Knowledge     |       |            |\n|                            | 2026-06-02                |       |            |\n+-----------------------------------------------------------------------------+"
   },
-  "source_count": 150,
+  "source_count": 158,
   "source_results": [
     {
       "title": "Mighty Skill-Bridge docs/docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
@@ -22,6 +22,16 @@
       "action": "skipped_existing_refresh",
       "reason": "--skip-source-refresh",
       "source_id": "5288e523-fa9d-4d03-a277-eff1994d831e",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "title": "Mighty Skill-Bridge docs/docs/ACCOUNTING_AND_TAX_OPERATIONS_RUNBOOK.md",
+      "drive_file_id": "1FB5YDVy3XZ0TGaT-w4mAlA8Yxyzq3Tk_ENgGMqw5Sis",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "453f531c-e7f5-4d42-85a3-02aa0197efe8",
       "returncode": null,
       "stdout": "",
       "stderr": ""
@@ -182,6 +192,16 @@
       "action": "skipped_existing_refresh",
       "reason": "--skip-source-refresh",
       "source_id": "98ae403e-d1b4-4e67-a38c-e253061b5866",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "title": "Mighty Skill-Bridge docs/docs/CEO_MEETING_AGENDA_2026-08-05.md",
+      "drive_file_id": "1S3O2YLLkyAtn-F9dWzmtGJ-sa6NR_UOZi_vi-4cxgW0",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "5848b5d1-819b-4b86-876b-cd93ab0e8bb4",
       "returncode": null,
       "stdout": "",
       "stderr": ""
@@ -587,6 +607,16 @@
       "stderr": ""
     },
     {
+      "title": "Mighty Skill-Bridge docs/docs/HANDOVER_DOCUMENTATION_PACKAGE.md",
+      "drive_file_id": "1RGCe7aTSWx5jczyZtj_sHxjBMTyGAP28JNge0AeKTh4",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "e13ada56-7f6f-46f1-ad07-5998265e23fe",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
       "title": "Mighty Skill-Bridge docs/docs/HOSTING_AND_DATABASE_SELECTION.md",
       "drive_file_id": "1ngrMIRYYAbR2jzpLGRSKKJBTcOPvwUSJ00MDeCbx8-Y",
       "action": "skipped_existing_refresh",
@@ -612,6 +642,16 @@
       "action": "skipped_existing_refresh",
       "reason": "--skip-source-refresh",
       "source_id": "566b649f-4af8-4e39-8317-ad090ff01dbb",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "title": "Mighty Skill-Bridge docs/docs/INFRA_HEARING_AGENDA_2026-08-07.md",
+      "drive_file_id": "1_SOMXDQH2iTgtmTVI1a1VDs-avd7naKJvrmCpagDvVM",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "ec469256-901f-4771-acac-6d07326da02f",
       "returncode": null,
       "stdout": "",
       "stderr": ""
@@ -657,6 +697,16 @@
       "stderr": ""
     },
     {
+      "title": "Mighty Skill-Bridge docs/docs/JAPANESE_UI_UX_STYLE_GUIDE.md",
+      "drive_file_id": "1MGpt6joI5dUqauome4-b0-KYRkciMpJwfhIHrWwNSsg",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "e054c685-c91a-43c8-8ffd-a7465b859bf9",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
       "title": "Mighty Skill-Bridge docs/docs/LANE_PREFLIGHT_GUARD.md",
       "drive_file_id": "1kTBbjSxL58XW_2kPT1yLPUSKMrWQ80NBTgMLRJSEgzE",
       "action": "skipped_existing_refresh",
@@ -682,6 +732,16 @@
       "action": "skipped_existing_refresh",
       "reason": "--skip-source-refresh",
       "source_id": "981f64fd-640e-4e64-898d-35a15d6190ab",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "title": "Mighty Skill-Bridge docs/docs/LEGAL_REVIEW_EXTERNAL_ATTORNEY_PACKAGE.md",
+      "drive_file_id": "1uJfS7u2sjDQyvjEtaw5F7TMu5JMsqr7bOWwUK5xmb24",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "781d4d4a-04f6-4be5-8634-52761c6c8f21",
       "returncode": null,
       "stdout": "",
       "stderr": ""
@@ -997,6 +1057,16 @@
       "stderr": ""
     },
     {
+      "title": "Mighty Skill-Bridge docs/docs/PROJECT_GLOSSARY.md",
+      "drive_file_id": "11dIJXgo2ZfAVeMWSpU7PMW3iyV02FKi4mWevcyZazYk",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "ebaa9094-0f36-48f5-937f-84bf3eb436f2",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
       "title": "Mighty Skill-Bridge docs/docs/PROJECT_STRUCTURE.md",
       "drive_file_id": "1ACZgUCWCCSM6o7oNh9qsAIk5wfyq7mKsHCiyQxNsrcg",
       "action": "skipped_existing_refresh",
@@ -1102,6 +1172,16 @@
       "action": "skipped_existing_refresh",
       "reason": "--skip-source-refresh",
       "source_id": "936980d1-ec37-48be-8996-7067fd760d34",
+      "returncode": null,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "title": "Mighty Skill-Bridge docs/docs/SALES_PROPOSAL_EFFECTIVENESS_SUMMARY.md",
+      "drive_file_id": "1NApNVwa7JcGW-43zT6bajMGK92jCo6Psjz18A05hGKw",
+      "action": "skipped_existing_refresh",
+      "reason": "--skip-source-refresh",
+      "source_id": "9fca8e44-2764-4e05-8498-2d76f892f514",
       "returncode": null,
       "stdout": "",
       "stderr": ""
@@ -1510,10 +1590,10 @@
   "ask_generation": {
     "status": "skipped",
     "reason": "--skip-asks",
-    "generated_at_jst": "2026-07-24T00:26:18+09:00",
+    "generated_at_jst": "2026-07-25T16:14:03+09:00",
     "ask_timeout_seconds": 900,
     "next_command": "python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900",
-    "source_count": 150
+    "source_count": 158
   },
   "question": "このNotebookに含まれる設計情報、作業手順、WBS、ロードマップをもとに、\nCodex/AIエージェントが次に開発を進めるための要約を作ってください。\n\n必ず以下を含めてください。\n1. 現在のプロダクト方向性で確定していること\n2. 6/2の社長打ち合わせまでに優先すべきプレゼン準備タスク\n3. 6/2で社長に決めてもらうべき事項\n4. バックエンド/app.pyやデータ構造を肉付けする時に守るべき前提\n5. NotebookLM / Slack / Notion / Obsidian / GitHub Issues / GitHub Project の運用上の残課題\n6. WBSへ追加すべき次アクション\n",
   "summary_returncode": null,

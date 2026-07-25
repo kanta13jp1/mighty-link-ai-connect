@@ -1,6 +1,6 @@
 # リリース判定ゲート整合性監査 (T908)
 
-- ゲート総数: **21** / 内訳: BLOCKED=4, HUMAN_GATE=1, PASS=12, WARNING=4
+- ゲート総数: **21** / 内訳: BLOCKED=4, HUMAN_GATE=1, PASS=13, WARNING=3
 - 陳腐化ゲート(非PASSだが関連WBS全完了): **5件** ['PUBLIC-04', 'PUBLIC-06', 'PUBLIC-08', 'PUBLIC-11', 'PUBLIC-14']
 - 総合判定: ✅ PASS (ドリフト0)
 
