@@ -307,6 +307,8 @@ def main(argv: list[str] | None = None, retry_errors: bool | None = None) -> int
             result = parser.parse(subject, body)
             category = result.category
 
+            full_evidence = (body.strip() if body else result.evidence_excerpt) or result.evidence_excerpt
+
             if category == "project" and result.project:
                 # Insert Project Requirements
                 proj_payload = {
@@ -325,7 +327,7 @@ def main(argv: list[str] | None = None, retry_errors: bool | None = None) -> int
                     "duration_text": result.project.duration_text,
                     "commercial_flow": result.project.commercial_flow,
                     "restrictions": result.project.restrictions,
-                    "evidence_excerpt": result.evidence_excerpt,
+                    "evidence_excerpt": full_evidence,
                     "review_status": "pending",
                 }
                 proj_id = db.insert_project_requirement(proj_payload)
@@ -338,7 +340,7 @@ def main(argv: list[str] | None = None, retry_errors: bool | None = None) -> int
                         "skill_name": skill,
                         "importance": "required",
                         "confidence": result.confidence,
-                        "evidence_excerpt": result.evidence_excerpt
+                        "evidence_excerpt": full_evidence
                     })
                     db.insert_entity({
                         "message_id": msg_id,
@@ -346,7 +348,7 @@ def main(argv: list[str] | None = None, retry_errors: bool | None = None) -> int
                         "label": skill,
                         "normalized_label": skill.lower(),
                         "confidence": result.confidence,
-                        "evidence_excerpt": result.evidence_excerpt
+                        "evidence_excerpt": full_evidence
                     })
                 
                 # Tag project title itself
@@ -356,7 +358,7 @@ def main(argv: list[str] | None = None, retry_errors: bool | None = None) -> int
                     "label": result.project.title,
                     "normalized_label": result.project.title.lower(),
                     "confidence": result.confidence,
-                    "evidence_excerpt": result.evidence_excerpt
+                    "evidence_excerpt": full_evidence
                 })
 
             elif category == "talent" and result.talent:
@@ -374,7 +376,7 @@ def main(argv: list[str] | None = None, retry_errors: bool | None = None) -> int
                     "desired_location": result.talent.desired_location,
                     "remote_preference": result.talent.remote_preference,
                     "availability_text": result.talent.availability_text,
-                    "evidence_excerpt": result.evidence_excerpt,
+                    "evidence_excerpt": full_evidence,
                     "review_status": "pending",
                 }
                 talent_id = db.insert_talent_profile(talent_payload)

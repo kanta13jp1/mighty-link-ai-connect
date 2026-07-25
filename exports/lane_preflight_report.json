@@ -108,10 +108,10 @@
   },
   "pytest": {
     "skipped": false,
-    "failed": 0,
+    "failed": 3,
     "errors": 0,
     "collected": 725,
-    "exit_code": 0
+    "exit_code": 1
   },
   "hypotheses": [
     {
@@ -141,8 +141,8 @@
     {
       "id": "H5",
       "title": "pytest tests/ の failed/error が0",
-      "passed": true,
-      "detail": "failed=0, errors=0"
+      "passed": false,
+      "detail": "failed=3, errors=0"
     },
     {
       "id": "H6",
@@ -171,9 +171,9 @@
     {
       "id": "H10",
       "title": "プリフライト全体が完全・整合(ドリフト0)",
-      "passed": true,
-      "detail": "先行ドリフト=なし"
+      "passed": false,
+      "detail": "先行ドリフト=あり"
     }
   ],
-  "all_passed": true
+  "all_passed": false
 }

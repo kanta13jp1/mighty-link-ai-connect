@@ -8679,7 +8679,7 @@
             </div>
             
             <h4 style="font-size: 13px; color: var(--muted); margin-bottom: 8px; font-weight: bold; display: flex; align-items: center; gap: 6px;">
-                📝 受信メール本文の安全な抜粋（個人情報マスク済み）
+                📝 受信メール本文（全文・個人情報マスク済み）
             </h4>
             <div id="modal-email-body" style="
                 background: rgba(0,0,0,0.2); 
@@ -8691,7 +8691,8 @@
                 color: var(--text-light); 
                 line-height: 1.6; 
                 white-space: pre-wrap; 
-                max-height: 300px; 
+                word-break: break-all;
+                max-height: 450px; 
                 overflow-y: auto;
             "></div>
             

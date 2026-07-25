@@ -6229,7 +6229,7 @@ def load_extraction_report_from_postgres() -> Optional[dict]:
                     "duration_text": proj["duration_text"],
                     "commercial_flow": proj["commercial_flow"],
                     "restrictions": proj["restrictions"],
-                    "evidence_excerpt": proj["evidence_excerpt"],
+                    "evidence_excerpt": (msg.get("body_excerpt") or "").strip() or proj["evidence_excerpt"],
                     "confidence": 1.0,
                     "review_status": proj["review_status"]
                 }
@@ -6255,7 +6255,7 @@ def load_extraction_report_from_postgres() -> Optional[dict]:
                     "desired_location": tal["desired_location"],
                     "remote_preference": tal["remote_preference"],
                     "availability_text": tal["availability_text"],
-                    "evidence_excerpt": tal["evidence_excerpt"],
+                    "evidence_excerpt": (msg.get("body_excerpt") or "").strip() or tal["evidence_excerpt"],
                     "confidence": 1.0,
                     "review_status": tal["review_status"]
                 }

@@ -1,13 +1,13 @@
 # Sales Email Extraction Review
 
 - Task: T817_4
-- Generated at: 2026-07-25T04:24:32.753734Z
+- Generated at: 2026-07-25T04:53:27.918574Z
 - Model: deterministic-sales-email-extractor-v1
 - Fallback used: True
-- Input messages: 691
-- Project requirements: 369
+- Input messages: 692
+- Project requirements: 370
 - Talent profiles: 296
-- Skill tags: 525
+- Skill tags: 526
 - Privacy: raw bodies and credentials are not written; evidence is redacted.
 
 | # | Source | Kind | Subject | Required skills | Nice skills | Talent skills | Rate | Remote | Evidence |
@@ -703,3 +703,4 @@
 | 689 | `imap://imap2.gmoserver.jp/Trash/3` | project | ▲BP人材▲8月〜▲Flutter・基本設計〜保守▲ |  |  |  |  | unknown | 株式会社Mighty LINK ご担当者様 お世話になります。 てくてくの近藤です。 現在営業している人材のご紹介です。 見合う案件が御座いましたらご紹介ください。 ご確認よろしくお願いいたします。 ------------------------------------------------------- 【名前】：S.M（23歳_男性） 【国籍】：日本 【最寄】：上本郷駅 【所属】：弊社1社先正社員 【単金】：61万円（相談可） 【スキル】：Flutter ,Ja... |
 | 690 | `imap://imap2.gmoserver.jp/Trash/2` | project | ▲PHP▲Webシステム改修▲ | PHP |  |  |  | unknown | 株式会社Mighty LINK ご担当者様 お世話になります。 てくてくの近藤です。 下記案件にて人材を探しております。 見合う方が居られましたらご紹介いただけますと幸いです。 ご確認よろしくお願いいたします。 ※案件情報の再配信やwebサイトへ掲載するなどの行為は禁止します。 ------------------------------------------------------ ■案件概要 Webシステム改修 ■作業概要 現行のWebシステムの改修 Webシステ... |
 | 691 | `imap://imap2.gmoserver.jp/Trash/1` | project | 【IDH要員のご提案】C# 10年, JavaScript, TypeScript／リーダー経験有／要件定義～／45歳(経験24年)／75万(調整可)／10月～ | Typescript, Javascript |  |  |  | unknown | 株式会社Mighty LINK ご担当者 様 いつも大変お世話になっております。IDHの山﨑です。 弊社要員をご提案させていただきます。 見合う案件がありましたら、ご検討頂けますと幸いでございます。 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ 氏名：W.A 所属：弊社社員 年齢：45歳 性別：男性 最寄：JR山手線 田端駅 稼動：10月1日～ 並行：書類選考1件 単価：75万円（調整可） 希望案件： ・WEB開発で設計、製造、テストに携わることが出来る案件を... |
+| 692 | `imap://imap2.gmoserver.jp/INBOX/1` | project | インフラ/8月～/上位から複数複数参画中/面談2回/Linux・Windows構築、運用/サーバー/横浜常駐/障害切り分け | LINUX |  |  |  | unknown | ご担当者様 各位 お世話になっております。GFD高橋です。 案件のご紹介となります。 ご提案いただける際は以下必須要件へのご回答をお願いします。 ※必須要件を満たない場合はお見送りとなります。 ■必須スキル : → ○年○か月 項番○ -------------------------------------------------------- ■案件名：社内向けインフラ運用構築案件(交代/増員) ■業務内容： ・全社サーバOSレベルでの監視業務 ・ネットワーク機器（... |

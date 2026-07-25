@@ -1,12 +1,12 @@
 {
   "task_id": "T817_4",
-  "generated_at": "2026-07-25T04:24:32.753734Z",
+  "generated_at": "2026-07-25T04:53:27.918574Z",
   "model_name": "deterministic-sales-email-extractor-v1",
   "fallback_used": true,
-  "input_count": 691,
-  "project_requirement_count": 369,
+  "input_count": 692,
+  "project_requirement_count": 370,
   "talent_profile_count": 296,
-  "skill_tag_count": 525,
+  "skill_tag_count": 526,
   "privacy_controls": [
     "raw_email_body_not_written",
     "email_phone_secret_patterns_redacted_from_evidence",
@@ -20576,6 +20576,39 @@
         "commercial_flow": "不明",
         "restrictions": null,
         "evidence_excerpt": "株式会社Mighty LINK ご担当者 様 いつも大変お世話になっております。IDHの山﨑です。 弊社要員をご提案させていただきます。 見合う案件がありましたら、ご検討頂けますと幸いでございます。 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ 氏名：W.A 所属：弊社社員 年齢：45歳 性別：男性 最寄：JR山手線 田端駅 稼動：10月1日～ 並行：書類選考1件 単価：75万円（調整可） 希望案件： ・WEB開発で設計、製造、テストに携わることが出来る案件を...",
+        "confidence": 1.0,
+        "review_status": "pending"
+      },
+      "talent_profile": null
+    },
+    {
+      "source_path": "imap://imap2.gmoserver.jp/INBOX/1",
+      "source_type": "api",
+      "dedupe_key": "6252c12563fc39d1a5acae4e9534cb29dcf6b99cd569ee5c0f11c4f05c1d5e2a",
+      "sender_domain": "gf-design.jp",
+      "normalized_subject": "インフラ/8月～/上位から複数複数参画中/面談2回/Linux・Windows構築、運用/サーバー/横浜常駐/障害切り分け",
+      "received_at": "2026-07-25T13:41:01+09:00",
+      "email_kind": "project",
+      "model_name": "deterministic-sales-email-extractor-v1",
+      "fallback_used": true,
+      "project_requirement": {
+        "title": "インフラ/8月～/上位から複数複数参画中/面談2回/Linux・Windows構築、運用/サーバー/横浜常駐/障害切り分け",
+        "summary": "ご担当者様 各位 お世話になっております。GFD高橋です。 案件のご紹介となります。 ご提案いただける際は以下必須要件へのご回答をお願いします。 ※必須要件を満たない場合はお見送りとなります。 ■必須スキル : → ○年○か月 項番○ -------------------------------------------------------- ■案件名：社内向けインフラ運用構築案件(交代/増員",
+        "required_skills": [
+          "LINUX"
+        ],
+        "nice_to_have_skills": [],
+        "skill_categories": {},
+        "rate_min": null,
+        "rate_max": null,
+        "rate_unit": "jpy_month",
+        "location": "横浜",
+        "remote_type": "unknown",
+        "start_date_text": null,
+        "duration_text": null,
+        "commercial_flow": "不明",
+        "restrictions": null,
+        "evidence_excerpt": "ご担当者様 各位 お世話になっております。GFD高橋です。 案件のご紹介となります。 ご提案いただける際は以下必須要件へのご回答をお願いします。 ※必須要件を満たない場合はお見送りとなります。 ■必須スキル : → ○年○か月 項番○ -------------------------------------------------------- ■案件名：社内向けインフラ運用構築案件(交代/増員) ■業務内容： ・全社サーバOSレベルでの監視業務 ・ネットワーク機器（...",
         "confidence": 1.0,
         "review_status": "pending"
       },
