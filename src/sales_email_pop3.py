@@ -59,8 +59,8 @@ def fetch_pop3_emails(
     username = username or os.getenv("POP3_USERNAME")
     password = password or os.getenv("POP3_PASSWORD")
     
-    leave_str = os.getenv("POP3_LEAVE_ON_SERVER", "true").lower()
-    leave_on_server = leave_on_server if leave_on_server is not None else (leave_str == "true")
+    # HARD SAFETY ENFORCEMENT: Never delete messages from POP3 server (Read-Only Safety)
+    leave_on_server = True
     
     # Load limit for safety (default to 1000 for daily 1000-email ingest scale)
     if max_messages is None:
@@ -72,7 +72,7 @@ def fetch_pop3_emails(
 
     emails: list[RawSalesEmail] = []
     
-    print(f"Connecting to POP3 server {host}:{port} (SSL: {use_ssl})...")
+    print(f"Connecting to POP3 server {host}:{port} (SSL: {use_ssl}) [READ-ONLY SAFETY ENFORCED]...")
     
     if use_ssl:
         context = ssl.create_default_context()
@@ -111,10 +111,7 @@ def fetch_pop3_emails(
                         body=_message_body(message),
                     )
                 )
-                
-                if not leave_on_server:
-                    client.dele(i)
-                    
+                # NEVER issue DELE command - strictly read-only
             except Exception as msg_err:
                 print(f"Error fetching message {i}: {msg_err}")
                 
