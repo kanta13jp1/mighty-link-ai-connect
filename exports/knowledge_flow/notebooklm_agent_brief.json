@@ -1590,7 +1590,7 @@
   "ask_generation": {
     "status": "skipped",
     "reason": "--skip-asks",
-    "generated_at_jst": "2026-07-25T20:24:35+09:00",
+    "generated_at_jst": "2026-07-25T20:36:49+09:00",
     "ask_timeout_seconds": 900,
     "next_command": "python scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900",
     "source_count": 158
