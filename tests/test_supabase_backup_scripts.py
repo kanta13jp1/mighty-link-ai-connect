@@ -2,6 +2,7 @@ import json
 import hashlib
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 
 
@@ -13,6 +14,14 @@ import restore_supabase_database as restore
 
 
 SECRET_DB_URL = "postgresql://postgres:very-secret@db.example.com:5432/postgres"
+
+
+def test_supabase_cli_major_matches_production_database():
+    config = tomllib.loads(
+        (PROJECT_ROOT / "supabase" / "config.toml").read_text(encoding="utf-8")
+    )
+
+    assert config["db"]["major_version"] == 17
 
 
 def test_redact_db_url_masks_password():
