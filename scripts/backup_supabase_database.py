@@ -8,6 +8,7 @@ objects and generated media need their own backup path.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -156,12 +157,17 @@ def run_command(command: tuple[str, ...], dry_run: bool, db_url: str) -> None:
     print(f"[*] {format_command(redact_command(command, db_url))}")
     if dry_run:
         return
-    subprocess.run(command, check=True)
+    try:
+        subprocess.run(command, check=True)
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(
+            f"{command[0]} backup command failed with exit code {exc.returncode}"
+        ) from None
 
 
-def build_gcs_command(snapshot_dir: Path, gcs_uri: str, gsutil: str = "gsutil") -> tuple[str, ...]:
+def build_gcs_command(snapshot_dir: Path, gcs_uri: str, gcloud: str = "gcloud") -> tuple[str, ...]:
     destination = gcs_uri.rstrip("/") + "/"
-    return (gsutil, "-m", "cp", "-r", str(snapshot_dir), destination)
+    return (gcloud, "storage", "cp", "--recursive", str(snapshot_dir), destination)
 
 
 def write_manifest(snapshot_dir: Path, manifest: dict) -> None:
@@ -170,6 +176,20 @@ def write_manifest(snapshot_dir: Path, manifest: dict) -> None:
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+
+def calculate_checksums(snapshot_dir: Path, files: tuple[str, ...]) -> dict[str, str]:
+    checksums: dict[str, str] = {}
+    for name in files:
+        path = snapshot_dir / name
+        if not path.is_file():
+            raise FileNotFoundError(f"Backup output is missing: {path}")
+        digest = hashlib.sha256()
+        with path.open("rb") as source:
+            for chunk in iter(lambda: source.read(1024 * 1024), b""):
+                digest.update(chunk)
+        checksums[name] = digest.hexdigest()
+    return checksums
 
 
 def build_manifest(
@@ -181,6 +201,7 @@ def build_manifest(
     upload_command: tuple[str, ...] | None,
     pruned: list[Path] | None = None,
     status: str | None = None,
+    checksums: dict[str, str] | None = None,
 ) -> dict:
     return {
         "task_id": TASK_ID,
@@ -191,6 +212,7 @@ def build_manifest(
         "retention_generations": retention,
         "scope": "Supabase PostgreSQL logical dump only. Supabase Storage objects are out of scope.",
         "files": list(plan.files),
+        "checksums_sha256": checksums or {},
         "commands": [
             format_command(redact_command(command, db_url)) for command in plan.commands
         ],
@@ -237,11 +259,11 @@ def main(argv: list[str] | None = None, env: dict[str, str] | None = None) -> in
     backup_dir = args.output_dir or Path(env.get("SUPABASE_BACKUP_DIR", DEFAULT_BACKUP_DIR))
     retention = args.retention or int(env.get("SUPABASE_BACKUP_RETENTION", DEFAULT_RETENTION))
     supabase_cli = env.get("SUPABASE_CLI", "supabase")
-    gsutil = env.get("GSUTIL", "gsutil")
+    gcloud = env.get("GCLOUD_CLI", "gcloud")
     gcs_uri = None if args.skip_upload else env.get("SUPABASE_BACKUP_GCS_URI")
 
     plan = build_plan(backup_dir, db_url, timestamp=args.timestamp, supabase_cli=supabase_cli)
-    upload_command = build_gcs_command(plan.snapshot_dir, gcs_uri, gsutil) if gcs_uri else None
+    upload_command = build_gcs_command(plan.snapshot_dir, gcs_uri, gcloud) if gcs_uri else None
     manifest = build_manifest(
         plan=plan,
         db_url=db_url,
@@ -257,14 +279,12 @@ def main(argv: list[str] | None = None, env: dict[str, str] | None = None) -> in
         for command in plan.commands:
             run_command(command, args.dry_run, db_url)
 
-        if upload_command:
-            print(f"[*] {format_command(upload_command)}")
-            if not args.dry_run:
-                subprocess.run(upload_command, check=True)
-        elif not args.skip_upload:
-            print("[!] SUPABASE_BACKUP_GCS_URI is not set; keeping local backup only.")
-
         pruned = prune_old_snapshots(backup_dir, retention=retention, dry_run=args.dry_run)
+        checksums = (
+            {}
+            if args.dry_run
+            else calculate_checksums(plan.snapshot_dir, plan.files)
+        )
         final_manifest = build_manifest(
             plan=plan,
             db_url=db_url,
@@ -273,8 +293,16 @@ def main(argv: list[str] | None = None, env: dict[str, str] | None = None) -> in
             gcs_uri=gcs_uri,
             upload_command=upload_command,
             pruned=pruned,
+            checksums=checksums,
         )
         write_manifest(plan.snapshot_dir, final_manifest)
+
+        if upload_command:
+            print(f"[*] {format_command(upload_command)}")
+            if not args.dry_run:
+                subprocess.run(upload_command, check=True)
+        elif not args.skip_upload:
+            print("[!] SUPABASE_BACKUP_GCS_URI is not set; keeping local backup only.")
     except Exception as exc:
         failed_manifest = build_manifest(
             plan=plan,

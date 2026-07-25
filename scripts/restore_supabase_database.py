@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import subprocess
@@ -25,6 +26,26 @@ def validate_snapshot_dir(snapshot_dir: Path) -> list[Path]:
         missing_list = ", ".join(str(path) for path in missing)
         raise FileNotFoundError(f"Missing required restore files: {missing_list}")
     return [snapshot_dir / name for name in REQUIRED_FILES]
+
+
+def verify_snapshot_checksums(snapshot_dir: Path) -> None:
+    manifest_path = snapshot_dir / "manifest.json"
+    if not manifest_path.exists():
+        return
+
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    checksums = manifest.get("checksums_sha256")
+    if not checksums:
+        return
+
+    missing = sorted(set(REQUIRED_FILES) - set(checksums))
+    if missing:
+        raise ValueError(f"Manifest is missing checksums for: {', '.join(missing)}")
+
+    for name in REQUIRED_FILES:
+        digest = hashlib.sha256((snapshot_dir / name).read_bytes()).hexdigest()
+        if digest != checksums[name]:
+            raise ValueError(f"Checksum mismatch for backup file: {name}")
 
 
 def build_restore_command(
@@ -85,6 +106,7 @@ def main(argv: list[str] | None = None, env: dict[str, str] | None = None) -> in
     snapshot_dir = args.snapshot_dir
 
     validate_snapshot_dir(snapshot_dir)
+    verify_snapshot_checksums(snapshot_dir)
 
     db_url = env.get("SUPABASE_RESTORE_DB_URL") or env.get("SUPABASE_DB_URL")
     if not db_url:

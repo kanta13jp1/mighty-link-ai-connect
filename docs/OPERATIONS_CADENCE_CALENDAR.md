@@ -60,3 +60,9 @@
 - サービス終了の決定 → [サービス終了（EOL）・廃止計画](SERVICE_EOL_DECOMMISSIONING_PLAN.md)
 
 *本カレンダーは T907（Claude Code）の成果物。頻度・担当の変更は本ファイルを正本として更新し、`python scripts/audit_operations_cadence.py` で整合を確認すること。*
+
+## T870 日次運用追補
+
+| 実施内容 | 担当 | Runbook | 完了確認 |
+| --- | --- | --- | --- |
+| Supabase Daily Backup CIの自動実行・WIF認証・GCS保存 | Codex（自動） | [Supabase Daily Backup CI](SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md) | scheduled runがgreenで、GCS上のmanifest検証が成功したことを確認 |

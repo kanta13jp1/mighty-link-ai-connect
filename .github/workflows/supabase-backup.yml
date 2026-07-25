@@ -20,8 +20,8 @@ jobs:
       contents: read
       id-token: write
     env:
-      GCP_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
-      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_SERVICE_ACCOUNT_EMAIL: ${{ secrets.GCP_BACKUP_SERVICE_ACCOUNT_EMAIL }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_BACKUP_WORKLOAD_IDENTITY_PROVIDER }}
       SUPABASE_BACKUP_GCS_URI: ${{ secrets.SUPABASE_BACKUP_GCS_URI }}
       SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
       SUPABASE_BACKUP_RETENTION: "7"
@@ -66,6 +66,35 @@ jobs:
         uses: google-github-actions/setup-gcloud@v3
 
       - name: Create backup and upload to GCS
+        id: create_backup
         env:
           SUPABASE_BACKUP_DIR: ${{ runner.temp }}/supabase-backups
-        run: python scripts/backup_supabase_database.py
+        run: |
+          set -euo pipefail
+          SNAPSHOT="$(date -u +%Y%m%dT%H%M%SZ)"
+          python scripts/backup_supabase_database.py --timestamp "$SNAPSHOT"
+          echo "snapshot=$SNAPSHOT" >> "$GITHUB_OUTPUT"
+
+      - name: Verify uploaded backup manifest
+        env:
+          SNAPSHOT: ${{ steps.create_backup.outputs.snapshot }}
+        run: |
+          set -euo pipefail
+          MANIFEST="$RUNNER_TEMP/supabase-backup-manifest.json"
+          gcloud storage cp "${SUPABASE_BACKUP_GCS_URI}/${SNAPSHOT}/manifest.json" "$MANIFEST"
+          python - "$MANIFEST" "$SNAPSHOT" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          manifest = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+          required = {"roles.sql", "schema.sql", "data.sql"}
+          checksums = manifest.get("checksums_sha256", {})
+          if manifest.get("status") != "created":
+              raise SystemExit(f"uploaded manifest is not complete: {manifest.get('status')!r}")
+          if manifest.get("snapshot") != sys.argv[2]:
+              raise SystemExit("uploaded manifest snapshot does not match the workflow snapshot")
+          if set(checksums) != required:
+              raise SystemExit("uploaded manifest does not contain all required SHA-256 checksums")
+          print(f"[+] Verified uploaded backup manifest for {sys.argv[2]}")
+          PY

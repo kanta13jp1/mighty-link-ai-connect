@@ -17,6 +17,7 @@ def test_generate_setup_plan_contains_required_steps():
         sa_email="backup-sa@my-gcp-proj.iam.gserviceaccount.com",
         bucket_name="mightylink-supabase-backup",
         repo="kanta13jp1/mighty-link-ai-connect",
+        repository_id="1244319528",
     )
     text = "\n".join(plan)
 
@@ -24,7 +25,12 @@ def test_generate_setup_plan_contains_required_steps():
     assert "mightylink-supabase-backup" in text
     assert "github-pool" in text
     assert "github-provider" in text
-    assert "gh secret set GCP_WORKLOAD_IDENTITY_PROVIDER" in text
+    assert "assertion.repository_id=='1244319528'" in text
+    assert "assertion.ref=='refs/heads/master'" in text
+    assert "roles/storage.objectCreator" in text
+    assert "roles/storage.objectViewer" in text
+    assert "roles/storage.objectAdmin" not in text
+    assert "gh secret set GCP_BACKUP_WORKLOAD_IDENTITY_PROVIDER" in text
     assert "gh secret set SUPABASE_DB_URL" in text
     assert "gh workflow run 'Supabase Daily Backup'" in text
 
@@ -34,4 +40,4 @@ def test_setup_script_main_executes_cleanly(capsys):
     assert ret == 0
     captured = capsys.readouterr()
     assert "T870: Supabase Backup CI Recovery Setup Helper" in captured.out
-    assert "mightylink-supabase-backup" in captured.out
+    assert "mighty-link-ai-connect-13d22-supabase-backups" in captured.out

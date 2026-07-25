@@ -1,4 +1,6 @@
 import json
+import hashlib
+import subprocess
 import sys
 from pathlib import Path
 
@@ -18,6 +20,25 @@ def test_redact_db_url_masks_password():
 
     assert "very-secret" not in redacted
     assert redacted == "postgresql://postgres:***@db.example.com:5432/postgres"
+
+
+def test_backup_command_failure_does_not_expose_db_url(monkeypatch):
+    command = ("supabase", "db", "dump", "--db-url", SECRET_DB_URL)
+
+    def fail(*_args, **_kwargs):
+        raise subprocess.CalledProcessError(1, command)
+
+    monkeypatch.setattr(backup.subprocess, "run", fail)
+
+    try:
+        backup.run_command(command, dry_run=False, db_url=SECRET_DB_URL)
+    except RuntimeError as exc:
+        message = str(exc)
+        assert "very-secret" not in message
+        assert SECRET_DB_URL not in message
+        assert "exit code 1" in message
+    else:
+        raise AssertionError("backup command failure was not raised")
 
 
 def test_backup_dry_run_writes_redacted_manifest(tmp_path):
@@ -63,6 +84,16 @@ def test_prune_old_snapshots_keeps_retention_and_ignores_other_dirs(tmp_path):
     assert (tmp_path / "notes").exists()
 
 
+def test_gcs_upload_uses_gcloud_storage():
+    command = backup.build_gcs_command(
+        Path("backups/supabase/20260613T180000Z"),
+        "gs://private-bucket/supabase",
+    )
+
+    assert command[:4] == ("gcloud", "storage", "cp", "--recursive")
+    assert command[-1] == "gs://private-bucket/supabase/"
+
+
 def test_restore_dry_run_prints_safe_psql_command(tmp_path, capsys):
     snapshot_dir = tmp_path / "20260613T180000Z"
     snapshot_dir.mkdir()
@@ -77,3 +108,28 @@ def test_restore_dry_run_prints_safe_psql_command(tmp_path, capsys):
     assert "ON_ERROR_STOP=1" in output
     assert "session_replication_role" in output
     assert "very-secret" not in output
+
+
+def test_restore_rejects_checksum_mismatch(tmp_path):
+    snapshot_dir = tmp_path / "20260613T180000Z"
+    snapshot_dir.mkdir()
+    checksums = {}
+    for name in restore.REQUIRED_FILES:
+        content = f"-- {name}\n".encode()
+        (snapshot_dir / name).write_bytes(content)
+        checksums[name] = hashlib.sha256(content).hexdigest()
+    (snapshot_dir / "manifest.json").write_text(
+        json.dumps({"checksums_sha256": checksums}),
+        encoding="utf-8",
+    )
+    (snapshot_dir / "data.sql").write_text("-- tampered\n", encoding="utf-8")
+
+    try:
+        restore.main(
+            [str(snapshot_dir), "--dry-run"],
+            env={"SUPABASE_RESTORE_DB_URL": SECRET_DB_URL},
+        )
+    except ValueError as exc:
+        assert "Checksum mismatch" in str(exc)
+    else:
+        raise AssertionError("restore accepted a tampered backup")
