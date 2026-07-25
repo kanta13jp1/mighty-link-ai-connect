@@ -47,8 +47,11 @@
 | **社内GA** | Internal GA / Internal Launch | 一般公開前に、自社内の役職員を対象として実データ・無償で運用・検証を行う**「社内本番リリース」**フェーズ（2026-07-08〜）。 |
 | **一般GA（有償公開）** | Public Paid Launch | 社外一般ユーザーへ公開し、StripeのLive課金を有効化する有償リリースフェーズ（T862 経営判断で決定）。 |
 | **WBS** | Work Breakdown Structure | プロジェクトの全タスク、担当者、期限、進捗ステータスを追跡する単一正本台帳（[`data/WBS.tsv`](../data/WBS.tsv)）。 |
-| **レーン・プリフライト** | Lane Preflight Guard | コミット/Push前に、24件の整合性ガードや全自動テストを一括実行して品質破壊を防ぐCI自動安全装置（`scripts/run_lane_preflight.py`）。 |
+| **レーン・プリフライト監査** | Lane Preflight Audit / Guard | 3レーン体制（Antigravity, Codex, Claude Code）がコミット/Pushを行う前に、25件の整合性自動ガードと全自動テストスイートを1コマンドで一括検証し、不整合や品質破壊の混入を未然に防ぐCI安全装置（`scripts/run_lane_preflight.py` / [`docs/LANE_PREFLIGHT_GUARD.md`](LANE_PREFLIGHT_GUARD.md)）。 |
+| **品質ガードカタログ** | Quality Guard Catalog / Catalog | プロジェクト内の全自動整合性監査ガード（`audit_*.py`）の守る対象・NG例・関連WBS・プリフライト役割を体系的に分類・索引化した正本インデックス（[`docs/QUALITY_GUARD_CATALOG.md`](QUALITY_GUARD_CATALOG.md)）。`scripts/audit_guard_catalog.py` により機械側正本（`GUARD_REGISTRY`）との完全一致（未記載0・幽霊0）が常に自動検証される（T903）。 |
 | **10仮説自動監査ガード** | 10-Hypotheses Guard | 各スクリプトや機能が正しく動作・整合しているかを、10個の厳格な検証仮説（H1〜H10）によって機械的に監査する仕組み。 |
+| **運用Runbook** | Operational Runbook / Runbook | システムの日常運用・保守・障害対応・バックアップ・セキュリティ運用等を、属人化なく安全かつ再現可能に実行するための標準化作業手順書。 |
+| **運用Runbookカタログ** | Operations Runbook Catalog | プロジェクト内に存在する全46本のRunbookを、カテゴリ・利用タイミング・検索トリガー付きで一元管理するインデックス（[`docs/OPERATIONS_RUNBOOK_CATALOG.md`](OPERATIONS_RUNBOOK_CATALOG.md)）。 |
 | **Fail-closed** | Fail-closed | 認証情報の欠落やシステムエラーが発生した際、安全側に倒してアクセスを即座に自動遮断（503/401/403）するセキュリティ設計原則。 |
 
 ---

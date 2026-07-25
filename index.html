@@ -40,6 +40,27 @@
             --yellow: #ffd166;
             --rose: #ff6cab;
             --shadow: rgba(0, 0, 0, 0.46);
+            --glass-panel-bg: rgba(12, 13, 15, 0.58);
+            --glass-panel-border: rgba(255, 255, 255, 0.14);
+            --shadow-glow: rgba(139, 220, 255, 0.15);
+        }
+
+        :root[data-theme="light"] {
+            --bg: #f8fafc;
+            --panel: rgba(255, 255, 255, 0.88);
+            --panel-strong: rgba(255, 255, 255, 0.96);
+            --line: rgba(0, 0, 0, 0.12);
+            --line-strong: rgba(0, 0, 0, 0.22);
+            --text: #0f172a;
+            --muted: #475569;
+            --blue: #0284c7;
+            --green: #16a34a;
+            --yellow: #d97706;
+            --rose: #e11d48;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --glass-panel-bg: rgba(255, 255, 255, 0.85);
+            --glass-panel-border: rgba(0, 0, 0, 0.12);
+            --shadow-glow: rgba(2, 132, 199, 0.15);
         }
 
         * {
@@ -8304,8 +8325,14 @@
         }
 
         function setActiveMobileNav(el) {
-            document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item').forEach(item => item.classList.remove('active'));
-            if (el) el.classList.add('active');
+            document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item').forEach(item => {
+                item.classList.remove('active');
+                item.removeAttribute('aria-current');
+            });
+            if (el) {
+                el.classList.add('active');
+                el.setAttribute('aria-current', 'page');
+            }
         }
 
         // Initialize Auth UI & Mobile Navigation Scrollspy
@@ -8336,8 +8363,10 @@
                 document.querySelectorAll('.mobile-bottom-nav .mobile-nav-item[data-nav]').forEach(item => {
                     if (item.getAttribute('data-nav') === currentNav) {
                         item.classList.add('active');
+                        item.setAttribute('aria-current', 'page');
                     } else {
                         item.classList.remove('active');
+                        item.removeAttribute('aria-current');
                     }
                 });
             };
