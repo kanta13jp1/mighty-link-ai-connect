@@ -67,23 +67,31 @@ def sync_tables():
                 )
             continue
 
-        pg_cur.execute("""
-            INSERT INTO sales_email_messages (
-                message_id_hash, dedupe_key, sender_hash, sender_domain,
-                normalized_subject, received_at, body_hash, body_excerpt,
-                source_path, source_type, raw_storage_policy, ingest_status, metadata
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            RETURNING id;
-        """, (
-            msg["message_id_hash"], msg["dedupe_key"], msg["sender_hash"], msg["sender_domain"],
-            msg["normalized_subject"], msg["received_at"], msg["body_hash"], msg["body_excerpt"],
-            msg["source_path"], msg["source_type"], msg["raw_storage_policy"], msg["ingest_status"],
-            msg["metadata"]
-        ))
-        new_pg_id = pg_cur.fetchone()["id"]
-        msg_id_map[sq_id] = new_pg_id
-        pg_existing[key] = new_pg_id
-        inserted_msg_count += 1
+        try:
+            pg_cur.execute("""
+                INSERT INTO sales_email_messages (
+                    message_id_hash, dedupe_key, sender_hash, sender_domain,
+                    normalized_subject, received_at, body_hash, body_excerpt,
+                    source_path, source_type, raw_storage_policy, ingest_status, metadata
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                RETURNING id;
+            """, (
+                msg["message_id_hash"], msg["dedupe_key"], msg["sender_hash"], msg["sender_domain"],
+                msg["normalized_subject"], msg["received_at"], msg["body_hash"], msg["body_excerpt"],
+                msg["source_path"], msg["source_type"], msg["raw_storage_policy"], msg["ingest_status"],
+                msg["metadata"]
+            ))
+            new_pg_id = pg_cur.fetchone()["id"]
+            msg_id_map[sq_id] = new_pg_id
+            pg_existing[key] = new_pg_id
+            inserted_msg_count += 1
+        except Exception as dup_err:
+            pg_conn.rollback()
+            pg_cur.execute("SELECT id FROM sales_email_messages WHERE dedupe_key = %s;", (key,))
+            existing_row = pg_cur.fetchone()
+            if existing_row:
+                msg_id_map[sq_id] = existing_row["id"]
+                pg_existing[key] = existing_row["id"]
 
     print(f"[+] Inserted {inserted_msg_count} new sales_email_messages into Supabase PostgreSQL.")
 

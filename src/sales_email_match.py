@@ -36,6 +36,9 @@ class SearchCriteria:
     limit: int = 20
     project_key: str = ""
     talent_key: str = ""
+    min_rate: int | None = None
+    max_rate: int | None = None
+    search_query: str = ""
 
 
 @dataclass(frozen=True)
@@ -52,6 +55,7 @@ class ProjectRecord:
     start_date_text: str
     evidence_excerpt: str
     confidence: float
+    sender_domains: list[str]
     source_paths: list[str]
 
 
@@ -68,6 +72,7 @@ class TalentRecord:
     availability_text: str
     evidence_excerpt: str
     confidence: float
+    sender_domains: list[str]
     source_paths: list[str]
 
 
@@ -151,6 +156,7 @@ def project_from_item(item: dict[str, Any]) -> ProjectRecord | None:
     nice = as_list(project.get("nice_to_have_skills"))
     if not required and not nice:
         return None
+    sender_domain_value = compact_text(item.get("sender_domain"), 120)
     key = stable_key(project.get("title"), ",".join(sorted(required)), project.get("rate_min"), project.get("remote_type"))
     return ProjectRecord(
         project_key="project_" + key[:16],
@@ -165,6 +171,7 @@ def project_from_item(item: dict[str, Any]) -> ProjectRecord | None:
         start_date_text=compact_text(project.get("start_date_text"), 80),
         evidence_excerpt=compact_text(project.get("evidence_excerpt"), 240),
         confidence=confidence_value(project.get("confidence")),
+        sender_domains=[sender_domain_value] if sender_domain_value else [],
         source_paths=[str(item.get("source_path") or "")],
     )
 
@@ -176,6 +183,7 @@ def talent_from_item(item: dict[str, Any]) -> TalentRecord | None:
     skills = as_list(talent.get("skills"))
     if not skills:
         return None
+    sender_domain_value = compact_text(item.get("sender_domain"), 120)
     key = compact_text(talent.get("anonymized_talent_key"), 80)
     return TalentRecord(
         talent_key=key or ("talent_" + stable_key(item.get("dedupe_key"))[:16]),
@@ -189,6 +197,7 @@ def talent_from_item(item: dict[str, Any]) -> TalentRecord | None:
         availability_text=compact_text(talent.get("availability_text"), 80),
         evidence_excerpt=compact_text(talent.get("evidence_excerpt"), 240),
         confidence=confidence_value(talent.get("confidence")),
+        sender_domains=[sender_domain_value] if sender_domain_value else [],
         source_paths=[str(item.get("source_path") or "")],
     )
 
@@ -203,6 +212,7 @@ def merge_projects(projects: Sequence[ProjectRecord]) -> list[ProjectRecord]:
         merged[project.project_key] = ProjectRecord(
             **{
                 **asdict(existing),
+                "sender_domains": sorted(set(existing.sender_domains + project.sender_domains)),
                 "source_paths": sorted(set(existing.source_paths + project.source_paths)),
                 "confidence": max(existing.confidence, project.confidence),
             }
@@ -221,6 +231,7 @@ def merge_talents(talents: Sequence[TalentRecord]) -> list[TalentRecord]:
             **{
                 **asdict(existing),
                 "skills": sorted(set(existing.skills + talent.skills), key=str.casefold),
+                "sender_domains": sorted(set(existing.sender_domains + talent.sender_domains)),
                 "source_paths": sorted(set(existing.source_paths + talent.source_paths)),
                 "confidence": max(existing.confidence, talent.confidence),
             }
@@ -362,6 +373,18 @@ def score_pair(project: ProjectRecord, talent: TalentRecord) -> dict[str, Any]:
     }
 
 
+def parse_optional_rate(name: str, value: int | str | None) -> int | None:
+    if value is None or str(value).strip() == "":
+        return None
+    try:
+        parsed = int(str(value).strip())
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{name} must be a non-negative integer") from exc
+    if parsed < 0:
+        raise ValueError(f"{name} must be a non-negative integer")
+    return parsed
+
+
 def criteria_from_values(
     *,
     direction: str = "project_to_talent",
@@ -371,12 +394,20 @@ def criteria_from_values(
     limit: int = 20,
     project_key: str = "",
     talent_key: str = "",
+    min_rate: int | str | None = None,
+    max_rate: int | str | None = None,
+    search_query: str = "",
 ) -> SearchCriteria:
     if isinstance(skills, str):
         skill_values = tuple(item.strip() for item in skills.split(",") if item.strip())
     else:
         skill_values = tuple(str(item).strip() for item in skills if str(item).strip())
     normalized_direction = direction if direction in {"project_to_talent", "talent_to_project"} else "project_to_talent"
+    parsed_min_rate = parse_optional_rate("min_rate", min_rate)
+    parsed_max_rate = parse_optional_rate("max_rate", max_rate)
+    if parsed_min_rate is not None and parsed_max_rate is not None and parsed_min_rate > parsed_max_rate:
+        raise ValueError("min_rate must not exceed max_rate")
+
     return SearchCriteria(
         direction=normalized_direction,
         skills=skill_values,
@@ -385,7 +416,28 @@ def criteria_from_values(
         limit=max(1, min(int(limit or 20), 100)),
         project_key=project_key.strip(),
         talent_key=talent_key.strip(),
+        min_rate=parsed_min_rate,
+        max_rate=parsed_max_rate,
+        search_query=search_query.strip().casefold(),
     )
+
+
+def rate_range_overlaps(project: ProjectRecord, min_rate: int | None, max_rate: int | None) -> bool:
+    if min_rate is None and max_rate is None:
+        return True
+    if project.rate_min is None and project.rate_max is None:
+        return False
+
+    project_floor = project.rate_min if project.rate_min is not None else project.rate_max
+    project_ceiling = project.rate_max if project.rate_max is not None else project.rate_min
+    assert project_floor is not None and project_ceiling is not None
+    project_floor, project_ceiling = sorted((project_floor, project_ceiling))
+
+    if min_rate is not None and project_ceiling < min_rate:
+        return False
+    if max_rate is not None and project_floor > max_rate:
+        return False
+    return True
 
 
 def match_satisfies(match: dict[str, Any], project: ProjectRecord, talent: TalentRecord, criteria: SearchCriteria) -> bool:
@@ -403,6 +455,29 @@ def match_satisfies(match: dict[str, Any], project: ProjectRecord, talent: Talen
         combined = skill_union(project.required_skills, project.nice_to_have_skills, talent.skills)
         wanted = {skill_key(item) for item in criteria.skills}
         if not wanted.issubset(combined):
+            return False
+    if not rate_range_overlaps(project, criteria.min_rate, criteria.max_rate):
+        return False
+    if criteria.search_query:
+        query = criteria.search_query
+        searchable_text = " ".join(
+            [
+                project.title,
+                talent.display_name,
+                *project.required_skills,
+                *project.nice_to_have_skills,
+                *talent.skills,
+                *project.sender_domains,
+                *talent.sender_domains,
+                project.location,
+                project.remote_type,
+                talent.desired_location,
+                talent.remote_preference,
+                project.evidence_excerpt,
+                talent.evidence_excerpt,
+            ]
+        ).casefold()
+        if query not in searchable_text:
             return False
     return True
 
@@ -500,6 +575,9 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--skills", default="", help="Comma-separated skill filters.")
     parser.add_argument("--remote", default="")
     parser.add_argument("--min-score", type=int, default=0)
+    parser.add_argument("--min-rate", type=int)
+    parser.add_argument("--max-rate", type=int)
+    parser.add_argument("--search-query", default="")
     parser.add_argument("--limit", type=int, default=20)
     return parser
 
@@ -512,6 +590,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         skills=args.skills,
         remote=args.remote,
         min_score=args.min_score,
+        min_rate=args.min_rate,
+        max_rate=args.max_rate,
+        search_query=args.search_query,
         limit=args.limit,
     )
     report = build_match_report_from_file(Path(args.input_report), criteria)

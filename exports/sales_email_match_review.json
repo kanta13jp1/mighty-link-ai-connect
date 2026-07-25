@@ -1,6 +1,6 @@
 {
   "task_id": "T817_5",
-  "generated_at": "2026-07-25T04:53:28Z",
+  "generated_at": "2026-07-25T05:33:19Z",
   "model_name": "deterministic-sales-email-matcher-v1",
   "direction": "project_to_talent",
   "filters": {
@@ -22,8 +22,8 @@
     "match_output_uses_redacted_evidence_only",
     "human_review_required_before_outreach"
   ],
-  "project_count": 171,
-  "talent_count": 102,
+  "project_count": 173,
+  "talent_count": 103,
   "match_count": 20,
   "projects": [
     {
@@ -667,6 +667,44 @@
       "confidence": 1.0,
       "source_paths": [
         "pop3://pop2.gmoserver.jp/7"
+      ]
+    },
+    {
+      "project_key": "project_729a4d9c8d2661ee",
+      "title": "【GFD案件】※面談依頼きてます※ インフラ/8月～/面談1回！/Linux詳細設計/MW/AWS/Zabbix",
+      "required_skills": [
+        "AWS"
+      ],
+      "nice_to_have_skills": [],
+      "skill_categories": {},
+      "rate_min": null,
+      "rate_max": null,
+      "location": "",
+      "remote_type": "unknown",
+      "start_date_text": "",
+      "evidence_excerpt": "ご担当者様 各位 お世話になっております。GFD高橋です。 案件のご紹介となります。 ご提案いただける際は以下必須要件へのご回答をお願いします。 ※必須要件を満たない場合はお見送りとなります。 ■必須スキル : → ○年○か月 項番○ -------------------------------------------------------- ■案件名：某銀行勘定系システムのインフラ基盤運用保守 ■業務内容： 某銀行勘定系システムのインフラ基盤保守作業と定期的なメン...",
+      "confidence": 1.0,
+      "source_paths": [
+        "imap://imap2.gmoserver.jp/INBOX/10"
+      ]
+    },
+    {
+      "project_key": "project_72e87f678835ac0e",
+      "title": "【GFD案件】インフラ M365要員募集／基本設計～Microsoft Entra ID、Intune、Azure、ハイブリッド構成",
+      "required_skills": [
+        "AZURE"
+      ],
+      "nice_to_have_skills": [],
+      "skill_categories": {},
+      "rate_min": null,
+      "rate_max": null,
+      "location": "",
+      "remote_type": "hybrid",
+      "start_date_text": "",
+      "evidence_excerpt": "ご担当者様 各位 お世話になっております。GFD本田です。 案件のご紹介となります。 ご提案いただける際は以下必須要件へのご回答をお願いします。 ※必須要件を満たない場合はお見送りとなります。 ■必須スキル : → ○年○か月 項番○ ーーーーーーーーーーーーーーーーーーーーーーーーーー ■ポイントとしては以下の設定・管理・経験がある方が求めらます。 ・Microsoft Entra ID ・Intune ・ハイブリッド環境（オンプレ・クラウド） ＝＝＝＝＝＝＝＝＝＝＝...",
+      "confidence": 1.0,
+      "source_paths": [
+        "imap://imap2.gmoserver.jp/INBOX/7"
       ]
     },
     {
@@ -3622,6 +3660,26 @@
       "confidence": 1.0,
       "source_paths": [
         "imap://imap2.gmoserver.jp/Trash/30"
+      ]
+    },
+    {
+      "talent_key": "技術者（AWS等）-ID700",
+      "display_name": "技術者（AWS等）-ID700",
+      "skills": [
+        "AWS",
+        "AZURE",
+        "LINUX"
+      ],
+      "skill_categories": {},
+      "desired_rate_min": null,
+      "desired_rate_max": null,
+      "desired_location": "",
+      "remote_preference": "unknown",
+      "availability_text": "",
+      "evidence_excerpt": "ご担当者様各位 お世話になっております。 株式会社GFDの高橋でございます。 下記要員様に見合う案件ございましたらご紹介頂けますと幸いです。 ご確認のほど何卒宜しくお願い致します。 並行営業中ですので、提案の際はその旨 ご了承下さいますよう宜しくお願い致します。 ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー スキルシート https://gf-design.box.com/s/v57qrmsx3gmlrz6r3772zn8ndo8153hr...",
+      "confidence": 1.0,
+      "source_paths": [
+        "imap://imap2.gmoserver.jp/INBOX/3"
       ]
     },
     {

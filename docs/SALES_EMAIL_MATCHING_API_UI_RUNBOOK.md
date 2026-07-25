@@ -1,10 +1,10 @@
 # 営業メールAIマッチング検索API/UI Runbook
 
 - 作成日: 2026-06-19
-- 関連WBS: T817, T817_5, T817_6
+- 関連WBS: T817, T817_5, T817_6, T920
 - 関連Issue: #110
 - 関連課題: R75, R82, R83
-- ステータス: T817_5 完了。T817_6で人間レビュー、評価ログ、`email_match_feedback` 保存も完了。本番hardeningはT817_7で実装する。
+- ステータス: T817_5 完了。T817_6で人間レビュー、評価ログ、`email_match_feedback` 保存も完了。T920で必須スキル、単価範囲、フリーワード、適合度の絞り込みを追加。本番hardeningはT817_7で実装する。
 
 ---
 
@@ -30,7 +30,7 @@ T817_4で生成した安全な営業メール抽出レビューJSONを入力に�
 ## API
 
 ```http
-GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_score=1&limit=20
+GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_rate=60&max_rate=90&search_query=AWS&min_score=80&limit=20
 ```
 
 主なquery:
@@ -44,6 +44,11 @@ GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_score=1
 | `limit` | 最大100件 |
 | `project_key` | 特定案件への絞り込み |
 | `talent_key` | 特定匿名候補者への絞り込み |
+| `min_rate` | 案件単価レンジの下限条件（万円/月）。案件上限がこの値未満の場合は除外 |
+| `max_rate` | 案件単価レンジの上限条件（万円/月）。案件下限がこの値を超える場合は除外 |
+| `search_query` | 案件名、匿名要員ラベル、構造化スキル、送信元ドメイン、redacted evidence の部分一致 |
+
+`min_rate` / `max_rate` は案件単価レンジとの重なりで判定する。単価条件を指定した場合、単価が未抽出の案件は誤認防止のため除外する。下限が上限を超える場合や負数は `400` で拒否する。
 
 返却内容:
 
@@ -54,6 +59,8 @@ GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_score=1
 ## UI
 
 案件候補比較ボードは、`/api/sales-email/matches` が成功した場合に営業メール由来の案件と匿名候補者を優先表示する。APIが使えない場合は既存のデモ候補にfallbackする。
+
+公開マッチング進捗テーブルの上部では、フリーワード、案件の必須スキル、単価下限/上限、適合度で、取得済み候補をリアルタイムに絞り込む。件数表示は「表示中 / 取得済み全件」を示す。条件に一致しない場合は0件表示を維持し、デモ候補へ戻さない。リセットボタンで全条件を解除する。
 
 テーブルには以下を表示する:
 
@@ -91,7 +98,7 @@ python scripts/build_sales_email_match_review.py `
 ## 検証
 
 ```powershell
-python -m pytest tests/test_sales_email_match.py -q
+python -m pytest tests/test_sales_email_match.py tests/test_public_matching_filters.py -q
 python -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract.py tests/test_sales_email_match.py tests/test_sales_email_schema_migrations.py tests/test_db_migration_management.py tests/test_rls_policies.py -q
 ```
 
@@ -99,6 +106,8 @@ python -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract
 
 - 案件と匿名候補者の候補ペアを生成できる。
 - スキルフィルタと最低スコアで絞り込める。
+- 単価レンジ、送信元ドメインを含むフリーワード、必須スキルで絞り込める。
+- 単価不明案件は単価指定時に除外され、0件の結果がデモ行へ戻らない。
 - API応答とCLI出力に個人メール、電話番号、secret-like値が出ない。
 - UIが営業メール候補を優先し、APIが使えない場合は既存デモへfallbackする。
 

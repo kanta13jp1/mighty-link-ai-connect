@@ -1,0 +1,113 @@
+{
+  "report_id": "SUPABASE_UAT_WRITES_T845_T921",
+  "generated_at": "2026-07-25T07:48:22.062551Z",
+  "status": "PASS",
+  "mode": "live_transactional_write",
+  "has_db_connection": true,
+  "live_write_verified": true,
+  "transaction_rolled_back": true,
+  "cleanup_verified": true,
+  "persisted_probe_records": 0,
+  "checked_tables": [
+    "employee_assessment_responses",
+    "attendance_punch_events",
+    "attendance_timesheet_imports",
+    "usage_analytics_events",
+    "sales_mailbox_sources",
+    "sales_email_messages",
+    "sales_email_entities",
+    "project_requirements",
+    "talent_profiles_from_email",
+    "requirement_skill_tags",
+    "email_parse_runs",
+    "email_match_results",
+    "email_match_feedback",
+    "feedback_events",
+    "support_requests"
+  ],
+  "table_status": {
+    "employee_assessment_responses": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "attendance_punch_events": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "attendance_timesheet_imports": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "usage_analytics_events": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "sales_mailbox_sources": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "sales_email_messages": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "sales_email_entities": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "project_requirements": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "talent_profiles_from_email": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "requirement_skill_tags": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "email_parse_runs": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "email_match_results": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "email_match_feedback": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "feedback_events": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    },
+    "support_requests": {
+      "verified": true,
+      "mode": "transactional_insert_readback",
+      "synthetic": true
+    }
+  },
+  "summary": "Live transactional INSERT/readback passed for 15 tables; ROLLBACK completed and 0 probe records persisted.",
+  "github_actions": {
+    "run_id": "30149963975",
+    "commit_sha": "7d3bcf42ca8e20f03839b4dc766db274712387a1",
+    "run_url": "https://github.com/kanta13jp1/mighty-link-ai-connect/actions/runs/30149963975"
+  },
+  "run_id": "1759c24433f544bda065ad6c28f934b1",
+  "postgres_version_num": "170006"
+}

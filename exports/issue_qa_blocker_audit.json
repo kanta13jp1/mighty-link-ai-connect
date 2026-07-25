@@ -1,30 +1,22 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-25T04:53:08Z",
+  "generated_at": "2026-07-25T07:49:48Z",
   "issue_total": 191,
   "qa_total": 174,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "open": 6,
-    "resolved": 164,
+    "open": 5,
+    "resolved": 165,
     "transferred": 18
   },
   "qa_status_counts": {
     "回答済": 135,
     "想定済": 39
   },
-  "issue_blocker_count": 6,
+  "issue_blocker_count": 5,
   "qa_blocker_count": 0,
   "issue_blockers": [
-    {
-      "id": "R116",
-      "severity": "HIGH",
-      "category": "operations",
-      "title": "Supabase Daily Backup CIが一度も成功しておらず、本番DBの自動バックアップが存在しないリスク",
-      "related_wbs": "T870;T852;T833;T849",
-      "related_issue": "#162"
-    },
     {
       "id": "R119",
       "severity": "MED",

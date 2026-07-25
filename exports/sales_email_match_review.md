@@ -1,10 +1,10 @@
 # Sales Email Match Review
 
 - Task: T817_5
-- Generated at: 2026-07-25T04:53:28Z
+- Generated at: 2026-07-25T05:33:19Z
 - Direction: project_to_talent
-- Projects: 171
-- Talents: 102
+- Projects: 173
+- Talents: 103
 - Matches: 20
 - Privacy: only sanitized extraction fields and redacted evidence are used.
 

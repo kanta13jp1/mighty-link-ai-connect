@@ -6319,6 +6319,9 @@ async def list_sales_email_matches(
     limit: int = 20,
     project_key: str = "",
     talent_key: str = "",
+    min_rate: Optional[int] = None,
+    max_rate: Optional[int] = None,
+    search_query: str = "",
     username: Optional[str] = Depends(verify_credentials_optional),
 ):
     """Return sanitized bidirectional candidate lists from T817_4 extraction output."""
@@ -6356,6 +6359,9 @@ async def list_sales_email_matches(
             limit=limit,
             project_key=project_key,
             talent_key=talent_key,
+            min_rate=min_rate,
+            max_rate=max_rate,
+            search_query=search_query,
         )
         import sys
         sys.path.insert(0, str(Path(PROJECT_ROOT) / "src"))

@@ -3306,6 +3306,116 @@
             font-size: 0.8rem;
             display: none;
         }
+
+        .matching-filter-toolbar {
+            display: grid;
+            grid-template-columns: minmax(190px, 2fr) repeat(4, minmax(112px, 1fr)) auto;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .matching-filter-field {
+            min-width: 0;
+        }
+
+        .matching-filter-field label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .matching-filter-control {
+            width: 100%;
+            min-width: 0;
+            height: 38px;
+            padding: 0 10px;
+            border: 1px solid var(--line-strong);
+            border-radius: 6px;
+            color: var(--text);
+            background: var(--panel-strong);
+            font: inherit;
+            font-size: 12px;
+        }
+
+        .matching-filter-control:focus {
+            border-color: var(--blue);
+        }
+
+        .matching-filter-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            min-height: 38px;
+        }
+
+        #matching-filter-count {
+            min-width: 128px;
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 700;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .matching-filter-reset {
+            display: inline-grid;
+            width: 38px;
+            height: 38px;
+            place-items: center;
+            flex: 0 0 38px;
+            border: 1px solid var(--line-strong);
+            border-radius: 6px;
+            color: var(--text);
+            background: transparent;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .matching-filter-reset:hover {
+            color: var(--blue);
+            border-color: var(--blue);
+            background: rgba(139, 220, 255, 0.08);
+        }
+
+        @media (max-width: 1100px) {
+            .matching-filter-toolbar {
+                grid-template-columns: minmax(190px, 2fr) repeat(2, minmax(120px, 1fr));
+            }
+
+            .matching-filter-actions {
+                justify-content: flex-start;
+            }
+
+            #matching-filter-count {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 700px) {
+            #matching-section {
+                padding-inline: 16px;
+            }
+
+            #matching-section .panel {
+                padding: 18px 16px;
+            }
+
+            .matching-filter-toolbar {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .matching-filter-actions {
+                justify-content: space-between;
+            }
+        }
     </style>
 </head>
 <body>
@@ -4158,6 +4268,67 @@
                     <span class="control-label" data-i18n="matching_subtitle">営業メールから自動抽出された案件と、適合するエンジニアのAIマッチング候補一覧（閲覧専用）</span>
                 </div>
                 <div class="panel" style="min-height: auto;">
+                    <div class="matching-filter-toolbar" role="search" aria-label="営業メールAIマッチングの絞り込み">
+                        <div class="matching-filter-field">
+                            <label for="matching-filter-keyword">フリーワード</label>
+                            <input class="matching-filter-control" type="search" id="matching-filter-keyword" placeholder="案件名・要員・送信元など" autocomplete="off" oninput="applyMatchingFilters()">
+                        </div>
+
+                        <div class="matching-filter-field">
+                            <label for="matching-filter-skill">必須スキル</label>
+                            <select class="matching-filter-control" id="matching-filter-skill" onchange="applyMatchingFilters()">
+                                <option value="">すべて</option>
+                                <option value="Java">Java</option>
+                                <option value="Python">Python</option>
+                                <option value="AWS">AWS</option>
+                                <option value="React">React</option>
+                                <option value="TypeScript">TypeScript</option>
+                                <option value="PHP">PHP</option>
+                                <option value="Linux">Linux</option>
+                                <option value="C#">C#</option>
+                                <option value="SQL">SQL</option>
+                            </select>
+                        </div>
+
+                        <div class="matching-filter-field">
+                            <label for="matching-filter-rate-min">単価下限</label>
+                            <select class="matching-filter-control" id="matching-filter-rate-min" onchange="applyMatchingFilters()">
+                                <option value="0">指定なし</option>
+                                <option value="50">50万円〜</option>
+                                <option value="60">60万円〜</option>
+                                <option value="70">70万円〜</option>
+                                <option value="80">80万円〜</option>
+                                <option value="90">90万円〜</option>
+                            </select>
+                        </div>
+
+                        <div class="matching-filter-field">
+                            <label for="matching-filter-rate-max">単価上限</label>
+                            <select class="matching-filter-control" id="matching-filter-rate-max" onchange="applyMatchingFilters()">
+                                <option value="999">指定なし</option>
+                                <option value="70">〜70万円</option>
+                                <option value="80">〜80万円</option>
+                                <option value="90">〜90万円</option>
+                                <option value="100">〜100万円</option>
+                                <option value="120">〜120万円</option>
+                            </select>
+                        </div>
+
+                        <div class="matching-filter-field">
+                            <label for="matching-filter-score">適合度</label>
+                            <select class="matching-filter-control" id="matching-filter-score" onchange="applyMatchingFilters()">
+                                <option value="0">すべて</option>
+                                <option value="80">80%以上</option>
+                                <option value="90">90%以上</option>
+                            </select>
+                        </div>
+
+                        <div class="matching-filter-actions">
+                            <span id="matching-filter-count" role="status" aria-live="polite">全件表示中</span>
+                            <button class="matching-filter-reset" type="button" onclick="resetMatchingFilters()" aria-label="絞り込み条件をリセット" title="絞り込み条件をリセット">↺</button>
+                        </div>
+                    </div>
+
                     <div class="table-responsive">
                         <table class="comparison-table" style="min-width: 600px;">
                             <thead>
@@ -5891,26 +6062,71 @@
         let currentSortField = "";
         let currentSortOrder = "desc";
 
+        function populateMatchingSkillFilter(projects) {
+            const select = document.getElementById("matching-filter-skill");
+            if (!select) return;
+
+            const selectedValue = select.value;
+            const preferredSkills = ["Java", "Python", "AWS", "React", "TypeScript", "PHP", "Linux", "C#", "SQL"];
+            const extractedSkills = (projects || []).flatMap(project => project.required_skills || []);
+            const skillsByKey = new Map();
+            [...preferredSkills, ...extractedSkills].forEach(skill => {
+                const label = String(skill || "").trim();
+                if (label) skillsByKey.set(label.toLocaleLowerCase("ja"), label);
+            });
+
+            select.replaceChildren(new Option("すべて", ""));
+            [...skillsByKey.values()]
+                .sort((left, right) => left.localeCompare(right, "ja", { sensitivity: "base" }))
+                .forEach(skill => select.add(new Option(skill, skill)));
+            if ([...select.options].some(option => option.value === selectedValue)) {
+                select.value = selectedValue;
+            }
+        }
+
         async function initSalesEmailMatchData() {
             try {
                 const res = await fetch("/api/sales-email/matches?direction=project_to_talent&limit=50");
                 if (!res.ok) {
-                    renderPublicMatchingTable(matchingData);
+                    salesEmailMatches = [];
+                    applyMatchingFilters();
                     return false;
                 }
                 const data = await res.json();
                 if (data.status !== "success" || !Array.isArray(data.matches) || data.matches.length === 0) {
-                    renderPublicMatchingTable(matchingData);
+                    salesEmailMatches = [];
+                    applyMatchingFilters();
                     return false;
                 }
 
-                salesEmailMatches = data.matches;
-                windowComparisonJobs = (data.projects || []).map((project, index) => ({
+                const projects = Array.isArray(data.projects) ? data.projects : [];
+                const talents = Array.isArray(data.talents) ? data.talents : [];
+                const projectsByKey = new Map(projects.map(project => [project.project_key, project]));
+                const talentsByKey = new Map(talents.map(talent => [talent.talent_key, talent]));
+
+                salesEmailMatches = data.matches.map(match => {
+                    const project = projectsByKey.get(match.project_key) || {};
+                    const talent = talentsByKey.get(match.talent_key) || {};
+                    return {
+                        ...match,
+                        project_required_skills: project.required_skills || [],
+                        project_rate_min: Number.isFinite(project.rate_min) ? project.rate_min : null,
+                        project_rate_max: Number.isFinite(project.rate_max) ? project.rate_max : null,
+                        sender_domains: [...new Set([
+                            ...(project.sender_domains || []),
+                            ...(talent.sender_domains || []),
+                        ])],
+                    };
+                });
+                populateMatchingSkillFilter(projects);
+                windowComparisonJobs = projects.map((project, index) => ({
                     id: 1000 + index,
                     title: project.title || `営業メール案件 ${index + 1}`,
                     company: "営業メールDB",
                     company_culture: "T817_4の抽出結果をもとに、根拠と不足理由を人間レビュー前提で表示します。",
                     parsed_requirements: { mandatory: project.required_skills || [] },
+                    rate_min: Number.isFinite(project.rate_min) ? project.rate_min : null,
+                    rate_max: Number.isFinite(project.rate_max) ? project.rate_max : null,
                     job_description: [
                         `案件名: ${project.title || "営業メール案件"}`,
                         `必須スキル: ${(project.required_skills || []).join(", ") || "未抽出"}`,
@@ -5920,18 +6136,19 @@
                     ].join("\n"),
                     sales_email_project_key: project.project_key
                 }));
-                comparisonStock = (data.talents || []).map((talent, index) => ({
+                comparisonStock = talents.map((talent, index) => ({
                     id: 2000 + index,
                     name: talent.display_name || `匿名候補者 ${index + 1}`,
                     skills: (talent.skills || []).join(", "),
                     evidence: talent.evidence_excerpt || "",
                     sales_email_talent_key: talent.talent_key
                 }));
-                renderPublicMatchingTable(salesEmailMatches);
+                applyMatchingFilters();
                 return windowComparisonJobs.length > 0 && comparisonStock.length > 0;
             } catch (e) {
                 console.warn("Could not fetch sales email matches, using existing comparison data:", e);
-                renderPublicMatchingTable(matchingData);
+                salesEmailMatches = [];
+                applyMatchingFilters();
                 return false;
             }
         }
@@ -7493,9 +7710,9 @@
         function renderPublicMatchingTable(dataList) {
             const tbody = document.getElementById("public-matching-table-body");
             if (!tbody) return;
-            const list = (dataList && dataList.length) ? dataList : matchingData;
+            const list = Array.isArray(dataList) ? dataList : matchingData;
             if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted)">データがありません</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted)">条件に一致する候補はありません</td></tr>`;
             } else {
                 tbody.innerHTML = list.map(m => {
                     const title = m.title || m.project_title || "";
@@ -7534,12 +7751,99 @@
             }
         }
 
+        function matchingRateOverlaps(item, rateMin, rateMax) {
+            const asRate = value => {
+                if (value === null || value === undefined || value === "") return null;
+                const numeric = Number(value);
+                return Number.isFinite(numeric) ? numeric : null;
+            };
+            const projectMin = asRate(item.project_rate_min);
+            const projectMax = asRate(item.project_rate_max);
+            const hasRateFilter = rateMin > 0 || rateMax < 999;
+            if (!hasRateFilter) return true;
+            if (projectMin === null && projectMax === null) return false;
+
+            const floor = Math.min(projectMin ?? projectMax, projectMax ?? projectMin);
+            const ceiling = Math.max(projectMin ?? projectMax, projectMax ?? projectMin);
+            if (rateMin > 0 && ceiling < rateMin) return false;
+            if (rateMax < 999 && floor > rateMax) return false;
+            return true;
+        }
+
+        function applyMatchingFilters() {
+            const normalizeText = value => String(value || "").toLocaleLowerCase("ja").trim();
+            const keyword = normalizeText(document.getElementById("matching-filter-keyword")?.value);
+            const selectedSkill = normalizeText(document.getElementById("matching-filter-skill")?.value);
+            const rateMin = parseInt(document.getElementById("matching-filter-rate-min")?.value || "0", 10);
+            const rateMax = parseInt(document.getElementById("matching-filter-rate-max")?.value || "999", 10);
+            const minScore = parseInt(document.getElementById("matching-filter-score")?.value || "0", 10);
+            const sourceList = (salesEmailMatches && salesEmailMatches.length) ? salesEmailMatches : matchingData;
+            const countElem = document.getElementById("matching-filter-count");
+
+            if (rateMin > rateMax) {
+                if (countElem) {
+                    countElem.textContent = "単価の上下限を確認してください";
+                    countElem.style.color = "var(--rose)";
+                }
+                renderPublicMatchingTable([]);
+                return;
+            }
+
+            const filtered = sourceList.filter(item => {
+                const title = normalizeText(item.title || item.project_title);
+                const candidate = normalizeText(item.candidate || item.talent_name || item.talent_label);
+                const score = Number(item.score ?? item.matching_score ?? 0);
+                const requiredSkills = item.project_required_skills || item.required_skills || [];
+
+                if (score < minScore) return false;
+
+                if (keyword) {
+                    const searchableText = normalizeText([
+                        title,
+                        candidate,
+                        ...requiredSkills,
+                        ...(item.matched_skills || []),
+                        ...(item.missing_skills || []),
+                        ...(item.sender_domains || []),
+                        item.match_reason,
+                        item.project_evidence,
+                        item.talent_evidence,
+                    ].join(" "));
+                    if (!searchableText.includes(keyword)) return false;
+                }
+
+                if (selectedSkill) {
+                    const hasSkill = requiredSkills.some(skill => normalizeText(skill) === selectedSkill)
+                        || (requiredSkills.length === 0 && title.includes(selectedSkill));
+                    if (!hasSkill) return false;
+                }
+
+                return matchingRateOverlaps(item, rateMin, rateMax);
+            });
+
+            if (countElem) {
+                countElem.textContent = `${filtered.length}件表示中 / 全${sourceList.length}件`;
+                countElem.style.color = "var(--blue)";
+            }
+
+            renderPublicMatchingTable(filtered);
+        }
+
+        function resetMatchingFilters() {
+            if (document.getElementById("matching-filter-keyword")) document.getElementById("matching-filter-keyword").value = "";
+            if (document.getElementById("matching-filter-skill")) document.getElementById("matching-filter-skill").value = "";
+            if (document.getElementById("matching-filter-rate-min")) document.getElementById("matching-filter-rate-min").value = "0";
+            if (document.getElementById("matching-filter-rate-max")) document.getElementById("matching-filter-rate-max").value = "999";
+            if (document.getElementById("matching-filter-score")) document.getElementById("matching-filter-score").value = "0";
+            applyMatchingFilters();
+        }
+
         function toggleApproveMatching(id) {
             const match = matchingData.find(m => m.id === id);
             if (!match) return;
             match.approved = !match.approved;
             renderDashboard();
-            renderPublicMatchingTable(salesEmailMatches);
+            applyMatchingFilters();
 
             const actionText = match.approved ? "承認" : "未承認";
             alert(`営業メール案件マッチング「${match.title}」を${actionText}状態に更新しました。`);
