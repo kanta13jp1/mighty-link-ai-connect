@@ -1,9 +1,9 @@
 {
   "task": "T894",
-  "mode": "fast",
+  "mode": "full",
   "guard_count": 25,
   "exempt_count": 2,
-  "test_file_count": 107,
+  "test_file_count": 108,
   "guard_results": {
     "audit_access_inventory.py": {
       "exit_code": 0,
@@ -107,17 +107,18 @@
     }
   },
   "pytest": {
-    "skipped": true,
+    "skipped": false,
     "failed": 0,
     "errors": 0,
-    "collected": 0
+    "collected": 719,
+    "exit_code": 0
   },
   "hypotheses": [
     {
       "id": "H1",
       "title": "プリフライト対象ガード10件以上かつテストファイル50件以上(sanity)",
       "passed": true,
-      "detail": "対象ガード=25, 対象外=2, テストファイル=107"
+      "detail": "対象ガード=25, 対象外=2, テストファイル=108"
     },
     {
       "id": "H2",
@@ -141,13 +142,13 @@
       "id": "H5",
       "title": "pytest tests/ の failed/error が0",
       "passed": true,
-      "detail": "高速モード(未実行) — push前に --full を実行すること"
+      "detail": "failed=0, errors=0"
     },
     {
       "id": "H6",
       "title": "収集テストが400件以上(スイート縮退検知)",
       "passed": true,
-      "detail": "高速モード(未実行) — push前に --full を実行すること"
+      "detail": "収集=719"
     },
     {
       "id": "H7",
