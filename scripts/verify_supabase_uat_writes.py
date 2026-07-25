@@ -51,7 +51,7 @@ def _timestamp() -> str:
 
 
 def _base_result(mode: str) -> dict[str, Any]:
-    return {
+    result = {
         "report_id": "SUPABASE_UAT_WRITES_T845_T921",
         "generated_at": _timestamp(),
         "status": "FAIL",
@@ -68,6 +68,20 @@ def _base_result(mode: str) -> dict[str, Any]:
         },
         "summary": "",
     }
+    github_run_id = os.getenv("GITHUB_RUN_ID", "").strip()
+    if github_run_id:
+        server_url = os.getenv("GITHUB_SERVER_URL", "https://github.com").rstrip("/")
+        repository = os.getenv("GITHUB_REPOSITORY", "").strip()
+        result["github_actions"] = {
+            "run_id": github_run_id,
+            "commit_sha": os.getenv("GITHUB_SHA", "").strip(),
+            "run_url": (
+                f"{server_url}/{repository}/actions/runs/{github_run_id}"
+                if repository
+                else ""
+            ),
+        }
+    return result
 
 
 def _redact_error(error: BaseException, db_url: str | None = None) -> str:
@@ -570,10 +584,17 @@ def _write_report(result: dict[str, Any], prefix: str) -> tuple[Path, Path]:
         f"- Cleanup verified: **{result['cleanup_verified']}**",
         f"- Persisted probe records: `{result['persisted_probe_records']}`",
         f"- Summary: {result['summary']}",
-        "",
-        "## Tables",
-        "",
     ]
+    actions_context = result.get("github_actions")
+    if actions_context:
+        lines.extend(
+            [
+                f"- GitHub Actions run: `{actions_context['run_id']}`",
+                f"- Commit: `{actions_context['commit_sha']}`",
+                f"- Run URL: {actions_context['run_url']}",
+            ]
+        )
+    lines.extend(["", "## Tables", ""])
     for table, info in result["table_status"].items():
         verdict = "PASS" if info["verified"] else "FAIL"
         lines.append(f"- `{table}`: **{verdict}** (`{info['mode']}`)")

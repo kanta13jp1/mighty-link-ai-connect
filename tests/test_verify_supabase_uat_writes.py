@@ -179,5 +179,22 @@ def test_manual_workflow_uses_repository_secret_and_publishes_evidence():
     assert "workflow_dispatch:" in workflow
     assert "secrets.SUPABASE_DB_URL" in workflow
     assert "verify_supabase_uat_writes.py --execute" in workflow
-    assert "actions/upload-artifact@" in workflow
+    assert "actions/checkout@v6" in workflow
+    assert "actions/setup-python@v6" in workflow
+    assert "actions/upload-artifact@v6" in workflow
     assert "pull_request:" not in workflow
+
+
+def test_actions_context_makes_live_evidence_traceable(monkeypatch):
+    monkeypatch.setenv("GITHUB_RUN_ID", "123456")
+    monkeypatch.setenv("GITHUB_SHA", "abc123")
+    monkeypatch.setenv("GITHUB_SERVER_URL", "https://github.com")
+    monkeypatch.setenv("GITHUB_REPOSITORY", "example/repo")
+
+    result = verify_uat_db_writes()
+
+    assert result["github_actions"] == {
+        "run_id": "123456",
+        "commit_sha": "abc123",
+        "run_url": "https://github.com/example/repo/actions/runs/123456",
+    }
