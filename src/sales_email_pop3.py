@@ -1,7 +1,8 @@
-"""POP3 sales email connector.
+"""Read-only POP3 sales email connector.
 
 This module retrieves raw emails from a POP3 server, parses them, and
-converts them into RawSalesEmail objects.
+converts them into RawSalesEmail objects. Server-side deletion is
+intentionally unsupported for shared sales mailboxes.
 """
 
 from __future__ import annotations
@@ -12,10 +13,10 @@ import ssl
 from email import policy
 from email.parser import BytesParser
 from pathlib import Path
-from typing import Sequence
-
 # Import from ingest module where RawSalesEmail is defined
 from sales_email_ingest import RawSalesEmail, _message_body
+
+_TRUE_VALUES = {"1", "true", "yes", "on"}
 
 
 def load_env_file():
@@ -32,6 +33,19 @@ def load_env_file():
                 if (val.startswith('"') and val.endswith('"')) or (val.startswith("'") and val.endswith("'")):
                     val = val[1:-1]
                 os.environ.setdefault(key.strip(), val)
+
+
+def _require_leave_on_server(leave_on_server: bool | None) -> None:
+    """Reject any configuration that requests server-side deletion."""
+    if leave_on_server is None:
+        raw_value = os.getenv("POP3_LEAVE_ON_SERVER", "true").strip().lower()
+        leave_on_server = True if not raw_value else raw_value in _TRUE_VALUES
+
+    if leave_on_server is not True:
+        raise ValueError(
+            "Destructive POP3 retrieval is disabled. "
+            "POP3_LEAVE_ON_SERVER must be true for shared sales mailboxes."
+        )
 
 
 def fetch_pop3_emails(
@@ -59,8 +73,7 @@ def fetch_pop3_emails(
     username = username or os.getenv("POP3_USERNAME")
     password = password or os.getenv("POP3_PASSWORD")
     
-    # HARD SAFETY ENFORCEMENT: Never delete messages from POP3 server (Read-Only Safety)
-    leave_on_server = True
+    _require_leave_on_server(leave_on_server)
     
     # Load limit for safety (default to 1000 for daily 1000-email ingest scale)
     if max_messages is None:

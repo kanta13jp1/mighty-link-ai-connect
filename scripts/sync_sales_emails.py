@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""CLI script to sync POP3 sales emails, register to DB, parse, and rebuild UI reports."""
+"""CLI script to sync sales emails over read-only IMAP and rebuild reports."""
 
 from __future__ import annotations
 
@@ -15,7 +15,6 @@ from typing import Any, Dict, List
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
-from sales_email_pop3 import fetch_pop3_emails
 from sales_email_imap import fetch_imap_emails
 from sales_email_ingest import dedupe_key, normalize_subject, canonical_body, safe_excerpt, sender_domain, sha256_hex
 from parse_sales_emails import DBAdapter, main as run_parser
@@ -116,16 +115,6 @@ def sync_imap_to_db(db: DBAdapter, max_messages: int | None = None) -> int:
         return sync_raw_email_list(db, raw_emails)
     except Exception as e:
         print(f"[-] IMAP connection/fetch failed: {e}")
-        return 0
-
-
-def sync_pop3_to_db(db: DBAdapter, max_messages: int | None = None) -> int:
-    print(f"[*] Fetching emails via POP3 (max_messages={max_messages or 'default'})...")
-    try:
-        raw_emails = fetch_pop3_emails(max_messages=max_messages)
-        return sync_raw_email_list(db, raw_emails)
-    except Exception as e:
-        print(f"[-] POP3 connection/fetch failed: {e}")
         return 0
 
 
@@ -294,11 +283,8 @@ def sync_sales_emails_pipeline(max_messages: int | None = None, retry_errors: bo
     
     print(f"[*] Starting Sales Email Sync & Parse Pipeline (retry_errors={retry_errors}). Connection Mode: {'Supabase' if db.use_supabase else 'SQLite'}")
     
-    # 1. Fetch via IMAP (and POP3 fallback)
+    # 1. Fetch via read-only IMAP. Shared mailboxes must never fall back to POP3.
     new_emails = sync_imap_to_db(db, max_messages=max_messages)
-    if new_emails == 0:
-        pop3_new = sync_pop3_to_db(db, max_messages=max_messages)
-        new_emails += pop3_new
 
     print(f"[+] Total new emails synced into DB: {new_emails}")
     

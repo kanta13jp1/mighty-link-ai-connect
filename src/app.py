@@ -6443,11 +6443,11 @@ async def get_sales_email_analytics():
 
 @app.post("/api/sales-email/sync")
 async def sync_sales_emails(
-    max_messages: int | None = Query(None, description="Maximum POP3 emails to fetch (default: 1000)"),
+    max_messages: int | None = Query(None, description="Maximum IMAP emails to fetch (default: 1000)"),
     retry_errors: bool = Query(False, description="Whether to include ingest_status='error' messages in parsing retry"),
     username: str = Depends(verify_credentials),
 ):
-    """Sync POP3 emails to database, run AI parse pipeline, and rebuild review JSONs."""
+    """Sync emails over read-only IMAP, run parsing, and rebuild review JSONs."""
     try:
         import sys
         sys.path.insert(0, str(Path(PROJECT_ROOT) / "scripts"))

@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-25T17:18:49+09:00
+Generated: 2026-07-25T18:18:46+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
 - Drive docs discovered: `158`
-- Drive docs uploaded: `1`
-- Drive docs skipped unchanged: `157`
+- Drive docs uploaded: `3`
+- Drive docs skipped unchanged: `155`
 - NotebookLM CLI status: `ready`
 
 ## Google Docs Synced From docs/

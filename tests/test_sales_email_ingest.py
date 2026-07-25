@@ -2,6 +2,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
@@ -106,3 +108,10 @@ def test_unsupported_input_is_rejected(tmp_path):
         assert "Unsupported or missing input path" in str(exc)
     else:
         raise AssertionError("Expected unsupported files to be rejected")
+
+
+def test_pop3_cli_option_is_rejected():
+    with pytest.raises(SystemExit) as exc_info:
+        ingest.main(["--pop3"])
+
+    assert exc_info.value.code == 2

@@ -91,20 +91,36 @@ def test_fetch_pop3_emails_success(mock_pop3_ssl):
         mock_pop3_ssl.quit.assert_called_once()
 
 
-def test_fetch_pop3_emails_deletion(mock_pop3_ssl):
+def test_fetch_pop3_emails_rejects_deletion(mock_pop3_ssl):
     env_patch = {
         "POP3_HOST": "pop.example.com",
         "POP3_PORT": "995",
         "POP3_USE_SSL": "true",
         "POP3_USERNAME": "test_user",
         "POP3_PASSWORD": "test_password",
-        "POP3_LEAVE_ON_SERVER": "false",  # Delete from server
+        "POP3_LEAVE_ON_SERVER": "false",
+    }
+    with patch.dict(os.environ, env_patch):
+        with pytest.raises(ValueError, match="Destructive POP3 retrieval is disabled"):
+            fetch_pop3_emails()
+
+    mock_pop3_ssl.dele.assert_not_called()
+
+
+def test_fetch_pop3_emails_blank_leave_setting_is_safe(mock_pop3_ssl):
+    env_patch = {
+        "POP3_HOST": "pop.example.com",
+        "POP3_PORT": "995",
+        "POP3_USE_SSL": "true",
+        "POP3_USERNAME": "test_user",
+        "POP3_PASSWORD": "test_password",
+        "POP3_LEAVE_ON_SERVER": "",
     }
     with patch.dict(os.environ, env_patch):
         emails = fetch_pop3_emails()
-        assert len(emails) == 3
-        # Ensure dele was called for all fetched messages (1, 2, 3)
-        assert mock_pop3_ssl.dele.call_count == 3
+
+    assert len(emails) == 3
+    mock_pop3_ssl.dele.assert_not_called()
 
 
 def test_fetch_pop3_emails_limit(mock_pop3_ssl):
@@ -164,4 +180,3 @@ def test_fetch_pop3_emails_1000_scale():
             assert emails[0].subject == "Sales Email 1000"
             assert emails[999].subject == "Sales Email 1"
             assert emails[0].source_type == "pop3"
-

@@ -117,6 +117,8 @@ T817_2のPoCはローカルファイルで検証し、実メール本文やOAuth
 
 Microsoft Graph、Gmail API、IMAP、POP3、Webhook、ファイル監視のどの方式でも、取得処理は `sales_email_ingest.py` に `RawSalesEmail` を渡すアダプタとして追加する。これにより、重複排除、redaction、レポート生成の挙動を接続方式に依存させない。
 
+GMOの共有営業メールはIMAP `readonly=True` を本番方式とする。POP3は互換性確認用に限定し、`DELE`、取得後削除、IMAP失敗時の自動フォールバックを禁止する。
+
 T817_4で `scripts/extract_sales_email_requirements.py` を追加したため、取り込み後は同じ `.eml`、`.txt`、CSV入力から案件要件、要員情報、スキルタグ、redacted根拠抜粋、信頼度を抽出できる。
 
 ---
@@ -131,7 +133,7 @@ T817_4で `scripts/extract_sales_email_requirements.py` を追加したため、
 | Microsoft 365 / Exchange | tenant ID、app registration、client ID、権限、対象mailbox、folder ID、delta/webhook利用可否 |
 | Google Workspace / Gmail | Workspaceドメイン、OAuth client、対象label/search query、Gmail Push通知利用可否 |
 | IMAP | `IMAP_HOST`、`IMAP_PORT`、SSL/TLS、`IMAP_USERNAME`、アプリパスワード、対象folder、IDLE利用可否 |
-| POP3 | POP3サーバー、SSL/TLS、ユーザー名、パスワード、サーバー上にメールを残すか |
+| POP3 | 本番共有営業メールでは使用禁止。互換性確認時も `POP3_LEAVE_ON_SERVER=true` 固定 |
 | Webhook/転送 | Webhook URL、署名secret、payload形式、再送/idempotency方針 |
 
 ---
