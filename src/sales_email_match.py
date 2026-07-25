@@ -11,15 +11,18 @@ import argparse
 import hashlib
 import json
 from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any, Iterable, Sequence
+from zoneinfo import ZoneInfo
 
 
 DEFAULT_EXTRACTION_REPORT = Path("exports") / "sales_email_extraction_review.json"
 DEFAULT_JSON_REPORT = Path("exports") / "sales_email_match_review.json"
 DEFAULT_MARKDOWN_REPORT = Path("exports") / "sales_email_match_review.md"
 MATCH_MODEL_NAME = "deterministic-sales-email-matcher-v1"
+JST = ZoneInfo("Asia/Tokyo")
 REQUIRED_PRIVACY_CONTROLS = {
     "raw_email_body_not_written",
     "email_phone_secret_patterns_redacted_from_evidence",
@@ -39,6 +42,8 @@ class SearchCriteria:
     min_rate: int | None = None
     max_rate: int | None = None
     search_query: str = ""
+    received_from: str = ""
+    received_to: str = ""
 
 
 @dataclass(frozen=True)
@@ -57,6 +62,8 @@ class ProjectRecord:
     confidence: float
     sender_domains: list[str]
     source_paths: list[str]
+    received_at: str
+    received_date: str
 
 
 @dataclass(frozen=True)
@@ -74,6 +81,8 @@ class TalentRecord:
     confidence: float
     sender_domains: list[str]
     source_paths: list[str]
+    received_at: str
+    received_date: str
 
 
 def utc_timestamp() -> str:
@@ -100,6 +109,27 @@ def compact_text(value: Any, max_chars: int = 220) -> str:
     if len(text) <= max_chars:
         return text
     return text[: max_chars - 1].rstrip() + "…"
+
+
+def normalize_received_timestamp(value: Any) -> tuple[str, str]:
+    """Normalize RFC 2822 or ISO timestamps to a JST timestamp and date."""
+    raw_value = compact_text(value, 160)
+    if not raw_value:
+        return "", ""
+
+    parsed: datetime | None = None
+    try:
+        parsed = datetime.fromisoformat(raw_value.replace("Z", "+00:00"))
+    except ValueError:
+        try:
+            parsed = parsedate_to_datetime(raw_value)
+        except (TypeError, ValueError):
+            return "", ""
+
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=JST)
+    local_received_at = parsed.astimezone(JST).replace(microsecond=0)
+    return local_received_at.isoformat(), local_received_at.date().isoformat()
 
 
 def skill_key(value: str) -> str:
@@ -156,6 +186,7 @@ def project_from_item(item: dict[str, Any]) -> ProjectRecord | None:
     nice = as_list(project.get("nice_to_have_skills"))
     if not required and not nice:
         return None
+    received_at, received_date = normalize_received_timestamp(item.get("received_at"))
     sender_domain_value = compact_text(item.get("sender_domain"), 120)
     key = stable_key(project.get("title"), ",".join(sorted(required)), project.get("rate_min"), project.get("remote_type"))
     return ProjectRecord(
@@ -173,6 +204,8 @@ def project_from_item(item: dict[str, Any]) -> ProjectRecord | None:
         confidence=confidence_value(project.get("confidence")),
         sender_domains=[sender_domain_value] if sender_domain_value else [],
         source_paths=[str(item.get("source_path") or "")],
+        received_at=received_at,
+        received_date=received_date,
     )
 
 
@@ -183,6 +216,7 @@ def talent_from_item(item: dict[str, Any]) -> TalentRecord | None:
     skills = as_list(talent.get("skills"))
     if not skills:
         return None
+    received_at, received_date = normalize_received_timestamp(item.get("received_at"))
     sender_domain_value = compact_text(item.get("sender_domain"), 120)
     key = compact_text(talent.get("anonymized_talent_key"), 80)
     return TalentRecord(
@@ -199,6 +233,8 @@ def talent_from_item(item: dict[str, Any]) -> TalentRecord | None:
         confidence=confidence_value(talent.get("confidence")),
         sender_domains=[sender_domain_value] if sender_domain_value else [],
         source_paths=[str(item.get("source_path") or "")],
+        received_at=received_at,
+        received_date=received_date,
     )
 
 
@@ -215,6 +251,8 @@ def merge_projects(projects: Sequence[ProjectRecord]) -> list[ProjectRecord]:
                 "sender_domains": sorted(set(existing.sender_domains + project.sender_domains)),
                 "source_paths": sorted(set(existing.source_paths + project.source_paths)),
                 "confidence": max(existing.confidence, project.confidence),
+                "received_at": max(existing.received_at, project.received_at),
+                "received_date": max(existing.received_date, project.received_date),
             }
         )
     return sorted(merged.values(), key=lambda item: item.title.casefold())
@@ -234,6 +272,8 @@ def merge_talents(talents: Sequence[TalentRecord]) -> list[TalentRecord]:
                 "sender_domains": sorted(set(existing.sender_domains + talent.sender_domains)),
                 "source_paths": sorted(set(existing.source_paths + talent.source_paths)),
                 "confidence": max(existing.confidence, talent.confidence),
+                "received_at": max(existing.received_at, talent.received_at),
+                "received_date": max(existing.received_date, talent.received_date),
             }
         )
     return sorted(merged.values(), key=lambda item: item.display_name.casefold())
@@ -353,8 +393,12 @@ def score_pair(project: ProjectRecord, talent: TalentRecord) -> dict[str, Any]:
     return {
         "project_key": project.project_key,
         "project_title": project.title,
+        "project_received_at": project.received_at,
+        "project_received_date": project.received_date,
         "talent_key": talent.talent_key,
         "talent_label": talent.display_name,
+        "talent_received_at": talent.received_at,
+        "talent_received_date": talent.received_date,
         "score": score,
         "score_breakdown": {
             "required_skill_fit": round(required_ratio * 100),
@@ -385,6 +429,16 @@ def parse_optional_rate(name: str, value: int | str | None) -> int | None:
     return parsed
 
 
+def parse_optional_date(name: str, value: str | None) -> str:
+    normalized = str(value or "").strip()
+    if not normalized:
+        return ""
+    try:
+        return date.fromisoformat(normalized).isoformat()
+    except ValueError as exc:
+        raise ValueError(f"{name} must be a valid YYYY-MM-DD date") from exc
+
+
 def criteria_from_values(
     *,
     direction: str = "project_to_talent",
@@ -397,6 +451,8 @@ def criteria_from_values(
     min_rate: int | str | None = None,
     max_rate: int | str | None = None,
     search_query: str = "",
+    received_from: str = "",
+    received_to: str = "",
 ) -> SearchCriteria:
     if isinstance(skills, str):
         skill_values = tuple(item.strip() for item in skills.split(",") if item.strip())
@@ -407,6 +463,10 @@ def criteria_from_values(
     parsed_max_rate = parse_optional_rate("max_rate", max_rate)
     if parsed_min_rate is not None and parsed_max_rate is not None and parsed_min_rate > parsed_max_rate:
         raise ValueError("min_rate must not exceed max_rate")
+    parsed_received_from = parse_optional_date("received_from", received_from)
+    parsed_received_to = parse_optional_date("received_to", received_to)
+    if parsed_received_from and parsed_received_to and parsed_received_from > parsed_received_to:
+        raise ValueError("received_from must not exceed received_to")
 
     return SearchCriteria(
         direction=normalized_direction,
@@ -419,6 +479,8 @@ def criteria_from_values(
         min_rate=parsed_min_rate,
         max_rate=parsed_max_rate,
         search_query=search_query.strip().casefold(),
+        received_from=parsed_received_from,
+        received_to=parsed_received_to,
     )
 
 
@@ -458,6 +520,13 @@ def match_satisfies(match: dict[str, Any], project: ProjectRecord, talent: Talen
             return False
     if not rate_range_overlaps(project, criteria.min_rate, criteria.max_rate):
         return False
+    if criteria.received_from or criteria.received_to:
+        if not project.received_date:
+            return False
+        if criteria.received_from and project.received_date < criteria.received_from:
+            return False
+        if criteria.received_to and project.received_date > criteria.received_to:
+            return False
     if criteria.search_query:
         query = criteria.search_query
         searchable_text = " ".join(
@@ -578,6 +647,8 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--min-rate", type=int)
     parser.add_argument("--max-rate", type=int)
     parser.add_argument("--search-query", default="")
+    parser.add_argument("--received-from", default="", help="Project email received date lower bound (YYYY-MM-DD).")
+    parser.add_argument("--received-to", default="", help="Project email received date upper bound (YYYY-MM-DD).")
     parser.add_argument("--limit", type=int, default=20)
     return parser
 
@@ -593,6 +664,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         min_rate=args.min_rate,
         max_rate=args.max_rate,
         search_query=args.search_query,
+        received_from=args.received_from,
+        received_to=args.received_to,
         limit=args.limit,
     )
     report = build_match_report_from_file(Path(args.input_report), criteria)

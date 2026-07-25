@@ -33,6 +33,16 @@ def sample_extraction_report_with_rate() -> dict:
     return report
 
 
+def sample_extraction_report_with_received_dates() -> dict:
+    report = sample_extraction_report()
+    for item in report["extractions"]:
+        if item.get("project_requirement"):
+            item["received_at"] = "Fri, 24 Jul 2026 23:30:00 +0000"
+        elif item.get("talent_profile"):
+            item["received_at"] = "2026-07-23T09:15:00+09:00"
+    return report
+
+
 def test_match_report_builds_project_to_talent_candidates():
     report = match.build_match_report(sample_extraction_report(), match.criteria_from_values(limit=10))
 
@@ -117,6 +127,25 @@ def test_match_report_searches_sender_domain_and_structured_fields():
     assert missing_report["match_count"] == 0
 
 
+def test_match_report_filters_project_email_received_date_in_jst():
+    source_report = sample_extraction_report_with_received_dates()
+
+    matching_day = match.build_match_report(
+        source_report,
+        match.criteria_from_values(received_from="2026-07-25", received_to="2026-07-25", limit=5),
+    )
+    previous_day = match.build_match_report(
+        source_report,
+        match.criteria_from_values(received_from="2026-07-24", received_to="2026-07-24", limit=5),
+    )
+
+    assert matching_day["match_count"] == 1
+    assert previous_day["match_count"] == 0
+    assert matching_day["projects"][0]["received_date"] == "2026-07-25"
+    assert matching_day["matches"][0]["project_received_date"] == "2026-07-25"
+    assert matching_day["matches"][0]["talent_received_date"] == "2026-07-23"
+
+
 def test_match_criteria_rejects_invalid_rate_values():
     with pytest.raises(ValueError, match="min_rate"):
         match.criteria_from_values(min_rate="not-a-number")
@@ -124,6 +153,15 @@ def test_match_criteria_rejects_invalid_rate_values():
         match.criteria_from_values(max_rate=-1)
     with pytest.raises(ValueError, match="must not exceed"):
         match.criteria_from_values(min_rate=90, max_rate=70)
+
+
+def test_match_criteria_rejects_invalid_received_date_values():
+    with pytest.raises(ValueError, match="received_from"):
+        match.criteria_from_values(received_from="2026-02-30")
+    with pytest.raises(ValueError, match="received_to"):
+        match.criteria_from_values(received_to="25/07/2026")
+    with pytest.raises(ValueError, match="must not exceed"):
+        match.criteria_from_values(received_from="2026-07-26", received_to="2026-07-25")
 
 
 def test_match_cli_outputs_sanitized_json_and_markdown(tmp_path):
@@ -207,4 +245,32 @@ def test_sales_email_match_api_supports_keyword_and_rate_filters(tmp_path):
     assert data["filters"]["min_rate"] == 80
     assert data["filters"]["max_rate"] == 100
     assert data["filters"]["search_query"] == "partner.example.jp"
+    assert invalid_response.status_code == 400
+
+
+def test_sales_email_match_api_supports_received_date_filters(tmp_path):
+    extraction_path = tmp_path / "extraction.json"
+    extract.write_json_report(sample_extraction_report_with_received_dates(), extraction_path)
+
+    old_path = app.SALES_EMAIL_MATCH_REPORT_FILE
+    app.SALES_EMAIL_MATCH_REPORT_FILE = str(extraction_path)
+    try:
+        client = TestClient(app.app)
+        response = client.get(
+            "/api/sales-email/matches",
+            params={"received_from": "2026-07-25", "received_to": "2026-07-25", "limit": 5},
+        )
+        invalid_response = client.get(
+            "/api/sales-email/matches",
+            params={"received_from": "2026-07-26", "received_to": "2026-07-25"},
+        )
+    finally:
+        app.SALES_EMAIL_MATCH_REPORT_FILE = old_path
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["match_count"] == 1
+    assert data["filters"]["received_from"] == "2026-07-25"
+    assert data["filters"]["received_to"] == "2026-07-25"
+    assert data["matches"][0]["project_received_date"] == "2026-07-25"
     assert invalid_response.status_code == 400

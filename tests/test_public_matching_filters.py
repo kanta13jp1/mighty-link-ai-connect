@@ -18,6 +18,8 @@ def test_filter_controls_exist_in_both_html_files():
         "matching-filter-rate-min",
         "matching-filter-rate-max",
         "matching-filter-score",
+        "matching-filter-received-from",
+        "matching-filter-received-to",
         "matching-filter-count",
     }
 
@@ -41,6 +43,8 @@ def test_api_matches_are_enriched_with_project_filter_fields():
         "project_required_skills:",
         "project_rate_min:",
         "project_rate_max:",
+        "project_received_at:",
+        "project_received_date:",
         "sender_domains:",
     }
 
@@ -62,8 +66,29 @@ def test_rate_filter_excludes_unknown_rates_and_checks_range_overlap():
         assert "if (projectMin === null && projectMax === null) return false;" in text
 
 
+def test_received_date_filter_refreshes_api_and_preserves_empty_results():
+    required_fragments = {
+        'params.set("received_from", receivedFrom)',
+        'params.set("received_to", receivedTo)',
+        "function matchingReceivedDateInRange",
+        "function refreshSalesEmailMatchesForDateRange",
+        "salesEmailMatchSourceReady ? salesEmailMatches : matchingData",
+        'countElem.textContent = "受信日の期間を確認してください"',
+        'document.getElementById("matching-filter-received-from").value = ""',
+        'document.getElementById("matching-filter-received-to").value = ""',
+    }
+
+    for path, text in html_sources():
+        for fragment in required_fragments:
+            assert fragment in text, f"{path} is missing received-date behavior: {fragment}"
+        assert 'colspan="6"' in text
+        assert "<th>受信日</th>" in text
+
+
 def test_filter_toolbar_uses_scoped_responsive_styles():
     for path, text in html_sources():
         assert 'class="matching-filter-toolbar"' in text
+        assert 'class="matching-date-range"' in text
         assert ".matching-filter-toolbar" in text
+        assert ".matching-date-range" in text
         assert "@media (max-width: 700px)" in text

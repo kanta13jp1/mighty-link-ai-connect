@@ -1,10 +1,10 @@
 # 営業メールAIマッチング検索API/UI Runbook
 
 - 作成日: 2026-06-19
-- 関連WBS: T817, T817_5, T817_6, T920
+- 関連WBS: T817, T817_5, T817_6, T920, T923
 - 関連Issue: #110
 - 関連課題: R75, R82, R83
-- ステータス: T817_5 完了。T817_6で人間レビュー、評価ログ、`email_match_feedback` 保存も完了。T920で必須スキル、単価範囲、フリーワード、適合度の絞り込みを追加。本番hardeningはT817_7で実装する。
+- ステータス: T817_5 完了。T817_6で人間レビュー、評価ログ、`email_match_feedback` 保存も完了。T920で必須スキル、単価範囲、フリーワード、適合度、T923で案件メール受信日の期間絞り込みを追加。本番hardeningはT817_7で実装する。
 
 ---
 
@@ -30,7 +30,7 @@ T817_4で生成した安全な営業メール抽出レビューJSONを入力に�
 ## API
 
 ```http
-GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_rate=60&max_rate=90&search_query=AWS&min_score=80&limit=20
+GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_rate=60&max_rate=90&search_query=AWS&received_from=2026-07-01&received_to=2026-07-31&min_score=80&limit=20
 ```
 
 主なquery:
@@ -47,8 +47,12 @@ GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_rate=60
 | `min_rate` | 案件単価レンジの下限条件（万円/月）。案件上限がこの値未満の場合は除外 |
 | `max_rate` | 案件単価レンジの上限条件（万円/月）。案件下限がこの値を超える場合は除外 |
 | `search_query` | 案件名、匿名要員ラベル、構造化スキル、送信元ドメイン、redacted evidence の部分一致 |
+| `received_from` | 案件メール受信日の開始日。JST基準の `YYYY-MM-DD` |
+| `received_to` | 案件メール受信日の終了日。JST基準の `YYYY-MM-DD` |
 
 `min_rate` / `max_rate` は案件単価レンジとの重なりで判定する。単価条件を指定した場合、単価が未抽出の案件は誤認防止のため除外する。下限が上限を超える場合や負数は `400` で拒否する。
+
+`received_from` / `received_to` は案件メールの受信日を両端含みで判定する。元日時がRFC 2822またはISO形式でもJSTへ正規化し、期間指定時の日付不明案件は除外する。開始日が終了日を超える場合や実在しない日付は `400` で拒否する。期間判定は `limit` 適用前に行う。
 
 返却内容:
 
@@ -60,7 +64,7 @@ GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_rate=60
 
 案件候補比較ボードは、`/api/sales-email/matches` が成功した場合に営業メール由来の案件と匿名候補者を優先表示する。APIが使えない場合は既存のデモ候補にfallbackする。
 
-公開マッチング進捗テーブルの上部では、フリーワード、案件の必須スキル、単価下限/上限、適合度で、取得済み候補をリアルタイムに絞り込む。件数表示は「表示中 / 取得済み全件」を示す。条件に一致しない場合は0件表示を維持し、デモ候補へ戻さない。リセットボタンで全条件を解除する。
+公開マッチング進捗テーブルの上部では、フリーワード、案件の必須スキル、単価下限/上限、適合度、案件メール受信日の開始日/終了日で絞り込む。受信日を変更した場合はAPIで期間を先に適用し、それ以外の条件は取得済み候補へリアルタイムに適用する。件数表示は「表示中 / 取得済み全件」を示す。条件に一致しない場合は0件表示を維持し、デモ候補へ戻さない。リセットボタンで全条件を解除してAPIを再取得する。
 
 テーブルには以下を表示する:
 
@@ -107,6 +111,8 @@ python -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract
 - 案件と匿名候補者の候補ペアを生成できる。
 - スキルフィルタと最低スコアで絞り込める。
 - 単価レンジ、送信元ドメインを含むフリーワード、必須スキルで絞り込める。
+- 案件メール受信日の開始日/終了日で絞り込め、一覧の受信日列と一致する。
+- JSTへの日付正規化、期間端の包含、不正期間の400拒否が正しい。
 - 単価不明案件は単価指定時に除外され、0件の結果がデモ行へ戻らない。
 - API応答とCLI出力に個人メール、電話番号、secret-like値が出ない。
 - UIが営業メール候補を優先し、APIが使えない場合は既存デモへfallbackする。

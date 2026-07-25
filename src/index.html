@@ -3309,7 +3309,7 @@
 
         .matching-filter-toolbar {
             display: grid;
-            grid-template-columns: minmax(190px, 2fr) repeat(4, minmax(112px, 1fr)) auto;
+            grid-template-columns: minmax(180px, 1.6fr) repeat(4, minmax(104px, 1fr)) minmax(250px, 1.4fr) auto;
             gap: 12px;
             align-items: end;
             margin-bottom: 16px;
@@ -3344,6 +3344,24 @@
 
         .matching-filter-control:focus {
             border-color: var(--blue);
+        }
+
+        .matching-date-range {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+            gap: 7px;
+            align-items: center;
+        }
+
+        .matching-date-range input[type="date"] {
+            min-width: 0;
+            padding-inline: 8px;
+            color-scheme: dark;
+        }
+
+        .matching-date-separator {
+            color: var(--muted);
+            font-size: 12px;
         }
 
         .matching-filter-actions {
@@ -3393,6 +3411,10 @@
                 justify-content: flex-start;
             }
 
+            .matching-filter-date-field {
+                grid-column: span 2;
+            }
+
             #matching-filter-count {
                 text-align: left;
             }
@@ -3410,6 +3432,10 @@
             .matching-filter-toolbar {
                 grid-template-columns: 1fr;
                 gap: 10px;
+            }
+
+            .matching-filter-date-field {
+                grid-column: auto;
             }
 
             .matching-filter-actions {
@@ -4323,6 +4349,15 @@
                             </select>
                         </div>
 
+                        <div class="matching-filter-field matching-filter-date-field">
+                            <label for="matching-filter-received-from">受信日</label>
+                            <div class="matching-date-range">
+                                <input class="matching-filter-control" type="date" id="matching-filter-received-from" aria-label="受信日（開始）" onchange="refreshSalesEmailMatchesForDateRange()">
+                                <span class="matching-date-separator" aria-hidden="true">〜</span>
+                                <input class="matching-filter-control" type="date" id="matching-filter-received-to" aria-label="受信日（終了）" onchange="refreshSalesEmailMatchesForDateRange()">
+                            </div>
+                        </div>
+
                         <div class="matching-filter-actions">
                             <span id="matching-filter-count" role="status" aria-live="polite">全件表示中</span>
                             <button class="matching-filter-reset" type="button" onclick="resetMatchingFilters()" aria-label="絞り込み条件をリセット" title="絞り込み条件をリセット">↺</button>
@@ -4330,10 +4365,11 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="comparison-table" style="min-width: 600px;">
+                        <table class="comparison-table" style="min-width: 720px;">
                             <thead>
                                 <tr>
                                     <th>案件タイトル</th>
+                                    <th>受信日</th>
                                     <th>適合エンジニア</th>
                                     <th>マッチングスコア</th>
                                     <th>ステータス</th>
@@ -6059,6 +6095,8 @@
         ];
 
         let salesEmailMatches = [];
+        let salesEmailMatchSourceReady = false;
+        let salesEmailMatchRequestSerial = 0;
         let currentSortField = "";
         let currentSortOrder = "desc";
 
@@ -6084,17 +6122,31 @@
             }
         }
 
-        async function initSalesEmailMatchData() {
+        async function initSalesEmailMatchData(options = {}) {
+            const receivedFrom = String(options.receivedFrom || "").trim();
+            const receivedTo = String(options.receivedTo || "").trim();
+            const params = new URLSearchParams({
+                direction: "project_to_talent",
+                limit: "50",
+            });
+            if (receivedFrom) params.set("received_from", receivedFrom);
+            if (receivedTo) params.set("received_to", receivedTo);
+            const requestSerial = ++salesEmailMatchRequestSerial;
+
             try {
-                const res = await fetch("/api/sales-email/matches?direction=project_to_talent&limit=50");
+                const res = await fetch(`/api/sales-email/matches?${params.toString()}`);
+                if (requestSerial !== salesEmailMatchRequestSerial) return false;
                 if (!res.ok) {
                     salesEmailMatches = [];
+                    salesEmailMatchSourceReady = false;
                     applyMatchingFilters();
                     return false;
                 }
                 const data = await res.json();
-                if (data.status !== "success" || !Array.isArray(data.matches) || data.matches.length === 0) {
+                if (requestSerial !== salesEmailMatchRequestSerial) return false;
+                if (data.status !== "success" || !Array.isArray(data.matches)) {
                     salesEmailMatches = [];
+                    salesEmailMatchSourceReady = false;
                     applyMatchingFilters();
                     return false;
                 }
@@ -6104,6 +6156,7 @@
                 const projectsByKey = new Map(projects.map(project => [project.project_key, project]));
                 const talentsByKey = new Map(talents.map(talent => [talent.talent_key, talent]));
 
+                salesEmailMatchSourceReady = true;
                 salesEmailMatches = data.matches.map(match => {
                     const project = projectsByKey.get(match.project_key) || {};
                     const talent = talentsByKey.get(match.talent_key) || {};
@@ -6112,6 +6165,10 @@
                         project_required_skills: project.required_skills || [],
                         project_rate_min: Number.isFinite(project.rate_min) ? project.rate_min : null,
                         project_rate_max: Number.isFinite(project.rate_max) ? project.rate_max : null,
+                        project_received_at: match.project_received_at || project.received_at || "",
+                        project_received_date: match.project_received_date || project.received_date || "",
+                        talent_received_at: match.talent_received_at || talent.received_at || "",
+                        talent_received_date: match.talent_received_date || talent.received_date || "",
                         sender_domains: [...new Set([
                             ...(project.sender_domains || []),
                             ...(talent.sender_domains || []),
@@ -6144,10 +6201,11 @@
                     sales_email_talent_key: talent.talent_key
                 }));
                 applyMatchingFilters();
-                return windowComparisonJobs.length > 0 && comparisonStock.length > 0;
+                return salesEmailMatches.length > 0 && windowComparisonJobs.length > 0 && comparisonStock.length > 0;
             } catch (e) {
                 console.warn("Could not fetch sales email matches, using existing comparison data:", e);
                 salesEmailMatches = [];
+                salesEmailMatchSourceReady = false;
                 applyMatchingFilters();
                 return false;
             }
@@ -7712,10 +7770,11 @@
             if (!tbody) return;
             const list = Array.isArray(dataList) ? dataList : matchingData;
             if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--muted)">条件に一致する候補はありません</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted)">条件に一致する候補はありません</td></tr>`;
             } else {
                 tbody.innerHTML = list.map(m => {
                     const title = m.title || m.project_title || "";
+                    const receivedDate = formatMatchingReceivedDate(m.project_received_date);
                     const candidate = m.candidate || m.talent_name || m.talent_label || "";
                     const score = m.score || m.matching_score || 0;
                     const approved = m.approved ?? false;
@@ -7741,6 +7800,7 @@
                     return `
                         <tr>
                             <td style="font-weight: 500; font-size: 13px;">${escapeHtml(title)}</td>
+                            <td style="white-space: nowrap;"><time datetime="${escapeHtml(m.project_received_date || "")}" style="color: var(--muted); font-size: 12px;">${escapeHtml(receivedDate)}</time></td>
                             <td style="font-weight: 600;">${escapeHtml(candidate)}</td>
                             <td><span class="fit-badge ${badgeClass}">${score}%</span></td>
                             <td><span class="fit-badge" style="padding: 4px 8px; font-size: 11px; ${statusStyle}">${statusText}</span></td>
@@ -7749,6 +7809,22 @@
                     `;
                 }).join("");
             }
+        }
+
+        function formatMatchingReceivedDate(value) {
+            const normalized = String(value || "").trim();
+            return /^\d{4}-\d{2}-\d{2}$/.test(normalized)
+                ? normalized.replaceAll("-", "/")
+                : "—";
+        }
+
+        function matchingReceivedDateInRange(item, receivedFrom, receivedTo) {
+            if (!receivedFrom && !receivedTo) return true;
+            const receivedDate = String(item.project_received_date || "").trim();
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(receivedDate)) return false;
+            if (receivedFrom && receivedDate < receivedFrom) return false;
+            if (receivedTo && receivedDate > receivedTo) return false;
+            return true;
         }
 
         function matchingRateOverlaps(item, rateMin, rateMax) {
@@ -7777,12 +7853,23 @@
             const rateMin = parseInt(document.getElementById("matching-filter-rate-min")?.value || "0", 10);
             const rateMax = parseInt(document.getElementById("matching-filter-rate-max")?.value || "999", 10);
             const minScore = parseInt(document.getElementById("matching-filter-score")?.value || "0", 10);
-            const sourceList = (salesEmailMatches && salesEmailMatches.length) ? salesEmailMatches : matchingData;
+            const receivedFrom = document.getElementById("matching-filter-received-from")?.value || "";
+            const receivedTo = document.getElementById("matching-filter-received-to")?.value || "";
+            const sourceList = salesEmailMatchSourceReady ? salesEmailMatches : matchingData;
             const countElem = document.getElementById("matching-filter-count");
 
             if (rateMin > rateMax) {
                 if (countElem) {
                     countElem.textContent = "単価の上下限を確認してください";
+                    countElem.style.color = "var(--rose)";
+                }
+                renderPublicMatchingTable([]);
+                return;
+            }
+
+            if (receivedFrom && receivedTo && receivedFrom > receivedTo) {
+                if (countElem) {
+                    countElem.textContent = "受信日の期間を確認してください";
                     countElem.style.color = "var(--rose)";
                 }
                 renderPublicMatchingTable([]);
@@ -7796,6 +7883,7 @@
                 const requiredSkills = item.project_required_skills || item.required_skills || [];
 
                 if (score < minScore) return false;
+                if (!matchingReceivedDateInRange(item, receivedFrom, receivedTo)) return false;
 
                 if (keyword) {
                     const searchableText = normalizeText([
@@ -7829,13 +7917,31 @@
             renderPublicMatchingTable(filtered);
         }
 
+        async function refreshSalesEmailMatchesForDateRange() {
+            const receivedFrom = document.getElementById("matching-filter-received-from")?.value || "";
+            const receivedTo = document.getElementById("matching-filter-received-to")?.value || "";
+            if (receivedFrom && receivedTo && receivedFrom > receivedTo) {
+                applyMatchingFilters();
+                return;
+            }
+
+            const countElem = document.getElementById("matching-filter-count");
+            if (countElem) {
+                countElem.textContent = "受信日で検索中…";
+                countElem.style.color = "var(--muted)";
+            }
+            await initSalesEmailMatchData({ receivedFrom, receivedTo });
+        }
+
         function resetMatchingFilters() {
             if (document.getElementById("matching-filter-keyword")) document.getElementById("matching-filter-keyword").value = "";
             if (document.getElementById("matching-filter-skill")) document.getElementById("matching-filter-skill").value = "";
             if (document.getElementById("matching-filter-rate-min")) document.getElementById("matching-filter-rate-min").value = "0";
             if (document.getElementById("matching-filter-rate-max")) document.getElementById("matching-filter-rate-max").value = "999";
             if (document.getElementById("matching-filter-score")) document.getElementById("matching-filter-score").value = "0";
-            applyMatchingFilters();
+            if (document.getElementById("matching-filter-received-from")) document.getElementById("matching-filter-received-from").value = "";
+            if (document.getElementById("matching-filter-received-to")) document.getElementById("matching-filter-received-to").value = "";
+            void refreshSalesEmailMatchesForDateRange();
         }
 
         function toggleApproveMatching(id) {
