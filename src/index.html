@@ -143,15 +143,21 @@
             width: 100%;
             z-index: 100;
             display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 10px clamp(12px, 2.5vw, 36px) 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(180deg, rgba(10, 12, 18, 0.94) 0%, rgba(3, 3, 3, 0.88) 100%);
+            backdrop-filter: blur(16px);
+            transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .topbar-header {
+            display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
             gap: 16px;
-            min-height: 80px;
-            padding: 20px clamp(12px, 2.5vw, 36px) 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            background: linear-gradient(180deg, rgba(12, 14, 20, 0.85) 0%, rgba(3, 3, 3, 0) 100%);
-            backdrop-filter: blur(12px);
-            transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .topbar::after {
@@ -167,9 +173,8 @@
         }
 
         .topbar.scrolled {
-            min-height: 60px;
-            padding: 12px clamp(12px, 2.5vw, 36px);
-            background: rgba(10, 12, 18, 0.92);
+            padding: 8px clamp(12px, 2.5vw, 36px) 4px;
+            background: rgba(8, 10, 15, 0.96);
             backdrop-filter: blur(28px) saturate(180%);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(139, 220, 255, 0.08);
         }
@@ -187,16 +192,16 @@
         }
 
         .brand-mark {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             display: grid;
             place-items: center;
             border: 1px solid rgba(139, 220, 255, 0.4);
-            border-radius: 9px;
+            border-radius: 8px;
             background: linear-gradient(135deg, rgba(139, 220, 255, 0.35), rgba(186, 255, 102, 0.2), rgba(255, 108, 171, 0.25));
             color: #ffffff;
             font-weight: 900;
-            font-size: 1rem;
+            font-size: 0.95rem;
             box-shadow: 0 0 14px rgba(139, 220, 255, 0.25);
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
         }
@@ -239,13 +244,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: clamp(6px, 1vw, 16px);
-            flex: 1 1 auto;
-            min-width: 0;
+            gap: clamp(8px, 1.4vw, 24px);
+            width: 100%;
+            padding-top: 4px;
+            padding-bottom: 2px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
             overflow-x: auto;
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none;  /* IE and Edge */
-            padding: 4px 0;
         }
 
         .nav-links::-webkit-scrollbar {
@@ -3619,13 +3625,41 @@
 <body>
     <a class="skip-link" href="#top">Skip to main content</a>
     <header class="topbar">
-        <a class="brand" href="#top" aria-label="Mighty Skill-Bridge home">
-            <span class="brand-mark">M</span>
-            <span class="brand-text">
-                <strong>Mighty Skill-Bridge</strong>
-                <span>エンジニア＆案件 AIフィットシミュレーター</span>
-            </span>
-        </a>
+        <div class="topbar-header">
+            <a class="brand" href="#top" aria-label="Mighty Skill-Bridge home">
+                <span class="brand-mark">M</span>
+                <span class="brand-text">
+                    <strong>Mighty Skill-Bridge</strong>
+                    <span>エンジニア＆案件 AIフィットシミュレーター</span>
+                </span>
+            </a>
+            <div class="topbar-tools">
+                <div class="language-switch" aria-label="Language">
+                    <a href="#top" data-lang="en" onclick="switchLanguage(this)">EN</a>
+                    <span>/</span>
+                    <a href="#top" data-lang="zh" onclick="switchLanguage(this)">中文</a>
+                    <span>/</span>
+                    <a href="#top" data-lang="ko" onclick="switchLanguage(this)">KO</a>
+                    <span>/</span>
+                    <a href="#top" class="active" data-lang="ja" onclick="switchLanguage(this)">JP</a>
+                </div>
+                <div class="status-strip" aria-live="polite">
+                    <span class="status-dot"></span>
+                    <span id="api-status">Seedance API Preview</span>
+                    <span>/</span>
+                    <a href="admin" style="color: var(--blue); font-weight: 700; text-decoration: underline;" target="_blank" rel="noopener">Admin</a>
+                </div>
+                <div id="auth-nav-container" style="display: flex; align-items: center; gap: 8px;">
+                    <button class="auth-btn-nav" id="open-login-btn" onclick="openAuthModal('login')">🔑 ログイン</button>
+                    <div class="auth-user-badge" id="auth-user-info" style="display: none;">
+                        <span id="auth-user-email">user@example.com</span>
+                        <button class="auth-logout-btn" onclick="handleLogout()" title="ログアウト">🔒 ログアウト</button>
+                    </div>
+                </div>
+                <button class="theme-toggle" type="button" id="theme-toggle" aria-label="配色モードを切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label">ライト</span></button>
+                <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleNav()">☰</button>
+            </div>
+        </div>
         <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
             <a href="#top" data-i18n="nav_home">ホーム</a>
             <a href="#onboarding-section" data-i18n="nav_onboarding">初期セットアップ</a>
@@ -3636,32 +3670,6 @@
             <a href="#matching-section" data-i18n="nav_matching">営業メールマッチング</a>
             <a href="#admin-dashboard-section" data-i18n="nav_admin">管理者ダッシュボード</a>
         </nav>
-        <div class="topbar-tools">
-            <div class="language-switch" aria-label="Language">
-                <a href="#top" data-lang="en" onclick="switchLanguage(this)">EN</a>
-                <span>/</span>
-                <a href="#top" data-lang="zh" onclick="switchLanguage(this)">中文</a>
-                <span>/</span>
-                <a href="#top" data-lang="ko" onclick="switchLanguage(this)">KO</a>
-                <span>/</span>
-                <a href="#top" class="active" data-lang="ja" onclick="switchLanguage(this)">JP</a>
-            </div>
-            <div class="status-strip" aria-live="polite">
-                <span class="status-dot"></span>
-                <span id="api-status">Seedance API Preview</span>
-                <span>/</span>
-                <a href="admin" style="color: var(--blue); font-weight: 700; text-decoration: underline;" target="_blank" rel="noopener">Admin</a>
-            </div>
-            <div id="auth-nav-container" style="display: flex; align-items: center; gap: 8px;">
-                <button class="auth-btn-nav" id="open-login-btn" onclick="openAuthModal('login')">🔑 ログイン</button>
-                <div class="auth-user-badge" id="auth-user-info" style="display: none;">
-                    <span id="auth-user-email">user@example.com</span>
-                    <button class="auth-logout-btn" onclick="handleLogout()" title="ログアウト">🔒 ログアウト</button>
-                </div>
-            </div>
-            <button class="theme-toggle" type="button" id="theme-toggle" aria-label="配色モードを切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label">ライト</span></button>
-            <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleNav()">☰</button>
-        </div>
     </header>
 
     <!-- Training / Onboarding Modal (T919) -->
