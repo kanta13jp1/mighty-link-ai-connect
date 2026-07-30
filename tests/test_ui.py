@@ -53,23 +53,23 @@ def test_ui_flow(fastapi_server):
         assert page.locator("#admin-dashboard-password").count() == 1
         assert page.locator("#support").count() == 1
         
+        
         # 3. Check text areas are initially empty
         eng_input = page.locator("#engineer-input")
         job_input = page.locator("#job-input")
         assert eng_input.input_value() == ""
         assert job_input.input_value() == ""
         
-        # 4. Click the first "Load Sample" button (for engineer resume)
-        # Note: We click the first element matching the sample-btn class
-        page.locator(".sample-btn", has_text="Load Sample").nth(0).click()
+        # 4. Click the first sample load button (for engineer resume)
+        page.locator(".hero-inputs-container .sample-btn").nth(0).click()
         assert len(eng_input.input_value()) > 0
         
-        # 5. Click the second "Load Sample" button (for job details)
-        page.locator(".sample-btn", has_text="Load Sample").nth(1).click()
+        # 5. Click the second sample load button (for job details)
+        page.locator(".hero-inputs-container .sample-btn").nth(1).click()
         assert len(job_input.input_value()) > 0
         
         # 6. Verify Analyze requires legal consent, then accept and run
-        analyze_btn = page.get_by_role("button", name="Analyze Fit & Generate Story")
+        analyze_btn = page.locator("#run-analysis-btn")
         analyze_btn.click()
         page.wait_for_function(
             "document.getElementById('legal-consent-status').textContent.includes('同意が必要')"

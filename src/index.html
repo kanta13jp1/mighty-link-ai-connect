@@ -3630,7 +3630,7 @@
                 <span class="brand-mark">M</span>
                 <span class="brand-text">
                     <strong>Mighty Skill-Bridge</strong>
-                    <span>エンジニア＆案件 AIフィットシミュレーター</span>
+                    <span data-i18n="hero_subtitle_short">エンジニア＆案件 AIフィットシミュレーター</span>
                 </span>
             </a>
             <div class="topbar-tools">
@@ -3650,13 +3650,13 @@
                     <a href="admin" style="color: var(--blue); font-weight: 700; text-decoration: underline;" target="_blank" rel="noopener">Admin</a>
                 </div>
                 <div id="auth-nav-container" style="display: flex; align-items: center; gap: 8px;">
-                    <button class="auth-btn-nav" id="open-login-btn" onclick="openAuthModal('login')">🔑 ログイン</button>
+                    <button class="auth-btn-nav" id="open-login-btn" onclick="openAuthModal('login')" data-i18n="auth_login_btn">🔑 ログイン</button>
                     <div class="auth-user-badge" id="auth-user-info" style="display: none;">
                         <span id="auth-user-email">user@example.com</span>
-                        <button class="auth-logout-btn" onclick="handleLogout()" title="ログアウト">🔒 ログアウト</button>
+                        <button class="auth-logout-btn" onclick="handleLogout()" title="ログアウト" data-i18n="auth_logout_btn" data-i18n-title="auth_logout_title">🔒 ログアウト</button>
                     </div>
                 </div>
-                <button class="theme-toggle" type="button" id="theme-toggle" aria-label="配色モードを切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label">ライト</span></button>
+                <button class="theme-toggle" type="button" id="theme-toggle" aria-label="配色モードを切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label" data-i18n="theme_light">ライト</span></button>
                 <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleNav()">☰</button>
             </div>
         </div>
@@ -3817,10 +3817,10 @@
                 <div class="panel input-panel">
                     <div class="step-kicker">Step 1</div>
                     <div class="section-label">
-                        <span>Engineer Profile</span>
-                        <button class="sample-btn" onclick="loadSampleEngineer()">Load Sample</button>
+                        <span data-i18n="engineer_profile_label">Engineer Profile</span>
+                        <button class="sample-btn" onclick="loadSampleEngineer()" data-i18n="load_sample_btn">Load Sample</button>
                     </div>
-                    <h2 id="engineer-input-heading">Engineer Skill & Experience</h2>
+                    <h2 id="engineer-input-heading" data-i18n="engineer_input_title">Engineer Skill & Experience</h2>
                     <label class="sr-only" for="engineer-input">Engineer profile, skills, and experience</label>
                     <textarea id="engineer-input" class="textarea-input" aria-labelledby="engineer-input-heading" placeholder="エンジニアのスキルや経歴を入力してください..." data-i18n-placeholder="placeholder_engineer"></textarea>
                 </div>
@@ -3829,10 +3829,10 @@
                 <div class="panel input-panel">
                     <div class="step-kicker">Step 1</div>
                     <div class="section-label">
-                        <span>Project Requirements</span>
-                        <button class="sample-btn" onclick="loadSampleJob()">Load Sample</button>
+                        <span data-i18n="job_req_label">Project Requirements</span>
+                        <button class="sample-btn" onclick="loadSampleJob()" data-i18n="load_sample_btn">Load Sample</button>
                     </div>
-                    <h2 id="job-input-heading">Job & Team Requirements</h2>
+                    <h2 id="job-input-heading" data-i18n="job_input_title">Job & Team Requirements</h2>
                     <label class="sr-only" for="job-input">Project requirements and team conditions</label>
                     <textarea id="job-input" class="textarea-input" aria-labelledby="job-input-heading" placeholder="案件の必須要件や歓迎要件を入力してください..." data-i18n-placeholder="placeholder_job"></textarea>
                 </div>
@@ -3843,18 +3843,12 @@
                 <div class="legal-consent-panel" id="legal-consent-panel">
                     <label for="legal-consent-checkbox">
                         <input id="legal-consent-checkbox" type="checkbox" aria-describedby="legal-consent-status">
-                        <span>
-                            <a href="docs/TERMS_OF_SERVICE.md" target="_blank" rel="noopener">サービス利用規約</a>、
-                            <a href="docs/PRIVACY_POLICY.md" target="_blank" rel="noopener">プライバシーポリシー</a>、
-                            <a href="docs/TOKUSHOHO_NOTATION.md" target="_blank" rel="noopener">特定商取引法に基づく表記</a>、
-                            <a href="docs/BILLING_AND_REFUND_POLICY.md" target="_blank" rel="noopener">課金規約・返金ポリシー</a>
-                            のドラフト内容を確認し、AI診断・案件マッチング処理に同意します。
-                        </span>
+                        <span data-i18n-html="legal_consent_text"><a href="docs/TERMS_OF_SERVICE.md" target="_blank" rel="noopener">サービス利用規約</a>、<a href="docs/PRIVACY_POLICY.md" target="_blank" rel="noopener">プライバシーポリシー</a>、<a href="docs/TOKUSHOHO_NOTATION.md" target="_blank" rel="noopener">特定商取引法に基づく表記</a>、<a href="docs/BILLING_AND_REFUND_POLICY.md" target="_blank" rel="noopener">課金規約・返金ポリシー</a>のドラフト内容を確認し、AI診断・案件マッチング処理に同意します。</span>
                     </label>
-                    <span class="legal-consent-status" id="legal-consent-status">法務確認・価格確定前のドラフト版です。一般公開・有償ローンチは引き続きNo-Goです。</span>
+                    <span class="legal-consent-status" id="legal-consent-status" data-i18n="legal_consent_status">法務確認・価格確定前のドラフト版です。一般公開・有償ローンチは引き続きNo-Goです。</span>
                 </div>
-                <button class="big-btn" onclick="runAnalysis()">
-                    <span class="play-glyph"></span>Analyze Fit & Generate Story
+                <button class="big-btn" onclick="runAnalysis()" id="run-analysis-btn">
+                    <span class="play-glyph"></span><span data-i18n="analyze_fit_btn">Analyze Fit & Generate Story</span>
                 </button>
             </div>
         </section>
@@ -3865,30 +3859,29 @@
         <section class="pillars-strip fade-in-on-scroll" aria-label="4-axis fit scoring overview">
             <div class="pillars-head">
                 <div class="step-kicker">4-Axis Fit Scoring</div>
-                <h2>合う・合わないを、4 つの軸で読み解く。</h2>
-                <p>Mighty Skill-Bridge は経歴と案件の文脈推論を 4 軸に分解。
-                    キーワード一致では拾えない「合うかどうか」を、判断者の手に届く解像度で返す。</p>
+                <h2 data-i18n="four_axis_title">合う・合わないを、4 つの軸で読み解く。</h2>
+                <p data-i18n="four_axis_subtitle">Mighty Skill-Bridge は経歴と案件の文脈推論を 4 軸に分解。キーワード一致では拾えない「合うかどうか」を、判断者の手に届く解像度で返す。</p>
             </div>
             <div class="pillars-grid">
                 <article class="fade-in-on-scroll">
                     <span class="pillar-num">01 / SKILL</span>
-                    <h3>到達点を、規模で裏付ける。</h3>
-                    <p>キーワード一致ではなく、過去 PJ 規模からの実証された到達点を 0–100 で評価。</p>
+                    <h3 data-i18n="four_axis_c1_title">到達点を、規模で裏付ける。</h3>
+                    <p data-i18n="four_axis_c1_desc">キーワード一致ではなく、過去 PJ 規模からの実証された到達点を 0–100 で評価。</p>
                 </article>
                 <article class="fade-in-on-scroll">
                     <span class="pillar-num">02 / CULTURE</span>
-                    <h3>働き方を、文脈で読み取る。</h3>
-                    <p>組織形態・意思決定速度・密度の整合性を、文脈推論で読み取る。</p>
+                    <h3 data-i18n="four_axis_c2_title">働き方を、文脈で読み取る。</h3>
+                    <p data-i18n="four_axis_c2_desc">組織形態・意思決定速度・密度の整合性を、文脈推論で読み取る。</p>
                 </article>
                 <article class="fade-in-on-scroll">
                     <span class="pillar-num">03 / GROWTH</span>
-                    <h3>3 週間後を、いま設計する。</h3>
-                    <p>配属直後のキャッチアップ可能性を、week 1 / 2 / 3 のロードマップに分解。</p>
+                    <h3 data-i18n="four_axis_c3_title">3 週間後を、いま設計する。</h3>
+                    <p data-i18n="four_axis_c3_desc">配属直後のキャッチアップ可能性を、week 1 / 2 / 3 のロードマップに分解。</p>
                 </article>
                 <article class="fade-in-on-scroll">
                     <span class="pillar-num">04 / PERFORMING</span>
-                    <h3>再現性を、過去から測る。</h3>
-                    <p>実績の再現性 — 過去 PJ の規模と成果から、将来 perf を推定する。</p>
+                    <h3 data-i18n="four_axis_c4_title">再現性を、過去から測る。</h3>
+                    <p data-i18n="four_axis_c4_desc">実績の再現性 — 過去 PJ の規模と成果から、将来 perf を推定する。</p>
                 </article>
             </div>
         </section>
@@ -4092,14 +4085,14 @@
         <section id="comparison-section" class="comparison-section fade-in-on-scroll" aria-label="Multiple Candidates Comparison Board">
             <div class="step-kicker">Step 2.5</div>
             <div class="section-title-wrapper" style="text-align: center; margin-bottom: 24px;">
-                <h2 class="section-title" style="font-size: 32px; font-weight: 800; letter-spacing: -0.5px;">Multiple Candidates Comparison Board <span class="accent-text" style="background: linear-gradient(135deg, var(--blue), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">案件候補比較ボード</span></h2>
-                <p class="section-subtitle" style="color: var(--muted); margin-top: 8px; font-size: 15px;">複数案件とストック候補エンジニアの多次元フィットスコアを一覧で突合・比較します。</p>
+                <h2 class="section-title" style="font-size: 32px; font-weight: 800; letter-spacing: -0.5px;" data-i18n="comp_board_title">案件候補比較ボード</h2>
+                <p class="section-subtitle" style="color: var(--muted); margin-top: 8px; font-size: 15px;" data-i18n="comp_board_subtitle">複数案件とストック候補エンジニアの多次元フィットスコアを一覧で突合・比較します。</p>
             </div>
 
             <div class="comparison-container">
                 <div class="comparison-controls">
                     <div class="control-group">
-                        <label for="comparison-job-select" class="control-label">対象案件の選択:</label>
+                        <label for="comparison-job-select" class="control-label" data-i18n="comp_select_job">対象案件の選択:</label>
                         <div class="select-wrapper">
                             <select id="comparison-job-select" onchange="updateComparisonBoard()">
                                 <!-- Loaded dynamically or falls back to mock -->
@@ -4109,10 +4102,10 @@
 
                     <div class="control-actions">
                         <button class="action-btn secondary-btn" onclick="openAddCandidateModal()">
-                            <span class="btn-icon" style="font-size: 16px; font-weight: bold;">+</span> 候補者の追加
+                            <span class="btn-icon" style="font-size: 16px; font-weight: bold;">+</span> <span data-i18n="comp_add_candidate">+ 候補者の追加</span>
                         </button>
                         <button class="action-btn primary-btn" onclick="exportComparisonCSV()">
-                            <span class="btn-icon" style="font-size: 14px;">⬇</span> CSVエクスポート
+                            <span class="btn-icon" style="font-size: 14px;">⬇</span> <span data-i18n="comp_export_csv">CSVエクスポート</span>
                         </button>
                     </div>
                 </div>
@@ -4121,15 +4114,15 @@
                     <table class="comparison-table">
                         <thead>
                             <tr>
-                                <th class="sortable" onclick="sortComparison('name')">候補者氏名 <span class="sort-indicator" id="sort-name"></span></th>
-                                <th class="sortable" onclick="sortComparison('final_score')">総合マッチ度 <span class="sort-indicator" id="sort-final_score"></span></th>
-                                <th class="sortable" onclick="sortComparison('skill')">スキル適合 <span class="sort-indicator" id="sort-skill"></span></th>
-                                <th class="sortable" onclick="sortComparison('culture')">カルチャー適合 <span class="sort-indicator" id="sort-culture"></span></th>
-                                <th class="sortable" onclick="sortComparison('growth')">成長親和性 <span class="sort-indicator" id="sort-growth"></span></th>
-                                <th class="sortable" onclick="sortComparison('performing')">稼働安定性 <span class="sort-indicator" id="sort-performing"></span></th>
-                                <th>一致根拠</th>
-                                <th>確認/不足</th>
-                                <th>アクション</th>
+                                <th class="sortable" onclick="sortComparison('name')"><span data-i18n="comp_th_name">候補者氏名</span> <span class="sort-indicator" id="sort-name"></span></th>
+                                <th class="sortable" onclick="sortComparison('final_score')"><span data-i18n="comp_th_score">総合マッチ度</span> <span class="sort-indicator" id="sort-final_score"></span></th>
+                                <th class="sortable" onclick="sortComparison('skill')"><span data-i18n="comp_th_skill">スキル適合</span> <span class="sort-indicator" id="sort-skill"></span></th>
+                                <th class="sortable" onclick="sortComparison('culture')"><span data-i18n="comp_th_culture">カルチャー適合</span> <span class="sort-indicator" id="sort-culture"></span></th>
+                                <th class="sortable" onclick="sortComparison('growth')"><span data-i18n="comp_th_growth">成長親和性</span> <span class="sort-indicator" id="sort-growth"></span></th>
+                                <th class="sortable" onclick="sortComparison('performing')"><span data-i18n="comp_th_stability">稼働安定性</span> <span class="sort-indicator" id="sort-performing"></span></th>
+                                <th data-i18n="comp_th_evidence">一致根拠</th>
+                                <th data-i18n="comp_th_gaps">確認/不足</th>
+                                <th data-i18n="comp_th_action">アクション</th>
                             </tr>
                         </thead>
                         <tbody id="comparison-tbody">
@@ -4347,7 +4340,7 @@
                             <div id="aptitude-band-legend" class="aptitude-band-legend" aria-live="polite"></div>
                             <p class="control-label" style="margin-top: 8px;">スコアはセルフチェックの目安です。人事評価や処遇の判断には使用しません。</p>
                         </div>
-                        <button type="button" class="sample-btn" id="aptitude-demo-consent-jump" onclick="focusLegalConsentPanel()" style="margin-top: 10px;">↑ 上部の規約同意チェック欄へ移動</button>
+                        <button type="button" class="sample-btn" id="aptitude-demo-consent-jump" onclick="focusLegalConsentPanel()" style="margin-top: 10px;" data-i18n="onboard_jump_btn">↑ 上部の規約同意チェック欄へ移動</button>
                         <div class="aptitude-demo-actions">
                             <button type="button" class="big-btn" id="aptitude-demo-generate" onclick="loadAptitudeQuestions()" data-i18n="aptitude_run_btn">質問を生成</button>
                             <button type="button" class="big-btn" id="aptitude-demo-evaluate" onclick="evaluateAptitudeDemo()">評価する</button>
@@ -4553,7 +4546,7 @@
                                     <th>適合エンジニア</th>
                                     <th>マッチングスコア</th>
                                     <th>ステータス</th>
-                                    <th>アクション</th>
+                                    <th data-i18n="comp_th_action">アクション</th>
                                 </tr>
                             </thead>
                             <tbody id="public-matching-table-body">
@@ -5095,7 +5088,7 @@
                 admin_refresh_btn: "データを最新に更新",
                 admin_status_active: "システム正常稼働中",
                 auth_login_btn: "🔑 ログイン",
-                auth_logout_btn: "🚪 ログアウト",
+                auth_logout_btn: "🔒 ログアウト",
                 auth_modal_title: "ダッシュボード ログイン",
                 auth_email_label: "メールアドレス",
                 auth_pass_label: "パスワード",
@@ -5120,7 +5113,47 @@
                 admin_ops_subtitle: "適性診断・勤怠解析・営業メールマッチングの一元管理",
                 admin_card_survey: "適性診断回答数",
                 admin_card_attendance: "勤怠打刻解析数",
-                admin_card_matching: "営業メールAIマッチング"
+                admin_card_matching: "営業メールAIマッチング",
+                hero_subtitle_short: "エンジニア＆案件 AIフィットシミュレーター",
+                auth_logout_title: "ログアウト",
+                theme_light: "ライト",
+                theme_dark: "ダーク",
+                step_1_badge: "Step 1",
+                step_2_5_badge: "Step 2.5",
+                load_sample_btn: "サンプルを読み込む",
+                engineer_profile_label: "ENGINEER PROFILE / エンジニア経歴",
+                engineer_input_title: "エンジニアのスキルと経歴",
+                job_req_label: "PROJECT REQUIREMENTS / 案件・チーム要件",
+                job_input_title: "案件・チームの必須要件",
+                legal_consent_text: "<a href=\"docs/TERMS_OF_SERVICE.md\" target=\"_blank\" rel=\"noopener\">サービス利用規約</a>、<a href=\"docs/PRIVACY_POLICY.md\" target=\"_blank\" rel=\"noopener\">プライバシーポリシー</a>、<a href=\"docs/TOKUSHOHO_NOTATION.md\" target=\"_blank\" rel=\"noopener\">特定商取引法に基づく表記</a>、<a href=\"docs/BILLING_AND_REFUND_POLICY.md\" target=\"_blank\" rel=\"noopener\">課金規約・返金ポリシー</a>のドラフト内容を確認し、AI診断・案件マッチング処理に同意します。",
+                legal_consent_status: "法務確認・価格確定前のドラフト版です。一般公開・有償ローンチは引き続きNo-Goです。",
+                analyze_fit_btn: "Analyze Fit & Generate Story / 適合度分析",
+                four_axis_title: "合う・合わないを、4 つの軸で読み解く。",
+                four_axis_subtitle: "Mighty Skill-Bridge は経歴と案件の文脈推論を 4 軸に分解。キーワード一致では拾えない「合うかどうか」を、判断者の手に届く解像度で返す。",
+                four_axis_c1_title: "到達点を、規模で裏付ける。",
+                four_axis_c1_desc: "キーワード一致ではなく、過去 PJ 規模からの実証された到達点を 0–100 で評価。",
+                four_axis_c2_title: "働き方を、文脈で読み取る。",
+                four_axis_c2_desc: "組織形態・意思決定速度・密度の整合性を、文脈推論で読み取る。",
+                four_axis_c3_title: "3 週間後を、いま設計する。",
+                four_axis_c3_desc: "配属直後のキャッチアップ可能性を、week 1 / 2 / 3 のロードマップに分解。",
+                four_axis_c4_title: "再現性を、過去から測る。",
+                four_axis_c4_desc: "実績の再現性 — 過去 PJ の規模と成果から、将来 perf を推定する。",
+                comp_board_title: "案件候補比較ボード",
+                comp_board_subtitle: "複数案件とストック候補エンジニアの多次元フィットスコアを一覧で突合・比較します。",
+                comp_select_job: "対象案件の選択:",
+                comp_add_candidate: "+ 候補者の追加",
+                comp_export_csv: "CSVエクスポート",
+                comp_th_name: "候補者氏名",
+                comp_th_score: "総合マッチ度",
+                comp_th_skill: "スキル適合",
+                comp_th_culture: "カルチャー適合",
+                comp_th_growth: "成長親和性",
+                comp_th_stability: "稼働安定性",
+                comp_th_evidence: "一致根拠",
+                comp_th_gaps: "確認/不足",
+                comp_th_action: "アクション",
+                onboard_jump_btn: "↑ 上部の規約同意チェック欄へ移動",
+                onboard_open_training_modal: "役割別研修ガイドモーダルを開く"
             },
             en: {
                 nav_home: "Home",
@@ -5179,7 +5212,7 @@
                 admin_refresh_btn: "Refresh Data",
                 admin_status_active: "System Operating Normally",
                 auth_login_btn: "🔑 Login",
-                auth_logout_btn: "🚪 Logout",
+                auth_logout_btn: "🔒 Logout",
                 auth_modal_title: "Dashboard Login",
                 auth_email_label: "Email Address",
                 auth_pass_label: "Password",
@@ -5204,7 +5237,47 @@
                 admin_ops_subtitle: "Centralized management for aptitude assessment, attendance, and email matching",
                 admin_card_survey: "Assessment Responses",
                 admin_card_attendance: "Attendance Analyses",
-                admin_card_matching: "Email AI Matching"
+                admin_card_matching: "Email AI Matching",
+                hero_subtitle_short: "Engineer & Job AI Fit Simulator",
+                auth_logout_title: "Logout",
+                theme_light: "Light",
+                theme_dark: "Dark",
+                step_1_badge: "Step 1",
+                step_2_5_badge: "Step 2.5",
+                load_sample_btn: "Load Sample",
+                engineer_profile_label: "ENGINEER PROFILE / Engineer Profile",
+                engineer_input_title: "Engineer Skill & Experience",
+                job_req_label: "PROJECT REQUIREMENTS / Job Requirements",
+                job_input_title: "Job & Team Requirements",
+                legal_consent_text: "<a href=\"docs/TERMS_OF_SERVICE.md\" target=\"_blank\" rel=\"noopener\">Terms of Service</a>, <a href=\"docs/PRIVACY_POLICY.md\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>, <a href=\"docs/TOKUSHOHO_NOTATION.md\" target=\"_blank\" rel=\"noopener\">Specified Commercial Transactions</a>, and <a href=\"docs/BILLING_AND_REFUND_POLICY.md\" target=\"_blank\" rel=\"noopener\">Billing Policy</a> draft content confirmed, and I consent to AI fit diagnosis and job matching.",
+                legal_consent_status: "Draft version prior to legal review and price finalization. Public paid launch is currently No-Go.",
+                analyze_fit_btn: "Analyze Fit & Generate Story",
+                four_axis_title: "Decoding Fit Across 4 Dimensions.",
+                four_axis_subtitle: "Mighty Skill-Bridge breaks down background and job context into 4 axes, capturing true fit beyond simple keyword matching.",
+                four_axis_c1_title: "Substantiating scale & reach.",
+                four_axis_c1_desc: "Evaluates proven achievement from past project scales on a 0-100 score.",
+                four_axis_c2_title: "Reading work culture in context.",
+                four_axis_c2_desc: "Infers alignment across organization type, decision speed, and communication density.",
+                four_axis_c3_title: "Designing speed to autonomy.",
+                four_axis_c3_desc: "Deconstructs initial catch-up potential into a week 1/2/3 onboarding roadmap.",
+                four_axis_c4_title: "Predicting future performance.",
+                four_axis_c4_desc: "Estimates future performance repeatability based on scale and outcomes.",
+                comp_board_title: "Multiple Candidates Comparison Board",
+                comp_board_subtitle: "Compare multi-dimensional fit scores across multiple jobs and candidate engineers.",
+                comp_select_job: "Select Target Job:",
+                comp_add_candidate: "+ Add Candidate",
+                comp_export_csv: "Export CSV",
+                comp_th_name: "Candidate Name",
+                comp_th_score: "Overall Fit",
+                comp_th_skill: "Skill Fit",
+                comp_th_culture: "Culture Fit",
+                comp_th_growth: "Growth Fit",
+                comp_th_stability: "Stability",
+                comp_th_evidence: "Evidence",
+                comp_th_gaps: "Gaps / Verification",
+                comp_th_action: "Action",
+                onboard_jump_btn: "↑ Jump to Legal Consent Checkbox",
+                onboard_open_training_modal: "Open Role Training Modal"
             },
             zh: {
                 nav_home: "首页",
@@ -5263,7 +5336,7 @@
                 admin_refresh_btn: "刷新最新数据",
                 admin_status_active: "系统正常运行中",
                 auth_login_btn: "🔑 登录",
-                auth_logout_btn: "🚪 退出登录",
+                auth_logout_btn: "🔒 退出登录",
                 auth_modal_title: "控制台登录",
                 auth_email_label: "电子邮箱",
                 auth_pass_label: "密码",
@@ -5288,7 +5361,47 @@
                 admin_ops_subtitle: "胜任力诊断、考勤分析与邮件匹配的一站式管理",
                 admin_card_survey: "胜任力诊断答卷数",
                 admin_card_attendance: "考勤打卡分析数",
-                admin_card_matching: "邮件匹配运行数"
+                admin_card_matching: "邮件匹配运行数",
+                hero_subtitle_short: "工程师与职位 AI 匹配模拟器",
+                auth_logout_title: "退出登录",
+                theme_light: "浅色",
+                theme_dark: "深色",
+                step_1_badge: "步骤 1",
+                step_2_5_badge: "步骤 2.5",
+                load_sample_btn: "加载示例",
+                engineer_profile_label: "ENGINEER PROFILE / 工程师技能与履历",
+                engineer_input_title: "工程师技能与履历详情",
+                job_req_label: "PROJECT REQUIREMENTS / 职位与团队要求",
+                job_input_title: "职位与团队必备要件",
+                legal_consent_text: "我已确认<a href=\"docs/TERMS_OF_SERVICE.md\" target=\"_blank\" rel=\"noopener\">服务条款</a>、<a href=\"docs/PRIVACY_POLICY.md\" target=\"_blank\" rel=\"noopener\">隐私政策</a>、<a href=\"docs/TOKUSHOHO_NOTATION.md\" target=\"_blank\" rel=\"noopener\">特定商业交易法标识</a>、<a href=\"docs/BILLING_AND_REFUND_POLICY.md\" target=\"_blank\" rel=\"noopener\">计费与退款政策</a>草案，并同意执行 AI 匹配诊断。",
+                legal_consent_status: "法务审核与价格确定前的草案版本。目前暂未开启公开有偿上线。",
+                analyze_fit_btn: "分析契合度并生成报告",
+                four_axis_title: "从 4 个维度解读契合度。",
+                four_axis_subtitle: "Mighty Skill-Bridge 将履历与职位上下文拆解为 4 个维度，超越简单关键词匹配，呈现深层契合度。",
+                four_axis_c1_title: "用项目规模印证技能到达高度。",
+                four_axis_c1_desc: "超越关键词匹配，基于过往项目规模评估 0-100 得分。",
+                four_axis_c2_title: "在上下文中解读工作文化与习惯。",
+                four_axis_c2_desc: "推论组织形态、决策速度与沟通密度的契合程度。",
+                four_axis_c3_title: "预判并规划入职 3 周后的成长曲线。",
+                four_axis_c3_desc: "将入职初期的适应潜力拆解为第 1/2/3 周的成长路线图。",
+                four_axis_c4_title: "基于过往业绩衡量未来工作再现性。",
+                four_axis_c4_desc: "根据过往项目规模与成果，预估未来表现的再现性。",
+                comp_board_title: "项目候选人综合对比面板",
+                comp_board_subtitle: "跨多个职位与储备工程师，一站式对比多维契合度评分。",
+                comp_select_job: "选择目标职位:",
+                comp_add_candidate: "+ 添加候选人",
+                comp_export_csv: "导出 CSV",
+                comp_th_name: "候选人姓名/标识",
+                comp_th_score: "综合契合度",
+                comp_th_skill: "技能匹配",
+                comp_th_culture: "文化契合",
+                comp_th_growth: "成长亲和力",
+                comp_th_stability: "工作稳定性",
+                comp_th_evidence: "匹配依据",
+                comp_th_gaps: "待确认/不足",
+                comp_th_action: "操作",
+                onboard_jump_btn: "↑ 跳转至顶部条款同意勾选框",
+                onboard_open_training_modal: "打开角色分工培训指南"
             },
             ko: {
                 nav_home: "홈",
@@ -5347,7 +5460,7 @@
                 admin_refresh_btn: "최신 데이터로 새로고침",
                 admin_status_active: "시스템 정상 작동 중",
                 auth_login_btn: "🔑 로그인",
-                auth_logout_btn: "🚪 로그아웃",
+                auth_logout_btn: "🔒 로그아웃",
                 auth_modal_title: "대시보드 로그인",
                 auth_email_label: "이메일 주소",
                 auth_pass_label: "비밀번호",
@@ -5372,7 +5485,47 @@
                 admin_ops_subtitle: "적성 진단, 근태 분석, 영업 메일 매칭 통합 관리",
                 admin_card_survey: "적성 진단 응답 수",
                 admin_card_attendance: "근태 분석 건수",
-                admin_card_matching: "영업 메일 매칭 건수"
+                admin_card_matching: "영업 메일 매칭 건수",
+                hero_subtitle_short: "엔지니어 & 프로젝트 AI 피트 시뮬레이터",
+                auth_logout_title: "로그아웃",
+                theme_light: "라이트",
+                theme_dark: "다크",
+                step_1_badge: "1단계",
+                step_2_5_badge: "2.5단계",
+                load_sample_btn: "샘플 로드",
+                engineer_profile_label: "ENGINEER PROFILE / 엔지니어 경력",
+                engineer_input_title: "엔지니어 스킬 및 경력",
+                job_req_label: "PROJECT REQUIREMENTS / 프로젝트 요건",
+                job_input_title: "프로젝트 필수 요건",
+                legal_consent_text: "<a href=\"docs/TERMS_OF_SERVICE.md\" target=\"_blank\" rel=\"noopener\">서비스 이용약관</a>, <a href=\"docs/PRIVACY_POLICY.md\" target=\"_blank\" rel=\"noopener\">개인정보 처리방침</a>, <a href=\"docs/TOKUSHOHO_NOTATION.md\" target=\"_blank\" rel=\"noopener\">특정상거래법 표기</a>, <a href=\"docs/BILLING_AND_REFUND_POLICY.md\" target=\"_blank\" rel=\"noopener\">결제 정책</a> 드래프트를 확인하였으며 AI 진단 처리에 동의합니다.",
+                legal_consent_status: "법무 검토 및 가격 확정 전의 드래프트 버전입니다. 정식 공개 및 유료 런칭은 미확정 상태입니다.",
+                analyze_fit_btn: "적합도 분석 및 리포트 생성",
+                four_axis_title: "적합성을 4가지 축으로 분석합니다.",
+                four_axis_subtitle: "Mighty Skill-Bridge는 이력과 프로젝트 맥락을 4개 축으로 분석하여, 단순 키워드 일치를 넘어선 진짜 적합성을 전달합니다.",
+                four_axis_c1_title: "프로젝트 규모로 증명하는 기술 수준.",
+                four_axis_c1_desc: "단순 키워드가 아닌 과거 프로젝트 규모 기반 0-100 점수 평가.",
+                four_axis_c2_title: "맥락으로 읽어내는 조직 문화 적합도.",
+                four_axis_c2_desc: "조직 형태, 의사결정 속도, 커뮤니케이션 밀도의 정합성 분석.",
+                four_axis_c3_title: "입사 3주 후의 성장 곡선을 설계.",
+                four_axis_c3_desc: "초기 온보딩 적응 가능性を 1/2/3주차 로드맵으로 해독.",
+                four_axis_c4_title: "과거 성과로 측정하는 미래 재현성.",
+                four_axis_c4_desc: "과거 프로젝트 규모와 성과로부터 미래 성과 재현性を 추정.",
+                comp_board_title: "프로젝트 후보자 비교 대시보드",
+                comp_board_subtitle: "복수 프로젝트와 인재 후보의 다차원 적합도 점수를 한눈에 비교.",
+                comp_select_job: "대상 프로젝트 선택:",
+                comp_add_candidate: "+ 후보자 추가",
+                comp_export_csv: "CSV 내보내기",
+                comp_th_name: "후보자 성명",
+                comp_th_score: "종합 적합도",
+                comp_th_skill: "기술 적합도",
+                comp_th_culture: "문화 적합도",
+                comp_th_growth: "성장 친화성",
+                comp_th_stability: "가동 안정성",
+                comp_th_evidence: "일치 근거",
+                comp_th_gaps: "확인/부족",
+                comp_th_action: "작업",
+                onboard_jump_btn: "↑ 상단 약관 동의 체크란으로 이동",
+                onboard_open_training_modal: "역할별 연수 가이드 모달 열기"
             }
         };
 
