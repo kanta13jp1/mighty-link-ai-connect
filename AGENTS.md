@@ -46,7 +46,6 @@ python scripts/sync_wbs_to_github.py TXXX --dry-run
 python scripts/sync_wbs_to_github.py TXXX --report exports/github_wbs_sync_report.json
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
 ```
 
 Replace `TXXX` with every WBS task completed or materially updated in the session. The GitHub sync is intentionally targeted and must not be run against the full historical WBS by default.
@@ -59,20 +58,11 @@ python scripts/generate_ceo_presentation_deck.py
 python scripts/upload_notebooklm_docs_to_drive.py
 ```
 
-After validation, commit intentionally, push `main`, and push `master` from `main` so GitHub Pages stays aligned with the CEO-shared public URL.
+After validation, commit intentionally and push `main` (production deployment to mightylink-app.com via Firebase Hosting).
 
 ## Tool Lanes
 
 - Antigravity + Gemini: frontend polish, multimodal demos, browser-agent checks, and post-quota visual refinement.
-- VSCode + Codex: backend, sync scripts, GitHub CLI, Google Workspace automation, CI/public-demo guard, and WBS source edits.
+- VSCode + Codex: backend, sync scripts, GitHub CLI, Google Workspace automation, CI/CD, and WBS source edits.
 - VSCode + Claude Code: documentation, review, triage, checklist maintenance, and third-party review of Codex/Antigravity changes.
 
-## Public Demo Guard
-
-The public demo URL is shared with the CEO. Do not ship UI changes without checking:
-
-```powershell
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
-```
-
-If the guard fails, fix or revert only your own change before pushing.

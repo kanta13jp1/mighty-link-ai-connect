@@ -1,13 +1,13 @@
 {
   "status": "blocked",
-  "generated_at": "2026-07-30T14:00:05Z",
-  "issue_total": 192,
+  "generated_at": "2026-07-30T15:16:36Z",
+  "issue_total": 193,
   "qa_total": 175,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
     "open": 5,
-    "resolved": 166,
+    "resolved": 167,
     "transferred": 18
   },
   "qa_status_counts": {
