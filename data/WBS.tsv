@@ -363,4 +363,9 @@ T925	8. 本番運用・品質管理	品質管理	開発プロセス＆WBS進捗�
 T926	8. 本番運用・品質管理	フロントエンド	UI内ヘルプ・FAQガイド（日本語ダイアログ・直感的操作案内）の組み込み	Antigravity	Antigravity + Gemini	日本語UI/UX向上施策(1)。UIへ日本語ヘルプモーダル・操作ガイド・エラー対処案内を実装し、ユーザーの直感的操作をサポート。回帰テスト(tests/test_ui_help_guide.py)を完遂し完了化	完了	2026-08-05	2026-08-05
 T927	8. 本番運用・品質管理	バックエンド開発	営業メールAIマッチング適合理由・サマリー・QA生成プロンプトの日本語自然化・品質最適化	Antigravity	Antigravity + Gemini	日本語UI/UX向上施策(2)。AI生成文脈（マッチング根拠、スキルギャップ、育成ロードマップ）のプロンプトを丁寧で自然なビジネス日本語へ最適化。回帰テスト(tests/test_sales_email_ai_japanese_prompt.py)を完了	完了	2026-08-05	2026-08-05
 T928	8. 本番運用・品質管理	フロントエンド	社内適性・モチベーション診断の面談ガイド日本語表現精緻化と法務・医療誤認防止文言強化	Antigravity	Antigravity + Gemini	日本語UI/UX向上施策(3)。診断結果面談ガイドの文言を親身な表現へ精緻化し、「人事評価・処遇目的ではない」「医療判断を行わない」法務免責を強化。回帰テスト(tests/test_aptitude_score_bands.py)を完了	完了	2026-08-05	2026-08-05
+T929	8. 本番運用・品質管理	ドキュメント保守	Obsidianを活用したローカル開発プロセスガイドの策定およびVault雛形・テンプレート拡張	Antigravity	Antigravity + Gemini	Obsidian開発プロセスガイド(docs/OBSIDIAN_DEVELOPMENT_WORKFLOW.md)・Vault4層構造・テンプレート拡張・CI検証・完了化	完了	2026-08-05	2026-08-05
+T930	8. 本番運用・品質管理	死活監視	本番全エンドポイント統合死活・レスポンス構造監視の自動化と運用検証	Antigravity	Antigravity + Gemini	/api/health, /api/sales-email/analytics, /api/aptitude-demo/legend 等の主要全エンドポイントのステータス・応答速度・JSON構造妥当性を自動検証し、exports/uptime_monitor_report.json および死活監視ログへ記録・反映する	完了	2026-08-05	2026-08-05
+T931	8. 本番運用・品質管理	セキュリティ監視	セキュリティ・認証エラー・要配慮個人情報非保存のログ健全性自動スキャン	Antigravity	Antigravity + Gemini	監査ログ・エラーログ内の認証失敗・認可拒否・要配慮個人情報漏洩非存在をCI自動スキャンする仕組みの整備	未着手	2026-08-05	2026-08-12
+T932	8. 本番運用・品質管理	コスト監視	3 AIツール/外部サービス月間コスト・クォータ使用量自動ダッシュボード監視と健全性アラート統合検証	Antigravity	Antigravity + Gemini	AI APIおよび各種外部インフラのクォータ・費用上限監視と超過時のアラート通知体制を検証	未着手	2026-08-05	2026-08-15
+
 

@@ -403,8 +403,9 @@ gantt
 | **T924** | 8. 本番運用・品質管理 | 運用管理 | 公開デモ（GitHub Pages）の廃止・デコミッションと本番mightylink-app.com一元化 | Antigravity | Antigravity + Gemini | mightylink-app.comの本番稼働に伴い、GitHub Pagesによる公開デモ（masterブランチ配信）およびverify_public_demoガードを廃止・削除。mainブランチからのFirebase Hosting自動デプロイへ一元化し、二重管理を解消。 | 完了 |
 | **T925** | 8. 本番運用・品質管理 | 品質管理 | 開発プロセス＆WBS進捗ガバナンスの最適化と8/5定例前最終監査 | Antigravity | Antigravity + Gemini | /grill-meアライメントに基づき開発プロセスガバナンス(8/5定例直前WBS・事前アジェンダ・プリフライト25ガード・同期パイプライン)を最終検証し完了化 | 完了 |
 | **T926** | 8. 本番運用・品質管理 | フロントエンド | UI内ヘルプ・FAQガイド（日本語ダイアログ・直感的操作案内）の組み込み | Antigravity | Antigravity + Gemini | 日本語UI/UX向上施策(1)。UIへ日本語ヘルプモーダル・操作ガイド・エラー対処案内を実装し、ユーザーの直感的操作をサポート。回帰テスト(tests/test_ui_help_guide.py)を完遂し完了化 | 完了 |
-| **T927** | 8. 本番運用・品質管理 | バックエンド開発 | 営業メールAIマッチング適合理由・サマリー・QA生成プロンプトの日本語自然化・品質最適化 | Antigravity | Antigravity + Gemini | 日本語UI/UX向上施策(2)。AI生成文脈（マッチング根拠、スキルギャップ、育成ロードマップ）のプロンプトを丁寧で自然なビジネス日本語へ最適化 | 未着手 |
-| **T928** | 8. 本番運用・品質管理 | フロントエンド | 社内適性・モチベーション診断の面談ガイド日本語表現精緻化と法務・医療誤認防止文言強化 | Antigravity | Antigravity + Gemini | 日本語UI/UX向上施策(3)。診断結果面談ガイドの文言を親身な表現へ精緻化し、「人事評価・処遇目的ではない」「医療判断を行わない」法務免責を強化 | 未着手 |
+| **T927** | 8. 本番運用・品質管理 | バックエンド開発 | 営業メールAIマッチング適合理由・サマリー・QA生成プロンプトの日本語自然化・品質最適化 | Antigravity | Antigravity + Gemini | 日本語UI/UX向上施策(2)。AI生成文脈（マッチング根拠、スキルギャップ、育成ロードマップ）のプロンプトを丁寧で自然なビジネス日本語へ最適化。回帰テスト(tests/test_sales_email_ai_japanese_prompt.py)を完了 | 完了 |
+| **T928** | 8. 本番運用・品質管理 | フロントエンド | 社内適性・モチベーション診断の面談ガイド日本語表現精緻化と法務・医療誤認防止文言強化 | Antigravity | Antigravity + Gemini | 日本語UI/UX向上施策(3)。診断結果面談ガイドの文言を親身な表現へ精緻化し、「人事評価・処遇目的ではない」「医療判断を行わない」法務免責を強化。回帰テスト(tests/test_aptitude_score_bands.py)を完了 | 完了 |
+| **T929** | 8. 本番運用・品質管理 | ドキュメント保守 | Obsidianを活用したローカル開発プロセスガイドの策定およびVault雛形・テンプレート拡張 | Antigravity | Antigravity + Gemini | Obsidian開発プロセスガイド(docs/OBSIDIAN_DEVELOPMENT_WORKFLOW.md)・Vault4層構造・テンプレート拡張・CI検証・完了化 | 完了 |
 
 ---
 

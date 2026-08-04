@@ -327,6 +327,26 @@ def write_csv(path: Path, rows: list[dict], fieldnames: list[str] | None = None)
 
 def build_obsidian_vault(summary: dict) -> None:
     write_text(
+        OBSIDIAN_DIR / "00_Inbox" / "README.md",
+        "# 00_Inbox\n\nDaily notes, meeting scratchpads, and rapid thought capture.\n",
+    )
+    write_text(
+        OBSIDIAN_DIR / "10_ADR_Drafts" / "README.md",
+        "# 10_ADR_Drafts\n\nDraft Architectural Decision Records before official promotion to docs/ARCHITECTURE_DECISION_RECORDS.md.\n",
+    )
+    write_text(
+        OBSIDIAN_DIR / "20_Prompts" / "README.md",
+        "# 20_Prompts\n\nPrompt engineering experiments, LLM model comparison logs (Gemini / Claude / Codex).\n",
+    )
+    write_text(
+        OBSIDIAN_DIR / "30_Meetings" / "README.md",
+        "# 30_Meetings\n\nMeeting scratch notes, real-time agenda checklists.\n",
+    )
+    write_text(
+        OBSIDIAN_DIR / "40_Canvas" / "README.md",
+        "# 40_Canvas\n\nObsidian Canvas files for visual system architecture, data flows, and UI wireframes.\n",
+    )
+    write_text(
         OBSIDIAN_DIR / "Mighty Skill-Bridge Home.md",
         f"""# Mighty Skill-Bridge Home
 
