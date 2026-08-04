@@ -197,12 +197,15 @@ def update_obsidian_vault_home() -> None:
             db_readme.write_text(txt, encoding="utf-8")
 
 
-def main():
-    print("[*] Connecting all nodes in Knowledge Graph...")
+def connect_all_knowledge_nodes() -> list[Path]:
     generate_master_knowledge_graph()
     update_obsidian_vault_home()
-    
-    isolated = find_isolated_files()
+    return find_isolated_files()
+
+
+def main():
+    print("[*] Connecting all nodes in Knowledge Graph...")
+    isolated = connect_all_knowledge_nodes()
     print(f"[*] Remaining isolated files: {len(isolated)}")
     if isolated:
         for p in isolated:

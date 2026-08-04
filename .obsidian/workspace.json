@@ -185,6 +185,7 @@
   },
   "active": "f21d96d7b62fbfd4",
   "lastOpenFiles": [
+    "scripts/__pycache__/connect_knowledge_graph.cpython-312.pyc",
     "data_test_user_export/mighty.db",
     "data_test_user_export/mighty.db-wal",
     "data_test_user_export/mighty.db-shm",
@@ -208,7 +209,6 @@
     "docs/wireframes/README.md",
     "docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
     "data/mighty.db-wal",
-    "data/mighty.db-shm",
     "docs/SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md"
   ]
 }
