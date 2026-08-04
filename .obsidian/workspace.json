@@ -185,6 +185,11 @@
   },
   "active": "f21d96d7b62fbfd4",
   "lastOpenFiles": [
+    "data_test_user_export/mighty.db",
+    "data_test_user_export/mighty.db-wal",
+    "data_test_user_export/mighty.db-shm",
+    "data_test_user_export/audit",
+    "data_test_user_export",
     "firebase-debug.log",
     "tests/__pycache__/test_knowledge_graph_connectivity.cpython-312-pytest-9.0.3.pyc",
     "tests/test_knowledge_graph_connectivity.py",
@@ -204,11 +209,6 @@
     "docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
     "data/mighty.db-wal",
     "data/mighty.db-shm",
-    "docs/SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md",
-    "data_test/audit",
-    "data_test",
-    "data_test_aptitude/audit/ai_audit.jsonl",
-    "data_test_aptitude/mighty.db",
-    "data_test_aptitude/mighty.db-journal"
+    "docs/SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md"
   ]
 }
