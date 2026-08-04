@@ -36,7 +36,7 @@ REQUIRED_CSP_TOKENS = {
     "font-src": ["'self'", "https://fonts.gstatic.com"],
     "img-src": ["'self'", "data:"],
     "media-src": ["'self'"],
-    "connect-src": ["'self'"],
+    "connect-src": ["'self'", "https://cdn.jsdelivr.net"],
     "worker-src": ["'self'"],
     "frame-src": ["'self'"],
     "upgrade-insecure-requests": [],

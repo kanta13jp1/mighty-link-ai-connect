@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-07-31 02:31:06 UTC+09:00
+Generated: 2026-08-03 14:07:40 UTC+09:00
 
 ## Purpose
 
