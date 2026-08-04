@@ -4867,6 +4867,7 @@ BILLING_PORTAL_HTML = """<!DOCTYPE html>
 
 # Static Hosting route
 @app.get("/favicon.ico", include_in_schema=False)
+@app.get("/api/favicon.ico", include_in_schema=False)
 async def favicon():
     """Serves the project favicon for browser tabs and DevTools requests."""
     possible_paths = [

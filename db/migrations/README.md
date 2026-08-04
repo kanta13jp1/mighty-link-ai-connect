@@ -19,3 +19,6 @@ Rules:
    `python scripts/manage_db_migrations.py apply --engine sqlite --sqlite-path data/mighty.db --dry-run`
 5. Apply to Supabase only after backup, staging validation, and one-lane
    deployment coordination.
+
+
+- [Master Knowledge Graph Index](../../docs/MASTER_KNOWLEDGE_GRAPH.md)

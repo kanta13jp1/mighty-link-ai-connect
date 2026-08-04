@@ -629,7 +629,14 @@ def main() -> None:
     print(f"[*] Output: {EXPORT_DIR}")
     for artifact in manifest["artifacts"]:
         print(f"  - {artifact}")
+    
+    try:
+        from connect_knowledge_graph import main as connect_graph
+        connect_graph()
+    except Exception as e:
+        print(f"[-] Knowledge graph connection skipped: {e}")
 
 
 if __name__ == "__main__":
     main()
+

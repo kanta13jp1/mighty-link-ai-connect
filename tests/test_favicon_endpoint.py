@@ -16,7 +16,9 @@ client = TestClient(app)
 
 
 def test_favicon_returns_200_and_icon_media_type():
-    response = client.get("/favicon.ico")
-    assert response.status_code == 200
-    assert "image/x-icon" in response.headers.get("content-type", "").lower()
-    assert len(response.content) > 0
+    for path in ["/favicon.ico", "/api/favicon.ico"]:
+        response = client.get(path)
+        assert response.status_code == 200
+        assert "image/x-icon" in response.headers.get("content-type", "").lower()
+        assert len(response.content) > 0
+
