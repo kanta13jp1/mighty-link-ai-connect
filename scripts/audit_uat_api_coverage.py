@@ -21,8 +21,12 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -74,6 +78,7 @@ EXEMPT_ENDPOINTS = {
     "/api/billing/customer-portal/session": "gated: T862有償化判断前・live課金未有効",
     "/api/db-test": "内部: デバッグ用DB接続確認",
     "/api/engineers": "内部: 比較ボード用データ取得ヘルパー",
+    "/api/favicon.ico": "内部: Favicon取得エイリアス",
     "/api/jobs": "内部: 比較ボード用データ取得ヘルパー",
     "/api/knowledge-flow/generate": "内部: ナレッジ連携デモ生成ツール",
     "/api/knowledge-flow/status": "内部: ナレッジ連携デモ状態",

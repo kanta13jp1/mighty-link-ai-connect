@@ -2,12 +2,19 @@
 
 ## Current Status
 
-- WBS total: 367
-- Done: 356
+- WBS total: 368
+- Done: 355
 - In progress: 0
-- Completion: 97%
+- Completion: 96%
 
 ## Key Notes
+- [[00_Inbox/README|00_Inbox]]
+- [[10_ADR_Drafts/README|10_ADR_Drafts]]
+- [[20_Prompts/README|20_Prompts]]
+- [[30_Meetings/README|30_Meetings]]
+- [[40_Canvas/README|40_Canvas]]
+- [Master Knowledge Graph Index](../../../docs/MASTER_KNOWLEDGE_GRAPH.md)
+- [Obsidian Development Workflow Guide](../../../docs/OBSIDIAN_DEVELOPMENT_WORKFLOW.md)
 
 - [[Meetings/2026-06-02 CEO Meeting]]
 - [[ADR/ADR-0001-knowledge-flow]]
