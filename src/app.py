@@ -4869,9 +4869,23 @@ BILLING_PORTAL_HTML = """<!DOCTYPE html>
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
     """Serves the project favicon for browser tabs and DevTools requests."""
-    if not os.path.exists(FAVICON_FILE):
-        raise HTTPException(status_code=404, detail="favicon.ico not found in project root.")
-    return FileResponse(FAVICON_FILE, media_type="image/x-icon")
+    possible_paths = [
+        FAVICON_FILE,
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), "favicon.ico"),
+        os.path.join(PROJECT_ROOT, "src", "favicon.ico"),
+        os.path.join(PROJECT_ROOT, "public", "favicon.ico"),
+    ]
+    for path in possible_paths:
+        if os.path.exists(path):
+            return FileResponse(path, media_type="image/x-icon")
+    blank_ico = (
+        b"\x00\x00\x01\x00\x01\x00\x01\x01\x00\x00\x01\x00\x18\x00\x30\x00"
+        b"\x00\x00\x16\x00\x00\x00\x28\x00\x00\x00\x01\x00\x00\x00\x02\x00"
+        b"\x00\x00\x01\x00\x18\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+        b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xff\x00"
+        b"\x00\x00\x00\x00\x00\x00"
+    )
+    return Response(content=blank_ico, media_type="image/x-icon")
 
 
 @app.get(CHROME_DEVTOOLS_WORKSPACE_PATH, include_in_schema=False)
