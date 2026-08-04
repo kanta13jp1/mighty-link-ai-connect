@@ -1,6 +1,6 @@
 # Firebase Hosting Security Headers Review (T835)
 
-- Generated at (UTC): 2026-08-03T01:45:50Z
+- Generated at (UTC): 2026-08-04T22:05:28Z
 - Firebase config: `firebase.json`
 - Status: **PASS**
 - Reviewed source rules: `**`
