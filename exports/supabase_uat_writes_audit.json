@@ -1,6 +1,6 @@
 {
   "report_id": "SUPABASE_UAT_WRITES_T845_T921",
-  "generated_at": "2026-08-04T22:39:03.646094Z",
+  "generated_at": "2026-08-05T14:52:43.129424Z",
   "status": "PASS",
   "mode": "offline_schema_contract",
   "has_db_connection": false,

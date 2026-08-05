@@ -19,7 +19,7 @@ MASTER_GRAPH_FILE = DOCS_DIR / "MASTER_KNOWLEDGE_GRAPH.md"
 def collect_md_files() -> list[Path]:
     return [
         p for p in PROJECT_ROOT.glob("**/*.md")
-        if not any(part.startswith(".") or part in ["venv", "node_modules"] for part in p.parts)
+        if not any(part in ["venv", "node_modules", ".venv", ".git"] for part in p.parts)
     ]
 
 
@@ -36,15 +36,32 @@ def build_path_map(md_files: list[Path]) -> dict[str, Path]:
 def get_outgoing_links(p: Path, path_map: dict[str, Path]) -> set[Path]:
     try:
         content = p.read_text(encoding="utf-8", errors="ignore")
-    except Exception:
+    except OSError as err:
+        print(f"[WARN] Failed to read markdown file {p}: {err}")
         return set()
     wikilinks = re.findall(r"\[\[([^\]\|]+)(?:\|[^\]]+)?\]\]", content)
     mdlinks = re.findall(r"\[[^\]]*\]\(([^)]+)\)", content)
     res = set()
     for l in wikilinks + mdlinks:
+        if l.startswith(("http://", "https://", "mailto:", "tel:", "#")):
+            continue
         l_clean = l.split("#")[0].strip()
         if not l_clean:
             continue
+        
+        # 1. Direct path or relative path from p
+        rel_target = (p.parent / l_clean).resolve()
+        if rel_target in path_map.values():
+            res.add(rel_target)
+            continue
+            
+        # 2. Path relative to root
+        root_target = (PROJECT_ROOT / l_clean).resolve()
+        if root_target in path_map.values():
+            res.add(root_target)
+            continue
+
+        # 3. Stem match
         target = path_map.get(l_clean) or path_map.get(l_clean + ".md") or path_map.get(Path(l_clean).name)
         if target:
             res.add(target)
@@ -91,7 +108,7 @@ def generate_master_knowledge_graph() -> None:
         "# Master Knowledge Graph Index",
         "",
         "全ナレッジノード（ドキュメント・監査レポート・WBS・ADR・Obsidian Vault）を統合するマスター知識グラフ索引起点です。",
-        "Obsidian Graph View において全ノードの接続性を担保し、孤立ノード（Isolates）を排除します。",
+        "Obsidian Graph View において全ノードの接続性を担保し、孤立ノード（Isolates）および未解決WikiLink（Ghost Nodes）を完全排除します。",
         "",
         "## 1. 主要インデックス & ガバナンス",
         "- [WBS Management Table](WBS.md)",
@@ -140,7 +157,7 @@ def generate_master_knowledge_graph() -> None:
 
     content.extend([
         "",
-        "## 6. プロジェクト構成・レポート・その他 (root / db / reports)",
+        "## 6. プロジェクト構成・隠しフォルダ・その他 (root / db / reports / .codex / .pytest_cache)",
     ])
     for rel in other_files:
         p = PROJECT_ROOT / rel
@@ -155,15 +172,34 @@ def update_obsidian_vault_home() -> None:
     if not VAULT_HOME.exists():
         return
     home_content = VAULT_HOME.read_text(encoding="utf-8")
+    
+    # Fix WikiLinks to use vault-relative paths or unique stems so Obsidian resolves them cleanly from root vault
+    replacements = {
+        "[[00_Inbox/README|00_Inbox]]": "[[exports/knowledge_flow/obsidian_vault/00_Inbox/README|00_Inbox]]",
+        "[[10_ADR_Drafts/README|10_ADR_Drafts]]": "[[exports/knowledge_flow/obsidian_vault/10_ADR_Drafts/README|10_ADR_Drafts]]",
+        "[[20_Prompts/README|20_Prompts]]": "[[exports/knowledge_flow/obsidian_vault/20_Prompts/README|20_Prompts]]",
+        "[[30_Meetings/README|30_Meetings]]": "[[exports/knowledge_flow/obsidian_vault/30_Meetings/README|30_Meetings]]",
+        "[[40_Canvas/README|40_Canvas]]": "[[exports/knowledge_flow/obsidian_vault/40_Canvas/README|40_Canvas]]",
+        "[[Meetings/2026-06-02 CEO Meeting]]": "[[2026-06-02 CEO Meeting]]",
+        "[[ADR/ADR-0001-knowledge-flow]]": "[[ADR-0001-knowledge-flow]]",
+        "[[Rules/Boundary Rule]]": "[[Boundary Rule]]",
+        "[[Prompts/NotebookLM Source Prompt]]": "[[NotebookLM Source Prompt]]",
+        "[[Prompts/NotebookLM Agent Brief Prompt]]": "[[NotebookLM Agent Brief Prompt]]",
+    }
+    
+    for old_w, new_w in replacements.items():
+        home_content = home_content.replace(old_w, new_w)
+        
     additions = [
-        "- [[00_Inbox/README|00_Inbox]]",
-        "- [[10_ADR_Drafts/README|10_ADR_Drafts]]",
-        "- [[20_Prompts/README|20_Prompts]]",
-        "- [[30_Meetings/README|30_Meetings]]",
-        "- [[40_Canvas/README|40_Canvas]]",
+        "- [[exports/knowledge_flow/obsidian_vault/00_Inbox/README|00_Inbox]]",
+        "- [[exports/knowledge_flow/obsidian_vault/10_ADR_Drafts/README|10_ADR_Drafts]]",
+        "- [[exports/knowledge_flow/obsidian_vault/20_Prompts/README|20_Prompts]]",
+        "- [[exports/knowledge_flow/obsidian_vault/30_Meetings/README|30_Meetings]]",
+        "- [[exports/knowledge_flow/obsidian_vault/40_Canvas/README|40_Canvas]]",
         "- [Master Knowledge Graph Index](../../../docs/MASTER_KNOWLEDGE_GRAPH.md)",
         "- [Obsidian Development Workflow Guide](../../../docs/OBSIDIAN_DEVELOPMENT_WORKFLOW.md)",
     ]
+    
     new_lines = []
     for line in home_content.splitlines():
         new_lines.append(line)
@@ -171,6 +207,7 @@ def update_obsidian_vault_home() -> None:
             for add in additions:
                 if add not in home_content:
                     new_lines.append(add)
+                    
     VAULT_HOME.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
     
     # Ensure vault READMEs have backlinks to Home Note and Master Index

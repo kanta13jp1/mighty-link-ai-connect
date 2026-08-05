@@ -116,18 +116,27 @@ def sync_tables():
 
         req_skills = proj["required_skills"]
         if isinstance(req_skills, str):
-            try: req_skills = json.loads(req_skills)
-            except Exception: req_skills = []
+            try:
+                req_skills = json.loads(req_skills)
+            except json.JSONDecodeError as err:
+                print(f"[WARN] Failed to parse required_skills for msg {sq_msg_id}: {err}")
+                req_skills = []
 
         nice_skills = proj["nice_to_have_skills"]
         if isinstance(nice_skills, str):
-            try: nice_skills = json.loads(nice_skills)
-            except Exception: nice_skills = []
+            try:
+                nice_skills = json.loads(nice_skills)
+            except json.JSONDecodeError as err:
+                print(f"[WARN] Failed to parse nice_to_have_skills for msg {sq_msg_id}: {err}")
+                nice_skills = []
 
         categories = proj["skill_categories"]
         if isinstance(categories, str):
-            try: categories = json.loads(categories)
-            except Exception: categories = {}
+            try:
+                categories = json.loads(categories)
+            except json.JSONDecodeError as err:
+                print(f"[WARN] Failed to parse skill_categories for msg {sq_msg_id}: {err}")
+                categories = {}
 
         pg_cur.execute("""
             INSERT INTO project_requirements (
@@ -166,13 +175,19 @@ def sync_tables():
 
         skills = tal["skills"]
         if isinstance(skills, str):
-            try: skills = json.loads(skills)
-            except Exception: skills = []
+            try:
+                skills = json.loads(skills)
+            except json.JSONDecodeError as err:
+                print(f"[WARN] Failed to parse talent skills for msg {sq_msg_id}: {err}")
+                skills = []
 
         categories = tal["skill_categories"]
         if isinstance(categories, str):
-            try: categories = json.loads(categories)
-            except Exception: categories = {}
+            try:
+                categories = json.loads(categories)
+            except json.JSONDecodeError as err:
+                print(f"[WARN] Failed to parse talent skill_categories for msg {sq_msg_id}: {err}")
+                categories = {}
 
         pg_cur.execute("""
             INSERT INTO talent_profiles_from_email (

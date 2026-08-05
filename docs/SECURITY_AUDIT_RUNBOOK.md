@@ -175,13 +175,13 @@ gitleaks detect --source . --report-path=reports/gitleaks_YYYY-QQ.json
     '''docs/.*''',
   ]
 
-[[rules]]
+`rules/`
   description = "Supabase Service Role Key"
   id = "supabase-service-role"
   regex = '''eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+'''
   tags = ["supabase", "jwt"]
 
-[[rules]]
+`rules/`
   description = "Firebase API Key"
   id = "firebase-api-key"
   regex = '''AIza[0-9A-Za-z\-_]{35}'''

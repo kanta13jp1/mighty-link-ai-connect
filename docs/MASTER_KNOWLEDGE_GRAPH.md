@@ -1,7 +1,7 @@
 # Master Knowledge Graph Index
 
 全ナレッジノード（ドキュメント・監査レポート・WBS・ADR・Obsidian Vault）を統合するマスター知識グラフ索引起点です。
-Obsidian Graph View において全ノードの接続性を担保し、孤立ノード（Isolates）を排除します。
+Obsidian Graph View において全ノードの接続性を担保し、孤立ノード（Isolates）および未解決WikiLink（Ghost Nodes）を完全排除します。
 
 ## 1. 主要インデックス & ガバナンス
 - [WBS Management Table](WBS.md)
@@ -275,7 +275,11 @@ Obsidian Graph View において全ノードの接続性を担保し、孤立ノ
 - [NotebookLM Source Prompt.md](../exports/knowledge_flow/obsidian_vault/Prompts/NotebookLM Source Prompt.md)
 - [Boundary Rule.md](../exports/knowledge_flow/obsidian_vault/Rules/Boundary Rule.md)
 
-## 6. プロジェクト構成・レポート・その他 (root / db / reports)
+## 6. プロジェクト構成・隠しフォルダ・その他 (root / db / reports / .codex / .pytest_cache)
+- [SKILL.md](../.codex/skills/sync-notebooklm/SKILL.md)
+- [SKILL.md](../.codex/skills/sync-wbs/SKILL.md)
+- [SKILL.md](../.codex/skills/verify-demo/SKILL.md)
+- [README.md](../.pytest_cache/README.md)
 - [AGENTS.md](../AGENTS.md)
 - [CHANGELOG.md](../CHANGELOG.md)
 - [CLAUDE.md](../CLAUDE.md)

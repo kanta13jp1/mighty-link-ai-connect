@@ -18,7 +18,7 @@
 2. **プレーンテキスト & ローカルファースト**:
    - Obsidian は標準 Markdown を採用するため、ベンダーロックインなくローカルファイルシステム上で高速かつオフラインで動作します。
 3. **双方向リンク (WikiLinks) によるナレッジグラフ可視化**:
-   - 単発のメモに終わらせず、`[[T929]]`, `[[R148]]`, `[[ADR-0005]]` などの参照リンク（WikiLinks）を張ることで、タスク・課題・設計判断の相関関係を可視化します。
+   - 単発のメモに終わらせず、`[[WBS#T929|T929]]`, `[[TRACKER_INTEGRITY_GUARD|R148]]`, `[[ARCHITECTURE_DECISION_RECORDS#ADR-0005|ADR-0005]]` などの参照リンク（WikiLinks）を張ることで、タスク・課題・設計判断の相関関係を可視化します。
 
 ---
 
@@ -32,7 +32,7 @@
    │  10_ADR_Drafts / 20_Prompts / 40_Canvas
    ▼
 [ Tier 3: 相互リンクとメタデータ構造化 ]
-   │  YAML Frontmatter / WikiLinks [[T###]] / タグ分類
+   │  YAML Frontmatter / WikiLinks `[[WBS#T###|T###]]` / タグ分類
    ▼
 [ Tier 4: 公式ドキュメントへの昇格 & 自動連携 ]
    │  docs/*.md への転記昇格 / scripts/generate_knowledge_flow_demo.py
@@ -55,9 +55,9 @@
 ### 2.3 Tier 3: 相互リンクとメタデータ構造化 (WikiLinks & Metadata)
 
 - **WikiLink 表記ルール**:
-  - WBSタスクへのリンク: `[[T929]]`
-  - 課題トラッカーへのリンク: `[[R148]]`
-  - 公式ADRへのリンク: `[[ADR-0005]]`
+  - WBSタスクへのリンク: `[[WBS#T929|T929]]`
+  - 課題トラッカーへのリンク: `[[TRACKER_INTEGRITY_GUARD|R148]]`
+  - 公式ADRへのリンク: `[[ARCHITECTURE_DECISION_RECORDS#ADR-0005|ADR-0005]]`
 - **YAML Frontmatter 標準規格**:
 
 ```yaml

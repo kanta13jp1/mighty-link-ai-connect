@@ -41,6 +41,7 @@
         <div class="toolbar">
             <a class="button" href="../">Demo</a>
             <a class="button" href="../api/admin/usage/export" id="export-btn">Export JSONL</a>
+            <label style="font-size:13px; color:var(--muted); display:inline-flex; align-items:center; gap:6px; cursor:pointer;"><input type="checkbox" id="auto-refresh-check" onchange="toggleAutoRefresh(this.checked)" checked> Auto Refresh (30s)</label>
             <button onclick="loadUsage()">Refresh</button>
         </div>
     </header>
@@ -343,6 +344,17 @@
             if (tooltip) tooltip.style.display = "none";
         }
 
+        let autoRefreshTimer = null;
+        function toggleAutoRefresh(enabled) {
+            if (autoRefreshTimer) {
+                clearInterval(autoRefreshTimer);
+                autoRefreshTimer = null;
+            }
+            if (enabled) {
+                autoRefreshTimer = setInterval(loadUsage, 30000);
+            }
+        }
+
         async function loadUsage() {
             try {
                 const response = await fetch("../api/admin/usage");
@@ -358,6 +370,7 @@
             }
         }
         loadUsage();
+        toggleAutoRefresh(true);
     </script>
 </body>
 </html>

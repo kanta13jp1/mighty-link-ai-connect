@@ -9,6 +9,17 @@ __pycache__/
 
 # Firebase local deploy cache
 .firebase/
+# Google Cloud Credentials (SECURITY CRITICAL - NEVER UPLOAD TO GITHUB)
+client_secret.json
+credentials.json
+authorized_user.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Firebase local deploy cache
+.firebase/
 
 # Runtime audit logs
 data/audit/*.jsonl
@@ -18,6 +29,8 @@ data/log_archive/
 # Local system files
 .DS_Store
 Thumbs.db
+~$*.xlsx
+~$*.docx
 
 # Local AI tool settings
 .claude/settings.local.json
