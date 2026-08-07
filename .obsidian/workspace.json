@@ -1,0 +1,210 @@
+{
+  "main": {
+    "id": "777daecbeabebbf4",
+    "type": "split",
+    "children": [
+      {
+        "id": "63a9a4dca68378c7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f21d96d7b62fbfd4",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "グラフビュー"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ef6001ba5d65ce68",
+    "type": "split",
+    "children": [
+      {
+        "id": "937a3ebba2a54015",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b45a6a60155f0721",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "ファイルエクスプローラ"
+            }
+          },
+          {
+            "id": "c7eab43c313ff322",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "検索"
+            }
+          },
+          {
+            "id": "14d2d76bd0942a6c",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "ブックマーク"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "a2bb6eb4e2e028ac",
+    "type": "split",
+    "children": [
+      {
+        "id": "20868d647f943245",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0e6390e3550973b6",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "バックリンク"
+            }
+          },
+          {
+            "id": "ef0b884e843d0e9e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "アウトゴーイングリンク"
+            }
+          },
+          {
+            "id": "4d51130da4adcd57",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "タグ"
+            }
+          },
+          {
+            "id": "2510fd84932d1459",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "すべてのプロパティ"
+            }
+          },
+          {
+            "id": "a674fbf58ac232b3",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "アウトライン"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:クイックスイッチャーを開く": false,
+      "graph:グラフビューを開く": false,
+      "canvas:新規キャンバスを作成": false,
+      "daily-notes:今日のデイリーノートを開く": false,
+      "templates:テンプレートを挿入": false,
+      "command-palette:コマンドパレットを開く": false,
+      "bases:新規ベースを作成": false
+    }
+  },
+  "active": "f21d96d7b62fbfd4",
+  "lastOpenFiles": [
+    "docs/MASTER_KNOWLEDGE_GRAPH.md",
+    "AC080420",
+    "22240420",
+    "docs/OPERATIONS_RUNBOOK_CATALOG.md",
+    "docs/WBS.md",
+    "docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md",
+    "venv/Lib/site-packages/pyparsing/ai/best_practices.md",
+    "F54BF320",
+    "5FE0F320",
+    "E7CDC320",
+    "43ADC320",
+    "517DC320",
+    "9BE8C320",
+    "CA2CF220",
+    "C5FBF220",
+    "docs/wireframes/WF-01_vertical_hero_stack.md",
+    "docs/wireframes/WF-10_search_catalog.md",
+    "docs/wireframes/WF-09_inline_live_preview.md",
+    "docs/wireframes/WF-08_dashboard_tiles.md",
+    "docs/wireframes/WF-07_comparison_table.md",
+    "docs/wireframes/WF-06_kanban_pipeline.md",
+    "docs/wireframes/WF-05_dnd_quadrant.md",
+    "docs/wireframes/WF-04_conversational_chat.md",
+    "docs/wireframes/WF-03_step_wizard.md",
+    "docs/wireframes/WF-02_split_form.md",
+    "docs/wireframes/README.md",
+    "docs/ACCESSIBILITY_AUDIT_REPORT_2026-06-22.md",
+    "docs/SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md"
+  ]
+}
