@@ -1,0 +1,7 @@
+SYNTHETIC_DATA_ONLY	研修用の架空・合成データです
+task_id	task_name	owner	status	due_date	priority
+DEMO-T01	営業提案テンプレート確認	サンプル担当A	完了	2026-08-20	中
+DEMO-T02	研修端末の事前確認	サンプル担当B	進行中	2026-08-24	高
+DEMO-T03	参加者アカウント確認	サンプル担当C	未着手	2026-08-25	高
+DEMO-T04	アンケート準備	サンプル担当D	未着手	2026-08-27	中
+DEMO-T05	旧資料の整理	サンプル担当E	進行中	2026-08-18	低

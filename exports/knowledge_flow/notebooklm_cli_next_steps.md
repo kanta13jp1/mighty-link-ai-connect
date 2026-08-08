@@ -1,14 +1,14 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-07-31T03:25:45+09:00
+Generated: 2026-08-08T18:47:13+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `158`
-- Drive docs uploaded: `3`
-- Drive docs skipped unchanged: `155`
+- Drive docs discovered: `160`
+- Drive docs uploaded: `8`
+- Drive docs skipped unchanged: `152`
 - NotebookLM CLI status: `auth_required`
 
 ## Google Docs Synced From docs/
@@ -92,12 +92,14 @@ Generated: 2026-07-31T03:25:45+09:00
 - `docs/LOAD_TEST_100_USERS_REPORT_2026-07-01.md`: https://docs.google.com/document/d/1p_05xdUzs-16aPBskTjCgQUIryRaHIb_cQqbpNEp_60/edit?usp=drivesdk
 - `docs/LOCAL_DEV_EMULATOR_STACK_RUNBOOK.md`: https://docs.google.com/document/d/1_jywSbN49MBBiyGRd89HguBrj-2ktZkB9SWiS3FaBuU/edit?usp=drivesdk
 - `docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md`: https://docs.google.com/document/d/1EKarbQEJc11rMLWXU4L9TL994vPp5dawHyjf-y3HPJg/edit?usp=drivesdk
+- `docs/MASTER_KNOWLEDGE_GRAPH.md`: https://docs.google.com/document/d/15j_yDpTq1mSfs9wy2Gu8_yB_5D1LlG1RMSPw3lTrlP4/edit?usp=drivesdk
 - `docs/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md`: https://docs.google.com/document/d/1aFiRyJpftES9MXnSkTUKsaum_KCUt8UhS37p_3Ln15U/edit?usp=drivesdk
 - `docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md`: https://docs.google.com/document/d/1gysz5FkXVK22refIm4oGmXslBzOXCbJtTgfr8pxcSWM/edit?usp=drivesdk
 - `docs/MONTHLY_QUALITY_REPORT_DELIVERY_RUNBOOK.md`: https://docs.google.com/document/d/1hpESXzggNnUlIWIVQyV_1c3-eLOFdsP2n7terUlicbc/edit?usp=drivesdk
 - `docs/MONTHLY_REPORT_2026-06.md`: https://docs.google.com/document/d/1v6aM1DSB5rGL-gYelOq9ZjKWa834Lc3ztBh1SrXFyFs/edit?usp=drivesdk
 - `docs/MULTI_AI_WORKFLOW.md`: https://docs.google.com/document/d/1WfBfLEpbTV6zcB4AuA4RbeXaJ99qw6h0UGq9D_1oJ_Q/edit?usp=drivesdk
 - `docs/NOTEBOOKLM_SYNC_TIMEOUT_RUNBOOK.md`: https://docs.google.com/document/d/1CdeYHRCiCsdoUC7nlHW9ozc1vKUNjvEv2i2nMHYKvJA/edit?usp=drivesdk
+- `docs/OBSIDIAN_DEVELOPMENT_WORKFLOW.md`: https://docs.google.com/document/d/1XQv8DrDC-EoPcvcaNq7WqNAlxCu7Y8fmA5hs4HpQn2Y/edit?usp=drivesdk
 - `docs/OPERATIONS_CADENCE_CALENDAR.md`: https://docs.google.com/document/d/11JjJN7KAkhW-SVC1cYfLFPsNZsHW0GzK2YYEE7Kx_PE/edit?usp=drivesdk
 - `docs/OPERATIONS_HANDOVER_REHEARSAL_RUNBOOK.md`: https://docs.google.com/document/d/1uRqqhJwR3ZAoXo_pJDxvwh-t_2IK6B3tO2sBfXmrbZc/edit?usp=drivesdk
 - `docs/OPERATIONS_RUNBOOK_CATALOG.md`: https://docs.google.com/document/d/1UFsw0aQgP5NzaK2xIAZRAOuqyCgdh8vk3JMBpQXl0qg/edit?usp=drivesdk

@@ -183,10 +183,45 @@ def run_guards(registry: dict[str, str] | None = None) -> dict[str, dict[str, An
     return results
 
 
+def _count_collected_tests(output: str) -> int:
+    """Count pytest node IDs from quiet collect-only output."""
+    return sum(
+        1
+        for line in output.splitlines()
+        if re.match(r"^tests[\\/].+::", line.strip())
+    )
+
+
+def _parse_pytest_failures(output: str, exit_code: int) -> tuple[int, int]:
+    """Read only pytest summary lines; test logs may contain words like 'failed'."""
+    if exit_code == 0:
+        return 0, 0
+    summaries = "\n".join(
+        line for line in output.splitlines() if line.strip().startswith("=")
+    )
+    failed = sum(int(n) for n in re.findall(r"(\d+) failed", summaries))
+    errors = sum(int(n) for n in re.findall(r"(\d+) errors?", summaries))
+    if failed == 0 and errors == 0:
+        errors = 1
+    return failed, errors
+
+
 def run_pytest() -> dict[str, Any]:
-    """Run the full suite and parse the summary line."""
+    """Run the full suite and collect a pytest-version-independent count."""
+    collect_proc = subprocess.run(
+        [sys.executable, "-m", "pytest", "tests/", "--collect-only", "-q", "-s"],
+        cwd=str(PROJECT_ROOT),
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        env=utf8_subprocess_env(),
+    )
+    collect_out = collect_proc.stdout + collect_proc.stderr
+    collected = _count_collected_tests(collect_out)
+
     proc = subprocess.run(
-        [sys.executable, "-m", "pytest", "tests/", "-q"],
+        [sys.executable, "-m", "pytest", "tests/", "-q", "-s"],
         cwd=str(PROJECT_ROOT),
         capture_output=True,
         text=True,
@@ -195,14 +230,14 @@ def run_pytest() -> dict[str, Any]:
         env=utf8_subprocess_env(),
     )
     out = proc.stdout + proc.stderr
-    failed = sum(int(n) for n in re.findall(r"(\d+) failed", out))
-    errors = sum(int(n) for n in re.findall(r"(\d+) errors?", out))
-    passed = sum(int(n) for n in re.findall(r"(\d+) passed", out))
+    failed, errors = _parse_pytest_failures(out, proc.returncode)
+    if collect_proc.returncode != 0 and collected == 0:
+        errors = max(errors, 1)
     return {
         "skipped": False,
         "failed": failed,
         "errors": errors,
-        "collected": passed + failed + errors,
+        "collected": collected,
         "exit_code": proc.returncode,
     }
 

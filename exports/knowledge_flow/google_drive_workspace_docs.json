@@ -15,7 +15,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:24:43.067Z",
-      "modifiedTime": "2026-07-25T11:24:44.548Z",
+      "modifiedTime": "2026-08-08T10:04:28.539Z",
       "source": "exports/knowledge_flow/notebooklm_source_pack.txt"
     },
     "notebooklm_presentation_brief": {
@@ -31,7 +31,7 @@
         }
       ],
       "createdTime": "2026-05-21T15:24:46.489Z",
-      "modifiedTime": "2026-07-25T11:24:49.676Z",
+      "modifiedTime": "2026-08-08T10:04:33.354Z",
       "source": "exports/knowledge_flow/notebooklm_presentation_brief.txt"
     },
     "notebooklm_agent_brief": {
@@ -47,7 +47,7 @@
         }
       ],
       "createdTime": "2026-05-21T16:35:24.795Z",
-      "modifiedTime": "2026-07-25T11:24:54.333Z",
+      "modifiedTime": "2026-08-08T10:04:37.296Z",
       "source": "exports/knowledge_flow/notebooklm_agent_brief.md"
     },
     "notebooklm_ceo_slide_outline": {
@@ -63,7 +63,7 @@
         }
       ],
       "createdTime": "2026-05-21T16:35:27.388Z",
-      "modifiedTime": "2026-07-25T11:24:58.788Z",
+      "modifiedTime": "2026-08-08T10:04:41.494Z",
       "source": "exports/knowledge_flow/notebooklm_ceo_slide_outline.md"
     },
     "press_release_sns": {
@@ -79,7 +79,7 @@
         }
       ],
       "createdTime": "2026-05-28T16:02:34.205Z",
-      "modifiedTime": "2026-07-25T11:25:02.911Z",
+      "modifiedTime": "2026-08-08T10:04:45.795Z",
       "source": "exports/knowledge_flow/press_release_sns.md"
     }
   },
@@ -98,7 +98,7 @@
         }
       ],
       "createdTime": "2026-05-21T17:25:09.130Z",
-      "modifiedTime": "2026-07-25T11:25:07.315Z",
+      "modifiedTime": "2026-08-08T10:04:50.025Z",
       "source": "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx"
     },
     "ceo_presentation_pptx_branded": {
@@ -115,7 +115,7 @@
         }
       ],
       "createdTime": "2026-05-23T15:24:51.404Z",
-      "modifiedTime": "2026-07-25T11:25:11.798Z",
+      "modifiedTime": "2026-08-08T10:04:54.295Z",
       "source": "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02_branded.pptx"
     },
     "ui_wireframes_pptx": {
@@ -132,7 +132,7 @@
         }
       ],
       "createdTime": "2026-05-23T17:52:43.352Z",
-      "modifiedTime": "2026-07-25T11:25:15.061Z",
+      "modifiedTime": "2026-08-08T10:04:57.291Z",
       "source": "exports/knowledge_flow/mighty_skill_bridge_ui_wireframes_2026-06-02.pptx"
     },
     "ui_wireframes_canva_pptx": {
@@ -149,7 +149,7 @@
         }
       ],
       "createdTime": "2026-05-23T21:25:41.009Z",
-      "modifiedTime": "2026-07-25T11:25:20.948Z",
+      "modifiedTime": "2026-08-08T10:05:02.311Z",
       "source": "exports/mighty_skill_bridge_wireframes_v2.pptx"
     }
   }

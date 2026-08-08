@@ -165,6 +165,24 @@ def test_h6_flags_suite_shrinkage():
     assert hyps["H6"]["passed"] is False
 
 
+def test_pytest_collection_count_supports_quiet_pytest_9_output():
+    output = (
+        "tests/test_alpha.py::test_one\n"
+        "tests\\test_beta.py::test_two[param]\n"
+        "2 tests collected in 0.01s\n"
+    )
+    assert pre._count_collected_tests(output) == 2
+
+
+def test_pytest_parser_ignores_failure_words_when_process_passed():
+    output = "helper report says 2 failed checks, but this is fixture text"
+    assert pre._parse_pytest_failures(output, 0) == (0, 0)
+
+
+def test_pytest_parser_fails_closed_without_a_summary():
+    assert pre._parse_pytest_failures("process terminated", 1) == (0, 1)
+
+
 def test_h7_flags_guard_without_ci_path():
     """A guard no test imports never runs in CI."""
     imported = set(_good_imports())

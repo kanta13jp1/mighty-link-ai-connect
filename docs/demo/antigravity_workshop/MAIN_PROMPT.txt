@@ -1,0 +1,8 @@
+@docs/demo/antigravity_workshop/input/customer_interview_memo.md を読み、
+docs/demo/antigravity_workshop/output/index.html を作成してください。
+
+HTML/CSSだけで、1画面に「顧客課題／提案／適合スコア／次アクション」を表示する。
+MightyLINK公式色 #00A5E3 と #EF7E00 を使う。
+既存ファイルは変更せず、出力先以外に書き込まない。
+作成後にブラウザで開き、4項目・文字切れ・モバイル幅を確認する。
+最後に「変更ファイル／確認結果／未解決点」を3行で報告する。
