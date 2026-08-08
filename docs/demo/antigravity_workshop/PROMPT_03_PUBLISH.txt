@@ -1,0 +1,16 @@
+Prompt 3 / GitHub Pagesへ公開する
+
+このWebサイトを次の専用公開先へGitHub Pagesで公開する準備をしてください。
+
+- 許可されたリポジトリ: https://github.com/kanta13jp1/mighty-link-antigravity-live-demo
+- 許可されたブランチ: main
+- 期待する公開URL: https://kanta13jp1.github.io/mighty-link-antigravity-live-demo/
+
+最初にgit status、git diff --stat、git remote -v、現在ブランチを確認してください。リモートURLまたはブランチが上記と一致しない場合は何も変更せず停止してください。
+次に、追跡対象へ.env、認証ファイル、トークン、個人情報、顧客情報が含まれていないことと、SITE_BRIEF.mdにSYNTHETIC_DATA_ONLYがあることを確認してください。
+index.html、styles.css、app.js、assets/workshop-hero.pngをローカルブラウザで最終確認し、公開予定ファイル、コミットメッセージ、公開URLを報告してください。
+
+ここで必ず停止し、「公開してもよいですか？」と質問してください。私が正確に「公開して」と答えるまで、git add、git commit、git push、GitHub設定変更を実行しないでください。
+
+「公開して」と回答された後だけ、必要なサイトファイルをgit addし、`Publish iterative workshop demo`でcommitしてmainへpushしてください。GitHub Pagesのデプロイ完了を最大3分待ち、期待する公開URLをブラウザで開いてください。
+HTTPS、ページタイトル、4セッション、カテゴリ絞り込み、参加候補2件の操作を確認し、最後に「commit／公開URL／公開確認／未解決」を4行で報告してください。

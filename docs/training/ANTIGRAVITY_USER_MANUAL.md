@@ -2,73 +2,72 @@
 
 ## 目的
 
-2026年8月26日の社員向けAI研修で、Google Antigravityによる「指示、実行、確認」を15分で一度だけ実演する。機能を網羅する説明書ではなく、登壇者が迷わず、安全にデモを完走するための運用手順を正本とする。
+2026年8月26日の社員向けAI研修で、AntigravityによるWeb開発を15分で実演する。デモは「新規作成」「機能・デザイン改善」「GitHub Pages公開」の3段階とし、各段階の差分をブラウザで確認する。
 
 ## 成果物
 
 - 投影資料: `exports/mighty_skill_bridge_antigravity_user_guide_2026.pptx`（全12枚）
-- 主プロンプト: `docs/demo/antigravity_workshop/MAIN_PROMPT.txt`
-- 予備プロンプト: `docs/demo/antigravity_workshop/BACKUP_PROMPTS.txt`
-- 合成入力データ: `docs/demo/antigravity_workshop/input/`
-- 出力先: `docs/demo/antigravity_workshop/output/index.html`
-- 事前検証: `python scripts/run_antigravity_live_demo.py`
+- Prompt 1: `docs/demo/antigravity_workshop/MAIN_PROMPT.txt`
+- Prompt 2: `docs/demo/antigravity_workshop/PROMPT_02_IMPROVE.txt`
+- Prompt 3: `docs/demo/antigravity_workshop/PROMPT_03_PUBLISH.txt`
+- 要件: `docs/demo/antigravity_workshop/input/SITE_BRIEF.md`
+- 完成版予備サイト: `docs/demo/antigravity_workshop/output/`
+- 公開専用リポジトリ: `https://github.com/kanta13jp1/mighty-link-antigravity-live-demo`
+- 公開URL: `https://kanta13jp1.github.io/mighty-link-antigravity-live-demo/`
 
-## 前日までの確認
+## 事前確認
 
-1. Antigravityを起動し、ログイン済みであることを確認する。
-2. AntigravityからChromeを起動できることを確認する。Antigravityのブラウザは専用のChromeプロファイルを使用する。
-3. このリポジトリをProjectとして開く。
-4. `docs/demo/antigravity_workshop/input/`の3ファイルに`SYNTHETIC_DATA_ONLY`があることを確認する。
-5. 次のコマンドが`PASS`になるまで投影を開始しない。
+1. Antigravityにログインし、Browserを起動できることを確認する。
+2. 公開専用リポジトリをローカルへcloneし、Antigravityでそのフォルダだけを開く。
+3. `git remote -v`が公開専用リポジトリを指し、ブランチが`main`であることを確認する。
+4. `SITE_BRIEF.md`に`SYNTHETIC_DATA_ONLY`があることを確認する。
+5. 次の検証を実行し、H1-H10がすべてPASSであることを確認する。
 
 ```powershell
 python scripts/run_antigravity_live_demo.py
+python -m pytest tests/test_antigravity_live_demo.py -q
 ```
 
-## 15分の進行
+## 15分進行
 
-| 時刻 | 操作 | 観客に見せるもの |
+| 時刻 | 操作 | 観客に見せる変化 |
 | --- | --- | --- |
-| 00:00-02:00 | `MAIN_PROMPT.txt`を貼り、出力先と禁止事項を読み上げる | 1 prompt |
-| 02:00-07:00 | Plan、編集、必要な承認を一度だけ見せる | 1 file |
-| 07:00-12:00 | `output/index.html`をブラウザで確認する | 1 browser |
-| 12:00-15:00 | 変更、確認、未解決を3行で共有する | 1 report |
+| 00:00-04:00 | Prompt 1を実行 | 要件から4つの研修カードを持つWebサイトを新規作成 |
+| 04:00-09:00 | Prompt 2を実行 | 5カテゴリの絞り込み、参加候補選択、ブランド配色、モバイル対応を追加 |
+| 09:00-13:00 | Prompt 3を実行 | 差分と安全条件を確認し、人の承認後だけGitHub Pagesへ公開 |
+| 13:00-15:00 | 公開URLを再読込 | HTTPS、4カード、絞り込み件数、参加候補2件を確認 |
 
-説明する画面はManager、Editor / Terminal、Artifacts / Browserの3か所だけとする。ログを逐語的に読み上げず、Plan、Edit、Browser、Reportの4場面だけを実況する。
+見る場所はManager、Editor / Terminal、Browser、GitHub Pagesの4つに限定する。観客へはコード全文ではなく、各プロンプトの前後差分を見せる。
 
-## 承認と安全
+## 公開承認
 
-- 入力は合成データだけを使用する。
-- 書き込みは`docs/demo/antigravity_workshop/output/index.html`だけに限定する。
-- 顧客、社員、認証情報を要求する操作は拒否する。
-- 外部送信や別フォルダへの書き込みは拒否する。
-- 権限ルールは公式仕様どおり`Deny > Ask > Allow`の優先順位で判断する。
-- 対象と実行内容を説明できない承認は行わない。
+Prompt 3は`git add`、commit、pushの前に必ず停止し、`公開してもよいですか？`と確認する。登壇者が正確に`公開して`と返答した場合だけ公開操作へ進む。
+
+公開前に確認する項目:
+
+1. remoteが公開専用リポジトリである。
+2. 顧客情報、社員情報、認証情報、トークンが含まれない。
+3. `SYNTHETIC_DATA_ONLY`が残っている。
+4. 本番`mightylink-app.com`のリポジトリやFirebase設定を変更していない。
 
 ## 成功条件
 
-次の3点が見えたら追加依頼をせず、主デモを終了する。
+- FILES: `index.html`、`styles.css`、`app.js`、画像が存在する。
+- FUNCTION: カテゴリ件数が`4,1,1,1,1`、参加候補を2件選択できる。
+- PUBLIC: GitHub PagesのHTTPS URLでタイトル、4カード、機能、画像を再確認できる。
 
-1. `output/index.html`だけが変更されている。
-2. 顧客課題、提案、適合スコア、次アクションが表示され、文字切れとモバイル幅を確認できる。
-3. 最終回答が変更、確認、未解決の3行である。
+## 90秒復旧
 
-## 90秒の復旧
-
-- 進展が見えない: 現在地を一度だけ尋ねる。
-- ブラウザが止まる: `output/index.html`を手動で開く。
-- エラーが続く: `BACKUP_PROMPTS.txt`の読み取り専用デモへ切り替える。
-
-会場で再インストール、モデルの連続変更、長時間のデバッグ、本番データや別Projectへの切り替えは行わない。
-
-## 研修後
-
-各参加者は、翌日から試す繰り返し業務を一つ選ぶ。合成または匿名化したデータで試し、役立ったプロンプトと人が確認した方法をセットで共有する。
+- 90秒間進展がなければ、その段階のライブ生成を止める。
+- 完成版は`docs/demo/antigravity_workshop/output/index.html`を開く。
+- Antigravityの説明は`BACKUP_PROMPTS.txt`の読み取り専用プロンプトへ切り替える。
+- 公開が間に合わない場合は、GitHub Actionsの履歴と準備中ページを見せ、公開URLの検証項目を説明する。
+- 会場で再インストール、認証再設定、本番リポジトリへの切替は行わない。
 
 ## 公式参照
 
-- [Google Antigravity documentation](https://antigravity.google/docs/)
-- [Permissions](https://antigravity.google/docs/permissions?app=antigravity)
-- [Browser](https://antigravity.google/docs/ide/browser)
-- [Subagents](https://antigravity.google/docs/subagents)
-- [Google Developers Blog: Build with Google Antigravity](https://developers.googleblog.com/en/build-with-google-antigravity-our-new-agentic-development-platform/)
+- [Antigravity Browser](https://antigravity.google/docs/browser)
+- [Antigravity Artifacts](https://antigravity.google/docs/artifacts)
+- [Antigravity Permissions](https://antigravity.google/docs/permissions?app=antigravity)
+- [GitHub Pagesの公開元設定](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
+- [GitHubのデプロイ履歴確認](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/view-deployment-history)

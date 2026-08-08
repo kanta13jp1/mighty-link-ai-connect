@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import sys
 import shutil
+import sys
 from pathlib import Path
 
 
@@ -9,6 +9,13 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 from run_antigravity_live_demo import collect_demo_kit_status
+
+
+def _copy_workshop(tmp_path: Path) -> Path:
+    source = PROJECT_ROOT / "docs" / "demo" / "antigravity_workshop"
+    target = tmp_path / "docs" / "demo" / "antigravity_workshop"
+    shutil.copytree(source, target)
+    return target
 
 
 def test_committed_antigravity_demo_kit_is_fail_closed_and_ready():
@@ -25,55 +32,47 @@ def test_committed_antigravity_demo_kit_is_fail_closed_and_ready():
 
 
 def test_demo_kit_rejects_missing_synthetic_marker(tmp_path: Path):
-    workshop = tmp_path / "docs" / "demo" / "antigravity_workshop"
-    input_dir = workshop / "input"
-    output_dir = workshop / "output"
-    input_dir.mkdir(parents=True)
-    output_dir.mkdir(parents=True)
-
-    (workshop / "MAIN_PROMPT.txt").write_text(
-        "docs/demo/antigravity_workshop/output/index.html\n"
-        "出力先以外に書き込まない\nブラウザで開き\n3行で報告\n",
-        encoding="utf-8",
-    )
-    (workshop / "BACKUP_PROMPTS.txt").write_text("backup", encoding="utf-8")
-    (input_dir / "customer_interview_memo.md").write_text("no marker", encoding="utf-8")
-    (input_dir / "expenses.csv").write_text(
-        "SYNTHETIC_DATA_ONLY,demo\n伝票番号,発生日付,金額_JPY,承認ステータス\n1,2026-08-01,100,済\n",
-        encoding="utf-8",
-    )
-    (input_dir / "sample_wbs.tsv").write_text(
-        "SYNTHETIC_DATA_ONLY\tdemo\ntask_id\ttask_name\tstatus\tdue_date\tpriority\nT1\tDemo\t未着手\t2026-08-20\t高\n",
-        encoding="utf-8",
-    )
-    (output_dir / "README.md").write_text("output", encoding="utf-8")
-    (output_dir / "index.html").write_text(
-        "<!doctype html><html><body>SYNTHETIC_DATA_ONLY</body></html>",
-        encoding="utf-8",
-    )
+    workshop = _copy_workshop(tmp_path)
+    brief = workshop / "input" / "SITE_BRIEF.md"
+    brief.write_text(brief.read_text(encoding="utf-8").replace("SYNTHETIC_DATA_ONLY", ""), encoding="utf-8")
 
     result = collect_demo_kit_status(tmp_path)
+    failed = {check["name"] for check in result["checks"] if not check["passed"]}
 
     assert result["passed"] is False
-    failed = {check["name"] for check in result["checks"] if not check["passed"]}
-    assert "customer_memo_synthetic_marker" in failed
+    assert "H7_public_data_safety" in failed
 
 
-def test_demo_output_rejects_external_script_and_invented_rank(tmp_path: Path):
-    source = PROJECT_ROOT / "docs" / "demo" / "antigravity_workshop"
-    target = tmp_path / "docs" / "demo" / "antigravity_workshop"
-    shutil.copytree(source, target)
-
-    output = target / "output" / "index.html"
-    html = output.read_text(encoding="utf-8")
-    output.write_text(
-        html.replace("</head>", '<script src="https://example.com/app.js"></script></head>')
-        .replace("提案判断サマリー", "提案判断サマリー 高適合", 1),
+def test_demo_kit_rejects_wrong_repository_and_missing_publish_approval(tmp_path: Path):
+    workshop = _copy_workshop(tmp_path)
+    prompt = workshop / "PROMPT_03_PUBLISH.txt"
+    text = prompt.read_text(encoding="utf-8")
+    prompt.write_text(
+        text.replace("kanta13jp1/mighty-link-antigravity-live-demo", "kanta13jp1/mighty-link-ai-connect")
+        .replace("正確に「公開して」と答えるまで", "確認を待たずに"),
         encoding="utf-8",
     )
 
     result = collect_demo_kit_status(tmp_path)
     failed = {check["name"] for check in result["checks"] if not check["passed"]}
 
-    assert "H1_source_fidelity" in failed
-    assert "H7_demo_safety" in failed
+    assert "H5_publish_isolation" in failed
+    assert "H6_human_publish_gate" in failed
+
+
+def test_demo_output_rejects_external_dependency_and_persistent_storage(tmp_path: Path):
+    workshop = _copy_workshop(tmp_path)
+    html = workshop / "output" / "index.html"
+    javascript = workshop / "output" / "app.js"
+    html.write_text(
+        html.read_text(encoding="utf-8").replace(
+            "</head>", '<script src="https://example.com/app.js"></script></head>'
+        ),
+        encoding="utf-8",
+    )
+    javascript.write_text(javascript.read_text(encoding="utf-8") + "\nlocalStorage.setItem('demo', '1');\n", encoding="utf-8")
+
+    result = collect_demo_kit_status(tmp_path)
+    failed = {check["name"] for check in result["checks"] if not check["passed"]}
+
+    assert "H8_offline_fallback" in failed

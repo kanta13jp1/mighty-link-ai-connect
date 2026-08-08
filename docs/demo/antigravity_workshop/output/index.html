@@ -1,589 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light">
-  <title>サンプルテック株式会社 提案判断サマリー | MightyLINK</title>
-  <style>
-    :root {
-      --ml-blue: #00A5E3;
-      --ml-orange: #EF7E00;
-      --canvas: #F2F5F8;
-      --surface: #FFFFFF;
-      --ink: #172033;
-      --muted: #5F6B7A;
-      --line: #D8E0E8;
-      --blue-soft: #E8F7FC;
-      --orange-soft: #FFF3E8;
-      --red: #B42318;
-      --red-soft: #FFF1F2;
-      --green: #18794E;
-      --green-soft: #ECFDF3;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      background: var(--canvas);
-    }
-
-    body {
-      margin: 0;
-      min-width: 320px;
-      min-height: 100vh;
-      padding: 16px;
-      background: var(--canvas);
-      color: var(--ink);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
-      font-size: 16px;
-      line-height: 1.5;
-      letter-spacing: 0;
-    }
-
-    .app-shell {
-      width: min(1240px, 100%);
-      min-height: calc(100vh - 32px);
-      margin: 0 auto;
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      gap: 12px;
-    }
-
-    .page-header {
-      min-width: 0;
-      overflow: hidden;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-top: 4px solid var(--ml-blue);
-      border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(23, 32, 51, 0.07);
-    }
-
-    .brand-row,
-    .header-main,
-    .decision-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      min-width: 0;
-    }
-
-    .brand-row {
-      padding: 10px 20px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .brand-mark {
-      margin: 0;
-      color: var(--ink);
-      font-size: 0.9rem;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .brand-mark .mighty {
-      color: var(--ml-blue);
-    }
-
-    .brand-mark .link {
-      color: var(--ml-orange);
-    }
-
-    .status-cluster {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 3px 9px;
-      border: 1px solid;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .status-badge.training {
-      border-color: #A9DCEC;
-      background: var(--blue-soft);
-      color: #006B91;
-    }
-
-    .status-badge.review {
-      border-color: #F5C18D;
-      background: var(--orange-soft);
-      color: #8A4500;
-    }
-
-    .header-main {
-      padding: 15px 20px 13px;
-    }
-
-    .eyebrow {
-      margin: 0 0 2px;
-      color: #006B91;
-      font-size: 0.75rem;
-      font-weight: 800;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 1.75rem;
-      line-height: 1.25;
-      letter-spacing: 0;
-      overflow-wrap: anywhere;
-    }
-
-    .company-meta {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 0.875rem;
-    }
-
-    .workflow {
-      display: grid;
-      grid-template-columns: repeat(5, auto);
-      align-items: center;
-      gap: 7px;
-      color: var(--muted);
-      font-size: 0.78rem;
-      white-space: nowrap;
-    }
-
-    .workflow-step {
-      padding: 5px 8px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: var(--canvas);
-    }
-
-    .workflow-step.current {
-      border-color: #81CFE8;
-      background: var(--blue-soft);
-      color: #006B91;
-      font-weight: 800;
-    }
-
-    .workflow-arrow {
-      color: #9AA6B2;
-    }
-
-    .decision-bar {
-      justify-content: flex-start;
-      padding: 8px 20px;
-      border-top: 1px solid #F5D4B1;
-      background: var(--orange-soft);
-      color: #6E3A08;
-      font-size: 0.84rem;
-    }
-
-    .decision-bar strong {
-      flex: 0 0 auto;
-      color: #8A3300;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 12px;
-      min-width: 0;
-      min-height: 0;
-    }
-
-    .panel {
-      min-width: 0;
-      overflow: hidden;
-      padding: 17px 19px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: 0 6px 18px rgba(23, 32, 51, 0.05);
-    }
-
-    .panel.span-6 {
-      grid-column: span 6;
-    }
-
-    .panel.span-5 {
-      grid-column: span 5;
-    }
-
-    .panel.span-7 {
-      grid-column: span 7;
-    }
-
-    .panel-heading {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .section-number {
-      display: grid;
-      flex: 0 0 31px;
-      width: 31px;
-      height: 31px;
-      place-items: center;
-      border-radius: 6px;
-      background: var(--ink);
-      color: #FFFFFF;
-      font-size: 0.75rem;
-      font-weight: 800;
-    }
-
-    .panel h2 {
-      margin: 0;
-      font-size: 1.08rem;
-      line-height: 1.35;
-      letter-spacing: 0;
-    }
-
-    .panel-intro {
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-size: 0.78rem;
-    }
-
-    .fact-list,
-    .action-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .fact-list li,
-    .action-list li {
-      min-width: 0;
-      padding: 10px 0;
-      border-top: 1px solid #E8EDF2;
-      display: grid;
-      align-items: start;
-      gap: 10px;
-      overflow-wrap: anywhere;
-    }
-
-    .fact-list li {
-      grid-template-columns: 58px minmax(0, 1fr);
-    }
-
-    .action-list li {
-      grid-template-columns: 30px minmax(0, 1fr) auto;
-    }
-
-    .fact-list li:first-child,
-    .action-list li:first-child {
-      border-top-color: var(--line);
-    }
-
-    .fact-key,
-    .action-state {
-      color: var(--muted);
-      font-size: 0.73rem;
-      font-weight: 800;
-    }
-
-    .fact-key {
-      padding-top: 2px;
-    }
-
-    .fact-text,
-    .action-text {
-      min-width: 0;
-      font-size: 0.89rem;
-      font-weight: 600;
-    }
-
-    .action-number {
-      display: grid;
-      width: 26px;
-      height: 26px;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--green-soft);
-      color: var(--green);
-      font-size: 0.75rem;
-      font-weight: 800;
-    }
-
-    .action-state {
-      padding: 3px 7px;
-      border-radius: 4px;
-      background: var(--canvas);
-      white-space: nowrap;
-    }
-
-    .score-list {
-      display: grid;
-      gap: 9px;
-    }
-
-    .score-row {
-      min-width: 0;
-    }
-
-    .score-meta {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 4px;
-      font-size: 0.8rem;
-    }
-
-    .score-meta span {
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .score-meta strong {
-      color: #006B91;
-    }
-
-    .progress-track {
-      height: 8px;
-      overflow: hidden;
-      border-radius: 4px;
-      background: #E7EDF2;
-    }
-
-    .progress-value {
-      width: var(--value);
-      height: 100%;
-      border-radius: 4px;
-      background: var(--ml-blue);
-    }
-
-    .score-row.attention .progress-value {
-      background: var(--ml-orange);
-    }
-
-    .score-summary {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 10px;
-      margin-top: 12px;
-      padding: 9px 10px;
-      border-left: 4px solid var(--ml-orange);
-      border-radius: 4px;
-      background: var(--orange-soft);
-    }
-
-    .score-summary strong {
-      color: #8A4500;
-      font-size: 0.78rem;
-      white-space: nowrap;
-    }
-
-    .score-summary span {
-      color: #6E3A08;
-      font-size: 0.78rem;
-    }
-
-    footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 0 4px;
-      color: var(--muted);
-      font-size: 0.72rem;
-    }
-
-    @media (max-width: 720px) {
-      body {
-        padding: 10px;
-      }
-
-      .app-shell {
-        min-height: calc(100vh - 20px);
-        gap: 10px;
-      }
-
-      .brand-row,
-      .header-main {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 9px;
-        padding-right: 14px;
-        padding-left: 14px;
-      }
-
-      .status-cluster {
-        justify-content: flex-start;
-      }
-
-      h1 {
-        font-size: 1.42rem;
-      }
-
-      .workflow {
-        width: 100%;
-        grid-template-columns: 1fr auto 1fr auto 1fr;
-        text-align: center;
-      }
-
-      .decision-bar {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 2px;
-        padding-right: 14px;
-        padding-left: 14px;
-      }
-
-      .dashboard-grid {
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-rows: none;
-        gap: 10px;
-      }
-
-      .panel.span-5,
-      .panel.span-6,
-      .panel.span-7 {
-        grid-column: 1 / -1;
-      }
-
-      .panel {
-        padding: 15px 16px;
-      }
-
-      .action-list li {
-        grid-template-columns: 30px minmax(0, 1fr);
-      }
-
-      .action-state {
-        grid-column: 2;
-        justify-self: start;
-      }
-
-      footer {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 2px;
-      }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MightyLINK AI Workshop Demoの研修用サンプルサイト">
+  <title>MightyLINK AI Workshop Demo</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- SYNTHETIC_DATA_ONLY: training artifact; no customer or employee data. -->
-  <div class="app-shell">
-    <header class="page-header">
-      <div class="brand-row">
-        <p class="brand-mark"><span class="mighty">Mighty</span><span class="link">LINK</span> / AI提案レビュー</p>
-        <div class="status-cluster" aria-label="資料の状態">
-          <span class="status-badge training">研修用・合成データ</span>
-          <span class="status-badge review">営業責任者レビュー待ち</span>
-        </div>
-      </div>
+  <!-- SYNTHETIC_DATA_ONLY -->
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="MightyLINK AI Workshop Demo ホーム">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>MightyLINK</span>
+    </a>
+    <p class="sample-label">研修用サンプルサイト</p>
+  </header>
 
-      <div class="header-main">
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <img src="assets/workshop-hero.png" alt="オフィスでWebサイトを確認するAIワークショップの参加者">
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">MightyLINK AI Workshop Demo</p>
+        <h1 id="hero-title">AIを、明日の仕事で試してみる。</h1>
+        <p>4つのミニセッションから、業務で試したいテーマを選ぶための研修用サンプルサイトです。</p>
+        <a class="hero-link" href="#sessions">セッションを見る</a>
+      </div>
+    </section>
+
+    <section class="session-section" id="sessions" aria-labelledby="sessions-title">
+      <div class="section-heading">
         <div>
-          <p class="eyebrow">提案判断サマリー</p>
-          <h1>サンプルテック株式会社</h1>
-          <p class="company-meta">ITサービス / 従業員120名</p>
+          <p class="eyebrow">Choose a session</p>
+          <h2 id="sessions-title">興味のあるテーマを選ぶ</h2>
         </div>
-        <div class="workflow" aria-label="現在の確認工程">
-          <span class="workflow-step">ヒアリング</span>
-          <span class="workflow-arrow" aria-hidden="true">→</span>
-          <span class="workflow-step current">提案案</span>
-          <span class="workflow-arrow" aria-hidden="true">→</span>
-          <span class="workflow-step">人が確認</span>
-        </div>
+        <p id="result-count" class="result-count" aria-live="polite">4件表示</p>
       </div>
 
-      <div class="decision-bar" role="status" aria-label="送付可否">
-        <strong>社外送付不可</strong>
-        <span>最終判断と顧客送付は必ず人が行います。</span>
+      <div class="filter-group" role="group" aria-label="セッションカテゴリ">
+        <button type="button" class="filter-button is-active" data-filter="all" aria-pressed="true">すべて</button>
+        <button type="button" class="filter-button" data-filter="improvement" aria-pressed="false">業務改善</button>
+        <button type="button" class="filter-button" data-filter="communication" aria-pressed="false">コミュニケーション</button>
+        <button type="button" class="filter-button" data-filter="analysis" aria-pressed="false">分析</button>
+        <button type="button" class="filter-button" data-filter="governance" aria-pressed="false">ガバナンス</button>
       </div>
-    </header>
 
-    <main class="dashboard-grid" aria-label="営業提案の4項目">
-      <section class="panel span-6" id="customer-pain-points" aria-labelledby="pain-title">
-        <div class="panel-heading">
-          <span class="section-number" aria-hidden="true">01</span>
-          <div>
-            <h2 id="pain-title">顧客課題</h2>
-            <p class="panel-intro">ヒアリングメモから抽出した事実</p>
-          </div>
-        </div>
-        <ul class="fact-list">
-          <li><span class="fact-key">作成</span><span class="fact-text">営業提案の初稿作成に時間がかかる。</span></li>
-          <li><span class="fact-key">情報</span><span class="fact-text">案件情報が担当者ごとのメモに分散している。</span></li>
-          <li><span class="fact-key">進行</span><span class="fact-text">提案後の次アクションが曖昧になりやすい。</span></li>
-        </ul>
-      </section>
+      <div class="session-grid">
+        <article class="session-card" data-category="improvement" data-session="AIで仕事を整理する">
+          <div class="card-topline"><span>業務改善</span><span>20分</span></div>
+          <h3>AIで仕事を整理する</h3>
+          <p>日々の業務を分解し、AIに任せる範囲と人が判断する範囲を整理します。</p>
+          <button type="button" class="select-button" aria-pressed="false">参加候補に追加</button>
+        </article>
 
-      <section class="panel span-6" id="proposal-summary" aria-labelledby="proposal-title">
-        <div class="panel-heading">
-          <span class="section-number" aria-hidden="true">02</span>
-          <div>
-            <h2 id="proposal-title">提案方針</h2>
-            <p class="panel-intro">課題に対応する試作の方向性</p>
-          </div>
-        </div>
-        <ul class="fact-list">
-          <li><span class="fact-key">整理</span><span class="fact-text">既存メモから提案骨子を自動で整理する。</span></li>
-          <li><span class="fact-key">共通化</span><span class="fact-text">出力形式を共通化し、レビュー時間を短縮する。</span></li>
-          <li><span class="fact-key">確認</span><span class="fact-text">最終判断と顧客送付は必ず人が行う。</span></li>
-        </ul>
-      </section>
+        <article class="session-card" data-category="communication" data-session="伝わる文章をレビューする">
+          <div class="card-topline"><span>コミュニケーション</span><span>25分</span></div>
+          <h3>伝わる文章をレビューする</h3>
+          <p>社内文書を題材に、目的と読み手に合わせた改善案を比較します。</p>
+          <button type="button" class="select-button" aria-pressed="false">参加候補に追加</button>
+        </article>
 
-      <section class="panel span-5" id="fit-score" aria-labelledby="score-title">
-        <div class="panel-heading">
-          <span class="section-number" aria-hidden="true">03</span>
-          <div>
-            <h2 id="score-title">適合スコア</h2>
-            <p class="panel-intro">ヒアリングメモ記載の参考値</p>
-          </div>
-        </div>
-        <div class="score-list">
-          <div class="score-row">
-            <div class="score-meta"><span id="business-label">業務適合</span><strong>82 / 100</strong></div>
-            <div class="progress-track" role="progressbar" aria-labelledby="business-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="82"><div class="progress-value" style="--value: 82%"></div></div>
-          </div>
-          <div class="score-row">
-            <div class="score-meta"><span id="ease-label">導入容易性</span><strong>76 / 100</strong></div>
-            <div class="progress-track" role="progressbar" aria-labelledby="ease-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="76"><div class="progress-value" style="--value: 76%"></div></div>
-          </div>
-          <div class="score-row attention">
-            <div class="score-meta"><span id="data-label">データ準備</span><strong>68 / 100</strong></div>
-            <div class="progress-track" role="progressbar" aria-labelledby="data-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68"><div class="progress-value" style="--value: 68%"></div></div>
-          </div>
-        </div>
-        <div class="score-summary">
-          <strong>確認優先</strong>
-          <span>データ準備 68 / 100。実データ利用前に情報管理ルールを確認します。</span>
-        </div>
-      </section>
+        <article class="session-card" data-category="analysis" data-session="データを見える形にする">
+          <div class="card-topline"><span>分析</span><span>30分</span></div>
+          <h3>データを見える形にする</h3>
+          <p>合成データから傾向を読み取り、確認すべきポイントを可視化します。</p>
+          <button type="button" class="select-button" aria-pressed="false">参加候補に追加</button>
+        </article>
 
-      <section class="panel span-7" id="next-actions" aria-labelledby="action-title">
-        <div class="panel-heading">
-          <span class="section-number" aria-hidden="true">04</span>
-          <div>
-            <h2 id="action-title">次アクション</h2>
-            <p class="panel-intro">試作から実データ利用前までの確認順</p>
-          </div>
-        </div>
-        <ol class="action-list">
-          <li><span class="action-number">1</span><span class="action-text">合成データで提案画面を試作する。</span><span class="action-state">今すぐ</span></li>
-          <li><span class="action-number">2</span><span class="action-text">営業責任者が出力項目をレビューする。</span><span class="action-state">人が確認</span></li>
-          <li><span class="action-number">3</span><span class="action-text">実データ利用前に情報管理ルールを確認する。</span><span class="action-state">実データ前</span></li>
-        </ol>
-      </section>
-    </main>
+        <article class="session-card" data-category="governance" data-session="安全なAI活用を設計する">
+          <div class="card-topline"><span>ガバナンス</span><span>20分</span></div>
+          <h3>安全なAI活用を設計する</h3>
+          <p>合成データ、権限、レビュー、公開前確認の基本ルールを学びます。</p>
+          <button type="button" class="select-button" aria-pressed="false">参加候補に追加</button>
+        </article>
+      </div>
+    </section>
 
-    <footer>
-      <span>株式会社MightyLINK / 8月26日 AI研修デモ</span>
-      <span>合成データ / 社外送付不可</span>
-    </footer>
-  </div>
+    <section class="selection-summary" aria-labelledby="selection-title">
+      <div>
+        <p class="eyebrow">Your shortlist</p>
+        <h2 id="selection-title">参加候補 <span id="selection-count">0</span>件</h2>
+      </div>
+      <p id="selection-names" aria-live="polite">まだ選択されていません。</p>
+    </section>
+
+    <section class="safety-note" aria-labelledby="safety-title">
+      <h2 id="safety-title">このサイトについて</h2>
+      <p>表示内容は研修用の合成データです。選択内容は送信・保存されません。</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>MightyLINK AI Workshop Demo / SYNTHETIC_DATA_ONLY</p>
+  </footer>
+  <script src="app.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
-[経費CSV・読み取り専用]
-@docs/demo/antigravity_workshop/input/expenses.csv から、10,000円を超える支出と「同日・同額」の行を抽出し、Markdown表で回答してください。ファイルは変更しないでください。
+[予備1・ローカル完成版を確認する]
+既存のindex.htmlをブラウザで開き、カテゴリ絞り込みを5種類すべて操作し、2件を参加候補へ追加してください。ファイル変更、commit、pushは行わず、確認結果だけ回答してください。
 
-[WBS・読み取り専用]
-@docs/demo/antigravity_workshop/input/sample_wbs.tsv から、期限超過と今週期限を分け、優先度が高い3件を理由付きで回答してください。ファイルは変更しないでください。
+[予備2・3プロンプトの差分を説明する]
+MAIN_PROMPT.txt、PROMPT_02_IMPROVE.txt、PROMPT_03_PUBLISH.txtを読み、各段階で「AIに任せること／人が確認すること／停止条件」を3列のMarkdown表で回答してください。ファイル変更、commit、pushは行わないでください。

@@ -1,49 +1,50 @@
 #!/usr/bin/env python3
-"""Fail closed unless the dedicated Antigravity workshop kit is demo-ready."""
+"""Fail closed unless the iterative Antigravity workshop demo is ready."""
 
 from __future__ import annotations
 
-import csv
 from html.parser import HTMLParser
 from pathlib import Path
 import re
 import sys
 
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WORKSHOP_DIR = PROJECT_ROOT / "docs" / "demo" / "antigravity_workshop"
-INPUT_DIR = WORKSHOP_DIR / "input"
 SYNTHETIC_MARKER = "SYNTHETIC_DATA_ONLY"
+PAGES_REPOSITORY = "https://github.com/kanta13jp1/mighty-link-antigravity-live-demo"
+PAGES_URL = "https://kanta13jp1.github.io/mighty-link-antigravity-live-demo/"
 
 
 def _read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-class _DemoHTMLParser(HTMLParser):
+class _SiteParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.tags: list[str] = []
-        self.section_ids: list[str] = []
-        self.section_attrs: list[dict[str, str]] = []
-        self.heading_counts = {"h1": 0, "h2": 0}
-        self.progressbars: list[dict[str, str]] = []
+        self.headings = {"h1": 0, "h2": 0, "h3": 0}
+        self.buttons: list[dict[str, str]] = []
         self.external_refs: list[str] = []
+        self.local_refs: list[str] = []
         self.text_parts: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = {name: value or "" for name, value in attrs}
         self.tags.append(tag)
-        if tag == "section":
-            self.section_ids.append(values.get("id", ""))
-            self.section_attrs.append(values)
-        if tag in self.heading_counts:
-            self.heading_counts[tag] += 1
-        if values.get("role") == "progressbar":
-            self.progressbars.append(values)
+        if tag in self.headings:
+            self.headings[tag] += 1
+        if tag == "button":
+            self.buttons.append(values)
         for name in ("href", "src"):
             value = values.get(name, "")
+            if not value or value.startswith("#"):
+                continue
             if value.startswith(("http://", "https://", "//")):
                 self.external_refs.append(value)
+            else:
+                self.local_refs.append(value)
 
     def handle_data(self, data: str) -> None:
         text = data.strip()
@@ -51,207 +52,170 @@ class _DemoHTMLParser(HTMLParser):
             self.text_parts.append(text)
 
 
-def _demo_hypothesis_checks(output_html: Path, customer_memo: Path) -> list[dict[str, object]]:
-    raw = _read_text(output_html)
-    memo = _read_text(customer_memo)
-    parser = _DemoHTMLParser()
-    parser.feed(raw)
+def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
+    prompt1 = _read_text(files["prompt1"])
+    prompt2 = _read_text(files["prompt2"])
+    prompt3 = _read_text(files["prompt3"])
+    backup = _read_text(files["backup"])
+    brief = _read_text(files["site_brief"])
+    html = _read_text(files["output_html"])
+    css = _read_text(files["output_css"])
+    javascript = _read_text(files["output_js"])
+
+    parser = _SiteParser()
+    parser.feed(html)
     visible_text = " ".join(parser.text_parts)
 
-    source_facts = [
-        "サンプルテック株式会社",
-        "ITサービス",
-        "従業員120名",
-        "営業提案の初稿作成に時間がかかる。",
-        "案件情報が担当者ごとのメモに分散している。",
-        "提案後の次アクションが曖昧になりやすい。",
-        "既存メモから提案骨子を自動で整理する。",
-        "出力形式を共通化し、レビュー時間を短縮する。",
-        "82 / 100",
-        "76 / 100",
-        "68 / 100",
-        "合成データで提案画面を試作する。",
-        "営業責任者が出力項目をレビューする。",
-        "実データ利用前に情報管理ルールを確認する。",
-    ]
-    missing_facts = [fact for fact in source_facts if fact not in visible_text]
-    invented_claims = [claim for claim in ("高適合", "ROI", "削減率", "導入決定") if claim in visible_text]
-    h1 = not missing_facts and not invented_claims and "SYNTHETIC_DATA_ONLY" in memo
+    h1 = (
+        prompt1.startswith("Prompt 1 / Webサイトを作る")
+        and prompt2.startswith("Prompt 2 / 機能とデザインを改善する")
+        and prompt3.startswith("Prompt 3 / GitHub Pagesへ公開する")
+    )
 
-    decision_markers = ("提案判断サマリー", "営業責任者レビュー待ち", "社外送付不可")
-    h2 = all(marker in visible_text for marker in decision_markers)
+    h2 = all(
+        marker in prompt1
+        for marker in (
+            "index.html と styles.css",
+            "この段階ではJavaScript",
+            "git commitとgit pushは実行しない",
+            "1440x900と390x844",
+        )
+    )
 
-    expected_sections = ["customer-pain-points", "proposal-summary", "fit-score", "next-actions"]
-    h3 = parser.section_ids == expected_sections
+    h3 = all(
+        marker in prompt2
+        for marker in (
+            "カテゴリ絞り込み",
+            "参加候補に追加／追加済み",
+            "app.jsを新規作成",
+            "aria-pressed",
+            "aria-live",
+            "4、1、1、1、1",
+            "git commitとgit pushは実行しない",
+        )
+    )
 
-    upper_html = raw.upper()
-    h4 = "#00A5E3" in upper_html and "#EF7E00" in upper_html
+    prompt2_upper = prompt2.upper()
+    css_upper = css.upper()
+    h4 = (
+        "#00A5E3" in prompt2_upper
+        and "#EF7E00" in prompt2_upper
+        and "#00A5E3" in css_upper
+        and "#EF7E00" in css_upper
+        and "gradient" not in css.lower()
+    )
 
-    progress_values = {bar.get("aria-valuenow") for bar in parser.progressbars}
     h5 = (
-        len(parser.progressbars) == 3
-        and progress_values == {"68", "76", "82"}
-        and "ヒアリングメモ記載の参考値" in visible_text
-        and "確認優先" in visible_text
+        PAGES_REPOSITORY in prompt3
+        and PAGES_URL in prompt3
+        and "許可されたブランチ: main" in prompt3
+        and "一致しない場合は何も変更せず停止" in prompt3
+        and "mightylink-app.com" not in prompt3
+        and "mighty-link-ai-connect" not in prompt3
     )
 
-    human_review_markers = (
-        "営業責任者レビュー待ち",
-        "最終判断と顧客送付は必ず人が行います。",
-        "営業責任者が出力項目をレビューする。",
+    h6 = all(
+        marker in prompt3
+        for marker in (
+            "ここで必ず停止",
+            "公開してもよいですか？",
+            "正確に「公開して」と答えるまで",
+            "git add、git commit、git push",
+            "「公開して」と回答された後だけ",
+        )
     )
-    h6 = all(marker in visible_text for marker in human_review_markers)
 
-    forbidden_tags = {"script", "form", "input", "iframe"}
     h7 = (
-        "SYNTHETIC_DATA_ONLY" in raw
-        and not parser.external_refs
-        and not forbidden_tags.intersection(parser.tags)
+        SYNTHETIC_MARKER in brief
+        and "実在する顧客、社員、申込情報を含まない" in brief
+        and all(marker in prompt3 for marker in (".env", "トークン", "個人情報", "顧客情報"))
+        and "フォーム送信、ネットワーク送信、永続保存は行わない" in brief
     )
 
-    compact_css = re.sub(r"\s+", " ", raw)
-    h8 = all(
-        marker in compact_css
-        for marker in (
-            "grid-template-columns: repeat(12, minmax(0, 1fr))",
-            "grid-template-rows: minmax(0, 1fr) minmax(0, 1fr)",
-            "min-height: calc(100vh - 32px)",
-        )
+    forbidden_runtime = ("fetch(", "XMLHttpRequest", "localStorage", "sessionStorage")
+    h8 = (
+        not parser.external_refs
+        and all((files["output_dir"] / ref).is_file() for ref in parser.local_refs if not ref.startswith("mailto:"))
+        and not any(marker in javascript for marker in forbidden_runtime)
+        and "form" not in parser.tags
+        and files["hero_image"].stat().st_size > 100_000
     )
 
-    h9 = all(
-        marker in compact_css
-        for marker in (
-            'name="viewport"',
-            "@media (max-width: 720px)",
-            "grid-column: 1 / -1",
-            "overflow-wrap: anywhere",
-            "min-width: 0",
-        )
+    filter_buttons = [button for button in parser.buttons if "data-filter" in button]
+    select_buttons = [button for button in parser.buttons if "select-button" in button.get("class", "")]
+    compact_css = re.sub(r"\s+", " ", css)
+    h9 = (
+        {"header", "main", "section", "footer"}.issubset(parser.tags)
+        and parser.headings == {"h1": 1, "h2": 3, "h3": 4}
+        and len(filter_buttons) == 5
+        and len(select_buttons) == 4
+        and all("aria-pressed" in button for button in parser.buttons)
+        and 'name="viewport"' in html
+        and "@media (max-width: 640px)" in compact_css
+        and "grid-template-columns: 1fr" in compact_css
     )
 
-    progress_aria_ok = all(
-        bar.get("aria-labelledby")
-        and bar.get("aria-valuemin") == "0"
-        and bar.get("aria-valuemax") == "100"
-        and bar.get("aria-valuenow")
-        for bar in parser.progressbars
-    )
-    sections_labelled = all(section.get("aria-labelledby") for section in parser.section_attrs)
     h10 = (
-        {"header", "main", "footer"}.issubset(parser.tags)
-        and parser.heading_counts == {"h1": 1, "h2": 4}
-        and sections_labelled
-        and progress_aria_ok
+        all(marker in prompt3 for marker in ("最大3分", "HTTPS", "ページタイトル", "カテゴリ絞り込み", "参加候補2件"))
+        and "90秒以上進展が見えない" in _read_text(files["readme"])
+        and backup.count("ファイル変更、commit、pushは行わ") == 2
+        and "ローカル予備成果物" in _read_text(files["output_readme"])
     )
 
     hypotheses = [
-        ("H1_source_fidelity", h1, f"missing={missing_facts or 'none'}; invented={invented_claims or 'none'}"),
-        ("H2_decision_clarity", h2, "company, review status, and send restriction are visible"),
-        ("H3_information_order", h3, f"sections={parser.section_ids}"),
-        ("H4_brand_fidelity", h4, "official #00A5E3 and #EF7E00 are present"),
-        ("H5_score_explainability", h5, f"progress_values={sorted(progress_values)}"),
-        ("H6_human_review", h6, "review owner and human final decision are explicit"),
-        ("H7_demo_safety", h7, f"external_refs={len(parser.external_refs)}; forbidden_tags={sorted(forbidden_tags.intersection(parser.tags))}"),
-        ("H8_desktop_first_view", h8, "12-column, two-row viewport layout is declared"),
-        ("H9_mobile_resilience", h9, "single-column breakpoint and overflow protections are declared"),
-        ("H10_accessibility", h10, f"headings={parser.heading_counts}; progressbars={len(parser.progressbars)}"),
+        ("H1_iterative_story", h1, "three prompts are explicitly ordered build, improve, publish"),
+        ("H2_build_boundary", h2, "Prompt 1 builds HTML/CSS only and forbids commit/push"),
+        ("H3_feature_iteration", h3, "Prompt 2 adds filters, shortlist behavior, ARIA, and tests"),
+        ("H4_design_iteration", h4, "Prompt 2 and fallback site use official accent colors without gradients"),
+        ("H5_publish_isolation", h5, f"dedicated repository={PAGES_REPOSITORY}"),
+        ("H6_human_publish_gate", h6, "push is blocked until the exact human approval phrase"),
+        ("H7_public_data_safety", h7, "synthetic-only brief and secret/PII checks are explicit"),
+        ("H8_offline_fallback", h8, f"external_refs={len(parser.external_refs)}; local_refs={parser.local_refs}"),
+        ("H9_responsive_accessibility", h9, f"headings={parser.headings}; buttons={len(parser.buttons)}"),
+        ("H10_publish_verification_recovery", h10, "live URL verification and read-only recovery are defined"),
     ]
     return [
-        {"name": name, "path": output_html, "passed": passed, "detail": detail}
+        {"name": name, "path": files["readme"], "passed": passed, "detail": detail}
         for name, passed, detail in hypotheses
     ]
 
 
 def collect_demo_kit_status(project_root: Path = PROJECT_ROOT) -> dict[str, object]:
-    workshop_dir = project_root / "docs" / "demo" / "antigravity_workshop"
-    required_files = {
-        "main_prompt": workshop_dir / "MAIN_PROMPT.txt",
-        "backup_prompts": workshop_dir / "BACKUP_PROMPTS.txt",
-        "customer_memo": workshop_dir / "input" / "customer_interview_memo.md",
-        "expenses": workshop_dir / "input" / "expenses.csv",
-        "sample_wbs": workshop_dir / "input" / "sample_wbs.tsv",
-        "output_readme": workshop_dir / "output" / "README.md",
-        "output_html": workshop_dir / "output" / "index.html",
+    workshop = project_root / "docs" / "demo" / "antigravity_workshop"
+    output = workshop / "output"
+    files = {
+        "prompt1": workshop / "MAIN_PROMPT.txt",
+        "prompt2": workshop / "PROMPT_02_IMPROVE.txt",
+        "prompt3": workshop / "PROMPT_03_PUBLISH.txt",
+        "backup": workshop / "BACKUP_PROMPTS.txt",
+        "readme": workshop / "README.md",
+        "site_brief": workshop / "input" / "SITE_BRIEF.md",
+        "output_dir": output,
+        "output_readme": output / "README.md",
+        "output_html": output / "index.html",
+        "output_css": output / "styles.css",
+        "output_js": output / "app.js",
+        "hero_image": output / "assets" / "workshop-hero.png",
     }
 
     checks: list[dict[str, object]] = []
-    for name, path in required_files.items():
+    for name, path in files.items():
+        if name == "output_dir":
+            continue
         exists = path.is_file() and path.stat().st_size > 0
         checks.append({"name": name, "path": path, "passed": exists, "detail": "present" if exists else "missing"})
 
     if not all(check["passed"] for check in checks):
         return {"passed": False, "checks": checks}
 
-    for name in ("customer_memo", "expenses", "sample_wbs"):
-        path = required_files[name]
-        has_marker = SYNTHETIC_MARKER in _read_text(path)
-        checks.append(
-            {
-                "name": f"{name}_synthetic_marker",
-                "path": path,
-                "passed": has_marker,
-                "detail": "synthetic marker present" if has_marker else "synthetic marker missing",
-            }
-        )
-
-    main_prompt = _read_text(required_files["main_prompt"])
-    prompt_requirements = {
-        "scoped_output": "docs/demo/antigravity_workshop/output/index.html",
-        "no_unscoped_writes": "出力先以外に書き込まない",
-        "browser_verification": "ブラウザで開き",
-        "source_fidelity": "数値・判定・効果を追加しない",
-        "human_review": "営業責任者レビュー待ち",
-        "desktop_viewport": "1440x900",
-        "mobile_viewport": "390x844",
-        "three_line_report": "3行で報告",
-    }
-    for name, expected in prompt_requirements.items():
-        present = expected in main_prompt
-        checks.append(
-            {
-                "name": f"main_prompt_{name}",
-                "path": required_files["main_prompt"],
-                "passed": present,
-                "detail": f"contains {expected!r}" if present else f"missing {expected!r}",
-            }
-        )
-
-    expense_lines = _read_text(required_files["expenses"]).splitlines()[1:]
-    expense_rows = list(csv.DictReader(expense_lines))
-    expense_columns = {"伝票番号", "発生日付", "金額_JPY", "承認ステータス"}
-    expense_ok = bool(expense_rows) and expense_columns.issubset(expense_rows[0])
-    checks.append(
-        {
-            "name": "expenses_schema",
-            "path": required_files["expenses"],
-            "passed": expense_ok,
-            "detail": f"rows={len(expense_rows)}",
-        }
-    )
-
-    wbs_lines = _read_text(required_files["sample_wbs"]).splitlines()[1:]
-    wbs_rows = list(csv.DictReader(wbs_lines, delimiter="\t"))
-    wbs_columns = {"task_id", "task_name", "status", "due_date", "priority"}
-    wbs_ok = bool(wbs_rows) and wbs_columns.issubset(wbs_rows[0])
-    checks.append(
-        {
-            "name": "sample_wbs_schema",
-            "path": required_files["sample_wbs"],
-            "passed": wbs_ok,
-            "detail": f"rows={len(wbs_rows)}",
-        }
-    )
-
-    checks.extend(_demo_hypothesis_checks(required_files["output_html"], required_files["customer_memo"]))
-
+    checks.extend(_hypothesis_checks(files))
     return {"passed": all(check["passed"] for check in checks), "checks": checks}
 
 
 def verify_demo_data(project_root: Path = PROJECT_ROOT) -> int:
     result = collect_demo_kit_status(project_root)
-    print("Google Antigravity 8/26 ライブデモキット検証")
-    print("=" * 56)
+    print("Google Antigravity 8/26 段階開発ライブデモ検証")
+    print("=" * 60)
     for check in result["checks"]:
         status = "OK" if check["passed"] else "FAIL"
         path = Path(check["path"])
@@ -260,7 +224,10 @@ def verify_demo_data(project_root: Path = PROJECT_ROOT) -> int:
         except ValueError:
             display_path = path
         print(f"[{status}] {check['name']}: {display_path} ({check['detail']})")
-    print("\n[PASS] デモキットは合成データ・限定出力・確認手順を満たしています。" if result["passed"] else "\n[FAIL] デモキットの不足を修正してください。")
+    message = "\n[PASS] 作成、改善、人の承認、専用Pages公開、確認、復旧を安全に実演できます。"
+    if not result["passed"]:
+        message = "\n[FAIL] デモキットの不足を修正してください。"
+    print(message)
     return 0 if result["passed"] else 1
 
 

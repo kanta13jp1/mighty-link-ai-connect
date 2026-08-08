@@ -1,37 +1,44 @@
 # Antigravityライブデモ 10仮説検証レポート
 
 実施日: 2026-08-08
-対象: `docs/demo/antigravity_workshop/output/index.html`
-
-## 目的
-
-8月26日の社内研修で、合成ヒアリングメモから生成した提案画面を短時間で確認できるようにする。見た目だけでなく、入力事実との一致、人による最終判断、安全な出力範囲、デスクトップとモバイルの実描画を検証する。
+対象: 3段階プロンプト、完成版予備サイト、GitHub Pages公開専用リポジトリ
 
 ## 検証結果
 
 | 仮説 | 合否 | 合格条件 | 実測・証拠 |
 | --- | --- | --- | --- |
-| H1 入力事実を保つ | PASS | 会社情報、課題、提案、3スコア、次アクションが入力と一致し、判定を創作しない | 必須14項目すべて存在。「高適合」「ROI」「削減率」「導入決定」は0件 |
-| H2 判断状態がすぐ分かる | PASS | 会社名、レビュー状態、送付制限を上部に表示 | 「提案判断サマリー」「営業責任者レビュー待ち」「社外送付不可」を表示 |
-| H3 視線順序が固定される | PASS | 課題、提案、スコア、次アクションの順に並ぶ | section IDのDOM順が指定4項目と一致 |
-| H4 公式ブランド色を守る | PASS | `#00A5E3`と`#EF7E00`を使用する | 2色をアクセントに限定し、背景は中立色で構成 |
-| H5 スコアを説明できる | PASS | 82、76、68を参考値として示し、最低値を確認事項へ接続 | progressbar 3件。データ準備68点を「確認優先」として次アクションへ接続 |
-| H6 人の判断を外さない | PASS | レビュー担当と最終判断を明示する | レビュー待ち、営業責任者レビュー、顧客送付は人が行うことを表示 |
-| H7 安全なデモに閉じる | PASS | 合成データ、外部参照なし、実行要素なし | `SYNTHETIC_DATA_ONLY`あり。外部URL 0、script/form/input/iframe 0 |
-| H8 デスクトップ1画面に収まる | PASS | 1440x900でページスクロール、重なり、文字溢れがない | scroll 1440x900、主要領域重なり0、文字溢れ0、4 section表示 |
-| H9 モバイル幅で破綻しない | PASS | 390x844で横スクロール、重なり、文字溢れがない | scrollWidth 390、重なり0、文字溢れ0。全体高は1701pxから1432pxへ15.8%短縮 |
-| H10 構造を読み上げ可能にする | PASS | landmark、見出し階層、progressbar ARIAを持つ | header/main/footer、h1 1件、h2 4件、ARIA progressbar 3件、section 4件 |
+| H1 変化が理解できる | PASS | 作成、改善、公開が別プロンプトで進む | 3ファイルに責務を分離し、各段階でブラウザ確認を要求 |
+| H2 最初は小さく作れる | PASS | Prompt 1はHTML/CSSと画像だけを生成 | JavaScript、commit、pushを禁止 |
+| H3 機能追加を実演できる | PASS | Prompt 2で絞り込みと参加候補選択を追加 | 件数`4,1,1,1,1`、2件選択をPlaywrightで確認 |
+| H4 デザイン変更を実演できる | PASS | Prompt 2で公式色とレスポンシブ構成を追加 | `#00A5E3`、`#EF7E00`、デスクトップ1列、モバイル1列を確認 |
+| H5 本番と公開先を分離できる | PASS | Prompt 3のremoteを専用リポジトリへ限定 | リポジトリURLとPages URLを完全一致で検証 |
+| H6 人が公開を決める | PASS | 正確な承認文言まで書込操作をしない | `公開してもよいですか？`で停止し、`公開して`のみ許可 |
+| H7 公開データが安全である | PASS | 合成データ標識、秘密・個人情報なし | `SYNTHETIC_DATA_ONLY`を必須化し、違反時はfail-closed |
+| H8 回線障害でも続行できる | PASS | 完成版が外部依存なしでローカル動作 | 外部JS/CSS、API、永続ストレージなし |
+| H9 画面が崩れない | PASS | 1440x900と390x844で横溢れ・文字溢れ・console errorなし | 幅は各viewportと一致、画像読込成功、カード4件表示 |
+| H10 公開後まで検証できる | PASS | push後にHTTPSと主要機能を再確認 | 専用Pagesの初期デプロイ成功、公開確認手順をPrompt 3へ固定 |
+
+## ブラウザ実測
+
+| 項目 | Desktop 1440x900 | Mobile 390x844 |
+| --- | ---: | ---: |
+| clientWidth / scrollWidth | 1440 / 1440 | 390 / 390 |
+| scrollHeight | 1620 | 2549 |
+| 文字溢れ | 0 | 0 |
+| console error | 0 | 0 |
+| 表示カード | 4 | 4 |
+
+インタラクションはカテゴリ件数`4,1,1,1,1`、参加候補2件、選択名「AIで仕事を整理する / データを見える形にする」を確認した。
 
 ## 証拠
 
-- [デスクトップ 1440x900](../../../exports/antigravity_demo_hypothesis_evidence/desktop_1440x900.png)
-- [モバイル 390x844](../../../exports/antigravity_demo_hypothesis_evidence/mobile_390x844.png)
+- [デスクトップ](../../../exports/antigravity_demo_hypothesis_evidence/desktop_1440x900.png)
+- [モバイル](../../../exports/antigravity_demo_hypothesis_evidence/mobile_390x844.png)
+- [インタラクション](../../../exports/antigravity_demo_hypothesis_evidence/interaction_1440x900.png)
 - [Playwright実測値](../../../exports/antigravity_demo_hypothesis_evidence/render_metrics.json)
 - 自動検証: `python scripts/run_antigravity_live_demo.py`
 - 回帰テスト: `python -m pytest tests/test_antigravity_live_demo.py -q`
 
-## 限界
+## 残余リスク
 
-- 2つの代表viewportで検証しており、全端末・全ブラウザの網羅ではない。
-- DOMとARIAは検証したが、実機スクリーンリーダーによる利用者試験は未実施。
-- 8月26日のライブ実行ではAntigravityがHTMLを再生成するため、実行後に同じ検証コマンドとブラウザ確認を行う。
+会場回線、GitHub Actionsの待ち時間、Antigravity UIの更新は制御できない。90秒で進展がなければ完成版と読み取り専用プロンプトへ切り替え、公開処理は本番リポジトリでは実施しない。
