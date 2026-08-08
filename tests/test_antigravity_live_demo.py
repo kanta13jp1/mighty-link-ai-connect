@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import shutil
 from pathlib import Path
 
 
@@ -15,6 +16,12 @@ def test_committed_antigravity_demo_kit_is_fail_closed_and_ready():
 
     assert result["passed"] is True
     assert all(check["passed"] for check in result["checks"])
+
+    hypotheses = [check for check in result["checks"] if check["name"].startswith("H")]
+    assert len(hypotheses) == 10
+    assert {check["name"].split("_", 1)[0] for check in hypotheses} == {
+        f"H{number}" for number in range(1, 11)
+    }
 
 
 def test_demo_kit_rejects_missing_synthetic_marker(tmp_path: Path):
@@ -40,9 +47,33 @@ def test_demo_kit_rejects_missing_synthetic_marker(tmp_path: Path):
         encoding="utf-8",
     )
     (output_dir / "README.md").write_text("output", encoding="utf-8")
+    (output_dir / "index.html").write_text(
+        "<!doctype html><html><body>SYNTHETIC_DATA_ONLY</body></html>",
+        encoding="utf-8",
+    )
 
     result = collect_demo_kit_status(tmp_path)
 
     assert result["passed"] is False
     failed = {check["name"] for check in result["checks"] if not check["passed"]}
     assert "customer_memo_synthetic_marker" in failed
+
+
+def test_demo_output_rejects_external_script_and_invented_rank(tmp_path: Path):
+    source = PROJECT_ROOT / "docs" / "demo" / "antigravity_workshop"
+    target = tmp_path / "docs" / "demo" / "antigravity_workshop"
+    shutil.copytree(source, target)
+
+    output = target / "output" / "index.html"
+    html = output.read_text(encoding="utf-8")
+    output.write_text(
+        html.replace("</head>", '<script src="https://example.com/app.js"></script></head>')
+        .replace("提案判断サマリー", "提案判断サマリー 高適合", 1),
+        encoding="utf-8",
+    )
+
+    result = collect_demo_kit_status(tmp_path)
+    failed = {check["name"] for check in result["checks"] if not check["passed"]}
+
+    assert "H1_source_fidelity" in failed
+    assert "H7_demo_safety" in failed

@@ -110,7 +110,7 @@
     "skipped": false,
     "failed": 0,
     "errors": 0,
-    "collected": 670,
+    "collected": 769,
     "exit_code": 0
   },
   "hypotheses": [
@@ -148,7 +148,7 @@
       "id": "H6",
       "title": "収集テストが400件以上(スイート縮退検知)",
       "passed": true,
-      "detail": "収集=670"
+      "detail": "収集=769"
     },
     {
       "id": "H7",

@@ -1,0 +1,152 @@
+{
+  "source": "docs/demo/antigravity_workshop/output/index.html",
+  "all_passed": true,
+  "viewports": {
+    "desktop_1440x900": {
+      "title": "サンプルテック株式会社 提案判断サマリー | MightyLINK",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "document": {
+        "scrollWidth": 1440,
+        "scrollHeight": 900
+      },
+      "boxes": [
+        {
+          "selector": "header",
+          "x": 100,
+          "y": 16,
+          "width": 1240,
+          "height": 199.15625,
+          "right": 1340,
+          "bottom": 215.15625
+        },
+        {
+          "selector": "#customer-pain-points",
+          "x": 100,
+          "y": 227.15625,
+          "width": 614,
+          "height": 307.78125,
+          "right": 714,
+          "bottom": 534.9375
+        },
+        {
+          "selector": "#proposal-summary",
+          "x": 726,
+          "y": 227.15625,
+          "width": 614,
+          "height": 307.78125,
+          "right": 1340,
+          "bottom": 534.9375
+        },
+        {
+          "selector": "#fit-score",
+          "x": 100,
+          "y": 546.9375,
+          "width": 509.65625,
+          "height": 307.796875,
+          "right": 609.65625,
+          "bottom": 854.734375
+        },
+        {
+          "selector": "#next-actions",
+          "x": 621.65625,
+          "y": 546.9375,
+          "width": 718.34375,
+          "height": 307.796875,
+          "right": 1340,
+          "bottom": 854.734375
+        },
+        {
+          "selector": "footer",
+          "x": 100,
+          "y": 866.734375,
+          "width": 1240,
+          "height": 17.265625,
+          "right": 1340,
+          "bottom": 884
+        }
+      ],
+      "overlaps": [],
+      "textOverflow": [],
+      "headings": 5,
+      "progressbars": 3,
+      "sections": 4,
+      "passed": true
+    },
+    "mobile_390x844": {
+      "title": "サンプルテック株式会社 提案判断サマリー | MightyLINK",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "scrollWidth": 390,
+        "scrollHeight": 1432
+      },
+      "boxes": [
+        {
+          "selector": "header",
+          "x": 10,
+          "y": 10,
+          "width": 370,
+          "height": 285.03125,
+          "right": 380,
+          "bottom": 295.03125
+        },
+        {
+          "selector": "#customer-pain-points",
+          "x": 10,
+          "y": 305.03125,
+          "width": 370,
+          "height": 213.078125,
+          "right": 380,
+          "bottom": 518.109375
+        },
+        {
+          "selector": "#proposal-summary",
+          "x": 10,
+          "y": 528.109375,
+          "width": 370,
+          "height": 234.421875,
+          "right": 380,
+          "bottom": 762.53125
+        },
+        {
+          "selector": "#fit-score",
+          "x": 10,
+          "y": 772.53125,
+          "width": 370,
+          "height": 265.046875,
+          "right": 380,
+          "bottom": 1037.578125
+        },
+        {
+          "selector": "#next-actions",
+          "x": 10,
+          "y": 1047.578125,
+          "width": 370,
+          "height": 327.640625,
+          "right": 380,
+          "bottom": 1375.21875
+        },
+        {
+          "selector": "footer",
+          "x": 10,
+          "y": 1385.21875,
+          "width": 370,
+          "height": 36.53125,
+          "right": 380,
+          "bottom": 1421.75
+        }
+      ],
+      "overlaps": [],
+      "textOverflow": [],
+      "headings": 5,
+      "progressbars": 3,
+      "sections": 4,
+      "passed": true
+    }
+  }
+}

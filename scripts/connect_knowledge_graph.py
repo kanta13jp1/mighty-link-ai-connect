@@ -15,11 +15,16 @@ DOCS_DIR = PROJECT_ROOT / "docs"
 VAULT_HOME = PROJECT_ROOT / "exports" / "knowledge_flow" / "obsidian_vault" / "Mighty Skill-Bridge Home.md"
 MASTER_GRAPH_FILE = DOCS_DIR / "MASTER_KNOWLEDGE_GRAPH.md"
 
+CACHE_DIR_NAMES = frozenset({".pytest_cache", ".mypy_cache", ".ruff_cache", "__pycache__"})
+
 
 def collect_md_files() -> list[Path]:
     return [
         p for p in PROJECT_ROOT.glob("**/*.md")
-        if not any(part in ["venv", "node_modules", ".venv", ".git"] for part in p.parts)
+        if not any(
+            part in {"venv", "node_modules", ".venv", ".git"} | CACHE_DIR_NAMES
+            for part in p.parts
+        )
     ]
 
 
@@ -157,7 +162,7 @@ def generate_master_knowledge_graph() -> None:
 
     content.extend([
         "",
-        "## 6. プロジェクト構成・隠しフォルダ・その他 (root / db / reports / .codex / .pytest_cache)",
+        "## 6. プロジェクト構成・隠しフォルダ・その他 (root / db / reports / .codex)",
     ])
     for rel in other_files:
         p = PROJECT_ROOT / rel
