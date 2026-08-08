@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail closed unless the skills-led Antigravity workshop demo is ready."""
+"""Fail closed unless the Antigravity AI-agent learning demo is ready."""
 
 from __future__ import annotations
 
@@ -14,6 +14,15 @@ WORKSHOP_DIR = PROJECT_ROOT / "docs" / "demo" / "antigravity_workshop"
 SYNTHETIC_MARKER = "SYNTHETIC_DATA_ONLY"
 PAGES_REPOSITORY = "https://github.com/kanta13jp1/mighty-link-antigravity-live-demo"
 PAGES_URL = "https://kanta13jp1.github.io/mighty-link-antigravity-live-demo/"
+PROMPT_SUFFIXES = (
+    "GRILL_ME",
+    "FIND_SKILLS",
+    "INSTALL_SKILL",
+    "BUILD",
+    "APPLY_SKILL",
+    "MCP_CHECK",
+    "PUBLISH",
+)
 
 
 def _read_text(path: Path) -> str:
@@ -47,8 +56,8 @@ class _SiteParser(HTMLParser):
 
 
 def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
-    prompts = [_read_text(files[f"prompt{number}"]) for number in range(6)]
-    grill, find_skills, build, steer, mcp, publish = prompts
+    prompts = [_read_text(files[f"prompt{number}"]) for number in range(7)]
+    grill, find_skills, install, build, apply_skill, mcp, publish = prompts
     concepts = _read_text(files["concepts"])
     backup = _read_text(files["backup"])
     readme = _read_text(files["readme"])
@@ -62,25 +71,18 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
 
     h1 = (
         all(prompt.startswith(f"Prompt {number} /") for number, prompt in enumerate(prompts))
-        and all(
-            name in readme
-            for name in (
-                "PROMPT_00_GRILL_ME.txt",
-                "PROMPT_01_FIND_SKILLS.txt",
-                "PROMPT_02_BUILD.txt",
-                "PROMPT_03_STEER.txt",
-                "PROMPT_04_MCP_CHECK.txt",
-                "PROMPT_05_PUBLISH.txt",
-            )
-        )
-        and "20分" in readme
+        and all(f"PROMPT_{number:02d}_{suffix}.txt" in readme for number, suffix in enumerate(PROMPT_SUFFIXES))
+        and "30分" in readme
+        and "残り30分" in readme
     )
 
     h2 = all(
         marker in grill
         for marker in (
             "/grill-me",
-            "次の6点を1問ずつ質問",
+            "最大2問",
+            "1問ずつ質問",
+            "推奨回答",
             "私の回答を待って",
             "決定事項／見送ること／停止条件／成功条件",
             "ファイル変更、コマンド実行、外部通信を行わない",
@@ -91,9 +93,7 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
         marker in find_skills
         for marker in (
             "/find-skills",
-            "frontend design",
-            "web accessibility",
-            "GitHub Pages deployment",
+            'npx skills find "frontend design"',
             "インストール数",
             "公開元とGitHub stars",
             "セキュリティ監査",
@@ -102,66 +102,76 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     )
 
     h4 = all(
+        marker in install
+        for marker in (
+            "anthropics/skills@frontend-design",
+            "--agent antigravity",
+            "--copy -y",
+            "npx skills list --json",
+            ".agents/skills/frontend-design/SKILL.md",
+            "index.html、styles.css、app.js、GitHub設定を変更せず",
+        )
+    ) and " -g" not in install
+
+    h5 = all(
         marker in build
         for marker in (
             "@SITE_BRIEF.md",
-            "index.html と styles.css",
-            "この段階ではJavaScript",
+            "index.htmlとstyles.css",
+            "Codex、Claude Code、Claude Cowork、Kiro、Antigravity",
+            "この初版ではJavaScript",
             "commitとpushは実行しない",
             "1440x900と390x844",
         )
     )
 
-    h5 = all(
-        marker in steer
-        for marker in (
-            "Steering",
-            "変更すること",
-            "維持すること",
-            "検証すること",
-            "aria-pressed",
-            "aria-live",
-            "#00A5E3",
-            "#EF7E00",
-            "4、1、1、1、1",
-            "2件選択",
-        )
-    )
-
     h6 = all(
-        marker in concepts
+        marker in apply_skill
         for marker in (
-            "## Skills",
-            "SKILL.md",
-            "再利用可能なパッケージ",
-            "/grill-me",
-            "/find-skills",
-            "anthropics/skills@frontend-design",
-            "Agent Skills",
+            "/frontend-design",
+            "最大2製品",
+            "aria-live",
+            "aria-pressed",
+            "5・4・1・5",
+            "SteeringとPowersを、Kiro固有の正式機能",
+            "1440x900と390x844",
         )
     )
 
     h7 = all(
-        marker in mcp
-        for marker in (
-            "/mcp",
-            "GitHub MCP",
-            "読み取り専用",
-            "Issue作成、設定変更、認証の追加、ファイル変更、commit、pushは行わない",
-            "MCP確認は省略、gitと公開URL確認へ継続",
-        )
-    ) and all(marker in concepts for marker in ("## MCP", "Model Context Protocol", "標準形式"))
-
-    h8 = all(
         marker in concepts
         for marker in (
+            "## 主要機能マトリックス",
             "## Steering",
-            "## Power",
-            "公式機能名ではなく",
-            "研修上の呼称",
-            "独立設定があるとは説明しない",
+            "## Skills",
+            "## Powers",
+            "## MCP",
+            "`Steering`はKiroの正式機能名です",
+            "`Powers`はKiroの正式機能です",
+            "Codex",
+            "Claude Code",
+            "Claude Cowork",
+            "Antigravity",
+            "anthropics/skills@frontend-design",
         )
-    ) and "`Power`はAntigravityの公式機能名として扱いません" in readme
+    ) and all(
+        marker in brief
+        for marker in (
+            "Specs、Steering、Hooks、Agent Skills、Powers、MCP",
+            "Artifacts、Planning、Browser、Rules、Workflows、Skills、MCP",
+        )
+    )
+
+    h8 = all(
+        marker in mcp
+        for marker in (
+            "MCP Servers",
+            "GitHub MCP",
+            "読み取り専用",
+            "Issue作成、設定変更、認証追加、ファイル変更、commit、pushは行わない",
+            "MCP確認は省略、gitと公開URL確認へ継続",
+        )
+    ) and all(marker in concepts for marker in ("## MCP", "Model Context Protocol", "標準"))
 
     h9 = (
         PAGES_REPOSITORY in publish
@@ -171,10 +181,11 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
         and "公開してもよいですか？" in publish
         and "正確に「公開して」と答えるまで" in publish
         and "「公開して」の後だけ" in publish
+        and ".agents/skills/`は公開対象へaddしない" in publish
         and all(marker in publish for marker in (".env", "認証情報", "トークン", "個人情報", "顧客情報"))
         and "mightylink-app.com" not in publish
         and SYNTHETIC_MARKER in brief
-        and "実在する顧客、社員、申込情報を含まない" in brief
+        and "実在する顧客、社員、申込情報、認証情報を含まない" in brief
     )
 
     forbidden_runtime = ("fetch(", "XMLHttpRequest", "localStorage", "sessionStorage")
@@ -187,25 +198,26 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
         and not any(marker in javascript for marker in forbidden_runtime)
         and "form" not in parser.tags
         and files["hero_image"].stat().st_size > 100_000
-        and parser.headings == {"h1": 1, "h2": 3, "h3": 4}
-        and len(filter_buttons) == 5
-        and len(select_buttons) == 4
+        and parser.headings == {"h1": 1, "h2": 5, "h3": 5}
+        and len(filter_buttons) == 4
+        and len(select_buttons) == 5
         and all("aria-pressed" in button for button in parser.buttons)
         and '@media (max-width: 640px)' in compact_css
-        and "90秒以上進展が見えない" in readme
-        and backup.count("行わないでください") == 3
+        and "selectedAgents.size >= 2" in javascript
+        and "90秒以上" in readme
+        and backup.count("行わないでください") == 4
         and "ローカル予備成果物" in _read_text(files["output_readme"])
     )
 
     hypotheses = [
-        ("H1_six_stage_story", h1, "six prompts are ordered from grilling through publishing"),
-        ("H2_grill_before_build", h2, "/grill-me asks one question at a time and cannot modify files"),
+        ("H1_seven_stage_30min_story", h1, "seven prompts fit a 30-minute demo with reserve time"),
+        ("H2_grill_timeboxed", h2, "/grill-me asks at most two consequential questions and cannot modify files"),
         ("H3_skill_discovery_quality", h3, "/find-skills compares provenance, adoption, audits, and install commands"),
-        ("H4_build_boundary", h4, "build creates HTML/CSS only and verifies two viewports"),
-        ("H5_steering_contract", h5, "Steering separates changes, preserved behavior, and measurable verification"),
-        ("H6_skill_explanation", h6, "Skills and the two demonstrated skills are defined with a verified candidate"),
-        ("H7_mcp_read_only", h7, "GitHub MCP is read-only and optional with a no-auth fallback"),
-        ("H8_power_clarity", h8, "Power is explicitly training shorthand rather than an official feature"),
+        ("H4_project_scoped_install", h4, "frontend-design installs only to the Antigravity demo repository"),
+        ("H5_build_boundary", h5, "the first build is a five-agent HTML/CSS site without publishing"),
+        ("H6_skill_application", h6, "the installed skill visibly improves design and two-agent comparison"),
+        ("H7_product_feature_accuracy", h7, "the five products use official feature names and Kiro owns Steering/Powers"),
+        ("H8_mcp_read_only", h8, "GitHub MCP is read-only and optional with a no-auth fallback"),
         ("H9_publish_safety", h9, "dedicated repository, synthetic data, secret checks, and exact approval are enforced"),
         ("H10_offline_accessible_recovery", h10, f"external_refs={len(parser.external_refs)}; headings={parser.headings}"),
     ]
@@ -219,9 +231,10 @@ def collect_demo_kit_status(project_root: Path = PROJECT_ROOT) -> dict[str, obje
     workshop = project_root / "docs" / "demo" / "antigravity_workshop"
     output = workshop / "output"
     files = {
-        **{f"prompt{number}": workshop / f"PROMPT_{number:02d}_{suffix}.txt" for number, suffix in enumerate((
-            "GRILL_ME", "FIND_SKILLS", "BUILD", "STEER", "MCP_CHECK", "PUBLISH"
-        ))},
+        **{
+            f"prompt{number}": workshop / f"PROMPT_{number:02d}_{suffix}.txt"
+            for number, suffix in enumerate(PROMPT_SUFFIXES)
+        },
         "concepts": workshop / "DEMO_CONCEPTS.md",
         "backup": workshop / "BACKUP_PROMPTS.txt",
         "readme": workshop / "README.md",
@@ -250,7 +263,7 @@ def collect_demo_kit_status(project_root: Path = PROJECT_ROOT) -> dict[str, obje
 
 def verify_demo_data(project_root: Path = PROJECT_ROOT) -> int:
     result = collect_demo_kit_status(project_root)
-    print("Google Antigravity 8/26 スキル活用ライブデモ検証")
+    print("Antigravity AIエージェント学習サイト ライブデモ検証")
     print("=" * 60)
     for check in result["checks"]:
         status = "OK" if check["passed"] else "FAIL"
@@ -260,7 +273,7 @@ def verify_demo_data(project_root: Path = PROJECT_ROOT) -> int:
         except ValueError:
             display_path = path
         print(f"[{status}] {check['name']}: {display_path} ({check['detail']})")
-    message = "\n[PASS] 要件整理、Skill検索、Steering、MCP読取、人の承認、専用Pages公開を安全に実演できます。"
+    message = "\n[PASS] 比較、Skill検索・導入、初版、改善、MCP、人の承認、Pages公開を安全に実演できます。"
     if not result["passed"]:
         message = "\n[FAIL] デモキットの不足を修正してください。"
     print(message)

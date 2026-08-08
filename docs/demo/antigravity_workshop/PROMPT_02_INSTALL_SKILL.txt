@@ -1,0 +1,17 @@
+Prompt 2 / frontend-design Skillを専用環境へ導入する
+
+推奨された`anthropics/skills@frontend-design`を、この専用リポジトリだけへインストールしてください。
+
+最初に`git remote -v`、現在branch、`git status --short`、`npx skills list --json`を確認してください。remoteが`kanta13jp1/mighty-link-antigravity-live-demo`、branchが`main`でない場合、または`frontend-design`が既に存在する場合は、何も変更せず停止してください。
+
+条件が一致した場合だけ、次を実行してください。
+
+`npx skills add anthropics/skills@frontend-design --agent antigravity --copy -y`
+
+インストール後に`npx skills list --json`と`.agents/skills/frontend-design/SKILL.md`を読み、次を報告してください。
+- インストール先がこのリポジトリ内であること
+- 公開元が`anthropics/skills`であること
+- Skillの目的と、このデモで適用する3つの観点
+- 監査結果または確認できなかった項目
+
+この段階ではindex.html、styles.css、app.js、GitHub設定を変更せず、commitとpushも実行しないでください。

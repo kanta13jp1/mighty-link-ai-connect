@@ -1,8 +1,11 @@
 [予備1・完成版を操作する]
-既存のindex.htmlをブラウザで開き、5カテゴリを操作して2件を参加候補へ追加してください。確認後もファイル変更、外部通信、commit、pushは行わないでください。
+ローカル予備成果物のindex.htmlをブラウザで開き、4フィルターを操作してCodexとClaude Coworkを比較へ追加してください。件数、名称、向いている仕事を確認した後も、ファイル変更、外部通信、commit、pushは行わないでください。
 
-[予備2・6段階を読み取り説明する]
-PROMPT_00_GRILL_ME.txtからPROMPT_05_PUBLISH.txtとDEMO_CONCEPTS.mdを読み、「目的／AIに任せること／人が確認すること／停止条件」を4列の表で説明してください。ファイル変更、外部通信、commit、pushは行わないでください。
+[予備2・7段階を読み取り説明する]
+PROMPT_00_GRILL_ME.txtからPROMPT_06_PUBLISH.txtとDEMO_CONCEPTS.mdを読み、「目的／AIに任せること／人が確認すること／停止条件」を4列の表で説明してください。ファイル変更、外部通信、commit、pushは行わないでください。
 
-[予備3・MCP未接続を説明する]
-DEMO_CONCEPTS.mdとPROMPT_04_MCP_CHECK.txtを読み、MCPでできること、今回読み取り専用にする理由、未接続でもデモを続ける方法を3点で説明してください。MCP接続、認証、設定変更は行わないでください。
+[予備3・Skill導入結果を説明する]
+DEMO_CONCEPTS.mdとPROMPT_01_FIND_SKILLS.txt、PROMPT_02_INSTALL_SKILL.txtを読み、/find-skills、frontend-design、プロジェクト限定インストール、使用前確認を4点で説明してください。Skillのインストール、削除、ファイル変更は行わないでください。
+
+[予備4・MCP未接続を説明する]
+DEMO_CONCEPTS.mdとPROMPT_05_MCP_CHECK.txtを読み、MCPでできること、今回読み取り専用にする理由、未接続でもデモを続ける方法を3点で説明してください。MCP接続、認証、設定変更は行わないでください。

@@ -3,96 +3,144 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="MightyLINK AI Workshop Demoの研修用サンプルサイト">
-  <title>MightyLINK AI Workshop Demo</title>
+  <meta name="description" content="5つのAIエージェントを用途と機能から比較する研修用サンプルサイト">
+  <title>AI Agent Learning Hub</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- SYNTHETIC_DATA_ONLY -->
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="MightyLINK AI Workshop Demo ホーム">
+    <a class="brand" href="#top" aria-label="AI Agent Learning Hub ホーム">
       <span class="brand-mark" aria-hidden="true"></span>
-      <span>MightyLINK</span>
+      <span>AI Agent Learning Hub</span>
     </a>
-    <p class="sample-label">研修用サンプルサイト</p>
+    <p class="sample-label">研修用サンプル</p>
   </header>
 
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
-      <img src="assets/workshop-hero.png" alt="オフィスでWebサイトを確認するAIワークショップの参加者">
+      <img src="assets/workshop-hero.png" alt="オフィスでAIエージェントの使い方を学ぶ参加者">
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="hero-copy">
-        <p class="eyebrow">MightyLINK AI Workshop Demo</p>
-        <h1 id="hero-title">AIを、明日の仕事で試してみる。</h1>
-        <p>4つのミニセッションから、業務で試したいテーマを選ぶための研修用サンプルサイトです。</p>
-        <a class="hero-link" href="#sessions">セッションを見る</a>
+        <p class="eyebrow">Five agents, one starting point</p>
+        <h1 id="hero-title">仕事に合うAIエージェントを、まず一つ試す。</h1>
+        <p>開発とナレッジワークの5製品を、用途と主な機能から読み比べる研修用サンプルです。</p>
+        <a class="hero-link" href="#agents">5製品を比べる</a>
       </div>
     </section>
 
-    <section class="session-section" id="sessions" aria-labelledby="sessions-title">
+    <section class="learning-flow" aria-labelledby="flow-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Choose a session</p>
-          <h2 id="sessions-title">興味のあるテーマを選ぶ</h2>
+          <p class="eyebrow">How to start</p>
+          <h2 id="flow-title">製品名より、任せたい仕事から選ぶ</h2>
         </div>
-        <p id="result-count" class="result-count" aria-live="polite">4件表示</p>
+        <p>1つ選ぶ → 小さく任せる → 結果を人が確認する</p>
+      </div>
+      <ol class="flow-list">
+        <li><span>01</span><strong>目的を決める</strong><small>開発か、資料・調査か</small></li>
+        <li><span>02</span><strong>必要な力を足す</strong><small>指示、Skill、MCP</small></li>
+        <li><span>03</span><strong>証拠を確認する</strong><small>差分、テスト、公開URL</small></li>
+      </ol>
+    </section>
+
+    <section class="agent-section" id="agents" aria-labelledby="agents-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Choose by work</p>
+          <h2 id="agents-title">5つのAIエージェントを比較する</h2>
+        </div>
+        <p id="result-count" class="result-count" aria-live="polite">5件表示</p>
       </div>
 
-      <div class="filter-group" role="group" aria-label="セッションカテゴリ">
+      <div class="filter-group" role="group" aria-label="仕事の種類">
         <button type="button" class="filter-button is-active" data-filter="all" aria-pressed="true">すべて</button>
-        <button type="button" class="filter-button" data-filter="improvement" aria-pressed="false">業務改善</button>
-        <button type="button" class="filter-button" data-filter="communication" aria-pressed="false">コミュニケーション</button>
-        <button type="button" class="filter-button" data-filter="analysis" aria-pressed="false">分析</button>
-        <button type="button" class="filter-button" data-filter="governance" aria-pressed="false">ガバナンス</button>
+        <button type="button" class="filter-button" data-filter="coding" aria-pressed="false">開発</button>
+        <button type="button" class="filter-button" data-filter="knowledge" aria-pressed="false">ナレッジワーク</button>
+        <button type="button" class="filter-button" data-filter="planning" aria-pressed="false">計画・自動化</button>
       </div>
 
-      <div class="session-grid">
-        <article class="session-card" data-category="improvement" data-session="AIで仕事を整理する">
-          <div class="card-topline"><span>業務改善</span><span>20分</span></div>
-          <h3>AIで仕事を整理する</h3>
-          <p>日々の業務を分解し、AIに任せる範囲と人が判断する範囲を整理します。</p>
-          <button type="button" class="select-button" aria-pressed="false">参加候補に追加</button>
+      <div class="agent-grid">
+        <article class="agent-card" data-tags="coding planning" data-agent="Codex" data-fit="コード理解、実装、テスト、レビュー">
+          <div class="card-topline"><span>OpenAI</span><span>開発</span></div>
+          <h3>Codex</h3>
+          <p class="fit"><strong>向いている仕事</strong> コードベース理解、実装、修正、テスト、レビュー。</p>
+          <ul><li>AGENTS.md</li><li>Skills / Plugins</li><li>MCP / local・cloud</li></ul>
+          <p class="first-step">最初の一歩: 小さな不具合の調査からテストまで任せる。</p>
+          <button type="button" class="select-button" aria-pressed="false">比較に追加</button>
         </article>
 
-        <article class="session-card" data-category="communication" data-session="伝わる文章をレビューする">
-          <div class="card-topline"><span>コミュニケーション</span><span>25分</span></div>
-          <h3>伝わる文章をレビューする</h3>
-          <p>社内文書を題材に、目的と読み手に合わせた改善案を比較します。</p>
-          <button type="button" class="select-button" aria-pressed="false">参加候補に追加</button>
+        <article class="agent-card" data-tags="coding planning" data-agent="Claude Code" data-fit="複数ファイルの開発、Git操作、反復作業の自動化">
+          <div class="card-topline"><span>Anthropic</span><span>開発</span></div>
+          <h3>Claude Code</h3>
+          <p class="fit"><strong>向いている仕事</strong> 複数ファイルの開発、Git操作、反復作業の自動化。</p>
+          <ul><li>CLAUDE.md / auto memory</li><li>Skills / Hooks</li><li>MCP / subagents / Routines</li></ul>
+          <p class="first-step">最初の一歩: 未テスト機能へテストを追加して直す。</p>
+          <button type="button" class="select-button" aria-pressed="false">比較に追加</button>
         </article>
 
-        <article class="session-card" data-category="analysis" data-session="データを見える形にする">
-          <div class="card-topline"><span>分析</span><span>30分</span></div>
-          <h3>データを見える形にする</h3>
-          <p>合成データから傾向を読み取り、確認すべきポイントを可視化します。</p>
-          <button type="button" class="select-button" aria-pressed="false">参加候補に追加</button>
+        <article class="agent-card" data-tags="knowledge planning" data-agent="Claude Cowork" data-fit="調査、資料作成、表計算、ファイル整理、定期レポート">
+          <div class="card-topline"><span>Anthropic</span><span>ナレッジワーク</span></div>
+          <h3>Claude Cowork</h3>
+          <p class="fit"><strong>向いている仕事</strong> 調査、資料作成、表計算、ファイル整理、定期レポート。</p>
+          <ul><li>Projects / local files</li><li>Skills / Plugins / Connectors</li><li>Scheduled tasks / live artifacts</li></ul>
+          <p class="first-step">最初の一歩: 複数資料からレビュー可能な文書を作る。</p>
+          <button type="button" class="select-button" aria-pressed="false">比較に追加</button>
         </article>
 
-        <article class="session-card" data-category="governance" data-session="安全なAI活用を設計する">
-          <div class="card-topline"><span>ガバナンス</span><span>20分</span></div>
-          <h3>安全なAI活用を設計する</h3>
-          <p>合成データ、権限、レビュー、公開前確認の基本ルールを学びます。</p>
-          <button type="button" class="select-button" aria-pressed="false">参加候補に追加</button>
+        <article class="agent-card" data-tags="coding planning" data-agent="Kiro" data-fit="要件、設計、タスクを明確にする仕様駆動開発">
+          <div class="card-topline"><span>AWS</span><span>仕様駆動開発</span></div>
+          <h3>Kiro</h3>
+          <p class="fit"><strong>向いている仕事</strong> 要件、設計、タスクを明確にする仕様駆動開発。</p>
+          <ul><li>Specs / Steering</li><li>Hooks / Agent Skills</li><li>Powers / MCP</li></ul>
+          <p class="first-step">最初の一歩: 新機能をrequirements、design、tasksへ分ける。</p>
+          <button type="button" class="select-button" aria-pressed="false">比較に追加</button>
+        </article>
+
+        <article class="agent-card" data-tags="coding planning" data-agent="Antigravity" data-fit="計画、実装、ブラウザ検証をArtifactで確認するWeb開発">
+          <div class="card-topline"><span>Google</span><span>開発</span></div>
+          <h3>Antigravity</h3>
+          <p class="fit"><strong>向いている仕事</strong> 計画、実装、ブラウザ検証をArtifactで確認するWeb開発。</p>
+          <ul><li>Artifacts / Planning / Browser</li><li>Rules / Workflows / Skills</li><li>MCP / Permissions</li></ul>
+          <p class="first-step">最初の一歩: 1ページサイトを作り、2画面幅で確認する。</p>
+          <button type="button" class="select-button" aria-pressed="false">比較に追加</button>
         </article>
       </div>
     </section>
 
-    <section class="selection-summary" aria-labelledby="selection-title">
+    <section class="comparison-summary" aria-labelledby="comparison-title">
       <div>
-        <p class="eyebrow">Your shortlist</p>
-        <h2 id="selection-title">参加候補 <span id="selection-count">0</span>件</h2>
+        <p class="eyebrow">Compare two</p>
+        <h2 id="comparison-title">比較候補 <span id="selection-count">0</span>/2</h2>
       </div>
-      <p id="selection-names" aria-live="polite">まだ選択されていません。</p>
+      <div id="selection-names" class="selection-content" aria-live="polite">
+        <p>製品カードから2つまで選べます。</p>
+      </div>
+    </section>
+
+    <section class="concept-band" aria-labelledby="concept-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Shared and product-specific</p>
+          <h2 id="concept-title">似た言葉ほど、製品ごとの意味を確認する</h2>
+        </div>
+      </div>
+      <dl class="concept-list">
+        <div><dt>Steering</dt><dd>Kiroの持続的なプロジェクト知識と規約。</dd></div>
+        <div><dt>Skills</dt><dd>手順、知識、任意のスクリプトを再利用する共通形式。</dd></div>
+        <div><dt>MCP</dt><dd>外部のToolとContextへ接続する標準。</dd></div>
+        <div><dt>Powers</dt><dd>KiroでMCP、知識、Workflowを必要時に束ねる機能。</dd></div>
+      </dl>
     </section>
 
     <section class="safety-note" aria-labelledby="safety-title">
       <h2 id="safety-title">このサイトについて</h2>
-      <p>表示内容は研修用の合成データです。選択内容は送信・保存されません。</p>
+      <p>2026年8月9日時点の公式情報を研修向けに要約しています。機能や提供面は変更される可能性があります。選択内容は送信・保存されません。</p>
     </section>
   </main>
 
   <footer>
-    <p>MightyLINK AI Workshop Demo / SYNTHETIC_DATA_ONLY</p>
+    <p>AI Agent Learning Hub / SYNTHETIC_DATA_ONLY</p>
   </footer>
   <script src="app.js"></script>
 </body>

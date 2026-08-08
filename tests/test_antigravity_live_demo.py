@@ -39,7 +39,7 @@ def test_committed_antigravity_demo_kit_is_fail_closed_and_ready():
 def test_demo_kit_rejects_missing_synthetic_marker_and_wrong_repository(tmp_path: Path):
     workshop = _copy_workshop(tmp_path)
     brief = workshop / "input" / "SITE_BRIEF.md"
-    publish = workshop / "PROMPT_05_PUBLISH.txt"
+    publish = workshop / "PROMPT_06_PUBLISH.txt"
     brief.write_text(brief.read_text(encoding="utf-8").replace("SYNTHETIC_DATA_ONLY", ""), encoding="utf-8")
     publish.write_text(
         publish.read_text(encoding="utf-8").replace(
@@ -51,35 +51,49 @@ def test_demo_kit_rejects_missing_synthetic_marker_and_wrong_repository(tmp_path
     assert "H9_publish_safety" in _failed_hypotheses(tmp_path)
 
 
-def test_demo_kit_rejects_skill_install_and_weak_quality_check(tmp_path: Path):
+def test_demo_kit_rejects_global_or_unverified_skill_install(tmp_path: Path):
     workshop = _copy_workshop(tmp_path)
-    prompt = workshop / "PROMPT_01_FIND_SKILLS.txt"
+    prompt = workshop / "PROMPT_02_INSTALL_SKILL.txt"
     text = prompt.read_text(encoding="utf-8")
     prompt.write_text(
-        text.replace("公開元とGitHub stars", "名前")
-        .replace("セキュリティ監査の有無", "説明")
-        .replace("まだSkillのインストール", "すぐSkillのインストール"),
+        text.replace("--agent antigravity --copy -y", "-g -y").replace(
+            ".agents/skills/frontend-design/SKILL.md", "Skill名"
+        ),
         encoding="utf-8",
     )
 
-    assert "H3_skill_discovery_quality" in _failed_hypotheses(tmp_path)
+    assert "H4_project_scoped_install" in _failed_hypotheses(tmp_path)
 
 
-def test_demo_kit_rejects_mcp_write_and_power_as_official_feature(tmp_path: Path):
+def test_demo_kit_rejects_kiro_feature_names_assigned_to_antigravity(tmp_path: Path):
     workshop = _copy_workshop(tmp_path)
-    mcp = workshop / "PROMPT_04_MCP_CHECK.txt"
     concepts = workshop / "DEMO_CONCEPTS.md"
-    mcp.write_text(mcp.read_text(encoding="utf-8").replace("読み取り専用", "読み書き可能"), encoding="utf-8")
+    text = concepts.read_text(encoding="utf-8")
     concepts.write_text(
-        concepts.read_text(encoding="utf-8")
-        .replace("公式機能名ではなく", "公式機能名であり")
-        .replace("独立設定があるとは説明しない", "独立設定として説明する"),
+        text.replace("Kiroの正式機能名です", "Antigravityの正式機能名です", 1).replace(
+            "Kiroの正式機能です", "Antigravityの正式機能です", 1
+        ),
+        encoding="utf-8",
+    )
+
+    assert "H7_product_feature_accuracy" in _failed_hypotheses(tmp_path)
+
+
+def test_demo_kit_rejects_mcp_write_and_skill_directory_publish(tmp_path: Path):
+    workshop = _copy_workshop(tmp_path)
+    mcp = workshop / "PROMPT_05_MCP_CHECK.txt"
+    publish = workshop / "PROMPT_06_PUBLISH.txt"
+    mcp.write_text(mcp.read_text(encoding="utf-8").replace("読み取り専用", "読み書き可能"), encoding="utf-8")
+    publish.write_text(
+        publish.read_text(encoding="utf-8").replace(
+            "`.agents/skills/`は公開対象へaddしないでください。", "`.agents/skills/`もaddしてください。"
+        ),
         encoding="utf-8",
     )
 
     failed = _failed_hypotheses(tmp_path)
-    assert "H7_mcp_read_only" in failed
-    assert "H8_power_clarity" in failed
+    assert "H8_mcp_read_only" in failed
+    assert "H9_publish_safety" in failed
 
 
 def test_demo_output_rejects_external_dependency_and_persistent_storage(tmp_path: Path):

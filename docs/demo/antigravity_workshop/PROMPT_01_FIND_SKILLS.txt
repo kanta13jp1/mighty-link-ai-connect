@@ -1,15 +1,15 @@
-Prompt 1 / /find-skillsで能力を探す
+Prompt 1 / /find-skillsで専門能力を探す
 
 /find-skills
 
-研修一覧WebサイトのUI品質とアクセシビリティ改善に使えるAgent Skillを探してください。
+5製品を比較するAI Agent Learning Hubの、情報設計、Webデザイン、レスポンシブ品質、アクセシビリティを改善できるAgent Skillを探してください。
 
-検索語は「frontend design」「web accessibility」「GitHub Pages deployment」です。候補は3件までに絞り、次を表で比較してください。
+最初にskills.shの上位候補を確認し、次にSkills CLIで`npx skills find "frontend design"`を実行してください。候補は3件までに絞り、次を表で比較してください。
 - Skill名と用途
 - インストール数
 - 公開元とGitHub stars
-- セキュリティ監査の有無
+- セキュリティ監査の結果
 - インストールコマンド
 - skills.shのURL
 
-品質を確認したうえで推奨を1件選び、今回のデモで何を任せるかを2行で説明してください。まだSkillのインストール、ファイル変更、外部サービスへの書き込みは行わないでください。
+公開元の信頼性、利用実績、監査結果を確認して推奨を1件選び、このデモで何を改善させるかを2行で説明してください。まだSkillのインストール、ファイル変更、外部サービスへの書き込みは行わないでください。
