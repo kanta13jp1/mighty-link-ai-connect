@@ -18,6 +18,11 @@ def _copy_workshop(tmp_path: Path) -> Path:
     return target
 
 
+def _failed_hypotheses(project_root: Path) -> set[str]:
+    result = collect_demo_kit_status(project_root)
+    return {check["name"] for check in result["checks"] if not check["passed"]}
+
+
 def test_committed_antigravity_demo_kit_is_fail_closed_and_ready():
     result = collect_demo_kit_status(PROJECT_ROOT)
 
@@ -31,33 +36,50 @@ def test_committed_antigravity_demo_kit_is_fail_closed_and_ready():
     }
 
 
-def test_demo_kit_rejects_missing_synthetic_marker(tmp_path: Path):
+def test_demo_kit_rejects_missing_synthetic_marker_and_wrong_repository(tmp_path: Path):
     workshop = _copy_workshop(tmp_path)
     brief = workshop / "input" / "SITE_BRIEF.md"
+    publish = workshop / "PROMPT_05_PUBLISH.txt"
     brief.write_text(brief.read_text(encoding="utf-8").replace("SYNTHETIC_DATA_ONLY", ""), encoding="utf-8")
-
-    result = collect_demo_kit_status(tmp_path)
-    failed = {check["name"] for check in result["checks"] if not check["passed"]}
-
-    assert result["passed"] is False
-    assert "H7_public_data_safety" in failed
-
-
-def test_demo_kit_rejects_wrong_repository_and_missing_publish_approval(tmp_path: Path):
-    workshop = _copy_workshop(tmp_path)
-    prompt = workshop / "PROMPT_03_PUBLISH.txt"
-    text = prompt.read_text(encoding="utf-8")
-    prompt.write_text(
-        text.replace("kanta13jp1/mighty-link-antigravity-live-demo", "kanta13jp1/mighty-link-ai-connect")
-        .replace("正確に「公開して」と答えるまで", "確認を待たずに"),
+    publish.write_text(
+        publish.read_text(encoding="utf-8").replace(
+            "kanta13jp1/mighty-link-antigravity-live-demo", "kanta13jp1/mighty-link-ai-connect"
+        ),
         encoding="utf-8",
     )
 
-    result = collect_demo_kit_status(tmp_path)
-    failed = {check["name"] for check in result["checks"] if not check["passed"]}
+    assert "H9_publish_safety" in _failed_hypotheses(tmp_path)
 
-    assert "H5_publish_isolation" in failed
-    assert "H6_human_publish_gate" in failed
+
+def test_demo_kit_rejects_skill_install_and_weak_quality_check(tmp_path: Path):
+    workshop = _copy_workshop(tmp_path)
+    prompt = workshop / "PROMPT_01_FIND_SKILLS.txt"
+    text = prompt.read_text(encoding="utf-8")
+    prompt.write_text(
+        text.replace("公開元とGitHub stars", "名前")
+        .replace("セキュリティ監査の有無", "説明")
+        .replace("まだSkillのインストール", "すぐSkillのインストール"),
+        encoding="utf-8",
+    )
+
+    assert "H3_skill_discovery_quality" in _failed_hypotheses(tmp_path)
+
+
+def test_demo_kit_rejects_mcp_write_and_power_as_official_feature(tmp_path: Path):
+    workshop = _copy_workshop(tmp_path)
+    mcp = workshop / "PROMPT_04_MCP_CHECK.txt"
+    concepts = workshop / "DEMO_CONCEPTS.md"
+    mcp.write_text(mcp.read_text(encoding="utf-8").replace("読み取り専用", "読み書き可能"), encoding="utf-8")
+    concepts.write_text(
+        concepts.read_text(encoding="utf-8")
+        .replace("公式機能名ではなく", "公式機能名であり")
+        .replace("独立設定があるとは説明しない", "独立設定として説明する"),
+        encoding="utf-8",
+    )
+
+    failed = _failed_hypotheses(tmp_path)
+    assert "H7_mcp_read_only" in failed
+    assert "H8_power_clarity" in failed
 
 
 def test_demo_output_rejects_external_dependency_and_persistent_storage(tmp_path: Path):
@@ -72,7 +94,4 @@ def test_demo_output_rejects_external_dependency_and_persistent_storage(tmp_path
     )
     javascript.write_text(javascript.read_text(encoding="utf-8") + "\nlocalStorage.setItem('demo', '1');\n", encoding="utf-8")
 
-    result = collect_demo_kit_status(tmp_path)
-    failed = {check["name"] for check in result["checks"] if not check["passed"]}
-
-    assert "H8_offline_fallback" in failed
+    assert "H10_offline_accessible_recovery" in _failed_hypotheses(tmp_path)

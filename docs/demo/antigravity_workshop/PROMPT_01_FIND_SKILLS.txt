@@ -1,0 +1,15 @@
+Prompt 1 / /find-skillsで能力を探す
+
+/find-skills
+
+研修一覧WebサイトのUI品質とアクセシビリティ改善に使えるAgent Skillを探してください。
+
+検索語は「frontend design」「web accessibility」「GitHub Pages deployment」です。候補は3件までに絞り、次を表で比較してください。
+- Skill名と用途
+- インストール数
+- 公開元とGitHub stars
+- セキュリティ監査の有無
+- インストールコマンド
+- skills.shのURL
+
+品質を確認したうえで推奨を1件選び、今回のデモで何を任せるかを2行で説明してください。まだSkillのインストール、ファイル変更、外部サービスへの書き込みは行わないでください。

@@ -1,22 +1,22 @@
-# Antigravityライブデモ 10仮説検証レポート
+# Antigravityスキル活用ライブデモ 10仮説検証レポート
 
 実施日: 2026-08-08
-対象: 3段階プロンプト、完成版予備サイト、GitHub Pages公開専用リポジトリ
+対象: 6段階プロンプト、4概念説明、完成版予備サイト、GitHub Pages公開専用リポジトリ
 
 ## 検証結果
 
 | 仮説 | 合否 | 合格条件 | 実測・証拠 |
 | --- | --- | --- | --- |
-| H1 変化が理解できる | PASS | 作成、改善、公開が別プロンプトで進む | 3ファイルに責務を分離し、各段階でブラウザ確認を要求 |
-| H2 最初は小さく作れる | PASS | Prompt 1はHTML/CSSと画像だけを生成 | JavaScript、commit、pushを禁止 |
-| H3 機能追加を実演できる | PASS | Prompt 2で絞り込みと参加候補選択を追加 | 件数`4,1,1,1,1`、2件選択をPlaywrightで確認 |
-| H4 デザイン変更を実演できる | PASS | Prompt 2で公式色とレスポンシブ構成を追加 | `#00A5E3`、`#EF7E00`、デスクトップ1列、モバイル1列を確認 |
-| H5 本番と公開先を分離できる | PASS | Prompt 3のremoteを専用リポジトリへ限定 | リポジトリURLとPages URLを完全一致で検証 |
-| H6 人が公開を決める | PASS | 正確な承認文言まで書込操作をしない | `公開してもよいですか？`で停止し、`公開して`のみ許可 |
-| H7 公開データが安全である | PASS | 合成データ標識、秘密・個人情報なし | `SYNTHETIC_DATA_ONLY`を必須化し、違反時はfail-closed |
-| H8 回線障害でも続行できる | PASS | 完成版が外部依存なしでローカル動作 | 外部JS/CSS、API、永続ストレージなし |
-| H9 画面が崩れない | PASS | 1440x900と390x844で横溢れ・文字溢れ・console errorなし | 幅は各viewportと一致、画像読込成功、カード4件表示 |
-| H10 公開後まで検証できる | PASS | push後にHTTPSと主要機能を再確認 | 専用Pagesの初期デプロイ成功、公開確認手順をPrompt 3へ固定 |
+| H1 6段階の物語が成立する | PASS | 要件整理、Skill探索、Build、Steering、MCP、Publishを別プロンプトにする | `PROMPT_00`から`PROMPT_05`を順序固定し、READMEに20分進行を記載 |
+| H2 Build前に要件を詰められる | PASS | `/grill-me`が1問ずつ質問し、実行や変更を行わない | 6質問、回答待ち、4区分の要約、ファイル・コマンド・通信禁止を検証 |
+| H3 Skillを品質比較できる | PASS | `/find-skills`が公開元、利用実績、監査、導入方法を比較する | 3検索語、3候補上限、インストール数、stars、監査、コマンド、URLを必須化 |
+| H4 初版を小さく作れる | PASS | BuildはHTML/CSSとローカル画像だけを作る | JavaScript、commit、pushを禁止し、1440x900と390x844を確認 |
+| H5 Steeringが変更契約になる | PASS | 変更、維持、検証が分離される | 5カテゴリ、2件選択、`aria-pressed`、`aria-live`、公式色、2 viewportを明記 |
+| H6 Skillsを具体的に説明できる | PASS | `SKILL.md`と再利用性を説明し、デモSkillを示す | `/grill-me`、`/find-skills`、検証済み`anthropics/skills@frontend-design`を記載 |
+| H7 MCPを読み取り専用にできる | PASS | GitHub MCPが任意で、書込と会場認証を行わない | repo、branch、commit、Pagesだけを読み取り、未接続時の1行フォールバックを固定 |
+| H8 Powerを誤認させない | PASS | 公式機能名ではないと明記する | Steering、Skills、MCP、Browser、権限の組み合わせを研修上の呼称として定義 |
+| H9 公開をfail-closedにできる | PASS | 専用repo、合成データ、secret確認、正確な承認を必須にする | remote/branch不一致、marker欠落、秘密情報、承認欠落で停止 |
+| H10 回線障害と画面利用に耐える | PASS | 外部依存なし、a11y、2 viewport、90秒復旧を満たす | 外部参照0、見出し構造、5 filter、4 select、横溢れ0、読み取り専用予備3本 |
 
 ## ブラウザ実測
 
@@ -30,6 +30,13 @@
 
 インタラクションはカテゴリ件数`4,1,1,1,1`、参加候補2件、選択名「AIで仕事を整理する / データを見える形にする」を確認した。
 
+## PowerPoint実測
+
+- 16枚を原寸PNGで個別確認: PASS
+- `slides_test.py`: `Test passed. No overflow detected.`
+- `check_template_fidelity.mjs`: `status=pass`, `issueCount=0`
+- 具体プロンプト6本とスピーカーノートの出典を格納
+
 ## 証拠
 
 - [デスクトップ](../../../exports/antigravity_demo_hypothesis_evidence/desktop_1440x900.png)
@@ -41,4 +48,4 @@
 
 ## 残余リスク
 
-会場回線、GitHub Actionsの待ち時間、Antigravity UIの更新は制御できない。90秒で進展がなければ完成版と読み取り専用プロンプトへ切り替え、公開処理は本番リポジトリでは実施しない。
+会場回線、GitHub Actionsの待ち時間、Antigravity UI、skills.shの利用実績値は変動する。90秒で進展がなければ完成版と検証済みSkill結果へ切り替え、Skillインストール、MCP認証、本番リポジトリ操作は会場で行わない。

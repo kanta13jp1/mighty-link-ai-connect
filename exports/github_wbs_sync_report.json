@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-08-08T12:19:39.405265+00:00",
+  "generated_at": "2026-08-08T13:51:29.330274+00:00",
   "repository": "kanta13jp1/mighty-link-ai-connect",
   "project_owner": "kanta13jp1",
   "project_number": 1,
   "dry_run": false,
   "results": [
     {
-      "task_id": "T937",
+      "task_id": "T938",
       "wbs_status": "完了",
-      "issue_number": 248,
-      "issue_url": "https://github.com/kanta13jp1/mighty-link-ai-connect/issues/248",
+      "issue_number": 249,
+      "issue_url": "https://github.com/kanta13jp1/mighty-link-ai-connect/issues/249",
       "actions": [
         "create_issue",
         "close_issue",

@@ -1,0 +1,11 @@
+Prompt 4 / MCPで公開先を読み取り確認する
+
+最初に /mcp を開き、GitHub MCPの接続状態だけを確認してください。
+
+GitHub MCPが接続済みの場合、読み取り専用で次を確認してください。
+- リポジトリ: kanta13jp1/mighty-link-antigravity-live-demo
+- default branchがmain
+- 最新commitのSHAと件名
+- GitHub Pagesの公開URLまたは直近deployment状態
+
+Issue作成、設定変更、認証の追加、ファイル変更、commit、pushは行わないでください。GitHub MCPが未接続または情報を取得できない場合は、接続や認証を会場で開始せず「MCP確認は省略、gitと公開URL確認へ継続」と1行で報告してください。

@@ -1,0 +1,9 @@
+Prompt 2 / Webサイトを作る
+
+@SITE_BRIEF.md を読み、リポジトリ直下に index.html と styles.css を作成してください。
+
+MightyLINK AI Workshop Demoの概要と4つのセッションを閲覧できる、公開可能な1ページWebサイトにします。assets/workshop-hero.pngをヒーロー背景に使い、タイトル、説明、4セッション、公開用合成データである旨を表示してください。
+
+この段階ではJavaScript、絞り込み、参加候補機能は追加しません。外部ライブラリ、外部画像、外部フォント、実在する顧客・社員・連絡先は使用しないでください。index.html、styles.css、assets/workshop-hero.png以外は変更せず、commitとpushは実行しないでください。
+
+作成後にブラウザで開き、1440x900と390x844で画像、4セッション、文字切れ、横スクロールを確認してください。最後に「変更ファイル／ブラウザ確認／次の改善候補」を3行で報告してください。

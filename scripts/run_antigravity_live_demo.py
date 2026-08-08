@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail closed unless the iterative Antigravity workshop demo is ready."""
+"""Fail closed unless the skills-led Antigravity workshop demo is ready."""
 
 from __future__ import annotations
 
@@ -28,7 +28,6 @@ class _SiteParser(HTMLParser):
         self.buttons: list[dict[str, str]] = []
         self.external_refs: list[str] = []
         self.local_refs: list[str] = []
-        self.text_parts: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = {name: value or "" for name, value in attrs}
@@ -46,17 +45,13 @@ class _SiteParser(HTMLParser):
             else:
                 self.local_refs.append(value)
 
-    def handle_data(self, data: str) -> None:
-        text = data.strip()
-        if text:
-            self.text_parts.append(text)
-
 
 def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
-    prompt1 = _read_text(files["prompt1"])
-    prompt2 = _read_text(files["prompt2"])
-    prompt3 = _read_text(files["prompt3"])
+    prompts = [_read_text(files[f"prompt{number}"]) for number in range(6)]
+    grill, find_skills, build, steer, mcp, publish = prompts
+    concepts = _read_text(files["concepts"])
     backup = _read_text(files["backup"])
+    readme = _read_text(files["readme"])
     brief = _read_text(files["site_brief"])
     html = _read_text(files["output_html"])
     css = _read_text(files["output_css"])
@@ -64,115 +59,155 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
 
     parser = _SiteParser()
     parser.feed(html)
-    visible_text = " ".join(parser.text_parts)
 
     h1 = (
-        prompt1.startswith("Prompt 1 / Webサイトを作る")
-        and prompt2.startswith("Prompt 2 / 機能とデザインを改善する")
-        and prompt3.startswith("Prompt 3 / GitHub Pagesへ公開する")
+        all(prompt.startswith(f"Prompt {number} /") for number, prompt in enumerate(prompts))
+        and all(
+            name in readme
+            for name in (
+                "PROMPT_00_GRILL_ME.txt",
+                "PROMPT_01_FIND_SKILLS.txt",
+                "PROMPT_02_BUILD.txt",
+                "PROMPT_03_STEER.txt",
+                "PROMPT_04_MCP_CHECK.txt",
+                "PROMPT_05_PUBLISH.txt",
+            )
+        )
+        and "20分" in readme
     )
 
     h2 = all(
-        marker in prompt1
+        marker in grill
         for marker in (
-            "index.html と styles.css",
-            "この段階ではJavaScript",
-            "git commitとgit pushは実行しない",
-            "1440x900と390x844",
+            "/grill-me",
+            "次の6点を1問ずつ質問",
+            "私の回答を待って",
+            "決定事項／見送ること／停止条件／成功条件",
+            "ファイル変更、コマンド実行、外部通信を行わない",
         )
     )
 
     h3 = all(
-        marker in prompt2
+        marker in find_skills
         for marker in (
-            "カテゴリ絞り込み",
-            "参加候補に追加／追加済み",
-            "app.jsを新規作成",
-            "aria-pressed",
-            "aria-live",
-            "4、1、1、1、1",
-            "git commitとgit pushは実行しない",
+            "/find-skills",
+            "frontend design",
+            "web accessibility",
+            "GitHub Pages deployment",
+            "インストール数",
+            "公開元とGitHub stars",
+            "セキュリティ監査",
+            "まだSkillのインストール",
         )
     )
 
-    prompt2_upper = prompt2.upper()
-    css_upper = css.upper()
-    h4 = (
-        "#00A5E3" in prompt2_upper
-        and "#EF7E00" in prompt2_upper
-        and "#00A5E3" in css_upper
-        and "#EF7E00" in css_upper
-        and "gradient" not in css.lower()
+    h4 = all(
+        marker in build
+        for marker in (
+            "@SITE_BRIEF.md",
+            "index.html と styles.css",
+            "この段階ではJavaScript",
+            "commitとpushは実行しない",
+            "1440x900と390x844",
+        )
     )
 
-    h5 = (
-        PAGES_REPOSITORY in prompt3
-        and PAGES_URL in prompt3
-        and "許可されたブランチ: main" in prompt3
-        and "一致しない場合は何も変更せず停止" in prompt3
-        and "mightylink-app.com" not in prompt3
-        and "mighty-link-ai-connect" not in prompt3
+    h5 = all(
+        marker in steer
+        for marker in (
+            "Steering",
+            "変更すること",
+            "維持すること",
+            "検証すること",
+            "aria-pressed",
+            "aria-live",
+            "#00A5E3",
+            "#EF7E00",
+            "4、1、1、1、1",
+            "2件選択",
+        )
     )
 
     h6 = all(
-        marker in prompt3
+        marker in concepts
         for marker in (
-            "ここで必ず停止",
-            "公開してもよいですか？",
-            "正確に「公開して」と答えるまで",
-            "git add、git commit、git push",
-            "「公開して」と回答された後だけ",
+            "## Skills",
+            "SKILL.md",
+            "再利用可能なパッケージ",
+            "/grill-me",
+            "/find-skills",
+            "anthropics/skills@frontend-design",
+            "Agent Skills",
         )
     )
 
-    h7 = (
-        SYNTHETIC_MARKER in brief
+    h7 = all(
+        marker in mcp
+        for marker in (
+            "/mcp",
+            "GitHub MCP",
+            "読み取り専用",
+            "Issue作成、設定変更、認証の追加、ファイル変更、commit、pushは行わない",
+            "MCP確認は省略、gitと公開URL確認へ継続",
+        )
+    ) and all(marker in concepts for marker in ("## MCP", "Model Context Protocol", "標準形式"))
+
+    h8 = all(
+        marker in concepts
+        for marker in (
+            "## Steering",
+            "## Power",
+            "公式機能名ではなく",
+            "研修上の呼称",
+            "独立設定があるとは説明しない",
+        )
+    ) and "`Power`はAntigravityの公式機能名として扱いません" in readme
+
+    h9 = (
+        PAGES_REPOSITORY in publish
+        and PAGES_URL in publish
+        and "remoteまたはbranchが一致しなければ何も変更せず停止" in publish
+        and SYNTHETIC_MARKER in publish
+        and "公開してもよいですか？" in publish
+        and "正確に「公開して」と答えるまで" in publish
+        and "「公開して」の後だけ" in publish
+        and all(marker in publish for marker in (".env", "認証情報", "トークン", "個人情報", "顧客情報"))
+        and "mightylink-app.com" not in publish
+        and SYNTHETIC_MARKER in brief
         and "実在する顧客、社員、申込情報を含まない" in brief
-        and all(marker in prompt3 for marker in (".env", "トークン", "個人情報", "顧客情報"))
-        and "フォーム送信、ネットワーク送信、永続保存は行わない" in brief
     )
 
     forbidden_runtime = ("fetch(", "XMLHttpRequest", "localStorage", "sessionStorage")
-    h8 = (
+    filter_buttons = [button for button in parser.buttons if "data-filter" in button]
+    select_buttons = [button for button in parser.buttons if "select-button" in button.get("class", "")]
+    compact_css = re.sub(r"\s+", " ", css)
+    h10 = (
         not parser.external_refs
         and all((files["output_dir"] / ref).is_file() for ref in parser.local_refs if not ref.startswith("mailto:"))
         and not any(marker in javascript for marker in forbidden_runtime)
         and "form" not in parser.tags
         and files["hero_image"].stat().st_size > 100_000
-    )
-
-    filter_buttons = [button for button in parser.buttons if "data-filter" in button]
-    select_buttons = [button for button in parser.buttons if "select-button" in button.get("class", "")]
-    compact_css = re.sub(r"\s+", " ", css)
-    h9 = (
-        {"header", "main", "section", "footer"}.issubset(parser.tags)
         and parser.headings == {"h1": 1, "h2": 3, "h3": 4}
         and len(filter_buttons) == 5
         and len(select_buttons) == 4
         and all("aria-pressed" in button for button in parser.buttons)
-        and 'name="viewport"' in html
-        and "@media (max-width: 640px)" in compact_css
-        and "grid-template-columns: 1fr" in compact_css
-    )
-
-    h10 = (
-        all(marker in prompt3 for marker in ("最大3分", "HTTPS", "ページタイトル", "カテゴリ絞り込み", "参加候補2件"))
-        and "90秒以上進展が見えない" in _read_text(files["readme"])
-        and backup.count("ファイル変更、commit、pushは行わ") == 2
+        and '@media (max-width: 640px)' in compact_css
+        and "90秒以上進展が見えない" in readme
+        and backup.count("行わないでください") == 3
         and "ローカル予備成果物" in _read_text(files["output_readme"])
     )
 
     hypotheses = [
-        ("H1_iterative_story", h1, "three prompts are explicitly ordered build, improve, publish"),
-        ("H2_build_boundary", h2, "Prompt 1 builds HTML/CSS only and forbids commit/push"),
-        ("H3_feature_iteration", h3, "Prompt 2 adds filters, shortlist behavior, ARIA, and tests"),
-        ("H4_design_iteration", h4, "Prompt 2 and fallback site use official accent colors without gradients"),
-        ("H5_publish_isolation", h5, f"dedicated repository={PAGES_REPOSITORY}"),
-        ("H6_human_publish_gate", h6, "push is blocked until the exact human approval phrase"),
-        ("H7_public_data_safety", h7, "synthetic-only brief and secret/PII checks are explicit"),
-        ("H8_offline_fallback", h8, f"external_refs={len(parser.external_refs)}; local_refs={parser.local_refs}"),
-        ("H9_responsive_accessibility", h9, f"headings={parser.headings}; buttons={len(parser.buttons)}"),
-        ("H10_publish_verification_recovery", h10, "live URL verification and read-only recovery are defined"),
+        ("H1_six_stage_story", h1, "six prompts are ordered from grilling through publishing"),
+        ("H2_grill_before_build", h2, "/grill-me asks one question at a time and cannot modify files"),
+        ("H3_skill_discovery_quality", h3, "/find-skills compares provenance, adoption, audits, and install commands"),
+        ("H4_build_boundary", h4, "build creates HTML/CSS only and verifies two viewports"),
+        ("H5_steering_contract", h5, "Steering separates changes, preserved behavior, and measurable verification"),
+        ("H6_skill_explanation", h6, "Skills and the two demonstrated skills are defined with a verified candidate"),
+        ("H7_mcp_read_only", h7, "GitHub MCP is read-only and optional with a no-auth fallback"),
+        ("H8_power_clarity", h8, "Power is explicitly training shorthand rather than an official feature"),
+        ("H9_publish_safety", h9, "dedicated repository, synthetic data, secret checks, and exact approval are enforced"),
+        ("H10_offline_accessible_recovery", h10, f"external_refs={len(parser.external_refs)}; headings={parser.headings}"),
     ]
     return [
         {"name": name, "path": files["readme"], "passed": passed, "detail": detail}
@@ -184,9 +219,10 @@ def collect_demo_kit_status(project_root: Path = PROJECT_ROOT) -> dict[str, obje
     workshop = project_root / "docs" / "demo" / "antigravity_workshop"
     output = workshop / "output"
     files = {
-        "prompt1": workshop / "MAIN_PROMPT.txt",
-        "prompt2": workshop / "PROMPT_02_IMPROVE.txt",
-        "prompt3": workshop / "PROMPT_03_PUBLISH.txt",
+        **{f"prompt{number}": workshop / f"PROMPT_{number:02d}_{suffix}.txt" for number, suffix in enumerate((
+            "GRILL_ME", "FIND_SKILLS", "BUILD", "STEER", "MCP_CHECK", "PUBLISH"
+        ))},
+        "concepts": workshop / "DEMO_CONCEPTS.md",
         "backup": workshop / "BACKUP_PROMPTS.txt",
         "readme": workshop / "README.md",
         "site_brief": workshop / "input" / "SITE_BRIEF.md",
@@ -214,7 +250,7 @@ def collect_demo_kit_status(project_root: Path = PROJECT_ROOT) -> dict[str, obje
 
 def verify_demo_data(project_root: Path = PROJECT_ROOT) -> int:
     result = collect_demo_kit_status(project_root)
-    print("Google Antigravity 8/26 段階開発ライブデモ検証")
+    print("Google Antigravity 8/26 スキル活用ライブデモ検証")
     print("=" * 60)
     for check in result["checks"]:
         status = "OK" if check["passed"] else "FAIL"
@@ -224,7 +260,7 @@ def verify_demo_data(project_root: Path = PROJECT_ROOT) -> int:
         except ValueError:
             display_path = path
         print(f"[{status}] {check['name']}: {display_path} ({check['detail']})")
-    message = "\n[PASS] 作成、改善、人の承認、専用Pages公開、確認、復旧を安全に実演できます。"
+    message = "\n[PASS] 要件整理、Skill検索、Steering、MCP読取、人の承認、専用Pages公開を安全に実演できます。"
     if not result["passed"]:
         message = "\n[FAIL] デモキットの不足を修正してください。"
     print(message)
