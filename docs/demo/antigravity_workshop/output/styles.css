@@ -319,6 +319,17 @@ a:focus-visible {
   font-size: 1.55rem;
   line-height: 1.25;
   letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.agent-title-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .fit {
@@ -367,14 +378,28 @@ a:focus-visible {
 }
 
 .comparison-summary {
-  width: 100%;
-  padding: 46px max(24px, calc((100vw - var(--max-width)) / 2));
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  width: 360px;
+  max-width: calc(100vw - 48px);
+  padding: 20px;
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
-  gap: 40px;
+  grid-template-columns: 1fr;
+  gap: 14px;
   align-items: start;
   background: var(--navy);
   color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+}
+
+.comparison-summary h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.3;
 }
 
 .comparison-summary .eyebrow {
@@ -382,17 +407,18 @@ a:focus-visible {
 }
 
 .selection-content {
-  min-height: 74px;
+  min-height: 54px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 8px;
 }
 
 .selection-content p {
   margin: 0;
-  padding: 14px 16px;
+  padding: 10px 14px;
   border-left: 4px solid var(--orange);
   background: rgba(255, 255, 255, 0.08);
+  font-size: 0.9rem;
 }
 
 .selection-content strong,
@@ -401,9 +427,9 @@ a:focus-visible {
 }
 
 .selection-content span {
-  margin-top: 4px;
+  margin-top: 2px;
   color: #d3e1e7;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
 }
 
 .selection-content .selection-alert {
@@ -454,17 +480,15 @@ footer {
   font-size: 0.82rem;
 }
 
-footer p {
-  margin: 0;
+@media (min-width: 641px) {
+  footer {
+    padding-bottom: 90px;
+  }
 }
 
 @media (max-width: 900px) {
   .agent-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .comparison-summary {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -543,8 +567,14 @@ footer p {
   }
 
   .comparison-summary {
+    position: static;
+    width: 100%;
+    max-width: none;
     padding: 38px 18px;
     gap: 22px;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
   }
 
   .concept-list div {
