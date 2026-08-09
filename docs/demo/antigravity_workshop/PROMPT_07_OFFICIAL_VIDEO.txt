@@ -1,0 +1,16 @@
+Prompt 7 / Q&A用: 公式動画を出典確認して追加する
+
+/browser
+
+AI Agent Learning HubのAntigravityカード付近に、次の動画をサイト内で再生できる導線を追加してください。
+
+- URL: https://www.youtube.com/watch?v=SVCBA-pBgt0
+- 動画ID: SVCBA-pBgt0
+
+実装前にYouTube oEmbedまたは動画ページで、titleが「Welcome to Google Antigravity」、author_nameが「Google Antigravity」、author_urlが`https://www.youtube.com/@googleantigravity`であることを確認してください。1項目でも確認できなければ「公式」と表示せず、ファイルを変更しないで停止してください。
+
+確認できた場合だけ、privacy-enhanced modeの`https://www.youtube-nocookie.com/embed/SVCBA-pBgt0`を使い、Antigravityカードの近くに「Google Antigravity公式紹介動画」として追加してください。モーダルを使う場合は、閉じるボタン、Escape、背景クリック、focus復帰、YouTubeで開くリンクに対応してください。
+
+5製品を増やさず、料金、クォータ、他製品の動画、外部フォント、診断、検索、エクスポート、テーマ切替を追加しないでください。commitとpushは実行しないでください。
+
+1440x900と390x844で、動画導線、モーダル、キーボード操作、横スクロール、既存の絞り込みと2製品比較を確認し、「出典確認／変更ファイル／ブラウザ確認」を3行で報告してください。

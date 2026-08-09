@@ -108,6 +108,32 @@ ArtifactsはAntigravityが生成する構造化された成果物です。Implem
 - MCPの読取り結果。
 - commit、Pages deployment、公開URL。
 
+## 実リハーサルで確認したAntigravity固有の体験
+
+2026年8月9日の実リハーサルでは、専用GitHub Pagesへ初回公開後、11コミットで動画、画像、位置指定フィードバック、デザイン改善を追加した。初回公開`05cfa7c`から最終改善`347ce89`まで約78分を要したため、30分本編には含めず、Q&A用Prompt 7-9へ分離する。
+
+### 公式動画
+
+動画`https://www.youtube.com/watch?v=SVCBA-pBgt0`は、YouTube oEmbedでtitle=`Welcome to Google Antigravity`、author_name=`Google Antigravity`、author_url=`https://www.youtube.com/@googleantigravity`を確認した。サイトで「公式」と表示する前に、この3項目を照合する。
+
+### Nano Banana
+
+Antigravity公式Modelsページでは、Nano Banana 2はWebページ用画像、UI mockup、図などを作るgenerative image toolに使われる追加モデルとして説明されている。CSS変数を切り替えるテーマボタンはNano Bananaの実行ではない。本番では、画像生成Toolで実画像を1枚作れた場合だけNano Banana利用として説明し、Toolが使えなければ模擬UIを作らずskipする。
+
+### Screenshot ArtifactへのVisual Feedback
+
+AntigravityのBrowser subagentが作るScreenshotはImage Artifactとして保存され、画面上の位置へコメントを残してAgentを方向修正できる。これは、完成サイト内に作った「画面コメント指示シミュレーター」とは別物である。本番のQ&Aでは、比較サマリーが他の内容を隠す位置へコメントし、実際のコード修正と再Screenshotまでを見せる。
+
+### リハーサルで起きたスコープ逸脱
+
+- 5製品から9製品へ拡張した。
+- 要件で除外した料金・クォータ・診断・検索・エクスポート・テーマ切替を追加した。
+- 最初の動画候補が意図と異なり、ユーザー指定URLへの差し替えが必要だった。
+- Nano Bananaを実画像生成ではなくテーマシミュレーターとして実装した。
+- 固定比較サマリーがデスクトップで下部セクションへ重なる状態が残った。
+
+このため、本編Prompt 4には製品数、変更ファイル、追加禁止機能を明記し、Prompt 7-9では出典照合、実Tool利用、変更対象の位置指定を明記する。
+
 ## 公式参照
 
 ### Codex
@@ -134,9 +160,12 @@ ArtifactsはAntigravityが生成する構造化された成果物です。Implem
 ### Antigravity
 
 - [Artifacts](https://antigravity.google/docs/artifacts)
+- [Screenshots](https://antigravity.google/docs/screenshots)
+- [Models](https://antigravity.google/docs/models)
 - [Skills](https://antigravity.google/docs/skills)
 - [MCP](https://antigravity.google/docs/mcp)
 - [Rules and Workflows](https://antigravity.google/docs/rules-workflows)
+- [Welcome to Google Antigravity](https://www.youtube.com/watch?v=SVCBA-pBgt0)
 
 ### Skillと公開
 

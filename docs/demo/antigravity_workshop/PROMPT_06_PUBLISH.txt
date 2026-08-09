@@ -8,6 +8,6 @@ Prompt 6 / GitHub Pagesへ公開する
 
 git status、git diff --stat、git remote -v、現在branchを確認し、remoteまたはbranchが一致しなければ何も変更せず停止してください。.env、認証情報、トークン、個人情報、顧客情報が追跡対象にないことと、SITE_BRIEF.mdにSYNTHETIC_DATA_ONLYがあることを確認してください。`.agents/skills/`は公開対象へaddしないでください。
 
-公開予定ファイルをindex.html、styles.css、app.js、assets/workshop-hero.pngに限定し、commit messageと公開URLを報告したら必ず停止して「公開してもよいですか？」と質問してください。私が正確に「公開して」と答えるまでgit add、commit、push、GitHub設定変更を実行しないでください。
+公開予定ファイルをindex.html、styles.css、app.js、assets/workshop-hero.pngに限定します。Q&A用のPrompt 8を実行済みの場合だけassets/agent-workflow-hero.pngも許可します。これ以外の変更、製品数5件からの増加、料金・クォータ追加があれば公開せず停止してください。commit messageと公開URLを報告したら必ず停止して「公開してもよいですか？」と質問してください。私が正確に「公開して」と答えるまでgit add、commit、push、GitHub設定変更を実行しないでください。
 
 「公開して」の後だけ指定したサイトファイルをaddし、`Publish AI agent learning hub demo`でcommitしてmainへpushしてください。Pages完了を最大3分待ち、HTTPS、タイトル、5製品、フィルター件数5・4・1・5、2製品比較を公開URLで確認し、「commit／公開URL／確認／未解決」を4行で報告してください。

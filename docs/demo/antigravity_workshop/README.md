@@ -22,7 +22,7 @@
 | 24:00-29:00 | Pages公開 | 差分、秘密情報、人の承認、push、HTTPS確認 |
 | 29:00-30:00 | Proof | 公開URLと改善後の操作結果 |
 
-残り30分は質疑応答と予備時間です。90秒以上進展が見えない工程は停止し、完成済みローカル成果物またはバックアッププロンプトへ切り替えます。
+残り30分は質疑応答と予備時間です。Q&Aでは、時間と質問に応じて公式動画、Nano Banana実画像、Screenshot Artifactへの位置指定コメントを扱います。90秒以上進展が見えない工程は停止し、完成済みローカル成果物またはバックアッププロンプトへ切り替えます。
 
 ## プロンプト
 
@@ -33,6 +33,11 @@
 5. `PROMPT_04_APPLY_SKILL.txt`: `/frontend-design`を使い、見た目と比較機能を改善する。
 6. `PROMPT_05_MCP_CHECK.txt`: GitHub MCPを読み取り専用で確認する。
 7. `PROMPT_06_PUBLISH.txt`: 人の明示承認後だけGitHub Pagesへ公開する。
+8. `PROMPT_07_OFFICIAL_VIDEO.txt`: 動画の公式性を照合してから埋め込むQ&A用プロンプト。
+9. `PROMPT_08_NANO_BANANA.txt`: Nano Banana 2を使う画像生成Toolで実画像を1枚作るQ&A用プロンプト。
+10. `PROMPT_09_VISUAL_FEEDBACK_COMMENT.txt`: Screenshot Artifactへ位置指定コメントを残すQ&A用プロンプト。
+
+Prompt 7-9は30分本編に含めません。リハーサルでは公開後の追加改善だけで約78分かかったため、Q&Aまたは予備時間に限定します。
 
 ## 事前準備
 
@@ -47,6 +52,7 @@
 - `frontend-design`はまだインストールされていない。
 - GitHub MCPは接続済みなら使用し、未接続なら会場で認証しない。
 - `SITE_BRIEF.md`に`SYNTHETIC_DATA_ONLY`があり、秘密情報と個人情報がない。
+- 製品数が5件で、料金、クォータ、診断、検索、エクスポート、テーマ切替がない。
 - PowerPointを編集表示で開き、各プロンプトを全文コピーできる。
 
 ```powershell
@@ -79,22 +85,37 @@ npx skills list --json
 
 詳しい比較は`DEMO_CONCEPTS.md`を参照します。
 
+## 2026年8月9日の実リハーサル
+
+専用repoの初回公開`05cfa7c`から最終改善`347ce89`まで11コミット、約78分で、GitHub Pagesへの公開、Google Antigravity公式動画、9製品、Visual Feedback模擬体験、Nano Bananaテーマ模擬、検索、比較、暗色デザインまで実装できました。公開URLはデスクトップ1440x900とモバイル390x844で横スクロール0でした。
+
+一方で、要件の5製品から9製品へ広がり、除外していた料金・クォータ・診断・検索・エクスポート・テーマ切替まで追加されました。Nano Bananaは画像生成ToolではなくCSSテーマ切替として模擬され、固定比較サマリーが下部の内容を隠す状態も確認しました。
+
+本番では次のように修正します。
+
+- Prompt 4で製品数、変更ファイル、追加禁止機能を固定する。
+- Prompt 7でYouTubeのtitle、author_name、author_urlを確認してから「公式」と表示する。
+- Prompt 8で画像生成Toolが使えた場合だけNano Banana利用として説明する。
+- Prompt 9でAntigravityのScreenshot Artifactへ位置指定コメントを残し、重なりだけを修正する。
+- サイト内のVisual FeedbackシミュレーターをAntigravity本体の機能実演として扱わない。
+
 ## リハーサル後の復元
 
-リハーサルで公開したcommitを控え、公開確認後にそのcommitを`git revert`してpushします。履歴を壊す`git reset --hard`やforce pushは使いません。
+リハーサルで公開した最初と最後のcommitを控え、公開確認後にその範囲を`git revert --no-commit`して1件の復元commitをpushします。履歴を壊す`git reset --hard`やforce pushは使いません。
 
 ```powershell
 npx skills remove frontend-design --agent antigravity -y
 $skillsRoot = (Resolve-Path .agents/skills).Path
 $skillPath = Join-Path $skillsRoot 'frontend-design'
 if (Test-Path -LiteralPath $skillPath) {
-  if ((Split-Path $skillPath -Parent) -ne $skillsRoot) { throw 'Unexpected Skill path' }
-  Get-ChildItem -LiteralPath $skillPath -File | Remove-Item -Force
-  Remove-Item -LiteralPath $skillPath -Force
+  $resolvedSkillPath = (Resolve-Path -LiteralPath $skillPath).Path
+  if ((Split-Path $resolvedSkillPath -Parent) -ne $skillsRoot) { throw 'Unexpected Skill path' }
+  Remove-Item -LiteralPath $resolvedSkillPath -Recurse -Force
 }
 if (Test-Path -LiteralPath .\skills-lock.json) { Remove-Item -LiteralPath .\skills-lock.json -Force }
 npx skills list --json
-git revert --no-edit <リハーサルで公開したcommit SHA>
+git revert --no-commit <リハーサル前BASELINE>..<最後のリハーサルcommit SHA>
+git commit -m "Restore Antigravity rehearsal baseline"
 git push origin main
 ```
 

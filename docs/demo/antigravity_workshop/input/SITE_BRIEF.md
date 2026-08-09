@@ -50,3 +50,12 @@ SYNTHETIC_DATA_ONLY
 - フォーム送信、ネットワーク送信、永続保存は行わない。
 - 公開先は専用リポジトリ`kanta13jp1/mighty-link-antigravity-live-demo`だけとする。
 - 公開前に必ず人が差分、秘密情報、公開URLを確認する。
+
+## Q&A用の任意拡張
+
+30分本編では実行しない。Q&Aまたは予備時間にPowerPointのPrompt 7-9を使った場合だけ、次を許可する。
+
+- Google Antigravity公式YouTube動画`SVCBA-pBgt0`を、title、author_name、author_urlの照合後にprivacy-enhanced modeで埋め込む。
+- Antigravityのgenerative image toolが使える場合に限り、Nano Banana 2による実画像を`assets/agent-workflow-hero.png`へ1枚生成する。CSSテーマ切替や模擬UIをNano Bananaと呼ばない。
+- AntigravityのScreenshot Artifactへ位置指定コメントを残し、比較サマリーの重なりだけを修正する。サイト内シミュレーターは追加しない。
+- 任意拡張でも製品数は5件のまま維持し、料金、クォータ、診断、検索、エクスポート、テーマ切替を追加しない。
