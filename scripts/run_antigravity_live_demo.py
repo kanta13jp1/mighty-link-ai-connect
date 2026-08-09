@@ -65,6 +65,9 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     html = _read_text(files["output_html"])
     css = _read_text(files["output_css"])
     javascript = _read_text(files["output_js"])
+    cli_prompt = _read_text(files["prompt_cli"])
+    sdk_prompt = _read_text(files["prompt_sdk"])
+    sdk_script = _read_text(files["sdk_script"])
 
     parser = _SiteParser()
     parser.feed(html)
@@ -74,6 +77,9 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
         and all(f"PROMPT_{number:02d}_{suffix}.txt" in readme for number, suffix in enumerate(PROMPT_SUFFIXES))
         and "30分" in readme
         and "残り30分" in readme
+        and all(surface in readme for surface in ("Antigravity 2.0", "Antigravity CLI", "Antigravity SDK"))
+        and "PROMPT_10_CLI_READONLY.txt" in readme
+        and "PROMPT_11_SDK_READONLY.txt" in readme
     )
 
     h2 = all(
@@ -171,7 +177,32 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
             "Issue作成、設定変更、認証追加、ファイル変更、commit、pushは行わない",
             "MCP確認は省略、gitと公開URL確認へ継続",
         )
-    ) and all(marker in concepts for marker in ("## MCP", "Model Context Protocol", "標準"))
+    ) and all(marker in concepts for marker in ("## MCP", "Model Context Protocol", "標準")) and all(
+        marker in cli_prompt
+        for marker in (
+            "CLI DEMO / READ ONLY",
+            "ファイルの作成、変更、削除をしない",
+            "shell command、外部通信、commit、pushを実行しない",
+            "SURFACE: ANTIGRAVITY CLI",
+            "SYNTHETIC_DATA_ONLY",
+        )
+    ) and all(
+        marker in sdk_prompt
+        for marker in (
+            "SDK DEMO / READ ONLY",
+            "ファイルの作成、変更、削除、shell command、外部通信、git操作を行わない",
+            "NOT_VERIFIED",
+        )
+    ) and all(
+        marker in sdk_script
+        for marker in (
+            "BuiltinTools.read_only()",
+            "MODE: READ ONLY",
+            "--dry-run",
+            "Never create, edit, or delete files",
+            "GEMINI_API_KEY is not configured",
+        )
+    )
 
     h9 = (
         PAGES_REPOSITORY in publish
@@ -210,14 +241,14 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     )
 
     hypotheses = [
-        ("H1_seven_stage_30min_story", h1, "seven prompts fit a 30-minute demo with reserve time"),
+        ("H1_three_surface_30min_story", h1, "IDE, CLI, and SDK fit a 30-minute demo with reserve time"),
         ("H2_grill_timeboxed", h2, "/grill-me asks at most two consequential questions and cannot modify files"),
         ("H3_skill_discovery_quality", h3, "/find-skills compares provenance, adoption, audits, and install commands"),
         ("H4_project_scoped_install", h4, "frontend-design installs only to the Antigravity demo repository"),
         ("H5_build_boundary", h5, "the first build is a five-agent HTML/CSS site without publishing"),
         ("H6_skill_application", h6, "the installed skill visibly improves design and two-agent comparison"),
         ("H7_product_feature_accuracy", h7, "the five products use official feature names and Kiro owns Steering/Powers"),
-        ("H8_mcp_read_only", h8, "GitHub MCP is read-only and optional with a no-auth fallback"),
+        ("H8_read_only_integrations", h8, "MCP, CLI, and SDK are read-only with no-auth fallbacks"),
         ("H9_publish_safety", h9, "dedicated repository, synthetic data, secret checks, and exact approval are enforced"),
         ("H10_offline_accessible_recovery", h10, f"external_refs={len(parser.external_refs)}; headings={parser.headings}"),
     ]
@@ -245,6 +276,9 @@ def collect_demo_kit_status(project_root: Path = PROJECT_ROOT) -> dict[str, obje
         "output_css": output / "styles.css",
         "output_js": output / "app.js",
         "hero_image": output / "assets" / "workshop-hero.png",
+        "prompt_cli": workshop / "PROMPT_10_CLI_READONLY.txt",
+        "prompt_sdk": workshop / "PROMPT_11_SDK_READONLY.txt",
+        "sdk_script": workshop / "antigravity_sdk_readonly.py",
     }
 
     checks: list[dict[str, object]] = []

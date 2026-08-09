@@ -1,6 +1,6 @@
 # Antigravity 8/26 AIエージェント学習サイト ライブデモキット
 
-2026年8月26日の社内AI研修で、AIエージェントを使うと短時間でどこまで成果物を作れるかを見せる30分デモです。ライブ操作は低価格で利用しやすいAntigravityだけを使い、Codex、Claude Code、Claude Cowork、Kiro、Antigravityの違いは学習サイトとPowerPointで比較します。
+2026年8月26日の社内AI研修で、AIエージェントを使うと短時間でどこまで成果物を作れるかを見せる30分デモです。ライブ操作は低価格で利用しやすいAntigravityだけを使い、同じagent coreをAntigravity 2.0（IDE）、Antigravity CLI、Antigravity SDKの3つの操作面で見せます。Codex、Claude Code、Claude Cowork、Kiro、Antigravityの違いは学習サイトとPowerPointで比較します。
 
 投影資料は`exports/mighty_skill_bridge_antigravity_user_guide_2026.pptx`です。PowerPointから全文をコピー＆ペーストできるプロンプト、事前準備、Skill導入、GitHub Pages公開、リハーサル後の復元、90秒復旧を記載します。
 
@@ -12,15 +12,15 @@
 
 | 時刻 | 操作 | 見せるもの |
 | --- | --- | --- |
-| 00:00-03:00 | 5製品比較 | 用途の違いと、ライブ操作をAntigravityへ絞る理由 |
-| 03:00-06:00 | `/grill-me` | 実装前の質問、推奨案、成功条件の確定 |
-| 06:00-09:00 | `/find-skills` | 候補、公開元、利用実績、監査、導入コマンドの比較 |
-| 09:00-11:00 | Skill導入 | `frontend-design`を専用リポジトリだけへインストール |
-| 11:00-16:00 | 初版作成 | 5製品を比較できるHTML/CSSサイト |
-| 16:00-22:00 | Skillで改善 | デザイン、絞り込み、2製品比較、アクセシビリティ |
-| 22:00-24:00 | MCP確認 | GitHub MCPで公開先を読み取り専用確認 |
-| 24:00-29:00 | Pages公開 | 差分、秘密情報、人の承認、push、HTTPS確認 |
-| 29:00-30:00 | Proof | 公開URLと改善後の操作結果 |
+| 00:00-02:00 | ゴールと5製品比較 | ライブ操作をAntigravityへ絞る理由 |
+| 02:00-05:00 | `/grill-me` | 実装前の質問、推奨案、成功条件の確定 |
+| 05:00-08:00 | `/find-skills` + Skill導入 | 品質比較とproject-local導入 |
+| 08:00-14:00 | IDEで初版作成 | 会話、計画、コード、Browserを一画面で見る |
+| 14:00-18:00 | IDEでSkill適用 | デザイン、絞り込み、2製品比較、2 viewport |
+| 18:00-21:00 | Antigravity CLI | 同じrepoをターミナルから読み取り監査 |
+| 21:00-24:00 | Antigravity SDK | Pythonからread-only agentを実行し結果をstream表示 |
+| 24:00-26:00 | MCP確認 | GitHubを読み取り専用確認 |
+| 26:00-30:00 | Pages公開 + Proof | 明示承認、push、HTTPS、操作結果 |
 
 残り30分は質疑応答と予備時間です。Q&Aでは、時間と質問に応じて公式動画、Nano Banana実画像、Screenshot Artifactへの位置指定コメントを扱います。90秒以上進展が見えない工程は停止し、完成済みローカル成果物またはバックアッププロンプトへ切り替えます。
 
@@ -36,6 +36,9 @@
 8. `PROMPT_07_OFFICIAL_VIDEO.txt`: 動画の公式性を照合してから埋め込むQ&A用プロンプト。
 9. `PROMPT_08_NANO_BANANA.txt`: Nano Banana 2を使う画像生成Toolで実画像を1枚作るQ&A用プロンプト。
 10. `PROMPT_09_VISUAL_FEEDBACK_COMMENT.txt`: Screenshot Artifactへ位置指定コメントを残すQ&A用プロンプト。
+11. `PROMPT_10_CLI_READONLY.txt`: Antigravity CLIへ貼り付け、同じrepoを読み取り専用で監査する本編用プロンプト。
+12. `PROMPT_11_SDK_READONLY.txt`: Antigravity SDKから実行する読み取り専用の本編用プロンプト。
+13. `antigravity_sdk_readonly.py`: SDKをread-only toolsだけで動かし、結果をstream表示する実行ファイル。
 
 Prompt 7-9は30分本編に含めません。リハーサルでは公開後の追加改善だけで約78分かかったため、Q&Aまたは予備時間に限定します。
 
@@ -46,6 +49,8 @@ Prompt 7-9は30分本編に含めません。リハーサルでは公開後の�
 デモ開始前に次を確認します。
 
 - Antigravityにサインイン済みで、専用リポジトリだけを開いている。
+- Antigravity CLIの`agy`をインストールし、専用repoで対話TUIを一度起動してサインイン、表示テーマ、workspace trustを完了している。`/permissions`で対象4ファイルの読み取りだけを事前承認し、書き込み、command、URLアクセスは承認しない。
+- 専用のPython仮想環境へ`google-antigravity`をインストールし、`GEMINI_API_KEY`を安全な環境変数として設定した上で、`antigravity_sdk_readonly.py --dry-run`と実行リハーサルを完了している。
 - `git remote -v`が専用リポジトリ、現在branchが`main`である。
 - Node.js、Git、`npx skills`、ブラウザが利用できる。
 - workspace Skillの`/grill-me`と`/find-skills`がSlash Commandへ表示される。
@@ -57,6 +62,41 @@ Prompt 7-9は30分本編に含めません。リハーサルでは公開後の�
 
 ```powershell
 python scripts/run_antigravity_live_demo.py
+```
+
+CLIとSDKの導入・認証は本番中に行いません。Windowsでの事前準備は次のとおりです。
+
+```powershell
+irm https://antigravity.google/cli/install.ps1 | iex
+agy --version
+
+python -m venv .venv-antigravity-sdk
+.\.venv-antigravity-sdk\Scripts\Activate.ps1
+python -m pip install --upgrade pip google-antigravity
+python .\antigravity_sdk_readonly.py --workspace . --dry-run
+```
+
+API keyや認証tokenはPowerPoint、repo、コマンド履歴へ記載しません。現在のPCではSDK packageの導入とdry-runまでは検証済みですが、実通信には`GEMINI_API_KEY`の事前設定が必要です。本番中にCLIまたはSDKが認証を要求した場合はその場で認証せず、リハーサル済み画面へ切り替えます。
+
+CLI本番は対話TUIの`agy`を使います。非対話の`agy -p`はAsk権限を確認できず自動拒否されるため、リハーサルでも本番でも使いません。`--dangerously-skip-permissions`も使いません。
+
+## IDE・CLI・SDKの見せ分け
+
+- **Antigravity 2.0（IDE）**: 要件、計画、コード差分、Browser、Screenshot Artifactを一画面で見ながら作る。
+- **Antigravity CLI**: `agy`のTUIへ`PROMPT_10_CLI_READONLY.txt`を全文貼り付け、同じrepoを短く監査する。ファイル変更はさせない。
+- **Antigravity SDK**: Pythonコードでagentのsystem instructionsとread-only toolsを固定し、`PROMPT_11_SDK_READONLY.txt`を自動投入してstream結果を表示する。
+
+CLI本番操作:
+
+```powershell
+agy
+```
+
+起動後、PowerPointのCLIプロンプトを全文貼り付けます。SDK本番操作:
+
+```powershell
+.\.venv-antigravity-sdk\Scripts\Activate.ps1
+python .\antigravity_sdk_readonly.py --workspace .
 ```
 
 ## 事前導入する2つのSkill

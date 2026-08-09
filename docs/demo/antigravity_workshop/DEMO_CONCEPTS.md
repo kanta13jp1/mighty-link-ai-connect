@@ -14,6 +14,18 @@
 | Kiro | 仕様駆動のソフトウェア開発 | IDE、CLI、web preview | 要件、設計、タスクへ分解して実装し、Hooksで反復作業を自動化 |
 | Antigravity | 計画・実装・ブラウザ確認を伴う開発 | Antigravity 2.0、IDE、CLI、SDK | Implementation Plan、コード差分、ブラウザ録画を見ながらWeb開発 |
 
+## Antigravityの3つの操作面
+
+Antigravity 2.0、Antigravity CLI、Antigravity SDKは、同じagent harnessを用途に応じて異なる操作面から使います。本デモでは別モデルの優劣ではなく、同じ仕事をどの入口から任せるかを見せます。
+
+| 操作面 | 画面で見せるもの | 向いている場面 | 本デモの役割 |
+| --- | --- | --- | --- |
+| Antigravity 2.0（IDE） | Agent Manager、Editor、Browser、Artifacts | 計画、実装、視覚確認を行き来する開発 | 学習サイトを作り、Skill適用前後をBrowserで確認する |
+| Antigravity CLI | keyboard-driven TUI、tool実行、短い結果 | terminal-first、SSH、軽量な反復 | 同じrepoのHTML/CSS/JSを読み取り専用で監査する |
+| Antigravity SDK | Pythonコード、policy、stream出力 | agentをアプリや定期処理へ組み込む | `BuiltinTools.read_only()`で監査agentをプログラム実行する |
+
+IDEは人が画面を見ながら共同作業する入口、CLIはターミナルからすばやく指示する入口、SDKは決めたagent動作をコードから繰り返す入口です。CLIとSDKで本番サイトを追加変更すると差分が競合しやすいため、30分本編ではread-only監査へ限定します。
+
 ## 主要機能マトリックス
 
 | 比較軸 | Codex | Claude Code | Claude Cowork | Kiro | Antigravity |
@@ -166,6 +178,10 @@ AntigravityのBrowser subagentが作るScreenshotはImage Artifactとして保�
 - [MCP](https://antigravity.google/docs/mcp)
 - [Rules and Workflows](https://antigravity.google/docs/rules-workflows)
 - [Welcome to Google Antigravity](https://www.youtube.com/watch?v=SVCBA-pBgt0)
+- [Antigravity CLI Overview](https://antigravity.google/docs/cli/overview)
+- [Antigravity CLI Getting Started](https://antigravity.google/docs/cli/getting-started)
+- [Antigravity SDK Overview](https://antigravity.google/docs/sdk/overview)
+- [Antigravity SDK Product](https://antigravity.google/product/antigravity-sdk)
 
 ### Skillと公開
 

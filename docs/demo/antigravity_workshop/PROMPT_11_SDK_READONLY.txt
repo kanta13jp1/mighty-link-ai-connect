@@ -1,0 +1,11 @@
+SDK DEMO / READ ONLY
+
+現在の作業ディレクトリにあるAI Agent Learning Hubを、読み取り専用で監査してください。
+
+index.html、styles.css、app.js、SITE_BRIEF.mdだけを読み、次を日本語で報告してください。
+1. 製品カードの件数と製品名
+2. フィルターと比較操作の有無
+3. SYNTHETIC_DATA_ONLYの有無
+4. 画面確認で見るべき点を1つ
+
+ファイルの作成、変更、削除、shell command、外部通信、git操作を行わないでください。読み取れない項目は推測せず、NOT_VERIFIEDとしてください。

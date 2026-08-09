@@ -1,0 +1,24 @@
+CLI DEMO / READ ONLY
+
+Antigravity CLIから、現在の専用デモリポジトリを読み取り専用で監査してください。
+
+対象:
+- index.html
+- styles.css
+- app.js
+- SITE_BRIEF.md
+
+制約:
+- ファイルの作成、変更、削除をしない。
+- shell command、外部通信、commit、pushを実行しない。
+- 認証情報、個人情報、環境変数の値を表示しない。
+- 読み取れない項目を推測しない。
+
+次の見出しと順番だけで、日本語の短い結果を返してください。
+
+SURFACE: ANTIGRAVITY CLI
+FILES: 読み取れた対象ファイル
+PRODUCTS: index.htmlから確認できた製品名と件数
+INTERACTIONS: app.jsから確認できた操作を3点以内
+SAFETY: SYNTHETIC_DATA_ONLYの有無と、書き込みを行っていないこと
+NEXT: IDEでブラウザ確認する項目を1点

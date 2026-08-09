@@ -92,7 +92,7 @@ def test_demo_kit_rejects_mcp_write_and_skill_directory_publish(tmp_path: Path):
     )
 
     failed = _failed_hypotheses(tmp_path)
-    assert "H8_mcp_read_only" in failed
+    assert "H8_read_only_integrations" in failed
     assert "H9_publish_safety" in failed
 
 
@@ -109,3 +109,23 @@ def test_demo_output_rejects_external_dependency_and_persistent_storage(tmp_path
     javascript.write_text(javascript.read_text(encoding="utf-8") + "\nlocalStorage.setItem('demo', '1');\n", encoding="utf-8")
 
     assert "H10_offline_accessible_recovery" in _failed_hypotheses(tmp_path)
+
+
+def test_surface_demos_reject_cli_or_sdk_write_permissions(tmp_path: Path):
+    workshop = _copy_workshop(tmp_path)
+    cli_prompt = workshop / "PROMPT_10_CLI_READONLY.txt"
+    sdk_script = workshop / "antigravity_sdk_readonly.py"
+    cli_prompt.write_text(
+        cli_prompt.read_text(encoding="utf-8").replace(
+            "ファイルの作成、変更、削除をしない", "ファイルを自由に変更する"
+        ),
+        encoding="utf-8",
+    )
+    sdk_script.write_text(
+        sdk_script.read_text(encoding="utf-8").replace(
+            "BuiltinTools.read_only()", "BuiltinTools.all()"
+        ),
+        encoding="utf-8",
+    )
+
+    assert "H8_read_only_integrations" in _failed_hypotheses(tmp_path)

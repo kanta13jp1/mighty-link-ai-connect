@@ -2,11 +2,11 @@
 
 ## 目的
 
-2026年8月26日の社員向けAI研修で、Antigravityを使ったWeb開発を30分で実演する。`/grill-me`で要件を詰め、`/find-skills`で再利用可能な能力を探して導入し、初版サイトを作り、`/frontend-design`で改善し、MCPで公開先を読み取り確認し、人の承認後だけGitHub Pagesへ公開する。残り30分は質疑応答と予備に使う。
+2026年8月26日の社員向けAI研修で、Antigravityを使ったWeb開発を30分で実演する。Antigravity 2.0（IDE）でサイトを作り、Antigravity CLIで同じrepoを読み取り監査し、Antigravity SDKで同じ監査をPythonから自動実行する。`/grill-me`、`/find-skills`、`/frontend-design`、MCP、人の承認後だけのGitHub Pages公開も一つの流れとして見せる。残り30分は質疑応答と予備に使う。
 
 ## 成果物
 
-- 投影資料: `exports/mighty_skill_bridge_antigravity_user_guide_2026.pptx`（全30枚）
+- 投影資料: `exports/mighty_skill_bridge_antigravity_user_guide_2026.pptx`（全36枚）
 - 概念説明: `docs/demo/antigravity_workshop/DEMO_CONCEPTS.md`
 - Prompt 0: `docs/demo/antigravity_workshop/PROMPT_00_GRILL_ME.txt`
 - Prompt 1: `docs/demo/antigravity_workshop/PROMPT_01_FIND_SKILLS.txt`
@@ -18,6 +18,9 @@
 - Q&A Prompt 7: `docs/demo/antigravity_workshop/PROMPT_07_OFFICIAL_VIDEO.txt`
 - Q&A Prompt 8: `docs/demo/antigravity_workshop/PROMPT_08_NANO_BANANA.txt`
 - Q&A Prompt 9: `docs/demo/antigravity_workshop/PROMPT_09_VISUAL_FEEDBACK_COMMENT.txt`
+- CLI Prompt: `docs/demo/antigravity_workshop/PROMPT_10_CLI_READONLY.txt`
+- SDK Prompt: `docs/demo/antigravity_workshop/PROMPT_11_SDK_READONLY.txt`
+- SDK runner: `docs/demo/antigravity_workshop/antigravity_sdk_readonly.py`
 - 要件: `docs/demo/antigravity_workshop/input/SITE_BRIEF.md`
 - 完成版予備サイト: `docs/demo/antigravity_workshop/output/`
 - 公開専用リポジトリ: `https://github.com/kanta13jp1/mighty-link-antigravity-live-demo`
@@ -49,7 +52,7 @@
 - サイト内のVisual Feedbackシミュレーターと、AntigravityのScreenshot Artifactへの位置指定コメントを区別する。
 - 比較サマリーが下部コンテンツを隠す問題を、Q&A Prompt 9の位置指定コメントで修正する。
 
-この結果から、本編は7プロンプトへ固定し、Prompt 7-9はQ&Aまたは予備時間だけで使う。
+この結果から、IDEの制作工程は既存7プロンプトの境界を維持し、CLIとSDKは読み取り専用の短い本編ブロックとして追加する。Prompt 7-9はQ&Aまたは予備時間だけで使う。
 
 ## 事前確認
 
@@ -60,6 +63,8 @@
 5. GitHub MCPは任意とする。未接続なら認証を始めず、gitと公開URLの確認へ進む。
 6. ベースラインが5製品で、料金、クォータ、診断、検索、エクスポート、テーマ切替を含まないことを確認する。
 7. 次を実行し、H1-H10と回帰テストがすべてPASSであることを確認する。
+8. `agy --version`が成功し、専用repoで対話TUIの初回サインインとworkspace trustが完了していることを確認する。`/permissions`で`index.html`、`styles.css`、`app.js`、`SITE_BRIEF.md`の読み取りだけを事前承認し、`--dangerously-skip-permissions`は使わない。
+9. SDK専用venvで`google-antigravity`をimportでき、`GEMINI_API_KEY`を安全な環境変数として設定し、SDK runnerの`--dry-run`と実実行リハーサルが成功していることを確認する。キーは資料、repo、コマンド履歴へ記載しない。
 
 ```powershell
 python scripts/run_antigravity_live_demo.py
@@ -70,15 +75,38 @@ python -m pytest tests/test_antigravity_live_demo.py -q
 
 | 時刻 | 操作 | 観客に見せる証拠 |
 | --- | --- | --- |
-| 00:00-03:00 | 5製品とゴール | AIエージェントとの仕事の流れを固定 |
-| 03:00-05:00 | `/grill-me` | 決定事項、除外、停止条件、成功条件 |
-| 05:00-09:00 | `/find-skills` + install | 公開元、利用実績、監査、project-local導入 |
-| 09:00-15:00 | Build | HTML/CSSの5製品初版 |
-| 15:00-21:00 | `/frontend-design` | 絞り込み、最大2比較、a11y、2 viewport |
-| 21:00-23:00 | MCP check | repo、branch、commit、Pages状態の読み取り |
-| 23:00-30:00 | Publish + Public proof | 明示承認、push、HTTPS、5製品、件数、2件比較 |
+| 00:00-02:00 | 5製品とゴール | AIエージェントとの仕事の流れを固定 |
+| 02:00-05:00 | `/grill-me` | 決定事項、除外、停止条件、成功条件 |
+| 05:00-08:00 | `/find-skills` + install | 公開元、監査、project-local導入 |
+| 08:00-14:00 | IDE Build | 会話、計画、コード、Browserで5製品初版 |
+| 14:00-18:00 | IDE `/frontend-design` | 絞り込み、最大2比較、a11y、2 viewport |
+| 18:00-21:00 | Antigravity CLI | TUIへ全文貼付し、同じrepoをread-only監査 |
+| 21:00-24:00 | Antigravity SDK | Pythonからread-only agentを実行しstream表示 |
+| 24:00-26:00 | MCP check | repo、branch、commit、Pages状態の読み取り |
+| 26:00-30:00 | Publish + Public proof | 明示承認、push、HTTPS、5製品、2件比較 |
 
 Prompt 7-9は本編で実行しない。Q&Aで要望が出た場合だけ、公式動画、Nano Banana実画像、Screenshot Artifactへの位置指定コメントを順に使う。
+
+## IDE・CLI・SDKの実演手順
+
+### 1. Antigravity 2.0（IDE）
+
+Prompt 0-4をPowerPointから全文貼り付ける。Agent Manager、Editor、Browser、Artifactsが同時に見える配置にし、生成中の計画、コード差分、実画面を観客へ見せる。
+
+### 2. Antigravity CLI
+
+事前にCLIの導入、サインイン、workspace trust、対象4ファイルのread-only許可を済ませる。本番は専用repoのPowerShellで対話TUIの`agy`を実行し、PowerPointの`PROMPT_10_CLI_READONLY.txt`を全文貼り付ける。非対話の`agy -p`や`--dangerously-skip-permissions`は使わない。結果の`SURFACE`、`PRODUCTS`、`INTERACTIONS`、`SAFETY`だけを読み上げる。書き込み確認が出た場合は拒否して終了する。
+
+### 3. Antigravity SDK
+
+事前にSDK専用venvへ`google-antigravity`を導入する。本番は次の2行だけを実行する。
+
+```powershell
+.\.venv-antigravity-sdk\Scripts\Activate.ps1
+python .\antigravity_sdk_readonly.py --workspace .
+```
+
+runnerは`BuiltinTools.read_only()`だけをagentへ公開し、PROMPT_11を自動投入する。`SURFACE: ANTIGRAVITY SDK`、`MODE: READ ONLY`、stream表示された監査結果を見せる。`GEMINI_API_KEY`が未設定なら一行で安全停止し、値は表示しない。
 
 ## 公開承認
 
@@ -106,6 +134,7 @@ Prompt 6は`git add`、commit、pushの前に必ず停止し、`公開しても�
 - MCP未接続なら認証せず、gitと公開URLの確認へ進む。
 - Pages待ちが長ければ準備済みURLとActions greenを示す。
 - Prompt 7-9が90秒で進まなければ、実リハーサル済み公開URLとスクリーンショットを示す。
+- CLIまたはSDKが未導入、未認証、90秒停止なら、その場で導入・認証せず、PowerPointの検証済み画面と`--dry-run`結果へ切り替える。
 - 会場でglobal Skill install、MCP認証、本番リポジトリへの切替、承認前pushは行わない。
 
 ## リハーサル後・デモ後の復元
@@ -123,6 +152,10 @@ Prompt 6は`git add`、commit、pushの前に必ず停止し、`公開しても�
 - [Antigravity Models / Nano Banana 2](https://antigravity.google/docs/models)
 - [Antigravity Agent Skills](https://antigravity.google/docs/skills)
 - [Antigravity MCP](https://antigravity.google/docs/mcp)
+- [Antigravity CLI Overview](https://antigravity.google/docs/cli/overview)
+- [Antigravity CLI Getting Started](https://antigravity.google/docs/cli/getting-started)
+- [Antigravity SDK Overview](https://antigravity.google/docs/sdk/overview)
+- [Antigravity SDK Product](https://antigravity.google/product/antigravity-sdk)
 - [Antigravity Permissions](https://antigravity.google/docs/permissions?app=antigravity)
 - [Google Antigravity公式紹介動画](https://www.youtube.com/watch?v=SVCBA-pBgt0)
 - [GitHub Pagesの公開元設定](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
