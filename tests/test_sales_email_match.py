@@ -1,5 +1,6 @@
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
@@ -274,3 +275,46 @@ def test_sales_email_match_api_supports_received_date_filters(tmp_path):
     assert data["filters"]["received_to"] == "2026-07-25"
     assert data["matches"][0]["project_received_date"] == "2026-07-25"
     assert invalid_response.status_code == 400
+
+
+def test_postgres_extraction_report_serializes_datetime_without_static_fallback(monkeypatch):
+    class DummyCursor:
+        def __init__(self):
+            self.query_index = -1
+
+        def execute(self, _query):
+            self.query_index += 1
+
+        def fetchall(self):
+            if self.query_index == 0:
+                return [
+                    {
+                        "id": 1,
+                        "source_path": "imap://INBOX/1",
+                        "source_type": "imap",
+                        "dedupe_key": "message-1",
+                        "sender_domain": "partner.example.jp",
+                        "normalized_subject": "project",
+                        "received_at": datetime(2026, 8, 7, 8, 37, tzinfo=timezone.utc),
+                    }
+                ]
+            return []
+
+        def close(self):
+            return None
+
+    class DummyConnection:
+        def cursor(self, cursor_factory=None):
+            return DummyCursor()
+
+        def close(self):
+            return None
+
+    monkeypatch.setenv("SUPABASE_DB_URL", "postgresql://example.invalid/database")
+    monkeypatch.setattr(app.psycopg2, "connect", lambda _url: DummyConnection())
+
+    report = app.load_extraction_report_from_postgres()
+
+    assert report is not None
+    assert report["input_count"] == 1
+    assert report["extractions"][0]["received_at"] == "2026-08-07T08:37:00Z"

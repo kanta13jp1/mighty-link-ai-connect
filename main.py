@@ -14,7 +14,7 @@ import threading
 if "APPDATA" not in os.environ:
     os.environ["APPDATA"] = os.environ.get("USERPROFILE") or os.environ.get("HOME") or os.path.expanduser("~")
 
-from firebase_functions import https_fn
+from firebase_functions import https_fn, options
 from firebase_admin import initialize_app
 from src.app import app
 from a2wsgi import ASGIMiddleware
@@ -45,7 +45,11 @@ def _get_wsgi_app():
     return _wsgi_app
 
 # Export the "api" function mapped in firebase.json
-@https_fn.on_request(invoker="public")
+@https_fn.on_request(
+    invoker="public",
+    memory=options.MemoryOption.MB_512,
+    timeout_sec=120,
+)
 def api(req: https_fn.Request) -> https_fn.Response:
     """Bridges incoming Firebase functions request to FastAPI ASGI app."""
     status_str = "200 OK"

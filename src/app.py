@@ -6277,12 +6277,12 @@ def load_extraction_report_from_postgres() -> Optional[dict]:
                 
             msg_received_at = "2026-06-18T00:00:00Z"
             if msg.get("received_at"):
-                if isinstance(msg["received_at"], datetime):
+                if isinstance(msg["received_at"], datetime.datetime):
                     msg_received_at = msg["received_at"].isoformat().replace("+00:00", "Z")
                 else:
                     msg_received_at = str(msg["received_at"])
             elif msg.get("created_at"):
-                if isinstance(msg["created_at"], datetime):
+                if isinstance(msg["created_at"], datetime.datetime):
                     msg_received_at = msg["created_at"].isoformat().replace("+00:00", "Z")
                 else:
                     msg_received_at = str(msg["created_at"])
@@ -6301,10 +6301,9 @@ def load_extraction_report_from_postgres() -> Optional[dict]:
                 "talent_profile": tal_data
             })
             
-        from datetime import datetime, timezone
         return {
             "task_id": "T817_4",
-            "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
             "model_name": "deterministic-sales-email-extractor-v1",
             "fallback_used": True,
             "input_count": len(messages),

@@ -43,3 +43,10 @@ def test_functions_deploy_overlays_dedicated_supabase_url():
     remove_index = workflow.index("grep -Ev '^(USE_SUPABASE|SUPABASE_DB_URL)='")
     append_index = workflow.index('SUPABASE_DB_URL="%s"')
     assert remove_index < append_index
+
+
+def test_firebase_function_has_capacity_for_recovered_mailbox():
+    main_source = (PROJECT_ROOT / "main.py").read_text(encoding="utf-8")
+
+    assert "memory=options.MemoryOption.MB_512" in main_source
+    assert "timeout_sec=120" in main_source
