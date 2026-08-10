@@ -130,12 +130,12 @@ POP3しか使えない場合の最終候補。共有営業メールでは受信�
 
 ## 本番の自動同期
 
-- Firebase scheduled function `sales_email_sync_scheduled` が15分ごとに起動する。
+- GitHub Actions workflow `sales-email-sync.yml` が15分ごとにBasic認証付き同期APIを呼ぶ。Firebase SchedulerはCI service accountのIAM policy更新権限が不足するため採用しない。
 - 対象folderは `INBOX` のみ。1回あたり最新100通を読み取り、dedupe keyで登録済みメールを除外する。
-- scheduled functionは `max_instances=1` とし、重複起動を抑制する。
+- workflowのconcurrency groupで重複起動を抑制する。
 - 取得は `IMAP4_SSL`、port 993、`readonly=True` で行う。既読化、移動、削除、`EXPUNGE`、POP3フォールバックは行わない。
-- 接続失敗はジョブ失敗として最大2回retryする。`0件・success` として隠さない。
-- 緊急停止はFunctions環境の `SALES_EMAIL_SYNC_ENABLED=false` を設定して再deployする。
+- 接続失敗はAPI 500とActions job失敗として記録し、最大2回retryする。`0件・success` として隠さない。
+- 緊急停止はGitHub Actionsで `sales-email-sync.yml` をdisableする。
 
 ### 停止判定
 
@@ -151,7 +151,7 @@ POP3しか使えない場合の最終候補。共有営業メールでは受信�
 - 本番Supabaseは702通、`max(received_at)=2026-07-25` で停止していた。
 - 公開analyticsも最新日付が2026-07-25で、本番同期APIはIMAP失敗を握り潰してHTTP 200・0件を返していた。
 - 定期起動するschedulerが実装されていなかったため、自動取り込みは成立していなかった。
-- T943でfail-closed化、15分scheduled function、専用IMAP secret overlayを追加した。
+- T943でfail-closed化、15分GitHub Actions workflow、専用IMAP secret overlayを追加した。専用secretを追加する前に旧IMAPキーを除去し、dotenvの重複キーで古い認証情報が採用されないようにした。
 
 ---
 

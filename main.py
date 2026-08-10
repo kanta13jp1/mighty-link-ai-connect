@@ -14,7 +14,7 @@ import threading
 if "APPDATA" not in os.environ:
     os.environ["APPDATA"] = os.environ.get("USERPROFILE") or os.environ.get("HOME") or os.path.expanduser("~")
 
-from firebase_functions import https_fn, scheduler_fn
+from firebase_functions import https_fn
 from firebase_admin import initialize_app
 from src.app import app
 from a2wsgi import ASGIMiddleware
@@ -86,59 +86,3 @@ def api(req: https_fn.Request) -> https_fn.Response:
         status=status_code,
         headers=headers_list
     )
-
-
-def _sales_email_sync_enabled() -> bool:
-    return os.environ.get("SALES_EMAIL_SYNC_ENABLED", "true").strip().lower() in {
-        "1",
-        "true",
-        "yes",
-        "on",
-    }
-
-
-def _sales_email_sync_max_messages() -> int:
-    try:
-        value = int(os.environ.get("SALES_EMAIL_SYNC_MAX_MESSAGES", "100"))
-    except (TypeError, ValueError):
-        value = 100
-    return max(1, min(value, 1000))
-
-
-def run_scheduled_sales_email_sync() -> dict:
-    """Run one fail-closed, read-only-IMAP sales email synchronization."""
-    if not _sales_email_sync_enabled():
-        print("[*] Scheduled sales email sync is disabled by configuration.")
-        return {"status": "disabled", "new_emails_count": 0}
-
-    import sys
-    from pathlib import Path
-
-    scripts_dir = str(Path(__file__).resolve().parent / "scripts")
-    if scripts_dir not in sys.path:
-        sys.path.insert(0, scripts_dir)
-
-    from sync_sales_emails import sync_sales_emails_pipeline
-
-    result = sync_sales_emails_pipeline(max_messages=_sales_email_sync_max_messages())
-    if result.get("status") != "success":
-        raise RuntimeError("Scheduled sales email sync returned a non-success status")
-    print(
-        "[+] Scheduled sales email sync completed: "
-        f"new_emails_count={result.get('new_emails_count', 0)}"
-    )
-    return result
-
-
-@scheduler_fn.on_schedule(
-    schedule=os.environ.get("SALES_EMAIL_SYNC_SCHEDULE", "every 15 minutes"),
-    timezone=scheduler_fn.Timezone("Asia/Tokyo"),
-    retry_count=2,
-    min_backoff_seconds=60,
-    max_backoff_seconds=300,
-    max_instances=1,
-    timeout_sec=540,
-)
-def sales_email_sync_scheduled(_event: scheduler_fn.ScheduledEvent) -> None:
-    """Poll the shared mailbox without changing message state on the server."""
-    run_scheduled_sales_email_sync()

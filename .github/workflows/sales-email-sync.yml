@@ -1,0 +1,35 @@
+name: Sales Email Sync
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sales-email-sync-production
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Import new INBOX messages
+        env:
+          SALES_EMAIL_SYNC_USERNAME: ${{ secrets.SALES_EMAIL_SYNC_USERNAME }}
+          SALES_EMAIL_SYNC_PASSWORD: ${{ secrets.SALES_EMAIL_SYNC_PASSWORD }}
+        run: |
+          set -euo pipefail
+          test -n "$SALES_EMAIL_SYNC_USERNAME"
+          test -n "$SALES_EMAIL_SYNC_PASSWORD"
+          curl --fail-with-body --silent --show-error \
+            --retry 2 --retry-delay 30 --max-time 540 \
+            --user "$SALES_EMAIL_SYNC_USERNAME:$SALES_EMAIL_SYNC_PASSWORD" \
+            --request POST \
+            "https://mightylink-app.com/api/sales-email/sync?max_messages=100"

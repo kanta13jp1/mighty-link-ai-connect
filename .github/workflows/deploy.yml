@@ -192,6 +192,8 @@ jobs:
             fi
 
             if [ -n "${SALES_EMAIL_IMAP_ENV:-}" ]; then
+              grep -Ev '^(IMAP_HOST|IMAP_PORT|IMAP_USE_SSL|IMAP_USERNAME|IMAP_PASSWORD|IMAP_FOLDERS|IMAP_MAX_MESSAGES|SALES_EMAIL_SYNC_ENABLED|SALES_EMAIL_SYNC_MAX_MESSAGES|SALES_EMAIL_SYNC_SCHEDULE)=' .env > .env.base
+              mv .env.base .env
               printf '\n%s\n' "$SALES_EMAIL_IMAP_ENV" >> .env
               chmod 600 .env
               echo "[*] Overlaid the dedicated read-only IMAP runtime settings."
