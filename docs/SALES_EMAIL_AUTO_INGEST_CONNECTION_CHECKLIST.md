@@ -1,7 +1,7 @@
 # 営業メール自動取り込み 接続方式確認チェックリスト
 
 - 作成日: 2026-06-20
-- 関連WBS: T817, T817_7, T824
+- 関連WBS: T817, T817_7, T824, T922, T943
 - 関連Issue: #115
 - ステータス: 接続方式の決め打ち防止と、必要情報の確認項目を整理済み
 
@@ -123,6 +123,35 @@ POP3しか使えない場合の最終候補。共有営業メールでは受信�
 6. 共有営業メールの本番同期はIMAPの `readonly=True` だけを使用し、既読化、移動、削除、`EXPUNGE` を行わない。
 7. IMAP同期が0件または失敗でもPOP3へ自動フォールバックしない。
 8. POP3コネクタは `DELE` を実装せず、`POP3_LEAVE_ON_SERVER=false` を接続前に拒否する。
+9. IMAP接続・認証・folder選択に失敗した場合は0件成功へ変換せず、同期APIを500、定期ジョブを失敗として記録する。
+10. 本番のIMAP認証情報はGitHub Actionsの専用secret `SALES_EMAIL_IMAP_ENV` から既存Functions環境へoverlayし、汎用の `FIREBASE_FUNCTIONS_DOTENV` と分離して更新する。
+
+---
+
+## 本番の自動同期
+
+- Firebase scheduled function `sales_email_sync_scheduled` が15分ごとに起動する。
+- 対象folderは `INBOX` のみ。1回あたり最新100通を読み取り、dedupe keyで登録済みメールを除外する。
+- scheduled functionは `max_instances=1` とし、重複起動を抑制する。
+- 取得は `IMAP4_SSL`、port 993、`readonly=True` で行う。既読化、移動、削除、`EXPUNGE`、POP3フォールバックは行わない。
+- 接続失敗はジョブ失敗として最大2回retryする。`0件・success` として隠さない。
+- 緊急停止はFunctions環境の `SALES_EMAIL_SYNC_ENABLED=false` を設定して再deployする。
+
+### 停止判定
+
+1. GMO WebメールまたはThunderbirdで、`INBOX` の最新受信日時と件数を確認する。
+2. 本番DB `sales_email_messages` の `max(received_at)` と件数を読み取り専用で確認する。
+3. `/api/sales-email/analytics` の最新日付を確認する。
+4. GMOに新着があり、本番DBが30分以上更新されない場合は停止として扱う。
+5. `/api/sales-email/sync` が200かつ0件でも正常と決めつけない。T943以降はIMAP接続失敗なら500となるため、Functionsログで例外種別を確認する。
+
+### 2026-08-10停止インシデント
+
+- GMO `INBOX` は読み取り専用接続に成功し、2026-08-10受信の2通を確認した。
+- 本番Supabaseは702通、`max(received_at)=2026-07-25` で停止していた。
+- 公開analyticsも最新日付が2026-07-25で、本番同期APIはIMAP失敗を握り潰してHTTP 200・0件を返していた。
+- 定期起動するschedulerが実装されていなかったため、自動取り込みは成立していなかった。
+- T943でfail-closed化、15分scheduled function、専用IMAP secret overlayを追加した。
 
 ---
 
@@ -146,4 +175,5 @@ POP3しか使えない場合の最終候補。共有営業メールでは受信�
 - Gmail API guides: https://developers.google.com/workspace/gmail/api/guides
 - Gmail API push notifications: https://developers.google.com/workspace/gmail/api/guides/push
 - IMAP4rev2 RFC 9051: https://datatracker.ietf.org/doc/html/rfc9051
+- Firebase scheduled functions: https://firebase.google.com/docs/functions/schedule-functions
 - Amazon SES receiving email: https://docs.aws.amazon.com/ses/latest/dg/receiving-email.html

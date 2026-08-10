@@ -110,12 +110,8 @@ def sync_raw_email_list(db: DBAdapter, raw_emails: List[Any]) -> int:
 
 def sync_imap_to_db(db: DBAdapter, max_messages: int | None = None) -> int:
     print(f"[*] Fetching emails via IMAP (max_messages={max_messages or 'default'})...")
-    try:
-        raw_emails = fetch_imap_emails(max_messages=max_messages)
-        return sync_raw_email_list(db, raw_emails)
-    except Exception as e:
-        print(f"[-] IMAP connection/fetch failed: {e}")
-        return 0
+    raw_emails = fetch_imap_emails(max_messages=max_messages)
+    return sync_raw_email_list(db, raw_emails)
 
 
 def rebuild_extraction_review_json(db: DBAdapter) -> None:
@@ -284,7 +280,11 @@ def sync_sales_emails_pipeline(max_messages: int | None = None, retry_errors: bo
     print(f"[*] Starting Sales Email Sync & Parse Pipeline (retry_errors={retry_errors}). Connection Mode: {'Supabase' if db.use_supabase else 'SQLite'}")
     
     # 1. Fetch via read-only IMAP. Shared mailboxes must never fall back to POP3.
-    new_emails = sync_imap_to_db(db, max_messages=max_messages)
+    try:
+        new_emails = sync_imap_to_db(db, max_messages=max_messages)
+    except Exception:
+        db.close()
+        raise
 
     print(f"[+] Total new emails synced into DB: {new_emails}")
     

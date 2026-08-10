@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, "src"))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "scripts"))
 
 import app
+import main as firebase_main
 import sales_email_pop3
 import sync_sales_emails
 
@@ -96,3 +97,58 @@ def test_pipeline_never_falls_back_to_pop3(monkeypatch):
 
     assert result["new_emails_count"] == 0
     assert db.closed is True
+
+
+def test_pipeline_fails_closed_when_imap_fetch_fails(monkeypatch):
+    class DummyDb:
+        use_supabase = False
+        sqlite_conn = None
+
+        def __init__(self):
+            self.closed = False
+
+        def close(self):
+            self.closed = True
+
+    db = DummyDb()
+    monkeypatch.setattr(sync_sales_emails, "DBAdapter", lambda _path: db)
+
+    def fail_imap_fetch(*_args, **_kwargs):
+        raise ConnectionError("authentication failed")
+
+    monkeypatch.setattr(sync_sales_emails, "fetch_imap_emails", fail_imap_fetch)
+
+    with pytest.raises(ConnectionError, match="authentication failed"):
+        sync_sales_emails.sync_sales_emails_pipeline()
+
+    assert db.closed is True
+
+
+def test_scheduled_sync_uses_bounded_message_limit(monkeypatch):
+    calls = []
+
+    def fake_pipeline(max_messages=None, retry_errors=False):
+        calls.append((max_messages, retry_errors))
+        return {"status": "success", "new_emails_count": 2}
+
+    monkeypatch.setenv("SALES_EMAIL_SYNC_ENABLED", "true")
+    monkeypatch.setenv("SALES_EMAIL_SYNC_MAX_MESSAGES", "25")
+    monkeypatch.setattr(sync_sales_emails, "sync_sales_emails_pipeline", fake_pipeline)
+
+    result = firebase_main.run_scheduled_sales_email_sync()
+
+    assert result["new_emails_count"] == 2
+    assert calls == [(25, False)]
+
+
+def test_scheduled_sync_can_be_disabled_without_connecting(monkeypatch):
+    monkeypatch.setenv("SALES_EMAIL_SYNC_ENABLED", "false")
+    monkeypatch.setattr(
+        sync_sales_emails,
+        "sync_sales_emails_pipeline",
+        lambda **_kwargs: pytest.fail("disabled sync must not connect to IMAP"),
+    )
+
+    result = firebase_main.run_scheduled_sales_email_sync()
+
+    assert result == {"status": "disabled", "new_emails_count": 0}
