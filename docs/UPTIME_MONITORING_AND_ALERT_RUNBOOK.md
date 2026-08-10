@@ -24,7 +24,7 @@
 | --- | --- |
 | `data/uptime_targets.tsv` | 監視対象URL、期待HTTPステータス、TLS例外可否、severity、ownerの正本 |
 | `scripts/check_uptime_targets.py` | TSVを読み、各URLをGETしてJSON reportを生成する |
-| `.github/workflows/uptime-monitor.yml` | 30分間隔または手動で死活監視を実行する |
+| `.github/workflows/uptime-monitor.yml` | 15分間隔または手動で死活監視と読み取り専用の営業メール同期を実行する |
 | `exports/uptime_monitor_report.json` | 直近実行結果。失敗・warning・レイテンシを記録する |
 
 ## 手動実行
@@ -52,7 +52,7 @@ python scripts/check_uptime_targets.py --notify-on-failure
 
 ## 障害時の初動
 
-1. GitHub Actions の `Public Uptime Monitor` run と `exports/uptime_monitor_report.json` を確認する。
+1. GitHub Actions の `Production Operations Monitor` run と `exports/uptime_monitor_report.json` を確認する。
 2. 失敗URLが GitHub Pages か Firebase Hosting か custom domain かを切り分ける。
 3. Firebase Hosting のrelease履歴、GitHub Pagesの公開状態、DNS A/TXT、SSL証明書SANを確認する。
 4. P1/P2相当なら [DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md](DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md) に従って連絡する。

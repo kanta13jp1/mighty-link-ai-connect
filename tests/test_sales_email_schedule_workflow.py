@@ -5,14 +5,16 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_sales_email_sync_workflow_is_scheduled_and_fail_closed():
-    workflow = (PROJECT_ROOT / ".github" / "workflows" / "sales-email-sync.yml").read_text(
+    workflow = (PROJECT_ROOT / ".github" / "workflows" / "uptime-monitor.yml").read_text(
         encoding="utf-8"
     )
 
+    assert "name: Production Operations Monitor" in workflow
     assert 'cron: "*/15 * * * *"' in workflow
     assert "workflow_dispatch:" in workflow
     assert "concurrency:" in workflow
     assert "cancel-in-progress: false" in workflow
+    assert "sales-email-sync:" in workflow
     assert "scripts/manage_db_migrations.py apply --engine sqlite" in workflow
     assert "scripts/sync_sales_emails.py --max-messages 100" in workflow
     assert "scripts/sync_sqlite_to_supabase.py" in workflow

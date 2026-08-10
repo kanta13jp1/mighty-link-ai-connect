@@ -130,13 +130,13 @@ POP3しか使えない場合の最終候補。共有営業メールでは受信�
 
 ## 本番の自動同期
 
-- GitHub Actions workflow `sales-email-sync.yml` が15分ごとに起動する。Firebase SchedulerはCI service accountのIAM policy更新権限が不足するため採用しない。
+- 登録済みGitHub Actions workflow `uptime-monitor.yml`（Production Operations Monitor）の `sales-email-sync` jobが15分ごとに起動する。新規workflowがActions APIへ登録されなかったため、確実に稼働する既存workflowへ統合した。Firebase SchedulerはCI service accountのIAM policy更新権限が不足するため採用しない。
 - 対象folderは `INBOX` のみ。1回あたり最新100通を読み取り、dedupe keyで登録済みメールを除外する。
 - workflowのconcurrency groupで重複起動を抑制する。
 - workflow内で一時SQLiteをmigrationし、読み取り専用IMAP取得と解析を行ってから、`SUPABASE_DB_URL` で本番PostgreSQLへ重複排除付き同期する。Functions内の一時SQLiteには依存しない。
 - 取得は `IMAP4_SSL`、port 993、`readonly=True` で行う。既読化、移動、削除、`EXPUNGE`、POP3フォールバックは行わない。
 - 接続・解析・PostgreSQL同期のいずれかが失敗した場合はActions job失敗として記録する。IMAP失敗を `0件・success` として隠さない。
-- 緊急停止はGitHub Actionsで `sales-email-sync.yml` をdisableする。
+- 緊急停止はGitHub Actionsで `Production Operations Monitor` をdisableする。この操作は同workflowの公開uptime監視も停止するため、停止理由を運用記録へ残す。
 
 ### 停止判定
 

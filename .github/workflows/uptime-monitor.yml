@@ -1,9 +1,9 @@
-name: Public Uptime Monitor
+name: Production Operations Monitor
 
 on:
   schedule:
-    # Every 30 minutes. GitHub schedules are UTC; this supports both JST business hours and overnight checks.
-    - cron: "*/30 * * * *"
+    # Every 15 minutes. GitHub schedules are UTC.
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 env:
@@ -12,7 +12,49 @@ env:
 permissions:
   contents: read
 
+concurrency:
+  group: production-operations-monitor
+  cancel-in-progress: false
+
 jobs:
+  sales-email-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Materialize read-only IMAP settings
+        env:
+          SALES_EMAIL_IMAP_ENV: ${{ secrets.SALES_EMAIL_IMAP_ENV }}
+        run: |
+          set -euo pipefail
+          test -n "$SALES_EMAIL_IMAP_ENV"
+          printf '%s\n' "$SALES_EMAIL_IMAP_ENV" > .env
+          chmod 600 .env
+
+      - name: Initialize ephemeral SQLite schema
+        run: python scripts/manage_db_migrations.py apply --engine sqlite --sqlite-path data/mighty.db
+
+      - name: Import and parse new INBOX messages
+        run: python scripts/sync_sales_emails.py --max-messages 100
+
+      - name: Publish parsed records to Supabase
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          set -euo pipefail
+          test -n "$SUPABASE_DB_URL"
+          python scripts/sync_sqlite_to_supabase.py
+
   uptime-monitor:
     runs-on: ubuntu-latest
     steps:

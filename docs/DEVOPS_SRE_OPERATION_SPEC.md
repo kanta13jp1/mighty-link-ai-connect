@@ -51,7 +51,7 @@
 - **診断評価精度ヘルプフル率**: **70 % 以上**
 
 ### 4.2 モニタリング & アラーティング
-- **リアルタイムヘルスチェック**: `.github/workflows/uptime-monitor.yml` により 30 分周期でエンドポイント稼働を監視。障害検知時は Slack チャンネル (`SLACK_WEBHOOK_URL`) へ即時アラート送信。
+- **リアルタイムヘルスチェック**: `.github/workflows/uptime-monitor.yml`（Production Operations Monitor）により15分周期でエンドポイント稼働を監視。同workflowの別jobで営業メールも読み取り専用取得する。障害検知時は Slack チャンネル (`SLACK_WEBHOOK_URL`) へ即時アラート送信。
 - **SLA レポート集計**: Supabase ビュー (`uptime_checks` ＋ 6 ビュー) および `scripts/generate_sla_measurement_report.py` を活用し、週次・月次で SLA 指標を自動測定して PM（梅澤）および開発チームへ共有する。
 
 ---
@@ -95,7 +95,7 @@
 ### 8.1 SRE 観点での GA リリース Go/No-Go 判定基準
 以下の 3 条件がすべて満たされていることを SRE としての Go 判定条件とする：
 1. **本番 DB バックアップ CI (T870) 成功**: Supabase Daily Backup ジョブが本番 GCS バケットへ正常にダンプを作成できていること。
-2. **Public Uptime Monitor 正常稼働**: 過去 24 時間のヘルスチェック成功率 100%。
+2. **Production Operations Monitor 正常稼働**: 過去24時間のヘルスチェック成功率100%、営業メール同期job失敗0件。
 3. **全 24 件の整合プリフライトガード PASS**: ドリフト 0 を維持していること。
 
 ### 8.2 障害一次対応 (ファーストレスポンス・オンコール体制)
