@@ -13,10 +13,11 @@ def test_sales_email_sync_workflow_is_scheduled_and_fail_closed():
     assert "workflow_dispatch:" in workflow
     assert "concurrency:" in workflow
     assert "cancel-in-progress: false" in workflow
-    assert "--fail-with-body" in workflow
-    assert "/api/sales-email/sync?max_messages=100" in workflow
-    assert "secrets.SALES_EMAIL_SYNC_USERNAME" in workflow
-    assert "secrets.SALES_EMAIL_SYNC_PASSWORD" in workflow
+    assert "scripts/manage_db_migrations.py apply --engine sqlite" in workflow
+    assert "scripts/sync_sales_emails.py --max-messages 100" in workflow
+    assert "scripts/sync_sqlite_to_supabase.py" in workflow
+    assert "secrets.SALES_EMAIL_IMAP_ENV" in workflow
+    assert "secrets.SUPABASE_DB_URL" in workflow
     assert "POP3" not in workflow
     assert "DELE" not in workflow
 
