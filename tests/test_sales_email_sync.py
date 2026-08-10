@@ -121,3 +121,24 @@ def test_pipeline_fails_closed_when_imap_fetch_fails(monkeypatch):
         sync_sales_emails.sync_sales_emails_pipeline()
 
     assert db.closed is True
+
+
+def test_pipeline_fails_when_required_production_mailbox_is_empty(monkeypatch):
+    class DummyDb:
+        use_supabase = False
+        sqlite_conn = None
+
+        def __init__(self):
+            self.closed = False
+
+        def close(self):
+            self.closed = True
+
+    db = DummyDb()
+    monkeypatch.setattr(sync_sales_emails, "DBAdapter", lambda _path: db)
+    monkeypatch.setattr(sync_sales_emails, "fetch_imap_emails", lambda **_kwargs: [])
+
+    with pytest.raises(RuntimeError, match="production mailbox retention incident"):
+        sync_sales_emails.sync_sales_emails_pipeline(require_messages=True)
+
+    assert db.closed is True

@@ -151,6 +151,7 @@ jobs:
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON || secrets.FIREBASE_SERVICE_ACCOUNT_MIGHTY_LINK_AI_CONNECT }}
           FIREBASE_FUNCTIONS_DOTENV: ${{ secrets.FIREBASE_FUNCTIONS_DOTENV }}
           SALES_EMAIL_IMAP_ENV: ${{ secrets.SALES_EMAIL_IMAP_ENV }}
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: |
           set -euo pipefail
 
@@ -200,6 +201,19 @@ jobs:
             else
               echo "::error title=Missing SALES_EMAIL_IMAP_ENV::Functions deploy requires the dedicated read-only IMAP settings so stale mailbox credentials cannot be deployed silently."
               exit 4
+            fi
+
+            if [ -n "${SUPABASE_DB_URL:-}" ]; then
+              grep -Ev '^(USE_SUPABASE|SUPABASE_DB_URL)=' .env > .env.base
+              mv .env.base .env
+              ESCAPED_SUPABASE_DB_URL="${SUPABASE_DB_URL//\\/\\\\}"
+              ESCAPED_SUPABASE_DB_URL="${ESCAPED_SUPABASE_DB_URL//\"/\\\"}"
+              printf '\nUSE_SUPABASE=true\nSUPABASE_DB_URL="%s"\n' "$ESCAPED_SUPABASE_DB_URL" >> .env
+              chmod 600 .env
+              echo "[*] Overlaid the dedicated Supabase PostgreSQL runtime setting."
+            else
+              echo "::error title=Missing SUPABASE_DB_URL::Functions deploy requires the dedicated production PostgreSQL connection secret."
+              exit 5
             fi
           fi
 

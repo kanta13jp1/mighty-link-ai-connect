@@ -134,8 +134,10 @@ POP3しか使えない場合の最終候補。共有営業メールでは受信�
 - 対象folderは `INBOX` のみ。1回あたり最新100通を読み取り、dedupe keyで登録済みメールを除外する。
 - workflowのconcurrency groupで重複起動を抑制する。
 - workflow内で一時SQLiteをmigrationし、読み取り専用IMAP取得と解析を行ってから、`SUPABASE_DB_URL` で本番PostgreSQLへ重複排除付き同期する。Functions内の一時SQLiteには依存しない。
+- Functions deployでも汎用dotenv内の古い `SUPABASE_DB_URL` を除去し、GitHubの専用secretを引用符付きでoverlayする。公開analytics・matchesは本番PostgreSQLを正本とし、静的702通レポートへのフォールバックを正常状態とみなさない。
 - 取得は `IMAP4_SSL`、port 993、`readonly=True` で行う。既読化、移動、削除、`EXPUNGE`、POP3フォールバックは行わない。
 - 接続・解析・PostgreSQL同期のいずれかが失敗した場合はActions job失敗として記録する。IMAP失敗を `0件・success` として隠さない。
+- 定期jobは `--require-messages` を指定し、読み取り専用INBOXが0通なら削除・保持インシデントとして失敗させる。手動APIの0件応答だけで正常判定しない。
 - 緊急停止はGitHub Actionsで `Production Operations Monitor` をdisableする。この操作は同workflowの公開uptime監視も停止するため、停止理由を運用記録へ残す。
 
 ### 停止判定
@@ -165,6 +167,20 @@ POP3しか使えない場合の最終候補。共有営業メールでは受信�
 5. メールパスワードを変更して不明なクライアントを切断し、認可したIMAPクライアントだけへ新しい認証情報を設定する。
 6. GMOへ発生時刻、Message-ID、対象アドレスを伝え、POP3 `DELE` またはIMAP `EXPUNGE` の接続元調査を依頼する。
 7. 削除経路が停止したことをテストメールで確認してから、保全した `.eml` をIMAP受信トレイへ復元する。
+
+### Thunderbirdキャッシュからの本番DB復旧
+
+サーバーから消失済みでも、最適化前のThunderbird `INBOX` mboxに本文が残っている場合は、必ずプロファイル外へコピーしてSHA-256一致を確認してから復旧する。元ファイルを直接処理しない。
+
+```powershell
+python scripts/recover_thunderbird_sales_emails.py `
+  --mbox "C:\path\to\preserved\INBOX" `
+  --since 2026-07-26
+python scripts/parse_sales_emails.py --max-messages 0
+python scripts/sync_sqlite_to_supabase.py
+```
+
+復旧ツールはmboxを読み取り専用で解析し、既存のdedupe key、本文redaction、ハッシュ保存を通して一時SQLiteへ登録する。Supabase同期後に件数、`max(received_at)`、案件・要員抽出数を読み取り専用で照合する。
 
 ---
 

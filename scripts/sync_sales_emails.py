@@ -108,9 +108,19 @@ def sync_raw_email_list(db: DBAdapter, raw_emails: List[Any]) -> int:
     return new_count
 
 
-def sync_imap_to_db(db: DBAdapter, max_messages: int | None = None) -> int:
+def sync_imap_to_db(
+    db: DBAdapter,
+    max_messages: int | None = None,
+    *,
+    require_messages: bool = False,
+) -> int:
     print(f"[*] Fetching emails via IMAP (max_messages={max_messages or 'default'})...")
     raw_emails = fetch_imap_emails(max_messages=max_messages)
+    if require_messages and not raw_emails:
+        raise RuntimeError(
+            "Configured read-only IMAP folders are empty. "
+            "Treating this as a production mailbox retention incident."
+        )
     return sync_raw_email_list(db, raw_emails)
 
 
@@ -273,7 +283,11 @@ def rebuild_match_review_json() -> None:
         print(f"[-] Rebuild match review failed: {e}")
 
 
-def sync_sales_emails_pipeline(max_messages: int | None = None, retry_errors: bool = False) -> Dict[str, Any]:
+def sync_sales_emails_pipeline(
+    max_messages: int | None = None,
+    retry_errors: bool = False,
+    require_messages: bool = False,
+) -> Dict[str, Any]:
     sqlite_path = PROJECT_ROOT / "data" / "mighty.db"
     db = DBAdapter(sqlite_path)
     
@@ -281,7 +295,11 @@ def sync_sales_emails_pipeline(max_messages: int | None = None, retry_errors: bo
     
     # 1. Fetch via read-only IMAP. Shared mailboxes must never fall back to POP3.
     try:
-        new_emails = sync_imap_to_db(db, max_messages=max_messages)
+        new_emails = sync_imap_to_db(
+            db,
+            max_messages=max_messages,
+            require_messages=require_messages,
+        )
     except Exception:
         db.close()
         raise
@@ -330,7 +348,17 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Sales Email Sync & Matching Pipeline (T910 1000-scale)")
     parser.add_argument("--max-messages", type=int, default=None, help="Maximum emails to fetch (default: env or 1000)")
     parser.add_argument("--retry-errors", action="store_true", default=False, help="Retry parsing messages with status 'error'")
+    parser.add_argument(
+        "--require-messages",
+        action="store_true",
+        default=False,
+        help="Fail when all configured IMAP folders are empty",
+    )
     args = parser.parse_args()
 
-    res = sync_sales_emails_pipeline(max_messages=args.max_messages, retry_errors=args.retry_errors)
+    res = sync_sales_emails_pipeline(
+        max_messages=args.max_messages,
+        retry_errors=args.retry_errors,
+        require_messages=args.require_messages,
+    )
     print(f"[+] Complete. Result: {res}")

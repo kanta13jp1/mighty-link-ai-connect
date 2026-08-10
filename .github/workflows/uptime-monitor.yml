@@ -45,7 +45,7 @@ jobs:
         run: python scripts/manage_db_migrations.py apply --engine sqlite --sqlite-path data/mighty.db
 
       - name: Import and parse new INBOX messages
-        run: python scripts/sync_sales_emails.py --max-messages 100
+        run: python scripts/sync_sales_emails.py --max-messages 100 --require-messages
 
       - name: Publish parsed records to Supabase
         env:
