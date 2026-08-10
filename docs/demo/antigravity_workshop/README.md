@@ -76,7 +76,14 @@ python -m pip install --upgrade pip google-antigravity
 python .\antigravity_sdk_readonly.py --workspace . --dry-run
 ```
 
-API keyや認証tokenはPowerPoint、repo、コマンド履歴へ記載しません。現在のPCではSDK packageの導入とdry-runまでは検証済みですが、実通信には`GEMINI_API_KEY`の事前設定が必要です。本番中にCLIまたはSDKが認証を要求した場合はその場で認証せず、リハーサル済み画面へ切り替えます。
+API keyや認証tokenはPowerPoint、repo、コマンド履歴へ記載しません。現在のPCでは`GEMINI_API_KEY`をWindowsのユーザー環境変数へローカル設定し、SDK packageの導入、dry-run、実通信まで検証済みです。2026年8月10日の実通信では、9製品、フィルター、2件比較、`SYNTHETIC_DATA_ONLY`をread-onlyで監査し、ストリーミング結果を取得できました。本番中にCLIまたはSDKが認証を要求した場合はその場で認証せず、リハーサル済み画面へ切り替えます。
+
+キー値を表示せず、ユーザー環境変数の設定有無だけを確認する場合は次を実行します。
+
+```powershell
+$configured = -not [string]::IsNullOrWhiteSpace([Environment]::GetEnvironmentVariable('GEMINI_API_KEY', 'User'))
+Write-Output "GEMINI_API_KEY configured: $configured"
+```
 
 CLI本番は対話TUIの`agy`を使います。非対話の`agy -p`はAsk権限を確認できず自動拒否されるため、リハーサルでも本番でも使いません。`--dangerously-skip-permissions`も使いません。
 

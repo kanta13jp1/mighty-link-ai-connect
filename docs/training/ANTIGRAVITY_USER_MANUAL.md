@@ -108,6 +108,8 @@ python .\antigravity_sdk_readonly.py --workspace .
 
 runnerは`BuiltinTools.read_only()`だけをagentへ公開し、PROMPT_11を自動投入する。`SURFACE: ANTIGRAVITY SDK`、`MODE: READ ONLY`、stream表示された監査結果を見せる。`GEMINI_API_KEY`が未設定なら一行で安全停止し、値は表示しない。
 
+2026年8月10日の実通信リハーサルでは、Windowsのユーザー環境変数からキーを読み込み、公開デモrepoの9製品、フィルター、2件比較、`SYNTHETIC_DATA_ONLY`をread-onlyで監査してストリーミング結果を取得した。キー値はrepo、資料、ログへ保存していない。
+
 ## 公開承認
 
 Prompt 6は`git add`、commit、pushの前に必ず停止し、`公開してもよいですか？`と確認する。登壇者が正確に`公開して`と返答した場合だけ公開操作へ進む。
