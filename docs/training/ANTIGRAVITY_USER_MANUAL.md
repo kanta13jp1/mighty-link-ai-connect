@@ -33,6 +33,27 @@
 - **MCP**: AIとローカルツール、データベース、外部APIを標準形式で接続する仕組み。本デモではGitHubの読み取りだけに使う。
 - **Powers**: Kiroの正式機能名。Antigravityの機能名として扱わない。
 
+## MIXI研修を参考にした講師進行
+
+[MIXI 26新卒技術研修 AI Day1](https://www.youtube.com/watch?v=da7hWlccpxw)で確認できる「到達目標を先に示す」「説明直後にhands-onを行う」「出力や速度などの観察点を回収する」「最後に評価・デプロイ・運用へ接続する」という流れを、30分デモ向けに短縮して採用する。
+
+開始時に次の3つを到達目標として読み上げる。
+
+1. AIエージェントが、目的から計画、Tool実行、証拠確認まで進めることを説明できる。
+2. IDE、CLI、SDKの役割を一言で使い分けられる。
+3. 目的、境界、証拠、承認を人が持つ理由を説明できる。
+
+続けて「AIエージェントでファイルを変更した経験は、0回、1回、複数回のどれですか？」と挙手を求める。回答は評価に使わず、未経験者が多ければ用語説明を一文増やし、経験者が多ければBrowserや差分の観察へ早く移る。
+
+各実演ブロックは次の型で進める。
+
+1. **説明**: 30秒以内で、これから何を任せるかと、見る証拠を一つ予告する。
+2. **実行**: PowerPointのプロンプト全文を貼り付け、途中で別機能を追加しない。
+3. **証拠**: 出力、差分、Browser、権限、HTTPSなど、予告した一点を画面で示す。
+4. **言語化**: 「今、何を任せ、どの証拠で成功と判断しましたか？」と問い、3秒後に講師が答えを短く述べる。
+
+締めでは冒頭の3目標をそのまま再表示し、明日試す10分の行動として「架空の小さな仕事を`/grill-me`で問い直し、成功の証拠を一つ決める」を提示してQ&Aへ移る。
+
 ## 実リハーサル結果
 
 2026年8月9日に専用リポジトリで実施し、初回公開`05cfa7c`から最終改善`347ce89`まで11コミット、約78分を要した。公開URLはHTTPS 200で、デスクトップ1440x900とモバイル390x844はいずれも横スクロール0だった。
@@ -73,17 +94,17 @@ python -m pytest tests/test_antigravity_live_demo.py -q
 
 ## 30分本編
 
-| 時刻 | 操作 | 観客に見せる証拠 |
-| --- | --- | --- |
-| 00:00-02:00 | 5製品とゴール | AIエージェントとの仕事の流れを固定 |
-| 02:00-05:00 | `/grill-me` | 決定事項、除外、停止条件、成功条件 |
-| 05:00-08:00 | `/find-skills` + install | 公開元、監査、project-local導入 |
-| 08:00-14:00 | IDE Build | 会話、計画、コード、Browserで5製品初版 |
-| 14:00-18:00 | IDE `/frontend-design` | 絞り込み、最大2比較、a11y、2 viewport |
-| 18:00-21:00 | Antigravity CLI | TUIへ全文貼付し、同じrepoをread-only監査 |
-| 21:00-24:00 | Antigravity SDK | Pythonからread-only agentを実行しstream表示 |
-| 24:00-26:00 | MCP check | repo、branch、commit、Pages状態の読み取り |
-| 26:00-30:00 | Publish + Public proof | 明示承認、push、HTTPS、5製品、2件比較 |
+| 時刻 | 操作 | 観客に見せる証拠 | 回収する一言 |
+| --- | --- | --- | --- |
+| 00:00-02:00 | 5製品とゴール | AIエージェントとの仕事の流れを固定 | 今日は説明・使い分け・安全な委任を持ち帰る |
+| 02:00-05:00 | `/grill-me` | 決定事項、除外、停止条件、成功条件 | 実装前に境界を決めた |
+| 05:00-08:00 | `/find-skills` + install | 公開元、監査、project-local導入 | 能力を追加する前に出典と中身を見た |
+| 08:00-14:00 | IDE Build | 会話、計画、コード、Browserで5製品初版 | IDEでは相談しながら作った |
+| 14:00-18:00 | IDE `/frontend-design` | 絞り込み、最大2比較、a11y、2 viewport | Skillで専門的な判断を再利用した |
+| 18:00-21:00 | Antigravity CLI | TUIへ全文貼付し、同じrepoをread-only監査 | CLIでは速く確かめた |
+| 21:00-24:00 | Antigravity SDK | Pythonからread-only agentを実行しstream表示 | SDKでは同じ監査を仕組みにした |
+| 24:00-26:00 | MCP check | repo、branch、commit、Pages状態の読み取り | 外部接続は権限を限定した |
+| 26:00-30:00 | Publish + Public proof | 明示承認、push、HTTPS、5製品、2件比較 | 重要操作は人が承認し、公開後も証拠を見た |
 
 Prompt 7-9は本編で実行しない。Q&Aで要望が出た場合だけ、公式動画、Nano Banana実画像、Screenshot Artifactへの位置指定コメントを順に使う。
 
@@ -149,6 +170,10 @@ Prompt 6は`git add`、commit、pushの前に必ず停止し、`公開しても�
 
 ## 公式参照
 
+- [MIXI 26新卒技術研修 AI Day1](https://www.youtube.com/watch?v=da7hWlccpxw)
+- [MIXI公式 2026年度新卒技術研修レポート](https://mixi.co.jp/news/2026/0727/55293/)
+- [MIXI Zenn 26新卒技術研修まとめ](https://zenn.dev/mixi/articles/fd62f8ddc178f6)
+- [MIXI Speaker Deck AI研修Day1](https://speakerdeck.com/mixi_engineers/2026_new_grad_training_ai_day1)
 - [Antigravity ArtifactsとSteering](https://antigravity.google/docs/artifacts)
 - [Antigravity Screenshot Artifacts](https://antigravity.google/docs/screenshots)
 - [Antigravity Models / Nano Banana 2](https://antigravity.google/docs/models)
