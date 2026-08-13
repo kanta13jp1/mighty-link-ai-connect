@@ -180,6 +180,19 @@ npx skills list --json
 - Prompt 9でAntigravityのScreenshot Artifactへ位置指定コメントを残し、重なりだけを修正する。
 - サイト内のVisual FeedbackシミュレーターをAntigravity本体の機能実演として扱わない。
 
+## 2026年8月13日の比較サイト再検証
+
+[公開サイト](https://kanta13jp1.github.io/mighty-link-antigravity-live-demo/)を、リハーサルで広がった9製品から本来の5製品へ戻し、単純な機能一覧ではなく実務選定に使える比較へ再構成しました。
+
+- 公式配布元から取得したCodex、Claude Code、Claude Cowork、Kiro、Antigravityのアイコンをローカル配信する。
+- 版番号を`Codex CLI 0.147.0`、`Claude Code 2.1.229`、`Kiro IDE 1.0.293`、`Antigravity 2.8.0`として公式Changelogと照合する。
+- Claude Coworkはモデル版を代用せず、`公開版番号なし（SaaS）`と表示する。
+- 各製品に最新更新、最新公式動画、最新公式ブログ、確認日、一次情報リンクを表示する。
+- 操作面、持続指示、拡張、MCP、Browser、並列実行、SDK、証拠、安全境界、料金、導入注意を含む13軸で最大2製品を比較する。
+- 10回の自己レビューを`output/SELF_REVIEW.md`へ残し、公式出典を`output/SOURCE_AUDIT.md`、アイコン由来を`output/ICON_SOURCES.md`へ記録する。
+
+完成版はPython契約テスト11件とNode DOM E2E 6件を通過しました。Chromiumの320、390、768、1024、1440pxでページ横はみ出しがなく、公開URLでも5アイコン、40出典リンク、13比較行、コンソールエラー0件を確認済みです。
+
 ## リハーサル後の復元
 
 リハーサルで公開した最初と最後のcommitを控え、公開確認後にその範囲を`git revert --no-commit`して1件の復元commitをpushします。履歴を壊す`git reset --hard`やforce pushは使いません。

@@ -421,6 +421,7 @@ gantt
 | **T931** | 8. 本番運用・品質管理 | セキュリティ監視 | セキュリティ・認証エラー・要配慮個人情報非保存のログ健全性自動スキャン | Antigravity | Antigravity + Gemini | 監査ログ・エラーログ内の認証失敗・認可拒否・要配慮個人情報漏洩非存在をCI自動スキャンする仕組みの整備 | 未着手 |
 | **T932** | 8. 本番運用・品質管理 | コスト監視 | 3 AIツール/外部サービス月間コスト・クォータ使用量自動ダッシュボード監視と健全性アラート統合検証 | Antigravity | Antigravity + Gemini | AI APIおよび各種外部インフラのクォータ・費用上限監視と超過時のアラート通知体制を検証 | 未着手 |
 | **T946** | 8. 本番運用・品質管理 | 教育・研修 | Antigravityライブデモへのテスト仕様先行・RED→GREEN実演の導入 | Codex | VSCode + Codex + Artifact Tool + Python unittest + Antigravity | サイト作成前にTEST_SPEC.mdと標準ライブラリ契約テスト8件を作成してREDを確認し、初版で基本5件PASS・操作3件FAIL、Skill適用で自動8件GREEN、公開後にT10まで証拠化する手順へPowerPoint全36枚と運用資料を更新。完成版予備の8テストPASS、focused tests 4件PASS、全スライド原寸確認、Sources 36/36、overflow 0、template fidelity issue 0、正式出力2ファイルのSHA-256一致を確認 | 完了 |
+| **T947** | 8. 本番運用・品質管理 | 教育・研修 | AIエージェント5製品比較の公式アイコン・最新情報・10回自己レビュー公開 | Codex | VSCode + Codex + Antigravity + GitHub Pages + Playwright | Codex、Claude Code、Claude Cowork、Kiro、Antigravityの5製品へ対象を固定し、公式配布元のローカルアイコン、2026-08-13時点の版番号・更新日・最新公式動画・ブログ、13実務比較軸、40件の出典台帳を実装。10観点の自己レビュー、Python 11件・Node E2E 6件、320-1440px表示、公開URLの5画像・横はみ出し・console error 0を検証してGitHub Pagesへ公開 | 完了 |
 
 ---
 

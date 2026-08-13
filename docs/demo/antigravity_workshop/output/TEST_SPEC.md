@@ -1,42 +1,45 @@
-# AI Agent Learning Hub テスト仕様書
+# Test Specification: AI Agent Decision Guide
 
 SYNTHETIC_DATA_ONLY
 
-## 目的
+This specification is written before final browser polish. It defines what must remain true as the agent edits the site.
 
-実装前に期待動作と成功の証拠を固定し、テストを弱めずに`RED -> 部分PASS -> GREEN`へ進める。
+## TS-01 Product scope
 
-## 自動テスト
+The dataset contains exactly five unique products: Codex, Claude Code, Claude Cowork, Kiro, and Antigravity. Old rehearsal products such as Devin, Cursor Agent, Windsurf, and Copilot Workspace must not appear in the current site or dataset.
 
-| ID | 優先度 | 前提条件 | 操作 | 期待結果 | 証拠 |
-| --- | --- | --- | --- | --- | --- |
-| T01 | 必須 | Python 3が利用可能 | 契約テストを実行 | `index.html`、`styles.css`、`app.js`が存在する | unittest結果 |
-| T02 | 必須 | T01を満たす | HTMLを解析 | titleとサイト名が`AI Agent Learning Hub` | unittest結果 |
-| T03 | 必須 | T01を満たす | 製品カードを数える | 5カードと5製品名が一致する | unittest結果 |
-| T04 | 必須 | T01を満たす | 表示項目を検索 | 向いている仕事、主な機能、最初の一歩、研修用表示がある | unittest結果 |
-| T05 | 必須 | T01を満たす | HTMLとJSを検査 | `SYNTHETIC_DATA_ONLY`があり、外部依存、送信、永続保存がない | unittest結果 |
-| T06 | 必須 | 改善版を実装済み | フィルター定義を検査 | 件数が`5,4,1,5` | unittest結果 |
-| T07 | 必須 | 改善版を実装済み | 比較処理を検査 | 最大2製品で3件目を拒否する | unittest結果 |
-| T08 | 必須 | 改善版を実装済み | 状態通知を検査 | `aria-pressed`と`aria-live`がある | unittest結果 |
+## TS-02 Official icon provenance
 
-実行方法:
+Every product references a local icon file and an HTTPS source URL on an official first-party property. Every local icon exists, is non-empty, and is rendered with meaningful alternative text on product cards.
 
-```powershell
-python -m unittest discover -s tests -v
-```
+## TS-03 Version and date evidence
 
-## Browserテスト
+Every profile has a public version label, an ISO date, and a direct official release or changelog URL. Claude Cowork must explicitly state `公開版番号なし（SaaS）`; every other product must expose its current numeric version.
 
-| ID | 優先度 | 前提条件 | 操作 | 期待結果 | 証拠 |
-| --- | --- | --- | --- | --- | --- |
-| T09 | 必須 | ローカルサイトを起動 | 1440x900と390x844で確認 | 横スクロール、文字切れ、重なりが0 | Browser ArtifactまたはScreenshot |
-| T10 | 公開時 | 人が公開を承認 | GitHub Pages URLを開く | HTTPS、title、5製品、フィルター、2製品比較が確認できる | URL、commit SHA、Browser確認 |
+## TS-04 Current official content
 
-## フェーズ別判定
+Every profile includes a latest update, official video, and official blog item. Each item requires a title, ISO date, and HTTPS URL. The site displays `2026-08-13 JST` as the verification date.
 
-- Prompt 3A直後: T01-T08のうち1件以上がFAILする。全PASSなら想定外として停止する。
-- Prompt 3B直後: T01-T05がPASSし、T06-T08は未実装としてFAILする。
-- Prompt 4直後: T01-T08がすべてPASSし、T09を2 viewportで確認する。
-- Prompt 6直後: T10を公開URLで確認する。
+## TS-05 Useful decision depth
 
-テストの削除、`skip`、期待値の緩和によってGREENにしてはならない。
+Every product provides all 13 decision dimensions defined in `SITE_BRIEF.md`. The comparison UI supports one or two selected products, shows all dimensions, and prevents a third selection.
+
+## TS-06 Honest pricing and limits
+
+Pricing text distinguishes published plan prices from variable usage capacity. Previously invented fixed counts such as `1日100回`, `1日1,000回`, `1日1万回`, or `月3,000 PU` are forbidden.
+
+## TS-07 Source ledger
+
+The page provides a source ledger with documentation, release or changelog, pricing, update, video, blog, and icon provenance links. All factual source hosts must be in the approved first-party domain allowlist.
+
+## TS-08 Accessible interaction
+
+Scenario and comparison buttons expose `aria-pressed`; changing filters and selections is announced through `aria-live`; keyboard focus is visible; reduced-motion preferences are respected.
+
+## TS-09 Responsive layout
+
+At 1440x900 and 390x844, official icons load, primary content is visible, and the page has no horizontal document overflow. The comparison table may scroll inside its own labeled region.
+
+## TS-10 Review and publication
+
+Ten distinct self-review passes must be recorded in `SELF_REVIEW.md`. Automated tests, JavaScript syntax checks, desktop/mobile browser checks, and the GitHub Pages URL must pass before publication is called complete.

@@ -3,145 +3,162 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="5つのAIエージェントを用途と機能から比較する研修用サンプルサイト">
-  <title>AI Agent Learning Hub</title>
+  <meta name="description" content="公式情報を確認してCodex、Claude Code、Claude Cowork、Kiro、Antigravityを比較するAIエージェント選定サイト">
+  <title>AI Agent Decision Guide | 5製品の実務比較</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- SYNTHETIC_DATA_ONLY -->
+  <a class="skip-link" href="#products">製品比較へ移動</a>
+
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="AI Agent Learning Hub ホーム">
-      <span class="brand-mark" aria-hidden="true"></span>
-      <span>AI Agent Learning Hub</span>
-    </a>
-    <p class="sample-label">研修用サンプル</p>
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="AI Agent Decision Guide トップ">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>AI Agent Decision Guide</span>
+      </a>
+      <nav aria-label="ページ内ナビゲーション">
+        <a href="#products">製品</a>
+        <a href="#compare">詳細比較</a>
+        <a href="#sources">公式根拠</a>
+      </nav>
+    </div>
   </header>
 
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
-      <img src="assets/workshop-hero.png" alt="オフィスでAIエージェントの使い方を学ぶ参加者">
-      <div class="hero-shade" aria-hidden="true"></div>
-      <div class="hero-copy">
-        <p class="eyebrow">Five agents, one starting point</p>
-        <h1 id="hero-title">仕事に合うAIエージェントを、まず一つ試す。</h1>
-        <p>開発とナレッジワークの5製品を、用途と主な機能から読み比べる研修用サンプルです。</p>
-        <a class="hero-link" href="#agents">5製品を比べる</a>
-      </div>
-    </section>
-
-    <section class="learning-flow" aria-labelledby="flow-title">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">How to start</p>
-          <h2 id="flow-title">製品名より、任せたい仕事から選ぶ</h2>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">OFFICIAL SOURCE VERIFIED / 2026-08-13 JST</p>
+          <h1 id="hero-title">AIエージェントを<br>仕事から選ぶ。</h1>
+          <p class="hero-lead">5製品の強みを並べるだけではなく、操作面、委任の粒度、証拠、権限、拡張方法、最新更新まで追い、実務で「どれを使うか」を判断できる比較です。</p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#products">製品を比較する</a>
+            <a class="secondary-action" href="#method">比較方法を見る</a>
+          </div>
         </div>
-        <p>1つ選ぶ → 小さく任せる → 結果を人が確認する</p>
+
+        <aside class="freshness-panel" aria-label="更新確認サマリー">
+          <div class="freshness-heading">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>公式更新を確認済み</span>
+          </div>
+          <dl>
+            <div><dt>確認日</dt><dd>2026-08-13 JST</dd></div>
+            <div><dt>対象</dt><dd>5製品</dd></div>
+            <div><dt>一次情報</dt><dd id="source-count">20+</dd></div>
+            <div><dt>自己レビュー</dt><dd>10回</dd></div>
+          </dl>
+          <p>版番号を公開していないSaaSは「公開版番号なし」と表示し、モデル名を製品版として扱いません。</p>
+        </aside>
       </div>
-      <ol class="flow-list">
-        <li><span>01</span><strong>目的を決める</strong><small>開発か、資料・調査か</small></li>
-        <li><span>02</span><strong>必要な力を足す</strong><small>指示、Skill、MCP</small></li>
-        <li><span>03</span><strong>証拠を確認する</strong><small>差分、テスト、公開URL</small></li>
-      </ol>
     </section>
 
-    <section class="agent-section" id="agents" aria-labelledby="agents-title">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Choose by work</p>
-          <h2 id="agents-title">5つのAIエージェントを比較する</h2>
+    <section class="decision-strip" aria-labelledby="decision-title">
+      <div class="section-inner">
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="eyebrow">START WITH THE JOB</p>
+            <h2 id="decision-title">やりたい仕事から候補を絞る</h2>
+          </div>
+          <p>ボタンを押すと、該当製品だけを残し、推奨理由を表示します。</p>
         </div>
-        <p id="result-count" class="result-count" aria-live="polite">5件表示</p>
-      </div>
-
-      <div class="filter-group" role="group" aria-label="仕事の種類">
-        <button type="button" class="filter-button is-active" data-filter="all" aria-pressed="true">すべて</button>
-        <button type="button" class="filter-button" data-filter="coding" aria-pressed="false">開発</button>
-        <button type="button" class="filter-button" data-filter="knowledge" aria-pressed="false">ナレッジワーク</button>
-        <button type="button" class="filter-button" data-filter="planning" aria-pressed="false">計画・自動化</button>
-      </div>
-
-      <div class="agent-grid">
-        <article class="agent-card" data-tags="coding planning" data-agent="Codex" data-fit="コード理解、実装、テスト、レビュー">
-          <div class="card-topline"><span>OpenAI</span><span>開発</span></div>
-          <h3><img src="assets/codex-icon.png" alt="" class="agent-title-icon">Codex</h3>
-          <p class="fit"><strong>向いている仕事</strong> コードベース理解、実装、修正、テスト、レビュー。</p>
-          <ul><li>AGENTS.md</li><li>Skills / Plugins</li><li>MCP / local・cloud</li></ul>
-          <p class="first-step">最初の一歩: 小さな不具合の調査からテストまで任せる。</p>
-          <button type="button" class="select-button" aria-pressed="false">比較に追加</button>
-        </article>
-
-        <article class="agent-card" data-tags="coding planning" data-agent="Claude Code" data-fit="複数ファイルの開発、Git操作、反復作業の自動化">
-          <div class="card-topline"><span>Anthropic</span><span>開発</span></div>
-          <h3><img src="assets/claude-code-icon.svg" alt="" class="agent-title-icon">Claude Code</h3>
-          <p class="fit"><strong>向いている仕事</strong> 複数ファイルの開発、Git操作、反復作業の自動化。</p>
-          <ul><li>CLAUDE.md / auto memory</li><li>Skills / Hooks</li><li>MCP / subagents / Routines</li></ul>
-          <p class="first-step">最初の一歩: 未テスト機能へテストを追加して直す。</p>
-          <button type="button" class="select-button" aria-pressed="false">比較に追加</button>
-        </article>
-
-        <article class="agent-card" data-tags="knowledge planning" data-agent="Claude Cowork" data-fit="調査、資料作成、表計算、ファイル整理、定期レポート">
-          <div class="card-topline"><span>Anthropic</span><span>ナレッジワーク</span></div>
-          <h3><img src="assets/claude-cowork-icon.svg" alt="" class="agent-title-icon">Claude Cowork</h3>
-          <p class="fit"><strong>向いている仕事</strong> 調査、資料作成、表計算、ファイル整理、定期レポート。</p>
-          <ul><li>Projects / local files</li><li>Skills / Plugins / Connectors</li><li>Scheduled tasks / live artifacts</li></ul>
-          <p class="first-step">最初の一歩: 複数資料からレビュー可能な文書を作る。</p>
-          <button type="button" class="select-button" aria-pressed="false">比較に追加</button>
-        </article>
-
-        <article class="agent-card" data-tags="coding planning" data-agent="Kiro" data-fit="要件、設計、タスクを明確にする仕様駆動開発">
-          <div class="card-topline"><span>AWS</span><span>仕様駆動開発</span></div>
-          <h3><img src="assets/kiro-icon.svg" alt="" class="agent-title-icon">Kiro</h3>
-          <p class="fit"><strong>向いている仕事</strong> 要件、設計、タスクを明確にする仕様駆動開発。</p>
-          <ul><li>Specs / Steering</li><li>Hooks / Agent Skills</li><li>Powers / MCP</li></ul>
-          <p class="first-step">最初の一歩: 新機能をrequirements、design、tasksへ分ける。</p>
-          <button type="button" class="select-button" aria-pressed="false">比較に追加</button>
-        </article>
-
-        <article class="agent-card" data-tags="coding planning" data-agent="Antigravity" data-fit="計画、実装、ブラウザ検証をArtifactで確認するWeb開発">
-          <div class="card-topline"><span>Google</span><span>開発</span></div>
-          <h3><img src="assets/antigravity-icon.svg" alt="" class="agent-title-icon">Antigravity</h3>
-          <p class="fit"><strong>向いている仕事</strong> 計画、実装、ブラウザ検証をArtifactで確認するWeb開発。</p>
-          <ul><li>Artifacts / Planning / Browser</li><li>Rules / Workflows / Skills</li><li>MCP / Permissions</li></ul>
-          <p class="first-step">最初の一歩: 1ページサイトを作り、2画面幅で確認する。</p>
-          <button type="button" class="select-button" aria-pressed="false">比較に追加</button>
-        </article>
+        <div class="scenario-controls" role="group" aria-label="業務シナリオ">
+          <button type="button" class="scenario-button is-active" data-scenario="all" aria-pressed="true">すべて</button>
+          <button type="button" class="scenario-button" data-scenario="code" aria-pressed="false">コード実装</button>
+          <button type="button" class="scenario-button" data-scenario="knowledge" aria-pressed="false">ナレッジワーク</button>
+          <button type="button" class="scenario-button" data-scenario="spec" aria-pressed="false">仕様駆動</button>
+          <button type="button" class="scenario-button" data-scenario="browser" aria-pressed="false">Web・画面検証</button>
+          <button type="button" class="scenario-button" data-scenario="automation" aria-pressed="false">自動化・SDK</button>
+        </div>
+        <p id="scenario-result" class="scenario-result" aria-live="polite">5製品を表示しています。カードから最大2製品を詳細比較できます。</p>
       </div>
     </section>
 
-    <section class="comparison-summary" aria-labelledby="comparison-title">
-      <div>
-        <p class="eyebrow">Compare two</p>
-        <h2 id="comparison-title">比較候補 <span id="selection-count">0</span>/2</h2>
-      </div>
-      <div id="selection-names" class="selection-content" aria-live="polite">
-        <p>製品カードから2つまで選べます。</p>
+    <section id="products" class="products-section" aria-labelledby="products-title">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FIVE PRODUCT PROFILES</p>
+            <h2 id="products-title">選定に必要な事実を1枚で読む</h2>
+          </div>
+          <div class="search-wrap">
+            <label for="product-search">製品・機能を検索</label>
+            <input id="product-search" type="search" placeholder="例: MCP、資料作成、SDK">
+          </div>
+        </div>
+        <div id="product-grid" class="product-grid"></div>
+        <p id="empty-state" class="empty-state" hidden>該当する製品がありません。検索語またはシナリオを変更してください。</p>
       </div>
     </section>
 
-    <section class="concept-band" aria-labelledby="concept-title">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Shared and product-specific</p>
-          <h2 id="concept-title">似た言葉ほど、製品ごとの意味を確認する</h2>
+    <section id="compare" class="compare-section" aria-labelledby="compare-title">
+      <div class="section-inner">
+        <div class="compare-heading">
+          <div>
+            <p class="eyebrow">SIDE-BY-SIDE DECISION</p>
+            <h2 id="compare-title">詳細比較 <span id="selection-count">0</span>/2</h2>
+          </div>
+          <button id="clear-comparison" class="text-button" type="button" disabled>選択を解除</button>
+        </div>
+        <p id="compare-status" class="compare-status" aria-live="polite">各カードの「比較に追加」から、判断に迷う2製品を選んでください。</p>
+        <div id="comparison-empty" class="comparison-empty">
+          <strong>比較候補を2つ選ぶと、13の実務軸で差が見えます。</strong>
+          <span>優劣の点数化ではなく、仕事・権限・証拠・運用の違いを確認します。</span>
+        </div>
+        <div id="comparison-table-wrap" class="comparison-table-wrap" hidden>
+          <table id="comparison-table">
+            <caption>選択したAIエージェントの実務比較</caption>
+            <thead id="comparison-head"></thead>
+            <tbody id="comparison-body"></tbody>
+          </table>
         </div>
       </div>
-      <dl class="concept-list">
-        <div><dt>Steering</dt><dd>Kiroの持続的なプロジェクト知識と規約。</dd></div>
-        <div><dt>Skills</dt><dd>手順、知識、任意のスクリプトを再利用する共通形式。</dd></div>
-        <div><dt>MCP</dt><dd>外部のToolとContextへ接続する標準。</dd></div>
-        <div><dt>Powers</dt><dd>KiroでMCP、知識、Workflowを必要時に束ねる機能。</dd></div>
-      </dl>
     </section>
 
-    <section class="safety-note" aria-labelledby="safety-title">
-      <h2 id="safety-title">このサイトについて</h2>
-      <p>2026年8月9日時点の公式情報を研修向けに要約しています。機能や提供面は変更される可能性があります。選択内容は送信・保存されません。</p>
+    <section id="method" class="method-section" aria-labelledby="method-title">
+      <div class="section-inner method-layout">
+        <div>
+          <p class="eyebrow">HOW TO READ</p>
+          <h2 id="method-title">「最新」と「向いている」を分けて考える</h2>
+        </div>
+        <ol class="method-list">
+          <li><span>01</span><div><strong>更新の新しさ</strong><p>版、更新日、Changelogを確認する。新しいこと自体を優劣にはしません。</p></div></li>
+          <li><span>02</span><div><strong>仕事との一致</strong><p>コード、知識作業、仕様駆動、ブラウザ検証のどこが主戦場かを決めます。</p></div></li>
+          <li><span>03</span><div><strong>証拠の形</strong><p>テスト、差分、Artifact、生成ファイルなど、成功を何で確認するかを先に決めます。</p></div></li>
+          <li><span>04</span><div><strong>権限と運用</strong><p>読み取りから開始し、外部書き込み・公開・送信は承認点を置きます。</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="sources" class="sources-section" aria-labelledby="sources-title">
+      <div class="section-inner">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">EVIDENCE LEDGER</p>
+            <h2 id="sources-title">公式サイトを確認した証拠</h2>
+          </div>
+          <p>製品ごとにDocs、Changelog、料金、動画、ブログを直接開けます。</p>
+        </div>
+        <div id="source-ledger" class="source-ledger"></div>
+        <div class="source-note">
+          <strong>情報の扱い</strong>
+          <p>2026年8月13日JST時点の公式公開情報です。料金は地域・税・契約形態で変わり、利用枠はモデルと作業量で変動します。購入や全社導入の前にリンク先で再確認してください。</p>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>AI Agent Learning Hub / SYNTHETIC_DATA_ONLY</p>
+    <div class="section-inner footer-inner">
+      <div>
+        <strong>AI Agent Decision Guide</strong>
+        <p>研修用デモ成果物 / SYNTHETIC_DATA_ONLY</p>
+      </div>
+      <a href="#top">ページ上部へ</a>
+    </div>
   </footer>
+
+  <script src="product-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

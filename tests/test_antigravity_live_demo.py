@@ -123,6 +123,22 @@ def test_demo_output_rejects_external_dependency_and_persistent_storage(tmp_path
     assert "H10_offline_accessible_recovery" in _failed_hypotheses(tmp_path)
 
 
+def test_demo_output_rejects_missing_product_evidence_or_review_pass(tmp_path: Path):
+    workshop = _copy_workshop(tmp_path)
+    product_data = workshop / "output" / "product-data.js"
+    self_review = workshop / "output" / "SELF_REVIEW.md"
+    product_data.write_text(
+        product_data.read_text(encoding="utf-8").replace('"version": "2.8.0"', '"version": ""'),
+        encoding="utf-8",
+    )
+    self_review.write_text(
+        self_review.read_text(encoding="utf-8").replace("## Review 10:", "## Final check:"),
+        encoding="utf-8",
+    )
+
+    assert "H10_offline_accessible_recovery" in _failed_hypotheses(tmp_path)
+
+
 def test_surface_demos_reject_cli_or_sdk_write_permissions(tmp_path: Path):
     workshop = _copy_workshop(tmp_path)
     cli_prompt = workshop / "PROMPT_10_CLI_READONLY.txt"
