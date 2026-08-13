@@ -36,14 +36,15 @@ def test_committed_antigravity_demo_kit_is_fail_closed_and_ready():
     }
 
 
-def test_demo_kit_rejects_missing_synthetic_marker_and_wrong_repository(tmp_path: Path):
+def test_demo_kit_rejects_missing_synthetic_marker_and_remote_guard(tmp_path: Path):
     workshop = _copy_workshop(tmp_path)
     brief = workshop / "input" / "SITE_BRIEF.md"
     publish = workshop / "PROMPT_06_PUBLISH.txt"
     brief.write_text(brief.read_text(encoding="utf-8").replace("SYNTHETIC_DATA_ONLY", ""), encoding="utf-8")
     publish.write_text(
         publish.read_text(encoding="utf-8").replace(
-            "kanta13jp1/mighty-link-antigravity-live-demo", "kanta13jp1/mighty-link-ai-connect"
+            "remoteまたはbranchが違えば何も変更せず停止",
+            "remoteまたはbranchが違っても公開を続ける",
         ),
         encoding="utf-8",
     )
@@ -63,6 +64,17 @@ def test_demo_kit_rejects_global_or_unverified_skill_install(tmp_path: Path):
     )
 
     assert "H4_project_scoped_install" in _failed_hypotheses(tmp_path)
+
+
+def test_demo_kit_rejects_test_spec_without_red_gate(tmp_path: Path):
+    workshop = _copy_workshop(tmp_path)
+    prompt = workshop / "PROMPT_03_TEST_SPEC.txt"
+    prompt.write_text(
+        prompt.read_text(encoding="utf-8").replace("1件以上FAILするRED", "テスト結果を確認"),
+        encoding="utf-8",
+    )
+
+    assert "H5_build_boundary" in _failed_hypotheses(tmp_path)
 
 
 def test_demo_kit_rejects_kiro_feature_names_assigned_to_antigravity(tmp_path: Path):
@@ -86,7 +98,7 @@ def test_demo_kit_rejects_mcp_write_and_skill_directory_publish(tmp_path: Path):
     mcp.write_text(mcp.read_text(encoding="utf-8").replace("読み取り専用", "読み書き可能"), encoding="utf-8")
     publish.write_text(
         publish.read_text(encoding="utf-8").replace(
-            "`.agents/skills/`は公開対象へaddしないでください。", "`.agents/skills/`もaddしてください。"
+            "`.agents/skills/`はaddしません。", "`.agents/skills/`もaddします。"
         ),
         encoding="utf-8",
     )

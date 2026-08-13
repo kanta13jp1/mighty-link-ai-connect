@@ -1,9 +1,9 @@
-Prompt 3 / AIエージェント学習サイトの初版を作る
+Prompt 3B / テストを基準にAIエージェント学習サイトの初版を作る
 
-@SITE_BRIEF.md を読み、リポジトリ直下にindex.htmlとstyles.cssを作成してください。
+@SITE_BRIEF.md、@TEST_SPEC.md、@tests/test_site_contract.py を読み、テストは変更せず、リポジトリ直下にindex.htmlとstyles.cssを作成してください。
 
 サイト名は「AI Agent Learning Hub」です。Codex、Claude Code、Claude Cowork、Kiro、Antigravityの5カードを表示し、各カードに「向いている仕事／主な機能／最初に試すこと」を記載してください。assets/workshop-hero.pngをヒーロー画像として使用し、研修用サンプルであることと、2026年8月9日時点の公式情報に基づく概要であることを表示してください。
 
-この初版ではJavaScript、絞り込み、製品選択、比較サマリーを追加しません。外部ライブラリ、外部画像、外部フォント、実在する顧客・社員・連絡先は使用しないでください。index.htmlとstyles.css以外は変更せず、commitとpushは実行しないでください。
+この初版ではJavaScript、絞り込み、製品選択、比較サマリーを追加しません。外部ライブラリ、外部画像、外部フォント、実在する顧客・社員・連絡先は使用しないでください。index.htmlとstyles.css以外は変更せず、TEST_SPEC.mdとtests/test_site_contract.pyを緩めたり書き換えたりしないでください。commitとpushは実行しないでください。
 
-作成後にブラウザで開き、1440x900と390x844でヒーロー画像、5製品、文字切れ、横スクロールを確認してください。最後に「変更ファイル／ブラウザ確認／次の改善候補」を3行で報告してください。
+作成後にpython -m unittest discover -s tests -vを実行し、T01-T05がPASS、まだ実装していないT06-T08がFAILであることを確認してください。ブラウザでも1440x900と390x844のヒーロー画像、5製品、文字切れ、横スクロールを確認してください。最後に「変更ファイル／テスト結果／次にGREENへする項目」を3行で報告してください。

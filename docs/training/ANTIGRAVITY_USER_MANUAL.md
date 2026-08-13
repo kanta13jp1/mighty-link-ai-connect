@@ -2,7 +2,7 @@
 
 ## 目的
 
-2026年8月26日の社員向けAI研修で、Antigravityを使ったWeb開発を30分で実演する。Antigravity 2.0（IDE）でサイトを作り、Antigravity CLIで同じrepoを読み取り監査し、Antigravity SDKで同じ監査をPythonから自動実行する。`/grill-me`、`/find-skills`、`/frontend-design`、MCP、人の承認後だけのGitHub Pages公開も一つの流れとして見せる。残り30分は質疑応答と予備に使う。
+2026年8月26日の社員向けAI研修で、Antigravityを使ったテスト駆動Web開発を30分で実演する。Antigravity 2.0（IDE）でテスト仕様を先に作ってからサイトを実装し、Antigravity CLIで同じrepoを読み取り監査し、Antigravity SDKで同じ監査をPythonから自動実行する。`/grill-me`、`/find-skills`、`/frontend-design`、MCP、人の承認後だけのGitHub Pages公開も一つの流れとして見せる。残り30分は質疑応答と予備に使う。
 
 ## 成果物
 
@@ -11,7 +11,8 @@
 - Prompt 0: `docs/demo/antigravity_workshop/PROMPT_00_GRILL_ME.txt`
 - Prompt 1: `docs/demo/antigravity_workshop/PROMPT_01_FIND_SKILLS.txt`
 - Prompt 2: `docs/demo/antigravity_workshop/PROMPT_02_INSTALL_SKILL.txt`
-- Prompt 3: `docs/demo/antigravity_workshop/PROMPT_03_BUILD.txt`
+- Prompt 3A: `docs/demo/antigravity_workshop/PROMPT_03_TEST_SPEC.txt`
+- Prompt 3B: `docs/demo/antigravity_workshop/PROMPT_03_BUILD.txt`
 - Prompt 4: `docs/demo/antigravity_workshop/PROMPT_04_APPLY_SKILL.txt`
 - Prompt 5: `docs/demo/antigravity_workshop/PROMPT_05_MCP_CHECK.txt`
 - Prompt 6: `docs/demo/antigravity_workshop/PROMPT_06_PUBLISH.txt`
@@ -39,7 +40,7 @@
 
 開始時に次の3つを到達目標として読み上げる。
 
-1. AIエージェントが、目的から計画、Tool実行、証拠確認まで進めることを説明できる。
+1. AIエージェントが、期待動作をテストで固定し、計画、Tool実行、証拠確認まで進めることを説明できる。
 2. IDE、CLI、SDKの役割を一言で使い分けられる。
 3. 目的、境界、証拠、承認を人が持つ理由を説明できる。
 
@@ -52,7 +53,7 @@
 3. **証拠**: 出力、差分、Browser、権限、HTTPSなど、予告した一点を画面で示す。
 4. **言語化**: 「今、何を任せ、どの証拠で成功と判断しましたか？」と問い、3秒後に講師が答えを短く述べる。
 
-締めでは冒頭の3目標をそのまま再表示し、明日試す10分の行動として「架空の小さな仕事を`/grill-me`で問い直し、成功の証拠を一つ決める」を提示してQ&Aへ移る。
+締めでは冒頭の3目標をそのまま再表示し、明日試す10分の行動として「架空の小さな仕事を`/grill-me`で問い直し、期待結果をテスト1件にする」を提示してQ&Aへ移る。
 
 ## 実リハーサル結果
 
@@ -97,14 +98,15 @@ python -m pytest tests/test_antigravity_live_demo.py -q
 | 時刻 | 操作 | 観客に見せる証拠 | 回収する一言 |
 | --- | --- | --- | --- |
 | 00:00-02:00 | 5製品とゴール | AIエージェントとの仕事の流れを固定 | 今日は説明・使い分け・安全な委任を持ち帰る |
-| 02:00-05:00 | `/grill-me` | 決定事項、除外、停止条件、成功条件 | 実装前に境界を決めた |
-| 05:00-08:00 | `/find-skills` + install | 公開元、監査、project-local導入 | 能力を追加する前に出典と中身を見た |
-| 08:00-14:00 | IDE Build | 会話、計画、コード、Browserで5製品初版 | IDEでは相談しながら作った |
-| 14:00-18:00 | IDE `/frontend-design` | 絞り込み、最大2比較、a11y、2 viewport | Skillで専門的な判断を再利用した |
-| 18:00-21:00 | Antigravity CLI | TUIへ全文貼付し、同じrepoをread-only監査 | CLIでは速く確かめた |
-| 21:00-24:00 | Antigravity SDK | Pythonからread-only agentを実行しstream表示 | SDKでは同じ監査を仕組みにした |
-| 24:00-26:00 | MCP check | repo、branch、commit、Pages状態の読み取り | 外部接続は権限を限定した |
-| 26:00-30:00 | Publish + Public proof | 明示承認、push、HTTPS、5製品、2件比較 | 重要操作は人が承認し、公開後も証拠を見た |
+| 02:00-04:00 | `/grill-me` | 決定事項、除外、停止条件、成功条件 | 実装前に境界を決めた |
+| 04:00-07:00 | `/find-skills` + install | 公開元、監査、project-local導入 | 能力を追加する前に出典と中身を見た |
+| 07:00-10:00 | IDE Test Spec | `TEST_SPEC.md`、8件の契約テスト、RED | 作る前に期待結果を固定した |
+| 10:00-15:00 | IDE Build | T01-T05 PASS、T06-T08 FAIL、5製品初版 | テストを変えずに実装した |
+| 15:00-18:00 | IDE `/frontend-design` | 自動8件GREEN、絞り込み、最大2比較、2 viewport | Skillで残りの期待結果を満たした |
+| 18:00-20:00 | Antigravity CLI | TUIへ全文貼付し、同じrepoをread-only監査 | CLIでは速く確かめた |
+| 20:00-22:00 | Antigravity SDK | Pythonからread-only agentを実行しstream表示 | SDKでは同じ監査を仕組みにした |
+| 22:00-24:00 | MCP check | repo、branch、commit、Pages状態の読み取り | 外部接続は権限を限定した |
+| 24:00-30:00 | Publish + Public proof | 明示承認、8 tests、push、HTTPS、5製品、2件比較 | 重要操作は人が承認し、公開後も証拠を見た |
 
 Prompt 7-9は本編で実行しない。Q&Aで要望が出た場合だけ、公式動画、Nano Banana実画像、Screenshot Artifactへの位置指定コメントを順に使う。
 
@@ -112,7 +114,7 @@ Prompt 7-9は本編で実行しない。Q&Aで要望が出た場合だけ、公�
 
 ### 1. Antigravity 2.0（IDE）
 
-Prompt 0-4をPowerPointから全文貼り付ける。Agent Manager、Editor、Browser、Artifactsが同時に見える配置にし、生成中の計画、コード差分、実画面を観客へ見せる。
+Prompt 0-4をPowerPointから全文貼り付ける。Prompt 3Aの直後にRED、Prompt 3Bの直後に基本5件PASS、Prompt 4の直後に自動8件GREENを見せる。Agent Manager、Editor、Terminal、Browser、Artifactsが同時に見える配置にし、テスト結果、コード差分、実画面を観客へ見せる。
 
 ### 2. Antigravity CLI
 
@@ -140,12 +142,14 @@ Prompt 6は`git add`、commit、pushの前に必ず停止し、`公開しても�
 1. remoteとbranchが公開専用リポジトリの`main`である。
 2. 顧客情報、社員情報、認証情報、トークンが含まれない。
 3. `SYNTHETIC_DATA_ONLY`が残っている。
-4. 本番`mightylink-app.com`のリポジトリやFirebase設定を変更していない。
-5. 製品数が5件で、料金・クォータ・未承認の外部情報が追加されていない。
+4. `python -m unittest discover -s tests -v`が8件PASSし、テストが削除、skip、弱体化されていない。
+5. 本番`mightylink-app.com`のリポジトリやFirebase設定を変更していない。
+6. 製品数が5件で、料金・クォータ・未承認の外部情報が追加されていない。
 
 ## 成功条件
 
 - DECISIONS: 対象、必須、除外、停止条件、成功条件が明文化される。
+- TEST: T01-T08が自動テストでGREEN、T09が2 viewportでPASS、T10が公開後にPASS。
 - FUNCTION: 製品5件、フィルター件数`5,4,1,5`、最大2製品比較、2 viewportで横スクロール0。
 - PUBLIC: GitHub PagesのHTTPS URLでタイトル、製品数、フィルター件数、2製品比較、最新commitを確認できる。
 
@@ -186,3 +190,5 @@ Prompt 6は`git add`、commit、pushの前に必ず停止し、`公開しても�
 - [Antigravity Permissions](https://antigravity.google/docs/permissions?app=antigravity)
 - [Google Antigravity公式紹介動画](https://www.youtube.com/watch?v=SVCBA-pBgt0)
 - [GitHub Pagesの公開元設定](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
+- [Python unittest](https://docs.python.org/3/library/unittest.html)
+- [PlaywrightのWeb-first assertions](https://playwright.dev/docs/test-assertions)

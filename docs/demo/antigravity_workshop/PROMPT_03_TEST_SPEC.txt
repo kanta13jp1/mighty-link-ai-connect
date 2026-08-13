@@ -1,0 +1,14 @@
+Prompt 3A / 実装前にテスト仕様書と契約テストを作る
+
+@SITE_BRIEF.md を読み、サイトを作り始める前に、期待動作をテストとして固定してください。
+
+最初にTEST_SPEC.mdを作成し、各ケースへID、優先度、前提条件、操作、期待結果、証拠、実行方法を記載してください。対象は次の10件です。
+- T01-T05 自動: 必須ファイル、タイトル、5製品、表示項目、SYNTHETIC_DATA_ONLYと外部依存・送信・保存なし
+- T06-T08 自動: フィルター件数5・4・1・5、最大2製品比較と3件目の拒否、aria-pressedとaria-live
+- T09-T10 Browser: 1440x900と390x844の横スクロール・文字切れ・重なり0、公開HTTPS URL
+
+続いてPython標準ライブラリだけを使うtests/test_site_contract.pyを作成してください。T01-T08を8つの独立したunittestとして実装し、テスト対象はリポジトリ直下のindex.html、styles.css、app.jsとします。サイトファイルがない場合もテスト収集を中断せず、各不足をFAILとして表示してください。
+
+この段階ではindex.html、styles.css、app.js、画像、設定を作成・変更しません。外部ライブラリの導入、外部通信、commit、pushも行いません。
+
+python -m unittest discover -s tests -v を実行し、1件以上FAILするREDを確認してください。すべてPASSした場合は想定外として停止してください。最後に「仕様書／自動テスト／REDの理由」を3行で報告してください。

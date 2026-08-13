@@ -1,13 +1,17 @@
-Prompt 6 / GitHub Pagesへ公開する
+Prompt 6 / テスト済みサイトをGitHub Pagesへ公開する
 
-完成したAI Agent Learning Hubを専用公開先へGitHub Pagesで公開する準備をしてください。
+完成したAI Agent Learning Hubを、次の専用公開先へ公開する準備をしてください。
 
-- リポジトリ: https://github.com/kanta13jp1/mighty-link-antigravity-live-demo
-- ブランチ: main
-- 公開URL: https://kanta13jp1.github.io/mighty-link-antigravity-live-demo/
+- repository: https://github.com/kanta13jp1/mighty-link-antigravity-live-demo
+- branch: main
+- URL: https://kanta13jp1.github.io/mighty-link-antigravity-live-demo/
 
-git status、git diff --stat、git remote -v、現在branchを確認し、remoteまたはbranchが一致しなければ何も変更せず停止してください。.env、認証情報、トークン、個人情報、顧客情報が追跡対象にないことと、SITE_BRIEF.mdにSYNTHETIC_DATA_ONLYがあることを確認してください。`.agents/skills/`は公開対象へaddしないでください。
+公開前にgit status、git diff --stat、git remote -v、現在branchを確認してください。remoteまたはbranchが違えば何も変更せず停止してください。.env、認証情報、トークン、個人情報、顧客情報が追跡対象になく、SITE_BRIEF.mdにSYNTHETIC_DATA_ONLYがあることも確認してください。`.agents/skills/`はaddしません。
 
-公開予定ファイルをindex.html、styles.css、app.js、assets/workshop-hero.pngに限定します。Q&A用のPrompt 8を実行済みの場合だけassets/agent-workflow-hero.pngも許可します。これ以外の変更、製品数5件からの増加、料金・クォータ追加があれば公開せず停止してください。commit messageと公開URLを報告したら必ず停止して「公開してもよいですか？」と質問してください。私が正確に「公開して」と答えるまでgit add、commit、push、GitHub設定変更を実行しないでください。
+python -m unittest discover -s tests -vを実行し、T01-T08が8件PASSすることを確認してください。FAIL、テストの削除・skip・弱体化があれば公開せず停止してください。
 
-「公開して」の後だけ指定したサイトファイルをaddし、`Publish AI agent learning hub demo`でcommitしてmainへpushしてください。Pages完了を最大3分待ち、HTTPS、タイトル、5製品、フィルター件数5・4・1・5、2製品比較を公開URLで確認し、「commit／公開URL／確認／未解決」を4行で報告してください。
+公開対象はindex.html、styles.css、app.js、assets/workshop-hero.png、TEST_SPEC.md、tests/test_site_contract.pyの6ファイルだけです。Q&A Prompt 8を実行済みの場合だけassets/agent-workflow-hero.pngも許可します。製品追加、料金、クォータ、その他の変更があれば停止してください。
+
+commit messageと公開URLを報告したら停止し、「公開してもよいですか？」と質問してください。私が正確に「公開して」と答えるまでgit add、commit、push、GitHub設定変更を行いません。
+
+「公開して」の後だけ指定ファイルをaddし、`Publish AI agent learning hub demo`でcommitしてmainへpushしてください。Pages完了を最大3分待ち、公開URLでHTTPS、title、5製品、フィルター5・4・1・5、最大2製品比較を確認し、「commit／公開URL／8 tests／公開確認」を4行で報告してください。

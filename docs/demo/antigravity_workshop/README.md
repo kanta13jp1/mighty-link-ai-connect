@@ -6,11 +6,11 @@
 
 ## ゴール
 
-観客が「AIエージェントは、要件整理、専門能力の追加、制作、検証、外部サービス連携、公開までを一つの流れとして進められる」と理解することがゴールです。学習サイト自体は研修教材ではなく、短時間でも完成度の高い成果物を作れることを示すデモ成果物です。
+観客が「AIエージェントは、要件整理、テスト仕様、専門能力の追加、制作、検証、外部サービス連携、公開までを一つの流れとして進められる」と理解することがゴールです。学習サイト自体は研修教材ではなく、短時間でも完成度の高い成果物を作れることを示すデモ成果物です。
 
 30分後の到達目標は次の3点です。
 
-1. AIエージェントが、会話だけでなく計画、Tool実行、証拠確認までつなぐことを説明できる。
+1. AIエージェントが、期待動作をテストで固定し、計画、Tool実行、証拠確認までつなぐことを説明できる。
 2. IDE、CLI、SDKを、見る・素早く確認する・仕組みに組み込むという役割で使い分けられる。
 3. 目的、境界、証拠、承認を人が持つことで、安全に仕事を任せられる。
 
@@ -31,14 +31,15 @@
 | 時刻 | 操作 | 見せるもの | 直後に確認すること |
 | --- | --- | --- | --- |
 | 00:00-02:00 | ゴールと5製品比較 | ライブ操作をAntigravityへ絞る理由 | 3つの到達目標と参加者の経験値 |
-| 02:00-05:00 | `/grill-me` | 実装前の質問、推奨案、成功条件の確定 | `DECISIONS`に境界と成功条件がある |
-| 05:00-08:00 | `/find-skills` + Skill導入 | 品質比較とproject-local導入 | 公開元、監査、導入先を説明できる |
-| 08:00-14:00 | IDEで初版作成 | 会話、計画、コード、Browserを一画面で見る | 5製品の初版と変更差分が見える |
-| 14:00-18:00 | IDEでSkill適用 | デザイン、絞り込み、2製品比較、2 viewport | 機能と見た目の変化を証拠で比較できる |
-| 18:00-21:00 | Antigravity CLI | 同じrepoをターミナルから読み取り監査 | 件数、操作、safetyを短い結果で確認できる |
-| 21:00-24:00 | Antigravity SDK | Pythonからread-only agentを実行し結果をstream表示 | read-only policyとstream出力が見える |
-| 24:00-26:00 | MCP確認 | GitHubを読み取り専用確認 | repo、branch、commit、Pages状態が一致する |
-| 26:00-30:00 | Pages公開 + Proof | 明示承認、push、HTTPS、操作結果 | HTTPS、5製品、2件比較、最新commitが一致する |
+| 02:00-04:00 | `/grill-me` | 実装前の質問、推奨案、成功条件の確定 | `DECISIONS`に境界と成功条件がある |
+| 04:00-07:00 | `/find-skills` + Skill導入 | 品質比較とproject-local導入 | 公開元、監査、導入先を説明できる |
+| 07:00-10:00 | IDEでテスト仕様作成 | `TEST_SPEC.md`と契約テストを先に作る | サイト未作成でREDになる |
+| 10:00-15:00 | IDEで初版作成 | テストを変えずにHTML/CSSを実装 | T01-T05 PASS、T06-T08 FAILになる |
+| 15:00-18:00 | IDEでSkill適用 | 絞り込み、2製品比較、2 viewport | 自動8件とBrowser確認がGREENになる |
+| 18:00-20:00 | Antigravity CLI | 同じrepoをターミナルから読み取り監査 | 件数、操作、safetyを短い結果で確認できる |
+| 20:00-22:00 | Antigravity SDK | Pythonからread-only agentを実行し結果をstream表示 | read-only policyとstream出力が見える |
+| 22:00-24:00 | MCP確認 | GitHubを読み取り専用確認 | repo、branch、commit、Pages状態が一致する |
+| 24:00-30:00 | Pages公開 + Proof | 明示承認、push、HTTPS、操作結果 | 8 tests、HTTPS、5製品、2件比較、最新commitが一致する |
 
 残り30分は質疑応答と予備時間です。Q&Aでは、時間と質問に応じて公式動画、Nano Banana実画像、Screenshot Artifactへの位置指定コメントを扱います。90秒以上進展が見えない工程は停止し、完成済みローカル成果物またはバックアッププロンプトへ切り替えます。
 
@@ -47,16 +48,29 @@
 1. `PROMPT_00_GRILL_ME.txt`: 最大2問で要件と成功条件を確定する。
 2. `PROMPT_01_FIND_SKILLS.txt`: `/find-skills`で候補を検索し、品質を比較する。
 3. `PROMPT_02_INSTALL_SKILL.txt`: `frontend-design`をプロジェクト単位で導入し、内容を確認する。
-4. `PROMPT_03_BUILD.txt`: JavaScriptなしの初版学習サイトを作る。
-5. `PROMPT_04_APPLY_SKILL.txt`: `/frontend-design`を使い、見た目と比較機能を改善する。
-6. `PROMPT_05_MCP_CHECK.txt`: GitHub MCPを読み取り専用で確認する。
-7. `PROMPT_06_PUBLISH.txt`: 人の明示承認後だけGitHub Pagesへ公開する。
-8. `PROMPT_07_OFFICIAL_VIDEO.txt`: 動画の公式性を照合してから埋め込むQ&A用プロンプト。
-9. `PROMPT_08_NANO_BANANA.txt`: Nano Banana 2を使う画像生成Toolで実画像を1枚作るQ&A用プロンプト。
-10. `PROMPT_09_VISUAL_FEEDBACK_COMMENT.txt`: Screenshot Artifactへ位置指定コメントを残すQ&A用プロンプト。
-11. `PROMPT_10_CLI_READONLY.txt`: Antigravity CLIへ貼り付け、同じrepoを読み取り専用で監査する本編用プロンプト。
-12. `PROMPT_11_SDK_READONLY.txt`: Antigravity SDKから実行する読み取り専用の本編用プロンプト。
-13. `antigravity_sdk_readonly.py`: SDKをread-only toolsだけで動かし、結果をstream表示する実行ファイル。
+4. `PROMPT_03_TEST_SPEC.txt`: サイトより先にテスト仕様書と8件の契約テストを作り、REDを確認する。
+5. `PROMPT_03_BUILD.txt`: テストを変えず、JavaScriptなしの初版を作って基本5件をPASSさせる。
+6. `PROMPT_04_APPLY_SKILL.txt`: `/frontend-design`で比較機能を実装し、自動8件をGREENにする。
+7. `PROMPT_05_MCP_CHECK.txt`: GitHub MCPを読み取り専用で確認する。
+8. `PROMPT_06_PUBLISH.txt`: 人の明示承認後だけGitHub Pagesへ公開する。
+9. `PROMPT_07_OFFICIAL_VIDEO.txt`: 動画の公式性を照合してから埋め込むQ&A用プロンプト。
+10. `PROMPT_08_NANO_BANANA.txt`: Nano Banana 2を使う画像生成Toolで実画像を1枚作るQ&A用プロンプト。
+11. `PROMPT_09_VISUAL_FEEDBACK_COMMENT.txt`: Screenshot Artifactへ位置指定コメントを残すQ&A用プロンプト。
+12. `PROMPT_10_CLI_READONLY.txt`: Antigravity CLIへ貼り付け、同じrepoを読み取り専用で監査する本編用プロンプト。
+13. `PROMPT_11_SDK_READONLY.txt`: Antigravity SDKから実行する読み取り専用の本編用プロンプト。
+14. `antigravity_sdk_readonly.py`: SDKをread-only toolsだけで動かし、結果をstream表示する実行ファイル。
+
+## テスト駆動の見せ方
+
+本編の状態遷移は`RED -> 部分PASS -> GREEN`で固定する。
+
+Prompt 3Aではサイトファイルを作らず、`TEST_SPEC.md`と`tests/test_site_contract.py`だけを作る。テスト実行がREDになることを「失敗」ではなく「実装前に期待値を固定できた証拠」として示す。
+
+Prompt 3Bではテストを編集せずに初版を作り、T01-T05のPASSとT06-T08のFAILを見せる。Prompt 4では残りの機能を追加し、自動8件のGREENとT09の2 viewport確認を揃える。公開後のT10まで同じ仕様書で追跡する。
+
+```powershell
+python -m unittest discover -s tests -v
+```
 
 Prompt 7-9は30分本編に含めません。リハーサルでは公開後の追加改善だけで約78分かかったため、Q&Aまたは予備時間に限定します。
 
@@ -77,6 +91,7 @@ Prompt 7-9は30分本編に含めません。リハーサルでは公開後の�
 - `SITE_BRIEF.md`に`SYNTHETIC_DATA_ONLY`があり、秘密情報と個人情報がない。
 - 製品数が5件で、料金、クォータ、診断、検索、エクスポート、テーマ切替がない。
 - PowerPointを編集表示で開き、各プロンプトを全文コピーできる。
+- Python 3で`unittest`を実行でき、外部テストライブラリを追加しない。
 
 ```powershell
 python scripts/run_antigravity_live_demo.py
@@ -158,6 +173,7 @@ npx skills list --json
 
 本番では次のように修正します。
 
+- Prompt 3Aでテスト仕様を実装前に固定し、Prompt 3BとPrompt 4ではテストを変更しない。
 - Prompt 4で製品数、変更ファイル、追加禁止機能を固定する。
 - Prompt 7でYouTubeのtitle、author_name、author_urlを確認してから「公式」と表示する。
 - Prompt 8で画像生成Toolが使えた場合だけNano Banana利用として説明する。

@@ -58,6 +58,7 @@ class _SiteParser(HTMLParser):
 def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     prompts = [_read_text(files[f"prompt{number}"]) for number in range(7)]
     grill, find_skills, install, build, apply_skill, mcp, publish = prompts
+    test_spec = _read_text(files["prompt_test_spec"])
     concepts = _read_text(files["concepts"])
     backup = _read_text(files["backup"])
     readme = _read_text(files["readme"])
@@ -72,9 +73,12 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     parser = _SiteParser()
     parser.feed(html)
 
+    expected_prompt_headers = ("Prompt 0 /", "Prompt 1 /", "Prompt 2 /", "Prompt 3B /", "Prompt 4 /", "Prompt 5 /", "Prompt 6 /")
     h1 = (
-        all(prompt.startswith(f"Prompt {number} /") for number, prompt in enumerate(prompts))
+        all(prompt.startswith(header) for prompt, header in zip(prompts, expected_prompt_headers))
+        and test_spec.startswith("Prompt 3A /")
         and all(f"PROMPT_{number:02d}_{suffix}.txt" in readme for number, suffix in enumerate(PROMPT_SUFFIXES))
+        and "PROMPT_03_TEST_SPEC.txt" in readme
         and "30分" in readme
         and "残り30分" in readme
         and all(surface in readme for surface in ("Antigravity 2.0", "Antigravity CLI", "Antigravity SDK"))
@@ -120,13 +124,27 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     ) and " -g" not in install
 
     h5 = all(
+        marker in test_spec
+        for marker in (
+            "TEST_SPEC.md",
+            "tests/test_site_contract.py",
+            "T01-T08を8つの独立したunittest",
+            "サイトファイルがない場合もテスト収集を中断せず",
+            "1件以上FAILするRED",
+            "すべてPASSした場合は想定外として停止",
+        )
+    ) and all(
         marker in build
         for marker in (
             "@SITE_BRIEF.md",
+            "@TEST_SPEC.md",
+            "テストは変更せず",
             "index.htmlとstyles.css",
             "Codex、Claude Code、Claude Cowork、Kiro、Antigravity",
             "この初版ではJavaScript",
             "commitとpushは実行しない",
+            "T01-T05がPASS",
+            "T06-T08がFAIL",
             "1440x900と390x844",
         )
     )
@@ -139,7 +157,9 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
             "aria-live",
             "aria-pressed",
             "5・4・1・5",
-            "SteeringとPowersを、Kiro固有の正式機能",
+            "SteeringとPowersはKiro固有機能",
+            "T01-T08がすべてPASS",
+            "テストを削除、skip、弱体化してPASSさせない",
             "1440x900と390x844",
         )
     )
@@ -207,12 +227,14 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     h9 = (
         PAGES_REPOSITORY in publish
         and PAGES_URL in publish
-        and "remoteまたはbranchが一致しなければ何も変更せず停止" in publish
+        and "remoteまたはbranchが違えば何も変更せず停止" in publish
         and SYNTHETIC_MARKER in publish
         and "公開してもよいですか？" in publish
         and "正確に「公開して」と答えるまで" in publish
         and "「公開して」の後だけ" in publish
-        and ".agents/skills/`は公開対象へaddしない" in publish
+        and ".agents/skills/`はaddしません" in publish
+        and "T01-T08が8件PASS" in publish
+        and "テストの削除・skip・弱体化があれば公開せず停止" in publish
         and all(marker in publish for marker in (".env", "認証情報", "トークン", "個人情報", "顧客情報"))
         and "mightylink-app.com" not in publish
         and SYNTHETIC_MARKER in brief
@@ -245,8 +267,8 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
         ("H2_grill_timeboxed", h2, "/grill-me asks at most two consequential questions and cannot modify files"),
         ("H3_skill_discovery_quality", h3, "/find-skills compares provenance, adoption, audits, and install commands"),
         ("H4_project_scoped_install", h4, "frontend-design installs only to the Antigravity demo repository"),
-        ("H5_build_boundary", h5, "the first build is a five-agent HTML/CSS site without publishing"),
-        ("H6_skill_application", h6, "the installed skill visibly improves design and two-agent comparison"),
+        ("H5_build_boundary", h5, "test specification is RED before the first five-agent HTML/CSS build reaches partial PASS"),
+        ("H6_skill_application", h6, "the installed skill makes all eight automated contracts GREEN and preserves the tests"),
         ("H7_product_feature_accuracy", h7, "the five products use official feature names and Kiro owns Steering/Powers"),
         ("H8_read_only_integrations", h8, "MCP, CLI, and SDK are read-only with no-auth fallbacks"),
         ("H9_publish_safety", h9, "dedicated repository, synthetic data, secret checks, and exact approval are enforced"),
@@ -278,6 +300,7 @@ def collect_demo_kit_status(project_root: Path = PROJECT_ROOT) -> dict[str, obje
         "hero_image": output / "assets" / "workshop-hero.png",
         "prompt_cli": workshop / "PROMPT_10_CLI_READONLY.txt",
         "prompt_sdk": workshop / "PROMPT_11_SDK_READONLY.txt",
+        "prompt_test_spec": workshop / "PROMPT_03_TEST_SPEC.txt",
         "sdk_script": workshop / "antigravity_sdk_readonly.py",
     }
 
