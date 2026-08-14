@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#eceef2" />
+    <meta name="description" content="Glass Towers, a minimalist balancing game." />
+    <title>Glass Towers</title>
+  </head>
+  <body>
+    <main class="game-shell">
+      <canvas id="game-canvas" aria-label="Glass Towers 3D game"></canvas>
+
+      <header class="topbar">
+        <div class="brand-block">
+          <p class="eyebrow">BALANCE STUDY / <span id="engine-label">INITIALIZING</span></p>
+          <h1>Glass Towers</h1>
+        </div>
+
+        <div class="scoreboard" aria-live="polite">
+          <div class="metric">
+            <span class="metric-label">SCORE</span>
+            <strong id="score">00</strong>
+          </div>
+          <div class="metric">
+            <span class="metric-label">BEST</span>
+            <strong id="best-score">00</strong>
+          </div>
+          <div class="metric metric-height">
+            <span class="metric-label">HEIGHT</span>
+            <strong><span id="height">0.0</span><small>m</small></strong>
+          </div>
+        </div>
+
+        <button id="restart-button" class="icon-button" type="button" aria-label="Restart game" title="Restart">
+          <span aria-hidden="true">↻</span>
+        </button>
+      </header>
+
+      <aside class="next-piece" aria-label="Next glass piece">
+        <div class="next-copy">
+          <span>NEXT</span>
+          <strong id="next-name">Prism</strong>
+        </div>
+        <canvas id="preview-canvas" aria-hidden="true"></canvas>
+      </aside>
+
+      <div class="status-rail" aria-live="polite">
+        <span id="state-dot" class="state-dot"></span>
+        <span id="state-label">POSITION</span>
+      </div>
+
+      <div class="controls" aria-hidden="true">
+        <span>←</span><span>A</span><span>D</span><span>→</span>
+        <i></i>
+        <span class="space-key">SPACE</span>
+        <span>TAP</span>
+      </div>
+
+      <section id="game-over" class="game-over" aria-labelledby="game-over-title" hidden>
+        <p class="eyebrow">SCULPTURE LOST</p>
+        <h2 id="game-over-title">Glass gives way.</h2>
+        <p class="result-line"><span id="final-score">0</span> pieces / <span id="final-height">0.0</span> m</p>
+        <button id="play-again-button" type="button">Build again <span aria-hidden="true">↗</span></button>
+      </section>
+
+      <div id="loading-state" class="loading-state" role="status">INITIALIZING ENGINE</div>
+
+      <p id="sr-status" class="sr-only" aria-live="assertive"></p>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

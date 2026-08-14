@@ -297,6 +297,7 @@ Obsidian Graph View において全ノードの接続性を担保し、孤立ノ
 - [CHANGELOG.md](../CHANGELOG.md)
 - [CLAUDE.md](../CLAUDE.md)
 - [README.md](../db/migrations/README.md)
+- [README.md](../demos/glass-towers/README.md)
 - [README.md](../README.md)
 - [daily_report_2026-06-02.md](../reports/daily_report_2026-06-02.md)
 - [service_decision_notification_2026-06-02.md](../reports/service_decision_notification_2026-06-02.md)
