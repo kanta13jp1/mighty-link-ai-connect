@@ -2985,6 +2985,24 @@
                 margin-bottom: 20px;
             }
         }
+        /* Tabbed SPA Multi-Page View System (Strict Display Control) */
+        .app-tab-view {
+            display: none !important;
+        }
+        .app-tab-view.tab-active {
+            display: block !important;
+            animation: tabFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes tabFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
         .analytics-hero-label {
             font-size: 12px;
             color: var(--muted);
@@ -3873,9 +3891,13 @@
 
     <main id="top" tabindex="-1">
         <!-- ==========================================================================
-             Step 1: AI Fit Simulation Profile Inputs (プロフィール入力)
+             HOME TAB VIEW (Landing Page & Fit Simulator)
              ========================================================================== -->
-        <section class="hero" aria-label="Step 1: AI Fit Simulation Profile Inputs">
+        <div id="home-view" class="app-tab-view home-tab-element">
+            <!-- ==========================================================================
+                 Step 1: AI Fit Simulation Profile Inputs (プロフィール入力)
+                 ========================================================================== -->
+            <section class="hero" aria-label="Step 1: AI Fit Simulation Profile Inputs">
             <!-- 1. 最上部: 100%露出する独立したシネマティックブランドビデオスクリーン -->
             <div class="hero-video-showcase">
                 <div class="step-kicker">AI Brand Video</div>
@@ -4268,6 +4290,8 @@
                 </div>
             </div>
         </section>
+
+        </div> <!-- end #home-view -->
 
         <!-- ==========================================================================
              Step 0: 初期セットアップ / アクティベーション ウィザード (T752)
@@ -5157,7 +5181,7 @@
             </div>
         </section>
 
-        <section id="models" class="model-band fade-in-on-scroll" aria-label="Mighty models">
+        <section id="models" class="app-tab-view home-tab-element model-band fade-in-on-scroll" aria-label="Mighty models">
             <a class="model-tile" href="#top">
                 <span>Video Generation</span>
                 <strong>Seedance</strong>
@@ -5181,7 +5205,7 @@
         </section>
 
 
-        <section id="knowledge-flow-demo" class="knowledge-flow-section fade-in-on-scroll" aria-label="Knowledge flow artifacts">
+        <section id="knowledge-flow-demo" class="app-tab-view home-tab-element knowledge-flow-section fade-in-on-scroll" aria-label="Knowledge flow artifacts">
             <div class="knowledge-flow-header">
                 <div class="knowledge-flow-title">
                     <h2>Knowledge Flow</h2>
@@ -5197,7 +5221,7 @@
             <div id="knowledge-flow-output" class="knowledge-flow-output">Ready.</div>
         </section>
 
-        <section class="support-section fade-in-on-scroll" id="support" aria-label="Support contact">
+        <section class="app-tab-view home-tab-element support-section fade-in-on-scroll" id="support" aria-label="Support contact">
             <div class="support-shell">
                 <div class="support-copy">
                     <div class="step-kicker">Support Desk</div>
@@ -5473,13 +5497,11 @@
             let matched = false;
 
             allTabViews.forEach(view => {
-                const isHomeElement = view.classList.contains('home-tab-element') || view.id === 'home-view';
-                if ((targetId === 'home-view' && isHomeElement) || (view.id === targetId)) {
-                    view.style.display = '';
+                const isHome = view.classList.contains('home-tab-element') || view.id === 'home-view';
+                if ((targetId === 'home-view' && isHome) || (view.id === targetId)) {
                     view.classList.add('tab-active');
                     matched = true;
                 } else {
-                    view.style.display = 'none';
                     view.classList.remove('tab-active');
                 }
             });
@@ -5487,10 +5509,8 @@
             if (!matched) {
                 allTabViews.forEach(view => {
                     if (view.classList.contains('home-tab-element') || view.id === 'home-view') {
-                        view.style.display = '';
                         view.classList.add('tab-active');
                     } else {
-                        view.style.display = 'none';
                         view.classList.remove('tab-active');
                     }
                 });
@@ -5503,7 +5523,7 @@
                 const href = link.getAttribute('href') || '';
                 const linkTarget = href.replace(/^#/, '');
                 if ((targetId === 'home-view' && (linkTarget === 'top' || linkTarget === 'home' || !linkTarget)) ||
-                    (linkTarget && targetId.includes(linkTarget))) {
+                    (linkTarget && targetId === linkTarget)) {
                     link.classList.add('active');
                 } else {
                     link.classList.remove('active');
@@ -5515,7 +5535,7 @@
             adminNavLinks.forEach(link => {
                 const href = link.getAttribute('href') || '';
                 const linkTarget = href.replace(/^#/, '');
-                if (linkTarget && targetId.includes(linkTarget)) {
+                if (linkTarget && targetId === linkTarget) {
                     link.classList.add('active');
                     link.style.background = 'rgba(186, 255, 102, 0.12)';
                     link.style.border = '1px solid rgba(186, 255, 102, 0.4)';
