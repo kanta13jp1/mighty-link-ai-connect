@@ -2,25 +2,18 @@
 
 ## Current Status
 
-- WBS total: 388
-- Done: 376
-- In progress: 1
+- WBS total: 367
+- Done: 356
+- In progress: 0
 - Completion: 97%
 
 ## Key Notes
-- [[exports/knowledge_flow/obsidian_vault/00_Inbox/README|00_Inbox]]
-- [[exports/knowledge_flow/obsidian_vault/10_ADR_Drafts/README|10_ADR_Drafts]]
-- [[exports/knowledge_flow/obsidian_vault/20_Prompts/README|20_Prompts]]
-- [[exports/knowledge_flow/obsidian_vault/30_Meetings/README|30_Meetings]]
-- [[exports/knowledge_flow/obsidian_vault/40_Canvas/README|40_Canvas]]
-- [Master Knowledge Graph Index](../../../docs/MASTER_KNOWLEDGE_GRAPH.md)
-- [Obsidian Development Workflow Guide](../../../docs/OBSIDIAN_DEVELOPMENT_WORKFLOW.md)
 
-- [[2026-06-02 CEO Meeting]]
-- [[ADR-0001-knowledge-flow]]
-- [[Boundary Rule]]
-- [[NotebookLM Source Prompt]]
-- [[NotebookLM Agent Brief Prompt]]
+- [[Meetings/2026-06-02 CEO Meeting]]
+- [[ADR/ADR-0001-knowledge-flow]]
+- [[Rules/Boundary Rule]]
+- [[Prompts/NotebookLM Source Prompt]]
+- [[Prompts/NotebookLM Agent Brief Prompt]]
 
 ## Rule
 

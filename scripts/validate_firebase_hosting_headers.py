@@ -37,6 +37,7 @@ REQUIRED_CSP_TOKENS = {
     "img-src": ["'self'", "data:"],
     "media-src": ["'self'"],
     "connect-src": ["'self'", "https://cdn.jsdelivr.net"],
+    "manifest-src": ["'self'", "data:"],
     "worker-src": ["'self'"],
     "frame-src": ["'self'"],
     "upgrade-insecure-requests": [],

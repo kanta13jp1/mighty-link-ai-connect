@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-08-15 22:54:06 UTC+09:00
+Generated: 2026-08-16 00:39:40 UTC+09:00
 
 ## Purpose
 
@@ -10,8 +10,8 @@ points about the prototype, WBS, Google Workspace sync, and knowledge-flow tools
 
 ## Current WBS Snapshot
 
-- Total tasks: 388
-- Done: 376
+- Total tasks: 401
+- Done: 389
 - In progress: 1
 - Not started: 11
 - Completion rate: 97%
@@ -144,152 +144,6 @@ python scripts/verify_google_workspace_account.py
 - [シーケンス図集 (Mermaid)](docs/SEQUENCE_DIAGRAMS.md) - 2026-05-26 新規。AI フィット診断 / Mock fallback / 3-tool 開発フロー / 採用 LP エントリー の 4 パターン
 - [シーケンス図 HTML 版 (インタラクティブ)](exports/sequence-diagrams/index.html) - 同 4 図を Mermaid runtime で描画する HTML。公開デモから「Architecture」リンクで遷移
 
-## Source: docs/CEO_PRESENTATION_PREP_2026-06-02.md
-
-# 6/2 社長打ち合わせ プレゼン準備ブリーフ
-
-作成日: 2026-05-21
-
-## 前提
-
-6/2 の社長打ち合わせまでは、実際の企画・サービス内容を決め打ちしない。
-当日決定するための判断材料、デモ環境、論点、選択肢、次アクションの受け皿を整える。
-
-## 打ち合わせの目的
-
-- 現在のプロトタイプで何が見せられるかを短時間で共有する。
-- Google Workspace 連携、WBS管理、公開デモ保護など、開発基盤の到達点を確認する。
-- サービス内容・ターゲット・優先機能・6/2以降の開発方針を社長と決定する。
-- 未決事項を残したままでも、次のWBS更新に即反映できる状態にする。
-
-## 当日までに用意するもの
-
-| 区分 | 内容 | 対応WBS |
-| --- | --- | --- |
-| デモ | 公開URL、Seedance API動画デモUI、ローカルFastAPI、Google Sheets WBS、Calendar同期状況 | T602, T603, T608, T667, T668 |
-| 説明資料 | 目的、現状、デモ導線、判断ポイント、次アクション、1枚絵サマリー | T604, T610 |
-| 論点整理 | サービス内容、対象ユーザー、収益/運用、優先機能、リスク、判断マトリクス | T605, T606, T611 |
-| 想定QA | 社長からの質問、回答方針、保留時の扱い | T607 |
-| 代替導線 | 公開URL障害時のローカル実行、スクリーンショット、ICS説明 | T613 |
-| 事前共有 | 社長へ送る確認ポイント、当日アジェンダの短文ドラフト | T614 |
-| 決定後の受け皿 | 議事録、WBS差し替え、Calendar更新、Git反映、決定後ロードマップ枠 | T609, T612, T615 |
-| 開発ナレッジ連携 | NotebookLM、Slack、Notion、Obsidian を使った資料要約・通知・議事録・ローカル知識管理の候補整理 | T616, T617, T618, T619, T620, T621, T622, T623 |
-| 連携デモ成果物 | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vault、UI/API生成導線 | T624, T625, T626, T627, T628, T629, T630, T631 |
-| CLI/MCP連携証跡 | GitHub Issues、Google Drive/NotebookLM、Notion、Obsidian、Slack確認、GitHub Project権限課題、PowerPoint成果物 | T632, T633, T634, T635, T636, T637, T638, T639, T640, T641, T642, T643, T644, T645, T646, T647, T648, T649, T650, T651, T652, T653, T654, T655, T656, T657, T658, T659, T660, T661, T662, T663 |
-
-## 関連ドキュメント
-
-- [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md): スライド構成、判断マトリクス、議事録テンプレート、デモ代替導線。
-- [CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md): 17 論点 (D 系 / C 系 / O 系 / X 系) と当日 CEO への確認質問 (T605 deliverable)。
-- [CEO_PRESENTATION_QA_PACK_2026-06-02.md](CEO_PRESENTATION_QA_PACK_2026-06-02.md): 22 想定 QA + 保留フロー + 機材チェックリスト (T607 deliverable)。
-- [CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md): 開発体制・運用責任分担・リスク R9-R13・費用感 12 Q-OPS (T606 deliverable)。
-- [CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md](CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md): 方向性 A/B/C/D 別の Phase 7 WBS テンプレ + 共通 Phase 7-common + 議事録 → WBS 反映手順 (T615 deliverable)。
-- [CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md](CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md): 社長への事前共有メモ (長文 / 短文 / 当日アジェンダ短文) + 送付前チェックリスト (T614 deliverable)。
-- [CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md](CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md): Canva PPTX import + Figma 代替パス + 8 枚コピペカード + Mighty Skill-Bridge ブランドカラー (T658-extend、手動版)。
-- [MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md](MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md): Canva MCP + Figma MCP セットアップ + 自動化プロンプト + プラン別機能マトリクス (T658-mcp-extend、自動化版、推奨)。
-- **Figma Slides ファイル (2026-05-24 自動生成)**: [Mighty Skill-Bridge CEO Brief 2026-06-02](https://www.figma.com/slides/PAQWzAUPoPTy3ibLcOmPDC) — Figma MCP `use_figma` で 9 slides (1 cover + 8 content) を Mighty Skill-Bridge brand colors + デモスクショ埋め込みで自動生成。当日の社長プレゼン用第一候補。
-- **Branded PPTX on Google Drive (2026-05-24 アップロード)**: [Mighty Skill-Bridge CEO Presentation Deck 2026-06-02 (Branded)](https://docs.google.com/presentation/d/1myH1m8TKiukdxR7F_EertJ1102CfglBC/edit?usp=drivesdk) — `_branded.pptx` (Seedance cyber theme + デモスクショ embed) を <k-umezawa@ml-mightylink.com> 所有で Drive アップロード済。Figma が使えない / PowerPoint で操作したい場合のフォールバック。
-- **UI Wireframes — Implementation-Ready Spec Pack (2026-05-24 生成、AI 実装着手用)**: [docs/wireframes/README.md](wireframes/README.md) — 10 WF を AI に渡して即実装できる spec md x10 (各 13 セクション: Identity / ASCII Layout / Component Tree / State Machine / Data Flow / Tokens / Interaction / A11y / Responsive / Out of Scope / Acceptance / LLM Prompt / Starter Snippet) + [exports/wireframes/wireframes_spec.json](../exports/wireframes/wireframes_spec.json) (機械可読版)。社長 6/2 判断後、`@docs/wireframes/WF-XX_*.md を実装` プロンプトで AI が `static/wireframes/wf-XX.html` を生成可能。
-- **UI Wireframes — 10 Patterns (Canva, Branded — 2026-05-24 生成、第一候補)**: [Canva 版 PPTX on Drive](https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit?usp=drivesdk) / Canva 編集: <https://www.canva.com/d/Mft5giDcMgir88Y> / Canva 閲覧: <https://www.canva.com/d/lLCcnCJnbJE9Xsa> — Canva MCP (HANDOFF-26/27) 経由で 12 ページ (Cover + 10 patterns + Next Steps)、Mighty cyber palette 適用、WF-NN バッジ + 💡 Rationale prefix 付きフルカラー版。社長 UI 方向性判断の第一候補。
-- **UI Wireframes — 10 Patterns (greyscale — 2026-05-24 生成、印刷用フォールバック)**: [python-pptx 版 PPTX on Drive](https://docs.google.com/presentation/d/1qTdOWsLhUf0GzVDkztiuuLczcYkQuQfo/edit?usp=drivesdk) — 同じ 10 パターン (Vertical Hero / Split Form / Step Wizard / Chat / DnD / Kanban / Comparison / Dashboard / Inline Live / Search Catalog) の greyscale wireframe 版。Figma companion: <https://www.figma.com/design/aiQt3c1Cenru4x6GMcLuL5> (Starter plan rate limit 解除後に同内容を MCP で構築予定)。
-- [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md): 6/1 21:00 JST Final Review 用 35 項目 checklist (T663 deliverable)。
-- [SHEETS_TRACKERS_SCHEMA.md](SHEETS_TRACKERS_SCHEMA.md): 課題管理表 + Q
-
-## Source: docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md
-
-# 6/2 社長打ち合わせ 判断材料パック
-
-作成日: 2026-05-21
-
-## 位置づけ
-
-この資料は、6/2 の社長打ち合わせで企画・サービス内容を決定するための判断材料です。
-6/2 以前にサービス内容を確定させるものではなく、公開デモ、WBS、Google Workspace 連携、開発体制を見ながら、当日に意思決定しやすくするための下準備として扱います。
-
-## 当日のゴール
-
-- 現在のプロトタイプで見せられる価値を短時間で共有する。
-- サービス方向性、対象ユーザー、最優先機能を社長と決める。
-- 6/2 以降に更新する WBS、Calendar、Git 運用の入口を明確にする。
-- 決めない事項と保留事項を分け、次回までのアクションに落とす。
-
-## プレゼン構成案
-
-| # | スライド | 伝えること | 対応WBS |
-| --- | --- | --- | --- |
-| 1 | 本日決めたいこと | 企画確定ではなく、方向性・優先順位・次アクションを決める場であること | T601, T610 |
-| 2 | 現在の到達点 | 公開デモ、FastAPI、AI fallback、Sheets/Calendar 連携、公開URLガード | T603, T610 |
-| 3 | 公開デモ | 経歴書/案件票からフィット診断へ進む体験を見せる | T602 |
-| 4 | 管理基盤 | CATS型WBS、Summary、Timeline、Calendar同期で進捗管理できること | T603 |
-| 5 | AI復帰時の伸びしろ | Gemini quota 回復後に structured context を渡して精度改善できること | T304, T305 |
-| 6 | 方向性の選択肢 | 複数案を比較し、当日決める判断軸を提示する | T605, T611 |
-| 7 | 運用・体制論点 | 誰が使うか、誰が更新するか、どこまで公開するか | T606 |
-| 8 | リスクと対策 | 公開URL、認証、Google API、デモ障害時のバックアップ | T607, T613 |
-| 9 | 決定後の反映方法 | 議事録から WBS / Calendar / Git へ即時反映する流れ | T609, T612 |
-| 10 | 開発ナレッジ連携 | NotebookLM / Slack / Notion / Obsidian をどう使うか | T616, T617, T621, T623 |
-| 11 | 連携成果物デモ | NotebookLM投入資料、Slack投稿案、Notion CSV、Obsidian vaultを見せる | T624, T625, T626, T627, T628, T629, T630 |
-| 12 | CLI/MCP実連携証跡 | Google Drive、Notion、GitHub Issues、Project権限課題、Slack到達点を見せる | T632, T633, T634, T635, T636, T637, T638, T639 |
-| 13 | NotebookLMプレゼン資料化 | NotebookLMでプレゼン草案を作る入力資料とプロンプトを見せる | T642, T643 |
-| 14 | 社長への確認事項 | 決定してほしい項目、保留してよい項目、次回までの宿題 | T614, T615, T622, T631, T640, T641, T644, T645, T646 |
-
-## 判断マトリクス
-
-| 判断軸 | 方向性A: AIフィット診断支援 | 方向性B: Workspace連携型PM支援 | 方向性C: AI PoC高速構築支援 |
-| --- | --- | --- | --- |
-| 想定利用者 | 営業、人材担当、エンジニア | 経営、PM、現場責任者 | 新規事業、営業企画、開発責任者 |
-| 見せやすいデモ | 経歴書と案件票のマッチング結果 | WBS、Sheets、Calendarの同期管理 | 短期間でAIデモを形にする流れ |
-| 現プロトタイプとの親和性 | 高い | 高い | 中から高い |
-| 6/2以降の初期実装 | スコア根拠、質問生成、案件候補管理 | WBS更新、社長レビュー、進捗可視化 | テンプレート化、デモ生成手順化 |
-| 価値の説明しやすさ | 採用・SES・案件配属の効率化 | 経営報告と進捗管理の高速化 | 顧客提案速度と検証回数の増加 |
-| 主なリスク | 入力データ品質、AI精度、個人情報 | 運用定着、権限管理、更新責任 | 汎用化しすぎて価値がぼやける |
-| 6/2で決めたいこと | 最初の対象業務と評価指標 | 誰の管理業務に適用するか | どの顧客/案件でPoC化するか |
-
-## 開発ナレッジ連携の判断材料
-
-| ツール | 6/2までの位置づけ | 社長に見せる価値 | 確認したい判断 |
-| --- | --- | --- | --- |
-| NotebookLM | 資料要約・想定QA生成の候補 | 社長説明前に `docs/` とWBSを読み込み、論点を短時間で掴める | 社長向け説明準備に使うか |
-| Slack | 進捗通知・レビュー依頼・同期結果共有の候補 | WBS同期、GitHub Actions、公開URL検証の結果を短文で追える | 通知先チャンネルと共有範囲 |
-| Notion | 議事録・意思決定DB・バックログ管理の候補 | 6/2決定事項から次アクションまで一元管理できる | 公式台帳にするか |
-| Obsidian | ローカル思考メモ・ADR・プロンプト資産管理の候補 | 未整理の設計判断を溜め、公式化する内容だけ `docs/` へ昇格できる | 個人メモ運用に限定するか |
-
-詳細は [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md) にまとめる。
-
-## 実装済み連携デモ成果物
-
-| 対象 | 生成物 | 説明 |
-| --- | --- | --- |
-| NotebookLM | `exports/knowledge_flow/notebooklm_source_pack.md` / `exports/knowledge_flow/notebooklm_source_pack.txt` | `docs/` とWBSをまとめた投入用資料。TXT版はGoogle Docs化済み。 |
-| NotebookLM | `exports/knowledge_flow/notebooklm_presentation_brief.md` / `exports/knowledge_flow/notebooklm_presentation_brief.txt` | プレゼン資料のたたき台をNotebookLMで作るための入力資料。 |
-| Slack | `exports/knowledge_flow/slack_ceo_update.md` | 社長レビュー前に投稿できる進捗共有文案。 |
-| Notion | `exports/knowledge_flow/notion_decision_log.csv` | 意思決定DBとして取り込めるCSV。 |
-| Notion | `exports/knowledge_flow/notion_backlog_import.csv` | WBS連携バックログとして取り込めるCSV。 |
-| Obsidian | `exports/knowledge_flow/obsidian_vault/` | ADR、議事録、プロンプトを含むローカルvault雛形。 |
-| UI/API | 公開デモの「開発ナレッジ連携デモ」 / `/api/knowledge-flow/generate` | 画面から成果物の存在を説明し、ローカルでは再生成できる。 |
-| 連携証跡 | `docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md` | Google Docs、Notionページ、GitHub Issues、Project/Slackの残課題を説明する。 |
-
-このデモは、秘密情報を含まない範囲で外部連携の到達点も見せる。Slack投稿とGitHub Project配置は、投稿先・権限が整ってから正式化する。
-
-## CLI/MCP実連携の見せ方
-
-| 連携先 | 見せるもの | 補足 |
-| --- | --- | --- |
-| Google Drive / NotebookLM | <https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit> | Local OAuth Drive APIでTXT版をGoogle Docs化し、所有者が `k-umezawa@ml-mightylink.com` であることを確認した。 |
-| Google Drive / NotebookLM Presentation | <https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit> | プレゼン構成・話す要点・想定QAをNotebookLMで作るためのブリーフ。Local OAuth Drive APIでWorkspace側へ再作成済み。 |
-| Google Drive / NotebookLM docs同期 | `exports/knowledge_flow/notebooklm_docs_manifest.json` | `docs/*.md` 22件をWorkspace所有Google Docsへ同期。NotebookLM CLI再認証後にsource追加とAgent Brief取得を実行する。 |
-| Notion / NotebookLM証跡 | <https://www.notion.so/3671d736b9db8164b46dc143befa29eb> | docs同期、Issue #9/#10、NotebookLM CLI再認証手順をNotion証跡ページとして追加。 |
-| Notion | <https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951> | 6/2社長デモ用の連携証跡ページ。 |
-| GitHub Issues | <https://github.com/kanta13jp1/mighty-link-ai-connect/issues> | Issue #1-#11/#13/#14/#16で連携タスクと課題を管理。 |
-| GitHub Project | Issue #5 / #8、WBS `T633`, `T641`, `T644`, `T645` | `gh` tokenの `read:project` / `project` スコープ復旧後にProjectへ配置。 |
-| Slack | `exports/knowledge_flow/slack_ceo_update.md` | 送信先チャンネルと共有範囲を6/2に確認。 |
-
-## 当日質問リスト
-
-- 最初に解決したい業務課題は、営業支援、人材管理、PM支援、顧客提案のどれか。
-- 社長が最初に見せたい相手は、社内、既存顧客、見込み顧客のどれか。
-- 6/2 以降の2週間で、デモ品質、AI精度、運用基盤、資料化のどれを優先するか。
-- Google Workspace 連携は、社内運用前提か、顧客提示価値の一部にするか。
-
 ## Source: docs/DEVELOPMENT_KNOWLEDGE_FLOW.md
 
 # 開発ナレッジ連携フロー手順書
@@ -410,77 +264,6 @@ Google Docsホームで資料が見えない問題に対応するため、Google
 - 再作成コマンド: `python scripts/upload_notebooklm_docs_to_drive.py`
 - Source Pack: <https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit>
 - Presentation Brief: <https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/ed
-
-## Source: docs/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md
-
-# 6/2 社長デモ向け 連携実施証跡
-
-作成日: 2026-05-21
-更新日: 2026-05-22
-
-## 目的
-
-6/2 の社長打ち合わせで「実際にやった状態」を見せるため、NotebookLM、Slack、Notion、Obsidian、GitHub Issues、GitHub Project の連携状況を証跡として残す。
-
-実際の企画・サービス内容は 6/2 に決定するため、本資料では開発フローとタスク管理の実装・確認結果だけを扱う。
-
-## 実施済み
-
-| 項目 | 実施内容 | 証跡 |
-| --- | --- | --- |
-| GitHub Issues | CEOデモ向け連携タスクを13件起票 | [#1](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/1), [#2](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/2), [#3](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/3), [#4](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/4), [#5](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/5), [#6](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/6), [#7](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/7), [#8](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/8), [#9](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/9), [#10](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/10), [#11](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/11), [#13](https://github.com/kanta13jp1/mighty-link-ai-connect/issues/13) |
-| NotebookLM / Google Drive | `notebooklm_source_pack.txt` をLocal OAuth Drive APIでGoogle Docsへ変換 | <https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit> |
-| NotebookLM / プレゼン作成 | `notebooklm_presentation_brief.txt` をLocal OAuth Drive APIでGoogle Docsへ変換 | <https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit> |
-| Notion | Notion MCPで連携証跡ページを作成 | <https://www.notion.so/3671d736b9db818aaa33da0a5f1a3951> |
-| Obsidian | `exports/knowledge_flow/obsidian_vault/` にvault雛形と `.obsidian` 設定を追加 | `exports/knowledge_flow/obsidian_vault/Mighty Skill-Bridge Home.md` |
-| Slack | 投稿案を生成し、CLI/MCP利用可否を確認 | `exports/knowledge_flow/slack_ceo_update.md` |
-| Google Workspace OAuth | `authorized_user.json` の実行アカウントをDrive APIで検証 | `k-umezawa@ml-mightylink.com` |
-| NotebookLM docs同期 | `docs/*.md` 22件をWorkspace Google Docsへ同期 | `exports/knowledge_flow/notebooklm_docs_manifest.json` |
-| NotebookLM CLI | ローカルCLI認証とsource状態確認 | notebook `75521ea6-6b9b-47b2-9508-50050d8ab2d5`、22 sources ready |
-| Notion証跡更新 | NotebookLM docs同期の子ページを作成 | <https://www.notion.so/3671d736b9db8164b46dc143befa29eb> |
-
-## CLI / MCP 実行結果
-
-| 操作 | コマンド/ツール | 結果 |
-| --- | --- | --- |
-| GitHub Issue起票 | `gh issue create` | Issue #1〜#11 と #13 を作成 (#12 はPR番号) |
-| NotebookLMプレゼン導線 | `python scripts/upload_notebooklm_docs_to_drive.py` | Presentation Brief を `k-umezawa@ml-mightylink.com` 所有のGoogle Docsへ変換し直した |
-| GitHub Project確認 | `gh project list --owner kanta13jp1 --format json` | `read:project` スコープ不足で停止 |
-| GitHub Project認証再試行 | `gh auth refresh -h github.com -s read:project -s project` | 2分でタイムアウト。Issue #8として手動認証待ちに分離 |
-| Google Drive連携 | `python scripts/upload_notebooklm_docs_to_drive.py` | TXT source pack を `authorized_user.json` 経由でGoogle Docsへ変換し、ownerが `k-umezawa@ml-mightylink.com` であることを確認 |
-| Notion連携 | Notion MCP `_notion_create_pages` | GitHub配下のNotionページとして証跡を作成 |
-| Slack CLI確認 | `Get-Command slack` | ローカルCLIは未検出 |
-| Google Workspaceアカウント確認 | `python scripts/verify_google_workspace_account.py` | `authorized_user.json` が `k-umezawa@ml-mightylink.com` に紐づいていることを確認 |
-| NotebookLM docs同期 | `python scripts/sync_docs_to_notebooklm.py` | Google Docs同期、NotebookLM source追加、Agent Brief、CEO Slide Outline生成が完了 |
-| GitHub Issues追加 | `gh issue create` / `gh issue comment` | Issue #9 / #10 / #11 / #13を追加し、Issue #8へProject権限不足の最新状況を追記 |
-| GitHub Issues完了反映 | `gh issue close` | Issue #7 / #9 / #10 / #11 / #13 を成果物リンク付きでクローズ |
-
-## 2026-05-22 Google Docsアカウント修正
-
-Google DocsホームでNotebookLM用資料が表示されない問題があったため、Codex/Google Drive MCPで作成した旧Docsではなく、ローカルOAuth `authorized_user.json` を使うDrive APIアップロードへ切り替えた。
-
-- Source Pack: <https://docs.google.com/document/d/1qPjlbvvkfYdw0FrkPMz8JCnMjrIuPy3toEoH6hVriGQ/edit>
-- Presentation Brief: <https://docs.google.com/document/d/1TFCrubKMa17L-ebIiMBPGpekabuEfd9NNQw3rVWpFoI/edit>
-- owner: `k-umezawa@ml-mightylink.com`
-- 証跡JSON: `exports/knowledge_flow/google_drive_workspace_docs.json`
-
-## 2026-05-22 docs配下のNotebookLM同期
-
-`scripts/sync_docs_to_notebooklm.py` を追加し、`docs/*.md` 22件をWorkspace所有のGoogle Docsへ同期した。NotebookLM CLIは補助ログイン導線で再認証し、source追加と要約取得まで完了した。
-
-- Manifest: `exports/knowledge_flow/notebooklm_docs_manifest.json`
-- Next steps: `exports/knowledge_flow/notebooklm_cli_next_steps.md`
-- 再ログイン補助コマンド: `python scripts/notebooklm_login_workspace.py` → `python scripts/sync_docs_to_notebooklm.py`
-- NotebookLM notebook: `75521ea6-6b9b-47b2-9508-50050d8ab2d5`
-- Agent Brief: `exports/knowledge_flow/notebooklm_agent_brief.md`
-- CEO Slide Outline: `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`
-- GitHub Issue #9: <https://github.com/kanta13jp1/mighty-link-ai-connect/issues/9>
-- GitHub Issue #10: <https://github.com/kanta13jp1/mighty-link-ai-connect/issues/10>
-- Notion子ページ: <https://www.notion.so/3671d736b9db8164b46dc143befa29eb>
-
-## GitHub Project の現状
-
-Gi
 
 ## Source: docs/BACKEND_AI_PIPELINE.md
 
@@ -827,10 +610,10 @@ python scripts/share_resources.py
 
 準備ブリーフ:
 
-- [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md)
-- [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md)
+- [CEO_PRESENTATION_PREP_2026-06-02.md](archive/presentations/CEO_PRESENTATION_PREP_2026-06-02.md)
+- [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](archive/presentations/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md)
 - [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md)
-- [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md)
+- [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](archive/presentations/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md)
 
 開発ナレッジ連携の位置づけ:
 
@@ -841,7 +624,4 @@ python scripts/share_resources.py
 
 6/2 までは、これらを正式サービス機能として固定せず、導入優先順位と情報管理ルールを社長に確認する判断材料として扱います。秘密情報を含まない範囲では、Google Drive、Notion、GitHub Issues への実体連携証跡を残します。
 
-実際に見せるための成果物生成:
-
-```powershell
-python scripts/generate_knowledge_flow_demo.p
+実際に見せるための成
