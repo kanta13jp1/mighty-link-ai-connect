@@ -1,6 +1,6 @@
 # 本番リリース Go/No-Go 判定レビュー (T746)
 
-- 生成時刻(UTC): 2026-07-25T06:55:18Z
+- 生成時刻(UTC): 2026-08-15T06:55:04Z
 - 正本TSV: `data/release_go_no_go_criteria.tsv`
 - WBS正本: `data/WBS.tsv`
 - 総合判定: **NO_GO**
@@ -10,7 +10,7 @@
 | スコープ | 判定 | 件数 | 状態内訳 |
 | :--- | :--- | ---: | :--- |
 | controlled_demo | GO | 5 | PASS:5 |
-| public_paid_launch | NO_GO | 16 | BLOCKED:4, HUMAN_GATE:1, PASS:8, WARNING:3 |
+| public_paid_launch | NO_GO | 17 | BLOCKED:5, HUMAN_GATE:1, PASS:8, WARNING:3 |
 
 ## 判定基準
 
@@ -37,6 +37,7 @@
 | PUBLIC-14 | public_paid_launch | リリース | WARNING | Firebase/GitHub Actionsの本番デプロイ認証経路が正規化され、アプリ変更時のmain deployがgreenである | .github/workflows/deploy.yml; GitHub Actions CI/CD Pipeline; Firebase Hosting/Functions; docs/WBS_REVIEW_2026-06-26.md | T852 | 開発責任者 / 会社管理者 | T833(7/7)判定: main/master deploy workflowは7/5 successを確認(deploy green要件は充足)。WIF/ADC正規化・FIREBASE_TOKEN廃止(T852)は7/8実施 【再評価待ち: 2026-07-20時点で関連WBS T852(WIF/ADC正規化・FIREBASE_TOKEN廃止)が完了。last_checked=2026-07-07から13日間未再確認のため、開発責任者/会社管理者による再判定が必要。確認事項=直近のmain deploy実行がgreenであること。T908ガードが検知】 |
 | PUBLIC-15 | public_paid_launch | 品質管理 | WARNING | 課題管理表・QA表の開発必須open/未回答が0である | data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Issue #141; GitHub Issue #150; GitHub Project #1 | T853;T854;T858;T849 | 開発責任者 / CEO | T833(7/7)判定: blocker監査open4件はすべて判定・運用系(R111/R112/R113/R116)でコード/QA起因は0。R112は本判定でresolved、残3件は7/8定例とT870で解消予定 |
 | PUBLIC-16 | public_paid_launch | 運用監視 | PASS | 販売URL `https://mightylink-app.com/` のDNS解決とstrict HTTPS uptimeがgreenである | data/uptime_targets.tsv; scripts/check_uptime_targets.py; exports/uptime_monitor_report.json; scripts/diagnose_custom_domain_dns.py; exports/custom_domain_dns_diagnostic.md; exports/custom_domain_dns_diagnostic.json; .github/workflows/uptime-monitor.yml; docs/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md; GitHub Issue #143 | T855;T856 | 開発責任者 / CEO | 2026-07-04: ドメイン所有者がお名前.comドメイン情報認証を完了しclientHold解除（RDAP active 04:25Z）。A=199.36.158.100復活、HTTPS 200、check_uptime_targets.py ok=3/failed=0、Public Uptime Monitor run 28694877615 success |
+| PUBLIC-17 | public_paid_launch | インシデント対応 | BLOCKED | 共有営業メールの認証情報がローテーション済みで、削除経路を封じ込め、テストメールのサーバー保持を確認している | docs/SALES_EMAIL_DISAPPEARANCE_FORENSIC_REPORT_2026-08-14.md; GitHub Issue #255; GitHub Actions run 31869752121 | T944 | 開発責任者 / 会社管理者 | 2026-08-15 15:34 JSTの読取専用IMAP再検証は認証成功・INBOX 0件でfail-closed。旧認証情報は有効なまま、GMOアクセスログ保全、資格情報ローテーション、全接続端末棚卸し、30分以上かつ定期処理1回をまたぐ保持確認が未完了。 |
 
 ## 承認プロセス
 

@@ -1,15 +1,15 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-07-25T06:55:18Z",
+  "generated_at": "2026-08-15T06:55:04Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
-    "total": 21,
+    "total": 22,
     "counts": {
       "PASS": 13,
       "HUMAN_GATE": 1,
-      "BLOCKED": 4,
+      "BLOCKED": 5,
       "WARNING": 3
     },
     "evidence_warnings": 0
@@ -29,10 +29,10 @@
       "counts": {
         "PASS": 8,
         "HUMAN_GATE": 1,
-        "BLOCKED": 4,
+        "BLOCKED": 5,
         "WARNING": 3
       },
-      "total": 16
+      "total": 17
     }
   },
   "criteria": [
@@ -470,6 +470,25 @@
       "wbs_statuses": {
         "T855": "完了",
         "T856": "完了"
+      },
+      "missing_evidence": []
+    },
+    {
+      "criterion_id": "PUBLIC-17",
+      "scope": "public_paid_launch",
+      "category": "インシデント対応",
+      "criterion": "共有営業メールの認証情報がローテーション済みで、削除経路を封じ込め、テストメールのサーバー保持を確認している",
+      "evidence_source": "docs/SALES_EMAIL_DISAPPEARANCE_FORENSIC_REPORT_2026-08-14.md; GitHub Issue #255; GitHub Actions run 31869752121",
+      "required_state": "PASS",
+      "current_state": "BLOCKED",
+      "owner": "Codex + 運用管理者",
+      "decision_authority": "開発責任者 / 会社管理者",
+      "related_wbs": "T944",
+      "related_issue": "#255",
+      "last_checked": "2026-08-15",
+      "notes": "2026-08-15 15:34 JSTの読取専用IMAP再検証は認証成功・INBOX 0件でfail-closed。旧認証情報は有効なまま、GMOアクセスログ保全、資格情報ローテーション、全接続端末棚卸し、30分以上かつ定期処理1回をまたぐ保持確認が未完了。",
+      "wbs_statuses": {
+        "T944": "実行中"
       },
       "missing_evidence": []
     }

@@ -1,6 +1,6 @@
 # リリース判定ゲート整合性監査 (T908)
 
-- ゲート総数: **21** / 内訳: BLOCKED=4, HUMAN_GATE=1, PASS=13, WARNING=3
+- ゲート総数: **22** / 内訳: BLOCKED=5, HUMAN_GATE=1, PASS=13, WARNING=3
 - 陳腐化ゲート(非PASSだが関連WBS全完了): **5件** ['PUBLIC-04', 'PUBLIC-06', 'PUBLIC-08', 'PUBLIC-11', 'PUBLIC-14']
 - 総合判定: ✅ PASS (ドリフト0)
 
@@ -11,7 +11,7 @@
 
 | 仮説 | 内容 | 判定 | 詳細 |
 | :-- | :-- | :-- | :-- |
-| H1 | ゲート台帳が読み込め非空 | ✅ | ゲート=21 / WBS=368 |
+| H1 | ゲート台帳が読み込め非空 | ✅ | ゲート=22 / WBS=382 |
 | H2 | ゲートIDが一意 | ✅ | 重複=なし |
 | H3 | 状態値が許容集合(PASS/WARNING/BLOCKED/HUMAN_GATE) | ✅ | 不正状態=なし |
 | H4 | related_wbsが実在WBSに解決(切れ参照0) | ✅ | 切れ参照=なし |

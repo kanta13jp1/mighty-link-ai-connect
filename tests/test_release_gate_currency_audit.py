@@ -1,6 +1,6 @@
 """T908 test spec (written test-first): release-gate currency guard.
 
-UAT TS-41 (docs/UAT_TEST_SPECIFICATION.md): the 21-row release gate ledger
+UAT TS-41 (docs/UAT_TEST_SPECIFICATION.md): the release gate ledger
 (data/release_go_no_go_criteria.tsv) drives the public-launch verdict, but its
 current_state is maintained by hand. Measured on 2026-07-20, three gates were
 still BLOCKED/WARNING although every related WBS task had completed

@@ -3,7 +3,7 @@
   "mode": "full",
   "guard_count": 25,
   "exempt_count": 2,
-  "test_file_count": 119,
+  "test_file_count": 120,
   "guard_results": {
     "audit_access_inventory.py": {
       "exit_code": 0,
@@ -110,7 +110,7 @@
     "skipped": false,
     "failed": 0,
     "errors": 0,
-    "collected": 788,
+    "collected": 792,
     "exit_code": 0
   },
   "hypotheses": [
@@ -118,7 +118,7 @@
       "id": "H1",
       "title": "プリフライト対象ガード10件以上かつテストファイル50件以上(sanity)",
       "passed": true,
-      "detail": "対象ガード=25, 対象外=2, テストファイル=119"
+      "detail": "対象ガード=25, 対象外=2, テストファイル=120"
     },
     {
       "id": "H2",
@@ -148,7 +148,7 @@
       "id": "H6",
       "title": "収集テストが400件以上(スイート縮退検知)",
       "passed": true,
-      "detail": "収集=788"
+      "detail": "収集=792"
     },
     {
       "id": "H7",
