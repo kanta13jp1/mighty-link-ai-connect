@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "total_hypotheses": 10,
+    "passed_hypotheses": 10,
+    "failed_hypotheses": 0,
+    "all_passed": true
+  },
+  "results": [
+    {
+      "hypothesis": "H1",
+      "description": "AIツール契約ポリシー (AI_DEVELOPMENT_TOOL_SUBSCRIPTION_POLICY.md) および価格プラン書が実在する",
+      "passed": true,
+      "detail": "各種コスト・価格ポリシー仕様書の実在を確認"
+    },
+    {
+      "hypothesis": "H2",
+      "description": "管理者用API使用量・コスト確認エンドポイント (/api/admin/usage) が実装されている",
+      "passed": true,
+      "detail": "使用量ダッシュボードエンドポイントを確認"
+    },
+    {
+      "hypothesis": "H3",
+      "description": "日次レポート送信・外部API監査・ログ退避スクリプトが実在する",
+      "passed": true,
+      "detail": "監視・アラートスクリプト 3 件の実在を確認"
+    },
+    {
+      "hypothesis": "H4",
+      "description": "予期せぬ従量課金爆発を防止するサーキットブレーカー / 有効化フラグが実装されている",
+      "passed": true,
+      "detail": "課金保護フラグ・制限機構を確認"
+    },
+    {
+      "hypothesis": "H5",
+      "description": "サービス緊急停止・予算超過時対応Runbook (AI_SAAS_SERVICE_FREEZE_RUNBOOK.md) が実在する",
+      "passed": true,
+      "detail": "AI_SAAS_SERVICE_FREEZE_RUNBOOK.md 実在"
+    },
+    {
+      "hypothesis": "H6",
+      "description": "Stripe カスタマーポータル連携モジュール (src/stripe_customer_portal.py) が実在する",
+      "passed": true,
+      "detail": "Stripe ポータル連携モジュールを確認"
+    },
+    {
+      "hypothesis": "H7",
+      "description": "3大AIツール（Gemini / Claude / OpenAI Codex）の月額枠・用途が定義されている",
+      "passed": true,
+      "detail": "3大AIツールの定義・整合性を確認"
+    },
+    {
+      "hypothesis": "H8",
+      "description": "コスト・クォータ監視ガード仕様書 (COST_QUOTA_ALERTS_GUARD.md) が実在する",
+      "passed": true,
+      "detail": "COST_QUOTA_ALERTS_GUARD.md 実在"
+    },
+    {
+      "hypothesis": "H9",
+      "description": "ストレージ費用増大を防止する監査ログアーカイブスクリプトが実在する",
+      "passed": true,
+      "detail": "archive_audit_logs_to_cold_storage.py 実在"
+    },
+    {
+      "hypothesis": "H10",
+      "description": "コスト・クォータ監視アラート全体が完全・整合（ドリフト0）",
+      "passed": true,
+      "detail": "全コスト監視仮説 PASS"
+    }
+  ]
+}

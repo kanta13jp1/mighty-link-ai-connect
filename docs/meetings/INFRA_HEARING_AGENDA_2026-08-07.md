@@ -3,8 +3,8 @@
 作成日: 2026-07-24
 対象: インフラチーム（杉村氏 ほか）、寛太梅澤、開発チーム
 担当レーン: 企画戦略担当 (Antigravity) + VSCode Claude Code
-関連WBS: [T878](../data/WBS.tsv#L314)（インフラチームヒアリング・懇親会） / [T913](../data/WBS.tsv#L351) / [T914](../data/WBS.tsv#L352) / [T915](../data/WBS.tsv#L353) / [T870](../data/WBS.tsv#L303)
-関連docs: [DEMO_SECURITY_AND_AUTH_DESIGN.md](DEMO_SECURITY_AND_AUTH_DESIGN.md) / [FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md](FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md) / [SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md](SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md)
+関連WBS: [T878](../../data/WBS.tsv#L314)（インフラチームヒアリング・懇親会） / [T913](../../data/WBS.tsv#L351) / [T914](../../data/WBS.tsv#L352) / [T915](../../data/WBS.tsv#L353) / [T870](../../data/WBS.tsv#L303)
+関連docs: [DEMO_SECURITY_AND_AUTH_DESIGN.md](../DEMO_SECURITY_AND_AUTH_DESIGN.md) / [FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md](../FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md) / [SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md](../SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md)
 
 ---
 

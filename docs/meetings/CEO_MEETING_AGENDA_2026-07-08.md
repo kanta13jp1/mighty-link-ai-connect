@@ -4,7 +4,7 @@
 対象: 小林雅水社長 との定例打ち合わせ（2026-07-08 15:00、6/29チャットで確定）
 作成レーン: VSCode + Claude Code
 関連WBS: T864（本レポート） / T819（定例実施） / T833 / T849
-関連docs: [WBS.md](WBS.md) / [GO_NO_GO_GATE_TRIAGE_2026-07-04.md](GO_NO_GO_GATE_TRIAGE_2026-07-04.md) / [INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md) / [PRICING_PLAN_PROVISIONAL_2026-07-03.md](PRICING_PLAN_PROVISIONAL_2026-07-03.md)
+関連docs: [WBS.md](../WBS.md) / [GO_NO_GO_GATE_TRIAGE_2026-07-04.md](../GO_NO_GO_GATE_TRIAGE_2026-07-04.md) / [INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](../INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md) / [PRICING_PLAN_PROVISIONAL_2026-07-03.md](../PRICING_PLAN_PROVISIONAL_2026-07-03.md)
 
 ---
 
@@ -47,8 +47,8 @@
 
 ## 3. 決定済み事項の共有（ご確認のみ）
 
-1. **7/8 のリリースは社内向けGA**: 社内ユーザー限定・実課金なし。一般公開・有償化は別途判断（2026-07-03 決定、[INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md)）。
-2. **料金プランの仮決定**: Free ¥0 / Standard ¥9,800月 / Pro ¥29,800月（税別）、年額10%引。有償公開時に最終確認いただきます（[PRICING_PLAN_PROVISIONAL_2026-07-03.md](PRICING_PLAN_PROVISIONAL_2026-07-03.md)）。
+1. **7/8 のリリースは社内向けGA**: 社内ユーザー限定・実課金なし。一般公開・有償化は別途判断（2026-07-03 決定、[INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](../INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md)）。
+2. **料金プランの仮決定**: Free ¥0 / Standard ¥9,800月 / Pro ¥29,800月（税別）、年額10%引。有償公開時に最終確認いただきます（[PRICING_PLAN_PROVISIONAL_2026-07-03.md](../PRICING_PLAN_PROVISIONAL_2026-07-03.md)）。
 3. **インフラ実測コスト**: 固定費 ¥0（Firebase/Supabase サーバーレス）+ AI従量が月数百円規模で、予算上限内で安定推移。
 
 ## 4. 7/8 に社長とお話しする必要がある事項（優先度順）
@@ -64,7 +64,7 @@
 
 ### 4-2.【ご承認】社内GA宣言とリリースゲート仕分け
 
-7/8 の社内GA宣言と、リリースゲート21件の仕分け結果（有償化専用ゲートのみ後回し、他は全て維持）のご承認をお願いします。詳細: [GO_NO_GO_GATE_TRIAGE_2026-07-04.md](GO_NO_GO_GATE_TRIAGE_2026-07-04.md)。
+7/8 の社内GA宣言と、リリースゲート21件の仕分け結果（有償化専用ゲートのみ後回し、他は全て維持）のご承認をお願いします。詳細: [GO_NO_GO_GATE_TRIAGE_2026-07-04.md](../GO_NO_GO_GATE_TRIAGE_2026-07-04.md)。
 
 ### 4-3.【ご相談】有償公開の進め方（T862）
 

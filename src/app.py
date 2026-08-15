@@ -22,6 +22,7 @@ import json
 import io
 import csv
 import re
+import html
 import unicodedata
 import hashlib
 import uuid
@@ -45,6 +46,11 @@ try:
     import aptitude_demo
 except ImportError:  # pragma: no cover - production path
     from src import aptitude_demo
+
+try:
+    import structured_ai
+except ImportError:  # pragma: no cover - production path
+    from src import structured_ai
 
 
 def env_int(name: str, default: int, minimum: int, maximum: int) -> int:
@@ -3707,6 +3713,85 @@ class BasicAuthStaticFiles(StaticFiles):
 os.makedirs(EXPORTS_DIR, exist_ok=True)
 app.mount("/exports", BasicAuthStaticFiles(directory=EXPORTS_DIR, username=BASIC_AUTH_USERNAME, password=BASIC_AUTH_PASSWORD), name="exports")
 
+DOCS_DIR = os.path.join(PROJECT_ROOT, "docs")
+
+@app.get("/docs/{file_path:path}", response_class=HTMLResponse)
+async def serve_doc_file(file_path: str, raw: bool = False):
+    """Serve documentation files under docs/ with clean HTML viewer or raw markdown."""
+    safe_path = os.path.normpath(file_path).lstrip(r"\/")
+    target_path = os.path.join(DOCS_DIR, safe_path)
+    
+    # Path traversal protection
+    if not os.path.abspath(target_path).startswith(os.path.abspath(DOCS_DIR)):
+        raise HTTPException(status_code=403, detail="Forbidden")
+    if not os.path.isfile(target_path):
+        raise HTTPException(status_code=404, detail="Document not found")
+    
+    with open(target_path, "r", encoding="utf-8", errors="replace") as f:
+        content = f.read()
+
+    if raw or not file_path.endswith((".md", ".markdown", ".txt")):
+        return PlainTextResponse(content, media_type="text/markdown; charset=utf-8")
+
+    escaped_content = html.escape(content)
+    doc_title = html.escape(os.path.basename(file_path))
+    html_content = f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{doc_title} - Mighty-Link Document</title>
+    <style>
+        body {{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }}
+        .doc-container {{
+            max-width: 900px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }}
+        .back-link {{
+            display: inline-block;
+            margin-bottom: 24px;
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }}
+        .back-link:hover {{ text-decoration: underline; }}
+        pre {{
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #cbd5e1;
+            background: #090d16;
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid #1e293b;
+        }}
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="/" class="back-link">← ホームに戻る</a>
+        <pre>{escaped_content}</pre>
+    </div>
+</body>
+</html>"""
+    return HTMLResponse(html_content)
+
+
 
 def deterministic_uuid4(seed: str) -> str:
     digest = bytearray(hashlib.sha256(seed.encode("utf-8")).digest()[:16])
@@ -6329,6 +6414,7 @@ async def list_sales_email_matches(
     direction: str = "project_to_talent",
     skills: str = "",
     remote: str = "",
+    contract_type: str = "",
     min_score: int = 0,
     limit: int = 20,
     project_key: str = "",
@@ -6371,6 +6457,7 @@ async def list_sales_email_matches(
             direction=direction,
             skills=skills,
             remote=remote,
+            contract_type=contract_type,
             min_score=min_score,
             limit=limit,
             project_key=project_key,
@@ -6395,6 +6482,55 @@ async def list_sales_email_matches(
         "status": "success",
         "source_report": source_report,
         **report,
+    }
+
+
+class ProposalGenerateRequest(BaseModel):
+    project_title: str
+    talent_label: str
+    score: int = 90
+    matched_skills: list[str] = []
+    rate_text: str = ""
+    contract_type: str = "準委任"
+    remote_type: str = "フルリモート"
+
+
+@app.post("/api/sales-email/proposal")
+async def generate_proposal_draft(req: ProposalGenerateRequest):
+    """Generate an AI sales proposal email draft for client outreach (P2/T910)."""
+    p_title = req.project_title.strip() or "案件"
+    t_label = req.talent_label.strip() or "弊社要員"
+    skills_str = ", ".join(req.matched_skills) if req.matched_skills else "主要開発スキル"
+    contract = req.contract_type or "準委任"
+    
+    subject = f"【ご提案】{p_title}向けのご要員マッチングのご案内 ({t_label})"
+    body = f"""お世話になっております。株式会社マイティリンク 営業担当でございます。
+
+貴社の案件「{p_title}」に関しまして、非常に適合度の高いエンジニア（適合度: {req.score}%）のご提案をさせていただきます。
+
+■ 該当要員概要
+・要員識別名: {t_label}
+・主要スキル: {skills_str}
+・契約形態: {contract}
+・働き方: {req.remote_type or "リモート/常駐相談可"}
+・提示単価: {req.rate_text or "ご相談可能"}
+
+■ アピールポイント
+本要員は、貴社の要件（{skills_str}）に合致した実務経験が豊富であり、即戦力としてご貢献いただけます。
+詳細なスキルシートや面元調整につきましては、折り返しご連絡いただけますと幸いです。
+
+何卒ご検討のほど、よろしくお願い申し上げます。
+
+--------------------------------------------------
+株式会社マイティリンク 営業部
+Email: eigyo@mighty-link.com
+URL: https://mightylink-app.com
+--------------------------------------------------"""
+
+    return {
+        "status": "success",
+        "subject": subject,
+        "proposal_text": body.strip(),
     }
 
 
@@ -7578,6 +7714,36 @@ async def list_matches(username: str = Depends(verify_credentials)):
     finally:
         cursor.close()
         conn.close()
+
+
+class StructuredExtractRequest(BaseModel):
+    text: str
+    target_type: str = "project"
+
+
+@app.post("/api/ai/extract/structured")
+@app.post("/api/extract-structured")
+async def api_extract_structured(req: StructuredExtractRequest):
+    if not req.text or len(req.text.strip()) < 3:
+        raise HTTPException(status_code=400, detail="text must be at least 3 characters")
+
+    t_type = (req.target_type or "project").strip().lower()
+    if t_type == "project":
+        schema_cls = structured_ai.ProjectRequirementSchema
+    elif t_type == "talent":
+        schema_cls = structured_ai.TalentProfileSchema
+    elif t_type == "fit":
+        schema_cls = structured_ai.FitEvaluationSchema
+    else:
+        raise HTTPException(status_code=400, detail="target_type must be project, talent, or fit")
+
+    res = structured_ai.extract_structured_data(prompt=req.text, schema_cls=schema_cls)
+    res_dict = res.model_dump() if hasattr(res, "model_dump") else res.dict()
+    return {
+        "status": "success",
+        "target_type": t_type,
+        "data": res_dict,
+    }
 
 
 if __name__ == "__main__":

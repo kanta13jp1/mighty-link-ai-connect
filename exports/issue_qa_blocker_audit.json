@@ -1,46 +1,22 @@
 {
   "status": "blocked",
-  "generated_at": "2026-08-15T06:06:30Z",
+  "generated_at": "2026-08-15T10:02:04Z",
   "issue_total": 193,
   "qa_total": 176,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "open": 5,
-    "resolved": 167,
+    "open": 1,
+    "resolved": 171,
     "transferred": 18
   },
   "qa_status_counts": {
     "回答済": 137,
     "想定済": 39
   },
-  "issue_blocker_count": 5,
+  "issue_blocker_count": 1,
   "qa_blocker_count": 0,
   "issue_blockers": [
-    {
-      "id": "R119",
-      "severity": "MED",
-      "category": "compliance",
-      "title": "AIアンケートにおける精神状態評価プロトタイプの法務・プライバシーリスク",
-      "related_wbs": "T876",
-      "related_issue": "#172"
-    },
-    {
-      "id": "R122",
-      "severity": "MED",
-      "category": "operations",
-      "title": "クリティカルシステム8件がバス係数1（backup所有者未設定）の単一障害点",
-      "related_wbs": "T850;T850_1;T823",
-      "related_issue": ""
-    },
-    {
-      "id": "R132",
-      "severity": "MED",
-      "category": "integration",
-      "title": "T836実メール同期がPoC営業メール抽出データを空に上書きし営業メールAIマッチングが静的デモへ無言フォールバック",
-      "related_wbs": "T836;T817_7;T817;T888",
-      "related_issue": "-"
-    },
     {
       "id": "R143",
       "severity": "中",
@@ -48,14 +24,6 @@
       "title": "Stripe公式が新規従量課金でBilling Meters→Metronome推奨へ方針変更",
       "related_wbs": "T791;T807;T862",
       "related_issue": ""
-    },
-    {
-      "id": "R148",
-      "severity": "MED",
-      "category": "operations",
-      "title": "2026-07-22 社長定例でのご意見・決定事項の反映（アクセス制限・営業メール1000件全件取り込み・診断評価基準点提示）",
-      "related_wbs": "T898;T909;T910;T911",
-      "related_issue": "-"
     }
   ],
   "qa_blockers": []

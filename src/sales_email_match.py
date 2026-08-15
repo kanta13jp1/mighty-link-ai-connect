@@ -35,6 +35,7 @@ class SearchCriteria:
     direction: str = "project_to_talent"
     skills: tuple[str, ...] = ()
     remote: str = ""
+    contract_type: str = ""
     min_score: int = 0
     limit: int = 20
     project_key: str = ""
@@ -57,6 +58,7 @@ class ProjectRecord:
     rate_max: int | None
     location: str
     remote_type: str
+    contract_type: str
     start_date_text: str
     evidence_excerpt: str
     confidence: float
@@ -76,6 +78,7 @@ class TalentRecord:
     desired_rate_max: int | None
     desired_location: str
     remote_preference: str
+    contract_type: str
     availability_text: str
     evidence_excerpt: str
     confidence: float
@@ -132,8 +135,44 @@ def normalize_received_timestamp(value: Any) -> tuple[str, str]:
     return local_received_at.isoformat(), local_received_at.date().isoformat()
 
 
+SKILL_SYNONYMS: dict[str, str] = {
+    "react.js": "react",
+    "reactjs": "react",
+    "vue.js": "vue",
+    "vuejs": "vue",
+    "node.js": "node",
+    "nodejs": "node",
+    "ts": "typescript",
+    "js": "javascript",
+    "py": "python",
+    "postgres": "postgresql",
+    "postgres sql": "postgresql",
+    "postgresql": "postgresql",
+    "k8s": "kubernetes",
+    "gcp": "google cloud",
+    "aws cloud": "aws",
+    "c sharp": "c#",
+    "csharp": "c#",
+    "golang": "go",
+}
+
+
 def skill_key(value: str) -> str:
-    return value.strip().casefold()
+    cleaned = value.strip().casefold()
+    return SKILL_SYNONYMS.get(cleaned, cleaned)
+
+
+def detect_contract_type(text: str) -> str:
+    cleaned = str(text or "").casefold()
+    if any(k in cleaned for k in ["準委任", "ses", "委任", "準委任契約"]):
+        return "準委任"
+    if any(k in cleaned for k in ["派遣", "特定派遣", "一般派遣"]):
+        return "派遣"
+    if any(k in cleaned for k in ["請負", "受託", "一括請負", "成果物"]):
+        return "請負"
+    if any(k in cleaned for k in ["正社員", "契約社員", "直接雇用"]):
+        return "正社員/契約社員"
+    return "準委任"
 
 
 def skill_union(*groups: Iterable[str]) -> set[str]:
@@ -189,6 +228,8 @@ def project_from_item(item: dict[str, Any]) -> ProjectRecord | None:
     received_at, received_date = normalize_received_timestamp(item.get("received_at"))
     sender_domain_value = compact_text(item.get("sender_domain"), 120)
     key = stable_key(project.get("title"), ",".join(sorted(required)), project.get("rate_min"), project.get("remote_type"))
+    evidence = compact_text(project.get("evidence_excerpt"), 240)
+    contract = project.get("contract_type") or detect_contract_type(f"{project.get('title')} {evidence}")
     return ProjectRecord(
         project_key="project_" + key[:16],
         title=compact_text(project.get("title") or item.get("normalized_subject") or "Untitled project", 120),
@@ -199,8 +240,9 @@ def project_from_item(item: dict[str, Any]) -> ProjectRecord | None:
         rate_max=project.get("rate_max") if isinstance(project.get("rate_max"), int) else None,
         location=compact_text(project.get("location"), 80),
         remote_type=compact_text(project.get("remote_type"), 40) or "unknown",
+        contract_type=compact_text(contract, 40),
         start_date_text=compact_text(project.get("start_date_text"), 80),
-        evidence_excerpt=compact_text(project.get("evidence_excerpt"), 240),
+        evidence_excerpt=evidence,
         confidence=confidence_value(project.get("confidence")),
         sender_domains=[sender_domain_value] if sender_domain_value else [],
         source_paths=[str(item.get("source_path") or "")],
@@ -219,6 +261,8 @@ def talent_from_item(item: dict[str, Any]) -> TalentRecord | None:
     received_at, received_date = normalize_received_timestamp(item.get("received_at"))
     sender_domain_value = compact_text(item.get("sender_domain"), 120)
     key = compact_text(talent.get("anonymized_talent_key"), 80)
+    evidence = compact_text(talent.get("evidence_excerpt"), 240)
+    contract = talent.get("contract_type") or detect_contract_type(evidence)
     return TalentRecord(
         talent_key=key or ("talent_" + stable_key(item.get("dedupe_key"))[:16]),
         display_name=key or "匿名候補者",
@@ -228,8 +272,9 @@ def talent_from_item(item: dict[str, Any]) -> TalentRecord | None:
         desired_rate_max=talent.get("desired_rate_max") if isinstance(talent.get("desired_rate_max"), int) else None,
         desired_location=compact_text(talent.get("desired_location"), 80),
         remote_preference=compact_text(talent.get("remote_preference"), 40) or "unknown",
+        contract_type=compact_text(contract, 40),
         availability_text=compact_text(talent.get("availability_text"), 80),
-        evidence_excerpt=compact_text(talent.get("evidence_excerpt"), 240),
+        evidence_excerpt=evidence,
         confidence=confidence_value(talent.get("confidence")),
         sender_domains=[sender_domain_value] if sender_domain_value else [],
         source_paths=[str(item.get("source_path") or "")],
@@ -444,6 +489,7 @@ def criteria_from_values(
     direction: str = "project_to_talent",
     skills: Sequence[str] | str = (),
     remote: str = "",
+    contract_type: str = "",
     min_score: int = 0,
     limit: int = 20,
     project_key: str = "",
@@ -472,6 +518,7 @@ def criteria_from_values(
         direction=normalized_direction,
         skills=skill_values,
         remote=remote.strip(),
+        contract_type=contract_type.strip(),
         min_score=max(0, min(int(min_score or 0), 100)),
         limit=max(1, min(int(limit or 20), 100)),
         project_key=project_key.strip(),
@@ -512,6 +559,12 @@ def match_satisfies(match: dict[str, Any], project: ProjectRecord, talent: Talen
     if criteria.remote:
         remote_key = criteria.remote.casefold()
         if remote_key not in {project.remote_type.casefold(), talent.remote_preference.casefold()}:
+            return False
+    if criteria.contract_type:
+        c_want = criteria.contract_type.casefold()
+        p_c = project.contract_type.casefold()
+        t_c = talent.contract_type.casefold()
+        if c_want not in {p_c, t_c}:
             return False
     if criteria.skills:
         combined = skill_union(project.required_skills, project.nice_to_have_skills, talent.skills)

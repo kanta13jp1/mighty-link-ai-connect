@@ -15,12 +15,14 @@ def test_filter_controls_exist_in_both_html_files():
     required_ids = {
         "matching-filter-keyword",
         "matching-filter-skill",
+        "matching-filter-contract",
         "matching-filter-rate-min",
         "matching-filter-rate-max",
         "matching-filter-score",
         "matching-filter-received-from",
         "matching-filter-received-to",
         "matching-filter-count",
+        "proposal-generation-modal",
     }
 
     for path, text in html_sources():
@@ -28,6 +30,8 @@ def test_filter_controls_exist_in_both_html_files():
             assert f'id="{control_id}"' in text, f"{path} is missing {control_id}"
         assert "applyMatchingFilters()" in text
         assert "resetMatchingFilters()" in text
+        assert "openProposalModal(" in text
+        assert "copyProposalToClipboard()" in text
 
 
 def test_empty_filtered_results_do_not_fall_back_to_demo_rows():
@@ -81,8 +85,8 @@ def test_received_date_filter_refreshes_api_and_preserves_empty_results():
     for path, text in html_sources():
         for fragment in required_fragments:
             assert fragment in text, f"{path} is missing received-date behavior: {fragment}"
-        assert 'colspan="6"' in text
-        assert "<th>受信日</th>" in text
+        assert 'colspan="7"' in text
+        assert "<th>契約形態</th>" in text
 
 
 def test_filter_toolbar_uses_scoped_responsive_styles():

@@ -78,7 +78,7 @@
     "app_default": "gemini-3.5-flash",
     "blockers": 0,
     "warnings": 0,
-    "runtime_references": 3,
+    "runtime_references": 4,
     "current_truth_references": 7
   },
   "default_finding": {
@@ -90,7 +90,7 @@
   "runtime_findings": [
     {
       "path": "src/app.py",
-      "line": 374,
+      "line": 379,
       "model": "gemini-3.5-flash",
       "context": "USER_EMAIL = \"k-umezawa@ml-mightylink.com\" GEMINI_MODEL = os.environ.get(\"GEMINI_MODEL\", \"gemini-3.5-flash\") GEMINI_DAILY_CALL_LIMIT = env_int(\"GEMINI_DAILY_CALL_LIMIT\", 20, 0, 100",
       "severity": "ok",
@@ -101,6 +101,14 @@
       "line": 13,
       "model": "gemini-3.5-flash",
       "context": "oogle import genai from google.genai import types as genai_types DEFAULT_GEMINI_MODEL = \"gemini-3.5-flash\" def get_gemini_model_name() -> str: return os.environ.get(\"GEMINI_",
+      "severity": "ok",
+      "reason": "stable_production_model"
+    },
+    {
+      "path": "src/structured_ai.py",
+      "line": 104,
+      "model": "gemini-3.5-flash",
+      "context": ": str, schema_cls: Type[T], api_key: Optional[str] = None, model_name: str = \"gemini-3.5-flash\", max_retries: int = 3, ) -> T: \"\"\"Extract typed, validated struc",
       "severity": "ok",
       "reason": "stable_production_model"
     },

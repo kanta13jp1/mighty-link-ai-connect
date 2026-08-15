@@ -18,6 +18,11 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#030303">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mighty Link">
+    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Mighty%20Skill-Bridge%22%2C%22short_name%22%3A%22MightyLink%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23030303%22%2C%22theme_color%22%3A%22%23030303%22%7D">
     <title>Mighty Skill-Bridge - エンジニア＆案件 AIフィットシミュレーター</title>
     <link rel="icon" href="favicon.ico" sizes="any">
     <!-- Trigger deploy for T852/T877 changes -->
@@ -238,6 +243,64 @@
             font-size: 11px;
             white-space: nowrap;
             letter-spacing: 0.02em;
+        }
+
+        /* スケルトンローダー (CLS撲滅) */
+        .skeleton-box {
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        .skeleton-box::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            transform: translateX(-100%);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            animation: skeleton-shimmer 1.6s infinite ease-in-out;
+        }
+        @keyframes skeleton-shimmer {
+            100% { transform: translateX(100%); }
+        }
+
+        /* モバイル専用ネイティブ風ボトムシートドロワー */
+        .mobile-bottom-sheet-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 10000;
+            display: flex;
+            align-items: flex-end;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .mobile-bottom-sheet-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .mobile-bottom-sheet {
+            width: 100%;
+            background: var(--panel-strong);
+            border-top: 1px solid var(--line-strong);
+            border-radius: 20px 20px 0 0;
+            padding: 16px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .mobile-bottom-sheet-overlay.active .mobile-bottom-sheet {
+            transform: translateY(0);
+        }
+        .mobile-sheet-handle {
+            width: 40px;
+            height: 5px;
+            border-radius: 999px;
+            background: var(--line-strong);
+            margin: 0 auto 16px;
         }
 
         .nav-links {
@@ -4522,6 +4585,17 @@
                             </select>
                         </div>
 
+                        <div class="matching-filter-field">
+                            <label for="matching-filter-contract">契約形態</label>
+                            <select class="matching-filter-control" id="matching-filter-contract" onchange="applyMatchingFilters()">
+                                <option value="">すべて</option>
+                                <option value="準委任">準委任</option>
+                                <option value="派遣">派遣</option>
+                                <option value="請負">請負</option>
+                                <option value="正社員/契約社員">正社員/契約社員</option>
+                            </select>
+                        </div>
+
                         <div class="matching-filter-field matching-filter-date-field">
                             <label for="matching-filter-received-from">受信日</label>
                             <div class="matching-date-range">
@@ -4538,12 +4612,13 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="comparison-table" style="min-width: 720px;">
+                        <table class="comparison-table" style="min-width: 780px;">
                             <thead>
                                 <tr>
                                     <th>案件タイトル</th>
                                     <th>受信日</th>
                                     <th>適合エンジニア</th>
+                                    <th>契約形態</th>
                                     <th>マッチングスコア</th>
                                     <th>ステータス</th>
                                     <th data-i18n="comp_th_action">アクション</th>
@@ -4842,6 +4917,58 @@
                 </form>
             </div>
         </section>
+
+        <!-- キーボードショートカットヘルプモーダル -->
+        <div id="shortcut-help-modal" class="auth-modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="shortcut-modal-title">
+            <div class="auth-modal-card" style="max-width: 500px;">
+                <button type="button" class="auth-modal-close" onclick="closeShortcutHelpModal()" aria-label="閉じる">×</button>
+                <div class="auth-modal-header">
+                    <h2 id="shortcut-modal-title" data-i18n="shortcut_modal_title">⌨️ キーボードショートカットガイド</h2>
+                    <p class="control-label" data-i18n="shortcut_modal_subtitle">Altキー（Optionキー）と数字による最速操作ナビゲーション</p>
+                </div>
+                <div style="display: grid; gap: 10px; margin-top: 16px; font-size: 13px;">
+                    <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                        <kbd style="background:var(--panel-strong); border:1px solid var(--line); padding:2px 8px; border-radius:4px; font-weight:700;">Alt + 1</kbd>
+                        <span>ホーム (トップ) へスクロール</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                        <kbd style="background:var(--panel-strong); border:1px solid var(--line); padding:2px 8px; border-radius:4px; font-weight:700;">Alt + 2</kbd>
+                        <span>初期セットアップへ移動</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                        <kbd style="background:var(--panel-strong); border:1px solid var(--line); padding:2px 8px; border-radius:4px; font-weight:700;">Alt + 3</kbd>
+                        <span>適性アンケートへ移動</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                        <kbd style="background:var(--panel-strong); border:1px solid var(--line); padding:2px 8px; border-radius:4px; font-weight:700;">Alt + 4</kbd>
+                        <span>自己診断デモへ移動</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                        <kbd style="background:var(--panel-strong); border:1px solid var(--line); padding:2px 8px; border-radius:4px; font-weight:700;">Alt + 5</kbd>
+                        <span>勤怠管理へ移動</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                        <kbd style="background:var(--panel-strong); border:1px solid var(--line); padding:2px 8px; border-radius:4px; font-weight:700;">Alt + 6</kbd>
+                        <span>営業メールマッチングへ移動</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                        <kbd style="background:var(--panel-strong); border:1px solid var(--line); padding:2px 8px; border-radius:4px; font-weight:700;">Alt + 7</kbd>
+                        <span>管理者ダッシュボードへ移動</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:6px;">
+                        <kbd style="background:var(--panel-strong); border:1px solid var(--line); padding:2px 8px; border-radius:4px; font-weight:700;">Alt + ?</kbd>
+                        <span>このヘルプガイドを表示 / 非表示</span>
+                    </div>
+                </div>
+                <button type="button" class="big-btn" onclick="closeShortcutHelpModal()" style="margin-top:20px; width:100%; justify-content:center;" data-i18n="shortcut_modal_close">閉じる</button>
+            </div>
+        </div>
+
+        <!-- オフライン / オンライン状態トースト -->
+        <div id="offline-toast" style="position:fixed; bottom:80px; right:20px; z-index:9999; display:none; background:rgba(18,20,24,0.95); border:1px solid var(--yellow); padding:12px 18px; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.5); backdrop-filter:blur(12px); max-width:320px; font-size:13px;" role="status" aria-live="assertive">
+            <strong id="offline-toast-title" style="color:var(--yellow); display:block; margin-bottom:4px;" data-i18n="offline_toast_title">⚠️ オフライン状態</strong>
+            <span id="offline-toast-msg" style="color:var(--text);" data-i18n="offline_toast_msg">ネットワーク接続が切断されました。ローカルキャッシュモードで動作しています。</span>
+        </div>
 
         <footer class="site-footer" aria-label="Site footer">
             <div class="footer-inner">
@@ -5153,7 +5280,12 @@
                 comp_th_gaps: "確認/不足",
                 comp_th_action: "アクション",
                 onboard_jump_btn: "↑ 上部の規約同意チェック欄へ移動",
-                onboard_open_training_modal: "役割別研修ガイドモーダルを開く"
+                onboard_open_training_modal: "役割別研修ガイドモーダルを開く",
+                shortcut_modal_title: "⌨️ キーボードショートカットガイド",
+                shortcut_modal_subtitle: "Altキー（Optionキー）と数字による最速操作ナビゲーション",
+                shortcut_modal_close: "閉じる",
+                offline_toast_title: "⚠️ オフライン状態",
+                offline_toast_msg: "ネットワーク接続が切断されました。ローカルキャッシュモードで動作しています。"
             },
             en: {
                 nav_home: "Home",
@@ -5277,7 +5409,12 @@
                 comp_th_gaps: "Gaps / Verification",
                 comp_th_action: "Action",
                 onboard_jump_btn: "↑ Jump to Legal Consent Checkbox",
-                onboard_open_training_modal: "Open Role Training Modal"
+                onboard_open_training_modal: "Open Role Training Modal",
+                shortcut_modal_title: "⌨️ Keyboard Shortcuts Guide",
+                shortcut_modal_subtitle: "Fast navigation using Alt (Option) key + numbers",
+                shortcut_modal_close: "Close",
+                offline_toast_title: "⚠️ Offline Mode",
+                offline_toast_msg: "Network connection lost. Running in local cache mode."
             },
             zh: {
                 nav_home: "首页",
@@ -5401,7 +5538,12 @@
                 comp_th_gaps: "待确认/不足",
                 comp_th_action: "操作",
                 onboard_jump_btn: "↑ 跳转至顶部条款同意勾选框",
-                onboard_open_training_modal: "打开角色分工培训指南"
+                onboard_open_training_modal: "打开角色分工培训指南",
+                shortcut_modal_title: "⌨️ 键盘快捷键指南",
+                shortcut_modal_subtitle: "使用 Alt (Option) 键加数字快速导航",
+                shortcut_modal_close: "关闭",
+                offline_toast_title: "⚠️ 离线模式",
+                offline_toast_msg: "网络连接已断开，正在使用本地缓存模式。"
             },
             ko: {
                 nav_home: "홈",
@@ -5525,7 +5667,12 @@
                 comp_th_gaps: "확인/부족",
                 comp_th_action: "작업",
                 onboard_jump_btn: "↑ 상단 약관 동의 체크란으로 이동",
-                onboard_open_training_modal: "역할별 연수 가이드 모달 열기"
+                onboard_open_training_modal: "역할별 연수 가이드 모달 열기",
+                shortcut_modal_title: "⌨️ 키보드 단축키 가이드",
+                shortcut_modal_subtitle: "Alt (Option) 키와 숫자를 이용한 빠른 탐색",
+                shortcut_modal_close: "닫기",
+                offline_toast_title: "⚠️ 오프라인 모드",
+                offline_toast_msg: "네트워크 연결이 끊어졌습니다. 로컬 캐시 모드로 동작 중입니다."
             }
         };
 
@@ -7361,9 +7508,10 @@
             const list = (bands && bands.length ? bands : aptitudeScoreBands).slice().reverse();
             host.innerHTML = list.map(band => {
                 const active = band.id === activeBandId ? " active" : "";
+                const symbol = band.id === "good" ? "✓ " : band.id === "moderate" ? "⚠️ " : "🚩 ";
                 return `
                     <div class="aptitude-band-row band-${escapeHtml(band.id)}${active}">
-                        <span class="aptitude-band-badge">${escapeHtml(band.label)}</span>
+                        <span class="aptitude-band-badge">${symbol}${escapeHtml(band.label)}</span>
                         <span class="aptitude-band-range">${band.min_index} 〜 ${band.max_index} 点</span>
                         <span class="aptitude-band-guidance">${escapeHtml(band.guidance || "")}</span>
                     </div>
@@ -7692,6 +7840,7 @@
             const conditionIndex = Number(data.condition_index || 0);
             const band = escapeHtml(data.band || "moderate");
             const bandLabel = escapeHtml(data.band_label || data.band || "-");
+            const bandSymbol = band === "good" ? "✓ " : band === "moderate" ? "⚠️ " : "🚩 ";
             const bandRangeStr = Array.isArray(data.band_range) ? ` (${data.band_range[0]}〜${data.band_range[1]}点)` : "";
             
             const r = 42;
@@ -7730,7 +7879,7 @@
                         <h3 style="font-size: 18px; color: var(--text); margin-bottom: 6px;">自己診断 総合判定結果</h3>
                         <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
                             <span class="control-label">総合判定:</span>
-                            <strong class="aptitude-band-badge band-${band}">${bandLabel}</strong>
+                            <strong class="aptitude-band-badge band-${band}">${bandSymbol}${bandLabel}</strong>
                             <span class="control-label">${bandRangeStr}</span>
                         </div>
                         <div class="card-stat stat-green" style="display:none">${conditionIndex.toFixed(1)} / 100</div>
@@ -8127,7 +8276,7 @@
             if (!tbody) return;
             const list = Array.isArray(dataList) ? dataList : matchingData;
             if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted)">条件に一致する候補はありません</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--muted)">条件に一致する候補はありません</td></tr>`;
             } else {
                 tbody.innerHTML = list.map(m => {
                     const title = m.title || m.project_title || "";
@@ -8135,23 +8284,36 @@
                     const candidate = m.candidate || m.talent_name || m.talent_label || "";
                     const score = m.score || m.matching_score || 0;
                     const approved = m.approved ?? false;
+                    const contractType = m.contract_type || m.project_contract_type || "準委任";
                     let badgeClass = score >= 90 ? "fit-high" : "fit-med";
                     let statusText = approved ? "承認済" : "未承認";
                     let statusStyle = approved ? "background: rgba(186, 255, 102, 0.1); color: var(--green);" : "background: rgba(255, 209, 102, 0.1); color: var(--yellow);";
                     
-                    // Button to view details only if we have database keys
                     const showAction = (m.project_key || m.talent_key) ? `
-                        <button type="button" class="btn" style="
-                            padding: 4px 10px;
-                            font-size: 11px;
-                            font-weight: bold;
-                            background: rgba(139, 220, 255, 0.08);
-                            border: 1px solid rgba(139, 220, 255, 0.25);
-                            color: var(--blue);
-                            border-radius: 4px;
-                            cursor: pointer;
-                            transition: all 0.2s ease;
-                        " onmouseenter="this.style.background='rgba(139, 220, 255, 0.16)'" onmouseleave="this.style.background='rgba(139, 220, 255, 0.08)'" onclick="showEmailDetail('${escapeHtml(m.project_key || '')}', '${escapeHtml(m.talent_key || '')}', '${escapeHtml(title)}')">元メール確認</button>
+                        <div style="display: flex; gap: 4px; align-items: center;">
+                            <button type="button" class="btn" style="
+                                padding: 4px 8px;
+                                font-size: 11px;
+                                font-weight: bold;
+                                background: rgba(139, 220, 255, 0.08);
+                                border: 1px solid rgba(139, 220, 255, 0.25);
+                                color: var(--blue);
+                                border-radius: 4px;
+                                cursor: pointer;
+                                transition: all 0.2s ease;
+                            " onmouseenter="this.style.background='rgba(139, 220, 255, 0.16)'" onmouseleave="this.style.background='rgba(139, 220, 255, 0.08)'" onclick="showEmailDetail('${escapeHtml(m.project_key || '')}', '${escapeHtml(m.talent_key || '')}', '${escapeHtml(title)}')">元メール確認</button>
+                            <button type="button" class="btn" style="
+                                padding: 4px 8px;
+                                font-size: 11px;
+                                font-weight: bold;
+                                background: rgba(186, 255, 102, 0.1);
+                                border: 1px solid rgba(186, 255, 102, 0.3);
+                                color: var(--green);
+                                border-radius: 4px;
+                                cursor: pointer;
+                                transition: all 0.2s ease;
+                            " onmouseenter="this.style.background='rgba(186, 255, 102, 0.2)'" onmouseleave="this.style.background='rgba(186, 255, 102, 0.1)'" onclick="openProposalModal('${escapeHtml(title)}', '${escapeHtml(candidate)}', ${score}, '${escapeHtml(contractType)}')">📧 提案作成</button>
+                        </div>
                     ` : `<span style="color:var(--muted); font-size:11px;">デモ案件</span>`;
                     
                     return `
@@ -8159,6 +8321,7 @@
                             <td style="font-weight: 500; font-size: 13px;">${escapeHtml(title)}</td>
                             <td style="white-space: nowrap;"><time datetime="${escapeHtml(m.project_received_date || "")}" style="color: var(--muted); font-size: 12px;">${escapeHtml(receivedDate)}</time></td>
                             <td style="font-weight: 600;">${escapeHtml(candidate)}</td>
+                            <td><span class="fit-badge" style="padding: 4px 8px; font-size: 11px; background: rgba(139, 220, 255, 0.08); color: var(--blue); border: 1px solid rgba(139, 220, 255, 0.2);">${escapeHtml(contractType)}</span></td>
                             <td><span class="fit-badge ${badgeClass}">${score}%</span></td>
                             <td><span class="fit-badge" style="padding: 4px 8px; font-size: 11px; ${statusStyle}">${statusText}</span></td>
                             <td>${showAction}</td>
@@ -8207,6 +8370,7 @@
             const normalizeText = value => String(value || "").toLocaleLowerCase("ja").trim();
             const keyword = normalizeText(document.getElementById("matching-filter-keyword")?.value);
             const selectedSkill = normalizeText(document.getElementById("matching-filter-skill")?.value);
+            const selectedContract = normalizeText(document.getElementById("matching-filter-contract")?.value);
             const rateMin = parseInt(document.getElementById("matching-filter-rate-min")?.value || "0", 10);
             const rateMax = parseInt(document.getElementById("matching-filter-rate-max")?.value || "999", 10);
             const minScore = parseInt(document.getElementById("matching-filter-score")?.value || "0", 10);
@@ -8238,14 +8402,20 @@
                 const candidate = normalizeText(item.candidate || item.talent_name || item.talent_label);
                 const score = Number(item.score ?? item.matching_score ?? 0);
                 const requiredSkills = item.project_required_skills || item.required_skills || [];
+                const itemContract = normalizeText(item.contract_type || item.project_contract_type || "準委任");
 
                 if (score < minScore) return false;
                 if (!matchingReceivedDateInRange(item, receivedFrom, receivedTo)) return false;
+
+                if (selectedContract && !itemContract.includes(selectedContract)) {
+                    return false;
+                }
 
                 if (keyword) {
                     const searchableText = normalizeText([
                         title,
                         candidate,
+                        itemContract,
                         ...requiredSkills,
                         ...(item.matched_skills || []),
                         ...(item.missing_skills || []),
@@ -8293,6 +8463,7 @@
         function resetMatchingFilters() {
             if (document.getElementById("matching-filter-keyword")) document.getElementById("matching-filter-keyword").value = "";
             if (document.getElementById("matching-filter-skill")) document.getElementById("matching-filter-skill").value = "";
+            if (document.getElementById("matching-filter-contract")) document.getElementById("matching-filter-contract").value = "";
             if (document.getElementById("matching-filter-rate-min")) document.getElementById("matching-filter-rate-min").value = "0";
             if (document.getElementById("matching-filter-rate-max")) document.getElementById("matching-filter-rate-max").value = "999";
             if (document.getElementById("matching-filter-score")) document.getElementById("matching-filter-score").value = "0";
@@ -9336,7 +9507,140 @@
             };
 
             window.addEventListener('scroll', handleScrollSpy, { passive: true });
+
+            window.addEventListener('online', () => {
+                const toast = document.getElementById('offline-toast');
+                if (toast) {
+                    const title = document.getElementById('offline-toast-title');
+                    const msg = document.getElementById('offline-toast-msg');
+                    if (title) { title.textContent = '✅ オンライン接続完了'; title.style.color = 'var(--green)'; }
+                    if (msg) { msg.textContent = 'ネットワーク接続が復旧しました。'; }
+                    toast.style.display = 'block';
+                    setTimeout(() => { toast.style.display = 'none'; }, 4000);
+                }
+            });
+
+            window.addEventListener('offline', () => {
+                const toast = document.getElementById('offline-toast');
+                if (toast) {
+                    const title = document.getElementById('offline-toast-title');
+                    const msg = document.getElementById('offline-toast-msg');
+                    if (title) { title.textContent = '⚠️ オフライン状態'; title.style.color = 'var(--yellow)'; }
+                    if (msg) { msg.textContent = 'ネットワーク接続が切断されました。ローカルキャッシュモードで動作しています。'; }
+                    toast.style.display = 'block';
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.altKey && (e.key === '?' || e.code === 'Slash')) {
+                    e.preventDefault();
+                    const modal = document.getElementById('shortcut-help-modal');
+                    if (modal && modal.classList.contains('active')) {
+                        closeShortcutHelpModal();
+                    } else {
+                        openShortcutHelpModal();
+                    }
+                }
+            });
         });
+
+        function animateValue(element, start, end, duration, decimal = 1, suffix = '') {
+            if (!element) return;
+            const startTime = performance.now();
+            function updateNumber(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const value = start + ((end - start) * progress);
+                element.textContent = value.toFixed(decimal) + suffix;
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                } else {
+                    element.textContent = end.toFixed(decimal) + suffix;
+                }
+            }
+            requestAnimationFrame(updateNumber);
+        }
+
+        let currentTrappedModal = null;
+        let previousActiveElement = null;
+
+        function setupFocusTrap(modalEl) {
+            if (!modalEl) return;
+            previousActiveElement = document.activeElement;
+            currentTrappedModal = modalEl;
+            const focusable = Array.from(modalEl.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(el => !el.disabled && el.offsetParent !== null);
+            if (focusable.length > 0) {
+                focusable[0].focus();
+            }
+        }
+
+        function releaseFocusTrap() {
+            if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
+                previousActiveElement.focus();
+            }
+            currentTrappedModal = null;
+            previousActiveElement = null;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && currentTrappedModal) {
+                if (typeof closeShortcutHelpModal === 'function') closeShortcutHelpModal();
+                if (typeof closeAuthModal === 'function') closeAuthModal();
+                if (typeof closeTrainingModal === 'function') closeTrainingModal();
+                if (typeof closeMobileBottomSheet === 'function') closeMobileBottomSheet();
+                if (typeof closeSalesEmailDetailModal === 'function') closeSalesEmailDetailModal();
+                if (typeof closeMatchingHelpModal === 'function') closeMatchingHelpModal();
+            }
+            if (e.key === 'Tab' && currentTrappedModal) {
+                const focusable = Array.from(currentTrappedModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(el => !el.disabled && el.offsetParent !== null);
+                if (focusable.length === 0) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        });
+
+        function openShortcutHelpModal() {
+            const modal = document.getElementById('shortcut-help-modal');
+            if (modal) {
+                modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+                setupFocusTrap(modal);
+            }
+        }
+
+        function closeShortcutHelpModal() {
+            const modal = document.getElementById('shortcut-help-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+                releaseFocusTrap();
+            }
+        }
+
+        function openMobileBottomSheet() {
+            const sheet = document.getElementById('mobile-bottom-sheet');
+            if (sheet) {
+                sheet.classList.add('active');
+                sheet.setAttribute('aria-hidden', 'false');
+                setupFocusTrap(sheet);
+            }
+        }
+
+        function closeMobileBottomSheet() {
+            const sheet = document.getElementById('mobile-bottom-sheet');
+            if (sheet) {
+                sheet.classList.remove('active');
+                sheet.setAttribute('aria-hidden', 'true');
+                releaseFocusTrap();
+            }
+        }
     </script>
 
     <!-- 営業メールマッチングヘルプモーダル -->
@@ -9495,6 +9799,187 @@
         </div>
     </div>
 
+    <!-- モバイル専用ボトムシートドロワー -->
+    <div id="mobile-bottom-sheet" class="mobile-bottom-sheet-overlay" onclick="if(event.target===this) closeMobileBottomSheet()" aria-hidden="true">
+        <div class="mobile-bottom-sheet" role="dialog" aria-modal="true" aria-label="モバイル追加メニュー">
+            <div class="mobile-sheet-handle"></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <strong style="font-size:16px; color:var(--text);">メニュー & ツール</strong>
+                <button type="button" class="auth-modal-close" onclick="closeMobileBottomSheet()" style="position:static;" aria-label="閉じる">×</button>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px;">
+                <a href="#onboarding-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">⚙️ 初期設定</a>
+                <a href="#aptitude-demo-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">📊 自己診断</a>
+                <a href="#admin-dashboard-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">🛡️ 管理者</a>
+                <a href="#support" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">💬 サポート</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI営業提案文（下書き自動生成）モーダル (P2/T910) -->
+    <div id="proposal-generation-modal" class="modal-overlay" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(3, 3, 3, 0.75);
+        backdrop-filter: blur(8px);
+        z-index: 10005;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    ">
+        <div class="modal-content" style="
+            background: var(--panel);
+            border: 1px solid var(--line-strong);
+            border-radius: 16px;
+            width: min(680px, 94%);
+            padding: 28px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 40px rgba(186, 255, 102, 0.08);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            max-height: 88vh;
+            overflow-y: auto;
+        ">
+            <button type="button" onclick="closeProposalModal()" style="
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: transparent;
+                border: none;
+                color: var(--muted);
+                font-size: 24px;
+                cursor: pointer;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: all 0.2s ease;
+            " onmouseenter="this.style.background='rgba(255,255,255,0.05)'" onmouseleave="this.style.background='transparent'">×</button>
+            
+            <div class="step-kicker" style="color: var(--green); background: rgba(186, 255, 102, 0.06); margin-bottom: 10px; display: inline-block;">AI PROPOSAL DRAFT</div>
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 16px;">📧 AI営業提案文（ワンクリック下書き生成）</h3>
+            
+            <div class="form-group" style="margin-bottom: 14px;">
+                <label for="proposal-subject-input" style="font-size: 12px; font-weight: bold; color: var(--muted); display: block; margin-bottom: 6px;">件名:</label>
+                <input type="text" id="proposal-subject-input" style="width: 100%; padding: 10px; font-size: 13px; font-weight: bold; color: var(--blue); background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 6px; outline: none;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label for="proposal-body-textarea" style="font-size: 12px; font-weight: bold; color: var(--muted); display: block; margin-bottom: 6px;">提案文章本文 (自由に編集・送信できます):</label>
+                <textarea id="proposal-body-textarea" rows="11" style="width: 100%; padding: 14px; font-family: inherit; font-size: 12px; color: var(--text); line-height: 1.6; background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 6px; outline: none; resize: vertical; white-space: pre-wrap; word-break: break-all;"></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+                <span id="proposal-copy-status" style="font-size: 12px; color: var(--green); font-weight: bold;"></span>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn" style="padding: 8px 16px; font-size: 12px; font-weight: bold; background: rgba(255,255,255,0.06); border: 1px solid var(--line); border-radius: 6px; color: var(--text); cursor: pointer;" onclick="closeProposalModal()">閉じる</button>
+                    <button type="button" class="btn" style="padding: 8px 20px; font-size: 12px; font-weight: bold; background: linear-gradient(90deg, var(--green), var(--blue)); border: none; border-radius: 6px; color: #030303; cursor: pointer; box-shadow: 0 0 15px rgba(186, 255, 102, 0.2);" onclick="copyProposalToClipboard()">📋 提案文をコピー</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function openProposalModal(projectTitle, talentLabel, score, contractType) {
+            const modal = document.getElementById("proposal-generation-modal");
+            if (!modal) return;
+
+            document.getElementById("proposal-subject-input").value = `【ご提案】${projectTitle} 向けのご要員マッチングのご案内 (${talentLabel})`;
+            document.getElementById("proposal-body-textarea").value = "AI提案文章を生成中...";
+            document.getElementById("proposal-copy-status").textContent = "";
+            
+            modal.style.opacity = "1";
+            modal.style.pointerEvents = "auto";
+            const content = modal.querySelector(".modal-content");
+            if (content) content.style.transform = "scale(1)";
+
+            try {
+                const resp = await fetch("/api/sales-email/proposal", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        project_title: projectTitle,
+                        talent_label: talentLabel,
+                        score: score || 90,
+                        contract_type: contractType || "準委任",
+                        remote_type: "フルリモート/常駐相談可"
+                    })
+                });
+                if (resp.ok) {
+                    const data = await resp.json();
+                    if (data.subject) document.getElementById("proposal-subject-input").value = data.subject;
+                    if (data.proposal_text) document.getElementById("proposal-body-textarea").value = data.proposal_text;
+                } else {
+                    throw new Error("提案生成API応答エラー");
+                }
+            } catch (e) {
+                const fallbackText = `お世話になっております。株式会社マイティリンク 営業担当でございます。
+
+貴社の案件「${projectTitle}」に関しまして、非常に適合度の高いエンジニア（適合度: ${score}%）のご提案をさせていただきます。
+
+■ 該当要員概要
+・要員識別名: ${talentLabel}
+・契約形態: ${contractType || "準委任"}
+・働き方: フルリモート/常駐相談可
+・提示単価: ご相談可能
+
+■ アピールポイント
+本要員は、貴社の要件に合致した実務経験が豊富であり、即戦力としてご貢献いただけます。
+詳細なスキルシートや面元調整につきましては、折り返しご連絡いただけますと幸いです。
+
+何卒ご検討のほど、よろしくお願い申し上げます。
+
+--------------------------------------------------
+株式会社マイティリンク 営業部
+Email: eigyo@mighty-link.com
+URL: https://mightylink-app.com
+--------------------------------------------------`;
+                document.getElementById("proposal-body-textarea").value = fallbackText;
+            }
+        }
+
+        function closeProposalModal() {
+            const modal = document.getElementById("proposal-generation-modal");
+            if (!modal) return;
+            modal.style.opacity = "0";
+            modal.style.pointerEvents = "none";
+            const content = modal.querySelector(".modal-content");
+            if (content) content.style.transform = "scale(0.95)";
+        }
+
+        function copyProposalToClipboard() {
+            const subject = document.getElementById("proposal-subject-input").value;
+            const body = document.getElementById("proposal-body-textarea").value;
+            const fullText = `件名: ${subject}\n\n${body}`;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(fullText).then(() => {
+                    const status = document.getElementById("proposal-copy-status");
+                    if (status) status.textContent = "✓ クリップボードに提案文をコピーしました！";
+                    setTimeout(() => {
+                        if (status) status.textContent = "";
+                    }, 3000);
+                }).catch(err => {
+                    alert("コピーに失敗しました: " + err);
+                });
+            } else {
+                const ta = document.getElementById("proposal-body-textarea");
+                ta.select();
+                document.execCommand("copy");
+                const status = document.getElementById("proposal-copy-status");
+                if (status) status.textContent = "✓ 提案文をコピーしました！";
+            }
+        }
+    </script>
+
     <!-- モバイル専用ボトムナビゲーションバー -->
     <nav class="mobile-bottom-nav" aria-label="モバイル主要ナビゲーション">
         <a href="#top" class="mobile-nav-item active" data-nav="top" onclick="setActiveMobileNav(this)">
@@ -9513,7 +9998,7 @@
             <span class="mobile-nav-icon">🤝</span>
             <span class="mobile-nav-label">マッチング</span>
         </a>
-        <button type="button" class="mobile-nav-item mobile-nav-btn" onclick="toggleNav()" aria-label="メニュー展開">
+        <button type="button" class="mobile-nav-item mobile-nav-btn" onclick="openMobileBottomSheet()" aria-label="メニュー展開">
             <span class="mobile-nav-icon">☰</span>
             <span class="mobile-nav-label">その他</span>
         </button>

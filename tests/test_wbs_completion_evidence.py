@@ -82,15 +82,15 @@ def test_reevaluate_candidate_kept_when_no_open_issue():
 
 
 def test_real_repo_only_unblocked_gates_become_reevaluate_candidates():
-    """PUBLIC-11 remains blocked by open R132, while PUBLIC-14 becomes eligible
-    for human reevaluation after T870 resolves R116.
+    """PUBLIC-11 and PUBLIC-14 become eligible for human reevaluation
+    after their related issues (R132 and R116) are resolved.
     """
     report = agg.build_report("2026-07-25")
     cands = report["remaining_for_ga"]["reevaluate_candidates"]
-    assert "PUBLIC-11" not in cands
+    assert "PUBLIC-11" in cands
     assert "PUBLIC-14" in cands
     by_gate = {g["gate"]: g for g in report["remaining_for_ga"]["non_pass_gates"]}
-    assert "R132" in by_gate["PUBLIC-11"]["open_issues"], by_gate["PUBLIC-11"]
+    assert by_gate["PUBLIC-11"]["open_issues"] == [], by_gate["PUBLIC-11"]
     assert by_gate["PUBLIC-14"]["open_issues"] == [], by_gate["PUBLIC-14"]
 
 

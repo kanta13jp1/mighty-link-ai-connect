@@ -16,7 +16,8 @@ import re
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-AGENDA = PROJECT_ROOT / "docs" / "CEO_MEETING_AGENDA_2026-07-22.md"
+AGENDA_DIR = PROJECT_ROOT / "docs" / "meetings"
+AGENDA = AGENDA_DIR / "CEO_MEETING_AGENDA_2026-07-22.md" if (AGENDA_DIR / "CEO_MEETING_AGENDA_2026-07-22.md").exists() else PROJECT_ROOT / "docs" / "CEO_MEETING_AGENDA_2026-07-22.md"
 WBS = PROJECT_ROOT / "data" / "WBS.tsv"
 
 REQUIRED_SECTIONS = [

@@ -1,9 +1,9 @@
 {
   "task": "T894",
   "mode": "fast",
-  "guard_count": 25,
+  "guard_count": 27,
   "exempt_count": 2,
-  "test_file_count": 119,
+  "test_file_count": 124,
   "guard_results": {
     "audit_access_inventory.py": {
       "exit_code": 0,
@@ -14,6 +14,10 @@
       "evidence": true
     },
     "audit_architecture_decisions.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
+    "audit_cost_quota_alerts.py": {
       "exit_code": 0,
       "evidence": true
     },
@@ -85,6 +89,10 @@
       "exit_code": 0,
       "evidence": true
     },
+    "audit_security_log_integrity.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
     "audit_supabase_uat_writes.py": {
       "exit_code": 0,
       "evidence": true
@@ -117,7 +125,7 @@
       "id": "H1",
       "title": "プリフライト対象ガード10件以上かつテストファイル50件以上(sanity)",
       "passed": true,
-      "detail": "対象ガード=25, 対象外=2, テストファイル=119"
+      "detail": "対象ガード=27, 対象外=2, テストファイル=124"
     },
     {
       "id": "H2",

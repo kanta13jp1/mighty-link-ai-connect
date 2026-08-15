@@ -4,7 +4,7 @@
 対象: 小林雅水社長 との定例打ち合わせ（2026-07-22 13:00）
 作成レーン: VSCode + Claude Code
 関連WBS: T879（本アジェンダ・予定確保） / T898（定例実施・議事録反映） / T849 / T862
-関連docs: [WBS.md](WBS.md) / [INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md) / [PRICING_PLAN_PROVISIONAL_2026-07-03.md](PRICING_PLAN_PROVISIONAL_2026-07-03.md) / [COST_REPORT_2026-06.md](COST_REPORT_2026-06.md) / [UAT_TEST_SPECIFICATION.md](UAT_TEST_SPECIFICATION.md)
+関連docs: [WBS.md](../WBS.md) / [INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](../INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md) / [PRICING_PLAN_PROVISIONAL_2026-07-03.md](../PRICING_PLAN_PROVISIONAL_2026-07-03.md) / [COST_REPORT_2026-06.md](../COST_REPORT_2026-06.md) / [UAT_TEST_SPECIFICATION.md](../UAT_TEST_SPECIFICATION.md)
 
 予定確保: Google Calendar の 7/22 に定例実施タスク（T898）のイベントを同期済み。13:00 開始の会議招待は従来どおり Google Workspace 上でご確認ください。
 
@@ -57,9 +57,9 @@
 7/24(金) に初回の月次判断を予定しています。判断材料は以下です。
 
 - **社内利用実績**: GA後の診断・勤怠・営業メールAIの利用状況（当日、管理者ダッシュボードでご覧いただけます）
-- **コスト実績**: 固定費 ¥0（Firebase/Supabase サーバーレス）+ AI従量 月数百円規模で安定（[COST_REPORT_2026-06.md](COST_REPORT_2026-06.md)）
+- **コスト実績**: 固定費 ¥0（Firebase/Supabase サーバーレス）+ AI従量 月数百円規模で安定（[COST_REPORT_2026-06.md](../COST_REPORT_2026-06.md)）
 - **SLA実測**: 稼働率・P95レスポンスの計測基盤（T778）を 7/20 までに本番適用予定
-- **料金プラン**: Free ¥0 / Standard ¥9,800月 / Pro ¥29,800月（税別）の仮決定済みプランの最終確認（[PRICING_PLAN_PROVISIONAL_2026-07-03.md](PRICING_PLAN_PROVISIONAL_2026-07-03.md)）
+- **料金プラン**: Free ¥0 / Standard ¥9,800月 / Pro ¥29,800月（税別）の仮決定済みプランの最終確認（[PRICING_PLAN_PROVISIONAL_2026-07-03.md](../PRICING_PLAN_PROVISIONAL_2026-07-03.md)）
 
 **Go の場合**は 7/27〜7/31 に課金本番適用（T791）→ 解約・プラン変更フロー live 化（T807）→ インボイス・Stripe Tax 設定（T813）→ 正式アナウンス（T793）の順で実施します。**継続検討の場合**は翌月の月次レビューへ持ち越します（どちらでも開発完了判定には影響しません）。
 

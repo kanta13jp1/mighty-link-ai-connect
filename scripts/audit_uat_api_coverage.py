@@ -83,8 +83,11 @@ EXEMPT_ENDPOINTS = {
     "/api/knowledge-flow/generate": "内部: ナレッジ連携デモ生成ツール",
     "/api/knowledge-flow/status": "内部: ナレッジ連携デモ状態",
     "/api/matches": "内部: 診断マッチ一覧の読取ヘルパー",
+    "/api/ai/extract/structured": "内部: 構造化AIプロファイル抽出(T304開発支援・非直接GA導線)",
+    "/api/extract-structured": "内部: 構造化AIプロファイル抽出エイリアス",
     "/api/seedance/video-demo": "非GA: Seedance動画デモ(T848で本番非採用に凍結)",
     "/api/seedance/video-task/{task_id}": "非GA: Seedance動画タスク(凍結)",
+    "/api/sales-email/proposal": "内部: 営業提案メール生成ドラフト(TS-08マッチング詳細スコープ)",
     "/api/sync": "内部: サーバー内部同期",
 }
 

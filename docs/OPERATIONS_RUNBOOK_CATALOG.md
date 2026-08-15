@@ -41,6 +41,7 @@
 - [サードパーティAPIキー・Secretローテーション Runbook（T751)](SECRET_ROTATION_RUNBOOK.md) — APIキー・Secretをローテーションするとき
 - [ログローテーション・アクセスログ保持 Runbook（T748)](LOG_ROTATION_AND_RETENTION_RUNBOOK.md) — ログ保持/ローテーションを運用するとき
 - [監査ログ・稼働ログ コールドストレージ退避 Runbook（T773)](COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md) — 古い監査/稼働ログを退避するとき
+- [セキュリティインシデント対応・ログ健全性運用Runbook（T931)](SECURITY_INCIDENT_RESPONSE_RUNBOOK.md) — セキュリティ違反・不正アクセス・ログ健全性異常を検知したとき
 
 ## 課金・コスト
 
