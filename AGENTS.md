@@ -58,7 +58,15 @@ python scripts/generate_ceo_presentation_deck.py
 python scripts/upload_notebooklm_docs_to_drive.py
 ```
 
-After validation, commit intentionally and push `main` (production deployment to mightylink-app.com via Firebase Hosting).
+**Step 3 — deploy & live production verification (required for task completion).**
+No task or session is considered complete until it is confirmed working on the live production environment (`https://mightylink-app.com/`).
+1. Commit intentionally and push `main` (which triggers GitHub Actions CI/CD to deploy to Firebase Hosting / Cloud Run).
+2. Wait for the GitHub Actions deployment workflow to succeed.
+3. Perform live HTTP reachability and E2E verification on the production URL (`https://mightylink-app.com/`):
+   ```powershell
+   python scripts/verify_public_demo.py --url https://mightylink-app.com/
+   ```
+4. Verify that modified screens, buttons, navigation links, and API endpoints return HTTP 200 on the live domain before reporting completion to the user.
 
 ## Tool Lanes
 

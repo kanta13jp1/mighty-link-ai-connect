@@ -50,6 +50,17 @@ python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB
 python scripts/sync_wbs_to_calendar.py
 ```
 
+### Step 4: Production Deployment & Live Verification (Mandatory for Completion)
+1. Push `main` to trigger the GitHub Actions deploy pipeline:
+   ```powershell
+   git push origin main
+   ```
+2. Verify live production reachability after deploy finishes:
+   ```powershell
+   python scripts/verify_public_demo.py --url https://mightylink-app.com/
+   ```
+3. Never mark a WBS task or user turn as complete without verifying the live domain responds with HTTP 200 on changed endpoints.
+
 ---
 
 ## 2. Authentication & Environment Pre-requisites

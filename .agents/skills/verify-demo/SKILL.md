@@ -20,9 +20,13 @@ Use this skill when modifying frontend UI components, landing pages, or multimod
 
 ## 1. Quick Verification Command (PowerShell)
 
-Run the verification script against the production/preview URL:
-
+Run the verification script against the production URL (`mightylink-app.com`) as well as the GitHub Pages fallback:
+ 
 ```powershell
+# Live Production URL Verification (Mandatory after deploy)
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
+
+# Public Demo Static Fallback Verification
 python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
 ```
 

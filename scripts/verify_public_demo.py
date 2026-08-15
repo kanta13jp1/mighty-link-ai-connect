@@ -56,9 +56,18 @@ def verify_html(content: str, label: str) -> None:
 def fetch_url(url: str) -> str:
     separator = "&" if "?" in url else "?"
     cache_busted_url = f"{url}{separator}codex_guard={int(time.time())}"
+    
+    auth = None
+    import os
+    user = os.environ.get("BASIC_AUTH_USERNAME", "admin")
+    pwd = os.environ.get("BASIC_AUTH_PASSWORD", "mighty-link-pass")
+    if "mightylink-app.com" in url or "127.0.0.1" in url or "localhost" in url:
+        auth = (user, pwd)
+
     response = requests.get(
         cache_busted_url,
         headers={"User-Agent": "mighty-link-public-demo-guard/1.0"},
+        auth=auth,
         timeout=30,
     )
     if response.status_code != 200:
