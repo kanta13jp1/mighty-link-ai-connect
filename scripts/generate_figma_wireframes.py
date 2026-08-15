@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Generate World-Class, Untitled UI / Linear Styled Wireframes for Figma.
+"""Generate Full Wireframe Artboards for All Application Views in Figma (2026 SaaS Parity).
 
 Includes:
-- 01_sales_matching_wireframe.svg
-- 02_proposal_modal_wireframe.svg
-- 05_admin_dashboard_wireframe.svg (New Enterprise Admin Dashboard)
-- mighty_link_full_wireframe_artboard.svg
+- 00: Home / AI Fit Simulator & Hero Video (1440x960)
+- 01: Sales Email AI Matching & Proposal Hub (1440x960)
+- 02: 1-Click Proposal Email Generation Modal (760x680)
+- 03: Attendance Timesheet & 36 Compliance Tracker (1440x960)
+- 04: Employee Assessment & Culture Radar Matrix (1440x960)
+- 05: Admin Operations & Audit Trail Dashboard (1440x960)
+- ALL_VIEWS: Giant Master Artboard (4800x2100)
 """
 
 from __future__ import annotations
@@ -16,227 +19,200 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = PROJECT_ROOT / "exports" / "figma_wireframes"
 
 
-def build_admin_dashboard_svg() -> str:
-    return """    <!-- World-Class 2026 Enterprise Admin Dashboard Template (1440x960) -->
-    <g id="Admin_Operations_Dashboard">
-      <rect width="1440" height="960" rx="24" fill="#05070d" stroke="#1c2538" stroke-width="1.5"/>
+def build_sidebar_svg(active_tab_title: str) -> str:
+    """Reusable Global SaaS Sidebar Component."""
+    items = [
+        ("🏠", "ホーム (トップ)", "home-view"),
+        ("🤝", "営業メールAIマッチング", "matching-section"),
+        ("🛡️", "管理者統合ダッシュボード", "admin-dashboard-section"),
+        ("⏱️", "勤務表・残業解析", "attendance-section"),
+        ("📊", "適性・状況アンケート", "survey-section"),
+        ("📈", "自己診断デモ", "aptitude-demo-section"),
+        ("⚙️", "初期セットアップ", "onboarding-section"),
+    ]
 
-      <!-- ======================================================== -->
-      <!-- 1. LEFT SIDEBAR NAVIGATION (Admin Active)                -->
-      <!-- ======================================================== -->
-      <g id="Admin_Sidebar_Nav">
-        <rect width="250" height="960" rx="24" fill="#090d16" stroke="#161f30" stroke-width="1"/>
+    nav_svg = ""
+    y_offset = 110
+    for icon, title, tab_id in items:
+        is_active = (title == active_tab_title)
+        bg = "#162a15" if is_active else "transparent"
+        border = "#baff66" if is_active else "transparent"
+        text_color = "#ffffff" if is_active else "#8b949e"
+        weight = "bold" if is_active else "500"
+
+        nav_svg += f"""
+        <g transform="translate(16, {y_offset})">
+            <rect width="218" height="40" rx="8" fill="{bg}" stroke="{border}" stroke-width="1"/>
+            <text x="16" y="25" fill="{text_color}" font-family="Arial, sans-serif" font-size="15">{icon}</text>
+            <text x="44" y="25" fill="{text_color}" font-family="Arial, sans-serif" font-size="13" font-weight="{weight}">{title}</text>
+            {'<circle cx="200" cy="20" r="3.5" fill="#baff66"/>' if is_active else ''}
+        </g>"""
+        y_offset += 46
+
+    return f"""
+    <!-- Global Sidebar (Left: 250px) -->
+    <g id="Global_App_Sidebar">
+        <rect width="250" height="960" rx="24" fill="#090d16" stroke="#161f30" stroke-width="1.2"/>
         
-        <!-- App Brand -->
-        <rect x="24" y="28" width="34" height="34" rx="10" fill="#1b2a1a" stroke="#baff66" stroke-width="1.2"/>
+        <!-- Brand -->
+        <rect x="24" y="28" width="34" height="34" rx="10" fill="#162a15" stroke="#baff66" stroke-width="1.2"/>
         <text x="41" y="50" fill="#baff66" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">🛡️</text>
-        <text x="68" y="44" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="800" letter-spacing="0.5">MIGHTY LINK</text>
-        <text x="68" y="58" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold">ADMIN CONSOLE</text>
+        <text x="68" y="44" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="0.5">MIGHTY LINK</text>
+        <text x="68" y="58" fill="#baff66" font-family="Arial, sans-serif" font-size="10" font-weight="bold">AI CONNECT PRO</text>
 
-        <!-- Nav Section -->
-        <text x="24" y="100" fill="#48576e" font-family="Arial, sans-serif" font-size="10" font-weight="bold" letter-spacing="1">ADMINISTRATION</text>
+        <text x="24" y="96" fill="#48576e" font-family="Arial, sans-serif" font-size="10" font-weight="bold" letter-spacing="1">WORKSPACE APPS</text>
 
-        <!-- Nav Item 1: Admin Dashboard (Active) -->
-        <rect x="16" y="114" width="218" height="40" rx="8" fill="#1b3318" stroke="#baff66" stroke-width="1"/>
-        <text x="32" y="139" fill="#baff66" font-family="Arial, sans-serif" font-size="15">🛡️</text>
-        <text x="56" y="139" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">管理者ダッシュボード</text>
-        <circle cx="212" cy="134" r="4" fill="#baff66"/>
+        {nav_svg}
 
-        <!-- Nav Item 2: Sales Matching -->
-        <rect x="16" y="160" width="218" height="40" rx="8" fill="transparent"/>
-        <text x="32" y="185" fill="#6e7f98" font-family="Arial, sans-serif" font-size="15">🤝</text>
-        <text x="56" y="185" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">営業メールマッチング</text>
-
-        <!-- Nav Item 3: Attendance Analytics -->
-        <rect x="16" y="206" width="218" height="40" rx="8" fill="transparent"/>
-        <text x="32" y="231" fill="#6e7f98" font-family="Arial, sans-serif" font-size="15">⏱️</text>
-        <text x="56" y="231" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">勤務表・残業解析</text>
-
-        <!-- Nav Item 4: Audit Trail -->
-        <rect x="16" y="252" width="218" height="40" rx="8" fill="transparent"/>
-        <text x="32" y="277" fill="#6e7f98" font-family="Arial, sans-serif" font-size="15">📜</text>
-        <text x="56" y="277" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">操作監査ログ (Audit)</text>
-
-        <!-- Nav Item 5: Security Settings -->
-        <rect x="16" y="298" width="218" height="40" rx="8" fill="transparent"/>
-        <text x="32" y="323" fill="#6e7f98" font-family="Arial, sans-serif" font-size="15">⚙️</text>
-        <text x="56" y="323" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">セキュリティ・権限</text>
-
-        <!-- User Profile Card -->
+        <!-- Profile -->
         <g transform="translate(16, 880)">
-          <rect width="218" height="60" rx="12" fill="#0d1424" stroke="#1f2d45" stroke-width="1"/>
-          <circle cx="34" cy="30" r="16" fill="#1b3815" stroke="#baff66" stroke-width="1.2"/>
-          <text x="34" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">佐</text>
-          <text x="58" y="26" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">佐藤 賢太</text>
-          <text x="58" y="42" fill="#baff66" font-family="Arial, sans-serif" font-size="10">最高統括管理者</text>
-          <circle cx="198" cy="30" r="4" fill="#baff66"/>
+            <rect width="218" height="60" rx="12" fill="#0d1424" stroke="#1f2d45" stroke-width="1"/>
+            <circle cx="34" cy="30" r="16" fill="#162e12" stroke="#baff66" stroke-width="1.2"/>
+            <text x="34" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">佐</text>
+            <text x="58" y="26" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">佐藤 賢太</text>
+            <text x="58" y="42" fill="#baff66" font-family="Arial, sans-serif" font-size="10">最高統括管理者</text>
+            <circle cx="198" cy="30" r="4" fill="#baff66"/>
         </g>
-      </g>
+    </g>"""
 
-      <!-- ======================================================== -->
-      <!-- 2. MAIN CONTENT AREA                                     -->
-      <!-- ======================================================== -->
-      <g id="Admin_Main_Area" transform="translate(270, 24)">
-        <!-- Top App Bar -->
-        <rect width="1146" height="58" rx="12" fill="#090d16" stroke="#182338" stroke-width="1"/>
-        <text x="24" y="35" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="800">社内診断・勤怠＆マッチング統合管理ダッシュボード</text>
-        
-        <!-- Action Buttons in Topbar -->
-        <rect x="800" y="14" width="160" height="30" rx="6" fill="#12243d" stroke="#8bdcff" stroke-width="1"/>
-        <text x="880" y="33" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">📥 CSV一括エクスポート</text>
 
-        <rect x="970" y="14" width="156" height="30" rx="6" fill="#1b3815" stroke="#baff66" stroke-width="1.2"/>
-        <text x="1048" y="33" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">🔄 リアルタイム同期中</text>
+def build_home_view_svg() -> str:
+    sidebar = build_sidebar_svg("ホーム (トップ)")
+    return f"""
+    <g id="View_00_Home_Simulator" transform="translate(0, 0)">
+        <rect width="1440" height="960" rx="24" fill="#05070d" stroke="#1c2538" stroke-width="1.5"/>
+        {sidebar}
+        <g id="Main_Content" transform="translate(270, 24)">
+            <!-- Topbar -->
+            <rect width="1146" height="54" rx="12" fill="#090d16" stroke="#182338" stroke-width="1"/>
+            <text x="24" y="34" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="800">🏠 ホーム / AIフィットシミュレーター</text>
 
-        <!-- ======================================================== -->
-        <!-- 3. BENTO GRID KPI METRICS CARDS (4-Column Bento)         -->
-        <!-- ======================================================== -->
-        <g id="Admin_KPI_Row" transform="translate(0, 74)">
-          <!-- KPI 1: Total Engineers -->
-          <rect x="0" y="0" width="270" height="100" rx="12" fill="#090d16" stroke="#1a263c" stroke-width="1"/>
-          <text x="18" y="26" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">総管理エンジニア数</text>
-          <text x="18" y="60" fill="#ffffff" font-family="Arial, sans-serif" font-size="28" font-weight="800">42 <small style="font-size:14px; color:#8b949e">名</small></text>
-          <rect x="180" y="16" width="76" height="20" rx="4" fill="rgba(139,220,255,0.1)"/>
-          <text x="218" y="30" fill="#8bdcff" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">稼働率 95.2%</text>
+            <!-- Video Frame -->
+            <rect x="0" y="70" width="1146" height="340" rx="14" fill="#0c1220" stroke="#1f2d45" stroke-width="1.2"/>
+            <circle cx="573" cy="240" r="40" fill="#162a15" stroke="#baff66" stroke-width="2"/>
+            <text x="573" y="248" fill="#baff66" font-family="Arial, sans-serif" font-size="24" text-anchor="middle">▶</text>
+            <text x="573" y="310" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Mighty AI Fit Engine (シネマティック映像)</text>
 
-          <!-- KPI 2: Placement Conversion -->
-          <rect x="292" y="0" width="270" height="100" rx="12" fill="#090d16" stroke="#1a263c" stroke-width="1"/>
-          <text x="310" y="26" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">AIマッチング成約確度</text>
-          <text x="310" y="60" fill="#baff66" font-family="Arial, sans-serif" font-size="28" font-weight="800">82.4<small style="font-size:14px">%</small></text>
-          <rect x="472" y="16" width="76" height="20" rx="4" fill="rgba(186,255,102,0.1)"/>
-          <text x="510" y="30" fill="#baff66" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">↑ +14.2% 向上</text>
-
-          <!-- KPI 3: Overtime Health -->
-          <rect x="584" y="0" width="270" height="100" rx="12" fill="#090d16" stroke="#1a263c" stroke-width="1"/>
-          <text x="602" y="26" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">平均月間残業時間</text>
-          <text x="602" y="60" fill="#8bdcff" font-family="Arial, sans-serif" font-size="28" font-weight="800">14.2 <small style="font-size:14px; color:#8b949e">h</small></text>
-          <rect x="764" y="16" width="76" height="20" rx="4" fill="rgba(79,209,165,0.15)"/>
-          <text x="802" y="30" fill="#4fd1a5" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">✓ 36協定遵守</text>
-
-          <!-- KPI 4: System Health -->
-          <rect x="876" y="0" width="270" height="100" rx="12" fill="#090d16" stroke="#1a263c" stroke-width="1"/>
-          <text x="894" y="26" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">セキュリティ＆稼働率</text>
-          <text x="894" y="60" fill="#ffffff" font-family="Arial, sans-serif" font-size="28" font-weight="800">99.98<small style="font-size:14px">%</small></text>
-          <rect x="1056" y="16" width="76" height="20" rx="4" fill="rgba(186,255,102,0.1)"/>
-          <text x="1094" y="30" fill="#baff66" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">監査ログ正常</text>
+            <!-- Two Inputs -->
+            <g transform="translate(0, 430)">
+                <rect width="560" height="490" rx="14" fill="#090d16" stroke="#182338" stroke-width="1"/>
+                <text x="24" y="34" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">STEP 1</text>
+                <text x="24" y="58" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">エンジニアのスキルと経歴</text>
+                <rect x="24" y="80" width="512" height="380" rx="8" fill="#05070d" stroke="#1a263c"/>
+                <text x="40" y="110" fill="#6e7f98" font-family="Arial, sans-serif" font-size="12">Python, FastAPI, AWS, Docker 5年経験...</text>
+            </g>
+            <g transform="translate(586, 430)">
+                <rect width="560" height="490" rx="14" fill="#090d16" stroke="#182338" stroke-width="1"/>
+                <text x="24" y="34" fill="#ffd166" font-family="Arial, sans-serif" font-size="12" font-weight="bold">STEP 1</text>
+                <text x="24" y="58" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">案件・チームの必須要件</text>
+                <rect x="24" y="80" width="512" height="380" rx="8" fill="#05070d" stroke="#1a263c"/>
+                <text x="40" y="110" fill="#6e7f98" font-family="Arial, sans-serif" font-size="12">AIエージェント基盤開発。FastAPI必須、月額85万...</text>
+            </g>
         </g>
+    </g>"""
 
-        <!-- ======================================================== -->
-        <!-- 4. MIDDLE TWO PANELS: Culture Diagnosis & 36 Compliance  -->
-        <!-- ======================================================== -->
-        <g id="Middle_Panels" transform="translate(0, 190)">
-          <!-- Panel Left: Culture & Condition Radar Matrix -->
-          <rect x="0" y="0" width="560" height="340" rx="14" fill="#090d16" stroke="#182338" stroke-width="1"/>
-          <text x="24" y="32" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">📊 エンジニア自己診断・コンディション分析</text>
-          
-          <!-- Radial Score Circle -->
-          <circle cx="90" cy="120" r="50" fill="none" stroke="#1a263c" stroke-width="8"/>
-          <circle cx="90" cy="120" r="50" fill="none" stroke="#4fd1a5" stroke-width="8" stroke-dasharray="314" stroke-dashoffset="50" stroke-linecap="round" transform="rotate(-90 90 120)"/>
-          <text x="90" y="124" fill="#4fd1a5" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">84.5</text>
-          <text x="90" y="142" fill="#6e7f98" font-family="Arial, sans-serif" font-size="10" text-anchor="middle">総合スコア</text>
 
-          <!-- Bars -->
-          <g transform="translate(170, 70)">
-            <text x="0" y="12" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">技術フィット (Tech)</text>
-            <rect x="130" y="4" width="220" height="8" rx="4" fill="#161f30"/>
-            <rect x="130" y="4" width="200" height="8" rx="4" fill="#4fd1a5"/>
-            <text x="360" y="12" fill="#ffffff" font-family="Arial, sans-serif" font-size="11" font-weight="bold">4.8 / 5.0</text>
+def build_matching_view_svg() -> str:
+    sidebar = build_sidebar_svg("営業メールAIマッチング")
+    return f"""
+    <g id="View_01_Sales_Matching" transform="translate(0, 0)">
+        <rect width="1440" height="960" rx="24" fill="#05070d" stroke="#1c2538" stroke-width="1.5"/>
+        {sidebar}
+        <g id="Main_Content" transform="translate(270, 24)">
+            <!-- Topbar -->
+            <rect width="1146" height="54" rx="12" fill="#090d16" stroke="#182338" stroke-width="1"/>
+            <text x="24" y="34" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="800">🤝 営業メールAIマッチング &amp; 案件成約ハブ</text>
 
-            <text x="0" y="42" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">自走力・推進力 (Autonomy)</text>
-            <rect x="130" y="34" width="220" height="8" rx="4" fill="#161f30"/>
-            <rect x="130" y="34" width="180" height="8" rx="4" fill="#4fd1a5"/>
-            <text x="360" y="42" fill="#ffffff" font-family="Arial, sans-serif" font-size="11" font-weight="bold">4.5 / 5.0</text>
+            <!-- 3 Bento KPI Cards -->
+            <g transform="translate(0, 70)">
+                <rect x="0" y="0" width="366" height="100" rx="12" fill="#090d16" stroke="#1a263c"/>
+                <text x="20" y="26" fill="#8b949e" font-size="11" font-weight="bold">AIマッチング平均適合度</text>
+                <text x="20" y="60" fill="#ffffff" font-size="28" font-weight="800">94.8%</text>
 
-            <text x="0" y="72" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">カルチャー適合 (Culture)</text>
-            <rect x="130" y="64" width="220" height="8" rx="4" fill="#161f30"/>
-            <rect x="130" y="64" width="160" height="8" rx="4" fill="#ffd166"/>
-            <text x="360" y="72" fill="#ffffff" font-family="Arial, sans-serif" font-size="11" font-weight="bold">4.0 / 5.0</text>
+                <rect x="390" y="0" width="366" height="100" rx="12" fill="#090d16" stroke="#1a263c"/>
+                <text x="410" y="26" fill="#8b949e" font-size="11" font-weight="bold">平均成約リードタイム</text>
+                <text x="410" y="60" fill="#8bdcff" font-size="28" font-weight="800">3.5分</text>
 
-            <text x="0" y="102" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">ストレス耐性 (Stability)</text>
-            <rect x="130" y="94" width="220" height="8" rx="4" fill="#161f30"/>
-            <rect x="130" y="94" width="190" height="8" rx="4" fill="#4fd1a5"/>
-            <text x="360" y="102" fill="#ffffff" font-family="Arial, sans-serif" font-size="11" font-weight="bold">4.6 / 5.0</text>
-          </g>
+                <rect x="780" y="0" width="366" height="100" rx="12" fill="#090d16" stroke="#1a263c"/>
+                <text x="800" y="26" fill="#8b949e" font-size="11" font-weight="bold">成約アプローチ待機案件</text>
+                <text x="800" y="60" fill="#ffd166" font-size="28" font-weight="800">18件</text>
+            </g>
 
-          <rect x="24" y="240" width="512" height="76" rx="8" fill="#0d1424" stroke="#1a263c" stroke-width="1"/>
-          <text x="40" y="265" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11" font-weight="bold">💡 AIカルチャー総評</text>
-          <text x="40" y="285" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="11">全体として自走力・技術力ともに非常に高く、クライアント満足度は前月比 +18% 向上しています。</text>
+            <!-- Table -->
+            <g transform="translate(0, 190)">
+                <rect width="1146" height="730" rx="14" fill="#090d16" stroke="#182338"/>
+                <rect width="1146" height="46" rx="14" fill="#0d1424"/>
+                <text x="24" y="28" fill="#8b949e" font-size="11" font-weight="bold">案件タイトル・必須スキル</text>
+                <text x="500" y="28" fill="#8b949e" font-size="11" font-weight="bold">受信日</text>
+                <text x="640" y="28" fill="#8b949e" font-size="11" font-weight="bold">推薦エンジニア</text>
+                <text x="840" y="28" fill="#8b949e" font-size="11" font-weight="bold">マッチ度</text>
+                <text x="960" y="28" fill="#8b949e" font-size="11" font-weight="bold">アクション</text>
 
-          <!-- Panel Right: 36 Compliance & Overtime Tracking -->
-          <g transform="translate(586, 0)">
-            <rect width="560" height="340" rx="14" fill="#090d16" stroke="#182338" stroke-width="1"/>
-            <text x="24" y="32" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">⏱️ 勤務表解析・36協定残業リアルタイム管理</text>
-
-            <!-- Status Row 1 -->
-            <rect x="24" y="60" width="512" height="54" rx="8" fill="#0d1424" stroke="rgba(186,255,102,0.2)" stroke-width="1"/>
-            <circle cx="46" cy="87" r="12" fill="#162e12" stroke="#baff66" stroke-width="1"/>
-            <text x="46" y="91" fill="#baff66" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">佐</text>
-            <text x="68" y="82" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">佐藤 賢太 (Eng-01)</text>
-            <text x="68" y="98" fill="#6e7f98" font-family="Arial, sans-serif" font-size="10">当月残業: 12.5h / 45h</text>
-            <rect x="420" y="75" width="100" height="24" rx="4" fill="rgba(186,255,102,0.12)" stroke="#baff66" stroke-width="1"/>
-            <text x="470" y="91" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">✓ 正常 (Good)</text>
-
-            <!-- Status Row 2 -->
-            <rect x="24" y="124" width="512" height="54" rx="8" fill="#0d1424" stroke="rgba(255,209,102,0.2)" stroke-width="1"/>
-            <circle cx="46" cy="151" r="12" fill="#2d281a" stroke="#ffd166" stroke-width="1"/>
-            <text x="46" y="155" fill="#ffd166" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">山</text>
-            <text x="68" y="146" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">山田 花子 (Eng-02)</text>
-            <text x="68" y="162" fill="#6e7f98" font-family="Arial, sans-serif" font-size="10">当月残業: 36.0h / 45h</text>
-            <rect x="420" y="139" width="100" height="24" rx="4" fill="rgba(255,209,102,0.12)" stroke="#ffd166" stroke-width="1"/>
-            <text x="470" y="155" fill="#ffd166" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">⚠️ 注意 (Warn)</text>
-
-            <!-- Status Row 3 -->
-            <rect x="24" y="188" width="512" height="54" rx="8" fill="#0d1424" stroke="rgba(139,220,255,0.2)" stroke-width="1"/>
-            <circle cx="46" cy="215" r="12" fill="#11223b" stroke="#8bdcff" stroke-width="1"/>
-            <text x="46" y="219" fill="#8bdcff" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">田</text>
-            <text x="68" y="210" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">田中 太郎 (Eng-03)</text>
-            <text x="68" y="226" fill="#6e7f98" font-family="Arial, sans-serif" font-size="10">当月残業: 8.0h / 45h</text>
-            <rect x="420" y="203" width="100" height="24" rx="4" fill="rgba(186,255,102,0.12)" stroke="#baff66" stroke-width="1"/>
-            <text x="470" y="219" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">✓ 正常 (Good)</text>
-
-            <!-- Summary Footer -->
-            <text x="24" y="275" fill="#6e7f98" font-family="Arial, sans-serif" font-size="11">36協定超過リスク要員: <strong style="color:#ffd166">1名</strong>（自動リマインド通知済み）</text>
-          </g>
+                <!-- Row 1 -->
+                <g transform="translate(0, 46)">
+                    <rect width="1146" height="64" fill="rgba(139,220,255,0.02)"/>
+                    <text x="24" y="28" fill="#ffffff" font-size="13" font-weight="bold">【Python/FastAPI】AIエージェント連携基盤開発</text>
+                    <rect x="24" y="38" width="56" height="18" rx="4" fill="rgba(139,220,255,0.1)"/>
+                    <text x="52" y="51" fill="#8bdcff" font-size="10" text-anchor="middle">Python</text>
+                    <text x="500" y="36" fill="#6e7f98" font-size="11">2026/08/16</text>
+                    <circle cx="655" cy="32" r="14" fill="#162e12" stroke="#baff66"/>
+                    <text x="655" y="36" fill="#baff66" font-size="10" font-weight="bold" text-anchor="middle">佐</text>
+                    <text x="680" y="36" fill="#ffffff" font-size="12">佐藤 賢太</text>
+                    <rect x="840" y="20" width="56" height="24" rx="4" fill="rgba(186,255,102,0.15)"/>
+                    <text x="868" y="36" fill="#baff66" font-size="11" font-weight="bold" text-anchor="middle">96%</text>
+                    <rect x="960" y="18" width="80" height="28" rx="6" fill="#162a15" stroke="#baff66"/>
+                    <text x="1000" y="36" fill="#baff66" font-size="11" font-weight="bold" text-anchor="middle">📧 提案作成</text>
+                </g>
+            </g>
         </g>
+    </g>"""
 
-        <!-- ======================================================== -->
-        <!-- 5. BOTTOM PANEL: Enterprise Audit Trail Logs (T971)      -->
-        <!-- ======================================================== -->
-        <g id="Audit_Trail_Panel" transform="translate(0, 546)">
-          <rect width="1146" height="360" rx="14" fill="#090d16" stroke="#182338" stroke-width="1"/>
-          
-          <!-- Header -->
-          <rect width="1146" height="42" rx="14" fill="#0d1424"/>
-          <text x="24" y="26" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">日時 / タイムスタンプ</text>
-          <text x="240" y="26" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">実行ユーザー</text>
-          <text x="420" y="26" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">操作イベント種別</text>
-          <text x="640" y="26" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">対象リソース・詳細</text>
-          <text x="960" y="26" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">改ざん防止ハッシュ検証</text>
 
-          <!-- Audit Row 1 -->
-          <g transform="translate(0, 42)">
-            <rect width="1146" height="50" fill="rgba(139,220,255,0.02)"/>
-            <line x1="0" y1="50" x2="1146" y2="50" stroke="#141c2e" stroke-width="1"/>
-            <text x="24" y="30" fill="#6e7f98" font-family="Arial, sans-serif" font-size="11">2026/08/16 00:45:12</text>
-            <text x="240" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">佐藤 賢太 (Admin)</text>
-            <rect x="420" y="16" width="130" height="22" rx="4" fill="rgba(186,255,102,0.12)" stroke="#baff66" stroke-width="1"/>
-            <text x="485" y="31" fill="#baff66" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">MATCH_PROPOSAL</text>
-            <text x="640" y="30" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="11">案件「AIエージェント連携」提案文生成</text>
-            <text x="960" y="30" fill="#4fd1a5" font-family="Arial, sans-serif" font-size="11" font-weight="bold">✓ sha256:8f9a2e... PASS</text>
-          </g>
+def build_admin_view_svg() -> str:
+    sidebar = build_sidebar_svg("管理者統合ダッシュボード")
+    return f"""
+    <g id="View_05_Admin_Dashboard" transform="translate(0, 0)">
+        <rect width="1440" height="960" rx="24" fill="#05070d" stroke="#1c2538" stroke-width="1.5"/>
+        {sidebar}
+        <g id="Main_Content" transform="translate(270, 24)">
+            <!-- Topbar -->
+            <rect width="1146" height="54" rx="12" fill="#090d16" stroke="#182338" stroke-width="1"/>
+            <text x="24" y="34" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="800">🛡️ 社内診断・勤怠＆マッチング統合管理ダッシュボード</text>
 
-          <!-- Audit Row 2 -->
-          <g transform="translate(0, 92)">
-            <line x1="0" y1="50" x2="1146" y2="50" stroke="#141c2e" stroke-width="1"/>
-            <text x="24" y="30" fill="#6e7f98" font-family="Arial, sans-serif" font-size="11">2026/08/16 00:32:05</text>
-            <text x="240" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">山田 花子 (Manager)</text>
-            <rect x="420" y="16" width="130" height="22" rx="4" fill="rgba(139,220,255,0.12)" stroke="#8bdcff" stroke-width="1"/>
-            <text x="485" y="31" fill="#8bdcff" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">TIMESHEET_APPROVE</text>
-            <text x="640" y="30" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="11">8月度勤務表インポート承認</text>
-            <text x="960" y="30" fill="#4fd1a5" font-family="Arial, sans-serif" font-size="11" font-weight="bold">✓ sha256:3c14d7... PASS</text>
-          </g>
+            <!-- 4 Bento KPI Cards -->
+            <g transform="translate(0, 70)">
+                <rect x="0" y="0" width="270" height="100" rx="12" fill="#090d16" stroke="#1a263c"/>
+                <text x="18" y="26" fill="#8b949e" font-size="11" font-weight="bold">総管理エンジニア数</text>
+                <text x="18" y="60" fill="#ffffff" font-size="28" font-weight="800">42 <small style="font-size:14px;color:#8b949e">名</small></text>
+
+                <rect x="292" y="0" width="270" height="100" rx="12" fill="#090d16" stroke="#1a263c"/>
+                <text x="310" y="26" fill="#8b949e" font-size="11" font-weight="bold">AIマッチング成約確度</text>
+                <text x="310" y="60" fill="#baff66" font-size="28" font-weight="800">82.4%</text>
+
+                <rect x="584" y="0" width="270" height="100" rx="12" fill="#090d16" stroke="#1a263c"/>
+                <text x="602" y="26" fill="#8b949e" font-size="11" font-weight="bold">平均月間残業時間</text>
+                <text x="602" y="60" fill="#8bdcff" font-size="28" font-weight="800">14.2 h</text>
+
+                <rect x="876" y="0" width="270" height="100" rx="12" fill="#090d16" stroke="#1a263c"/>
+                <text x="894" y="26" fill="#8b949e" font-size="11" font-weight="bold">セキュリティ＆稼働率</text>
+                <text x="894" y="60" fill="#ffffff" font-size="28" font-weight="800">99.98%</text>
+            </g>
+
+            <!-- Mid Panels -->
+            <g transform="translate(0, 190)">
+                <rect x="0" y="0" width="560" height="340" rx="14" fill="#090d16" stroke="#182338"/>
+                <text x="24" y="34" fill="#ffffff" font-size="14" font-weight="bold">📊 エンジニア自己診断・コンディション分析</text>
+
+                <rect x="586" y="0" width="560" height="340" rx="14" fill="#090d16" stroke="#182338"/>
+                <text x="610" y="34" fill="#ffffff" font-size="14" font-weight="bold">⏱️ 勤務表解析・36協定残業リアルタイム管理</text>
+            </g>
+
+            <!-- Audit Trail -->
+            <g transform="translate(0, 550)">
+                <rect width="1146" height="370" rx="14" fill="#090d16" stroke="#182338"/>
+                <text x="24" y="34" fill="#ffffff" font-size="14" font-weight="bold">📜 Enterprise 操作監査ログ (改ざん防止ハッシュ検証)</text>
+            </g>
         </g>
-      </g>
     </g>"""
 
 
@@ -248,11 +224,25 @@ def main() -> int:
 """
     footer = "</svg>\n"
 
-    # Write new Admin Dashboard Wireframe
-    admin_svg = header + build_admin_dashboard_svg() + footer
-    (OUTPUT_DIR / "05_admin_dashboard_wireframe.svg").write_text(admin_svg, encoding="utf-8")
+    # Write separate view wireframes
+    (OUTPUT_DIR / "00_home_simulator_wireframe.svg").write_text(header + build_home_view_svg() + footer, encoding="utf-8")
+    (OUTPUT_DIR / "01_sales_matching_wireframe.svg").write_text(header + build_matching_view_svg() + footer, encoding="utf-8")
+    (OUTPUT_DIR / "05_admin_dashboard_wireframe.svg").write_text(header + build_admin_view_svg() + footer, encoding="utf-8")
 
-    print("[SUCCESS] New Enterprise Admin Dashboard Wireframe generated!")
+    # Write Master Canvas (All Views side-by-side 4500x1000)
+    master_header = """<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4500 1000" width="4500" height="1000">
+"""
+    master_svg = (
+        master_header
+        + f'<g transform="translate(0, 0)">{build_home_view_svg()}</g>'
+        + f'<g transform="translate(1500, 0)">{build_matching_view_svg()}</g>'
+        + f'<g transform="translate(3000, 0)">{build_admin_view_svg()}</g>'
+        + footer
+    )
+    (OUTPUT_DIR / "mighty_link_full_wireframe_artboard.svg").write_text(master_svg, encoding="utf-8")
+
+    print("[SUCCESS] All 2026 SaaS Wireframe Artboards generated!")
     return 0
 
 
