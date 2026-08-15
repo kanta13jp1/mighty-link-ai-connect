@@ -43,5 +43,3 @@ backups/
 *.db
 *.log
 .env
-.codex/tmp/
-

@@ -55,4 +55,4 @@ def test_backup_output_contract_suite_is_green() -> None:
     )
 
     assert completed.returncode == 0, completed.stdout + completed.stderr
-    assert "Ran 8 tests" in completed.stderr
+    assert "Ran 11 tests" in completed.stderr

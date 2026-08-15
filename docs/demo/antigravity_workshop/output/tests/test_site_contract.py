@@ -1,107 +1,157 @@
-from __future__ import annotations
-
-from html.parser import HTMLParser
-from pathlib import Path
+import json
 import re
 import unittest
+from pathlib import Path
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
-HTML_PATH = ROOT / "index.html"
-CSS_PATH = ROOT / "styles.css"
-JS_PATH = ROOT / "app.js"
-PRODUCTS = ("Codex", "Claude Code", "Claude Cowork", "Kiro", "Antigravity")
+EXPECTED_PRODUCTS = {
+    "codex": "Codex",
+    "claude-code": "Claude Code",
+    "claude-cowork": "Claude Cowork",
+    "kiro": "Kiro",
+    "antigravity": "Antigravity",
+}
+EXPECTED_VERSIONS = {
+    "codex": "0.147.0",
+    "claude-code": "2.1.229",
+    "claude-cowork": "公開版番号なし（SaaS）",
+    "kiro": "1.0.293",
+    "antigravity": "2.8.0",
+}
+COMPARISON_FIELDS = {
+    "主な仕事",
+    "操作面",
+    "進め方",
+    "持続指示",
+    "能力拡張",
+    "MCP・連携",
+    "ブラウザ",
+    "並列・バックグラウンド",
+    "自動化・組み込み",
+    "証拠とレビュー",
+    "安全境界",
+    "価格・利用枠",
+    "導入時の注意",
+}
+ALLOWED_HOSTS = {
+    "developers.openai.com",
+    "learn.chatgpt.com",
+    "chatgpt.com",
+    "github.com",
+    "code.claude.com",
+    "claude.com",
+    "support.claude.com",
+    "cdn.prod.website-files.com",
+    "kiro.dev",
+    "antigravity.google",
+    "www.youtube.com",
+}
 
 
-def read(path: Path) -> str:
-    return path.read_text(encoding="utf-8") if path.is_file() else ""
+def load_products():
+    raw = (ROOT / "product-data.js").read_text(encoding="utf-8").strip()
+    match = re.fullmatch(r"window\.PRODUCT_DATA\s*=\s*(\[.*\]);", raw, re.DOTALL)
+    if not match:
+        raise AssertionError("product-data.js must be a JSON array assigned to window.PRODUCT_DATA")
+    return json.loads(match.group(1))
 
 
-class SiteParser(HTMLParser):
-    def __init__(self) -> None:
-        super().__init__()
-        self.cards: list[dict[str, str]] = []
-        self.buttons: list[dict[str, str]] = []
-        self.aria_live = 0
-        self.external_refs: list[str] = []
-
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        values = {name: value or "" for name, value in attrs}
-        classes = values.get("class", "").split()
-        if "agent-card" in classes:
-            self.cards.append(values)
-        if tag == "button":
-            self.buttons.append(values)
-        if values.get("aria-live"):
-            self.aria_live += 1
-        for name in ("href", "src"):
-            value = values.get(name, "")
-            if value.startswith(("http://", "https://", "//")):
-                self.external_refs.append(value)
-
-
-class SiteContractTest(unittest.TestCase):
+class SiteContractTests(unittest.TestCase):
     @classmethod
-    def setUpClass(cls) -> None:
-        cls.html = read(HTML_PATH)
-        cls.css = read(CSS_PATH)
-        cls.javascript = read(JS_PATH)
-        cls.parser = SiteParser()
-        cls.parser.feed(cls.html)
+    def setUpClass(cls):
+        cls.products = load_products()
+        cls.html = (ROOT / "index.html").read_text(encoding="utf-8")
+        cls.app = (ROOT / "app.js").read_text(encoding="utf-8")
+        cls.css = (ROOT / "styles.css").read_text(encoding="utf-8")
 
-    def test_t01_required_files_exist(self) -> None:
-        for path in (HTML_PATH, CSS_PATH, JS_PATH):
-            self.assertTrue(path.is_file(), f"missing: {path.name}")
+    def test_exact_product_scope(self):
+        actual = {item["id"]: item["name"] for item in self.products}
+        self.assertEqual(actual, EXPECTED_PRODUCTS)
 
-    def test_t02_title_and_site_name(self) -> None:
-        self.assertIn("<title>AI Agent Learning Hub</title>", self.html)
-        self.assertIn("AI Agent Learning Hub", self.html)
+    def test_removed_rehearsal_products_are_absent(self):
+        current = self.html + self.app + json.dumps(self.products, ensure_ascii=False)
+        for stale_name in ("Devin", "Cursor Agent", "Windsurf", "Copilot Workspace"):
+            self.assertNotIn(stale_name, current)
 
-    def test_t03_five_product_cards(self) -> None:
-        self.assertEqual(len(self.parser.cards), 5)
-        for product in PRODUCTS:
-            self.assertIn(product, self.html)
+    def test_icons_are_local_nonempty_and_official(self):
+        for product in self.products:
+            with self.subTest(product=product["name"]):
+                self.assertFalse(urlparse(product["icon"]).scheme)
+                icon_path = ROOT / product["icon"]
+                self.assertTrue(icon_path.is_file())
+                self.assertGreater(icon_path.stat().st_size, 1000)
+                self.assert_allowed_url(product["iconSource"])
+        self.assertIn("公式アイコン", self.app)
 
-    def test_t04_required_learning_content(self) -> None:
-        for label in ("向いている仕事", "主な機能", "最初の一歩", "研修用サンプル"):
-            self.assertIn(label, self.html)
-        self.assertIn("assets/workshop-hero.png", self.html)
+    def test_versions_and_release_dates_are_explicit(self):
+        for product in self.products:
+            with self.subTest(product=product["name"]):
+                release = product["release"]
+                self.assertEqual(release["version"], EXPECTED_VERSIONS[product["id"]])
+                self.assertRegex(release["date"], r"^2026-\d{2}-\d{2}$")
+                self.assert_allowed_url(release["url"])
 
-    def test_t05_synthetic_and_offline_boundary(self) -> None:
-        self.assertIn("SYNTHETIC_DATA_ONLY", self.html)
-        self.assertEqual(self.parser.external_refs, [])
-        for forbidden in ("fetch(", "XMLHttpRequest", "localStorage", "sessionStorage"):
-            self.assertNotIn(forbidden, self.javascript)
+    def test_latest_update_video_and_blog_are_complete(self):
+        for product in self.products:
+            for field in ("latestUpdate", "latestVideo", "latestBlog"):
+                with self.subTest(product=product["name"], field=field):
+                    item = product[field]
+                    self.assertTrue(item["title"].strip())
+                    self.assertRegex(item["date"], r"^2026-\d{2}-\d{2}$")
+                    self.assert_allowed_url(item["url"])
 
-    def test_t06_filter_counts_are_5_4_1_5(self) -> None:
-        filters = {
-            button.get("data-filter")
-            for button in self.parser.buttons
-            if button.get("data-filter")
-        }
-        self.assertEqual(filters, {"all", "coding", "knowledge", "planning"})
-        counts = [
-            len(self.parser.cards),
-            sum("coding" in card.get("data-tags", "").split() for card in self.parser.cards),
-            sum("knowledge" in card.get("data-tags", "").split() for card in self.parser.cards),
-            sum("planning" in card.get("data-tags", "").split() for card in self.parser.cards),
-        ]
-        self.assertEqual(counts, [5, 4, 1, 5])
+    def test_all_thirteen_comparison_dimensions_exist(self):
+        for product in self.products:
+            with self.subTest(product=product["name"]):
+                self.assertEqual(set(product["comparison"]), COMPARISON_FIELDS)
+                self.assertTrue(all(value.strip() for value in product["comparison"].values()))
 
-    def test_t07_compare_is_limited_to_two(self) -> None:
-        select_buttons = [
-            button for button in self.parser.buttons if "select-button" in button.get("class", "").split()
-        ]
-        self.assertEqual(len(select_buttons), 5)
-        self.assertRegex(self.javascript, r"selectedAgents\.size\s*>=\s*2")
-        self.assertIn("比較できるのは2製品までです", self.javascript)
+    def test_source_ledger_has_enough_official_evidence(self):
+        source_count = 0
+        for product in self.products:
+            urls = [source["url"] for source in product["sources"]]
+            urls += [
+                product["latestUpdate"]["url"],
+                product["latestVideo"]["url"],
+                product["latestBlog"]["url"],
+                product["iconSource"],
+            ]
+            source_count += len(urls)
+            for url in urls:
+                self.assert_allowed_url(url)
+        self.assertGreaterEqual(source_count, 40)
+        self.assertIn('id="source-ledger"', self.html)
 
-    def test_t08_accessible_state_is_announced(self) -> None:
-        state_buttons = [button for button in self.parser.buttons if button.get("data-filter") or "select-button" in button.get("class", "")]
-        self.assertTrue(state_buttons)
-        self.assertTrue(all("aria-pressed" in button for button in state_buttons))
-        self.assertGreaterEqual(self.parser.aria_live, 2)
+    def test_variable_limits_are_not_fabricated(self):
+        current = self.html + json.dumps(self.products, ensure_ascii=False)
+        for forbidden in ("1日100回", "1日1,000回", "1日1万回", "月3,000 PU", "5hあたり45"):
+            self.assertNotIn(forbidden, current)
+
+    def test_accessibility_contract_is_present(self):
+        self.assertIn('aria-live="polite"', self.html)
+        self.assertIn('aria-pressed="true"', self.html)
+        self.assertIn(":focus-visible", self.css)
+        self.assertIn("prefers-reduced-motion", self.css)
+        self.assertIn("selectedIds.size >= 2", self.app)
+
+    def test_verification_date_and_scripts_are_visible(self):
+        self.assertGreaterEqual(self.html.count("2026-08-13"), 2)
+        self.assertIn('<script src="product-data.js"></script>', self.html)
+        self.assertIn('<script src="app.js"></script>', self.html)
+
+    def test_ten_review_passes_are_recorded(self):
+        review_path = ROOT / "SELF_REVIEW.md"
+        self.assertTrue(review_path.is_file())
+        review = review_path.read_text(encoding="utf-8")
+        self.assertEqual(len(re.findall(r"^## Review \d{2}:", review, re.MULTILINE)), 10)
+
+    def assert_allowed_url(self, url):
+        parsed = urlparse(url)
+        self.assertEqual(parsed.scheme, "https")
+        self.assertIn(parsed.hostname, ALLOWED_HOSTS)
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    unittest.main()

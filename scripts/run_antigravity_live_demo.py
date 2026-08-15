@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from html.parser import HTMLParser
 from pathlib import Path
+import json
 import re
 import sys
 
@@ -66,12 +67,24 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     html = _read_text(files["output_html"])
     css = _read_text(files["output_css"])
     javascript = _read_text(files["output_js"])
+    product_data_text = _read_text(files["output_data"])
+    self_review = _read_text(files["output_self_review"])
     cli_prompt = _read_text(files["prompt_cli"])
     sdk_prompt = _read_text(files["prompt_sdk"])
     sdk_script = _read_text(files["sdk_script"])
 
     parser = _SiteParser()
     parser.feed(html)
+
+    product_data_match = re.fullmatch(
+        r"window\.PRODUCT_DATA\s*=\s*(\[.*\]);",
+        product_data_text.strip(),
+        re.DOTALL,
+    )
+    try:
+        product_data = json.loads(product_data_match.group(1)) if product_data_match else []
+    except json.JSONDecodeError:
+        product_data = []
 
     expected_prompt_headers = ("Prompt 0 /", "Prompt 1 /", "Prompt 2 /", "Prompt 3B /", "Prompt 4 /", "Prompt 5 /", "Prompt 6 /")
     h1 = (
@@ -242,24 +255,45 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     )
 
     forbidden_runtime = ("fetch(", "XMLHttpRequest", "localStorage", "sessionStorage")
-    filter_buttons = [button for button in parser.buttons if "data-filter" in button]
-    select_buttons = [button for button in parser.buttons if "select-button" in button.get("class", "")]
+    scenario_buttons = [button for button in parser.buttons if "data-scenario" in button]
     compact_css = re.sub(r"\s+", " ", css)
+    expected_product_ids = {"codex", "claude-code", "claude-cowork", "kiro", "antigravity"}
+    product_ids = {product.get("id") for product in product_data}
+    comparison_fields = {tuple(product.get("comparison", {}).keys()) for product in product_data}
+    icon_paths = [files["output_dir"] / product.get("icon", "") for product in product_data]
+    source_count = sum(len(product.get("sources", [])) + 4 for product in product_data)
     h10 = (
         not parser.external_refs
         and all((files["output_dir"] / ref).is_file() for ref in parser.local_refs if not ref.startswith("mailto:"))
         and not any(marker in javascript for marker in forbidden_runtime)
         and "form" not in parser.tags
-        and files["hero_image"].stat().st_size > 100_000
-        and parser.headings == {"h1": 1, "h2": 5, "h3": 5}
-        and len(filter_buttons) == 4
-        and len(select_buttons) == 5
-        and all("aria-pressed" in button for button in parser.buttons)
-        and '@media (max-width: 640px)' in compact_css
-        and "selectedAgents.size >= 2" in javascript
+        and parser.headings == {"h1": 1, "h2": 5, "h3": 0}
+        and len(scenario_buttons) == 6
+        and all("aria-pressed" in button for button in scenario_buttons)
+        and product_ids == expected_product_ids
+        and len(product_data) == 5
+        and all(
+            product.get("release", {}).get("version")
+            and re.fullmatch(r"2026-\d{2}-\d{2}", product.get("release", {}).get("date", ""))
+            and all(
+                product.get(field, {}).get("title")
+                and re.fullmatch(r"2026-\d{2}-\d{2}", product.get(field, {}).get("date", ""))
+                and product.get(field, {}).get("url", "").startswith("https://")
+                for field in ("latestUpdate", "latestVideo", "latestBlog")
+            )
+            for product in product_data
+        )
+        and len(comparison_fields) == 1
+        and len(next(iter(comparison_fields), ())) == 13
+        and all(path.is_file() and path.stat().st_size > 1_000 for path in icon_paths)
+        and source_count == 40
+        and len(re.findall(r"^## Review \d{2}:", self_review, re.MULTILINE)) == 10
+        and SYNTHETIC_MARKER in _read_text(files["output_site_brief"])
+        and '@media (max-width: 680px)' in compact_css
+        and any(marker in javascript for marker in ("selectedAgents.size >= 2", "selectedIds.size >= 2"))
         and "90秒以上" in readme
         and backup.count("行わないでください") == 4
-        and "ローカル予備成果物" in _read_text(files["output_readme"])
+        and "Test-first flow" in _read_text(files["output_readme"])
     )
 
     hypotheses = [
@@ -297,6 +331,13 @@ def collect_demo_kit_status(project_root: Path = PROJECT_ROOT) -> dict[str, obje
         "output_html": output / "index.html",
         "output_css": output / "styles.css",
         "output_js": output / "app.js",
+        "output_data": output / "product-data.js",
+        "output_site_brief": output / "SITE_BRIEF.md",
+        "output_test_spec": output / "TEST_SPEC.md",
+        "output_icon_sources": output / "ICON_SOURCES.md",
+        "output_source_audit": output / "SOURCE_AUDIT.md",
+        "output_self_review": output / "SELF_REVIEW.md",
+        "output_contract_test": output / "tests" / "test_site_contract.py",
         "hero_image": output / "assets" / "workshop-hero.png",
         "prompt_cli": workshop / "PROMPT_10_CLI_READONLY.txt",
         "prompt_sdk": workshop / "PROMPT_11_SDK_READONLY.txt",

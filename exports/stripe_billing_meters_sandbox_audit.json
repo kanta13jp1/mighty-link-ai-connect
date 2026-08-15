@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "Billing Meterイベントペイロードが仕様に準拠",
+      "passed": true,
+      "detail": "Valid"
+    },
+    {
+      "id": "H2",
+      "title": "要配慮個人情報・生メールアドレスのメーター送信を完全遮断",
+      "passed": true,
+      "detail": "PII payload properly rejected"
+    },
+    {
+      "id": "H3",
+      "title": "全3種の定義済み課金メーター (analysis/sales_email/admin) の正常生成",
+      "passed": true,
+      "detail": "Events: ['admin_export_run', 'analysis_run', 'sales_email_match_run']"
+    },
+    {
+      "id": "H4",
+      "title": "冪等性キー (identifier) の指定と重複防止構造",
+      "passed": true,
+      "detail": "Idempotency key preserved"
+    },
+    {
+      "id": "H5",
+      "title": "Stripe Webhook 署名検証 (HMAC-SHA256) が正常動作",
+      "passed": true,
+      "detail": "Signature verified successfully"
+    },
+    {
+      "id": "H6",
+      "title": "不正署名 Webhook リクエストを安全に拒絶",
+      "passed": true,
+      "detail": "Invalid signature rejected"
+    },
+    {
+      "id": "H7",
+      "title": "リプレイ攻撃対策 (Timestamp Tolerance 超過リクエストの遮断)",
+      "passed": true,
+      "detail": "Timestamp outside tolerance window (600s > 300s)"
+    },
+    {
+      "id": "H8",
+      "title": "Stripe Billing 統合設計書 (T776/T791) が実在し整合",
+      "passed": true,
+      "detail": "STRIPE_BILLING_INTEGRATION_DESIGN.md"
+    },
+    {
+      "id": "H9",
+      "title": "Stripe Sandboxes 隔離運用方針（本番キー非混入・テストモード分離）",
+      "passed": true,
+      "detail": "Live keys excluded; Sandbox isolation enforced"
+    },
+    {
+      "id": "H10",
+      "title": "Stripe Billing Meters Sandbox 検証ハーネス総合判定",
+      "passed": true,
+      "detail": "PASS (ドリフト0)"
+    }
+  ]
+}
