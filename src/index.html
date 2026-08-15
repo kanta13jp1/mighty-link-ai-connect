@@ -3717,6 +3717,100 @@
                 justify-content: space-between;
             }
         }
+    
+        /* ======================================================== */
+        /* UNIFIED GLOBAL SAAS APP SHELL LAYOUT                     */
+        /* ======================================================== */
+        .app-shell-container {
+            display: grid;
+            grid-template-columns: 260px minmax(0, 1fr);
+            gap: 24px;
+            max-width: 1680px;
+            margin: 0 auto;
+            padding: 16px 20px 60px;
+            align-items: start;
+        }
+
+        .global-app-sidebar {
+            background: rgba(9, 13, 22, 0.92);
+            border: 1px solid rgba(24, 35, 56, 0.9);
+            border-radius: 16px;
+            padding: 20px 16px;
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 76px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            z-index: 40;
+        }
+
+        .global-app-sidebar .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .global-app-sidebar .sidebar-nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .global-app-sidebar .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .global-app-sidebar .sidebar-nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            transform: translateX(3px);
+        }
+
+        .global-app-sidebar .sidebar-nav-item.active {
+            background: rgba(186, 255, 102, 0.12);
+            border: 1px solid rgba(186, 255, 102, 0.4);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .global-app-sidebar .sidebar-nav-item.active .nav-indicator {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            margin-left: auto;
+            box-shadow: 0 0 6px var(--green);
+        }
+
+        .global-main-area {
+            min-width: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .app-shell-container {
+                grid-template-columns: 1fr;
+                padding: 12px 14px;
+            }
+            .global-app-sidebar {
+                position: static;
+                margin-bottom: 16px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -3757,10 +3851,10 @@
                 <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleNav()">☰</button>
             </div>
         </div>
-        <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
+        <!-- Primary Navigation handled by Unified Global SaaS Sidebar -->
+        <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation" style="display:none;">
             <a href="#top" data-i18n="nav_home">ホーム</a>
             <a href="#onboarding-section" data-i18n="nav_onboarding">初期セットアップ</a>
-            <a href="#training-modal" onclick="openTrainingModal(event)" data-i18n="nav_training">研修ガイド</a>
             <a href="#survey-section" data-i18n="nav_survey">適性アンケート</a>
             <a href="#aptitude-demo-section" data-i18n="nav_aptitude">自己診断デモ</a>
             <a href="#attendance-section" data-i18n="nav_attendance">勤怠管理</a>
@@ -3890,6 +3984,95 @@
     </div>
 
     <main id="top" tabindex="-1">
+
+    <div class="app-shell-container">
+        <!-- ======================================================== -->
+        <!-- UNIFIED GLOBAL SAAS SIDEBAR (Figma Untitled UI Parity)   -->
+        <!-- ======================================================== -->
+        <aside class="global-app-sidebar" aria-label="Global Workspace Navigation">
+            <div class="sidebar-brand">
+                <div style="width: 36px; height: 36px; border-radius: 10px; background: #162a15; border: 1.2px solid #baff66; display: flex; align-items: center; justify-content: center; font-size: 16px;">🛡️</div>
+                <div>
+                    <div style="font-size: 13px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px;">MIGHTY LINK</div>
+                    <div style="font-size: 10px; font-weight: 700; color: var(--green);">AI CONNECT PRO</div>
+                </div>
+            </div>
+
+            <div style="font-size: 10px; font-weight: 800; color: var(--muted); letter-spacing: 1px; margin-bottom: 10px; padding-left: 8px;">WORKSPACE APPS</div>
+
+            <nav class="sidebar-nav-list">
+                <!-- 1. Home / Fit Simulator -->
+                <a href="#top" class="sidebar-nav-item" data-tab-id="home-view">
+                    <span style="font-size: 15px;">🏠</span>
+                    <span>ホーム (AIシミュレーター)</span>
+                    <span class="nav-indicator"></span>
+                </a>
+
+                <!-- 2. Sales Email Matching -->
+                <a href="#matching-section" class="sidebar-nav-item active" data-tab-id="matching-section">
+                    <span style="font-size: 15px;">🤝</span>
+                    <span>営業メールAIマッチング</span>
+                    <span class="nav-indicator"></span>
+                </a>
+
+                <!-- 3. Admin Dashboard -->
+                <a href="#admin-dashboard-section" class="sidebar-nav-item" data-tab-id="admin-dashboard-section">
+                    <span style="font-size: 15px;">🛡️</span>
+                    <span>管理者統合ダッシュボード</span>
+                    <span class="nav-indicator"></span>
+                </a>
+
+                <!-- 4. Timesheet / Attendance -->
+                <a href="#attendance-section" class="sidebar-nav-item" data-tab-id="attendance-section">
+                    <span style="font-size: 15px;">⏱️</span>
+                    <span>勤務表・残業解析</span>
+                    <span class="nav-indicator"></span>
+                </a>
+
+                <!-- 5. Survey / Assessment -->
+                <a href="#survey-section" class="sidebar-nav-item" data-tab-id="survey-section">
+                    <span style="font-size: 15px;">📊</span>
+                    <span>適性・状況アンケート</span>
+                    <span class="nav-indicator"></span>
+                </a>
+
+                <!-- 6. Aptitude Demo -->
+                <a href="#aptitude-demo-section" class="sidebar-nav-item" data-tab-id="aptitude-demo-section">
+                    <span style="font-size: 15px;">📈</span>
+                    <span>自己診断デモ</span>
+                    <span class="nav-indicator"></span>
+                </a>
+
+                <!-- 7. Onboarding / Setup -->
+                <a href="#onboarding-section" class="sidebar-nav-item" data-tab-id="onboarding-section">
+                    <span style="font-size: 15px;">⚙️</span>
+                    <span>初期セットアップ</span>
+                    <span class="nav-indicator"></span>
+                </a>
+
+                <!-- 8. Training Guide -->
+                <a href="#training-modal" class="sidebar-nav-item" onclick="openTrainingModal(event)">
+                    <span style="font-size: 15px;">📖</span>
+                    <span>研修・ガイド</span>
+                </a>
+            </nav>
+
+            <!-- Bottom User Profile Card -->
+            <div style="margin-top: 28px; padding: 12px; border-radius: 12px; background: rgba(13, 20, 36, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: center; gap: 10px;">
+                <div style="width: 32px; height: 32px; border-radius: 50%; background: #162e12; border: 1.2px solid #baff66; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #baff66;">佐</div>
+                <div style="flex: 1; min-width: 0;">
+                    <div style="font-size: 12px; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">佐藤 賢太</div>
+                    <div style="font-size: 10px; color: var(--green);">最高統括管理者</div>
+                </div>
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green);"></span>
+            </div>
+        </aside>
+
+        <!-- ======================================================== -->
+        <!-- MAIN CONTENT VIEWPORT (Active Tab Display Area)          -->
+        <!-- ======================================================== -->
+        <div class="global-main-area">
+
         <!-- ==========================================================================
              HOME TAB VIEW (Landing Page & Fit Simulator)
              ========================================================================== -->
@@ -4813,178 +4996,7 @@
         <section id="admin-dashboard-section" class="app-tab-view internal-section fade-in-on-scroll" aria-label="管理者統合ダッシュボード">
             <div class="step-kicker" data-i18n="nav_admin">管理者ダッシュボード</div>
             
-            <!-- Enterprise SaaS 2-Column Container (Figma Layout Parity) -->
-            <div class="admin-saas-layout" style="
-                display: grid;
-                grid-template-columns: 260px 1fr;
-                gap: 24px;
-                align-items: start;
-                margin-top: 16px;
-            ">
-                <!-- ======================================================== -->
-                <!-- 1. LEFT SIDEBAR NAVIGATION (Figma Parity)                -->
-                <!-- ======================================================== -->
-                <aside class="admin-sidebar-nav" style="
-                    background: rgba(9, 13, 22, 0.92);
-                    border: 1px solid rgba(24, 35, 56, 0.9);
-                    border-radius: 16px;
-                    padding: 20px 16px;
-                    backdrop-filter: blur(12px);
-                    position: sticky;
-                    top: 80px;
-                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-                ">
-                    <!-- Brand / Console Badge -->
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
-                        <div style="width: 36px; height: 36px; border-radius: 10px; background: #162a15; border: 1.2px solid #baff66; display: flex; align-items: center; justify-content: center; font-size: 16px;">🛡️</div>
-                        <div>
-                            <div style="font-size: 13px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px;">MIGHTY LINK</div>
-                            <div style="font-size: 10px; font-weight: 700; color: var(--green);">ADMIN CONSOLE</div>
-                        </div>
-                    </div>
-
-                    <!-- Section Label -->
-                    <div style="font-size: 10px; font-weight: 800; color: var(--muted); letter-spacing: 1px; margin-bottom: 10px; padding-left: 8px;">ADMINISTRATION</div>
-
-                    <!-- Navigation Items List -->
-                    <nav style="display: flex; flex-direction: column; gap: 6px;">
-                        <!-- Nav 1: Admin Dashboard (Active) -->
-                        <a href="#admin-dashboard-section" class="admin-nav-item active" style="
-                            display: flex;
-                            align-items: center;
-                            gap: 12px;
-                            padding: 10px 12px;
-                            border-radius: 8px;
-                            background: rgba(186, 255, 102, 0.12);
-                            border: 1px solid rgba(186, 255, 102, 0.4);
-                            color: #ffffff;
-                            font-size: 13px;
-                            font-weight: 700;
-                            text-decoration: none;
-                        ">
-                            <span style="font-size: 15px;">🛡️</span>
-                            <span>管理者ダッシュボード</span>
-                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-left: auto;"></span>
-                        </a>
-
-                        <!-- Nav 2: Sales Email Matching -->
-                        <a href="#matching-section" class="admin-nav-item" style="
-                            display: flex;
-                            align-items: center;
-                            gap: 12px;
-                            padding: 10px 12px;
-                            border-radius: 8px;
-                            color: var(--muted);
-                            font-size: 13px;
-                            font-weight: 600;
-                            text-decoration: none;
-                            transition: all 0.2s ease;
-                        ">
-                            <span style="font-size: 15px;">🤝</span>
-                            <span>営業メールマッチング</span>
-                        </a>
-
-                        <!-- Nav 3: Timesheet / Attendance -->
-                        <a href="#attendance-section" class="admin-nav-item" style="
-                            display: flex;
-                            align-items: center;
-                            gap: 12px;
-                            padding: 10px 12px;
-                            border-radius: 8px;
-                            color: var(--muted);
-                            font-size: 13px;
-                            font-weight: 600;
-                            text-decoration: none;
-                            transition: all 0.2s ease;
-                        ">
-                            <span style="font-size: 15px;">⏱️</span>
-                            <span>勤務表・残業解析</span>
-                        </a>
-
-                        <!-- Nav 4: Assessment & Survey -->
-                        <a href="#survey-section" class="admin-nav-item" style="
-                            display: flex;
-                            align-items: center;
-                            gap: 12px;
-                            padding: 10px 12px;
-                            border-radius: 8px;
-                            color: var(--muted);
-                            font-size: 13px;
-                            font-weight: 600;
-                            text-decoration: none;
-                            transition: all 0.2s ease;
-                        ">
-                            <span style="font-size: 15px;">📊</span>
-                            <span>適性アンケート・診断</span>
-                        </a>
-
-                        <!-- Nav 5: Enterprise Audit Trail -->
-                        <a href="#admin-dashboard-section" onclick="document.querySelector('#admin-dashboard-section .comparison-table')?.scrollIntoView({behavior:'smooth'})" class="admin-nav-item" style="
-                            display: flex;
-                            align-items: center;
-                            gap: 12px;
-                            padding: 10px 12px;
-                            border-radius: 8px;
-                            color: var(--muted);
-                            font-size: 13px;
-                            font-weight: 600;
-                            text-decoration: none;
-                            transition: all 0.2s ease;
-                        ">
-                            <span style="font-size: 15px;">📜</span>
-                            <span>利用履歴ログ (Audit)</span>
-                        </a>
-
-                        <!-- Nav 6: Security / Settings -->
-                        <a href="#setup-section" class="admin-nav-item" style="
-                            display: flex;
-                            align-items: center;
-                            gap: 12px;
-                            padding: 10px 12px;
-                            border-radius: 8px;
-                            color: var(--muted);
-                            font-size: 13px;
-                            font-weight: 600;
-                            text-decoration: none;
-                            transition: all 0.2s ease;
-                        ">
-                            <span style="font-size: 15px;">⚙️</span>
-                            <span>セキュリティ・初期設定</span>
-                        </a>
-
-                        <!-- Nav 7: System Monitoring -->
-                        <a href="#infra-monitoring-section" class="admin-nav-item" style="
-                            display: flex;
-                            align-items: center;
-                            gap: 12px;
-                            padding: 10px 12px;
-                            border-radius: 8px;
-                            color: var(--muted);
-                            font-size: 13px;
-                            font-weight: 600;
-                            text-decoration: none;
-                            transition: all 0.2s ease;
-                        ">
-                            <span style="font-size: 15px;">🖥️</span>
-                            <span>稼働モニタリング</span>
-                        </a>
-                    </nav>
-
-                    <!-- Bottom User Profile Card -->
-                    <div style="margin-top: 32px; padding: 12px; border-radius: 12px; background: rgba(13, 20, 36, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: center; gap: 10px;">
-                        <div style="width: 32px; height: 32px; border-radius: 50%; background: #162e12; border: 1.2px solid #baff66; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #baff66;">佐</div>
-                        <div style="flex: 1; min-width: 0;">
-                            <div style="font-size: 12px; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">佐藤 賢太</div>
-                            <div style="font-size: 10px; color: var(--green);">最高統括管理者</div>
-                        </div>
-                        <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green);"></span>
-                    </div>
-                </aside>
-
-                <!-- ======================================================== -->
-                <!-- 2. RIGHT MAIN CONTENT AREA                               -->
-                <!-- ======================================================== -->
-                <div class="admin-main-content" style="min-width: 0;">
+            <!-- Admin Main Content -->
                     <div class="comparison-controls" style="margin-bottom: 20px;">
                         <h2 data-i18n="admin_title" style="font-size: 22px; font-weight: 800; color: #ffffff;">社内診断・勤怠＆マッチング統合管理ダッシュボード</h2>
                         <span class="control-label" data-i18n="admin_subtitle">社員の適性診断、稼働状況、および営業メール案件マッチングの統括監視</span>
@@ -5389,7 +5401,9 @@
             </div>
         </footer>
 
-    </main>
+            </div> <!-- end .global-main-area -->
+    </div> <!-- end .app-shell-container -->
+</main>
 
     <script>
         const seedanceFallbackVideo = "exports/seedance_demo/mighty_skill_bridge_seedance_demo.mp4";
@@ -5484,7 +5498,7 @@
         }
 
         // ==========================================================================
-        // Tabbed SPA Multi-Page View Switching Engine
+        // UNIFIED GLOBAL SAAS TABBED ROUTING ENGINE
         // ==========================================================================
         function switchAppTab(targetId, updateHistory = true) {
             if (!targetId || targetId === '#top' || targetId === '#home' || targetId === 'top' || targetId === 'home') {
@@ -5517,34 +5531,34 @@
                 targetId = 'home-view';
             }
 
-            // Update Top Navigation active state
-            const navLinks = document.querySelectorAll('.nav-links a, .mobile-nav-link');
-            navLinks.forEach(link => {
+            // Synchronize Global Sidebar Navigation Items
+            const sidebarLinks = document.querySelectorAll('.global-app-sidebar .sidebar-nav-item');
+            sidebarLinks.forEach(link => {
                 const href = link.getAttribute('href') || '';
+                const tabAttr = link.getAttribute('data-tab-id') || '';
                 const linkTarget = href.replace(/^#/, '');
-                if ((targetId === 'home-view' && (linkTarget === 'top' || linkTarget === 'home' || !linkTarget)) ||
-                    (linkTarget && targetId === linkTarget)) {
+
+                const isMatch = (targetId === 'home-view' && (linkTarget === 'top' || linkTarget === 'home' || tabAttr === 'home-view')) ||
+                                (tabAttr && targetId === tabAttr) ||
+                                (linkTarget && targetId === linkTarget);
+
+                if (isMatch) {
                     link.classList.add('active');
                 } else {
                     link.classList.remove('active');
                 }
             });
 
-            // Update Admin Sidebar active state
-            const adminNavLinks = document.querySelectorAll('.admin-nav-item');
-            adminNavLinks.forEach(link => {
+            // Synchronize Mobile Bottom Navigation
+            const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileLinks.forEach(link => {
                 const href = link.getAttribute('href') || '';
                 const linkTarget = href.replace(/^#/, '');
-                if (linkTarget && targetId === linkTarget) {
+                if ((targetId === 'home-view' && (linkTarget === 'top' || linkTarget === 'home')) ||
+                    (linkTarget && targetId === linkTarget)) {
                     link.classList.add('active');
-                    link.style.background = 'rgba(186, 255, 102, 0.12)';
-                    link.style.border = '1px solid rgba(186, 255, 102, 0.4)';
-                    link.style.color = '#ffffff';
                 } else {
                     link.classList.remove('active');
-                    link.style.background = 'transparent';
-                    link.style.border = '1px solid transparent';
-                    link.style.color = 'var(--muted)';
                 }
             });
 
@@ -5562,7 +5576,7 @@
             const initialHash = window.location.hash || '#top';
             switchAppTab(initialHash, false);
 
-            // Intercept navigation clicks to switch tabs smoothly
+            // Intercept navigation clicks globally
             document.addEventListener('click', (e) => {
                 const targetLink = e.target.closest('a[href^="#"]');
                 if (targetLink && !targetLink.hasAttribute('onclick')) {
