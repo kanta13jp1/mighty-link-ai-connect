@@ -16,22 +16,7 @@ if "APPDATA" not in os.environ:
 
 from firebase_functions import https_fn, options
 from firebase_admin import initialize_app
-from src.app import app
-from a2wsgi import ASGIMiddleware
-
-# Initialize Firebase Admin SDK
-try:
-    initialize_app()
-except ValueError:
-    # Already initialized (e.g. during local tests)
-    pass
-
 # Convert FastAPI (ASGI) to WSGI lazily, on the first request.
-# ASGIMiddleware starts a daemon thread running its asyncio event loop. The
-# production runtime (functions-framework -> gunicorn) imports this module in
-# the gunicorn master and then forks workers; threads do not survive fork, so
-# a loop created at import time has no running thread inside the worker and
-# every request blocks forever on run_coroutine_threadsafe(...).result().
 _wsgi_app = None
 _wsgi_lock = threading.Lock()
 
@@ -41,6 +26,12 @@ def _get_wsgi_app():
     if _wsgi_app is None:
         with _wsgi_lock:
             if _wsgi_app is None:
+                try:
+                    initialize_app()
+                except ValueError:
+                    pass
+                from a2wsgi import ASGIMiddleware
+                from src.app import app
                 _wsgi_app = ASGIMiddleware(app)
     return _wsgi_app
 
