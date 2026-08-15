@@ -4797,24 +4797,51 @@
                     </div>
                 </div>
 
-                <div class="dashboard-grid" style="margin-bottom: 32px;">
-                    <div class="panel" style="min-height: auto;">
-                        <span class="step-kicker" style="color: var(--blue); background: rgba(139, 220, 255, 0.05);">稼働健全性</span>
-                        <h2>平均月間時間外労働</h2>
-                        <div class="card-stat stat-blue" id="dashboard-stat-ot">18.5 H</div>
-                        <span class="control-label" style="margin-top: 8px;">過重労働アラート: 0件 (閾値45H)</span>
+                <!-- 4-Column Bento Grid KPI Cards (Figma Admin Dashboard Parity) -->
+                <div class="admin-kpi-bento-grid" style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                    gap: 16px;
+                    margin-bottom: 24px;
+                ">
+                    <!-- KPI 1: Total Engineers -->
+                    <div class="kpi-bento-card" style="background: rgba(13, 20, 36, 0.75); border: 1px solid rgba(139, 220, 255, 0.18); border-radius: 12px; padding: 16px 20px; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; font-weight: 700; color: var(--muted);">総管理エンジニア数</span>
+                            <span style="font-size: 10px; font-weight: 800; color: var(--blue); background: rgba(139, 220, 255, 0.12); border-radius: 4px; padding: 2px 6px;">稼働率 95.2%</span>
+                        </div>
+                        <div style="font-size: 26px; font-weight: 900; color: #ffffff;">42 <small style="font-size: 14px; color: var(--muted); font-weight: 500;">名</small></div>
+                        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">稼働中 40名 / 即時待機 2名</div>
                     </div>
-                    <div class="panel" style="min-height: auto;">
-                        <span class="step-kicker" style="color: var(--green); background: rgba(186, 255, 102, 0.05);">コンディション</span>
-                        <h2>モチベーション平均値</h2>
-                        <div class="card-stat stat-green" id="dashboard-stat-motivation">4.3 / 5</div>
-                        <span class="control-label" style="margin-top: 8px;">アンケート提出率: 100% (5/5名)</span>
+
+                    <!-- KPI 2: Placement Conversion -->
+                    <div class="kpi-bento-card" style="background: rgba(13, 20, 36, 0.75); border: 1px solid rgba(139, 220, 255, 0.18); border-radius: 12px; padding: 16px 20px; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; font-weight: 700; color: var(--muted);">AIマッチング成約確度</span>
+                            <span style="font-size: 10px; font-weight: 800; color: var(--green); background: rgba(186, 255, 102, 0.12); border-radius: 4px; padding: 2px 6px;">↑ +14.2% 向上</span>
+                        </div>
+                        <div style="font-size: 26px; font-weight: 900; color: var(--green);">82.4<small style="font-size: 14px; font-weight: 600;">%</small></div>
+                        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">高適合案件提案数: <strong style="color: var(--text);">18件</strong></div>
                     </div>
-                    <div class="panel" style="min-height: auto;">
-                        <span class="step-kicker" style="color: var(--yellow); background: rgba(255, 209, 102, 0.05);">最優先MVP</span>
-                        <h2>営業メールAIマッチング</h2>
-                        <div class="card-stat stat-yellow" id="dashboard-stat-matching">87.5 %</div>
-                        <span class="control-label" style="margin-top: 8px;">未処理の抽出案件: 14通 (本日分)</span>
+
+                    <!-- KPI 3: Overtime Health -->
+                    <div class="kpi-bento-card" style="background: rgba(13, 20, 36, 0.75); border: 1px solid rgba(139, 220, 255, 0.18); border-radius: 12px; padding: 16px 20px; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; font-weight: 700; color: var(--muted);">平均月間残業時間</span>
+                            <span style="font-size: 10px; font-weight: 800; color: var(--blue); background: rgba(139, 220, 255, 0.12); border-radius: 4px; padding: 2px 6px;">✓ 36協定遵守</span>
+                        </div>
+                        <div class="card-stat stat-blue" id="dashboard-stat-ot" style="font-size: 26px; font-weight: 900; margin: 0;">14.2 <small style="font-size: 14px; color: var(--muted); font-weight: 500;">h</small></div>
+                        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">過重労働アラート: <strong style="color: var(--green);">0件</strong> (上限45h)</div>
+                    </div>
+
+                    <!-- KPI 4: Security & Audit Health -->
+                    <div class="kpi-bento-card" style="background: rgba(13, 20, 36, 0.75); border: 1px solid rgba(139, 220, 255, 0.18); border-radius: 12px; padding: 16px 20px; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; font-weight: 700; color: var(--muted);">セキュリティ＆稼働率</span>
+                            <span style="font-size: 10px; font-weight: 800; color: var(--green); background: rgba(186, 255, 102, 0.12); border-radius: 4px; padding: 2px 6px;">監査ログ正常</span>
+                        </div>
+                        <div style="font-size: 26px; font-weight: 900; color: #ffffff;">99.98<small style="font-size: 14px; font-weight: 600; color: var(--green);">%</small></div>
+                        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">改ざん防止ハッシュ検証: <strong style="color: var(--green);">全件PASS</strong></div>
                     </div>
                 </div>
 
@@ -4893,6 +4920,51 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                <!-- Enterprise 操作監査ログ (Audit Trail / T971) 改ざん防止テーブル -->
+                <div class="panel" style="margin-top: 24px; min-height: auto; background: rgba(13, 20, 36, 0.75); border: 1px solid rgba(139, 220, 255, 0.18); border-radius: 14px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+                        <div>
+                            <span class="step-kicker" style="color: var(--blue); background: rgba(139, 220, 255, 0.05); margin-bottom: 6px; display: inline-block;">SECURITY &amp; COMPLIANCE (T971)</span>
+                            <h3 style="font-size: 16px; font-weight: 800; color: var(--text); margin: 0;">📜 Enterprise 操作監査ログ (改ざん防止ハッシュ検証)</h3>
+                        </div>
+                        <span style="font-size: 11px; font-weight: 800; color: var(--green); background: rgba(186, 255, 102, 0.12); border: 1px solid rgba(186, 255, 102, 0.3); border-radius: 4px; padding: 3px 8px;">✓ SHA-256 検証済</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="comparison-table" style="min-width: 780px;">
+                            <thead>
+                                <tr>
+                                    <th>日時 / タイムスタンプ</th>
+                                    <th>実行ユーザー</th>
+                                    <th>操作イベント種別</th>
+                                    <th>対象リソース・詳細</th>
+                                    <th>改ざん防止ハッシュ検証</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="color: var(--muted); font-size: 12px;">2026/08/16 00:45:12</td>
+                                    <td style="font-weight: 600;">佐藤 賢太 <small style="color:var(--blue)">(Admin)</small></td>
+                                    <td><span style="font-size: 10px; font-weight: 800; color: var(--green); background: rgba(186, 255, 102, 0.12); border-radius: 4px; padding: 2px 6px;">MATCH_PROPOSAL</span></td>
+                                    <td style="font-size: 12px;">案件「AIエージェント連携基盤開発」提案文生成</td>
+                                    <td><span style="font-size: 11px; font-weight: 700; color: var(--green);">✓ sha256:8f9a2e... PASS</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: var(--muted); font-size: 12px;">2026/08/16 00:32:05</td>
+                                    <td style="font-weight: 600;">山田 花子 <small style="color:var(--muted)">(Manager)</small></td>
+                                    <td><span style="font-size: 10px; font-weight: 800; color: var(--blue); background: rgba(139, 220, 255, 0.12); border-radius: 4px; padding: 2px 6px;">TIMESHEET_APPROVE</span></td>
+                                    <td style="font-size: 12px;">8月度勤務表インポート承認 (ID: imp-202608)</td>
+                                    <td><span style="font-size: 11px; font-weight: 700; color: var(--green);">✓ sha256:3c14d7... PASS</span></td>
+                                </tr>
+                                <tr>
+                                    <td style="color: var(--muted); font-size: 12px;">2026/08/16 00:15:30</td>
+                                    <td style="font-weight: 600;">システム <small style="color:var(--yellow)">(System Auto)</small></td>
+                                    <td><span style="font-size: 10px; font-weight: 800; color: var(--yellow); background: rgba(255, 209, 102, 0.12); border-radius: 4px; padding: 2px 6px;">SCHEDULE_REFRESH</span></td>
+                                    <td style="font-size: 12px;">営業メール 691件 全件AIマッチング再計算</td>
+                                    <td><span style="font-size: 11px; font-weight: 700; color: var(--green);">✓ sha256:9a4b12... PASS</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
