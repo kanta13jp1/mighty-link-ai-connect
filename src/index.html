@@ -3857,6 +3857,42 @@
             }
         }
 
+    
+        /* ======================================================== */
+        /* WORLD-CLASS UI/UX: STRICT VISIBILITY & ZERO CLIPPING     */
+        /* ======================================================== */
+        /* 1. Eliminate Duplicate Topbar Nav */
+        .topbar .nav-links {
+            display: none !important;
+        }
+
+        /* 2. Fix Sidebar Top Clipping */
+        .global-app-sidebar {
+            position: sticky !important;
+            top: 84px !important;
+            height: calc(100vh - 104px) !important;
+            overflow-y: auto !important;
+            margin-top: 0 !important;
+            background: rgba(9, 13, 22, 0.95) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        /* 3. Ensure Active Tab & its Contents are NEVER Hidden by Scroll Observers */
+        .app-tab-view.tab-active {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+        }
+
+        .app-tab-view.tab-active .fade-in-on-scroll,
+        .app-tab-view.tab-active .internal-section {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+        }
+
     </style>
 </head>
 <body>
@@ -5620,6 +5656,17 @@
             }
 
             currentActiveTabId = targetId;
+
+            // Ensure all child elements inside active tab are fully visible
+            const activeView = document.getElementById(targetId === 'home-view' ? 'home-view' : targetId);
+            if (activeView) {
+                activeView.querySelectorAll('.fade-in-on-scroll').forEach(el => {
+                    el.classList.add('is-visible');
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                });
+            }
+
 
             // 2. Synchronize Global Sidebar Navigation Items & ARIA
             const sidebarLinks = document.querySelectorAll('.global-app-sidebar .sidebar-nav-item');
