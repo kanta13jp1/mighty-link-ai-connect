@@ -90,7 +90,7 @@
   "runtime_findings": [
     {
       "path": "src/app.py",
-      "line": 379,
+      "line": 380,
       "model": "gemini-3.5-flash",
       "context": "USER_EMAIL = \"k-umezawa@ml-mightylink.com\" GEMINI_MODEL = os.environ.get(\"GEMINI_MODEL\", \"gemini-3.5-flash\") GEMINI_DAILY_CALL_LIMIT = env_int(\"GEMINI_DAILY_CALL_LIMIT\", 20, 0, 100",
       "severity": "ok",

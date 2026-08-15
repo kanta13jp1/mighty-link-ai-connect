@@ -43,6 +43,8 @@
 
 残り30分は質疑応答と予備時間です。Q&Aでは、時間と質問に応じて公式動画、Nano Banana実画像、Screenshot Artifactへの位置指定コメントを扱います。90秒以上進展が見えない工程は停止し、完成済みローカル成果物またはバックアッププロンプトへ切り替えます。
 
+Q&Aまたは予備時間の先頭には、5分の`Figma Slides -> PowerPoint`追加デモを選択できます。30分本編はAntigravityだけで完結させ、追加デモではFigma公式のCodex連携経路を使います。全文プロンプト、PPTX書き出し、変換制約、90秒復旧は[`FIGMA_POWERPOINT_DEMO.md`](FIGMA_POWERPOINT_DEMO.md)に固定します。
+
 ## プロンプト
 
 1. `PROMPT_00_GRILL_ME.txt`: 最大2問で要件と成功条件を確定する。
@@ -59,6 +61,7 @@
 12. `PROMPT_10_CLI_READONLY.txt`: Antigravity CLIへ貼り付け、同じrepoを読み取り専用で監査する本編用プロンプト。
 13. `PROMPT_11_SDK_READONLY.txt`: Antigravity SDKから実行する読み取り専用の本編用プロンプト。
 14. `antigravity_sdk_readonly.py`: SDKをread-only toolsだけで動かし、結果をstream表示する実行ファイル。
+15. `PROMPT_12_FIGMA_POWERPOINT.txt`: Figma Slidesで3枚を作り、確認後にPPTXへ書き出すQ&A用プロンプト。
 
 ## テスト駆動の見せ方
 
@@ -91,6 +94,7 @@ Prompt 7-9は30分本編に含めません。リハーサルでは公開後の�
 - `SITE_BRIEF.md`に`SYNTHETIC_DATA_ONLY`があり、秘密情報と個人情報がない。
 - 製品数が5件で、料金、クォータ、診断、検索、エクスポート、テーマ切替がない。
 - PowerPointを編集表示で開き、各プロンプトを全文コピーできる。
+- Figma追加デモを行う場合は、Codex AppのFigmaプラグイン認証と作成先teamの固定を会場入り前に完了している。
 - Python 3で`unittest`を実行でき、外部テストライブラリを追加しない。
 
 ```powershell

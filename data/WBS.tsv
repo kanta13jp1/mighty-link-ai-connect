@@ -384,6 +384,7 @@ T948	9. 長期保守・拡張	AI開発	Instructor + Pydantic v2 を活用した�
 T957	8. 本番運用・品質管理	インフラ	8/7 インフラチーム技術聴取サインオフパック作成（認証Fail-Closed・POP3・Backup CIの3軸エビデンス集約）	Antigravity	Antigravity + Gemini	docs/INFRA_HEARING_SIGN_OFF_PACK_2026-08-07.mdを策定し、杉村様向けに①T913-915 認証保護/Fail-Closed、②T910 POP3メール取り込み、③T870 Supabase Backup CIの実行エビデンス・構成図・監査ログを集約して運用サインオフを完了化	完了	2026-08-14	2026-08-14
 T958	8. 本番運用・品質管理	収益化	Stripe Billing Meters API Sandbox検証ハーネスの実装とWebhook・計量イベント自動テスト	Antigravity + Codex	VSCode + Codex + Antigravity + Stripe	T791有償化に向け、Stripe Billing Meters API専用Sandbox環境を想定した計量イベント送信・重複排除・Webhook署名検証の自動テストハーネス（scripts/verify_stripe_billing_meters_sandbox.py、tests/test_stripe_billing_meters_sandbox.py）を実装・全件PASS検証完了	完了	2026-08-15	2026-08-15
 T959	1. 企画・設計	企画戦略	8/24有償化Go/No-Go意思決定パッケージ策定・ミキワメAI連携PoCプロトタイプ・営業リード獲得プロモーション準備	Antigravity	Antigravity + Gemini	2026-08-15 企画戦略担当による直近最重要マイルストーン完遂。docs/PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-08-24.md策定（精度80%エビデンス、法定3文書サインオフ）、docs/MIKIWAME_AI_INTEGRATION_POC_DESIGN.md策定およびPro向けミキワメAI連携PoCデモUI実装、docs/SALES_PROPOSAL_EFFECTIVENESS_SUMMARY.md更新（成約時間97%削減・事前登録キャンペーン）を完了。	完了	2026-08-15	2026-08-15
+T960	8. 本番運用・品質管理	教育・研修	Figma Slides連携によるPowerPoint生成5分デモと完成済み予備資料の統合	Codex	Codex App + Figma MCP + Figma Slides + Artifact Tool + PowerPoint	30分Antigravity本編を維持したままQ&A・予備時間へFigma SlidesからPPTXを生成する5分追加デモを設計。全文コピー可能なPROMPT_12、公式PPTX書き出し手順、フォント・グラデーション・静止画化の変換制約、複数team選択の事前固定、90秒復旧、完成済み5枚PowerPointを追加。PPTX再読込後に全5枚を原寸確認し、文字切れ・重なりなし、slides_test overflow 0、speaker notes Sources 5/5を確認	完了	2026-08-15	2026-08-15
 
 
 

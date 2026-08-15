@@ -33,8 +33,11 @@ def build_path_map(md_files: list[Path]) -> dict[str, Path]:
     for p in md_files:
         rel = p.relative_to(PROJECT_ROOT).as_posix()
         path_map[rel] = p
-        path_map[p.stem] = p
-        path_map[p.name] = p
+        # Basename aliases are convenient for WikiLinks, but duplicate names
+        # must not overwrite a canonical repository-relative path such as
+        # root-level AGENTS.md.
+        path_map.setdefault(p.stem, p)
+        path_map.setdefault(p.name, p)
     return path_map
 
 

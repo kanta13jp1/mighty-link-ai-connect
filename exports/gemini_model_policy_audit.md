@@ -21,7 +21,7 @@ No blockers.
 
 | Path | Line | Model | Severity | Reason |
 | --- | ---: | --- | --- | --- |
-| src/app.py | 379 | `gemini-3.5-flash` | ok | stable_production_model |
+| src/app.py | 380 | `gemini-3.5-flash` | ok | stable_production_model |
 | src/sales_email_parser.py | 13 | `gemini-3.5-flash` | ok | stable_production_model |
 | src/structured_ai.py | 104 | `gemini-3.5-flash` | ok | stable_production_model |
 | scripts/sync_docs_to_notebooklm.py | 964 | `gemini-3.5-flash` | ok | stable_production_model |

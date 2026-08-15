@@ -36,6 +36,23 @@ def test_collect_md_files_excludes_local_cache_directories(tmp_path, monkeypatch
     assert set(knowledge_graph.collect_md_files()) == {tracked_doc}
 
 
+def test_build_path_map_preserves_canonical_path_with_duplicate_basename(
+    tmp_path, monkeypatch
+):
+    nested_dir = tmp_path / ".agents" / "skills" / "example"
+    nested_dir.mkdir(parents=True)
+    root_agents = tmp_path / "AGENTS.md"
+    nested_agents = nested_dir / "AGENTS.md"
+    root_agents.write_text("# Root\n", encoding="utf-8")
+    nested_agents.write_text("# Skill\n", encoding="utf-8")
+    monkeypatch.setattr(knowledge_graph, "PROJECT_ROOT", tmp_path)
+
+    path_map = knowledge_graph.build_path_map([root_agents, nested_agents])
+
+    assert path_map["AGENTS.md"] == root_agents
+    assert path_map[".agents/skills/example/AGENTS.md"] == nested_agents
+
+
 def test_zero_isolated_markdown_files():
     """Verify that 100% of markdown files are connected in the knowledge graph (isolated: 0)."""
     isolated = connect_all_knowledge_nodes()
