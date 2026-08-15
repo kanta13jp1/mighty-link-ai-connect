@@ -2970,6 +2970,21 @@
             background: rgba(139, 220, 255, 0.05);
             transform: translateY(-2px);
         }
+        /* Enterprise SaaS 2-Column Sidebar Layout */
+        .admin-nav-item:hover {
+            background: rgba(255, 255, 255, 0.06) !important;
+            color: #ffffff !important;
+            transform: translateX(4px);
+        }
+        @media (max-width: 960px) {
+            .admin-saas-layout {
+                grid-template-columns: 1fr !important;
+            }
+            .admin-sidebar-nav {
+                position: static !important;
+                margin-bottom: 20px;
+            }
+        }
         .analytics-hero-label {
             font-size: 12px;
             color: var(--muted);
@@ -4773,29 +4788,201 @@
              ========================================================================= -->
         <section id="admin-dashboard-section" class="internal-section fade-in-on-scroll" aria-label="管理者統合ダッシュボード">
             <div class="step-kicker" data-i18n="nav_admin">管理者ダッシュボード</div>
-            <div class="comparison-container">
-                <div class="comparison-controls">
-                    <h2 data-i18n="admin_title">社内診断・勤怠＆マッチング統合管理</h2>
-                    <span class="control-label" data-i18n="admin_subtitle">社員の適性診断、稼働状況、および営業メール案件マッチングの統括監視</span>
-                </div>
+            
+            <!-- Enterprise SaaS 2-Column Container (Figma Layout Parity) -->
+            <div class="admin-saas-layout" style="
+                display: grid;
+                grid-template-columns: 260px 1fr;
+                gap: 24px;
+                align-items: start;
+                margin-top: 16px;
+            ">
+                <!-- ======================================================== -->
+                <!-- 1. LEFT SIDEBAR NAVIGATION (Figma Parity)                -->
+                <!-- ======================================================== -->
+                <aside class="admin-sidebar-nav" style="
+                    background: rgba(9, 13, 22, 0.92);
+                    border: 1px solid rgba(24, 35, 56, 0.9);
+                    border-radius: 16px;
+                    padding: 20px 16px;
+                    backdrop-filter: blur(12px);
+                    position: sticky;
+                    top: 80px;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+                ">
+                    <!-- Brand / Console Badge -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.06);">
+                        <div style="width: 36px; height: 36px; border-radius: 10px; background: #162a15; border: 1.2px solid #baff66; display: flex; align-items: center; justify-content: center; font-size: 16px;">🛡️</div>
+                        <div>
+                            <div style="font-size: 13px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px;">MIGHTY LINK</div>
+                            <div style="font-size: 10px; font-weight: 700; color: var(--green);">ADMIN CONSOLE</div>
+                        </div>
+                    </div>
 
-                <div class="panel" style="min-height: auto; margin-bottom: 24px;">
-                    <div class="form-grid-2col">
-                        <div>
-                            <label for="admin-dashboard-username" class="control-label">Admin username</label>
-                            <input type="text" id="admin-dashboard-username" class="text-input" autocomplete="username" placeholder="admin">
+                    <!-- Section Label -->
+                    <div style="font-size: 10px; font-weight: 800; color: var(--muted); letter-spacing: 1px; margin-bottom: 10px; padding-left: 8px;">ADMINISTRATION</div>
+
+                    <!-- Navigation Items List -->
+                    <nav style="display: flex; flex-direction: column; gap: 6px;">
+                        <!-- Nav 1: Admin Dashboard (Active) -->
+                        <a href="#admin-dashboard-section" class="admin-nav-item active" style="
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            padding: 10px 12px;
+                            border-radius: 8px;
+                            background: rgba(186, 255, 102, 0.12);
+                            border: 1px solid rgba(186, 255, 102, 0.4);
+                            color: #ffffff;
+                            font-size: 13px;
+                            font-weight: 700;
+                            text-decoration: none;
+                        ">
+                            <span style="font-size: 15px;">🛡️</span>
+                            <span>管理者ダッシュボード</span>
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-left: auto;"></span>
+                        </a>
+
+                        <!-- Nav 2: Sales Email Matching -->
+                        <a href="#matching-section" class="admin-nav-item" style="
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            padding: 10px 12px;
+                            border-radius: 8px;
+                            color: var(--muted);
+                            font-size: 13px;
+                            font-weight: 600;
+                            text-decoration: none;
+                            transition: all 0.2s ease;
+                        ">
+                            <span style="font-size: 15px;">🤝</span>
+                            <span>営業メールマッチング</span>
+                        </a>
+
+                        <!-- Nav 3: Timesheet / Attendance -->
+                        <a href="#attendance-section" class="admin-nav-item" style="
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            padding: 10px 12px;
+                            border-radius: 8px;
+                            color: var(--muted);
+                            font-size: 13px;
+                            font-weight: 600;
+                            text-decoration: none;
+                            transition: all 0.2s ease;
+                        ">
+                            <span style="font-size: 15px;">⏱️</span>
+                            <span>勤務表・残業解析</span>
+                        </a>
+
+                        <!-- Nav 4: Assessment & Survey -->
+                        <a href="#survey-section" class="admin-nav-item" style="
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            padding: 10px 12px;
+                            border-radius: 8px;
+                            color: var(--muted);
+                            font-size: 13px;
+                            font-weight: 600;
+                            text-decoration: none;
+                            transition: all 0.2s ease;
+                        ">
+                            <span style="font-size: 15px;">📊</span>
+                            <span>適性アンケート・診断</span>
+                        </a>
+
+                        <!-- Nav 5: Enterprise Audit Trail -->
+                        <a href="#admin-dashboard-section" onclick="document.querySelector('#admin-dashboard-section .comparison-table')?.scrollIntoView({behavior:'smooth'})" class="admin-nav-item" style="
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            padding: 10px 12px;
+                            border-radius: 8px;
+                            color: var(--muted);
+                            font-size: 13px;
+                            font-weight: 600;
+                            text-decoration: none;
+                            transition: all 0.2s ease;
+                        ">
+                            <span style="font-size: 15px;">📜</span>
+                            <span>利用履歴ログ (Audit)</span>
+                        </a>
+
+                        <!-- Nav 6: Security / Settings -->
+                        <a href="#setup-section" class="admin-nav-item" style="
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            padding: 10px 12px;
+                            border-radius: 8px;
+                            color: var(--muted);
+                            font-size: 13px;
+                            font-weight: 600;
+                            text-decoration: none;
+                            transition: all 0.2s ease;
+                        ">
+                            <span style="font-size: 15px;">⚙️</span>
+                            <span>セキュリティ・初期設定</span>
+                        </a>
+
+                        <!-- Nav 7: System Monitoring -->
+                        <a href="#infra-monitoring-section" class="admin-nav-item" style="
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            padding: 10px 12px;
+                            border-radius: 8px;
+                            color: var(--muted);
+                            font-size: 13px;
+                            font-weight: 600;
+                            text-decoration: none;
+                            transition: all 0.2s ease;
+                        ">
+                            <span style="font-size: 15px;">🖥️</span>
+                            <span>稼働モニタリング</span>
+                        </a>
+                    </nav>
+
+                    <!-- Bottom User Profile Card -->
+                    <div style="margin-top: 32px; padding: 12px; border-radius: 12px; background: rgba(13, 20, 36, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: #162e12; border: 1.2px solid #baff66; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #baff66;">佐</div>
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="font-size: 12px; font-weight: 700; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">佐藤 賢太</div>
+                            <div style="font-size: 10px; color: var(--green);">最高統括管理者</div>
                         </div>
-                        <div>
-                            <label for="admin-dashboard-password" class="control-label">Admin password</label>
-                            <input type="password" id="admin-dashboard-password" class="text-input" autocomplete="current-password" placeholder="********">
+                        <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green);"></span>
+                    </div>
+                </aside>
+
+                <!-- ======================================================== -->
+                <!-- 2. RIGHT MAIN CONTENT AREA                               -->
+                <!-- ======================================================== -->
+                <div class="admin-main-content" style="min-width: 0;">
+                    <div class="comparison-controls" style="margin-bottom: 20px;">
+                        <h2 data-i18n="admin_title" style="font-size: 22px; font-weight: 800; color: #ffffff;">社内診断・勤怠＆マッチング統合管理ダッシュボード</h2>
+                        <span class="control-label" data-i18n="admin_subtitle">社員の適性診断、稼働状況、および営業メール案件マッチングの統括監視</span>
+                    </div>
+
+                    <div class="panel" style="min-height: auto; margin-bottom: 24px;">
+                        <div class="form-grid-2col">
+                            <div>
+                                <label for="admin-dashboard-username" class="control-label">Admin username</label>
+                                <input type="text" id="admin-dashboard-username" class="text-input" autocomplete="username" placeholder="admin">
+                            </div>
+                            <div>
+                                <label for="admin-dashboard-password" class="control-label">Admin password</label>
+                                <input type="password" id="admin-dashboard-password" class="text-input" autocomplete="current-password" placeholder="********">
+                            </div>
+                        </div>
+                        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:16px;">
+                            <button type="button" class="big-btn" onclick="loadOperationsDashboard()">Load real data</button>
+                            <button type="button" class="sample-btn" onclick="downloadOperationsDashboardCsv(event)">CSV export</button>
+                            <span class="support-status" id="admin-dashboard-status">Static demo data</span>
                         </div>
                     </div>
-                    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:16px;">
-                        <button type="button" class="big-btn" onclick="loadOperationsDashboard()">Load real data</button>
-                        <button type="button" class="sample-btn" onclick="downloadOperationsDashboardCsv(event)">CSV export</button>
-                        <span class="support-status" id="admin-dashboard-status">Static demo data</span>
-                    </div>
-                </div>
 
                 <!-- 4-Column Bento Grid KPI Cards (Figma Admin Dashboard Parity) -->
                 <div class="admin-kpi-bento-grid" style="
