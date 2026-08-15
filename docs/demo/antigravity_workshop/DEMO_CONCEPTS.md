@@ -16,15 +16,15 @@
 
 ## Antigravityの3つの操作面
 
-Antigravity 2.0、Antigravity CLI、Antigravity SDKは、同じagent harnessを用途に応じて異なる操作面から使います。本デモでは別モデルの優劣ではなく、同じ仕事をどの入口から任せるかを見せます。
+Antigravity 2.0、Antigravity CLI、Antigravity SDKは、同じagent harnessを用途に応じて異なる操作面から使えます。本デモの30分本編は、IDEではなくAntigravity 2.0だけでWeb制作を進めます。CLIとSDKはQ&A用の比較対象です。
 
 | 操作面 | 画面で見せるもの | 向いている場面 | 本デモの役割 |
 | --- | --- | --- | --- |
-| Antigravity 2.0（IDE） | Agent Manager、Editor、Browser、Artifacts | 計画、実装、視覚確認を行き来する開発 | 学習サイトを作り、Skill適用前後をBrowserで確認する |
+| Antigravity 2.0 | Projects、Agent、Browser、Artifacts、MCP、Skills | IDEから独立したアプリで計画、実装、視覚確認を行き来する | 学習サイトを作り、Skill適用前後をBrowserで確認し、Figma MCPも使う |
 | Antigravity CLI | keyboard-driven TUI、tool実行、短い結果 | terminal-first、SSH、軽量な反復 | 同じrepoのHTML/CSS/JSを読み取り専用で監査する |
 | Antigravity SDK | Pythonコード、policy、stream出力 | agentをアプリや定期処理へ組み込む | `BuiltinTools.read_only()`で監査agentをプログラム実行する |
 
-IDEは人が画面を見ながら共同作業する入口、CLIはターミナルからすばやく指示する入口、SDKは決めたagent動作をコードから繰り返す入口です。CLIとSDKで本番サイトを追加変更すると差分が競合しやすいため、30分本編ではread-only監査へ限定します。
+Antigravity 2.0は複数Projectとagentを管理する独立アプリ、CLIはターミナルからすばやく指示する入口、SDKは決めたagent動作をコードから繰り返す入口です。30分本編では操作面をAntigravity 2.0へ一本化し、CLIとSDKは操作しません。
 
 ## 主要機能マトリックス
 
@@ -106,7 +106,7 @@ Powersは2026年8月9日時点でKiro IDE向けです。Antigravity、Codex、Cl
 
 Model Context Protocolは、AIエージェントをローカルツール、データ、外部APIへ接続する標準です。接続によって読取りだけでなく書込みToolも利用可能になり得るため、接続済みであることと、実行してよい操作は別に判断します。
 
-今回のデモではGitHub MCPを読み取り専用で使用し、専用リポジトリのbranch、最新commit、Pages deploymentを確認します。未接続なら会場で認証を始めず、`git`と公開URL確認へ進みます。
+今回のデモではFigma remote MCPを使用します。最初にaccount、team、project、Slides書き込みToolを読み取り確認し、予定どおりの場合だけ3枚のFigma Slidesを作ります。Figma MCPはSlidesの作成と編集を担い、PPTX書き出しと最終確認はFigma UIとPowerPointで人が行います。未接続、作成先不一致、利用上限、再認証要求のいずれかがあればライブ作成を停止し、リハーサル済み成果物へ切り替えます。
 
 ## Antigravity Artifacts
 
@@ -117,7 +117,7 @@ ArtifactsはAntigravityが生成する構造化された成果物です。Implem
 - 計画と停止条件。
 - 初版とSkill適用後のコード差分。
 - desktopとmobileのブラウザ結果。
-- MCPの読取り結果。
+- Figma MCPのaccount、team、project確認と3枚のSlides URL。
 - commit、Pages deployment、公開URL。
 
 ## 実リハーサルで確認したAntigravity固有の体験

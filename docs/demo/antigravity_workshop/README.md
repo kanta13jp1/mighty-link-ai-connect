@@ -1,17 +1,17 @@
 # Antigravity 8/26 AIエージェント学習サイト ライブデモキット
 
-2026年8月26日の社内AI研修で、AIエージェントを使うと短時間でどこまで成果物を作れるかを見せる30分デモです。ライブ操作は低価格で利用しやすいAntigravityだけを使い、同じagent coreをAntigravity 2.0（IDE）、Antigravity CLI、Antigravity SDKの3つの操作面で見せます。Codex、Claude Code、Claude Cowork、Kiro、Antigravityの違いは学習サイトとPowerPointで比較します。
+2026年8月26日の社内AI研修で、AIエージェントを使うと短時間でどこまで成果物を作れるかを見せる30分デモです。ライブ操作は低価格で利用しやすいAntigravityだけを使い、IDEではなく独立したデスクトップアプリのAntigravity 2.0からWebサイトの要件整理、テスト仕様、実装、Browser検証、GitHub Pages公開まで進めます。MCPの実演ではFigma remote MCPを使い、3枚のFigma Slidesを編集可能なPowerPointへ書き出します。Codex、Claude Code、Claude Cowork、Kiro、Antigravityの違いは学習サイトとPowerPointで比較します。
 
-投影資料は`exports/mighty_skill_bridge_antigravity_user_guide_2026.pptx`です。PowerPointから全文をコピー＆ペーストできるプロンプト、事前準備、Skill導入、GitHub Pages公開、リハーサル後の復元、90秒復旧を記載します。
+投影資料は`exports/mighty_skill_bridge_antigravity2_figma_mcp_powerpoint_demo_2026.pptx`です。PowerPointから全文をコピー＆ペーストできるプロンプト、事前準備、Skill導入、Figma MCP、GitHub Pages公開、リハーサル後の復元、90秒復旧を記載します。元資料は上書きしません。
 
 ## ゴール
 
-観客が「AIエージェントは、要件整理、テスト仕様、専門能力の追加、制作、検証、外部サービス連携、公開までを一つの流れとして進められる」と理解することがゴールです。学習サイト自体は研修教材ではなく、短時間でも完成度の高い成果物を作れることを示すデモ成果物です。
+観客が「AIエージェントは、要件整理、テスト仕様、専門能力の追加、Web制作、検証、MCPによる外部サービス連携、公開までを一つの流れとして進められる」と理解することがゴールです。学習サイトと3枚のPowerPointは、短時間でも複数のToolをまたぐ完成度の高い成果物を作れることを示すデモ成果物です。
 
 30分後の到達目標は次の3点です。
 
 1. AIエージェントが、期待動作をテストで固定し、計画、Tool実行、証拠確認までつなぐことを説明できる。
-2. IDE、CLI、SDKを、見る・素早く確認する・仕組みに組み込むという役割で使い分けられる。
+2. SkillとMCPの違いを、仕事の型と外部Toolへの接続として説明できる。
 3. 目的、境界、証拠、承認を人が持つことで、安全に仕事を任せられる。
 
 ## MIXI研修を参考にした進行設計
@@ -33,17 +33,15 @@
 | 00:00-02:00 | ゴールと5製品比較 | ライブ操作をAntigravityへ絞る理由 | 3つの到達目標と参加者の経験値 |
 | 02:00-04:00 | `/grill-me` | 実装前の質問、推奨案、成功条件の確定 | `DECISIONS`に境界と成功条件がある |
 | 04:00-07:00 | `/find-skills` + Skill導入 | 品質比較とproject-local導入 | 公開元、監査、導入先を説明できる |
-| 07:00-10:00 | IDEでテスト仕様作成 | `TEST_SPEC.md`と契約テストを先に作る | サイト未作成でREDになる |
-| 10:00-15:00 | IDEで初版作成 | テストを変えずにHTML/CSSを実装 | T01-T05 PASS、T06-T08 FAILになる |
-| 15:00-18:00 | IDEでSkill適用 | 絞り込み、2製品比較、2 viewport | 自動8件とBrowser確認がGREENになる |
-| 18:00-20:00 | Antigravity CLI | 同じrepoをターミナルから読み取り監査 | 件数、操作、safetyを短い結果で確認できる |
-| 20:00-22:00 | Antigravity SDK | Pythonからread-only agentを実行し結果をstream表示 | read-only policyとstream出力が見える |
-| 22:00-24:00 | MCP確認 | GitHubを読み取り専用確認 | repo、branch、commit、Pages状態が一致する |
-| 24:00-30:00 | Pages公開 + Proof | 明示承認、push、HTTPS、操作結果 | 8 tests、HTTPS、5製品、2件比較、最新commitが一致する |
+| 07:00-10:00 | Antigravity 2.0でテスト仕様作成 | `TEST_SPEC.md`と契約テストを先に作る | サイト未作成でREDになる |
+| 10:00-15:00 | Antigravity 2.0で初版作成 | テストを変えずにHTML/CSSを実装 | T01-T05 PASS、T06-T08 FAILになる |
+| 15:00-20:00 | Skill適用 + Browser検証 | 絞り込み、2製品比較、2 viewport | 自動8件とBrowser確認がGREENになる |
+| 20:00-25:00 | Figma MCP + PowerPoint | 3枚のFigma Slidesを作り、編集可能PPTXへ書き出す | team、project、3枚、編集可能テキストを確認できる |
+| 25:00-30:00 | Pages公開 + Proof | 明示承認、push、HTTPS、操作結果 | 8 tests、HTTPS、5製品、2件比較、最新commitが一致する |
 
-残り30分は質疑応答と予備時間です。Q&Aでは、時間と質問に応じて公式動画、Nano Banana実画像、Screenshot Artifactへの位置指定コメントを扱います。90秒以上進展が見えない工程は停止し、完成済みローカル成果物またはバックアッププロンプトへ切り替えます。
+残り30分は質疑応答と予備時間です。Q&Aでは、時間と質問に応じてAntigravity CLI / SDKの違い、公式動画、Nano Banana実画像、Screenshot Artifactへの位置指定コメントを扱います。90秒以上進展が見えない工程は停止し、完成済みローカル成果物またはバックアッププロンプトへ切り替えます。
 
-Q&Aまたは予備時間の先頭には、5分の`Figma Slides -> PowerPoint`追加デモを選択できます。30分本編はAntigravityだけで完結させ、追加デモではFigma公式のCodex連携経路を使います。全文プロンプト、PPTX書き出し、変換制約、90秒復旧は[`FIGMA_POWERPOINT_DEMO.md`](FIGMA_POWERPOINT_DEMO.md)に固定します。
+Figma MCPの5分セグメントは本編に含めます。全文プロンプト、PPTX書き出し、変換制約、90秒復旧は[`FIGMA_POWERPOINT_DEMO.md`](FIGMA_POWERPOINT_DEMO.md)に固定します。
 
 ## プロンプト
 
@@ -53,15 +51,15 @@ Q&Aまたは予備時間の先頭には、5分の`Figma Slides -> PowerPoint`追
 4. `PROMPT_03_TEST_SPEC.txt`: サイトより先にテスト仕様書と8件の契約テストを作り、REDを確認する。
 5. `PROMPT_03_BUILD.txt`: テストを変えず、JavaScriptなしの初版を作って基本5件をPASSさせる。
 6. `PROMPT_04_APPLY_SKILL.txt`: `/frontend-design`で比較機能を実装し、自動8件をGREENにする。
-7. `PROMPT_05_MCP_CHECK.txt`: GitHub MCPを読み取り専用で確認する。
+7. `PROMPT_05_MCP_CHECK.txt`: Figma MCPのaccount、team、project、Slides書き込みToolを読み取り確認する。
 8. `PROMPT_06_PUBLISH.txt`: 人の明示承認後だけGitHub Pagesへ公開する。
 9. `PROMPT_07_OFFICIAL_VIDEO.txt`: 動画の公式性を照合してから埋め込むQ&A用プロンプト。
 10. `PROMPT_08_NANO_BANANA.txt`: Nano Banana 2を使う画像生成Toolで実画像を1枚作るQ&A用プロンプト。
 11. `PROMPT_09_VISUAL_FEEDBACK_COMMENT.txt`: Screenshot Artifactへ位置指定コメントを残すQ&A用プロンプト。
-12. `PROMPT_10_CLI_READONLY.txt`: Antigravity CLIへ貼り付け、同じrepoを読み取り専用で監査する本編用プロンプト。
-13. `PROMPT_11_SDK_READONLY.txt`: Antigravity SDKから実行する読み取り専用の本編用プロンプト。
-14. `antigravity_sdk_readonly.py`: SDKをread-only toolsだけで動かし、結果をstream表示する実行ファイル。
-15. `PROMPT_12_FIGMA_POWERPOINT.txt`: Figma Slidesで3枚を作り、確認後にPPTXへ書き出すQ&A用プロンプト。
+12. `PROMPT_10_CLI_READONLY.txt`: Q&AでAntigravity CLIの違いを示す読み取り専用プロンプト。
+13. `PROMPT_11_SDK_READONLY.txt`: Q&AでAntigravity SDKの違いを示す読み取り専用プロンプト。
+14. `antigravity_sdk_readonly.py`: SDKをread-only toolsだけで動かす参考実装。
+15. `PROMPT_12_FIGMA_POWERPOINT.txt`: 本編でFigma MCPから3枚のFigma Slidesを作るプロンプト。
 
 ## テスト駆動の見せ方
 
@@ -79,69 +77,38 @@ Prompt 7-9は30分本編に含めません。リハーサルでは公開後の�
 
 ## 事前準備
 
-専用リポジトリ`kanta13jp1/mighty-link-antigravity-live-demo`をAntigravityで開きます。GitHub Pagesは`main`の`/(root)`から公開するよう事前設定し、公開URLを`https://kanta13jp1.github.io/mighty-link-antigravity-live-demo/`に固定します。
+専用リポジトリ`kanta13jp1/mighty-link-antigravity-live-demo`をAntigravity 2.0の専用Projectへ登録します。GitHub Pagesは`main`の`/(root)`から公開するよう事前設定し、公開URLを`https://kanta13jp1.github.io/mighty-link-antigravity-live-demo/`に固定します。
 
 デモ開始前に次を確認します。
 
-- Antigravityにサインイン済みで、専用リポジトリだけを開いている。
-- Antigravity CLIの`agy`をインストールし、専用repoで対話TUIを一度起動してサインイン、表示テーマ、workspace trustを完了している。`/permissions`で対象4ファイルの読み取りだけを事前承認し、書き込み、command、URLアクセスは承認しない。
-- 専用のPython仮想環境へ`google-antigravity`をインストールし、`GEMINI_API_KEY`を安全な環境変数として設定した上で、`antigravity_sdk_readonly.py --dry-run`と実行リハーサルを完了している。
+- Antigravity 2.0にサインイン済みで、デモ専用Projectだけを開いている。
+- Projectへ登録されたfolderが専用リポジトリだけで、Project permissionsがデモ範囲に限定されている。
 - `git remote -v`が専用リポジトリ、現在branchが`main`である。
 - Node.js、Git、`npx skills`、ブラウザが利用できる。
 - workspace Skillの`/grill-me`と`/find-skills`がSlash Commandへ表示される。
 - `frontend-design`はまだインストールされていない。
-- GitHub MCPは接続済みなら使用し、未接続なら会場で認証しない。
+- Figma remote MCPはAntigravity 2.0で接続済みで、会場では再認証しない。
+- Figma作成先が`kanta13jp1's team / Team project`、project IDが`264549730`である。
+- Figma Slidesの作成、3枚確認、editable PPTX equivalent書き出しをリハーサル済みである。
 - `SITE_BRIEF.md`に`SYNTHETIC_DATA_ONLY`があり、秘密情報と個人情報がない。
 - 製品数が5件で、料金、クォータ、診断、検索、エクスポート、テーマ切替がない。
 - PowerPointを編集表示で開き、各プロンプトを全文コピーできる。
-- Figma追加デモを行う場合は、Codex AppのFigmaプラグイン認証と作成先teamの固定を会場入り前に完了している。
+- 完成済みのFigma Slides URLと予備PPTXを開ける。
 - Python 3で`unittest`を実行でき、外部テストライブラリを追加しない。
 
 ```powershell
 python scripts/run_antigravity_live_demo.py
 ```
 
-CLIとSDKの導入・認証は本番中に行いません。Windowsでの事前準備は次のとおりです。
+API keyや認証tokenはPowerPoint、repo、コマンド履歴へ記載しません。Figma OAuth、MCP接続、team、project、利用上限は会場入り前に確認します。本番中に認証を要求された場合はその場で認証せず、リハーサル済みFigma Slidesまたは予備PPTXへ切り替えます。
 
-```powershell
-irm https://antigravity.google/cli/install.ps1 | iex
-agy --version
+## 本編で使う操作面
 
-python -m venv .venv-antigravity-sdk
-.\.venv-antigravity-sdk\Scripts\Activate.ps1
-python -m pip install --upgrade pip google-antigravity
-python .\antigravity_sdk_readonly.py --workspace . --dry-run
-```
+- **Antigravity 2.0**: IDEから独立したデスクトップアプリ。Project内で要件、計画、Tool実行、ファイル差分、Browser、Artifactsを確認しながらWeb制作を進める。
+- **Figma MCP**: Antigravity 2.0からFigmaのaccount、team、project、Slidesへ接続し、3枚の編集可能な資料を作る。
+- **Figma Slides / PowerPoint**: Figmaで視覚と構造を確認し、editable PPTX equivalentとして書き出してPowerPointで最終確認する。
 
-API keyや認証tokenはPowerPoint、repo、コマンド履歴へ記載しません。現在のPCでは`GEMINI_API_KEY`をWindowsのユーザー環境変数へローカル設定し、SDK packageの導入、dry-run、実通信まで検証済みです。2026年8月10日の実通信では、9製品、フィルター、2件比較、`SYNTHETIC_DATA_ONLY`をread-onlyで監査し、ストリーミング結果を取得できました。本番中にCLIまたはSDKが認証を要求した場合はその場で認証せず、リハーサル済み画面へ切り替えます。
-
-キー値を表示せず、ユーザー環境変数の設定有無だけを確認する場合は次を実行します。
-
-```powershell
-$configured = -not [string]::IsNullOrWhiteSpace([Environment]::GetEnvironmentVariable('GEMINI_API_KEY', 'User'))
-Write-Output "GEMINI_API_KEY configured: $configured"
-```
-
-CLI本番は対話TUIの`agy`を使います。非対話の`agy -p`はAsk権限を確認できず自動拒否されるため、リハーサルでも本番でも使いません。`--dangerously-skip-permissions`も使いません。
-
-## IDE・CLI・SDKの見せ分け
-
-- **Antigravity 2.0（IDE）**: 要件、計画、コード差分、Browser、Screenshot Artifactを一画面で見ながら作る。
-- **Antigravity CLI**: `agy`のTUIへ`PROMPT_10_CLI_READONLY.txt`を全文貼り付け、同じrepoを短く監査する。ファイル変更はさせない。
-- **Antigravity SDK**: Pythonコードでagentのsystem instructionsとread-only toolsを固定し、`PROMPT_11_SDK_READONLY.txt`を自動投入してstream結果を表示する。
-
-CLI本番操作:
-
-```powershell
-agy
-```
-
-起動後、PowerPointのCLIプロンプトを全文貼り付けます。SDK本番操作:
-
-```powershell
-.\.venv-antigravity-sdk\Scripts\Activate.ps1
-python .\antigravity_sdk_readonly.py --workspace .
-```
+Antigravity IDE、CLI、SDKは30分本編では操作しません。違いを質問された場合だけQ&Aで説明します。
 
 ## 事前導入する2つのSkill
 
@@ -219,6 +186,8 @@ git push origin main
 
 `--copy`で導入したSkillは、Skills CLIの`remove`後もフォルダーと`skills-lock.json`が残る場合があります。そのため、専用repoの`.agents/skills`直下であることを検証してから残存ファイル、空フォルダー、今回だけ生成されたlock fileを削除します。復元後は`npx skills list --json`で`frontend-design`がないこと、公開URLが「準備中」へ戻ったこと、`git status --short`が空であることを確認します。`/grill-me`と`/find-skills`は本番でも使うため削除しません。
 
+Figma側は、リハーサルで作成したファイル名とURLを記録し、本番用の予備ファイルと区別します。リハーサル専用ファイルだけをFigmaのTrashへ移動し、team、project、MCP接続、予備ファイルは残します。共有中または用途不明のファイルは削除しません。
+
 ## 停止条件
 
 - 専用リポジトリ以外が開かれている。
@@ -226,6 +195,8 @@ git push origin main
 - `SITE_BRIEF.md`に`SYNTHETIC_DATA_ONLY`がない。
 - 追跡対象に認証情報、トークン、個人情報、顧客情報が含まれる。
 - Skillの公開元またはインストール先を確認できない。
+- Figma account、team、project IDのいずれかが予定と違う。
+- Figma MCPのSlides書き込みToolがない、利用上限に達した、またはOAuth再認証を要求された。
 - 登壇者が正確に「公開して」と回答していない。
 - 90秒以上、画面上の進展がない。
 

@@ -444,6 +444,7 @@ gantt
 | **T975** | 8. 本番運用・品質管理 | 収益化 | Webブラウザ拡張連携API＆成約成果報酬連動型Stripe計量請求モジュールの実装（Action 16） | Antigravity + Codex | VSCode + Codex + Antigravity + Stripe + Chrome API | 第4期PdMレビューAction 16。Gmailや外部Web求人画面から即座にマッチング照合できるブラウザ拡張連携APIおよび成約時の成果報酬をStripe Billing Metersと連動して自動計量・請求するモジュール（src/browser_extension_bridge.py）を実装。テスト（tests/test_browser_extension_bridge.py）を完了。 | 完了 |
 | **T976** | 8. 本番運用・品質管理 | 教育・研修 | Figma公式Conference Talkテンプレート選定とAntigravityユーザーガイド編集可能PPTX再設計 | Codex | VSCode + Codex + Figma + Artifact Tool | 公式Figma Slides候補3件を採点しConference Talkを選定。元PPTX36枚・画像5点・全文プロンプト・発表者ノートを保持した別名PPTXを公式配色と編集可能テキストで再設計。全36枚の表示テキスト完全一致、ノート36/36、出典36/36、overflow 0、画像5/5、元資料SHA-256不変を確認し、指定Team projectにFigma Slides作業ファイルを作成 | 完了 |
 | **T977** | 8. 本番運用・品質管理 | 教育・研修 | Figma Slides作業ファイルへの36枚ネイティブ反映とCommunity複製配置の完了確認 | Codex | Figma Slides + Figma MCP + Browser | StarterプランのFigma MCP操作上限解除後に、作成済みFigma Slidesへ36枚を8枚以下のバッチで反映し、Community Conference Talk複製のTeam project配置とPPTXネイティブ書き出しを再確認する | 未着手 |
+| **T978** | 8. 本番運用・品質管理 | 教育・研修 | Web制作主役のAntigravity 2.0＋Figma MCP PowerPointデモ資料再構成 | Codex | Antigravity 2.0 + Figma MCP + PowerPoint + Artifact Tool | 30分本編をテスト仕様・Web実装・Browser検証・GitHub Pages公開中心へ再構成し、Figma MCPから指定Team projectへ3枚のFigma Slidesを作成して編集可能PPTXを開く5分セグメントを追加。全文プロンプトを正本と一致させた別名PPTX36枚を出力し、overflow 0と元資料非上書きを確認 | 完了 |
 
 ---
 
