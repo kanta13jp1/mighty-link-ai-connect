@@ -4274,7 +4274,7 @@
              ステップ定義は /api/onboarding/state をSSOTとして取得し、UIとゲート判定が
              乖離しないようにする。進捗は localStorage のみに保持し、個人情報は保存しない。
              ========================================================================== -->
-        <section id="onboarding-section" class="internal-section fade-in-on-scroll" aria-label="初期セットアップ・アクティベーション">
+        <section id="onboarding-section" class="app-tab-view internal-section fade-in-on-scroll" aria-label="初期セットアップ・アクティベーション">
             <div class="step-kicker" data-i18n="onboard_title">初期セットアップ</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
@@ -4322,7 +4322,7 @@
         <!-- ==========================================================================
              Step 3: 従業員向け適性・状況診断アンケート回答フォーム (T840)
              ========================================================================== -->
-        <section id="survey-section" class="internal-section fade-in-on-scroll" aria-label="従業員適性・状況アンケート">
+        <section id="survey-section" class="app-tab-view internal-section fade-in-on-scroll" aria-label="従業員適性・状況アンケート">
             <div class="step-kicker" data-i18n="nav_survey">適性アンケート</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
@@ -4389,7 +4389,7 @@
         <!-- ==========================================================================
              Step 3.5: 適性・モチベーション自己診断デモ (T876)
              ========================================================================== -->
-        <section id="aptitude-demo-section" class="internal-section fade-in-on-scroll" aria-label="適性・モチベーション自己診断デモ">
+        <section id="aptitude-demo-section" class="app-tab-view internal-section fade-in-on-scroll" aria-label="適性・モチベーション自己診断デモ">
             <div class="step-kicker" data-i18n="nav_aptitude">自己診断デモ</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
@@ -4446,7 +4446,7 @@
         <!-- ==========================================================================
              Step 4: 勤務表自動解析・ジョブカン風簡易勤怠打刻 (T841)
              ========================================================================== -->
-        <section id="attendance-section" class="internal-section fade-in-on-scroll" aria-label="勤怠管理・勤務表解析">
+        <section id="attendance-section" class="app-tab-view internal-section fade-in-on-scroll" aria-label="勤怠管理・勤務表解析">
             <div class="step-kicker" data-i18n="nav_attendance">勤怠管理</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
@@ -4518,7 +4518,7 @@
         <!-- ==========================================================================
              営業メールAIマッチング (一般向け公開セクション)
              ========================================================================= -->
-        <section id="matching-section" class="internal-section fade-in-on-scroll" aria-label="営業メールAIマッチング">
+        <section id="matching-section" class="app-tab-view internal-section fade-in-on-scroll" aria-label="営業メールAIマッチング">
             <div class="step-kicker" data-i18n="nav_matching">営業メールマッチング</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
@@ -4786,7 +4786,7 @@
         <!-- ==========================================================================
              Step 5: 管理者向け統合ダッシュボード (T842)
              ========================================================================= -->
-        <section id="admin-dashboard-section" class="internal-section fade-in-on-scroll" aria-label="管理者統合ダッシュボード">
+        <section id="admin-dashboard-section" class="app-tab-view internal-section fade-in-on-scroll" aria-label="管理者統合ダッシュボード">
             <div class="step-kicker" data-i18n="nav_admin">管理者ダッシュボード</div>
             
             <!-- Enterprise SaaS 2-Column Container (Figma Layout Parity) -->
@@ -5458,6 +5458,106 @@
                 return `session-${Date.now()}`;
             }
         }
+
+        // ==========================================================================
+        // Tabbed SPA Multi-Page View Switching Engine
+        // ==========================================================================
+        function switchAppTab(targetId, updateHistory = true) {
+            if (!targetId || targetId === '#top' || targetId === '#home' || targetId === 'top' || targetId === 'home') {
+                targetId = 'home-view';
+            } else {
+                targetId = targetId.replace(/^#/, '');
+            }
+
+            const allTabViews = document.querySelectorAll('.app-tab-view');
+            let matched = false;
+
+            allTabViews.forEach(view => {
+                const isHomeElement = view.classList.contains('home-tab-element') || view.id === 'home-view';
+                if ((targetId === 'home-view' && isHomeElement) || (view.id === targetId)) {
+                    view.style.display = '';
+                    view.classList.add('tab-active');
+                    matched = true;
+                } else {
+                    view.style.display = 'none';
+                    view.classList.remove('tab-active');
+                }
+            });
+
+            if (!matched) {
+                allTabViews.forEach(view => {
+                    if (view.classList.contains('home-tab-element') || view.id === 'home-view') {
+                        view.style.display = '';
+                        view.classList.add('tab-active');
+                    } else {
+                        view.style.display = 'none';
+                        view.classList.remove('tab-active');
+                    }
+                });
+                targetId = 'home-view';
+            }
+
+            // Update Top Navigation active state
+            const navLinks = document.querySelectorAll('.nav-links a, .mobile-nav-link');
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href') || '';
+                const linkTarget = href.replace(/^#/, '');
+                if ((targetId === 'home-view' && (linkTarget === 'top' || linkTarget === 'home' || !linkTarget)) ||
+                    (linkTarget && targetId.includes(linkTarget))) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Update Admin Sidebar active state
+            const adminNavLinks = document.querySelectorAll('.admin-nav-item');
+            adminNavLinks.forEach(link => {
+                const href = link.getAttribute('href') || '';
+                const linkTarget = href.replace(/^#/, '');
+                if (linkTarget && targetId.includes(linkTarget)) {
+                    link.classList.add('active');
+                    link.style.background = 'rgba(186, 255, 102, 0.12)';
+                    link.style.border = '1px solid rgba(186, 255, 102, 0.4)';
+                    link.style.color = '#ffffff';
+                } else {
+                    link.classList.remove('active');
+                    link.style.background = 'transparent';
+                    link.style.border = '1px solid transparent';
+                    link.style.color = 'var(--muted)';
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (updateHistory && history.pushState) {
+                const hashToSet = targetId === 'home-view' ? '#top' : `#${targetId}`;
+                if (window.location.hash !== hashToSet) {
+                    history.pushState(null, '', hashToSet);
+                }
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const initialHash = window.location.hash || '#top';
+            switchAppTab(initialHash, false);
+
+            // Intercept navigation clicks to switch tabs smoothly
+            document.addEventListener('click', (e) => {
+                const targetLink = e.target.closest('a[href^="#"]');
+                if (targetLink && !targetLink.hasAttribute('onclick')) {
+                    const href = targetLink.getAttribute('href');
+                    if (href && href !== '#' && !href.startsWith('#training-modal')) {
+                        e.preventDefault();
+                        switchAppTab(href, true);
+                    }
+                }
+            });
+        });
+
+        window.addEventListener('hashchange', () => {
+            switchAppTab(window.location.hash || '#top', false);
+        });
 
         function toggleNav() {
             const links = document.querySelector(".nav-links");
