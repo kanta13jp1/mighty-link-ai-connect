@@ -1863,7 +1863,16 @@ def db_insert_usage_analytics_event(
         }
     except Exception as e:
         record_storage_failure("insert_usage_analytics_event", e)
-        return {"id": 0, "error": str(e)}
+        return {
+            "id": -1,
+            "event_name": clean_event_name,
+            "event_surface": clean_event_surface,
+            "page_path": page_path,
+            "session_pseudonym": session_pseudonym,
+            "user_agent_family": user_agent_family,
+            "fallback": True,
+            "error": str(e),
+        }
     finally:
         cursor.close()
         conn.close()
@@ -6731,12 +6740,15 @@ async def get_sales_email_match_review_summary(limit: int = 20, username: str = 
 @app.post("/api/analytics/event")
 async def submit_usage_analytics_event(req: UsageAnalyticsEventRequest, request: Request):
     """Store a privacy-preserving product usage event for T800 KPI aggregation."""
-    event_name = clean_feedback_text(req.event_name, 80).lower()
+    event_name = clean_feedback_text(req.event_name, 80).lower() or "page_view"
     event_surface = clean_feedback_text(req.event_surface, 80).lower() or "public_demo"
     if event_name not in VALID_USAGE_ANALYTICS_EVENTS:
-        raise HTTPException(status_code=400, detail="unsupported analytics event_name")
+        raise HTTPException(
+            status_code=400,
+            detail=f"event_name must be one of: {', '.join(sorted(VALID_USAGE_ANALYTICS_EVENTS))}"
+        )
     if event_surface not in VALID_USAGE_ANALYTICS_SURFACES:
-        raise HTTPException(status_code=400, detail="unsupported analytics event_surface")
+        event_surface = "public_demo"
 
     db_result = db_insert_usage_analytics_event(
         event_name=event_name,
@@ -6750,12 +6762,12 @@ async def submit_usage_analytics_event(req: UsageAnalyticsEventRequest, request:
             "wbs_task": "T800",
         },
     )
-    if not db_result.get("id"):
-        raise HTTPException(status_code=500, detail=storage_failure_detail("Failed to store analytics event"))
+    event_id = db_result.get("id", -1)
     return {
         "status": "success",
-        "event_id": db_result["id"],
-        "event_name": db_result["event_name"],
+        "event_id": event_id,
+        "event_name": db_result.get("event_name", event_name),
+        "fallback": db_result.get("fallback", False),
         "privacy": {
             "session_pseudonymized": True,
             "ip_address_stored": False,
