@@ -3851,10 +3851,10 @@
                 <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleNav()">☰</button>
             </div>
         </div>
-        <!-- Primary Navigation handled by Unified Global SaaS Sidebar -->
-        <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation" style="display:none;">
-            <a href="#top" data-i18n="nav_home">ホーム</a>
+        <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
+            <a href="#top" class="active" data-i18n="nav_home">ホーム</a>
             <a href="#onboarding-section" data-i18n="nav_onboarding">初期セットアップ</a>
+            <a href="#training-modal" onclick="openTrainingModal(event)" data-i18n="nav_training">研修ガイド</a>
             <a href="#survey-section" data-i18n="nav_survey">適性アンケート</a>
             <a href="#aptitude-demo-section" data-i18n="nav_aptitude">自己診断デモ</a>
             <a href="#attendance-section" data-i18n="nav_attendance">勤怠管理</a>
@@ -4004,56 +4004,56 @@
                 <!-- 1. Home / Fit Simulator -->
                 <a href="#top" class="sidebar-nav-item" data-tab-id="home-view">
                     <span style="font-size: 15px;">🏠</span>
-                    <span>ホーム (AIシミュレーター)</span>
+                    <span data-i18n="nav_home">ホーム</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 2. Sales Email Matching -->
                 <a href="#matching-section" class="sidebar-nav-item active" data-tab-id="matching-section">
                     <span style="font-size: 15px;">🤝</span>
-                    <span>営業メールAIマッチング</span>
+                    <span data-i18n="nav_matching">営業メールマッチング</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 3. Admin Dashboard -->
                 <a href="#admin-dashboard-section" class="sidebar-nav-item" data-tab-id="admin-dashboard-section">
                     <span style="font-size: 15px;">🛡️</span>
-                    <span>管理者統合ダッシュボード</span>
+                    <span data-i18n="nav_admin">管理者ダッシュボード</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 4. Timesheet / Attendance -->
                 <a href="#attendance-section" class="sidebar-nav-item" data-tab-id="attendance-section">
                     <span style="font-size: 15px;">⏱️</span>
-                    <span>勤務表・残業解析</span>
+                    <span data-i18n="nav_attendance">勤怠管理</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 5. Survey / Assessment -->
                 <a href="#survey-section" class="sidebar-nav-item" data-tab-id="survey-section">
                     <span style="font-size: 15px;">📊</span>
-                    <span>適性・状況アンケート</span>
+                    <span data-i18n="nav_survey">適性アンケート</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 6. Aptitude Demo -->
                 <a href="#aptitude-demo-section" class="sidebar-nav-item" data-tab-id="aptitude-demo-section">
                     <span style="font-size: 15px;">📈</span>
-                    <span>自己診断デモ</span>
+                    <span data-i18n="nav_aptitude">自己診断デモ</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 7. Onboarding / Setup -->
                 <a href="#onboarding-section" class="sidebar-nav-item" data-tab-id="onboarding-section">
                     <span style="font-size: 15px;">⚙️</span>
-                    <span>初期セットアップ</span>
+                    <span data-i18n="nav_onboarding">初期セットアップ</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 8. Training Guide -->
                 <a href="#training-modal" class="sidebar-nav-item" onclick="openTrainingModal(event)">
                     <span style="font-size: 15px;">📖</span>
-                    <span>研修・ガイド</span>
+                    <span data-i18n="nav_training">研修ガイド</span>
                 </a>
             </nav>
 
