@@ -23,7 +23,7 @@ Figma MCPは完成品を自動保証する仕組みではなく、FigmaとAIエ�
 ## 事前準備
 
 1. Codex AppでFigmaプラグインをインストールし、OAuth認証を完了する。
-2. Figma側で使用するteam / planを1つに決める。現在の候補は`kanta13jp1's team`と`tokyofigma01`の2つなので、会場で選択しない。
+2. Figma側で使用するteam / planは`kanta13jp1's team`へ固定する。もう一方の候補`tokyofigma01`は使用せず、会場でteamを切り替えない。
 3. Figma Slidesの作成、編集、URL表示までを一度リハーサルする。
 4. `exports/mighty_skill_bridge_figma_powerpoint_demo_2026.pptx`を完成済み予備としてローカルに置く。
 5. PowerPointの編集表示で`PROMPT_12_FIGMA_POWERPOINT.txt`全文をコピーできることを確認する。
@@ -61,3 +61,12 @@ Figma MCPは完成品を自動保証する仕組みではなく、FigmaとAIエ�
 - Figma MCP: https://developers.figma.com/docs/figma-mcp-server/
 - CodexへのRemote MCP設定: https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/
 - Figma SlidesのPPTX書き出し: https://help.figma.com/hc/en-us/articles/24848334599447-Export-from-Figma-Slides
+
+## 36枚ユーザーガイドの実例
+
+- Figma Slidesテンプレート: https://www.figma.com/slides/IP8rKfpGvtaXXnzUhuYvRP
+- 元資料: `exports/mighty_skill_bridge_antigravity_user_guide_2026.pptx`
+- Figma反映版: `exports/mighty_skill_bridge_antigravity_user_guide_2026_figma_redesign.pptx`
+- 再生成: `scripts/generate_antigravity_user_guide_figma_redesign.mjs`
+
+Figma側には表紙、学習目標、タイムライン、5製品比較、テスト先行、長文プロンプト、IDE / CLI / SDK、クロージングの8テンプレートを作成した。PowerPoint側は元の36枚、画像、表、全文プロンプト、speaker notesを維持し、Figmaテンプレートの白・チャコール・シアン・オレンジ・エメラルド・バイオレットの配色、カード、コード領域へ統一している。
