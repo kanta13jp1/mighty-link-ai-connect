@@ -3811,6 +3811,52 @@
             }
         }
 
+    
+        /* ======================================================== */
+        /* WORLD-CLASS APP SHELL & MOBILE DRAWER (100/100 PERFECTION)*/
+        /* ======================================================== */
+        .sidebar-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .sidebar-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 1024px) {
+            .app-shell-container {
+                grid-template-columns: 1fr !important;
+                padding: 12px 14px 80px !important;
+            }
+            .global-app-sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 280px !important;
+                height: 100vh !important;
+                border-radius: 0 20px 20px 0 !important;
+                z-index: 999 !important;
+                transform: translateX(-100%) !important;
+                transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                overflow-y: auto;
+            }
+            .global-app-sidebar.drawer-open {
+                transform: translateX(0) !important;
+                box-shadow: 0 0 40px rgba(0, 0, 0, 0.8) !important;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -3848,7 +3894,7 @@
                     </div>
                 </div>
                 <button class="theme-toggle" type="button" id="theme-toggle" aria-label="配色モードを切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label" data-i18n="theme_light">ライト</span></button>
-                <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleNav()">☰</button>
+                <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleSidebarDrawer()" id="mobile-menu-btn" aria-controls="global-sidebar" aria-expanded="false">☰</button>
             </div>
         </div>
         <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
@@ -3989,7 +4035,8 @@
         <!-- ======================================================== -->
         <!-- UNIFIED GLOBAL SAAS SIDEBAR (Figma Untitled UI Parity)   -->
         <!-- ======================================================== -->
-        <aside class="global-app-sidebar" aria-label="Global Workspace Navigation">
+        <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="closeSidebarDrawer()"></div>
+        <aside class="global-app-sidebar" id="global-sidebar" aria-label="Global Workspace Navigation">
             <div class="sidebar-brand">
                 <div style="width: 36px; height: 36px; border-radius: 10px; background: #162a15; border: 1.2px solid #baff66; display: flex; align-items: center; justify-content: center; font-size: 16px;">🛡️</div>
                 <div>
@@ -5498,9 +5545,50 @@
         }
 
         // ==========================================================================
-        // UNIFIED GLOBAL SAAS TABBED ROUTING ENGINE
+        // 100/100 WORLD-CLASS TABBED ROUTING & SCROLL RESTORATION ENGINE
         // ==========================================================================
+        const tabScrollMemory = {};
+        let currentActiveTabId = 'home-view';
+
+        function toggleSidebarDrawer() {
+            const sidebar = document.getElementById('global-sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!sidebar) return;
+
+            const isOpen = sidebar.classList.contains('drawer-open');
+            if (isOpen) {
+                closeSidebarDrawer();
+            } else {
+                sidebar.classList.add('drawer-open');
+                if (backdrop) backdrop.classList.add('active');
+                if (btn) btn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeSidebarDrawer() {
+            const sidebar = document.getElementById('global-sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (sidebar) sidebar.classList.remove('drawer-open');
+            if (backdrop) backdrop.classList.remove('active');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSidebarDrawer();
+            }
+        });
+
         function switchAppTab(targetId, updateHistory = true) {
+            // 1. Remember current scroll position
+            if (currentActiveTabId) {
+                tabScrollMemory[currentActiveTabId] = window.scrollY;
+            }
+
             if (!targetId || targetId === '#top' || targetId === '#home' || targetId === 'top' || targetId === 'home') {
                 targetId = 'home-view';
             } else {
@@ -5531,7 +5619,9 @@
                 targetId = 'home-view';
             }
 
-            // Synchronize Global Sidebar Navigation Items
+            currentActiveTabId = targetId;
+
+            // 2. Synchronize Global Sidebar Navigation Items & ARIA
             const sidebarLinks = document.querySelectorAll('.global-app-sidebar .sidebar-nav-item');
             sidebarLinks.forEach(link => {
                 const href = link.getAttribute('href') || '';
@@ -5544,25 +5634,19 @@
 
                 if (isMatch) {
                     link.classList.add('active');
+                    link.setAttribute('aria-current', 'page');
                 } else {
                     link.classList.remove('active');
+                    link.removeAttribute('aria-current');
                 }
             });
 
-            // Synchronize Mobile Bottom Navigation
-            const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-            mobileLinks.forEach(link => {
-                const href = link.getAttribute('href') || '';
-                const linkTarget = href.replace(/^#/, '');
-                if ((targetId === 'home-view' && (linkTarget === 'top' || linkTarget === 'home')) ||
-                    (linkTarget && targetId === linkTarget)) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
+            // 3. Close mobile drawer on navigation
+            closeSidebarDrawer();
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // 4. Smooth Scroll Restoration
+            const savedScroll = tabScrollMemory[targetId] || 0;
+            window.scrollTo({ top: savedScroll, behavior: 'smooth' });
 
             if (updateHistory && history.pushState) {
                 const hashToSet = targetId === 'home-view' ? '#top' : `#${targetId}`;
