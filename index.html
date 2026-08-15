@@ -3862,9 +3862,7 @@
         /* WORLD-CLASS UI/UX: STRICT VISIBILITY & ZERO CLIPPING     */
         /* ======================================================== */
         /* 1. Eliminate Duplicate Topbar Nav */
-        .topbar .nav-links {
-            display: none !important;
-        }
+        
 
         /* 2. Fix Sidebar Top Clipping */
         .global-app-sidebar {
@@ -3933,16 +3931,7 @@
                 <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleSidebarDrawer()" id="mobile-menu-btn" aria-controls="global-sidebar" aria-expanded="false">☰</button>
             </div>
         </div>
-        <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
-            <a href="#top" class="active" data-i18n="nav_home">ホーム</a>
-            <a href="#onboarding-section" data-i18n="nav_onboarding">初期セットアップ</a>
-            <a href="#training-modal" onclick="openTrainingModal(event)" data-i18n="nav_training">研修ガイド</a>
-            <a href="#survey-section" data-i18n="nav_survey">適性アンケート</a>
-            <a href="#aptitude-demo-section" data-i18n="nav_aptitude">自己診断デモ</a>
-            <a href="#attendance-section" data-i18n="nav_attendance">勤怠管理</a>
-            <a href="#matching-section" data-i18n="nav_matching">営業メールマッチング</a>
-            <a href="#admin-dashboard-section" data-i18n="nav_admin">管理者ダッシュボード</a>
-        </nav>
+        
     </header>
 
     <!-- Training / Onboarding Modal (T919) -->
@@ -4083,7 +4072,7 @@
 
             <div style="font-size: 10px; font-weight: 800; color: var(--muted); letter-spacing: 1px; margin-bottom: 10px; padding-left: 8px;">WORKSPACE APPS</div>
 
-            <nav class="sidebar-nav-list">
+            <nav class="sidebar-nav-list" id="primary-navigation" aria-label="Primary navigation">
                 <!-- 1. Home / Fit Simulator -->
                 <a href="#top" class="sidebar-nav-item" data-tab-id="home-view">
                     <span style="font-size: 15px;">🏠</span>
