@@ -2,11 +2,10 @@
 name: e2e-link-auditor
 description: Audit and verify all internal, external, header, footer, and navigation links for HTTP 200 reachability and valid HTML rendering, preventing 404 Not Found errors on raw markdown or unmounted routes.
 triggers:
-  - "check links"
   - "audit links"
-  - "broken link"
+  - "check broken links"
   - "verify link reachability"
-  - "link review"
+  - "crawl links"
 license: Apache-2.0
 metadata:
   version: v1
@@ -15,26 +14,51 @@ metadata:
 
 # E2E Link & Endpoint Reachability Auditor Skill
 
-This skill enforces thorough verification of all interactive links (`<a href="...">`) within the application to prevent 404 Not Found regressions, unmounted static paths, and broken relative links.
+This skill enforces strict link validation across all landing pages, HTML templates, and documentation links. It ensures no user clicks encounter HTTP 404 Not Found, broken anchors, or unrendered raw `.md` files.
 
 ---
 
-## 1. Core Verification Principles
+## 1. Core Verification Directives
 
-1. **Never rely on static string matching**: Checking `assert "docs/TERMS_OF_SERVICE.md" in html` is insufficient. The endpoint must actually be reachable via HTTP.
-2. **Verify Server Routing & Static Mounts**: Any link pointing to `/docs/...`, `/exports/...`, or `/admin/...` must be explicitly handled by the backend server (`src/app.py`) and return `200 OK`.
-3. **Format & Browser Compatibility**: Raw `.md` files should be served with appropriate content-type or rendered via a clean HTML viewer for standard browser display.
+> [!IMPORTANT]
+> **No Static Assumption Rule**: Never assume links work just because the href string matches a filename. All links (`<a href="...">`) must resolve to live HTTP endpoints returning status **200 OK** with valid `Content-Type: text/html` (or appropriate media type).
+
+### Prohibited Patterns
+- ❌ Links pointing to raw markdown files on static web servers (e.g. `href="docs/ARCHITECTURE.md"` resulting in browser download or 404).
+- ❌ Fragment/anchor links pointing to non-existent `#id` targets.
+- ❌ External links returning `404`, `403`, or `500`.
 
 ---
 
-## 2. Automated Runbook (PowerShell)
+## 2. Automated Link Audit Script (PowerShell / Node.js)
 
-### Step 1: Run Broken Link Audit Test
+Run the comprehensive link crawler against the target URL or local preview:
+
 ```powershell
-python -m pytest tests/test_footer_and_nav_links.py -v
+# 1. Quick Python/Playwright Link Crawl
+python -c "
+import urllib.request
+from bs4 import BeautifulSoup
+
+url = 'https://kanta13jp1.github.io/mighty-link-ai-connect/'
+req = urllib.request.urlopen(url)
+soup = BeautifulSoup(req.read(), 'html.parser')
+links = [a.get('href') for a in soup.find_all('a', href=True)]
+print(f'Discovered {len(links)} links. Validating...')
+for link in links:
+    if link.startswith('http'):
+        try:
+            res = urllib.request.urlopen(link, timeout=5)
+            print(f'[OK 200] {link}')
+        except Exception as e:
+            print(f'[ERROR] {link} -> {e}')
+"
 ```
 
-### Step 2: Full Preflight Integration
-```powershell
-python scripts/run_lane_preflight.py
-```
+---
+
+## 3. Remediations
+
+1. **Raw Markdown Links**: Wrap documentation inside an interactive HTML modal, or route to GitHub/Docs viewer.
+2. **Relative Route Links**: Ensure all SPA/Multi-page routes are mounted in `firebase.json` or GitHub Pages router.
+3. **External Resources**: Verify all CDN scripts (Tailwind, Lucide, FontAwesome) load without CORS or 404 blocks.

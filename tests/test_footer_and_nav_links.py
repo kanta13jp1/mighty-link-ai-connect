@@ -4,9 +4,9 @@ in index.html return HTTP 200 OK and render properly via FastAPI server (E2E lin
 """
 
 import os
+import re
 import sys
 import pytest
-from bs4 import BeautifulSoup
 from fastapi.testclient import TestClient
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,16 +26,15 @@ def test_footer_docs_links_reachability(client):
     assert os.path.isfile(index_path)
 
     with open(index_path, "r", encoding="utf-8") as f:
-        soup = BeautifulSoup(f.read(), "html.parser")
+        content = f.read()
 
-    footer = soup.find("footer", class_="site-footer")
-    assert footer is not None, "site-footer element must exist in index.html"
+    # Find footer section
+    footer_match = re.search(r'<footer[^>]*class="[^"]*site-footer[^"]*"[^>]*>(.*?)</footer>', content, re.DOTALL)
+    assert footer_match is not None, "site-footer element must exist in index.html"
+    footer_html = footer_match.group(1)
 
-    doc_links = []
-    for a in footer.find_all("a", href=True):
-        href = a["href"]
-        if href.startswith("docs/"):
-            doc_links.append(href)
+    # Extract hrefs starting with docs/
+    doc_links = re.findall(r'href=["\'](docs/[^"\']+)["\']', footer_html)
 
     assert len(doc_links) >= 4, f"Expected at least 4 doc links in footer, found {len(doc_links)}"
 
