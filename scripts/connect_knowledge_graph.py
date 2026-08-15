@@ -23,6 +23,7 @@ def collect_md_files() -> list[Path]:
         p for p in PROJECT_ROOT.glob("**/*.md")
         if not any(
             part in {"venv", "node_modules", ".venv", ".git"} | CACHE_DIR_NAMES
+            or (part.startswith(".") and part != p.name)
             for part in p.parts
         )
     ]

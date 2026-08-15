@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: #0d1117;
+      color: #c9d1d9;
+      font-size: 12px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #30363d;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    .status-connected {
+      background: rgba(186, 255, 102, 0.15);
+      color: #baff66;
+      border: 1px solid rgba(186, 255, 102, 0.4);
+    }
+    .status-disconnected {
+      background: rgba(255, 102, 102, 0.15);
+      color: #ff8aa8;
+      border: 1px solid rgba(255, 102, 102, 0.4);
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .log-box {
+      background: #030406;
+      border: 1px solid #21262d;
+      border-radius: 6px;
+      padding: 8px;
+      height: 120px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 10px;
+      color: #8b949e;
+      line-height: 1.4;
+    }
+    .btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px;
+      background: #21262d;
+      border: 1px solid #30363d;
+      color: #f0f6fc;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #30363d;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <strong>Antigravity Live Bridge</strong>
+    <span id="status" class="status-badge status-disconnected"><span class="dot"></span> 切断中</span>
+  </div>
+
+  <div style="margin-bottom: 8px; color: #8b949e;">
+    ローカル Bridge サーバー (ws://localhost:9099) と常時接続中。Antigravity からの直接編集指示を待機しています。
+  </div>
+
+  <div id="logs" class="log-box"></div>
+
+  <button class="btn" onclick="reconnect()">再接続 (Reconnect)</button>
+
+  <script>
+    let ws = null;
+    const logsEl = document.getElementById('logs');
+    const statusEl = document.getElementById('status');
+
+    function log(msg) {
+      const time = new Date().toLocaleTimeString();
+      const div = document.createElement('div');
+      div.textContent = `[${time}] ${msg}`;
+      logsEl.appendChild(div);
+      logsEl.scrollTop = logsEl.scrollHeight;
+    }
+
+    function setStatus(connected) {
+      if (connected) {
+        statusEl.className = 'status-badge status-connected';
+        statusEl.innerHTML = '<span class="dot"></span> 接続中 (Live)';
+      } else {
+        statusEl.className = 'status-badge status-disconnected';
+        statusEl.innerHTML = '<span class="dot"></span> 待機中...';
+      }
+    }
+
+    function connect() {
+      try {
+        ws = new WebSocket('ws://localhost:9099');
+
+        ws.onopen = () => {
+          setStatus(true);
+          log('✅ Antigravity Bridge と接続しました');
+        };
+
+        ws.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            log(`📥 受信コマンド: ${data.action || 'unknown'}`);
+            parent.postMessage({ pluginMessage: data }, '*');
+          } catch (e) {
+            log(`❌ JSONパースエラー: ${e.message}`);
+          }
+        };
+
+        ws.onclose = () => {
+          setStatus(false);
+          log('⚠️ 切断されました。5秒後に再試行...');
+          setTimeout(connect, 5000);
+        };
+
+        ws.onerror = () => {
+          setStatus(false);
+        };
+      } catch (e) {
+        setStatus(false);
+        setTimeout(connect, 5000);
+      }
+    }
+
+    function reconnect() {
+      if (ws) ws.close();
+      connect();
+    }
+
+    window.onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+      if (msg && msg.type === 'log') {
+        log(msg.text);
+      }
+    };
+
+    connect();
+  </script>
+</body>
+</html>

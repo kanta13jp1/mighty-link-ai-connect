@@ -107,6 +107,12 @@
 - **関連WBS**: T917
 - **プリフライト説明**: 日本語UI/UX文言・用語整合性 (T917)
 
+### audit_figma_design_sync.py
+- **守る対象**: FigmaデザイントークンとCSS変数の完全同期
+- **NG例（失敗する時）**: FigmaのColor/Elevation/GlassmorphismトークンがCSS変数と乖離すると失敗
+- **関連WBS**: T768 / T917
+- **プリフライト説明**: Figmaデザイントークン・CSS変数同期整合性 (T768/T917)
+
 ## DB
 
 ### audit_fk_index_coverage.py

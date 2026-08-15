@@ -1,0 +1,137 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "name": "Mighty Link Studio Design Tokens (2026)",
+  "version": "1.0.0",
+  "color": {
+    "background": {
+      "page": {
+        "value": "#0B0F19",
+        "type": "color",
+        "description": "Deep ink canvas background for dark theme & modern presentation decks"
+      },
+      "surface": {
+        "value": "#151E2E",
+        "type": "color",
+        "description": "Card and panel container background"
+      },
+      "surfaceSubtle": {
+        "value": "#1E293B",
+        "type": "color",
+        "description": "Hover and elevated card background"
+      },
+      "lightPage": {
+        "value": "#F8FAFC",
+        "type": "color",
+        "description": "Clean white/slate background for light theme"
+      },
+      "lightSurface": {
+        "value": "#FFFFFF",
+        "type": "color",
+        "description": "Light card container background"
+      }
+    },
+    "brand": {
+      "cyan": {
+        "value": "#38BDF8",
+        "type": "color",
+        "description": "Primary vibrant accent for eyebrows, active states, key metrics"
+      },
+      "indigo": {
+        "value": "#6366F1",
+        "type": "color",
+        "description": "Secondary accent for AI features and badges"
+      },
+      "emerald": {
+        "value": "#10B981",
+        "type": "color",
+        "description": "Success indicators, completed milestones, verified metrics"
+      },
+      "amber": {
+        "value": "#F59E0B",
+        "type": "color",
+        "description": "Pending actions, attention items, warnings"
+      },
+      "rose": {
+        "value": "#F43F5E",
+        "type": "color",
+        "description": "Risk items, blockers, critical alerts"
+      },
+      "purple": {
+        "value": "#A855F7",
+        "type": "color",
+        "description": "Advanced workflows, multi-agent flows"
+      }
+    },
+    "text": {
+      "primary": {
+        "value": "#F8FAFC",
+        "type": "color",
+        "description": "High-contrast heading and primary text in dark mode"
+      },
+      "secondary": {
+        "value": "#94A3B8",
+        "type": "color",
+        "description": "Readable body and description text"
+      },
+      "muted": {
+        "value": "#64748B",
+        "type": "color",
+        "description": "Metadata, timestamps, footnotes, slide counters"
+      },
+      "darkPrimary": {
+        "value": "#0F172A",
+        "type": "color",
+        "description": "High-contrast text on light cards"
+      }
+    },
+    "border": {
+      "subtle": {
+        "value": "#2A364F",
+        "type": "color",
+        "description": "Hairline card borders and dividers"
+      },
+      "highlight": {
+        "value": "#38BDF866",
+        "type": "color",
+        "description": "Accent border glow for active or selected cards"
+      }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "display": {
+        "value": "Plus Jakarta Sans, sans-serif",
+        "type": "fontFamily"
+      },
+      "body": {
+        "value": "Noto Sans JP, Yu Gothic, sans-serif",
+        "type": "fontFamily"
+      },
+      "mono": {
+        "value": "JetBrains Mono, Consolas, monospace",
+        "type": "fontFamily"
+      }
+    },
+    "fontSize": {
+      "display1": { "value": "36pt", "type": "fontSize" },
+      "title": { "value": "26pt", "type": "fontSize" },
+      "subtitle": { "value": "16pt", "type": "fontSize" },
+      "heading": { "value": "14pt", "type": "fontSize" },
+      "body": { "value": "11pt", "type": "fontSize" },
+      "caption": { "value": "8.5pt", "type": "fontSize" },
+      "eyebrow": { "value": "9pt", "type": "fontSize" }
+    }
+  },
+  "spacing": {
+    "grid": { "value": "8px", "type": "spacing" },
+    "cardPadding": { "value": "20px", "type": "spacing" },
+    "cardGap": { "value": "16px", "type": "spacing" },
+    "slideMarginX": { "value": "48px", "type": "spacing" },
+    "slideMarginY": { "value": "36px", "type": "spacing" }
+  },
+  "borderRadius": {
+    "card": { "value": "12px", "type": "borderRadius" },
+    "pill": { "value": "9999px", "type": "borderRadius" },
+    "sm": { "value": "6px", "type": "borderRadius" }
+  }
+}

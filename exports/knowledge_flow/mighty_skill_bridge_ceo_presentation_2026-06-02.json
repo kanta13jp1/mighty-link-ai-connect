@@ -1,13 +1,13 @@
 {
-  "generated_at_jst": "2026-08-15T21:56:52+09:00",
+  "generated_at_jst": "2026-08-15T20:43:41+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "notebook_id": "4934c12b-b270-4739-97a1-b04b5b84eaaf",
+  "theme": "default",
   "source_outline": "exports/knowledge_flow/notebooklm_ceo_slide_outline.md",
   "source_count": 160,
   "tooling": {
-    "outline": "NotebookLM CLI",
-    "pptx_generator": "python-pptx",
-    "artifact_tool_status": "not available from the local Windows shell"
+    "design_tokens": "docs/design_tokens.json",
+    "pptx_generator": "python-pptx (Figma Modern Engine)"
   },
   "outputs": {
     "pptx": "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx",

@@ -3,7 +3,7 @@
 作成日: 2026-05-24
 オーナー: Claude Code レーン (UI design / docs)
 対象 WBS: T658-extend (UI 方向性提示)
-関連: [CEO_PRESENTATION_PREP](../CEO_PRESENTATION_PREP_2026-06-02.md) / [docs/wireframes/README.md](../wireframes/README.md)
+関連: [CEO_PRESENTATION_PREP](../archive/presentations/CEO_PRESENTATION_PREP_2026-06-02.md) / [docs/wireframes/README.md](../wireframes/README.md)
 
 ---
 

@@ -53,7 +53,6 @@ def test_allowlist_ids_is_the_documented_exception_set():
     al = guard.allowlist_ids()
     assert isinstance(al, set)
     # the known historical/provisional references are covered
-    assert "T720" in al and "T726" in al
     assert "T775" in al
 
 

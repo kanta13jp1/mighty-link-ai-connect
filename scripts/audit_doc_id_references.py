@@ -58,15 +58,6 @@ _R_RE = re.compile(r"\bR\d{1,3}\b")
 # Known-historical / provisional ID references that legitimately do not resolve
 # to a current tracker row. Each entry documents WHY it is exempt.
 ALLOWLIST: dict[str, str] = {
-    # 6/2 CEO プレゼンの「決定したら作る」提案タスク表。実WBSは別IDで起票され、
-    # 提案された各仮IDは作成されなかった歴史的記録（CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md）。
-    "T720": "6/2決定前提案の仮タスクID（未起票の歴史的記録）",
-    "T721": "6/2決定前提案の仮タスクID（未起票の歴史的記録）",
-    "T722": "6/2決定前提案の仮タスクID（未起票の歴史的記録）",
-    "T723": "6/2決定前提案の仮タスクID（未起票の歴史的記録）",
-    "T724": "6/2決定前提案の仮タスクID（未起票の歴史的記録）",
-    "T725": "6/2決定前提案の仮タスクID（未起票の歴史的記録）",
-    "T726": "6/2決定前提案の仮タスクID（未起票の歴史的記録）",
     # 解決済み課題 R40「T774/T775 二重定義」の履歴記述内の言及（MONTHLY_REPORT_2026-06.md）。
     # T775 は重複として削除された側で、記述は正確な履歴。
     "T775": "解決済み課題R40（T774/T775二重定義）の履歴記述内の言及",

@@ -53,8 +53,8 @@
 
 ### 1.4 既存リスクの初期データソース
 
-- [docs/CEO_PRESENTATION_PREP_2026-06-02.md Risks & Blockers](CEO_PRESENTATION_PREP_2026-06-02.md#risks--blockers-2026-05-22-時点): R1-R8
-- [docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md#32-62-後に発生する想定リスク-新規): R9-R13
+- [docs/CEO_PRESENTATION_PREP_2026-06-02.md Risks & Blockers](archive/presentations/CEO_PRESENTATION_PREP_2026-06-02.md#risks--blockers-2026-05-22-時点): R1-R8
+- [docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md](archive/presentations/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md#32-62-後に発生する想定リスク-新規): R9-R13
 - [docs/CODEX_CONTINUATION_NOTES.md handoff キュー](CODEX_CONTINUATION_NOTES.md): markdownlint / AGENTS.md / .codex/config.toml / context caching / skills / Antigravity CLI 評価 / JSON hooks PoC / voice transcription 評価
 
 ---
@@ -93,8 +93,8 @@
 
 ### 2.4 既存 QA の初期データソース
 
-- [docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md](CEO_PRESENTATION_QA_PACK_2026-06-02.md): QA-01 〜 QA-22 (T607 deliverable)
-- [docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md): Q-OPS-01 〜 Q-OPS-12 (T606 deliverable)
+- [docs/CEO_PRESENTATION_QA_PACK_2026-06-02.md](archive/presentations/CEO_PRESENTATION_QA_PACK_2026-06-02.md): QA-01 〜 QA-22 (T607 deliverable)
+- [docs/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md](archive/presentations/CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md): Q-OPS-01 〜 Q-OPS-12 (T606 deliverable)
 
 ---
 

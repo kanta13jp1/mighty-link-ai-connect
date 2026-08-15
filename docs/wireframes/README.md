@@ -4,8 +4,8 @@
 オーナー: Claude Code レーン (docs / spec)
 対象 WBS: T658-wireframe-deck / T658-mcp-extend
 関連:
-[CEO_PRESENTATION_PREP](../CEO_PRESENTATION_PREP_2026-06-02.md) /
-[MCP_CANVA_FIGMA_SETUP_GUIDE](../MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md) §4.7 /
+[CEO_PRESENTATION_PREP](../archive/presentations/CEO_PRESENTATION_PREP_2026-06-02.md) /
+[MCP_CANVA_FIGMA_SETUP_GUIDE](../archive/presentations/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md) §4.7 /
 Canva v2 deck: <https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit>
 
 ---

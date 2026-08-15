@@ -101,6 +101,32 @@
 - [ ] `git tag ceo-demo-2026-06-02` を打ち、main を凍結 (Codex 担当)
 - [ ] dry-run を計測 (目標 ≤ 25 分)
 
+| F-4 | `.ics` ファイル説明用スクショ | ファイル確認 | Antigravity | 6/1 | pending | |
+| F-5 | Slack 連携できない場合の代替説明 (草稿表示) リハーサル済 | dry-run 中に確認 | Claude | 6/1 | pending | R3 mitigation |
+
+## G. 当日運用 (6/2 当日)
+
+| # | チェック | 確認方法 | オーナー | 期限 | Status | 備考 |
+|---|---|---|---|---|---|---|
+| G-1 | 議事録テンプレートが `docs/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md` に含まれる | 目視 | Claude | 5/30 | pending | T609 |
+| G-2 | 決定後の WBS 差し替えフロー (T612) が明記 | 目視 | Claude | 5/30 | pending | |
+| G-3 | 決定後ロードマップ枠 (T615) が用意 | 目視 | Claude | 5/30 | pending | |
+| G-4 | 当日の役割分担 (司会/操作/議事録/QA) を確定 | docs 内 or 口頭 | 人間 + Claude | 6/1 | pending | |
+
+---
+
+## Final Review (6/1 21:00 JST)
+
+- [ ] A-1 〜 A-5: すべて `pass` (Hard gate)
+- [ ] B-1 〜 B-6: すべて `pass`
+- [ ] C-1 〜 C-7: すべて `pass` (C-7 が `n/a` の場合はデモから Project ボードを除外する旨を明記)
+- [ ] D-1 〜 D-5: すべて `pass`
+- [ ] E-1 〜 E-5: すべて `pass`
+- [ ] F-1 〜 F-5: すべて `pass` (Hard gate)
+- [ ] G-1 〜 G-4: すべて `pass`
+- [ ] `git tag ceo-demo-2026-06-02` を打ち、main を凍結 (Codex 担当)
+- [ ] dry-run を計測 (目標 ≤ 25 分)
+
 **Go/No-Go 判定**: Hard gate (A 系 + F 系) が全 pass、かつ A-1 + F-3 + B-1 + B-2 が pass であれば Go。それ以外は Claude Code が 6/1 22:00 JST までに human escalation。
 
 ---
@@ -108,15 +134,10 @@
 ## 参照
 
 - [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) — 3-tool 体制・handoff 規約・day-by-day オーナーシップ
-- [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md) — プレゼン構成・デモ導線
-- [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) — 判断マトリクス
-- [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md) — CLI/MCP 連携証跡
+- [CEO_PRESENTATION_PREP_2026-06-02.md](archive/presentations/CEO_PRESENTATION_PREP_2026-06-02.md) — プレゼン構成・デモ導線
+- [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](archive/presentations/CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) — 判断マトリクス
+- [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](archive/presentations/INTEGRATION_DEMO_EVIDENCE_2026-06-02.md) — CLI/MCP 連携証跡
 - [WBS.md](WBS.md) — T601-T666 全体像
-
----
-
-## 更新履歴
-
 | 日付 | 変更者 | 内容 |
 |---|---|---|
 | 2026-05-22 | Claude Code | 初版作成 (T663 deliverable、35 項目 7 セクション) |

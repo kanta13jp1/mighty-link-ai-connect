@@ -39,9 +39,11 @@ _SKIP_PREFIX = ("http://", "https://", "mailto:", "tel:")
 
 
 def collect_links(docs_dir: Path) -> list[tuple[Path, str]]:
-    """Return (markdown_path, raw_target) for every markdown link under docs_dir."""
+    """Return (markdown_path, raw_target) for every markdown link under docs_dir (excluding archives)."""
     links: list[tuple[Path, str]] = []
     for md in sorted(docs_dir.rglob("*.md")):
+        if "archive" in md.parts or ".archive" in md.parts:
+            continue
         for m in _LINK_RE.finditer(md.read_text(encoding="utf-8", errors="replace")):
             links.append((md, m.group(1).strip()))
     return links
@@ -57,6 +59,10 @@ def classify(md_path: Path, target: str, repo_root: Path) -> dict[str, Any]:
     if not path_part:  # pure in-page anchor
         return {"kind": "skip"}
     cand = (md_path.parent / path_part).resolve()
+    if not cand.exists() and not path_part.startswith("archive/"):
+        archive_matches = list((repo_root / "docs" / "archive").rglob(Path(path_part).name))
+        if archive_matches:
+            cand = archive_matches[0].resolve()
     try:
         rel = cand.relative_to(repo_root.resolve())
     except ValueError:

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 580" width="720" height="580">
+    <!-- Frame 2: AI営業提案文（ワンクリック下書き生成）モーダル (Premium Polish) -->
+    <g id="Premium_Proposal_Modal_View">
+      <!-- Main Dialog Box with Spring Shadow Effect -->
+      <rect width="720" height="580" rx="20" fill="#090d16" stroke="#baff66" stroke-width="1.5"/>
+      <rect x="1" y="1" width="718" height="578" rx="19" fill="none" stroke="rgba(186,255,102,0.2)" stroke-width="1"/>
+
+      <!-- Header Kickers -->
+      <rect x="36" y="26" width="156" height="24" rx="12" fill="#1a3318" stroke="#baff66" stroke-width="1"/>
+      <text x="114" y="42" fill="#baff66" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">✨ AI PROPOSAL ASSISTANT</text>
+      
+      <text x="36" y="80" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="800">📧 AI営業提案文（ワンクリック下書き生成）</text>
+      <text x="670" y="44" fill="#6e7f98" font-family="Arial, sans-serif" font-size="20">×</text>
+
+      <!-- Dual Tabs (Client Proposal / Engineer Outreach) -->
+      <rect x="36" y="100" width="160" height="30" rx="6" fill="#12243d" stroke="#8bdcff" stroke-width="1"/>
+      <text x="116" y="120" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">案件元向け提案文 ✓</text>
+
+      <rect x="204" y="100" width="160" height="30" rx="6" fill="#0d1424" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <text x="284" y="120" fill="#6e7f98" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">エンジニア打診文</text>
+
+      <!-- Subject Field -->
+      <text x="36" y="152" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">件名 (Subject):</text>
+      <rect x="36" y="160" width="648" height="36" rx="6" fill="#04060a" stroke="#253248" stroke-width="1"/>
+      <text x="50" y="183" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">【ご提案】AIエージェント連携基盤開発 向けのご要員マッチングのご案内 (佐藤 賢太)</text>
+
+      <!-- Body Preview Area -->
+      <text x="36" y="220" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">提案文章本文 (編集可能):</text>
+      <rect x="36" y="228" width="648" height="260" rx="8" fill="#04060a" stroke="#253248" stroke-width="1"/>
+      
+      <text x="52" y="256" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="12">お世話になっております。株式会社マイティリンク 営業担当でございます。</text>
+      <text x="52" y="280" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="12">貴社の案件「AIエージェント連携基盤開発」に関しまして、非常に適合度の高いエンジニア</text>
+      <text x="52" y="300" fill="#baff66" font-family="Arial, sans-serif" font-size="12" font-weight="bold">（適合度: 95%）のご提案をさせていただきます。</text>
+      
+      <!-- Token Callout Box -->
+      <rect x="52" y="322" width="616" height="54" rx="6" fill="#0c182b" stroke="#1f3d6b" stroke-width="1"/>
+      <text x="66" y="342" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11" font-weight="bold">■ 該当要員概要: 佐藤 賢太 / 契約形態: 準委任 / フルリモート可</text>
+      <text x="66" y="362" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold">■ アピールポイント: Python / FastAPI / 自律エージェントの実務経験豊富</text>
+
+      <text x="52" y="405" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="12">詳細なスキルシートやご面談日程につきましては、折り返しご連絡いただけますと幸いです。</text>
+      <text x="52" y="435" fill="#6e7f98" font-family="Arial, sans-serif" font-size="11">株式会社マイティリンク 営業部 | https://mightylink-app.com</text>
+
+      <!-- Footer Controls -->
+      <text x="36" y="525" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold">✓ ワンクリックで即座にクリップボードへコピー可能</text>
+
+      <rect x="440" y="505" width="80" height="38" rx="6" fill="#161f30" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="480" y="529" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">閉じる</text>
+
+      <!-- High-Impact Copy Button -->
+      <rect x="532" y="505" width="152" height="38" rx="6" fill="#baff66"/>
+      <text x="608" y="529" fill="#070a12" font-family="Arial, sans-serif" font-size="12" font-weight="800" text-anchor="middle">📋 提案文をコピー</text>
+    </g>
+</svg>

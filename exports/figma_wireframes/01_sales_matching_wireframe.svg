@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 760" width="1160" height="760">
+    <!-- Frame 1: 営業メールAIマッチング & 契約形態フィルター (Premium Glassmorphism) -->
+    <g id="Premium_Sales_Matching_View">
+      <!-- Main Outer Card Background with Subtle Ambient Glow -->
+      <rect width="1160" height="760" rx="20" fill="#070a12" stroke="#1f293d" stroke-width="1.5"/>
+      <rect x="1" y="1" width="1158" height="758" rx="19" fill="none" stroke="rgba(139,220,255,0.15)" stroke-width="1"/>
+
+      <!-- Topbar Header with Live Status Indicator -->
+      <rect x="24" y="24" width="1112" height="58" rx="12" fill="#0d1424" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      
+      <!-- Logo & Brand Badge -->
+      <rect x="40" y="38" width="30" height="30" rx="8" fill="#162744" stroke="#8bdcff" stroke-width="1"/>
+      <text x="55" y="58" fill="#8bdcff" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">ML</text>
+      <text x="80" y="58" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="800" letter-spacing="0.5">MIGHTY LINK</text>
+      <text x="188" y="58" fill="#8bdcff" font-family="Arial, sans-serif" font-size="16" font-weight="800">AI CONNECT</text>
+      
+      <text x="320" y="58" fill="#6e7f98" font-family="Arial, sans-serif" font-size="12">| 営業メールAIマッチング &amp; タレントマネジメント</text>
+
+      <!-- KPI Pills Header -->
+      <rect x="760" y="37" width="170" height="32" rx="16" fill="rgba(186,255,102,0.08)" stroke="rgba(186,255,102,0.3)" stroke-width="1"/>
+      <circle cx="778" cy="53" r="4" fill="#baff66"/>
+      <text x="848" y="57" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">成約時間 95% 削減</text>
+
+      <!-- Admin Profile Pill -->
+      <rect x="945" y="37" width="175" height="32" rx="16" fill="rgba(139,220,255,0.1)" stroke="rgba(139,220,255,0.4)" stroke-width="1"/>
+      <circle cx="962" cy="53" r="5" fill="#4fd1a5"/>
+      <text x="1035" y="57" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">管理者ログイン中 ✓</text>
+
+      <!-- Top KPI Stats Row (3 Gloss Cards) -->
+      <g transform="translate(24, 98)">
+        <!-- KPI 1 -->
+        <rect x="0" y="0" width="354" height="68" rx="10" fill="#0d1424" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <text x="18" y="26" fill="#6e7f98" font-family="Arial, sans-serif" font-size="11" font-weight="bold">AI マッチング平均適合度</text>
+        <text x="18" y="52" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="800">94.8%</text>
+        <rect x="250" y="16" width="88" height="22" rx="4" fill="rgba(186,255,102,0.1)"/>
+        <text x="294" y="31" fill="#baff66" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">高適合 +12件</text>
+
+        <!-- KPI 2 -->
+        <rect x="379" y="0" width="354" height="68" rx="10" fill="#0d1424" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <text x="397" y="26" fill="#6e7f98" font-family="Arial, sans-serif" font-size="11" font-weight="bold">平均成約リードタイム</text>
+        <text x="397" y="52" fill="#8bdcff" font-family="Arial, sans-serif" font-size="22" font-weight="800">3.5 分</text>
+        <rect x="629" y="16" width="88" height="22" rx="4" fill="rgba(139,220,255,0.1)"/>
+        <text x="673" y="31" fill="#8bdcff" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">従来比 97% 短縮</text>
+
+        <!-- KPI 3 -->
+        <rect x="758" y="0" width="354" height="68" rx="10" fill="#0d1424" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+        <text x="776" y="26" fill="#6e7f98" font-family="Arial, sans-serif" font-size="11" font-weight="bold">今月の成約期待案件数</text>
+        <text x="776" y="52" fill="#ffd166" font-family="Arial, sans-serif" font-size="22" font-weight="800">18 件</text>
+        <rect x="1008" y="16" width="88" height="22" rx="4" fill="rgba(255,209,102,0.1)"/>
+        <text x="1052" y="31" fill="#ffd166" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">提案待機中</text>
+      </g>
+
+      <!-- Filter Controls Bar -->
+      <rect x="24" y="182" width="1112" height="78" rx="12" fill="#0d1424" stroke="rgba(139,220,255,0.15)" stroke-width="1"/>
+      
+      <!-- Keyword -->
+      <text x="44" y="206" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">キーワード検索</text>
+      <rect x="44" y="214" width="220" height="34" rx="6" fill="#070a12" stroke="#253248" stroke-width="1"/>
+      <text x="56" y="235" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="12">🔍 Python, AWS, リモート...</text>
+
+      <!-- Skill Filter -->
+      <text x="284" y="206" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">主要スキル</text>
+      <rect x="284" y="214" width="160" height="34" rx="6" fill="#070a12" stroke="#253248" stroke-width="1"/>
+      <text x="296" y="235" fill="#f0f6fc" font-family="Arial, sans-serif" font-size="12">すべて (All Skills)</text>
+      <text x="424" y="235" fill="#6e7f98" font-family="Arial, sans-serif" font-size="10">▼</text>
+
+      <!-- Contract Filter (Highlighted) -->
+      <text x="464" y="206" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11" font-weight="bold">契約形態 (新設)</text>
+      <rect x="464" y="214" width="170" height="34" rx="6" fill="#0e2238" stroke="#8bdcff" stroke-width="1.2"/>
+      <text x="476" y="235" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">準委任 / 派遣 / 請負</text>
+      <text x="614" y="235" fill="#8bdcff" font-family="Arial, sans-serif" font-size="10">▼</text>
+
+      <!-- Score Slider with Glowing Track -->
+      <text x="654" y="206" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold">最低マッチ度: 80%以上</text>
+      <rect x="654" y="228" width="220" height="6" rx="3" fill="#1b2537"/>
+      <rect x="654" y="228" width="176" height="6" rx="3" fill="#baff66"/>
+      <circle cx="830" cy="231" r="8" fill="#baff66" stroke="#070a12" stroke-width="2"/>
+
+      <!-- Reset Btn -->
+      <rect x="980" y="214" width="136" height="34" rx="6" fill="#161f30" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="1048" y="235" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">条件リセット</text>
+
+      <!-- Table Section -->
+      <rect x="24" y="276" width="1112" height="460" rx="12" fill="#0d1424" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      
+      <!-- Table Header -->
+      <rect x="24" y="276" width="1112" height="42" rx="12" fill="#141c2e"/>
+      <text x="48" y="302" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">案件タイトル</text>
+      <text x="410" y="302" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">受信日</text>
+      <text x="515" y="302" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">適合要員</text>
+      <text x="660" y="302" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">契約形態</text>
+      <text x="770" y="302" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">マッチ度</text>
+      <text x="870" y="302" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold">ステータス</text>
+      <text x="1020" y="302" fill="#8b949e" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">アクション</text>
+
+      <!-- Row 1 (High Match 95%) -->
+      <rect x="24" y="318" width="1112" height="60" fill="rgba(139,220,255,0.02)"/>
+      <line x1="24" y1="378" x2="1136" y2="378" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      
+      <text x="48" y="353" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">【Python/FastAPI】AIエージェント連携基盤開発</text>
+      <text x="410" y="353" fill="#6e7f98" font-family="Arial, sans-serif" font-size="12">2026/08/15</text>
+      <text x="515" y="353" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">佐藤 賢太 (Eng-01)</text>
+      
+      <!-- Contract Badge -->
+      <rect x="660" y="338" width="68" height="24" rx="4" fill="#0e2a35" stroke="#8bdcff" stroke-width="1"/>
+      <text x="694" y="354" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">準委任</text>
+      
+      <!-- Score Badge (Glowing 95%) -->
+      <rect x="770" y="338" width="64" height="24" rx="12" fill="#1b3815" stroke="#baff66" stroke-width="1"/>
+      <text x="802" y="354" fill="#baff66" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">95%</text>
+
+      <!-- Status Badge -->
+      <rect x="870" y="338" width="60" height="24" rx="4" fill="rgba(186,255,102,0.1)"/>
+      <text x="900" y="354" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">✓ 承認済</text>
+
+      <!-- Buttons -->
+      <rect x="955" y="335" width="70" height="28" rx="5" fill="#141d2c" stroke="#8bdcff" stroke-width="1"/>
+      <text x="990" y="353" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">元メール</text>
+
+      <rect x="1035" y="335" width="85" height="28" rx="5" fill="#1b3815" stroke="#baff66" stroke-width="1.2"/>
+      <text x="1077" y="353" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">📧 提案作成</text>
+
+      <!-- Row 2 (High Match 92%) -->
+      <line x1="24" y1="438" x2="1136" y2="438" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      
+      <text x="48" y="413" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">【TypeScript/Next.js】モダンB2B SaaSフロントエンド</text>
+      <text x="410" y="413" fill="#6e7f98" font-family="Arial, sans-serif" font-size="12">2026/08/14</text>
+      <text x="515" y="413" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">山田 花子 (Eng-02)</text>
+      
+      <rect x="660" y="398" width="68" height="24" rx="4" fill="#0e2a35" stroke="#8bdcff" stroke-width="1"/>
+      <text x="694" y="414" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">準委任</text>
+      
+      <rect x="770" y="398" width="64" height="24" rx="12" fill="#1b3815" stroke="#baff66" stroke-width="1"/>
+      <text x="802" y="414" fill="#baff66" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">92%</text>
+
+      <rect x="870" y="398" width="60" height="24" rx="4" fill="rgba(255,209,102,0.1)"/>
+      <text x="900" y="414" fill="#ffd166" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">⚠️ 未承認</text>
+
+      <rect x="955" y="395" width="70" height="28" rx="5" fill="#141d2c" stroke="#8bdcff" stroke-width="1"/>
+      <text x="990" y="413" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">元メール</text>
+
+      <rect x="1035" y="395" width="85" height="28" rx="5" fill="#1b3815" stroke="#baff66" stroke-width="1.2"/>
+      <text x="1077" y="413" fill="#baff66" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">📧 提案作成</text>
+    </g>
+</svg>

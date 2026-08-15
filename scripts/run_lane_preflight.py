@@ -58,6 +58,7 @@ GUARD_REGISTRY: dict[str, str] = {
     "audit_diagnosis_fallback_transparency.py": "診断fallbackの利用者への透明性",
     "audit_doc_id_references.py": "docsのWBS/課題/QA ID参照整合(陳腐化・リンク切れ参照検知) (T904)",
     "audit_docs_reference_integrity.py": "docs内リンクの実在・移植性 (T891)",
+    "audit_figma_design_sync.py": "Figmaデザイントークン・CSS変数同期整合性 (T768/T917)",
     "audit_fk_index_coverage.py": "外部キーのインデックス網羅",
     "audit_form_error_handling.py": "フォーム入力エラー処理",
     "audit_frontend_api_contract.py": "フロントエンドとAPI契約の整合",

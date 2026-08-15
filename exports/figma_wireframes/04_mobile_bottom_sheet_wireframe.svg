@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844" width="390" height="844">
+  <!-- Mobile Screen Frame (iPhone 14 Pro Dimensions) -->
+  <rect width="390" height="844" rx="44" fill="#030303" stroke="rgba(255,255,255,0.2)" stroke-width="4"/>
+
+  <!-- Screen Content Backdrop -->
+  <rect x="20" y="60" width="350" height="70" rx="12" fill="#0d1117"/>
+  <text x="40" y="95" fill="#8bdcff" font-family="sans-serif" font-size="14" font-weight="bold">MIGHTY LINK AI</text>
+  <text x="40" y="115" fill="rgba(255,255,255,0.5)" font-family="sans-serif" font-size="11">モバイル対応 営業マッチング</text>
+
+  <!-- Mobile Bottom Sheet Drawer (#mobile-bottom-sheet) -->
+  <rect x="0" y="480" width="390" height="364" rx="24" fill="#0d1117" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+  
+  <!-- Sheet Handle -->
+  <rect x="175" y="495" width="40" height="5" rx="3" fill="rgba(255,255,255,0.3)"/>
+
+  <text x="30" y="535" fill="#ffffff" font-family="sans-serif" font-size="16" font-weight="bold">メニュー &amp; ツール</text>
+  <text x="345" y="535" fill="rgba(255,255,255,0.4)" font-family="sans-serif" font-size="18">×</text>
+
+  <!-- 2x2 Grid Menu Items -->
+  <rect x="25" y="560" width="160" height="56" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="40" y="594" fill="#ffffff" font-family="sans-serif" font-size="13">⚙️ 初期設定</text>
+
+  <rect x="205" y="560" width="160" height="56" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="220" y="594" fill="#ffffff" font-family="sans-serif" font-size="13">📊 自己診断</text>
+
+  <rect x="25" y="630" width="160" height="56" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="40" y="664" fill="#ffffff" font-family="sans-serif" font-size="13">🛡️ 管理者</text>
+
+  <rect x="205" y="630" width="160" height="56" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="220" y="664" fill="#ffffff" font-family="sans-serif" font-size="13">💬 サポート</text>
+
+  <!-- Mobile Bottom Nav Bar (Thumb Zone) -->
+  <rect x="0" y="760" width="390" height="84" fill="#07090e" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  
+  <text x="45" y="795" fill="#8bdcff" font-family="sans-serif" font-size="16" text-anchor="middle">🏠</text>
+  <text x="45" y="812" fill="#8bdcff" font-family="sans-serif" font-size="10" text-anchor="middle">ホーム</text>
+
+  <text x="120" y="795" fill="rgba(255,255,255,0.5)" font-family="sans-serif" font-size="16" text-anchor="middle">📝</text>
+  <text x="120" y="812" fill="rgba(255,255,255,0.5)" font-family="sans-serif" font-size="10" text-anchor="middle">調査</text>
+
+  <text x="195" y="795" fill="rgba(255,255,255,0.5)" font-family="sans-serif" font-size="16" text-anchor="middle">⏱️</text>
+  <text x="195" y="812" fill="rgba(255,255,255,0.5)" font-family="sans-serif" font-size="10" text-anchor="middle">勤怠</text>
+
+  <text x="270" y="795" fill="rgba(255,255,255,0.5)" font-family="sans-serif" font-size="16" text-anchor="middle">🤝</text>
+  <text x="270" y="812" fill="rgba(255,255,255,0.5)" font-family="sans-serif" font-size="10" text-anchor="middle">マッチ</text>
+
+  <text x="345" y="795" fill="#baff66" font-family="sans-serif" font-size="16" text-anchor="middle">☰</text>
+  <text x="345" y="812" fill="#baff66" font-family="sans-serif" font-size="10" text-anchor="middle">その他</text>
+</svg>
