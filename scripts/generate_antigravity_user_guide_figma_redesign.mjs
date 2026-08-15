@@ -9,7 +9,7 @@ if (!sourcePath || !outputPath || !qaDir) {
   );
 }
 
-const FIGMA_FILE_URL = "https://www.figma.com/slides/IP8rKfpGvtaXXnzUhuYvRP";
+const FIGMA_FILE_URL = "https://www.figma.com/slides/t1LgWfEHQKTAkCxsxUFkgD";
 const FIGMA_EXPORT_DOC =
   "https://help.figma.com/hc/en-us/articles/24848334599447-Export-from-Figma-Slides";
 

@@ -6,13 +6,18 @@ ROOT = Path(__file__).resolve().parents[1]
 DECK = ROOT / "exports" / "mighty_skill_bridge_antigravity_user_guide_2026_figma_redesign.pptx"
 GUIDE = ROOT / "docs" / "demo" / "antigravity_workshop" / "FIGMA_POWERPOINT_DEMO.md"
 GENERATOR = ROOT / "scripts" / "generate_antigravity_user_guide_figma_redesign.mjs"
-FIGMA_URL = "https://www.figma.com/slides/IP8rKfpGvtaXXnzUhuYvRP"
+FIGMA_URL = "https://www.figma.com/slides/t1LgWfEHQKTAkCxsxUFkgD"
+FIGMA_PROJECT_URL = (
+    "https://www.figma.com/files/team/1404381379512110171/project/264549730"
+)
 
 
 def test_figma_redesign_assets_are_documented() -> None:
     guide = GUIDE.read_text(encoding="utf-8")
     assert "kanta13jp1's team" in guide
+    assert "Team project" in guide
     assert FIGMA_URL in guide
+    assert FIGMA_PROJECT_URL in guide
     assert DECK.name in guide
     assert GENERATOR.name in guide
 

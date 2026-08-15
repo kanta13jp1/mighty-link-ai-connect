@@ -428,6 +428,7 @@ gantt
 | **T959** | 1. 企画・設計 | 企画戦略 | 8/24有償化Go/No-Go意思決定パッケージ策定・ミキワメAI連携PoCプロトタイプ・営業リード獲得プロモーション準備 | Antigravity | Antigravity + Gemini | 2026-08-15 企画戦略担当による直近最重要マイルストーン完遂。docs/PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-08-24.md策定（精度80%エビデンス、法定3文書サインオフ）、docs/MIKIWAME_AI_INTEGRATION_POC_DESIGN.md策定およびPro向けミキワメAI連携PoCデモUI実装、docs/SALES_PROPOSAL_EFFECTIVENESS_SUMMARY.md更新（成約時間97%削減・事前登録キャンペーン）を完了。 | 完了 |
 | **T960** | 8. 本番運用・品質管理 | 教育・研修 | Figma Slides連携によるPowerPoint生成5分デモと完成済み予備資料の統合 | Codex | Codex App + Figma MCP + Figma Slides + Artifact Tool + PowerPoint | 30分Antigravity本編を維持したままQ&A・予備時間へFigma SlidesからPPTXを生成する5分追加デモを設計。全文コピー可能なPROMPT_12、公式PPTX書き出し手順、フォント・グラデーション・静止画化の変換制約、複数team選択の事前固定、90秒復旧、完成済み5枚PowerPointを追加。PPTX再読込後に全5枚を原寸確認し、文字切れ・重なりなし、slides_test overflow 0、speaker notes Sources 5/5を確認 | 完了 |
 | **T961** | 8. 本番運用・品質管理 | 教育・研修 | Antigravity 36枚ユーザーガイドのFigma Slidesテンプレート化とPowerPoint再デザイン | Codex | Codex App + Figma MCP + Figma Slides + Artifact Tool + PowerPoint | kanta13jp1's teamへFigma Slides 8テンプレートを作成し、元の36枚PPTX、画像、表、全文プロンプト、speaker notesを維持したFigma反映版を生成。Figma 2バッチの重なり・文字切れ・範囲外0件、PPTX 36枚原寸確認、752オブジェクト配色変換、slides_test overflow 0、Sources 36/36を確認 | 完了 |
+| **T962** | 8. 本番運用・品質管理 | 教育・研修 | Figma Slides保存先をkanta13jp1's team / Team projectへ明示配置してDrafts誤配置を是正 | Codex | Codex App + Figma MCP + Figma Slides + Artifact Tool + PowerPoint | project ID 264549730を明示してTeam projectへ8枚のFigma Slidesテンプレートを再作成。全スライド1920x1080、主要見出し8/8、範囲外・文字切れ・トップレベル重なり0件を検証し、デモ手順・生成スクリプト・PowerPoint speaker notesを新URLへ更新 | 完了 |
 
 ---
 

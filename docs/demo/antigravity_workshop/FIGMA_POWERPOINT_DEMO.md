@@ -23,7 +23,7 @@ Figma MCPは完成品を自動保証する仕組みではなく、FigmaとAIエ�
 ## 事前準備
 
 1. Codex AppでFigmaプラグインをインストールし、OAuth認証を完了する。
-2. Figma側で使用するteam / planは`kanta13jp1's team`へ固定する。もう一方の候補`tokyofigma01`は使用せず、会場でteamを切り替えない。
+2. Figma側で使用するteam / planは`kanta13jp1's team`、保存先は`Team project`（project ID: `264549730`）へ固定する。もう一方の候補`tokyofigma01`は使用せず、会場でteamやprojectを切り替えない。
 3. Figma Slidesの作成、編集、URL表示までを一度リハーサルする。
 4. `exports/mighty_skill_bridge_figma_powerpoint_demo_2026.pptx`を完成済み予備としてローカルに置く。
 5. PowerPointの編集表示で`PROMPT_12_FIGMA_POWERPOINT.txt`全文をコピーできることを確認する。
@@ -64,7 +64,8 @@ Figma MCPは完成品を自動保証する仕組みではなく、FigmaとAIエ�
 
 ## 36枚ユーザーガイドの実例
 
-- Figma Slidesテンプレート: https://www.figma.com/slides/IP8rKfpGvtaXXnzUhuYvRP
+- Team project: https://www.figma.com/files/team/1404381379512110171/project/264549730
+- Figma Slidesテンプレート: https://www.figma.com/slides/t1LgWfEHQKTAkCxsxUFkgD
 - 元資料: `exports/mighty_skill_bridge_antigravity_user_guide_2026.pptx`
 - Figma反映版: `exports/mighty_skill_bridge_antigravity_user_guide_2026_figma_redesign.pptx`
 - 再生成: `scripts/generate_antigravity_user_guide_figma_redesign.mjs`
