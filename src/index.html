@@ -4118,60 +4118,61 @@
 
             <div style="font-size: 10px; font-weight: 800; color: var(--muted); letter-spacing: 1px; margin-bottom: 10px; padding-left: 8px;">WORKSPACE APPS</div>
 
-            <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
+                        <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
                 <!-- 1. Home / Fit Simulator -->
-                <a href="#top" class="sidebar-nav-item" data-tab-id="home-view" data-i18n="nav_home">
+                <a href="#top" class="sidebar-nav-item" data-tab-id="home-view">
                     <span style="font-size: 15px;">🏠</span>
                     <span data-i18n="nav_home">ホーム</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 2. Sales Email Matching -->
-                <a href="#matching-section" class="sidebar-nav-item active" data-tab-id="matching-section" data-i18n="nav_matching">
+                <a href="#matching-section" class="sidebar-nav-item active" data-tab-id="matching-section">
                     <span style="font-size: 15px;">🤝</span>
                     <span data-i18n="nav_matching">営業メールマッチング</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 3. Admin Dashboard -->
-                <a href="#admin-dashboard-section" class="sidebar-nav-item" data-tab-id="admin-dashboard-section" data-i18n="nav_admin">
+                <a href="#admin-dashboard-section" class="sidebar-nav-item" data-tab-id="admin-dashboard-section">
                     <span style="font-size: 15px;">🛡️</span>
                     <span data-i18n="nav_admin">管理者ダッシュボード</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 4. Timesheet / Attendance -->
-                <a href="#attendance-section" class="sidebar-nav-item" data-tab-id="attendance-section" data-i18n="nav_attendance">
+                <a href="#attendance-section" class="sidebar-nav-item" data-tab-id="attendance-section">
                     <span style="font-size: 15px;">⏱️</span>
                     <span data-i18n="nav_attendance">勤怠管理</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 5. Survey / Assessment -->
-                <a href="#survey-section" class="sidebar-nav-item" data-tab-id="survey-section" data-i18n="nav_survey">
+                <a href="#survey-section" class="sidebar-nav-item" data-tab-id="survey-section">
                     <span style="font-size: 15px;">📊</span>
                     <span data-i18n="nav_survey">適性アンケート</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 6. Aptitude Demo -->
-                <a href="#aptitude-demo-section" class="sidebar-nav-item" data-tab-id="aptitude-demo-section" data-i18n="nav_aptitude">
+                <a href="#aptitude-demo-section" class="sidebar-nav-item" data-tab-id="aptitude-demo-section">
                     <span style="font-size: 15px;">📈</span>
                     <span data-i18n="nav_aptitude">自己診断デモ</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 7. Onboarding / Setup -->
-                <a href="#onboarding-section" class="sidebar-nav-item" data-tab-id="onboarding-section" data-i18n="nav_onboarding">
+                <a href="#onboarding-section" class="sidebar-nav-item" data-tab-id="onboarding-section">
                     <span style="font-size: 15px;">⚙️</span>
                     <span data-i18n="nav_onboarding">初期セットアップ</span>
                     <span class="nav-indicator"></span>
                 </a>
 
                 <!-- 8. Training Guide -->
-                <a href="#training-section" class="sidebar-nav-item" data-tab-id="training-section" data-i18n="nav_training">
+                <a href="#training-section" class="sidebar-nav-item" data-tab-id="training-section">
                     <span style="font-size: 15px;">📖</span>
                     <span data-i18n="nav_training">研修ガイド</span>
+                    <span class="nav-indicator"></span>
                 </a>
             </nav>
 
@@ -6350,75 +6351,10 @@
             document.querySelectorAll("[data-i18n-placeholder]").forEach(node => {
                 const key = node.getAttribute("data-i18n-placeholder");
                 if (i18nDict[lang] && i18nDict[lang][key]) {
-                    node.placeholder = i18nDict[lang][key];
+                    node.setAttribute("placeholder", i18nDict[lang][key]);
                 }
             });
-
-            document.querySelectorAll("[data-i18n-aria-label]").forEach(node => {
-                const key = node.getAttribute("data-i18n-aria-label");
-                if (i18nDict[lang] && i18nDict[lang][key]) {
-                    node.setAttribute("aria-label", i18nDict[lang][key]);
-                }
-            });
-
-            document.querySelectorAll("[data-i18n-title]").forEach(node => {
-                const key = node.getAttribute("data-i18n-title");
-                if (i18nDict[lang] && i18nDict[lang][key]) {
-                    node.title = i18nDict[lang][key];
-                }
-            });
-
-            try {
-                window.dispatchEvent(new CustomEvent("languageChanged", { detail: { lang } }));
-            } catch (e) {}
         }
-
-        (function initLang() {
-            let savedLang = "";
-            try { savedLang = localStorage.getItem("msb_language_preference") || ""; } catch (e) {}
-            if (!savedLang) {
-                const navLang = (navigator.language || navigator.userLanguage || "").toLowerCase();
-                if (navLang.startsWith("zh")) savedLang = "zh";
-                else if (navLang.startsWith("ko")) savedLang = "ko";
-                else if (navLang.startsWith("en")) savedLang = "en";
-                else savedLang = "ja";
-            }
-            function applyLang() {
-                const targetEl = document.querySelector(`.language-switch a[data-lang='${savedLang}']`);
-                if (targetEl) {
-                    switchLanguage(targetEl);
-                } else {
-                    switchLanguage(savedLang || "ja");
-                }
-            }
-            if (document.readyState === "loading") {
-                document.addEventListener("DOMContentLoaded", applyLang);
-            } else {
-                applyLang();
-            }
-        })();
-
-        // Register Global Keyboard Shortcuts (Alt+1 .. Alt+7) for Accessible Navigation
-        document.addEventListener("keydown", function(e) {
-            if (e.altKey && !e.ctrlKey && !e.metaKey) {
-                const targets = {
-                    "1": "#top",
-                    "2": "#onboarding-section",
-                    "3": "#survey-section",
-                    "4": "#aptitude-demo-section",
-                    "5": "#attendance-section",
-                    "6": "#matching-section",
-                    "7": "#admin-dashboard-section"
-                };
-                if (targets[e.key]) {
-                    e.preventDefault();
-                    const el = document.querySelector(targets[e.key]);
-                    if (el) {
-                        el.scrollIntoView({ behavior: "smooth" });
-                        el.focus({ preventScroll: true });
-                    }
-                }
-            }
         });
 
         function setVideoSource(url) {
