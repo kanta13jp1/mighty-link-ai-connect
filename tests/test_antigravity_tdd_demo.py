@@ -36,8 +36,8 @@ def test_build_and_skill_prompts_cannot_weaken_tests() -> None:
 
 def test_run_of_show_places_test_spec_before_build() -> None:
     readme = read("README.md")
-    test_spec_position = readme.index("IDEでテスト仕様作成")
-    build_position = readme.index("IDEで初版作成")
+    test_spec_position = readme.index("Antigravity 2.0でテスト仕様作成")
+    build_position = readme.index("Antigravity 2.0で初版作成")
 
     assert test_spec_position < build_position
     assert "RED -> 部分PASS -> GREEN" in readme

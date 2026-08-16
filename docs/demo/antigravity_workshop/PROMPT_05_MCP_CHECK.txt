@@ -1,11 +1,26 @@
-Prompt 5 / MCPで公開先を読み取り確認する
+Prompt 5 / Figma MCPの接続と作成先を読み取り確認する
 
-Antigravity IDEのMCP Servers画面でGitHub MCPの接続状態だけを確認してください。Antigravity CLIを使う場合は`/mcp`を開いてください。
+Antigravity 2.0のSettings > Customizations > Installed MCP Serversで、Figma remote MCPの接続状態を確認してください。
 
-GitHub MCPが接続済みの場合、読み取り専用で次を確認してください。
-- リポジトリ: kanta13jp1/mighty-link-antigravity-live-demo
-- default branchがmain
-- 最新commitのSHAと件名
-- GitHub Pagesの公開URLまたは直近deployment状態
+確認条件:
+- この段階ではFigmaファイルを作成・編集・削除しない
+- OAuth再認証を要求された場合は、その場で認証せず停止する
+- APIキー、token、cookie、認証情報を表示しない
 
-Issue作成、設定変更、認証追加、ファイル変更、commit、pushは行わないでください。GitHub MCPが未接続または情報を取得できない場合は、接続や認証を会場で開始せず「MCP確認は省略、gitと公開URL確認へ継続」と1行で報告してください。
+接続済みの場合は、Figma MCPの読み取り専用Toolだけを使い、次を確認してください。
+
+1. 接続中のFigmaアカウント
+2. team / planが`kanta13jp1's team`であること
+3. plan keyが`team::1404381379512110171`であること
+4. 作成先project IDが`264549730`であること
+5. Figma Slidesの新規作成とcanvas書き込みに必要なToolが利用可能か
+
+結果は次の5行だけで返してください。
+
+MCP: CONNECTED または STOP
+ACCOUNT: <emailまたは非機密のhandle>
+TEAM: <team名>
+PROJECT: <project ID>
+WRITE TO SLIDES: AVAILABLE または UNAVAILABLE
+
+STOPの場合は理由を1行だけ追加し、設定変更や認証を開始しないでください。

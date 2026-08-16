@@ -72,6 +72,7 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     cli_prompt = _read_text(files["prompt_cli"])
     sdk_prompt = _read_text(files["prompt_sdk"])
     sdk_script = _read_text(files["sdk_script"])
+    figma_prompt = _read_text(files["prompt_figma"])
 
     parser = _SiteParser()
     parser.feed(html)
@@ -94,9 +95,13 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
         and "PROMPT_03_TEST_SPEC.txt" in readme
         and "30分" in readme
         and "残り30分" in readme
-        and all(surface in readme for surface in ("Antigravity 2.0", "Antigravity CLI", "Antigravity SDK"))
+        and all(surface in readme for surface in ("Antigravity 2.0", "Figma MCP", "PowerPoint"))
+        and "20:00-25:00" in readme
+        and "25:00-30:00" in readme
+        and "Antigravity IDE、CLI、SDKは30分本編では操作しません" in readme
         and "PROMPT_10_CLI_READONLY.txt" in readme
         and "PROMPT_11_SDK_READONLY.txt" in readme
+        and "PROMPT_12_FIGMA_POWERPOINT.txt" in readme
     )
 
     h2 = all(
@@ -204,11 +209,23 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     h8 = all(
         marker in mcp
         for marker in (
-            "MCP Servers",
-            "GitHub MCP",
+            "Settings > Customizations > Installed MCP Servers",
+            "Figma remote MCP",
             "読み取り専用",
-            "Issue作成、設定変更、認証追加、ファイル変更、commit、pushは行わない",
-            "MCP確認は省略、gitと公開URL確認へ継続",
+            "この段階ではFigmaファイルを作成・編集・削除しない",
+            "OAuth再認証を要求された場合は、その場で認証せず停止する",
+            "team::1404381379512110171",
+            "264549730",
+            "WRITE TO SLIDES: AVAILABLE または UNAVAILABLE",
+        )
+    ) and all(
+        marker in figma_prompt
+        for marker in (
+            "Figma remote MCP",
+            "上記と異なるteamやprojectへは作成しない",
+            "全3枚",
+            "PowerPointへの書き出しはまだ実行しない",
+            "公開、共有範囲変更、既存ファイルの編集・削除はしない",
         )
     ) and all(marker in concepts for marker in ("## MCP", "Model Context Protocol", "標準")) and all(
         marker in cli_prompt
@@ -297,14 +314,14 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
     )
 
     hypotheses = [
-        ("H1_three_surface_30min_story", h1, "IDE, CLI, and SDK fit a 30-minute demo with reserve time"),
+        ("H1_web_first_30min_story", h1, "Antigravity 2.0 delivers the web demo; Figma MCP and PowerPoint occupy five minutes"),
         ("H2_grill_timeboxed", h2, "/grill-me asks at most two consequential questions and cannot modify files"),
         ("H3_skill_discovery_quality", h3, "/find-skills compares provenance, adoption, audits, and install commands"),
         ("H4_project_scoped_install", h4, "frontend-design installs only to the Antigravity demo repository"),
         ("H5_build_boundary", h5, "test specification is RED before the first five-agent HTML/CSS build reaches partial PASS"),
         ("H6_skill_application", h6, "the installed skill makes all eight automated contracts GREEN and preserves the tests"),
         ("H7_product_feature_accuracy", h7, "the five products use official feature names and Kiro owns Steering/Powers"),
-        ("H8_read_only_integrations", h8, "MCP, CLI, and SDK are read-only with no-auth fallbacks"),
+        ("H8_read_only_integrations", h8, "Figma MCP preflight, CLI, and SDK are read-only; Slides writing is scoped to one new file"),
         ("H9_publish_safety", h9, "dedicated repository, synthetic data, secret checks, and exact approval are enforced"),
         ("H10_offline_accessible_recovery", h10, f"external_refs={len(parser.external_refs)}; headings={parser.headings}"),
     ]
@@ -342,6 +359,7 @@ def collect_demo_kit_status(project_root: Path = PROJECT_ROOT) -> dict[str, obje
         "prompt_cli": workshop / "PROMPT_10_CLI_READONLY.txt",
         "prompt_sdk": workshop / "PROMPT_11_SDK_READONLY.txt",
         "prompt_test_spec": workshop / "PROMPT_03_TEST_SPEC.txt",
+        "prompt_figma": workshop / "PROMPT_12_FIGMA_POWERPOINT.txt",
         "sdk_script": workshop / "antigravity_sdk_readonly.py",
     }
 
