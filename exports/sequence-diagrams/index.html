@@ -89,7 +89,7 @@
 </head><body>
 
 <header class="topbar">
-  <a class="brand" href="../../">
+  <a class="brand" href="../../index.html">
     <span class="brand-mark">M</span>
     <span class="brand-text"><strong>Mighty Skill-Bridge</strong><span>Sequence Diagrams · Architecture</span></span>
   </a>
@@ -99,7 +99,7 @@
     <a href="#p3">③ 開発フロー</a>
     <a href="#p4">④ 採用 LP</a>
   </nav>
-  <a class="back" href="../../">← 公開デモへ戻る</a>
+  <a class="back" href="../../index.html">← 公開デモへ戻る</a>
 </header>
 
 <section class="hero">
@@ -358,57 +358,25 @@ sequenceDiagram
 
 <footer>
   <span>© 2026 Mighty-Link Inc. · Sequence Diagrams</span>
-  <span><a href="../../">← 公開デモへ戻る</a> · <a href="../wireframes/index.html">WF (20)</a> · <a href="../landing-pages/index.html">LP (20)</a> · <a href="../recruit/index.html">Recruit</a></span>
+  <span><a href="../../index.html">← 公開デモへ戻る</a> · <a href="../wireframes/index.html">WF (20)</a> · <a href="../landing-pages/index.html">LP (20)</a> · <a href="../recruit/index.html">Recruit</a></span>
 </footer>
 
-<script src="https://unpkg.com/mermaid@11/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script>
-  mermaid.initialize({
-    startOnLoad: true,
-    theme: 'dark',
-    themeVariables: {
-      primaryColor: '#11131A',
-      primaryTextColor: '#F7F7F2',
-      primaryBorderColor: '#8BDCFF',
-      lineColor: '#8BDCFF',
-      secondaryColor: '#1a1d2c',
-      tertiaryColor: '#11131A',
-      noteBkgColor: '#1a2030',
-      noteTextColor: '#F7F7F2',
-      noteBorderColor: '#8BDCFF',
-      actorBkg: '#11131A',
-      actorBorder: '#8BDCFF',
-      actorTextColor: '#F7F7F2',
-      signalColor: '#BAFF66',
-      signalTextColor: '#F7F7F2',
-      sequenceNumberColor: '#0A0B0F'
-    },
-    sequence: {
-      mirrorActors: false,
-      showSequenceNumbers: true,
-      actorMargin: 80,
-      width: 180,
-      diagramMarginX: 30,
-      diagramMarginY: 16,
-      boxMargin: 12
-    }
-  });
-
-  // active TOC link on scroll
-  (function(){
-    const links=document.querySelectorAll('.nav-links a[href^="#"]');
-    const map={};
-    links.forEach(a=>{const id=a.getAttribute("href").slice(1);const el=document.getElementById(id);if(el)map[id]={a,el};});
-    function update(){
-      let cur=null,curTop=-Infinity;
-      Object.values(map).forEach(({el})=>{
-        const t=el.getBoundingClientRect().top;
-        if(t<140 && t>curTop){curTop=t;cur=el.id;}
-      });
-      Object.values(map).forEach(({a,el})=>a.classList.toggle("is-active",el.id===cur));
-    }
-    addEventListener("scroll",update,{passive:true});
-    update();
-  })();
+  if (typeof mermaid !== 'undefined') {
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      securityLevel: 'loose'
+    });
+  } else {
+    // Fallback load from cdnjs
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.4.1/mermaid.min.js';
+    s.onload = function() {
+      mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    };
+    document.head.appendChild(s);
+  }
 </script>
 </body></html>

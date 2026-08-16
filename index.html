@@ -4169,7 +4169,7 @@
                 </a>
 
                 <!-- 8. Training Guide -->
-                <a href="#training-modal" class="sidebar-nav-item" onclick="openTrainingModal(event)">
+                <a href="#training-section" class="sidebar-nav-item" data-tab-id="training-section">
                     <span style="font-size: 15px;">📖</span>
                     <span data-i18n="nav_training">研修ガイド</span>
                 </a>
@@ -5493,20 +5493,11 @@
                     <span>Copyright © 2026 Mighty-Link Inc. All rights reserved.</span>
                     <a href="#support" style="color:var(--blue); font-size:12px; margin-top: 4px; display:inline-block;">サポート・問い合わせ: k-umezawa@ml-mightylink.com</a>
                 </div>
-                <div class="footer-column">
-                    <h3>メニュー</h3>
-                    <a href="#top">ホーム</a>
-                    <a href="#onboarding-section">初期セットアップ</a>
-                    <a href="#survey-section">適性アンケート</a>
-                    <a href="#aptitude-demo-section">自己診断デモ</a>
-                    <a href="#attendance-section">勤怠管理</a>
-                    <a href="#matching-section">営業メールマッチング</a>
-                    <a href="#admin-dashboard-section">管理者ダッシュボード</a>
-                </div>
+                
                 <div class="footer-column">
                     <h3>資料リンク</h3>
-                    <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.md" target="_blank" rel="noopener">Mighty Knowledge Flow</a>
-                    <a href="exports/sequence-diagrams/index.html" target="_blank" rel="noopener">Mighty Architecture (シーケンス図)</a>
+                    <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.html">Mighty Knowledge Flow</a>
+                    <a href="exports/sequence-diagrams/index.html">Mighty Architecture (シーケンス図)</a>
                     <a href="admin" target="_blank" rel="noopener">管理者画面 (DB直通)</a>
                 </div>
                 <div class="footer-column">
@@ -9361,12 +9352,32 @@
         function switchTrainingTab(courseId) {
             const courses = ['course1', 'course2', 'course3'];
             courses.forEach((c, idx) => {
-                const btn = document.getElementById('training-tab-' + (idx + 1));
-                const panel = document.getElementById('training-course-' + (idx + 1));
-                if (c === courseId) {
-                    if (btn) btn.classList.add('active');
-                    if (panel) { panel.style.display = 'block'; panel.classList.add('active'); }
-                } else {
+                const num = idx + 1;
+                const btn1 = document.getElementById('training-tab-' + num);
+                const btn2 = document.getElementById('tab-course-tab-' + num);
+                const panel1 = document.getElementById('training-course-' + num);
+                const panel2 = document.getElementById('training-tab-course-' + num);
+
+                const isTarget = (c === courseId);
+                [btn1, btn2].forEach(btn => {
+                    if (btn) {
+                        if (isTarget) btn.classList.add('active');
+                        else btn.classList.remove('active');
+                    }
+                });
+                [panel1, panel2].forEach(panel => {
+                    if (panel) {
+                        if (isTarget) {
+                            panel.style.display = 'block';
+                            panel.classList.add('active');
+                        } else {
+                            panel.style.display = 'none';
+                            panel.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        } else {
                     if (btn) btn.classList.remove('active');
                     if (panel) { panel.style.display = 'none'; panel.classList.remove('active'); }
                 }
