@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>customer_interview_memo — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u55b6\u696d\u30d2\u30a2\u30ea\u30f3\u30b0\u30e1\u30e2\n\nSYNTHETIC_DATA_ONLY: \u3053\u306e\u6587\u66f8\u306f\u7814\u4fee\u7528\u306e\u67b6\u7a7a\u30fb\u5408\u6210\u30c7\u30fc\u30bf\u3067\u3059\u3002\n\n## \u9867\u5ba2\u6982\u8981\n\n- \u4f01\u696d\u540d: \u30b5\u30f3\u30d7\u30eb\u30c6\u30c3\u30af\u682a\u5f0f\u4f1a\u793e\n- \u696d\u7a2e: IT\u30b5\u30fc\u30d3\u30b9\n- \u5f93\u696d\u54e1\u6570: 120\u540d\n\n## \u9867\u5ba2\u8ab2\u984c\n\n- \u55b6\u696d\u63d0\u6848\u306e\u521d\u7a3f\u4f5c\u6210\u306b\u6642\u9593\u304c\u304b\u304b\u308b\u3002\n- \u6848\u4ef6\u60c5\u5831\u304c\u62c5\u5f53\u8005\u3054\u3068\u306e\u30e1\u30e2\u306b\u5206\u6563\u3057\u3066\u3044\u308b\u3002\n- \u63d0\u6848\u5f8c\u306e\u6b21\u30a2\u30af\u30b7\u30e7\u30f3\u304c\u66d6\u6627\u306b\u306a\u308a\u3084\u3059\u3044\u3002\n\n## \u63d0\u6848\u306e\u65b9\u5411\u6027\n\n- \u65e2\u5b58\u30e1\u30e2\u304b\u3089\u63d0\u6848\u9aa8\u5b50\u3092\u81ea\u52d5\u3067\u6574\u7406\u3059\u308b\u3002\n- \u51fa\u529b\u5f62\u5f0f\u3092\u5171\u901a\u5316\u3057\u3001\u30ec\u30d3\u30e5\u30fc\u6642\u9593\u3092\u77ed\u7e2e\u3059\u308b\u3002\n- \u6700\u7d42\u5224\u65ad\u3068\u9867\u5ba2\u9001\u4ed8\u306f\u5fc5\u305a\u4eba\u304c\u884c\u3046\u3002\n\n## \u9069\u5408\u30b9\u30b3\u30a2\n\n- \u696d\u52d9\u9069\u5408: 82 / 100\n- \u5c0e\u5165\u5bb9\u6613\u6027: 76 / 100\n- \u30c7\u30fc\u30bf\u6e96\u5099: 68 / 100\n\n## \u6b21\u30a2\u30af\u30b7\u30e7\u30f3\n\n1. \u5408\u6210\u30c7\u30fc\u30bf\u3067\u63d0\u6848\u753b\u9762\u3092\u8a66\u4f5c\u3059\u308b\u3002\n2. \u55b6\u696d\u8cac\u4efb\u8005\u304c\u51fa\u529b\u9805\u76ee\u3092\u30ec\u30d3\u30e5\u30fc\u3059\u308b\u3002\n3. \u5b9f\u30c7\u30fc\u30bf\u5229\u7528\u524d\u306b\u60c5\u5831\u7ba1\u7406\u30eb\u30fc\u30eb\u3092\u78ba\u8a8d\u3059\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

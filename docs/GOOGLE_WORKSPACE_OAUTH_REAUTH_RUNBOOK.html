@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Google Workspace OAuth \u518d\u8a8d\u8a3c Runbook\n\n\u4f5c\u6210\u65e5: 2026-06-21\n\u5bfe\u5fdc WBS: T825\n\u5bfe\u8c61: Sheets / Calendar / Drive / NotebookLM Docs \u540c\u671f\n\n## \u76ee\u7684\n\n`authorized_user.json` \u306e refresh token \u304c\u5931\u52b9\u307e\u305f\u306f\u53d6\u308a\u6d88\u3055\u308c\u305f\u5834\u5408\u306b\u3001WBS\u3001\u8ab2\u984c\u7ba1\u7406\u8868\u3001QA\u8868\u3001Calendar\u3001NotebookLM\u5411\u3051Drive\u8cc7\u6599\u306e\u540c\u671f\u3092\u5b89\u5168\u306b\u5fa9\u65e7\u3059\u308b\u3002\n\nGoogle\u516c\u5f0fOAuth\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3067\u306f\u3001refresh token \u306f\u30e6\u30fc\u30b6\u30fc\u306b\u3088\u308b\u53d6\u308a\u6d88\u3057\u3001\u9577\u671f\u9593\u672a\u4f7f\u7528\u3001\u30d1\u30b9\u30ef\u30fc\u30c9\u5909\u66f4\u3001token\u4e0a\u9650\u3001\u7ba1\u7406\u8005\u30dd\u30ea\u30b7\u30fc\u3001\u30c6\u30b9\u30c8\u516c\u958b\u72b6\u614b\u306e\u5236\u9650\u306a\u3069\u3067\u4f7f\u3048\u306a\u304f\u306a\u308b\u5834\u5408\u304c\u3042\u308b\u3002\u540c\u671f\u30b9\u30af\u30ea\u30d7\u30c8\u306f `invalid_grant` / `expired or revoked` \u3092\u691c\u77e5\u3057\u305f\u3089\u3001\u30d5\u30a9\u30fc\u30eb\u30d0\u30c3\u30af\u3067\u66d6\u6627\u306b\u9032\u3081\u305a\u518d\u8a8d\u8a3c\u3092\u4fc3\u3059\u3002\n\n## \u5fa9\u65e7\u624b\u9806\n\n\u307e\u305a\u73fe\u5728\u306e\u8a8d\u8a3c\u72b6\u614b\u3092\u78ba\u8a8d\u3059\u308b\u3002\n\n```powershell\npython scripts/verify_google_workspace_account.py\n```\n\n`Google Workspace OAuth token is expired or revoked` \u304c\u8868\u793a\u3055\u308c\u305f\u5834\u5408\u306f\u3001\u6b21\u3092\u5b9f\u884c\u3059\u308b\u3002\n\n```powershell\npython scripts/verify_google_workspace_account.py --reauth\n```\n\n\u30d6\u30e9\u30a6\u30b6\u3067\u306f\u4f1a\u793e\u63d0\u4f9b\u306e Google \u30a2\u30ab\u30a6\u30f3\u30c8 `k-umezawa@ml-mightylink.com` \u3092\u9078\u629e\u3057\u3001Sheets / Drive / Calendar \u306e\u6a29\u9650\u3092\u8a31\u53ef\u3059\u308b\u3002\u6210\u529f\u5f8c\u3001\u6b21\u306e\u540c\u671f\u3092\u518d\u5b9f\u884c\u3059\u308b\u3002\n\n```powershell\npython scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8\npython scripts/sync_wbs_to_calendar.py\npython scripts/sync_docs_to_notebooklm.py --drive-only\n```\n\n## \u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u30eb\u30fc\u30eb\n\n- `authorized_user.json`\u3001`client_secret.json`\u3001OAuth token\u3001refresh token \u306f GitHub\u3001Sheets\u3001Issue\u3001NotebookLM\u3001Slack\u3001\u30c1\u30e3\u30c3\u30c8\u672c\u6587\u3078\u8a18\u9332\u3057\u306a\u3044\u3002\n- `authorized_user.json` \u306f\u30ed\u30fc\u30ab\u30eb\u7aef\u672b\u5c02\u7528\u306e\u8a8d\u8a3c\u30ad\u30e3\u30c3\u30b7\u30e5\u3068\u3057\u3066\u6271\u3046\u3002\n- \u8a8d\u8a3c\u5f8c\u306f `python scripts/verify_google_workspace_account.py` \u3092\u518d\u5b9f\u884c\u3057\u3001\u5b9f\u884c\u4e3b\u4f53\u304c `k-umezawa@ml-mightylink.com` \u3067\u3042\u308b\u3053\u3068\u3092\u78ba\u8a8d\u3059\u308b\u3002\n- NotebookLM CLI \u306e `notebooklm login` \u306f NotebookLM \u64cd\u4f5c\u7528\u306e\u30d6\u30e9\u30a6\u30b6\u72b6\u614b\u3092\u4fdd\u5b58\u3059\u308b\u51e6\u7406\u3067\u3042\u308a\u3001Sheets / Calendar / Drive API \u306e `authorized_user.json` \u518d\u8a8d\u8a3c\u3068\u306f\u5225\u306b\u6271\u3046\u3002\n\n## Closeout \u518d\u958b\u57fa\u6e96\n\n\u6b21\u3092\u3059\u3079\u3066\u6e80\u305f\u3057\u305f\u3089\u3001\u901a\u5e38\u306e\u30bb\u30c3\u30b7\u30e7\u30f3 closeout \u3092\u518d\u958b\u3067\u304d\u308b\u3002\n\n- `verify_google_workspace_account.py` \u304c\u6210\u529f\u3059\u308b\u3002\n- Sheets \u540c\u671f\u304c `Mighty-Link WBS`\u3001`\u8ab2\u984c\u7ba1\u7406\u8868`\u3001`QA\u8868` \u3092\u66f4\u65b0\u3059\u308b\u3002\n- Calendar \u540c\u671f\u304c\u5b8c\u4e86\u6e08\u307fWBS\u30a4\u30d9\u30f3\u30c8\u3092\u524a\u9664\u3057\u3001\u672a\u5b8c\u4e86\u30a4\u30d9\u30f3\u30c8\u3060\u3051\u3092\u6b8b\u3059\u3002\n- Drive / NotebookLM docs \u540c\u671f\u304c `exports/knowledge_flow/notebooklm_docs_manifest.json` \u3092\u66f4\u65b0\u3059\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIKIWAME_AI_INTEGRATION_POC_DESIGN — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u30df\u30ad\u30ef\u30e1AI \u9023\u643aPoC \u30a2\u30fc\u30ad\u30c6\u30af\u30c1\u30e3\uff06UI\u4ed5\u69d8\u66f8\uff08Pro\u30d7\u30e9\u30f3\u5dee\u5225\u5316\u6a5f\u80fd\uff09\n\n\u4f5c\u6210\u65e5: 2026-08-15  \n\u4f5c\u6210\u8cac\u4efb\u8005: \u4f01\u753b\u6226\u7565\u62c5\u5f53 (Antigravity)  \n\u5bfe\u8c61\u30d7\u30e9\u30f3: **Pro \u30d7\u30e9\u30f3\uff08\u6708\u984d \u00a529,800\uff09 / Enterprise \u30d7\u30e9\u30f3**  \n\u95a2\u9023WBS: `T839` / `T862` / `T909`\n\u95a2\u9023docs: [PRICING_PLAN_SPECIFICATION.md](PRICING_PLAN_SPECIFICATION.md) / [APTITUDE_MOTIVATION_DEMO_PRIVACY_DESIGN.md](APTITUDE_MOTIVATION_DEMO_PRIVACY_DESIGN.md) / [GROWTH_STRATEGY_ROADMAP.md](GROWTH_STRATEGY_ROADMAP.md)\n\n---\n\n## 1. \u6982\u8981\u3068\u30d3\u30b8\u30cd\u30b9\u4fa1\u5024\n\n\u672c\u6a5f\u80fd\u306f\u3001\u300cMightyLink AI Connect\u300d\u306ePro\u30d7\u30e9\u30f3\uff08\u6708\u984d \u00a529,800\uff09\u304a\u3088\u3073Enterprise\u30d7\u30e9\u30f3\u306b\u304a\u3051\u308b\u4e2d\u6838\u7684\u5dee\u5225\u5316\u6a5f\u80fd\u3068\u3057\u3066\u3001\u682a\u5f0f\u4f1a\u793e\u30ea\u30fc\u30c7\u30a3\u30f3\u30b0\u30de\u30fc\u30af\u304c\u63d0\u4f9b\u3059\u308b\u9069\u6027\u691c\u67fb\u30af\u30e9\u30a6\u30c9**\u300c\u30df\u30ad\u30ef\u30e1\u300d\u306e\u8a3a\u65ad\u30c7\u30fc\u30bf\uff08CSV / JSON\u30a8\u30af\u30b9\u30dd\u30fc\u30c8\u30c7\u30fc\u30bf\uff09\u3092AI\u3067\u89e3\u6790\u30fb\u7d71\u5408**\u3057\u3001\u4ee5\u4e0b\u306e\u4fa1\u5024\u3092\u63d0\u4f9b\u3057\u307e\u3059\u3002\n\n1. **\u30ab\u30eb\u30c1\u30e3\u30fc\u30fb\u73fe\u5834\u9069\u5408\u5ea6\u5206\u6790**: \u6848\u4ef6\u306e\u8981\u6c42\u30b9\u30ad\u30eb\u306b\u52a0\u3048\u3001\u30a8\u30f3\u30b8\u30cb\u30a2\u306e\u6027\u683c\u50be\u5411\uff08\u5916\u5411\u6027\u30fb\u5354\u8abf\u6027\u30fb\u30b9\u30c8\u30ec\u30b9\u8010\u6027\u7b49\uff09\u3068\u73fe\u5834\u74b0\u5883\u306e\u9069\u5408\u5ea6\u3092\u591a\u9762\u7684\u306b\u30b9\u30b3\u30a2\u30ea\u30f3\u30b0\u3002\n2. **1-on-1\u30d5\u30a3\u30fc\u30c9\u30d0\u30c3\u30af\u9762\u8ac7\u30a2\u30c9\u30d0\u30a4\u30b9**: \u8a3a\u65ad\u7d50\u679c\u306b\u57fa\u3065\u304f\u6708\u6b21\u9762\u8ac7\u7528\u30d1\u30fc\u30bd\u30ca\u30e9\u30a4\u30ba\u30c9\u30a2\u30a4\u30b9\u30d6\u30ec\u30a4\u30af\uff06\u652f\u63f4\u8cea\u554f\u3092\u81ea\u52d5\u751f\u6210\u3002\n3. **\u9ad8ARPU\u5316\u306e\u727d\u5f15**: Standard\u30d7\u30e9\u30f3\uff08\u00a59,800\uff09\u304b\u3089Pro\u30d7\u30e9\u30f3\uff08\u00a529,800\uff09\u3078\u306e\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u52d5\u6a5f\u3092\u5275\u51fa\u3002\n\n---\n\n## 2. \u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u4fdd\u8b77\u30fb\u8981\u914d\u616e\u500b\u4eba\u60c5\u5831 \u53b3\u683c\u7ba1\u7406\u8a2d\u8a08\n\n[APTITUDE_MOTIVATION_DEMO_PRIVACY_DESIGN.md](APTITUDE_MOTIVATION_DEMO_PRIVACY_DESIGN.md) \u306e\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u65b9\u91dd\u3092\u5b8c\u5168\u6e96\u62e0\u3057\u3001\u4ee5\u4e0b\u306e\u300cDB\u975e\u4fdd\u5b58\u30fb\u30bb\u30c3\u30b7\u30e7\u30f3\u9650\u5b9a\u300d\u30a2\u30fc\u30ad\u30c6\u30af\u30c1\u30e3\u3092\u63a1\u7528\u3057\u307e\u3059\u3002\n\n```\n[\u30af\u30e9\u30a4\u30a2\u30f3\u30c8 (\u30d6\u30e9\u30a6\u30b6)] \n   \u2502 \n   \u2502 1. \u30df\u30ad\u30ef\u30e1\u8a3a\u65ad\u30c7\u30fc\u30bf(\u533f\u540d\u5316ID+\u30b9\u30b3\u30a2)\u3092\u6295\u5165\n   \u25bc\n[FastAPI /api/mikiwame-poc/analyze]\n   \u2502 \n   \u2502 2. \u30e1\u30e2\u30ea\u5185\u3067\u306e\u307f\u76f8\u6027\u8a3a\u65ad\u30fb\u9762\u8ac7\u30ac\u30a4\u30c9\u3092AI\u751f\u6210\n   \u2502    (PostgreSQL / Supabase \u3078\u306eDB\u66f8\u304d\u8fbc\u307f\u30fb\u30d5\u30a1\u30a4\u30eb\u6c38\u7d9a\u5316\u306f\u4e00\u5207\u884c\u308f\u306a\u3044)\n   \u25bc\n[\u30ec\u30b9\u30dd\u30f3\u30b9 (JSON)] \u2794 \u753b\u9762\u4e0a\u306b\u30bb\u30c3\u30b7\u30e7\u30f3\u9650\u5b9a\u8868\u793a (\u30ea\u30ed\u30fc\u30c9\u3067\u63ee\u767a)\n```\n\n- **\u975e\u4fdd\u5b58\u306e\u62c5\u4fdd**: \u30b5\u30fc\u30d0\u30fc\u30ed\u30b0\u30fb\u76e3\u67fbDB\u306b\u306f\u500b\u4eba\u540d\u30fb\u8a3a\u65ad\u751f\u30c7\u30fc\u30bf\u306f\u4e00\u5207\u8a18\u9332\u305b\u305a\u3001\u5b9f\u884c\u4ef6\u6570\u30ab\u30a6\u30f3\u30bf\u30fc\u306e\u307f\u3092\u30a4\u30f3\u30af\u30ea\u30e1\u30f3\u30c8\u3002\n- **\u5229\u7528\u76ee\u7684\u306e\u660e\u793a**: \u4eba\u4e8b\u8003\u8ab2\u30fb\u51e6\u9047\u6c7a\u5b9a\u306b\u306f\u4f7f\u7528\u305b\u305a\u3001\u793e\u54e1\u306e\u76f8\u4e92\u7406\u89e3\u304a\u3088\u3073\u30ad\u30e3\u30ea\u30a2\u652f\u63f4\u306e\u305f\u3081\u306e\u6750\u6599\u3068\u3057\u3066\u306e\u307f\u5229\u7528\u3059\u308b\u3053\u3068\u3092UI\u4e0a\u306b\u660e\u793a\u3002\n\n---\n\n## 3. \u30c7\u30fc\u30bf\u5165\u51fa\u529b\u4ed5\u69d8\n\n### \u5165\u529b\u30c7\u30fc\u30bf\u30d5\u30a9\u30fc\u30de\u30c3\u30c8 (JSON / CSV)\n```json\n{\n  \"engineer_alias\": \"Engineer-A (\u533f\u540d\u30e9\u30d9\u30eb)\",\n  \"mikiwame_traits\": {\n    \"stress_tolerance\": 78,\n    \"cooperativeness\": 85,\n    \"leadership\": 62,\n    \"adaptability\": 80,\n    \"logic_thinking\": 75\n  },\n  \"target_project_type\": \"SES\u5e38\u99d0\u30fb\u30a2\u30b8\u30e3\u30a4\u30eb\u958b\u767a\u30c1\u30fc\u30e0\"\n}\n```\n\n### \u51fa\u529b\u30ec\u30b9\u30dd\u30f3\u30b9\n```json\n{\n  \"overall_culture_fit_score\": 84,\n  \"fit_band\": \"\u826f\u597d\u30fb\u63a8\u5968 (Good Fit)\",\n  \"team_compatibility_summary\": \"\u5354\u8abf\u6027\u3068\u9069\u5fdc\u529b\u304c\u9ad8\u304f\u3001\u30c1\u30fc\u30e0\u958b\u767a\u30fb\u30b3\u30df\u30e5\u30cb\u30b1\u30fc\u30b7\u30e7\u30f3\u4e3b\u4f53\u306e\u73fe\u5834\u306b\u304a\u3044\u3066\u9ad8\u3044\u5b9a\u7740\u6027\u304c\u671f\u5f85\u3055\u308c\u307e\u3059\u3002\",\n  \"recommended_interview_questions\": [\n    \"\u300c\u30a2\u30b8\u30e3\u30a4\u30eb\u958b\u767a\u306b\u304a\u3044\u3066\u5468\u56f2\u3068\u610f\u898b\u304c\u5206\u304b\u308c\u305f\u969b\u3001\u3069\u306e\u3088\u3046\u306b\u5408\u610f\u5f62\u6210\u3092\u9032\u3081\u305f\u3044\u3067\u3059\u304b\uff1f\u300d\",\n    \"\u300c\u30ea\u30e2\u30fc\u30c8\u3068\u51fa\u793e\u306e\u30cf\u30a4\u30d6\u30ea\u30c3\u30c9\u74b0\u5883\u306b\u304a\u3044\u3066\u3001\u30e2\u30c1\u30d9\u30fc\u30b7\u30e7\u30f3\u3092\u7dad\u6301\u3059\u308b\u305f\u3081\u306e\u5de5\u592b\u306f\u3042\u308a\u307e\u3059\u304b\uff1f\u300d\"\n  ]\n}\n```\n\n---\n\n## 4. UI / \u753b\u9762\u30b3\u30f3\u30dd\u30fc\u30cd\u30f3\u30c8\u914d\u7f6e\n\n\u7d71\u5408\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\uff08`#aptitude-demo-section`\uff09\u5185\u306ePro\u30d7\u30e9\u30f3\u62e1\u5f35\u30bf\u30d6\u3068\u3057\u3066**\u300c\u30df\u30ad\u30ef\u30e1AI\u9023\u643a\u30d7\u30ec\u30d3\u30e5\u30fc\u300d**\u3092\u914d\u7f6e\u3057\u3001\u30ef\u30f3\u30af\u30ea\u30c3\u30af\u3067\u30b5\u30f3\u30d7\u30eb\u30c7\u30fc\u30bf\u306e\u5206\u6790\u5b9f\u6f14\u304c\u53ef\u80fd\u306aUI\u3092\u63d0\u4f9b\u3057\u307e\u3059\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

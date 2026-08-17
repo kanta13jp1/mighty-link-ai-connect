@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUPABASE_POSTGRES_UPGRADE_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Supabase Postgres 14 EOL \u5bfe\u5fdc Runbook\n\n\u66f4\u65b0\u65e5: 2026-06-21  \n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Codex  \n\u95a2\u9023WBS: T828 / T811  \n\u95a2\u9023Issue: #119 / #80 / R53\n\n## \u76ee\u7684\n\nSupabase \u306f Postgres 14 \u306e\u30b5\u30dd\u30fc\u30c8\u3092 2026-07-01 \u306b\u7d42\u4e86\u3059\u308b\u3002Mighty-Link AI Connect \u306e staging / production \u304c Postgres 14 \u306e\u307e\u307e\u6b8b\u308b\u3068\u3001\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u4fee\u6b63\u3001\u4e92\u63db\u6027\u3001\u5f37\u5236\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u6642\u306e\u505c\u6b62\u30ea\u30b9\u30af\u304c\u9ad8\u304f\u306a\u308b\u3002\n\n\u3053\u306eRunbook\u306f\u3001DB\u63a5\u7d9a\u60c5\u5831\u3084service role key\u3092\u8a18\u9332\u305b\u305a\u306b\u3001staging / production \u306ePostgres\u30e1\u30b8\u30e3\u30fc\u30d0\u30fc\u30b8\u30e7\u30f3\u78ba\u8a8d\u3001PG14\u691c\u77e5\u3001\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u524d\u30c1\u30a7\u30c3\u30af\u3001\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u5f8c\u691c\u8a3c\u3092\u6a19\u6e96\u5316\u3059\u308b\u3002\n\n## \u516c\u5f0fDocs\u78ba\u8a8d\n\n2026-06-21\u6642\u70b9\u3067\u4ee5\u4e0b\u3092\u78ba\u8a8d\u3057\u305f\u3002\n\n- Supabase changelog: Postgres 14 support is deprecated and removed on 2026-07-01.\n- Supabase Docs: Postgres version\u306fSQL Editor\u307e\u305f\u306fpsql\u3067 `select version();` \u3092\u5b9f\u884c\u3057\u3066\u78ba\u8a8d\u3059\u308b\u3002\n- Supabase Docs: Postgres\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u306fin-place upgrade\u307e\u305f\u306fpause and restore\u3067\u5b9f\u65bd\u3059\u308b\u3002\u901a\u5e38\u306fin-place upgrade\u304c\u63a8\u5968\u3055\u308c\u308b\u3002\n- Supabase Docs: \u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u6642\u306flogical replication slot\u3001\u53e4\u3044TimescaleDB/plv8\u3001Postgres 17\u3067deprecated\u306eextensions\u3001pg_graphql 1.6.0\u306eintrospection\u5909\u66f4\u3001md5\u8a8d\u8a3c\u65b9\u5f0f\u306e\u975e\u63a8\u5968\u306b\u6ce8\u610f\u3059\u308b\u3002\n\n## Secret\u30eb\u30fc\u30eb\n\n- `SUPABASE_STAGING_DB_URL`\u3001`SUPABASE_PROD_DB_URL`\u3001service role key\u3001DB password\u306fGitHub\u3001Issue\u3001Sheets\u3001docs\u3001NotebookLM\u3001Slack\u3001\u30c1\u30e3\u30c3\u30c8\u672c\u6587\u3078\u8a18\u9332\u3057\u306a\u3044\u3002\n- \u63a5\u7d9aURL\u306f\u30ed\u30fc\u30ab\u30eb\u74b0\u5883\u5909\u6570\u3001GitHub Actions Secrets\u3001\u307e\u305f\u306f\u4f1a\u793e\u6307\u5b9a\u306eSecret\u7ba1\u7406\u7d4c\u8def\u3067\u6271\u3046\u3002\n- \u751f\u6210\u30ec\u30dd\u30fc\u30c8\u306b\u306fredacted URL\u3068 `version()` \u306e\u30e1\u30b8\u30e3\u30fc\u30d0\u30fc\u30b8\u30e7\u30f3\u3060\u3051\u3092\u6b8b\u3059\u3002\n\n## \u30d0\u30fc\u30b8\u30e7\u30f3\u78ba\u8a8d\n\n\u74b0\u5883\u5909\u6570\u304c\u3042\u308b\u5834\u5408:\n\n```powershell\n$env:SUPABASE_STAGING_DB_URL = \"postgresql://postgres:<password>@<host>:5432/postgres\"\n$env:SUPABASE_PROD_DB_URL = \"postgresql://postgres:<password>@<host>:5432/postgres\"\npython scripts/check_supabase_postgres_version.py --execute\n```\n\nDashboard SQL Editor\u3067\u624b\u52d5\u78ba\u8a8d\u3059\u308b\u5834\u5408:\n\n```sql\nselect version();\n```\n\n\u7d50\u679c\u306fsecret\u3092\u542b\u307e\u306a\u3044 `PostgreSQL 15.1 ...` \u306e\u3088\u3046\u306a\u6587\u5b57\u5217\u3060\u3051\u3092\u4f7f\u3044\u3001\u6b21\u306e\u3088\u3046\u306b\u30ec\u30dd\u30fc\u30c8\u5316\u3059\u308b\u3002\n\n```powershell\npython scripts/check_supabase_postgres_version.py --dry-run `\n  --offline-version \"staging=PostgreSQL 15.1 on aarch64-unknown-linux-gnu\" `\n  --offline-version \"production=PostgreSQL 15.1 on aarch64-unknown-linux-gnu\"\n```\n\n\u51fa\u529b:\n\n- `exports/supabase_postgres_version_check.json`\n- `exports/supabase_postgres_version_check.md`\n\n## \u5224\u5b9a\n\n| \u7d50\u679c | \u5224\u5b9a | \u6b21\u30a2\u30af\u30b7\u30e7\u30f3 |\n| --- | --- | --- |\n| staging / production \u3068\u3082 Postgres 15\u4ee5\u4e0a | T811\u306e\u5b9f\u63a5\u7d9a\u78ba\u8a8d\u306fOK\u3002\u901a\u5e38\u306e\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u76e3\u8996\u3078\u623b\u3059 | R53\u3092\u89e3\u6c7a\u3057\u3001WBS/Sheets\u3078\u8a18\u9332 |\n| \u3069\u3061\u3089\u304b\u304c Postgres 14 | critical | staging\u3092\u5148\u306b\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u3057\u3001\u691c\u8a3c\u5f8c\u306bproduction\u306e\u30e1\u30f3\u30c6\u30ca\u30f3\u30b9\u30a6\u30a3\u30f3\u30c9\u30a6\u3092\u78ba\u4fdd |\n| \u63a5\u7d9a\u60c5\u5831\u306a\u3057 | needs_credentials | secret\u3092\u8cbc\u3089\u305a\u3001\u4f1a\u793e\u7ba1\u7406\u7d4c\u8def\u3067DB URL\u3092\u53d7\u3051\u53d6\u308a\u518d\u5b9f\u884c |\n| `version()`\u304cparse\u4e0d\u80fd | warning | SQL Editor\u3067\u518d\u78ba\u8a8d\u3057\u3001Postgres\u306e\u30e1\u30b8\u30e3\u30fc\u30d0\u30fc\u30b8\u30e7\u30f3\u3060\u3051\u3092\u518d\u8a18\u9332 |\n\n## PG14\u3060\u3063\u305f\u5834\u5408\u306e\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u524d\u30b2\u30fc\u30c8\n\n1. Supabase Dashboard\u3067\u6700\u65b0backup\u307e\u305f\u306fPITR\u6642\u523b\u3092\u8a18\u9332\u3059\u308b\u3002\n2. `python scripts/backup_supabase_database.py --dry-run --skip-upload` \u3067\u8ad6\u7406backup\u624b\u9806\u3092\u78ba\u8a8d\u3059\u308b\u3002\n3. staging\u3067\u5148\u306b\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u3059\u308b\u3002production\u3092\u5148\u306b\u5909\u66f4\u3057\u306a\u3044\u3002\n4. logical replication slot\u3092\u4f7f\u3063\u3066\u3044\u308b\u5834\u5408\u3001\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u5f8c\u306b\u518d\u4f5c\u6210\u304c\u5fc5\u8981\u304b\u78ba\u8a8d\u3059\u308b\u3002\n5. TimescaleDB\u3001plv8\u3001pg_graphql\u3001pgjwt\u3001Postgres 17\u3067deprecated\u306eextension\u3092\u78ba\u8a8d\u3059\u308b\u3002\n6. pg_graphql 1.6.0\u3078\u4e0a\u304c\u308b\u5834\u5408\u3001GraphQL introspection\u4f9d\u5b58\u304c\u306a\u3044\u304b\u78ba\u8a8d\u3059\u308b\u3002\n7. md5\u8a8d\u8a3c\u65b9\u5f0f\u306b\u4f9d\u5b58\u3057\u305f\u53e4\u3044\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u304c\u306a\u3044\u304b\u78ba\u8a8d\u3059\u308b\u3002\n8. production\u306f\u5229\u7528\u304c\u5c11\u306a\u3044\u6642\u9593\u5e2f\u306b\u30e1\u30f3\u30c6\u30ca\u30f3\u30b9\u30a6\u30a3\u30f3\u30c9\u30a6\u3092\u53d6\u308a\u3001CEO/\u904b\u7528\u62c5\u5f53\u3078\u4e8b\u524d\u5171\u6709\u3059\u308b\u3002\n\n## \u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u5f8c\u691c\u8a3c\n\nstaging / production \u305d\u308c\u305e\u308c\u3067\u5b9f\u65bd\u3059\u308b\u3002\n\n```powershell\npython scripts/check_supabase_postgres_version.py --execute\npython scripts/manage_db_migrations.py validate --engine supabase\npython -m pytest tests/test_sales_email_schema_migrations.py tests/test_supabase_postgres_version_check.py\npython scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/\n```\n\n\u5fc5\u8981\u306b\u5fdc\u3058\u3066\u4ee5\u4e0b\u3082\u78ba\u8a8d\u3059\u308b\u3002\n\n- Firebase Functions / Cloud Run \u304b\u3089Supabase\u3078\u306e\u63a5\u7d9a\n- Supavisor pooler\u306etransaction/session mode\n- RLS policy\u3068\u533f\u540dREST\u76f4\u30a2\u30af\u30bb\u30b9\u306e\u62d2\u5426\n- \u55b6\u696d\u30e1\u30fc\u30ebAI\u30de\u30c3\u30c1\u30f3\u30b0DB\u306e\u8aad\u307f\u66f8\u304d\n- backup / restore Runbook\u306e\u5fa9\u65e7\u624b\u9806\n\n## \u4eca\u56de\u306e\u72b6\u614b\n\n2026-06-21\u306eT828\u3067\u306f\u3001\u5b9fDB URL\u304c\u30ed\u30fc\u30ab\u30eb\u74b0\u5883\u306b\u672a\u8a2d\u5b9a\u3060\u3063\u305f\u305f\u3081\u3001staging / production \u306e\u5b9f\u63a5\u7d9a\u78ba\u8a8d\u306f\u884c\u3063\u3066\u3044\u306a\u3044\u3002\u4ee3\u308f\u308a\u306b\u3001T811\u306e\u5b9f\u4f5c\u696d\u3067\u8ff7\u308f\u305a\u78ba\u8a8d\u3067\u304d\u308b\u30b9\u30af\u30ea\u30d7\u30c8\u3001Runbook\u3001pytest\u3001secret\u975e\u51fa\u529b\u30ec\u30dd\u30fc\u30c8\u3092\u6574\u5099\u3057\u305f\u3002\n\nT811\u3067\u306f\u3001\u4f1a\u793e\u6307\u5b9a\u306eSecret\u7ba1\u7406\u7d4c\u8def\u3067 `SUPABASE_STAGING_DB_URL` \u3068 `SUPABASE_PROD_DB_URL` \u3092\u53d7\u3051\u53d6\u308a\u3001`--execute` \u307e\u305f\u306fDashboard SQL Editor\u306eoffline-version\u3067\u6700\u7d42\u78ba\u8a8d\u3059\u308b\u3002\n\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

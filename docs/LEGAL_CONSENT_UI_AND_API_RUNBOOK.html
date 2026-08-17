@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEGAL_CONSENT_UI_AND_API_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u5229\u7528\u898f\u7d04\u30fb\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u30dd\u30ea\u30b7\u30fc\u540c\u610fUI/API Runbook (T745)\n\n> \u6700\u7d42\u66f4\u65b0: 2026-06-27\n> \u95a2\u9023WBS: T745 / T777 / T798 / T752 / T845\n> \u95a2\u9023Go/No-Go: PUBLIC-05 / PUBLIC-07\n> \u95a2\u9023\u8ab2\u984c\u30fbQA: R102 / QA-82\n\n---\n\n## 1. \u76ee\u7684\n\nMighty Skill-Bridge \u306eAI\u8a3a\u65ad\u30fb\u6848\u4ef6\u30de\u30c3\u30c1\u30f3\u30b0\u5b9f\u884c\u524d\u306b\u3001\u5229\u7528\u8005\u304c\u6b21\u306e\u6cd5\u5b9a\u30fb\u898f\u7d04\u30c9\u30e9\u30d5\u30c8\u3092\u78ba\u8a8d\u3057\u305f\u3053\u3068\u3092UI\u3068API\u306e\u4e21\u65b9\u3067\u691c\u8a3c\u3059\u308b\u3002\n\n- [\u30b5\u30fc\u30d3\u30b9\u5229\u7528\u898f\u7d04](TERMS_OF_SERVICE.md)\n- [\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u30dd\u30ea\u30b7\u30fc](PRIVACY_POLICY.md)\n- [\u7279\u5b9a\u5546\u53d6\u5f15\u6cd5\u306b\u57fa\u3065\u304f\u8868\u8a18](TOKUSHOHO_NOTATION.md)\n- [\u8ab2\u91d1\u898f\u7d04\u30fb\u8fd4\u91d1\u30dd\u30ea\u30b7\u30fc](BILLING_AND_REFUND_POLICY.md)\n\n\u3053\u306eRunbook\u306e\u5b8c\u4e86\u306b\u3088\u308a\u3001WBS T745\u300c\u30b5\u30fc\u30d3\u30b9\u5229\u7528\u898f\u7d04\u304a\u3088\u3073\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u30dd\u30ea\u30b7\u30fc\u672c\u756aUI\u3067\u306e\u540c\u610f\u30c1\u30a7\u30c3\u30af\u30dc\u30c3\u30af\u30b9\u5b9f\u88c5\u300d\u306f\u5b8c\u4e86\u6271\u3044\u3068\u3059\u308b\u3002\u305f\u3060\u3057\u3001\u672c\u6587\u306f\u5f15\u304d\u7d9a\u304d\u30c9\u30e9\u30d5\u30c8\u3067\u3042\u308a\u3001T798\u306e\u6cd5\u52d9\u78ba\u8a8d\u3068T804\u306e\u4fa1\u683c\u78ba\u5b9a\u304c\u5b8c\u4e86\u3059\u308b\u307e\u3067\u4e00\u822c\u516c\u958b\u30fb\u6709\u511f\u30ed\u30fc\u30f3\u30c1\u306fNo-Go\u3067\u3042\u308b\u3002\n\n---\n\n## 2. \u73fe\u884c\u540c\u610f\u30d0\u30fc\u30b8\u30e7\u30f3\n\n| \u9805\u76ee | \u5024 |\n| --- | --- |\n| \u540c\u610f\u30d0\u30fc\u30b8\u30e7\u30f3 | `MSB-LEGAL-2026-06-DRAFT` |\n| UI\u5bfe\u8c61 | `index.html`, `src/index.html` |\n| API\u5bfe\u8c61 | `POST /api/parse`, `POST /api/match` |\n| \u691c\u8a3c\u95a2\u6570 | `src/app.py::validate_legal_consent` |\n| \u30c6\u30b9\u30c8 | `tests/test_api.py`, `tests/test_legal_consent_ui.py` |\n\n\u30d0\u30fc\u30b8\u30e7\u30f3\u5024\u306f\u3001\u5c06\u6765T798\u3067\u78ba\u5b9a\u7248\u3078\u5dee\u3057\u66ff\u3048\u308b\u969b\u306b\u5909\u66f4\u3059\u308b\u3002\u65e7\u30d0\u30fc\u30b8\u30e7\u30f3\u3092\u9001\u3063\u305f\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u306f400\u3067\u62d2\u5426\u3055\u308c\u308b\u305f\u3081\u3001\u898f\u7d04\u6539\u5b9a\u6642\u306bUI\u3068API\u3092\u540c\u6642\u306b\u66f4\u65b0\u3067\u304d\u308b\u3002\n\n---\n\n## 3. UI\u8981\u4ef6\n\n\u516c\u958b\u30c7\u30e2\u306eAnalyze\u30dc\u30bf\u30f3\u76f4\u524d\u306b\u3001\u6cd5\u5b9a\u30fb\u898f\u7d04\u30c9\u30e9\u30d5\u30c8\u3078\u306e\u540c\u610f\u30c1\u30a7\u30c3\u30af\u30dc\u30c3\u30af\u30b9\u3092\u914d\u7f6e\u3059\u308b\u3002\n\n- \u30c1\u30a7\u30c3\u30af\u672a\u9078\u629e\u3067\u306f `runAnalysis()` \u304cAPI\u9001\u4fe1\u524d\u306b\u505c\u6b62\u3059\u308b\u3002\n- \u753b\u9762\u4e0a\u306b\u3001\u6cd5\u52d9\u78ba\u8a8d\u30fb\u4fa1\u683c\u78ba\u5b9a\u524d\u306e\u30c9\u30e9\u30d5\u30c8\u7248\u3067\u3042\u308b\u3053\u3068\u3092\u8868\u793a\u3059\u308b\u3002\n- \u540c\u610f\u5bfe\u8c61\u306e4\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3078\u76f4\u63a5\u30ea\u30f3\u30af\u3059\u308b\u3002\n- \u30d5\u30c3\u30bf\u30fc\u306b\u3082\u300c\u6cd5\u5b9a\u30fb\u898f\u7d04\u300d\u5217\u3092\u8ffd\u52a0\u3057\u30014\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3078\u5e38\u6642\u30ea\u30f3\u30af\u3059\u308b\u3002\n\nGitHub Pages\u306econtrolled demo\u3067\u3082\u540c\u3058UI\u3092\u8868\u793a\u3059\u308b\u3002GitHub Pages\u306f\u9759\u7684\u30df\u30e9\u30fc\u3067\u3042\u308a\u3001\u5b9fAPI\u4fdd\u5b58\u3084\u672c\u756a\u8ab2\u91d1\u5c0e\u7dda\u306e\u8a31\u53ef\u3092\u610f\u5473\u3057\u306a\u3044\u3002\n\n---\n\n## 4. API\u5951\u7d04\n\n### `POST /api/parse`\n\nmultipart/form-data \u306b\u6b21\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u542b\u3081\u308b\u3002\n\n```text\nlegal_consent_accepted=true\nlegal_consent_version=MSB-LEGAL-2026-06-DRAFT\n```\n\n### `POST /api/match`\n\nJSON body \u306b\u6b21\u306e\u30d5\u30a3\u30fc\u30eb\u30c9\u3092\u542b\u3081\u308b\u3002\n\n```json\n{\n  \"legal_consent_accepted\": true,\n  \"legal_consent_version\": \"MSB-LEGAL-2026-06-DRAFT\"\n}\n```\n\n### \u5931\u6557\u6642\n\n| \u6761\u4ef6 | HTTP | detail |\n| --- | --- | --- |\n| \u540c\u610f\u672a\u53d6\u5f97 | 400 | `Terms of Service and Privacy Policy consent is required before running this API.` |\n| \u30d0\u30fc\u30b8\u30e7\u30f3\u4e0d\u4e00\u81f4 | 400 | `Invalid legal consent version. Expected MSB-LEGAL-2026-06-DRAFT.` |\n\n### \u6210\u529f\u6642\n\n\u30ec\u30b9\u30dd\u30f3\u30b9\u306b\u6b21\u306e\u30e1\u30bf\u30c7\u30fc\u30bf\u3092\u542b\u3081\u308b\u3002\n\n```json\n{\n  \"legal_consent\": {\n    \"accepted\": true,\n    \"version\": \"MSB-LEGAL-2026-06-DRAFT\",\n    \"source\": \"api_match\",\n    \"docs\": [\n      \"TERMS_OF_SERVICE.md\",\n      \"PRIVACY_POLICY.md\",\n      \"TOKUSHOHO_NOTATION.md\",\n      \"BILLING_AND_REFUND_POLICY.md\"\n    ]\n  }\n}\n```\n\n---\n\n## 5. \u4eca\u56de\u306e\u5b8c\u4e86\u7bc4\u56f2\n\n- `index.html` / `src/index.html` \u306b\u540c\u610f\u30c1\u30a7\u30c3\u30af\u30dc\u30c3\u30af\u30b9\u3001\u540c\u610f\u30b9\u30c6\u30fc\u30bf\u30b9\u3001\u6cd5\u5b9a\u30fb\u898f\u7d04\u30d5\u30c3\u30bf\u30fc\u30ea\u30f3\u30af\u3092\u8ffd\u52a0\u3002\n- `src/app.py` \u306b `LEGAL_CONSENT_VERSION`\u3001\u5bfe\u8c61\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u4e00\u89a7\u3001`validate_legal_consent()` \u3092\u8ffd\u52a0\u3002\n- `/api/parse` \u3068 `/api/match` \u3067\u540c\u610f\u5fc5\u9808\u30fb\u30d0\u30fc\u30b8\u30e7\u30f3\u4e00\u81f4\u3092\u691c\u8a3c\u3002\n- \u6210\u529f\u30ec\u30b9\u30dd\u30f3\u30b9\u306b\u540c\u610f\u30e1\u30bf\u30c7\u30fc\u30bf\u3092\u8fd4\u5374\u3002\n- `tests/test_api.py` \u3067\u672a\u540c\u610f\u30fb\u65e7\u30d0\u30fc\u30b8\u30e7\u30f3\u62d2\u5426\u3068\u6210\u529f\u6642\u30e1\u30bf\u30c7\u30fc\u30bf\u3092\u691c\u8a3c\u3002\n- `tests/test_legal_consent_ui.py` \u3067UI\u30ea\u30f3\u30af\u3001\u30c1\u30a7\u30c3\u30af\u30dc\u30c3\u30af\u30b9\u3001JS payload\u3001\u30d5\u30c3\u30bf\u30fc\u5e38\u6642\u30ea\u30f3\u30af\u3092\u9759\u7684\u691c\u8a3c\u3002\n- PUBLIC-05 \u3068 PUBLIC-07 \u3092\u5b9f\u88c5\u30b2\u30fc\u30c8\u3068\u3057\u3066PASS\u3078\u66f4\u65b0\u3002\n\n---\n\n## 6. \u6b8b\u30b2\u30fc\u30c8\n\nT745\u5b8c\u4e86\u5f8c\u3082\u3001\u6b21\u306e\u7406\u7531\u306b\u3088\u308a `public_paid_launch` \u306fNo-Go\u306e\u307e\u307e\u7dad\u6301\u3059\u308b\u3002\n\n- T798: \u5229\u7528\u898f\u7d04\u30fb\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u30dd\u30ea\u30b7\u30fc\u30fb\u7279\u5546\u6cd5\u8868\u8a18\u30fb\u8ab2\u91d1\u898f\u7d04\u306e\u6cd5\u52d9\u78ba\u8a8d\u3068\u672c\u6587\u78ba\u5b9a\u3002\n- T804: \u6599\u91d1\u30d7\u30e9\u30f3\u3001\u8ca9\u58f2\u4fa1\u683c\u3001\u8fd4\u91d1\u6761\u4ef6\u306eCEO\u627f\u8a8d\u3002\n- T752: Firebase Auth / \u6240\u6709\u8005\u30b9\u30b3\u30fc\u30d7\u306b\u7d10\u3065\u304f\u6b63\u5f0f\u306a\u30e6\u30fc\u30b6\u30fc\u767b\u9332\u30fb\u540c\u610f\u5c65\u6b74\u4fdd\u5b58\u3002\n- T770 / T776 / T791 / T807: \u8ab2\u91d1\u3001\u8ca0\u8377\u3001Stripe live\u3001Webhook\u3001\u8acb\u6c42\u505c\u6b62\u30fb\u8fd4\u91d1\u306e\u672c\u756a\u691c\u8a3c\u3002\n- T817_7: \u55b6\u696d\u30e1\u30fc\u30ebAI\u30de\u30c3\u30c1\u30f3\u30b0\u306e\u672c\u756a\u904b\u7528\u3001\u500b\u4eba\u60c5\u5831\u3001\u76e3\u67fb\u3001\u8ca0\u8377\u78ba\u8a8d\u3002\n- T845 / T849 / T850 / T852 / T854: \u5168\u6a5f\u80fdUAT\u3001\u30b5\u30a4\u30c8\u958b\u767a\u5b8c\u4e86\u7dcf\u5408\u5224\u5b9a\u3001\u4f1a\u793e\u904b\u7528\u5f15\u7d99\u304e\u3001Firebase CI/CD\u3001\u8ab2\u984c/QA\u68da\u5378\u3057\u3002\n\n---\n\n## 7. \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\n\n2026-06-27\u306eT745\u5b8c\u4e86\u6642\u306b\u3001\u6b21\u306e\u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3092\u78ba\u8a8d\u3057\u305f\u3002\n\n- OpenAI Codex manual: `C:\\Users\\kanta\\AppData\\Local\\Temp\\openai-docs-cache\\codex-manual.md`\n- Anthropic Claude Code Docs: https://code.claude.com/docs/en/overview\n- Google Workspace Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate\n- Firebase Hosting: https://firebase.google.com/docs/hosting\n- GitHub Actions Docs: https://docs.github.com/actions\n- Supabase Docs: https://supabase.com/docs\n- Stripe Docs: https://docs.stripe.com/\n- \u6d88\u8cbb\u8005\u5e81 \u7279\u5b9a\u5546\u53d6\u5f15\u6cd5\u95a2\u9023\u60c5\u5831: https://www.caa.go.jp/policies/policy/consumer_transaction/specified_commercial_transactions/\n\n---\n\n## 8. \u904b\u7528\u30e1\u30e2\n\n- \u6cd5\u52d9\u78ba\u5b9a\u524d\u306e\u30c9\u30e9\u30d5\u30c8\u540c\u610f\u3067\u3042\u308b\u3053\u3068\u3092\u3001UI\u3001Runbook\u3001Go/No-Go\u306b\u660e\u8a18\u3059\u308b\u3002\n- \u898f\u7d04\u672c\u6587\u306e\u5b9f\u5024\u3001\u4e8b\u696d\u8005\u60c5\u5831\u3001\u4fa1\u683c\u3001\u8fd4\u91d1\u6761\u4ef6\u306fT798/T804\u306e\u78ba\u5b9a\u7d50\u679c\u3067\u66f4\u65b0\u3059\u308b\u3002\n- \u30e6\u30fc\u30b6\u30fc\u5225\u306e\u6c38\u7d9a\u7684\u306a\u540c\u610f\u5c65\u6b74\u306fT752\u306e\u6b63\u5f0f\u30a2\u30ab\u30a6\u30f3\u30c8\u57fa\u76e4\u3067\u5b9f\u88c5\u3059\u308b\u3002\u73feT745\u306f\u8a3a\u65ad/\u30de\u30c3\u30c1\u30f3\u30b0\u5b9f\u884c\u6642\u306eAPI\u30ac\u30fc\u30c9\u3067\u3042\u308b\u3002\n- OAuth token\u3001secret\u3001\u500b\u4eba\u30c7\u30fc\u30bf\u5b9f\u5024\u3001\u55b6\u696d\u30e1\u30fc\u30eb\u672c\u6587\u5168\u6587\u306fGitHub\u3001Sheets\u3001docs\u3001NotebookLM\u3078\u8a18\u9332\u3057\u306a\u3044\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

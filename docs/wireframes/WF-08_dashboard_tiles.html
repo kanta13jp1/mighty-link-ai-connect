@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WF-08_dashboard_tiles — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# WF-08 \u00b7 Dashboard Tiles \u2014 Exec Overview\n\n> Subtitle: 6 \u30bf\u30a4\u30eb: \u672c\u65e5\u30de\u30c3\u30c1 / Score \u5206\u5e03 / Skill Gap / Recent / Queue / Metrics\u3002\n> \ud83d\udca1 Rationale: \u793e\u9577 / \u7d4c\u55b6\u5c64\u304c\u4e00\u76ee\u3067\u5168\u4f53\u628a\u63e1\u3002\u9031\u6b21\u30ec\u30d3\u30e5\u30fc\u3067\u4f7f\u3046\u3002\n\n## 1. Identity\n\n| key | value |\n| --- | --- |\n| id | `WF-08` |\n| category | dashboard / executive |\n| status | spec-ready (visual = Canva slide 9) |\n| pick-when | \u793e\u9577 / \u7d4c\u55b6\u5c64\u3001\u9031\u6b21\u30ec\u30d3\u30e5\u30fc\u3001KPI \u4e00\u89a7 |\n| skip-when | 1 \u5019\u88dc\u5358\u767a\u5206\u6790\u3001\u5165\u529b UI \u5fc5\u8981 |\n| output target | `exports/wireframes/wf-08.html` |\n\n## 2. ASCII Layout\n\n```text\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 1440 width \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  Mighty Skill-Bridge \u2014 Exec Dashboard          [\u4eca\u9031 \u25be] [\u5168\u671f\u9593 \u25be] [User]      \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Tile 1           \u2502 Tile 2           \u2502 Tile 3                                  \u2502\n\u2502 \u672c\u65e5\u30de\u30c3\u30c1        \u2502 Score \u5206\u5e03        \u2502 Skill Gap (top 5)                       \u2502\n\u2502   34 \u4ef6          \u2502 [hist canvas]    \u2502 \u30fbKubernetes                            \u2502\n\u2502   (\u25b2 +5)         \u2502 avg 78.3          \u2502 \u30fbGoLang                                \u2502\n\u2502                  \u2502                  \u2502 \u30fbTerraform ... \u203b5 \u4ef6                   \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Tile 4           \u2502 Tile 5           \u2502 Tile 6                                  \u2502\n\u2502 Recent Matches   \u2502 Queue            \u2502 API Metrics                             \u2502\n\u2502 \u30fbA \u00d7 X    88    \u2502 \u30fb3 \u4ef6 \u5f85\u6a5f       \u2502 24h calls: 142                          \u2502\n\u2502 \u30fbB \u00d7 Y    72    \u2502 \u30fb1 \u4ef6 evaluating\u2502 p95 latency: 1.2s                       \u2502\n\u2502 \u30fbC \u00d7 Z    85    \u2502                  \u2502 fallback rate: 12%                      \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\n## 3. Component Tree\n\n```html\n<main class=\"wf08\">\n  <header><h1>Exec Dashboard</h1>\n    <select aria-label=\"\u671f\u9593\"><option>\u4eca\u9031</option><option>\u5168\u671f\u9593</option></select></header>\n  <section class=\"wf08__grid\">\n    <article class=\"wf08__tile\" data-tile=\"today-matches\"><h2>\u672c\u65e5\u30de\u30c3\u30c1</h2>\n      <p class=\"wf08__big\" data-val=\"0\">--</p><p class=\"wf08__delta\"></p></article>\n    <article class=\"wf08__tile\" data-tile=\"score-dist\"><h2>Score \u5206\u5e03</h2>\n      <canvas width=\"320\" height=\"160\"></canvas><p>avg <span class=\"avg\">--</span></p></article>\n    <article class=\"wf08__tile\" data-tile=\"skill-gap\"><h2>Skill Gap</h2><ol></ol></article>\n    <article class=\"wf08__tile\" data-tile=\"recent\"><h2>Recent Matches</h2><ul></ul></article>\n    <article class=\"wf08__tile\" data-tile=\"queue\"><h2>Queue</h2><ul></ul></article>\n    <article class=\"wf08__tile\" data-tile=\"api-metrics\"><h2>API Metrics</h2>\n      <dl><dt>24h calls</dt><dd class=\"calls\"></dd>\n          <dt>p95 latency</dt><dd class=\"p95\"></dd>\n          <dt>fallback rate</dt><dd class=\"fb\"></dd></dl></article>\n  </section>\n</main>\n```\n\n## 4. State Machine\n\n```text\ninit    \u2500\u2500 fetch all 6 sources \u2500\u2500> loading (6 spinners)\nloading \u2500\u2500 all 200            \u2500\u2500> ready (all tiles populated)\nloading \u2500\u2500 partial 200        \u2500\u2500> ready-partial (tile-level error message in failing tiles)\nready   \u2500\u2500 change period      \u2500\u2500> loading (re-fetch all 6)\n```\n\n## 5. Data Flow + API contract\n\n\u5404 tile \u5225 fetch (\u4e26\u5217):\n\n- today-matches: client-side count from `/api/audit/recent` (filter today)\n- score-dist: \u540c\u4e0a + histogram canvas\n- skill-gap: `/api/audit/recent` \u306e jobs \u5074 unmatched skills \u96c6\u8a08 (client)\n- recent: `/api/audit/recent?limit=5`\n- queue: client state (\u672c demo \u306f constant\u3001\u5c06\u6765 pipeline backend \u3068\u63a5\u7d9a)\n- api-metrics: `/api/admin/usage` \u304b\u3089 calls / latency / fallback_rate\n\n(\u73fe\u72b6 backend \u306b `/api/dashboard/summary` \u304c\u306a\u3044\u305f\u3081 client aggregate \u3067\u69cb\u6210\u3002\u5c06\u6765 single endpoint \u8ffd\u52a0\u4f59\u5730\u3068\u3057\u3066 docs \u306b\u8a18\u8f09\u3002)\n\n## 6. Design Tokens (override)\n\n```css\n.wf08__grid { display: grid; grid-template-columns: repeat(3, 1fr);\n              grid-template-rows: repeat(2, 1fr); gap: var(--s-3); padding: var(--s-3); }\n.wf08__tile { background: var(--c-surface); border: 1px solid var(--c-border);\n              border-radius: var(--r-lg); padding: var(--s-4);\n              display: grid; gap: var(--s-2); }\n.wf08__tile h2 { font-size: var(--fs-h2); color: var(--c-text-sub); margin: 0; }\n.wf08__big { font-size: 48px; font-weight: 800; color: var(--c-accent); margin: 0; }\n.wf08__delta { color: var(--c-success); font-size: var(--fs-sm); }\n.wf08__delta[data-dir=\"down\"] { color: var(--c-danger); }\n```\n\n## 7. Interaction Spec\n\n- \u671f\u9593 select \u5909\u66f4\u3067\u5168 tile \u518d fetch (loading state)\u3002\n- tile \u30af\u30ea\u30c3\u30af\u3067\u8a72\u5f53\u30bd\u30fc\u30b9 drawer (\u4f8b: Recent \u2192 \u5168\u4ef6 list)\u3002\n- canvas histogram \u306f score \u3092 10 bin \u306b\u3002\n- error tile \u306f inline \"\u518d\u8aad\u8fbc\" \u30dc\u30bf\u30f3\u3002\n\n## 8. A11y\n\n- `<article>` per tile\u3001`<h2>` \u3067 landmark \u69cb\u9020\u3002\n- `<dl>` for API metrics (definition list, semantic)\u3002\n- color \u306b\u983c\u3089\u305a delta \u306f \u25b2\u25bc \u8a18\u53f7 + \u5024\u3067\u793a\u3059\u3002\n- canvas \u306b\u306f `aria-label=\"Score distribution, mean 78.3\"` \u3092\u4ed8\u4e0e\u3001\u30c7\u30fc\u30bf\u30c6\u30fc\u30d6\u30eb alt \u3092 `<details>` \u5185\u306b\u3002\n\n## 9. Responsive\n\n| breakpoint | layout |\n| --- | --- |\n| \u2264 800 | 1 \u5217 (grid-template-columns: 1fr)\u3001tile order \u4e0a\u304b\u3089\u91cd\u8981\u5ea6\u9806 |\n| 801-1280 | 2 \u5217 (3x2 \u2192 2x3) |\n| \u2265 1281 | 3x2 (\u539f\u6848) |\n\n## 10. Out of Scope\n\n- \u5165\u529b UI (\u3053\u306e WF \u306f read-only \u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3001\u5165\u529b\u306f WF-01..04 \u3068\u7d44\u307f\u5408\u308f\u305b)\n- \u30ea\u30a2\u30eb\u30bf\u30a4\u30e0 push (manual refresh / interval polling only)\n- \u30ab\u30b9\u30bf\u30e0 tile (\u56fa\u5b9a 6 tiles)\n- export CSV (\u2192 WF-07)\n\n## 11. Acceptance Criteria\n\n- [ ] 6 tile \u304c\u521d\u671f\u8868\u793a\u5f8c 5s \u4ee5\u5185\u306b\u5168\u3066 populated\n- [ ] /api/admin/usage \u304c 200 \u3092\u8fd4\u3055\u306a\u3044\u5834\u5408\u3001API Metrics tile \u306b \"\u518d\u8aad\u8fbc\" \u30dc\u30bf\u30f3\u8868\u793a\n- [ ] \u671f\u9593\u5207\u66ff\u3067\u5168 tile \u304c\u518d fetch (loading state visible)\n- [ ] mobile 1 \u5217\u3001tablet 2 \u5217\u3001desktop 3 \u5217\u306e grid \u306b\u5207\u308a\u66ff\u308f\u308b\n- [ ] canvas histogram \u306e\u4ee3\u308f\u308a\u306b `<details>` \u3067 score \u30c6\u30fc\u30d6\u30eb alt \u3092\u63d0\u4f9b\n- [ ] keyboard \u3067 \u671f\u9593 select / tile drawer / \u518d\u8aad\u8fbc \u3092\u5b8c\u8d70\n- [ ] verify_public_demo.py pass\n\n## 12. Implementation Prompt (LLM-ready)\n\n```text\nImplement WF-08 \"Exec Dashboard Tiles\" for Mighty Skill-Bridge as exports/wireframes/wf-08.html.\n\nStack: vanilla HTML/JS, Canvas 2D for histogram. Use GET /api/audit/recent + GET /api/admin/usage.\n\nUI: 3x2 grid of 6 tiles (\u672c\u65e5\u30de\u30c3\u30c1 / Score \u5206\u5e03 / Skill Gap / Recent / Queue / API Metrics).\nPeriod select at top (\u4eca\u9031 / \u5168\u671f\u9593). Each tile fetches independently and renders loading / error\ninline. Canvas histogram with aria-label + <details> data table alternative.\n\nAcceptance: docs/wireframes/WF-08_dashboard_tiles.md \u00a711. No backend changes, no build. Single file.\n```\n\n## 13. Starter Snippet\n\n```html\n<!doctype html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>WF-08 Dashboard</title>\n<style>\n:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;\n      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E;\n      --r-lg:20px;--s-2:8px;--s-3:16px;--s-4:24px}\nbody{margin:0;background:var(--c-bg);color:var(--c-text);font-family:\"Yu Gothic UI\",sans-serif}\n.wf08__grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);\n            gap:var(--s-3);padding:var(--s-3);min-height:90vh}\n@media (max-width:1280px){.wf08__grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr)}}\n@media (max-width:800px){.wf08__grid{grid-template-columns:1fr;grid-template-rows:repeat(6,auto)}}\n.wf08__tile{background:var(--c-surface);border:1px solid var(--c-border);\n            border-radius:var(--r-lg);padding:var(--s-4);display:grid;gap:var(--s-2)}\n.wf08__tile h2{margin:0;color:var(--c-text-sub);font-size:20px}\n.wf08__big{font-size:48px;font-weight:800;color:var(--c-accent);margin:0}\ncanvas{width:100%;height:160px;background:#0a0b12;border-radius:8px}\n</style></head><body>\n<header style=\"padding:var(--s-3)\"><h1>Exec Dashboard</h1></header>\n<section class=\"wf08__grid\" id=\"grid\">\n  <article class=\"wf08__tile\" data-tile=\"today\"><h2>\u672c\u65e5\u30de\u30c3\u30c1</h2><p class=\"wf08__big\" id=\"today-val\">--</p></article>\n  <article class=\"wf08__tile\" data-tile=\"dist\"><h2>Score \u5206\u5e03</h2><canvas id=\"hist\"></canvas><p>avg <span id=\"avg\">--</span></p></article>\n  <article class=\"wf08__tile\" data-tile=\"gap\"><h2>Skill Gap</h2><ol id=\"gap\"></ol></article>\n  <article class=\"wf08__tile\" data-tile=\"recent\"><h2>Recent</h2><ul id=\"recent\"></ul></article>\n  <article class=\"wf08__tile\" data-tile=\"queue\"><h2>Queue</h2><ul id=\"queue\"><li>(client state, future backend)</li></ul></article>\n  <article class=\"wf08__tile\" data-tile=\"api\"><h2>API Metrics</h2><dl id=\"api\"></dl></article>\n</section>\n<script>\nasync function loadAll(){\n  try{const audits=await (await fetch(\"/api/audit/recent?limit=50\")).json();\n    const matches=(audits.events||[]).filter(e=>e.type===\"match\");\n    document.getElementById(\"today-val\").textContent=matches.length;\n    const scores=matches.map(m=>m.payload?.final_score||0).filter(Boolean);\n    const avg=scores.reduce((a,b)=>a+b,0)/(scores.length||1);\n    document.getElementById(\"avg\").textContent=avg.toFixed(1);\n    const c=document.getElementById(\"hist\").getContext(\"2d\"); c.fillStyle=\"#00F0FF\";\n    const w=document.getElementById(\"hist\").width=document.getElementById(\"hist\").clientWidth;\n    const bins=Array(10).fill(0); scores.forEach(s=>bins[Math.min(9,Math.floor(s/10))]++);\n    const max=Math.max(...bins,1); bins.forEach((v,i)=>c.fillRect(i*w/10+2,160-v/max*150,w/10-4,v/max*150));\n    document.getElementById(\"recent\").innerHTML=matches.slice(0,5).map(m=>`<li>${m.payload?.final_score||\"?\"}</li>`).join(\"\");\n  }catch(e){console.error(e)}\n  try{const u=await (await fetch(\"/api/admin/usage\")).json();\n    document.getElementById(\"api\").innerHTML=`<dt>24h calls</dt><dd>${u.calls||0}</dd>\n      <dt>fallback rate</dt><dd>${(u.fallback_rate||0)*100|0}%</dd>`;\n  }catch(e){document.getElementById(\"api\").innerHTML=\"<dt>error</dt><dd>\u518d\u8aad\u8fbc</dd>\"}\n}\nloadAll();\n</script></body></html>\n```\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

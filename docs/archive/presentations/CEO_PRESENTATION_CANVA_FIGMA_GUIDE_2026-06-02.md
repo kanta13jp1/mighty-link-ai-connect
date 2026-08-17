@@ -9,7 +9,7 @@
 
 ## このドキュメントの位置づけ
 
-[exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx](../exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx) (NotebookLM CLI + python-pptx 自動生成、8 枚) を、Canva (推奨) または Figma のテンプレートを使って **デザイン的に作り直す** ための完全手順書。
+[exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx](../../../exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx) (NotebookLM CLI + python-pptx 自動生成、8 枚) を、Canva (推奨) または Figma のテンプレートを使って **デザイン的に作り直す** ための完全手順書。
 
 ユーザー (<kanta13jp@gmail.com>) が 2026-05-23 に「FigmaかCanvaのTemplateで作成し直すことはできますか？」と要望。本書は (1) Canva PPTX import + テンプレート適用フロー、(2) Figma Slides 代替パス、(3) **全 8 枚のコピペ専用カード** を提供し、社長プレゼン当日のクオリティを劇的に高める。
 
@@ -38,7 +38,7 @@ Claude Code は実際に Canva/Figma を直接操作しないため、**人間 (
 
 | Step | アクション | 所要 |
 | --- | --- | --- |
-| 1 | [exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx](../exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx) をローカル PC にダウンロード | 1 分 |
+| 1 | [exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx](../../../exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx) をローカル PC にダウンロード | 1 分 |
 | 2 | Canva (<https://www.canva.com/>) を開き、`k-umezawa@ml-mightylink.com` (or `kanta13jp@gmail.com`) でログイン | 1 分 |
 | 3 | トップ右上の「アップロード」→「メディアをアップロード」で PPTX ファイルをドラッグ＆ドロップ | 2 分 |
 | 4 | インポート完了後、自動でプレゼン編集画面に遷移。8 枚のスライド全てがテキスト保持で取り込まれていることを確認 | 1 分 |
@@ -53,7 +53,7 @@ Claude Code は実際に Canva/Figma を直接操作しないため、**人間 (
 
 ## 2. Mighty Skill-Bridge ブランドカラー設定
 
-縦統合型シネマティックダッシュボード UI ([Seedance ブランドループ動画](../scripts/generate_seedance_brand_video.py)) と統一感を持たせる:
+縦統合型シネマティックダッシュボード UI ([Seedance ブランドループ動画](../../../scripts/generate_seedance_brand_video.py)) と統一感を持たせる:
 
 | 用途 | カラーコード | 16 進 |
 | --- | --- | --- |
@@ -121,7 +121,7 @@ Canva ではなく Figma を選ぶ理由:
 - **見せる証跡 URL / ファイル** (画面に小さく表示 or 寛太が口頭で言う)
 - **社長への質問** (CTA、スライド下部に強調表示)
 
-元データ: [exports/knowledge_flow/notebooklm_ceo_slide_outline.md](../exports/knowledge_flow/notebooklm_ceo_slide_outline.md) (2026-05-23 22:23 NotebookLM 生成)
+元データ: [exports/knowledge_flow/notebooklm_ceo_slide_outline.md](../../../exports/knowledge_flow/notebooklm_ceo_slide_outline.md) (2026-05-23 22:23 NotebookLM 生成)
 
 ---
 
@@ -263,8 +263,8 @@ Canva ではなく Figma を選ぶ理由:
 
 **見せる証跡**:
 
-- Slack 進捗投稿案: [exports/knowledge_flow/slack_ceo_update.md](../exports/knowledge_flow/slack_ceo_update.md)
-- リスク登録: [data/issues_tracker.tsv](../data/issues_tracker.tsv) (R9 個人情報 / R10 公開 URL 認証層)
+- Slack 進捗投稿案: [exports/knowledge_flow/slack_ceo_update.md](../../../exports/knowledge_flow/slack_ceo_update.md)
+- リスク登録: [data/issues_tracker.tsv](../../../data/issues_tracker.tsv) (R9 個人情報 / R10 公開 URL 認証層)
 
 **社長への質問**:
 > 公開 URL は社長共有のみか、社内か、外部共有まで許容しますか? また、個人情報取り扱いの法務確認時期はいつとしますか?
@@ -313,7 +313,7 @@ Canva ではなく Figma を選ぶ理由:
 **見せる証跡**:
 
 - 議事録テンプレート: [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md 議事録テンプレート](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md#議事録テンプレート)
-- Notion 用意思決定 DB インポート CSV: [exports/knowledge_flow/notion_decision_log.csv](../exports/knowledge_flow/notion_decision_log.csv)
+- Notion 用意思決定 DB インポート CSV: [exports/knowledge_flow/notion_decision_log.csv](../../../exports/knowledge_flow/notion_decision_log.csv)
 
 **社長への質問**:
 > 未決定で保留にしてよい事項はありますか? また、次回のアクションとして **定例レビュー (隔週 30 分)** の機会をいただけますでしょうか?
@@ -334,7 +334,7 @@ Canva ではなく Figma を選ぶ理由:
 - [ ] スピーカーノートに各スライドの「話すメモ」を貼り付け
 - [ ] エクスポート: `mighty_skill_bridge_ceo_presentation_2026-06-02_canva.pptx` + `mighty_skill_bridge_ceo_presentation_2026-06-02_canva.pdf` を `exports/knowledge_flow/` に保存
 - [ ] Google Drive にアップロード (<k-umezawa@ml-mightylink.com> 所有) → URL を `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.json` の `canva_drive_url` フィールドに追加 (Codex に依頼)
-- [ ] [FINAL_REVIEW_CHECKLIST B-1 〜 B-6](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) に項目 B-7 (Canva 版 PPTX が Drive で開ける) を追加
+- [ ] [FINAL_REVIEW_CHECKLIST B-1 〜 B-6](../../CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) に項目 B-7 (Canva 版 PPTX が Drive で開ける) を追加
 
 ---
 

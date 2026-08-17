@@ -3,7 +3,7 @@
 作成日: 2026-05-23
 オーナー: VSCode + Claude Code レーン (docs / セットアップ手順) / 実 MCP 接続は人間 (寛太) + Antigravity / Codex / Claude Code が並走実行
 対応 WBS: **T658-mcp-extend** (Canva/Figma MCP による自動化)
-関連: [CANVA_FIGMA_GUIDE](CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md) (T658-extend、手動手順) / [MULTI_AI_WORKFLOW](MULTI_AI_WORKFLOW.md) / [PREP](CEO_PRESENTATION_PREP_2026-06-02.md)
+関連: [CANVA_FIGMA_GUIDE](CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md) (T658-extend、手動手順) / [MULTI_AI_WORKFLOW](../../MULTI_AI_WORKFLOW.md) / [PREP](CEO_PRESENTATION_PREP_2026-06-02.md)
 
 ---
 
@@ -273,7 +273,7 @@ Figma MCP を使って、以下の手順で社長プレゼン用 Figma ファイ
 
 ### Step B: ソース取得
 
-Claude Code が [exports/knowledge_flow/notebooklm_ceo_slide_outline.md](../exports/knowledge_flow/notebooklm_ceo_slide_outline.md) (NotebookLM 自動生成、2026-05-23 22:23 版) を Read。
+Claude Code が [exports/knowledge_flow/notebooklm_ceo_slide_outline.md](../../../exports/knowledge_flow/notebooklm_ceo_slide_outline.md) (NotebookLM 自動生成、2026-05-23 22:23 版) を Read。
 
 ### Step C: Canva MCP 実行 (1 ターン)
 
@@ -296,7 +296,7 @@ Canva MCP が返したダウンロード URL から PPTX/PDF をローカル `ex
 
 ### Step G: FINAL_REVIEW_CHECKLIST 更新
 
-[FINAL_REVIEW_CHECKLIST B-2](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) の「PPTX が Drive で開ける」を Canva MCP 版に置換、項目 B-7 を新規追加。
+[FINAL_REVIEW_CHECKLIST B-2](../../CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) の「PPTX が Drive で開ける」を Canva MCP 版に置換、項目 B-7 を新規追加。
 
 ---
 
@@ -486,7 +486,7 @@ MCP セットアップが詰まった場合の段階的フォールバック:
 
 ## 7. Codex / Antigravity / Claude Code レーン分担
 
-3-tool 体制 ([MULTI_AI_WORKFLOW](MULTI_AI_WORKFLOW.md)) に MCP 自動化を組み込む:
+3-tool 体制 ([MULTI_AI_WORKFLOW](../../MULTI_AI_WORKFLOW.md)) に MCP 自動化を組み込む:
 
 | 工程 | 担当 | 備考 |
 | --- | --- | --- |
@@ -501,7 +501,7 @@ MCP セットアップが詰まった場合の段階的フォールバック:
 
 ## 8. WBS / Issues / 関連 docs
 
-- [data/issues_tracker.tsv](../data/issues_tracker.tsv) の HANDOFF-14 (手動 Canva) を **HANDOFF-14a (手動)** と **HANDOFF-14b (MCP 自動化)** に分岐させる予定 (本書 commit 時に更新)
+- [data/issues_tracker.tsv](../../../data/issues_tracker.tsv) の HANDOFF-14 (手動 Canva) を **HANDOFF-14a (手動)** と **HANDOFF-14b (MCP 自動化)** に分岐させる予定 (本書 commit 時に更新)
 - 新規 **HANDOFF-17**: Canva MCP セットアップ実行 (寛太、所要 10 分)
 - 新規 **HANDOFF-18**: Figma MCP セットアップ実行 (寛太、所要 10 分、Canva 失敗時のバックアップ)
 - 本書 commit 後、[CANVA_FIGMA_GUIDE](CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md) の手順 1 セクションに「MCP 自動化版は本書を参照」のリンクを追加

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN_OPERATIONS_DASHBOARD_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u7ba1\u7406\u8005\u5411\u3051\u7d71\u5408\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9 Runbook\n\n- \u5bfe\u8c61WBS: T842\n- \u95a2\u9023\u8ab2\u984c: R98\n- \u4f5c\u6210\u65e5: 2026-06-27\n- \u30ec\u30fc\u30f3: Antigravity + Gemini / VSCode + Codex / VSCode + Claude Code\n- \u6280\u8853\u524d\u63d0: `index.html`, FastAPI on Firebase Functions, Supabase / SQLite fallback\n\n## \u6982\u8981\n\nT842\u3067\u306f\u3001\u8a3a\u65ad\u30a2\u30f3\u30b1\u30fc\u30c8\u3001\u52e4\u6020\u3001\u55b6\u696d\u30e1\u30fc\u30ebAI\u30de\u30c3\u30c1\u30f3\u30b0\u306e\u7ba1\u7406\u8005\u5411\u3051\u7d71\u5408\u30d3\u30e5\u30fc\u3092\u3001\u5b9f\u30c7\u30fc\u30bf\u96c6\u8a08API\u3068CSV\u30ec\u30dd\u30fc\u30c8\u51fa\u529b\u3078\u63a5\u7d9a\u3057\u305f\u3002\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u306f\u65e2\u5b58\u306eT840/T841/T817_6 summary API\u3092\u518d\u5229\u7528\u3057\u3001\u76f4\u63a5\u8b58\u5225\u5b50\u3001\u52e4\u52d9\u8868\u539f\u672c\u3001\u30e1\u30fc\u30eb\u672c\u6587\u3001secret-like\u5024\u3092\u65b0\u305f\u306b\u51fa\u529b\u3057\u306a\u3044\u3002\n\n## API\n\n### \u7d71\u5408\u96c6\u8a08\n\n`GET /api/admin/operations-dashboard?limit=20`\n\nBasic Auth\u5fc5\u9808\u3002\u30ec\u30b9\u30dd\u30f3\u30b9\u306b\u306f\u6b21\u3092\u542b\u3080\u3002\n\n- `kpis`: \u8a3a\u65ad\u56de\u7b54\u6570\u3001\u30e2\u30c1\u30d9\u30fc\u30b7\u30e7\u30f3\u5e73\u5747\u3001\u52e4\u6020\u6253\u523b/\u52e4\u52d9\u8868\u4ef6\u6570\u3001\u627f\u8a8d\u5f85\u3061\u4ef6\u6570\u3001\u55b6\u696d\u30e1\u30fc\u30eb\u30ec\u30d3\u30e5\u30fc\u4ef6\u6570\u3001\u30ec\u30d3\u30e5\u30fc\u5b8c\u4e86\u7387\u3002\n- `sources.employee_assessment`: `GET /api/employee-assessment/responses/summary` \u306eredacted\u6e08\u307f\u7d50\u679c\u3002\n- `sources.attendance`: `GET /api/attendance/summary` \u306e\u96c6\u8a08\u7d50\u679c\u3002\n- `sources.sales_email_review`: `GET /api/sales-email/reviews/summary` \u306e\u30ec\u30d3\u30e5\u30fc\u7d50\u679c\u3002\n- `security`: Basic Auth\u3001CSV\u51fa\u529b\u8a8d\u8a3c\u3001\u76f4\u63a5\u8b58\u5225\u5b50\u9664\u5916\u3001\u52e4\u52d9\u8868\u539f\u672c\u9664\u5916\u3001\u30e1\u30fc\u30eb\u672c\u6587\u9664\u5916\u3001secret redaction\u306e\u904b\u7528\u30d5\u30e9\u30b0\u3002\n\n### CSV\u30ec\u30dd\u30fc\u30c8\n\n`GET /api/admin/operations-dashboard/report.csv?limit=100`\n\nBasic Auth\u5fc5\u9808\u3002KPI\u3001\u90e8\u7f72\u5225\u8a3a\u65ad\u4ef6\u6570\u3001\u52e4\u6020\u30b9\u30c6\u30fc\u30bf\u30b9\u3001\u55b6\u696d\u30e1\u30fc\u30eb\u30ec\u30d3\u30e5\u30fc\u72b6\u614b\u3001security\u30d5\u30e9\u30b0\u306e\u307f\u3092CSV\u3067\u51fa\u529b\u3059\u308b\u3002\u533f\u540d\u30ad\u30fc\u3084\u6700\u8fd1\u306e\u81ea\u7531\u8a18\u8ff0\u306f\u542b\u3081\u305a\u3001Sheets/NotebookLM\u3078\u8f09\u305b\u3066\u3082\u76f4\u63a5\u8b58\u5225\u5b50\u304c\u6df7\u3056\u3089\u306a\u3044\u7c92\u5ea6\u306b\u3057\u3066\u3044\u308b\u3002\n\n## \u30d5\u30ed\u30f3\u30c8\u30a8\u30f3\u30c9\n\n`index.html` \u306e\u7ba1\u7406\u8005\u7d71\u5408\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u304a\u3088\u3073 `admin/index.html` \u306e\u5916\u90e8API\u8ab2\u91d1\u30ac\u30fc\u30c9\u30dd\u30fc\u30bf\u30eb\u306b\u3001\u7ba1\u7406\u8005\u30e6\u30fc\u30b6\u30fc\u540d\u3001\u30d1\u30b9\u30ef\u30fc\u30c9\u3001\u5b9f\u30c7\u30fc\u30bf\u8aad\u8fbc\u3001CSV export\u3001\u304a\u3088\u3073SVG\u30a4\u30f3\u30bf\u30e9\u30af\u30c6\u30a3\u30d6\u30fb\u30c7\u30fc\u30bf\u30d3\u30b8\u30e5\u30a2\u30eb\uff08\u6298\u308c\u7dda\u30c8\u30ec\u30f3\u30c9\u30fb\u30c9\u30fc\u30ca\u30c4\u5186\u30b0\u30e9\u30d5\u30fb\u30c4\u30fc\u30eb\u30c1\u30c3\u30d7\u8868\u793a\uff09\u3092\u8ffd\u52a0\u3057\u305f\u3002\n\n- \u8a8d\u8a3c\u60c5\u5831\u306f\u30d6\u30e9\u30a6\u30b6\u5185\u3067Basic Auth\u30d8\u30c3\u30c0\u30fc\u306b\u4f7f\u3046\u3060\u3051\u3067\u3001localStorage\u3084HTML\u3078\u4fdd\u5b58\u3057\u306a\u3044\u3002\n- API\u304c\u306a\u3044GitHub Pages controlled demo\u3067\u306f\u3001\u5f93\u6765\u306e\u9759\u7684\u30c7\u30e2\u5024\u304a\u3088\u3073\u30c7\u30e2\u30a2\u30cb\u30e1\u30fc\u30b7\u30e7\u30f3SVG\u30b0\u30e9\u30d5\u3092\u8868\u793a\u3057\u305f\u307e\u307e\u306b\u3059\u308b\u3002\n- API\u304c\u6210\u529f\u3057\u305f\u5834\u5408\u306e\u307f\u3001\u8a3a\u65ad\u3001\u52e4\u6020\u3001\u55b6\u696d\u30e1\u30fc\u30eb\u30ec\u30d3\u30e5\u30fc\u306e\u8868\u3001KPI\u3001\u304a\u3088\u3073SVG\u6298\u308c\u7dda\u30fb\u30c9\u30fc\u30ca\u30c4\u30b0\u30e9\u30d5\u3092\u5b9f\u30c7\u30fc\u30bf\u3067\u4e0a\u66f8\u304d\u518d\u63cf\u753b\u3059\u308b\u3002\n- \u30b0\u30e9\u30d5\u8981\u7d20\uff08\u30c7\u30fc\u30bf\u30dd\u30a4\u30f3\u30c8\uff09\u306b\u30de\u30a6\u30b9\u30db\u30d0\u30fc\u3059\u308b\u3068\u8a73\u7d30\u6570\u5024\u3092\u793a\u3059\u30c4\u30fc\u30eb\u30c1\u30c3\u30d7\uff08Tooltip\uff09\u304c\u8868\u793a\u3055\u308c\u308b\u3002\n\n## \u4fdd\u5b58\u3057\u306a\u3044\u60c5\u5831\n\n- \u793e\u54e1\u756a\u53f7\u3001\u6c0f\u540d\u3001\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3001\u96fb\u8a71\u756a\u53f7\u306a\u3069\u306e\u76f4\u63a5\u8b58\u5225\u5b50\u3002\n- \u52e4\u52d9\u8868CSV/PDF\u306e\u539f\u672c\u3001\u5143\u30d5\u30a1\u30a4\u30eb\u540d\u3001\u660e\u7d30\u884c\u3002\n- \u55b6\u696d\u30e1\u30fc\u30eb\u672c\u6587\u3001BP\u62c5\u5f53\u8005\u306e\u9023\u7d61\u5148\u3001\u5019\u88dc\u8005\u306e\u76f4\u63a5\u9023\u7d61\u5148\u3002\n- API key\u3001token\u3001password\u3001secret-like\u5024\u3002\n\n## \u691c\u8a3c\n\n- `tests/test_api.py::test_admin_operations_dashboard_requires_auth_aggregates_and_exports_csv`\n- `python -m pytest -q`\n- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/`\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\n\n2026-06-27\u306e\u30bb\u30c3\u30b7\u30e7\u30f3\u3067\u3001Claude Code\u3001OpenAI Codex\u3001Google Gemini/Workspace\u3001Microsoft Azure AI Foundry\u3001GitHub Projects API\u3001Slack\u3001Stripe Billing\u3001Supabase\u3001Unity\u3001Reddit\u3001Apple Machine Learning\u3001MiMo\u3001\u304a\u540d\u524d.com\u306a\u3069\u306e\u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3092\u78ba\u8a8d\u3057\u305f\u3002T842\u306b\u306f\u7279\u306b\u3001Basic Auth\u4ed8\u304d\u7ba1\u7406\u8005\u5883\u754c\u3001Sheets/Calendar\u540c\u671f\u3001GitHub Issues/Projects\u540c\u671f\u3001Supabase RLS\u3001redaction\u6e08\u307f\u96c6\u8a08\u3060\u3051\u3092\u516c\u958b\u3059\u308b\u65b9\u91dd\u3092\u53cd\u6620\u3057\u305f\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

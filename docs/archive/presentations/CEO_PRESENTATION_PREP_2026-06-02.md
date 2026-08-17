@@ -41,12 +41,12 @@
 - [MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md](MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md): Canva MCP + Figma MCP セットアップ + 自動化プロンプト + プラン別機能マトリクス (T658-mcp-extend、自動化版、推奨)。
 - **Figma Slides ファイル (2026-05-24 自動生成)**: [Mighty Skill-Bridge CEO Brief 2026-06-02](https://www.figma.com/slides/PAQWzAUPoPTy3ibLcOmPDC) — Figma MCP `use_figma` で 9 slides (1 cover + 8 content) を Mighty Skill-Bridge brand colors + デモスクショ埋め込みで自動生成。当日の社長プレゼン用第一候補。
 - **Branded PPTX on Google Drive (2026-05-24 アップロード)**: [Mighty Skill-Bridge CEO Presentation Deck 2026-06-02 (Branded)](https://docs.google.com/presentation/d/1myH1m8TKiukdxR7F_EertJ1102CfglBC/edit?usp=drivesdk) — `_branded.pptx` (Seedance cyber theme + デモスクショ embed) を <k-umezawa@ml-mightylink.com> 所有で Drive アップロード済。Figma が使えない / PowerPoint で操作したい場合のフォールバック。
-- **UI Wireframes — Implementation-Ready Spec Pack (2026-05-24 生成、AI 実装着手用)**: [docs/wireframes/README.md](wireframes/README.md) — 10 WF を AI に渡して即実装できる spec md x10 (各 13 セクション: Identity / ASCII Layout / Component Tree / State Machine / Data Flow / Tokens / Interaction / A11y / Responsive / Out of Scope / Acceptance / LLM Prompt / Starter Snippet) + [exports/wireframes/wireframes_spec.json](../exports/wireframes/wireframes_spec.json) (機械可読版)。社長 6/2 判断後、`@docs/wireframes/WF-XX_*.md を実装` プロンプトで AI が `static/wireframes/wf-XX.html` を生成可能。
+- **UI Wireframes — Implementation-Ready Spec Pack (2026-05-24 生成、AI 実装着手用)**: [docs/wireframes/README.md](../../wireframes/README.md) — 10 WF を AI に渡して即実装できる spec md x10 (各 13 セクション: Identity / ASCII Layout / Component Tree / State Machine / Data Flow / Tokens / Interaction / A11y / Responsive / Out of Scope / Acceptance / LLM Prompt / Starter Snippet) + [exports/wireframes/wireframes_spec.json](../../../exports/wireframes/wireframes_spec.json) (機械可読版)。社長 6/2 判断後、`@docs/wireframes/WF-XX_*.md を実装` プロンプトで AI が `static/wireframes/wf-XX.html` を生成可能。
 - **UI Wireframes — 10 Patterns (Canva, Branded — 2026-05-24 生成、第一候補)**: [Canva 版 PPTX on Drive](https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit?usp=drivesdk) / Canva 編集: <https://www.canva.com/d/Mft5giDcMgir88Y> / Canva 閲覧: <https://www.canva.com/d/lLCcnCJnbJE9Xsa> — Canva MCP (HANDOFF-26/27) 経由で 12 ページ (Cover + 10 patterns + Next Steps)、Mighty cyber palette 適用、WF-NN バッジ + 💡 Rationale prefix 付きフルカラー版。社長 UI 方向性判断の第一候補。
 - **UI Wireframes — 10 Patterns (greyscale — 2026-05-24 生成、印刷用フォールバック)**: [python-pptx 版 PPTX on Drive](https://docs.google.com/presentation/d/1qTdOWsLhUf0GzVDkztiuuLczcYkQuQfo/edit?usp=drivesdk) — 同じ 10 パターン (Vertical Hero / Split Form / Step Wizard / Chat / DnD / Kanban / Comparison / Dashboard / Inline Live / Search Catalog) の greyscale wireframe 版。Figma companion: <https://www.figma.com/design/aiQt3c1Cenru4x6GMcLuL5> (Starter plan rate limit 解除後に同内容を MCP で構築予定)。
-- [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md): 6/1 21:00 JST Final Review 用 35 項目 checklist (T663 deliverable)。
+- [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](../../CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md): 6/1 21:00 JST Final Review 用 35 項目 checklist (T663 deliverable)。
 - [SHEETS_TRACKERS_SCHEMA.md](SHEETS_TRACKERS_SCHEMA.md): 課題管理表 + QA表の Sheets スキーマと運用フロー。
-- [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md): 3-tool 体制 (Antigravity+Gemini / Codex / Claude Code) と handoff 規約。
+- [MULTI_AI_WORKFLOW.md](../../MULTI_AI_WORKFLOW.md): 3-tool 体制 (Antigravity+Gemini / Codex / Claude Code) と handoff 規約。
 - [DEVELOPMENT_KNOWLEDGE_FLOW.md](DEVELOPMENT_KNOWLEDGE_FLOW.md): NotebookLM / Slack / Notion / Obsidian 連携の開発フロー候補。
 - [INTEGRATION_DEMO_EVIDENCE_2026-06-02.md](INTEGRATION_DEMO_EVIDENCE_2026-06-02.md): CLI/MCPで実施した連携証跡、GitHub Issues、Project権限課題。
 - [WBS.md](WBS.md): WBS詳細とフェーズ別スケジュール。
@@ -112,17 +112,17 @@
 
 ## Risks & Blockers (2026-05-22 時点)
 
-3-tool 体制 ([MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md)) で 6/2 へ向かう過程で識別したリスクと、当日影響を出さないための緩和策を以下にまとめる。詳細チェックは [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) を参照。
+3-tool 体制 ([MULTI_AI_WORKFLOW.md](../../MULTI_AI_WORKFLOW.md)) で 6/2 へ向かう過程で識別したリスクと、当日影響を出さないための緩和策を以下にまとめる。詳細チェックは [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](../../CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) を参照。
 
 | # | 重要度 | リスク / Blocker | 影響 | 緩和策 | オーナー | 期限 |
 | --- | --- | --- | --- | --- | --- | --- |
 | R1 | LOW | 未確認の未来モデル名や公開時期がdocsに残る | 社長説明や実装判断が古い前提に引っ張られる | 公式Docsで確認できない未来モデル前提は削除または現在形に置換。`ANTIGRAVITY_GUIDE.md` の該当セクションはT665で削除済み | Codex / Claude | 継続 |
 | R2 | HIGH | GitHub `read:project` scope 不足 (Issue #5, #8) | gh CLI で Project ボード操作不可、6/2 デモで Project ボードを見せられない | `gh auth refresh -s project` をブラウザ承認 (人間タスク)。5/27 までに未解決なら **Project ボードを 6/2 デモから除外**、Issues 一覧表示で代替 | 人間 + Codex | 5/27 |
-| R3 | MED | Slack CLI / MCP 未露出 (課題管理表 `data/issues_tracker.tsv` の R3) | Slack live 送信不可 (T636/T646/T653/T662) | [exports/knowledge_flow/slack_ceo_update.md](../exports/knowledge_flow/slack_ceo_update.md) の草稿表示で代替。live send は約束しない | Codex (草稿維持) / Claude (代替説明準備) | 5/29 |
+| R3 | MED | Slack CLI / MCP 未露出 (課題管理表 `data/issues_tracker.tsv` の R3) | Slack live 送信不可 (T636/T646/T653/T662) | [exports/knowledge_flow/slack_ceo_update.md](../../../exports/knowledge_flow/slack_ceo_update.md) の草稿表示で代替。live send は約束しない | Codex (草稿維持) / Claude (代替説明準備) | 5/29 |
 | R4 | MED | 3 tools 並走で `data/WBS.tsv` の merge 競合 | WBS 行重複・並び順崩壊 | **`data/WBS.tsv` への書き込みは Codex のみ**。Antigravity / Claude は PR コメントで提案 | Codex | 通年 |
 | R5 | MED | 5/27 18:48 quota refresh が遅延・失敗 | デモ動画・radar polish が Antigravity で間に合わない | Codex が frontend タスクの静止画 fallback を準備、Antigravity 完成版が無くてもデモ可能な状態を維持 | Codex | 5/27-5/30 |
 | R6 | LOW | `requirements.txt` 依存ドリフト | デモ前に dependency 競合で起動失敗 | **5/30 EOD で freeze**、以降 upgrade 禁止。`requirements.txt` を編集する PR は Claude review 必須 | Claude (gate) | 5/30 |
-| R7 | LOW | NotebookLM CLI 認証切れ ([notebooklm_cli_next_steps.md](../exports/knowledge_flow/notebooklm_cli_next_steps.md)) | 22 sources の再 sync 不可 | `python scripts/notebooklm_login_workspace.py` を 6/1 dry-run で再確認 | Codex | 6/1 |
+| R7 | LOW | NotebookLM CLI 認証切れ ([notebooklm_cli_next_steps.md](../../../exports/knowledge_flow/notebooklm_cli_next_steps.md)) | 22 sources の再 sync 不可 | `python scripts/notebooklm_login_workspace.py` を 6/1 dry-run で再確認 | Codex | 6/1 |
 | R8 | LOW | サービス方向性 3 選択肢のいずれにも社長が首肯しない | 6/2 結論が出ず、ロードマップ更新不可 | 「保留」を 4th option として明示。決定後の WBS 差し替えフロー (T612) を準備済 | Claude | 6/2 |
 
 **Hard gate**: R1 / R2 / R5 は EOD 5/30 までに緩和策が動いていることを Final Review (6/1 21:00 JST) で確認する。それ以外は劣化シナリオ込みで 6/2 を実施可能。

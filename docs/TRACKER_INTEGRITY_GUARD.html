@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRACKER_INTEGRITY_GUARD — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \ud83d\uddc2\ufe0f \u30c8\u30e9\u30c3\u30ab\u30fc\u6574\u5408\u6027\u30ac\u30fc\u30c9 (T890)\n\n> `data/` \u914d\u4e0b\u306e4\u30c8\u30e9\u30c3\u30ab\u30fc TSV\uff08**\u8ab2\u984c\u7ba1\u7406\u8868** `issues_tracker.tsv` / **QA\u8868** `qa_tracker.tsv` / **\u30c6\u30b9\u30c8\u7d50\u679c** `test_results.tsv` / **\u30ea\u30ea\u30fc\u30b9\u5224\u5b9a** `release_go_no_go_criteria.tsv`\uff09\u304c\u3001Google Sheets \u306e\u5404\u30bf\u30d6\uff08CEO \u95b2\u89a7\uff09\u306e**\u6b63\u672c**\u3068\u3057\u3066\u58ca\u308c\u3066\u3044\u306a\u3044\u3053\u3068\u3092\u3001**\u4eba\u9593\u304c\u624b\u9806\u3069\u304a\u308a\u5b9f\u884c\u3057\u3066 OK/NG \u3092\u5224\u65ad\u3067\u304d\u308b**\u3088\u3046\u306b\u5b9a\u7fa9\u3057\u305f\u30ac\u30fc\u30c9\u4ed5\u69d8\u66f8\u3002\n>\n> \u3053\u308c\u3089\u306f\u5168\u30ec\u30fc\u30f3\uff08Antigravity / Codex / Claude Code\uff09\u304c\u8ffd\u8a18\u3059\u308b\u30021\u884c\u3067\u3082\u5217\u6570\u304c\u305a\u308c\u305f\u884c\u30fb\u91cd\u8907ID\u30fb\u4e0d\u6b63\u306a\u72b6\u614b\u5024\u30fb\u58ca\u308c\u305f\u65e5\u4ed8\u30fb\u5b9f\u5728\u3057\u306a\u3044\u30bf\u30b9\u30af\u3078\u306e\u53c2\u7167\u304c\u6df7\u3058\u308b\u3068\u3001**\u6b21\u306e Sheets \u540c\u671f\u3067 CEO \u95b2\u89a7\u30bf\u30d6\u304c\u9759\u304b\u306b\u58ca\u308c\u308b**\u3002\u672c\u30ac\u30fc\u30c9\u306f\u305d\u308c\u3092\u540c\u671f\u524d\u306b CI \u3067\u843d\u3068\u3059\u3002\n\n---\n\n## 1. \u76ee\u7684\n\n- \u30c8\u30e9\u30c3\u30ab\u30fc TSV \u306e**\u69cb\u9020**\uff08\u30d8\u30c3\u30c0\u30fb\u5217\u6570\u30fbID\u4e00\u610f\u30fb\u5fc5\u9808\u30bb\u30eb\uff09\u3092\u4fdd\u8a3c\u3059\u308b\u3002\n- **\u72b6\u614b\u5024\u30fb\u65e5\u4ed8\u5f62\u5f0f**\u306e\u6b63\u898f\u6027\u3092\u4fdd\u8a3c\u3059\u308b\u3002\n- **\u30af\u30ed\u30b9\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9**\uff08\u8ab2\u984c/QA \u304c\u53c2\u7167\u3059\u308b WBS \u30bf\u30b9\u30af\u3001WBS \u304c\u300c\u8a18\u9332\u300d\u3068\u4e3b\u5f35\u3059\u308b QA-/R- ID\uff09\u304c\u5b9f\u5728\u306b\u89e3\u6c7a\u3059\u308b\u3053\u3068\u3092\u4fdd\u8a3c\u3059\u308b\u3002\n\n## 2. \u5b9f\u884c\u65b9\u6cd5\n\n```powershell\npython scripts/audit_tracker_integrity.py\npython -m pytest tests/test_tracker_integrity.py -q\n```\n\n\u76e3\u67fb\u306f `exports/tracker_integrity_audit.{json,md}` \u306b\u7d50\u679c\u3092\u51fa\u529b\u3057\u300110\u4eee\u8aac\u3059\u3079\u3066 PASS \u3067\u7d42\u4e86\u30b3\u30fc\u30c9 0\u30011\u3064\u3067\u3082 FAIL \u3067 1 \u3092\u8fd4\u3059\u3002\n\n## 3. 10\u4eee\u8aac\uff08\u4eba\u9593\u304c\u78ba\u8a8d\u3067\u304d\u308b\u89b3\u70b9\uff09\n\n| \u4eee\u8aac | \u5185\u5bb9 | OK \u3068\u8a00\u3048\u308b\u6761\u4ef6 |\n| :-- | :-- | :-- |\n| H1 | \u8ab2\u984c\u7ba1\u7406\u8868\u306e\u69cb\u9020 | \u30d8\u30c3\u30c0\u304c\u65e2\u5b9a15\u5217\u3068\u4e00\u81f4\u3057\u3001\u5168\u30c7\u30fc\u30bf\u884c\u304c15\u5217\uff08\u30e9\u30b0\u30c9\u884c=0\uff09 |\n| H2 | QA\u8868\u306e\u69cb\u9020 | \u30d8\u30c3\u30c0\u304c\u65e2\u5b9a10\u5217\u3068\u4e00\u81f4\u3057\u3001\u5168\u30c7\u30fc\u30bf\u884c\u304c10\u5217 |\n| H3 | \u30c6\u30b9\u30c8\u7d50\u679c\u30fb\u30ea\u30ea\u30fc\u30b9\u5224\u5b9a\u306e\u69cb\u9020 | \u305d\u308c\u305e\u308c9\u5217\u30fb13\u5217\u306e\u30d8\u30c3\u30c0\u4e00\u81f4\u30fb\u5168\u884c\u6574\u5f62 |\n| H4 | ID\u4e00\u610f | 4\u30c8\u30e9\u30c3\u30ab\u30fc\u3068\u3082\u5404\u30d5\u30a1\u30a4\u30eb\u5185\u3067ID\u306e\u91cd\u8907\u304c0\u4ef6 |\n| H5 | \u72b6\u614b\u5024\u306e\u6b63\u898f\u6027 | \u8ab2\u984c\u306f open/resolved/accepted_non_blocker/transferred/closed\u3001QA\u306f \u56de\u7b54\u6e08/\u60f3\u5b9a\u6e08 \u306e\u307f |\n| H6 | \u65e5\u4ed8\u5f62\u5f0f | \u8d77\u7968\u65e5\u30fb\u89e3\u6c7a\u4e88\u5b9a\u65e5\u30fb\u66f4\u65b0\u65e5\u304c YYYY-MM-DD\uff08\u7a7a\u6b04\u306f\u8a31\u5bb9\uff09 |\n| H7 | WBS\u53c2\u7167\u306e\u89e3\u6c7a | \u8ab2\u984c\u306e\u300c\u95a2\u9023 WBS\u300d\u30fbQA\u306e\u300c\u95a2\u9023\u8ad6\u70b9\u300d\u306b\u542b\u307e\u308c\u308b T\u53c2\u7167\u304c\u3059\u3079\u3066\u5b9f\u5728\u306e WBS \u30bf\u30b9\u30afID |\n| H8 | \u5fc5\u9808\u30bb\u30eb\u975e\u7a7a | \u8ab2\u984c: ID/\u30ab\u30c6\u30b4\u30ea/\u91cd\u8981\u5ea6/\u72b6\u614b/\u30bf\u30a4\u30c8\u30eb\u3001QA: ID/\u30ab\u30c6\u30b4\u30ea/\u8cea\u554f/\u72b6\u614b \u304c\u7a7a\u6b04\u3067\u306a\u3044 |\n| H9 | \u53cc\u65b9\u5411\u30c9\u30ea\u30d5\u30c80 | WBS \u8a73\u7d30\u304c\u300cQA-NNN/R-NNN \u8a18\u9332\u300d\u3068\u4e3b\u5f35\u3059\u308b ID \u304c\u3001\u5bfe\u5fdc\u30c8\u30e9\u30c3\u30ab\u30fc\u306b\u5b9f\u5728\u3059\u308b |\n| H10 | \u5168\u4f53\u6574\u5408 | H1\u301cH9 \u304c\u3059\u3079\u3066 PASS\uff08\u69cb\u9020/\u53c2\u7167\u30c9\u30ea\u30d5\u30c80\uff09 |\n\n## 4. \u5224\u5b9a\n\n- **OK**: `python scripts/audit_tracker_integrity.py` \u304c\u300c\u7dcf\u5408\u5224\u5b9a: \u2705 PASS\u300d\u3092\u8868\u793a\u3057\u3001`tests/test_tracker_integrity.py` \u304c\u5168\u4ef6 green\u3002\n- **NG**: \u3044\u305a\u308c\u304b\u306e\u4eee\u8aac\u304c \u274c\u3002\u76e3\u67fb\u51fa\u529b\u306e\u300c\u8a73\u7d30\u300d\u5217\u306b\u3001\u30e9\u30b0\u30c9\u884cID\u30fb\u91cd\u8907ID\u30fb\u4e0d\u6b63\u72b6\u614b\u30fb\u4e0d\u6b63\u65e5\u4ed8\u30fb\u672a\u89e3\u6c7a\u53c2\u7167\u30fb\u7a7a\u6b04\u30bb\u30eb\u30fb\u6b20\u843dID\u304c\u5177\u4f53\u7684\u306b\u5217\u6319\u3055\u308c\u308b\u3002\n\n## 5. NG \u6642\u306e\u5bfe\u5fdc\n\n1. **H1\u301cH3 \u30e9\u30b0\u30c9\u884c**: \u8a72\u5f53\u884c\u306e\u30bf\u30d6\u533a\u5207\u308a\u5217\u6570\u3092\u4fee\u6b63\u3059\u308b\uff08TSV\u7de8\u96c6\u306f UTF-8/CRLF \u3092\u7dad\u6301\u3057\u3001\u7de8\u96c6\u5f8c\u306b\u5fc5\u305a\u672c\u76e3\u67fb\u3067\u5217\u6570\u3092\u518d\u691c\u8a3c\u3057\u3066\u304b\u3089\u30b3\u30df\u30c3\u30c8\u3059\u308b\uff09\u3002\n2. **H4 \u91cd\u8907ID**: \u63a1\u756a\u3092\u4fee\u6b63\u3059\u308b\uff08\u8ab2\u984c=R\u9023\u756a\u3001QA=QA-\u9023\u756a\u3001\u30c6\u30b9\u30c8=TS-\u9023\u756a\uff09\u3002\n3. **H5/H6**: \u72b6\u614b\u5024\u3092\u8a31\u5bb9\u96c6\u5408\u3078\u3001\u65e5\u4ed8\u3092 YYYY-MM-DD \u3078\u6b63\u898f\u5316\u3059\u308b\u3002\n4. **H7/H9 \u53c2\u7167\u5207\u308c**: \u53c2\u7167\u5148\u306e WBS/QA/R \u3092\u5b9f\u5728ID\u3078\u4fee\u6b63\u3001\u307e\u305f\u306f\u6b20\u843d\u3057\u3066\u3044\u308b\u30c8\u30e9\u30c3\u30ab\u30fc\u884c\u3092\u8ffd\u52a0\u3059\u308b\u3002\n5. \u4fee\u6b63\u5f8c\u306b\u76e3\u67fb\u3068\u30c6\u30b9\u30c8\u3092\u518d\u5b9f\u884c\u3057 10/10 PASS \u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u30b3\u30df\u30c3\u30c8\u30fbSheets\u540c\u671f\u3059\u308b\u3002\n\n## 6. \u88dc\u8db3\n\n- \u672c\u30ac\u30fc\u30c9\u306f**\u69cb\u9020\u3068\u53c2\u7167\u306e\u6574\u5408**\u3092\u4fdd\u8a3c\u3059\u308b\u3082\u306e\u3067\u3001\u5404\u8ab2\u984c/QA\u306e**\u5185\u5bb9\u306e\u59a5\u5f53\u6027**\u3084**\u672a\u89e3\u6c7a\u30d6\u30ed\u30c3\u30ab\u30fc\u306e\u6709\u7121**\u306f `scripts/audit_issue_qa_blockers.py` \u304c\u5225\u9014\u62c5\u4fdd\u3059\u308b\u3002\n- \u8ffd\u8a18\u306e\u5b9f\u52d9\u3067\u306f\u3001\u672c\u76e3\u67fb\u3092\u300cSheets \u540c\u671f\u306e\u76f4\u524d\u30b2\u30fc\u30c8\u300d\u3068\u3057\u3066\u5b9f\u884c\u3059\u308b\u3068\u3001CEO \u95b2\u89a7\u30bf\u30d6\u3078\u58ca\u308c\u305f\u884c\u304c\u5c4a\u304f\u306e\u3092\u78ba\u5b9f\u306b\u9632\u3052\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

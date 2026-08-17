@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUPABASE_CONNECTION_POOLING_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Supabase \u63a5\u7d9a\u30d7\u30fc\u30eb\u904b\u7528 Runbook (T759)\n\n\u4f5c\u6210\u65e5: 2026-06-14  \n\u30aa\u30fc\u30ca\u30fc: VSCode + Codex \u30ec\u30fc\u30f3  \n\u5bfe\u8c61: Firebase Cloud Functions / Cloud Run \u7d4c\u7531\u306e FastAPI (`src/app.py`) \u304b\u3089 Supabase PostgreSQL \u3078\u306e\u63a5\u7d9a\n\n---\n\n## \u76ee\u7684\n\nFirebase Cloud Functions / Cloud Run \u306e\u6c34\u5e73\u30b9\u30b1\u30fc\u30eb\u6642\u306b\u3001\u5404\u30a4\u30f3\u30b9\u30bf\u30f3\u30b9\u304c PostgreSQL \u3078\u76f4\u63a5\u63a5\u7d9a\u3092\u4e71\u7acb\u3055\u305b\u306a\u3044\u3088\u3046\u306b\u3059\u308b\u3002T795 \u3067\u672c\u756a `SUPABASE_DB_URL` \u306f Supavisor pooler URL \u3078\u5207\u66ff\u6e08\u307f\u306e\u305f\u3081\u3001T759 \u3067\u306f\u30a2\u30d7\u30ea\u5074\u306b\u5c0f\u3055\u306a\u518d\u5229\u7528\u30d7\u30fc\u30eb\u3001pre-ping\u3001recycle\u3001\u975e\u79d8\u5bc6\u306e\u72b6\u614b\u78ba\u8a8d\u3092\u7d44\u307f\u8fbc\u3080\u3002\n\n## \u516c\u5f0f docs \u53cd\u6620\u30e1\u30e2\n\n2026-06-14 \u306e\u4f5c\u696d\u958b\u59cb\u6642\u306b\u4ee5\u4e0b\u3092\u78ba\u8a8d\u3057\u305f\u3002\n\n- Firebase Functions \u306f runtime options \u3092\u30b3\u30fc\u30c9\u5074\u306e\u6b63\u672c\u306b\u3057\u3001min/max instances \u306a\u3069\u306e scaling \u3092\u5236\u5fa1\u3059\u308b\u3002\n- Firebase Functions networking \u306f\u547c\u3073\u51fa\u3057\u3054\u3068\u306e\u65b0\u898f outbound connection \u3092\u907f\u3051\u3001persistent connection \u3092\u7dad\u6301\u3057\u3066 CPU \u6642\u9593\u3068\u63a5\u7d9a quota \u3092\u6291\u3048\u308b\u3002\n- Supabase \u306f IPv6 \u975e\u5bfe\u5fdc\u74b0\u5883\u3084\u30b5\u30fc\u30d0\u30fc\u30ec\u30b9\u3067\u306f Supavisor pooler \u3092\u4f7f\u3046\u3002transaction mode \u306f `pooler.supabase.com:6543`\u3001session mode \u306f `pooler.supabase.com:5432` \u3067\u5224\u5b9a\u3059\u308b\u3002\n- Supabase \u306e connection management \u306f direct connection \u6570\u3068 Supavisor pool size \u306e\u4e21\u65b9\u3092\u76e3\u8996\u3057\u3001\u30a2\u30d7\u30ea\u5074 pool \u306f\u5c0f\u3055\u304f\u4fdd\u3064\u3002\n\n## \u5b9f\u88c5\n\n`src/app.py` \u306f `USE_SUPABASE=true` \u304b\u3064 `SUPABASE_DB_URL` \u304c `postgres://` \u307e\u305f\u306f `postgresql://` \u306e\u5834\u5408\u3001`psycopg2.pool.ThreadedConnectionPool` \u3092\u9045\u5ef6\u521d\u671f\u5316\u3059\u308b\u3002\n\n| \u8a2d\u5b9a | \u65e2\u5b9a\u5024 | \u8aac\u660e |\n| --- | ---: | --- |\n| `SUPABASE_DB_POOL_MIN` | `1` | \u5404 Functions/Cloud Run \u30a4\u30f3\u30b9\u30bf\u30f3\u30b9\u5185\u3067\u4fdd\u6301\u3059\u308b\u6700\u5c0f\u63a5\u7d9a\u6570 |\n| `SUPABASE_DB_POOL_MAX` | `4` | \u5404\u30a4\u30f3\u30b9\u30bf\u30f3\u30b9\u5185\u306e\u6700\u5927\u63a5\u7d9a\u6570\u3002Supavisor \u5074\u306e pool \u3092\u524d\u63d0\u306b\u5c0f\u3055\u304f\u4fdd\u3064 |\n| `SUPABASE_DB_CONNECT_TIMEOUT_SECONDS` | `3` | startup / request hang \u3092\u907f\u3051\u308b\u63a5\u7d9a timeout |\n| `SUPABASE_DB_POOL_RECYCLE_SECONDS` | `1800` | \u9577\u6642\u9593\u751f\u5b58\u3057\u305f pool \u3092\u9589\u3058\u3066\u518d\u4f5c\u6210\u3059\u308b\u9593\u9694 |\n| `SUPABASE_DB_POOL_PRE_PING` | `true` | \u501f\u7528\u6642\u306b `SELECT 1` \u3067\u5207\u65ad\u6e08\u307f\u63a5\u7d9a\u3092\u691c\u77e5\u3059\u308b |\n| `SUPABASE_DB_APPLICATION_NAME` | `mighty-skill-bridge-functions` | Supabase / Postgres \u76e3\u8996\u3067\u8b58\u5225\u3059\u308b\u975e\u79d8\u5bc6\u540d |\n\n\u65e2\u5b58\u30b3\u30fc\u30c9\u306f `conn.close()` \u3092\u5404\u51e6\u7406\u306e `finally` \u3067\u547c\u3076\u3002T759 \u3067\u306f `PooledPostgresConnection` \u30a2\u30c0\u30d7\u30bf\u3067\u3053\u308c\u3092 pool \u8fd4\u5374\u306b\u5909\u63db\u3057\u3066\u3044\u308b\u305f\u3081\u3001\u547c\u3073\u51fa\u3057\u5074\u306e\u5b9f\u88c5\u3092\u5e83\u304f\u66f8\u304d\u63db\u3048\u306a\u3044\u3002\n\n## \u63a5\u7d9a\u6587\u5b57\u5217\u30eb\u30fc\u30eb\n\n\u672c\u756a\u306f Supavisor transaction pooler \u3092\u6b63\u3068\u3059\u308b\u3002\n\n```text\npostgresql://postgres.<project-ref>:<password>@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require\n```\n\n\u7981\u6b62\u30fb\u6ce8\u610f:\n\n- raw secret \u3092 docs / WBS / Sheets / Issue \u3078\u66f8\u304b\u306a\u3044\u3002\n- direct `db.<project-ref>.supabase.co:5432` \u306f IPv6 \u975e\u5bfe\u5fdc runtime \u3067\u5230\u9054\u4e0d\u80fd\u306b\u306a\u308a\u3084\u3059\u3044\u305f\u3081\u3001\u672c\u756a Functions \u3067\u306f\u4f7f\u308f\u306a\u3044\u3002\n- transaction mode \u3067\u306f\u30bb\u30c3\u30b7\u30e7\u30f3\u56fa\u5b9a\u306e\u4e00\u6642\u30c6\u30fc\u30d6\u30eb\u3001\u9577\u3044 transaction\u3001prepared statement \u4f9d\u5b58\u3092\u907f\u3051\u308b\u3002\n- \u9577\u3044 migration / backup / restore \u306f\u30a2\u30d7\u30ea pool \u7d4c\u7531\u3067\u306f\u306a\u304f\u3001DB migration / backup runbook \u306e\u5c02\u7528\u624b\u9806\u3092\u4f7f\u3046\u3002\n\n## \u78ba\u8a8d\u624b\u9806\n\n\u30ed\u30fc\u30ab\u30eb\u5358\u4f53:\n\n```powershell\npython -m pytest tests/test_supabase_connection_pool.py -q\n```\n\n\u5168\u4f53:\n\n```powershell\npython -m pytest -q\n```\n\n\u672c\u756a/preview \u3067 Basic Auth \u4ed8\u304d\u306b\u78ba\u8a8d\u3059\u308b\u5834\u5408:\n\n```powershell\nInvoke-RestMethod https://<host>/api/db-test -Credential (Get-Credential)\n```\n\n\u8fd4\u5374\u3055\u308c\u308b `pool` \u306f\u975e\u79d8\u5bc6\u60c5\u5831\u3060\u3051\u3092\u542b\u3080\u3002\n\n| \u30d5\u30a3\u30fc\u30eb\u30c9 | \u671f\u5f85 |\n| --- | --- |\n| `enabled` | `true` |\n| `pooler_mode` | `supavisor_transaction` |\n| `max_connections` | `4` \u306a\u3069\u5c0f\u3055\u3044\u5024 |\n| `pre_ping` | `true` |\n| `direct_postgres_status` | `success` |\n\n## \u7570\u5e38\u6642\u306e\u5224\u65ad\n\n| \u72b6\u614b | \u610f\u5473 | \u5bfe\u5fdc |\n| --- | --- | --- |\n| `pooler_mode=direct_ipv6_risk` | direct Supabase DB URL \u306e\u53ef\u80fd\u6027 | Supabase Dashboard \u306e Transaction pooler URL \u306b\u623b\u3059 |\n| `direct_postgres_status=fallback_sqlite` | DB\u63a5\u7d9a\u5931\u6557\u5f8c\u306b SQLite fallback | Functions env / secret / Supavisor \u8a2d\u5b9a\u3092\u78ba\u8a8d |\n| `direct_postgres_status=error` | DB\u758e\u901a\u5931\u6557 | \u30a8\u30e9\u30fc\u30e1\u30c3\u30bb\u30fc\u30b8\u3092 secret \u5024\u306a\u3057\u3067 Issue \u306b\u8a18\u9332\u3057\u3001T761/T761_1 \u3078\u63a5\u7d9a |\n| pool timeout / exhausted | \u30a4\u30f3\u30b9\u30bf\u30f3\u30b9\u5185\u540c\u6642\u51e6\u7406\u304c pool \u3092\u8d85\u904e | Cloud Functions max instances / concurrency \u3068 `SUPABASE_DB_POOL_MAX` \u3092\u540c\u6642\u306b\u898b\u76f4\u3059 |\n\n## \u95a2\u9023\n\n- [FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md](FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md)\n- [STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md](STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md)\n- [DB_MIGRATION_MANAGEMENT_RUNBOOK.md](DB_MIGRATION_MANAGEMENT_RUNBOOK.md)\n- [INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md](INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md)\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

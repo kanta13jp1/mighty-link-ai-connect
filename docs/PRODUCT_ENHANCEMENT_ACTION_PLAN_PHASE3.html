@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE3 — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \ud83d\ude80 \u30d7\u30ed\u30c0\u30af\u30c8\u5f37\u5316 \u30d5\u30a7\u30fc\u30ba3\u4ed5\u69d8\u66f8\u30fb\u8a2d\u8a08\u66f8 (T968\u301cT971)\n\n\u672c\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u306f\u3001\u7b2c3\u671fPdM\u30ec\u30d3\u30e5\u30fc\u306b\u57fa\u3065\u304d\u3001\u30e1\u30acSaaS\uff08Salesforce, Calendly, Ramp, Stripe\u7b49\uff09\u6c34\u6e96\u3078\u30b9\u30b1\u30fc\u30eb\u3059\u308b\u305f\u3081\u306e4\u5927\u9032\u5316\u30a2\u30af\u30b7\u30e7\u30f3\uff08T968\u301cT971\uff09\u306e\u6280\u8853\u4ed5\u69d8\u66f8\u3067\u3059\u3002\n\n---\n\n## 1. Action 9: AI\u9762\u8ac7\u65e5\u7a0b\u81ea\u52d5\u8abf\u6574\uff06Calendar\u9023\u643a (T968)\n\n### 1.1 \u80cc\u666f\u3068\u76ee\u7684\n\u63d0\u6848\u627f\u8afe\u5f8c\u306e\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u4f01\u696d\u30fb\u30a8\u30f3\u30b8\u30cb\u30a2\u9593\u306e\u9762\u8ac7\u8abf\u6574\u306b\u304b\u304b\u308b\u65e5\u7a0b\u5019\u88dc\u51fa\u3057\u30fb\u9023\u7d61\u5f80\u5fa9\u5de5\u6570\u3092\u81ea\u52d5\u5316\u3057\u3001\u30ef\u30f3\u30af\u30ea\u30c3\u30af\u3067Google/Outlook Calendar\u4e88\u5b9a\u767b\u9332URL\u3092\u767a\u884c\u3059\u308b\u3002\n\n### 1.2 \u4e3b\u306a\u4ed5\u69d8\n- **\u30e2\u30b8\u30e5\u30fc\u30eb**: `src/interview_scheduler.py`\n- **\u6a5f\u80fd**:\n  - \u9762\u8ac7\u5019\u88dc\u65e5\u6642\uff08\u5e73\u65e53\u5019\u88dc\uff09\u306e\u81ea\u52d5\u30d5\u30a9\u30fc\u30de\u30c3\u30c8\u751f\u6210\u3002\n  - Google Calendar `render` URL\uff08\u65e5\u6642\u30fb\u30bf\u30a4\u30c8\u30eb\u30fb\u5834\u6240\u30fb\u53c2\u52a0\u8005\u30d7\u30ea\u30bb\u30c3\u30c8\uff09\u306e\u751f\u6210\u3002\n  - Zoom / Google Meet \u30aa\u30f3\u30e9\u30a4\u30f3\u9762\u8ac7\u7528\u30c6\u30ad\u30b9\u30c8\u81ea\u52d5\u633f\u5165\u3002\n\n---\n\n## 2. Action 10: LP\u5411\u305110\u79d2\u30a4\u30f3\u30b9\u30bf\u30f3\u30c8\u30fb\u30d5\u30ea\u30fc\u30de\u30c3\u30c1\u30f3\u30b0\u4f53\u9a13 (T969)\n\n### 2.1 \u80cc\u666f\u3068\u76ee\u7684\n\u672a\u30ed\u30b0\u30a4\u30f3\u306e\u521d\u56de\u6765\u8a2a\u8005\u304cLP\u4e0a\u3067\u30b9\u30ad\u30eb\u3084\u5e0c\u671b\u6761\u4ef6\u3092\u5165\u529b\u3059\u308b\u3060\u3051\u3067\u3001\u533f\u540d\u5316\u3055\u308c\u305f\u5b9f\u6848\u4ef6\u30d7\u30fc\u30eb\u304b\u308910\u79d2\u3067\u60f3\u5b9a\u5358\u4fa1\u3068\u30de\u30c3\u30c1\u6848\u4ef63\u4ef6\u3092\u8868\u793a\u3059\u308b\u30d0\u30a4\u30e9\u30ebPLG\u30b7\u30df\u30e5\u30ec\u30fc\u30bf\u30fc\u3092\u63d0\u4f9b\u3059\u308b\u3002\n\n### 2.2 \u4e3b\u306a\u4ed5\u69d8\n- **\u30e2\u30b8\u30e5\u30fc\u30eb**: `src/instant_sandbox_matcher.py`\n- **\u6a5f\u80fd**:\n  - \u30b9\u30ad\u30eb\u30fb\u5e0c\u671b\u5358\u4fa1\u306b\u57fa\u3065\u304f\u9ad8\u901f\u30a4\u30f3\u30e1\u30e2\u30ea\u30de\u30c3\u30c1\u30f3\u30b0\u3002\n  - \u500b\u4eba\u60c5\u5831\u30fb\u9867\u5ba2\u4f01\u696d\u540d\u3092\u5b8c\u5168\u306b\u30de\u30b9\u30ad\u30f3\u30b0\u3057\u305f\u5b89\u5fc3\u306e\u533f\u540d\u30d7\u30ec\u30d3\u30e5\u30fc\u3002\n  - \u300c\u7121\u6599\u30a2\u30ab\u30a6\u30f3\u30c8\u4f5c\u6210\u3067\u8a73\u7d30\u3068\u81ea\u52d5\u63d0\u6848\u6587\u3092\u898b\u308b\u300dCTA\u5c0e\u7dda\u3002\n\n---\n\n## 3. Action 11: \u5546\u6d41\u6df1\u3055\u30fb\u53d6\u5f15\u5148\u4fe1\u7528\u5ea6AI\u30b9\u30b3\u30a2 (T970)\n\n### 3.1 \u80cc\u666f\u3068\u76ee\u7684\n\u30e1\u30fc\u30eb\u672c\u6587\u306e\u6587\u8108\u304b\u3089\u591a\u91cd\u4e0b\u8acb\u3051\u5546\u6d41\uff08\u30a8\u30f3\u30c9\u76f4 / \u5143\u8acb\u3051 / 2\u6b21\u8acb\u3051\u4ee5\u964d\uff09\u304a\u3088\u3073\u652f\u6255\u3044\u30b5\u30a4\u30c8\uff0830\u65e5/60\u65e5\u7b49\uff09\u3092AI\u89e3\u6790\u3057\u3001\u5730\u96f7\u6848\u4ef6\u3092\u56de\u907f\u3059\u308b\u696d\u754c\u7279\u5316\u306e\u4fe1\u7528\u5ea6\u30b9\u30b3\u30a2\u3092\u63d0\u4f9b\u3059\u308b\u3002\n\n### 3.2 \u4e3b\u306a\u4ed5\u69d8\n- **\u30e2\u30b8\u30e5\u30fc\u30eb**: `src/client_credibility_scorer.py`\n- **\u8a55\u4fa1\u57fa\u6e96**:\n  - `\u5546\u6d41\u5224\u5b9a`: \u30a8\u30f3\u30c9\u76f4 (100\u70b9) / \u5143\u8acb\u30fb\u30d7\u30e9\u30a4\u30e0 (90\u70b9) / 2\u6b21\u8acb (70\u70b9) / \u591a\u91cd\u4e0b\u8acb (40\u70b9)\n  - `\u652f\u6255\u3044\u6761\u4ef6`: 30\u65e5\u30b5\u30a4\u30c8 (100\u70b9) / 45\u65e5\u30b5\u30a4\u30c8 (85\u70b9) / 60\u65e5\u8d85 (50\u70b9)\n  - `\u7dcf\u5408\u4fe1\u7528\u30a4\u30f3\u30c7\u30c3\u30af\u30b9`: 0\u301c100\u70b9\u304a\u3088\u3073\u30ea\u30b9\u30af\u8b66\u544a\u30bf\u30b0\u4ed8\u4e0e\u3002\n\n---\n\n## 4. Action 12: Enterprise\u5411\u3051\u5168\u64cd\u4f5c\u76e3\u67fb\u30ed\u30b0 (T971)\n\n### 4.1 \u80cc\u666f\u3068\u76ee\u7684\n\u5927\u4f01\u696d\u30fb\u4e0a\u5834SES\u4f01\u696d\u306e\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u76e3\u67fb\uff08SOC2 / ISO27001\uff09\u306b\u5bfe\u5fdc\u3059\u308b\u305f\u3081\u3001\u5168\u30e6\u30fc\u30b6\u30fc\u30fb\u7ba1\u7406\u8005\u306e\u64cd\u4f5c\u30ed\u30b0\uff08\u30de\u30c3\u30c1\u30f3\u30b0\u5b9f\u884c\u3001\u30a8\u30af\u30b9\u30dd\u30fc\u30c8\u3001\u500b\u4eba\u60c5\u5831\u95b2\u89a7\uff09\u3092\u6539\u3056\u3093\u9632\u6b62\u30cf\u30c3\u30b7\u30e5\u4ed8\u304d\u3067CSV/JSON\u51fa\u529b\u3059\u308b\u3002\n\n### 4.2 \u4e3b\u306a\u4ed5\u69d8\n- **\u30e2\u30b8\u30e5\u30fc\u30eb**: `src/enterprise_audit_trail.py`\n- **\u6a5f\u80fd**:\n  - \u64cd\u4f5c\u30ed\u30b0\u30ec\u30b3\u30fc\u30c9\uff08\u65e5\u6642\u3001\u30e6\u30fc\u30b6\u30fcID\u3001\u64cd\u4f5c\u7a2e\u5225\u3001\u5bfe\u8c61\u30ea\u30bd\u30fc\u30b9\u3001IP\u30a2\u30c9\u30ec\u30b9\u3001SHA-256\u7f72\u540d\uff09\u3002\n  - \u6539\u3056\u3093\u691c\u8a3c\u95a2\u6570\uff08Verify Chain Integrity\uff09\u3002\n  - Enterprise\u5c02\u7528\u76e3\u67fb\u30ec\u30dd\u30fc\u30c8\uff08JSON/CSV\uff09\u51fa\u529b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

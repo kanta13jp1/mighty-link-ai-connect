@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WF-02_split_form — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# WF-02 \u00b7 Split Form \u2014 Profile vs Job (\u73fe\u884c UI \u306e\u30d9\u30fc\u30b9)\n\n> Subtitle: 2 \u5217\u4e26\u5217\u5165\u529b / \u4e2d\u592e Analyze CTA\u3002\u73fe\u884c UI \u306e\u30d9\u30fc\u30b9\u3002\n> \ud83d\udca1 Rationale: \u6bd4\u8f03\u5bfe\u8c61\u3092\u8996\u899a\u7684\u306b\u5bfe\u7f6e\u3002\u30c7\u30b9\u30af\u30c8\u30c3\u30d7\u3067\u306e\u5e83\u3044\u753b\u9762\u524d\u63d0\u3002\n\n## 1. Identity\n\n| key | value |\n| --- | --- |\n| id | `WF-02` |\n| category | desktop-first / split form |\n| status | spec-ready (visual = Canva slide 3\u3001\u73fe\u884c `index.html` \u3068\u6700\u3082\u8fd1\u3044) |\n| pick-when | \u30c7\u30b9\u30af\u30c8\u30c3\u30d7\u5e38\u7528\u3001\u5de6\u53f3\u8996\u899a\u6bd4\u8f03\u3001\u73fe\u884c\u304b\u3089\u6700\u5c0f\u5909\u66f4 |\n| skip-when | \u30b9\u30de\u30db\u4e2d\u5fc3\u3001\u7247\u65b9\u306e\u5165\u529b\u304c\u9577\u6587 |\n| output target | `exports/wireframes/wf-02.html` |\n\n## 2. ASCII Layout\n\n```text\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 1280+ width \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  Mighty Skill-Bridge                              [Admin] [\u2699]       \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 \u7d4c\u6b74\u66f8 (Profile)         \u2502 \u6848\u4ef6\u7968 (Job)                              \u2502\n\u2502 [textarea 14 rows]       \u2502 [textarea 14 rows]                       \u2502\n\u2502 [\ud83d\udcce Upload] [Load Sample]\u2502 [\ud83d\udcce Upload] [Load Sample]                \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502                  \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                        \u2502\n\u2502                  \u2502   \u26a1 Analyze Fit        \u2502  (centered)             \u2502\n\u2502                  \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518                        \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 Result band (full width)                                            \u2502\n\u2502   [Gauge 88] [Radar 4-axis]     | Summary text                      \u2502\n\u2502   \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500     \u2502\n\u2502   QA accordion x2               | Roadmap week1/2/3                 \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\n## 3. Component Tree\n\n```html\n<main class=\"wf02\">\n  <header><h1>Mighty Skill-Bridge</h1><nav><a href=\"/admin\">Admin</a></nav></header>\n  <div class=\"wf02__grid\">\n    <section class=\"wf02__col\" aria-labelledby=\"eng-h\">\n      <h2 id=\"eng-h\">\u7d4c\u6b74\u66f8</h2>\n      <textarea id=\"engineer\" rows=\"14\"></textarea>\n      <div class=\"wf02__col-actions\"><label class=\"btn\">\ud83d\udcce Upload<input type=\"file\" hidden></label>\n        <button data-act=\"load-sample-engineer\">Load Sample</button></div>\n    </section>\n    <section class=\"wf02__col\" aria-labelledby=\"job-h\">\n      <h2 id=\"job-h\">\u6848\u4ef6\u7968</h2>\n      <textarea id=\"job\" rows=\"14\"></textarea>\n      <div class=\"wf02__col-actions\">...same shape...</div>\n    </section>\n  </div>\n  <button class=\"wf02__cta\" data-act=\"analyze\">\u26a1 Analyze Fit</button>\n  <section class=\"wf02__result\" aria-live=\"polite\" hidden>\n    <div class=\"wf02__result-left\"><div class=\"gauge\"></div><canvas class=\"radar\"></canvas></div>\n    <div class=\"wf02__result-right\"><article class=\"summary\"></article></div>\n    <details class=\"qa\" open></details><details class=\"qa\"></details>\n    <section class=\"roadmap\"></section>\n  </section>\n</main>\n```\n\n## 4. State Machine\n\n```text\ninitial \u2500\u2500 load-sample \u2500\u2500> filled\nfilled  \u2500\u2500 analyze    \u2500\u2500> analyzing (\u4e21 textarea readonly, CTA spinner)\nanalyzing \u2500\u2500 200      \u2500\u2500> loaded   (result band reveal\u3001no scroll\u3001in-place)\nanalyzing \u2500\u2500 error    \u2500\u2500> error    (toast)\nloaded  \u2500\u2500 edit       \u2500\u2500> filled-stale (result .is-stale)\n```\n\n## 5. Data Flow + API contract\n\nWF-01 \u3068\u540c\u3058: `Promise.all([/api/parse engineer, /api/parse job])` \u2192 `/api/match`\u3002\n\u305f\u3060\u3057 result \u306f **scroll \u3057\u306a\u3044** (in-place reveal)\u3002\n\n## 6. Design Tokens (override)\n\n```css\n.wf02 { display: grid; gap: var(--s-4); max-width: 1280px; margin: 0 auto; padding: var(--s-4); }\n.wf02__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); }\n.wf02__cta { justify-self: center; padding: var(--s-3) var(--s-5);\n             background: var(--c-accent); color: var(--c-bg); border-radius: var(--r-lg);\n             font-size: var(--fs-h2); font-weight: 700; }\n.wf02__result { display: grid; grid-template-columns: 360px 1fr; gap: var(--s-4); }\n```\n\n## 7. Interaction Spec\n\n- Tab order: \u7d4c\u6b74 textarea \u2192 Upload \u2192 Sample \u2192 \u6848\u4ef6 textarea \u2192 Upload \u2192 Sample \u2192 Analyze\u3002\n- \u4e26\u5217 Promise.all \u4e2d\u306f\u4e21 textarea \u306b `readonly` \u5c5e\u6027\u4ed8\u4e0e (\u8aa4\u5165\u529b\u9632\u6b62)\u3002\n- Result band \u51fa\u73fe\u6642\u306b `wf02__cta` \u3092 `wf02__cta--secondary` style \u3078\u964d\u683c (\u80cc\u666f\u900f\u660e + neon border)\u3002\n\n## 8. A11y\n\n- 2-column grid \u306f `<section>` x 2 \u3067\u4e26\u5217\u3001screen reader \u9806\u5e8f = DOM \u9806\u5e8f (LTR \u3067\u7d4c\u6b74 \u2192 \u6848\u4ef6)\u3002\n- mobile \u3067\u306f grid \u3092 1 \u5217\u306b\u7e2e\u9000 (\u00a79 \u53c2\u7167)\u3001reading order \u7dad\u6301\u3002\n- result-left \u306e gauge / radar \u306f SVG + `role=\"img\" aria-label=\"Score 88 of 100\"` \u3092\u5fc5\u9808\u3002\n\n## 9. Responsive\n\n| breakpoint | layout |\n| --- | --- |\n| \u2264 900 (tablet/mobile) | `grid-template-columns: 1fr` (\u7e26\u7a4d\u307f)\u3001CTA full-width |\n| 901-1279 | 2 \u5217 + CTA center |\n| \u2265 1280 (desktop) | 2 \u5217 + result band 2 \u5217 (gauge/radar 360px + summary 1fr) |\n\n## 10. Out of Scope\n\n- step progress UI (\u2192 WF-03)\n- chat \u5f62\u5f0f (\u2192 WF-04)\n- \u8907\u6570\u6848\u4ef6\u4e26\u5217 (\u2192 WF-05/06)\n\n## 11. Acceptance Criteria\n\n- [ ] desktop 1280 \u3067\u5de6\u53f3 textarea \u304c\u7b49\u5e45\u3001CTA \u4e2d\u592e\n- [ ] mobile 375 \u3067 1 \u5217\u7e26\u7a4d\u307f\u3001CTA full-width\n- [ ] result band reveal \u3067 page scroll \u304c\u767a\u751f\u3057\u306a\u3044 (in-place)\n- [ ] \u4e21 textarea \u304c\u7a7a\u306e\u3068\u304d Analyze \u306f `disabled`\n- [ ] verify_public_demo.py pass (`Mighty Skill-Bridge` / `Analyze` \u30de\u30fc\u30ab\u30fc\u4fdd\u6301)\n\n## 12. Implementation Prompt (LLM-ready)\n\n```text\nYou are implementing WF-02 \"Split Form\" for Mighty Skill-Bridge, the closest to the current index.html.\n\nConstraints: same as WF-01 (exports/wireframes/wf-02.html, vanilla, no build, use /api/parse + /api/match).\n\nKey differences vs WF-01:\n- Two-column grid for desktop (\u2265 901px), collapses to 1-column on mobile\n- CTA is centered horizontally and visually de-emphasizes after first result\n- Result band reveals in-place (no scrollIntoView)\n- Reuse existing sample text loaders (loadSampleEngineer / loadSampleJob)\n\nAcceptance: see docs/wireframes/WF-02_split_form.md \u00a711. Do not touch root index.html.\n```\n\n## 13. Starter Snippet\n\n```html\n<!doctype html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>Mighty Skill-Bridge \u2014 WF-02</title>\n<style>\n:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-accent:#00F0FF;--c-border:#2A2D3E;\n      --r-md:12px;--r-lg:20px;--s-3:16px;--s-4:24px;--s-5:40px;--fs-h2:22px}\nbody{margin:0;background:var(--c-bg);color:var(--c-text);font-family:\"Yu Gothic UI\",sans-serif}\n.wf02{display:grid;gap:var(--s-4);max-width:1280px;margin:0 auto;padding:var(--s-4)}\n.wf02__grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4)}\n@media (max-width:900px){.wf02__grid{grid-template-columns:1fr}}\ntextarea{width:100%;box-sizing:border-box;background:var(--c-surface);color:var(--c-text);\n         border:1px solid var(--c-border);border-radius:var(--r-md);padding:var(--s-3);min-height:340px}\n.wf02__cta{justify-self:center;padding:var(--s-3) var(--s-5);background:var(--c-accent);\n           color:var(--c-bg);border:0;border-radius:var(--r-lg);font-size:var(--fs-h2);font-weight:700}\n.wf02__cta:disabled{opacity:.4}\n.wf02__result[hidden]{display:none}\n.wf02__result{display:grid;grid-template-columns:360px 1fr;gap:var(--s-4)}\n@media (max-width:900px){.wf02__result{grid-template-columns:1fr}}\n</style></head><body>\n<main class=\"wf02\">\n  <h1>Mighty Skill-Bridge</h1>\n  <div class=\"wf02__grid\">\n    <section><h2>\u7d4c\u6b74\u66f8</h2><textarea id=\"engineer\"></textarea></section>\n    <section><h2>\u6848\u4ef6\u7968</h2><textarea id=\"job\"></textarea></section>\n  </div>\n  <button class=\"wf02__cta\" id=\"analyze\" disabled>\u26a1 Analyze Fit</button>\n  <section class=\"wf02__result\" id=\"result\" aria-live=\"polite\" hidden></section>\n</main>\n<script>\nconst $=(s)=>document.querySelector(s);\nfunction syncCta(){$(\"#analyze\").disabled = !($(\"#engineer\").value.trim() && $(\"#job\").value.trim())}\n[\"engineer\",\"job\"].forEach(id=>$(\"#\"+id).addEventListener(\"input\",syncCta));\nasync function parseDoc(text, t){const fd=new FormData();fd.append(\"text\",text);fd.append(\"doc_type\",t);\n  const r=await fetch(\"/api/parse\",{method:\"POST\",body:fd});return r.json()}\nasync function match(e,j){const r=await fetch(\"/api/match\",{method:\"POST\",\n  headers:{\"content-type\":\"application/json\"},\n  body:JSON.stringify({engineer_content:e,job_content:j})});return r.json()}\n$(\"#analyze\").addEventListener(\"click\",async ev=>{\n  ev.currentTarget.disabled=true;ev.currentTarget.setAttribute(\"aria-busy\",\"true\");\n  try{const [p1,p2]=await Promise.all([parseDoc($(\"#engineer\").value,\"engineer\"),parseDoc($(\"#job\").value,\"job\")]);\n    const m=await match(p1.parsed_text||$(\"#engineer\").value,p2.parsed_text||$(\"#job\").value);\n    const r=$(\"#result\");r.hidden=false;\n    r.innerHTML=`<div><h2>Score ${m.final_score}</h2><pre>${JSON.stringify(m.scores,null,2)}</pre></div>\n                 <div><p>${m.summary}</p></div>`;\n  }finally{ev.currentTarget.disabled=false;ev.currentTarget.removeAttribute(\"aria-busy\")}});\n</script></body></html>\n```\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

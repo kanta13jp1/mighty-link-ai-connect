@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECURITY_LOG_INTEGRITY_GUARD — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u30fb\u30ed\u30b0\u5065\u5168\u6027\u81ea\u52d5\u30b9\u30ad\u30e3\u30f3\u30ac\u30fc\u30c9\u4ed5\u69d8\u66f8 (SECURITY_LOG_INTEGRITY_GUARD.md)\n\n- \u95a2\u9023WBS: `T931` (8. \u672c\u756a\u904b\u7528\u30fb\u54c1\u8cea\u7ba1\u7406 / \u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u76e3\u8996)\n- \u62c5\u5f53\u30ec\u30fc\u30f3: `Antigravity + Gemini`\n- \u691c\u8a3c\u30b9\u30af\u30ea\u30d7\u30c8: [`scripts/audit_security_log_integrity.py`](../scripts/audit_security_log_integrity.py)\n- \u30c6\u30b9\u30c8\u30d5\u30a1\u30a4\u30eb: [`tests/test_security_log_integrity_audit.py`](../tests/test_security_log_integrity_audit.py)\n\n---\n\n## 1. \u76ee\u7684\u3068\u4fdd\u8b77\u5bfe\u8c61\n\n\u672c\u30ac\u30fc\u30c9\u306f\u3001\u30b7\u30b9\u30c6\u30e0\u5185\u306e\u30ed\u30b0\u3001\u30a8\u30e9\u30fc\u30cf\u30f3\u30c9\u30ea\u30f3\u30b0\u3001\u304a\u3088\u3073\u30c7\u30fc\u30bf\u6c38\u7d9a\u5316\u5c64\u306b\u304a\u3044\u3066\u3001\u4ee5\u4e0b\u306e\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u57fa\u6e96\u3068\u30b3\u30f3\u30d7\u30e9\u30a4\u30a2\u30f3\u30b9\u304c\u6052\u5e38\u7684\u306b\u7dad\u6301\u3055\u308c\u3066\u3044\u308b\u3053\u3068\u3092CI\u4e0a\u3067\u81ea\u52d5\u691c\u8a3c\u3057\u307e\u3059\u3002\n\n1. **\u6a5f\u5bc6\u60c5\u5831\u306e\u975e\u6f0f\u6d29**: API\u30ad\u30fc\u3001OAuth\u30b7\u30fc\u30af\u30ec\u30c3\u30c8\u3001DB\u63a5\u7d9aURL\u3001\u30d1\u30b9\u30ef\u30fc\u30c9\u7b49\u304c\u30ed\u30b0\u3084\u30bd\u30fc\u30b9\u30b3\u30fc\u30c9\u5185\u306b\u5e73\u6587\u3067\u9732\u51fa\u3057\u3066\u3044\u306a\u3044\u3053\u3068\u3002\n2. **\u8981\u914d\u616e\u500b\u4eba\u60c5\u5831\u306e\u975e\u6c38\u7d9a\u5316**: \u9069\u6027\u8a3a\u65ad\u30fb\u30e2\u30c1\u30d9\u30fc\u30b7\u30e7\u30f3\u8a3a\u65ad\u306e\u751f\u56de\u7b54\u3084\u7cbe\u795e\u72b6\u614b\u30b9\u30b3\u30a2\u304c\u3001DB\u3084\u6c38\u7d9a\u30ed\u30b0\u306b\u84c4\u7a4d\u3055\u308c\u306a\u3044\u69cb\u9020\uff08[`src/aptitude_demo.py`](../src/aptitude_demo.py) \u306eDB\u975eimport\u6027\u306a\u3069\uff09\u3092\u62c5\u4fdd\u3002\n3. **\u9069\u5207\u306a\u8a8d\u8a3c\u30fb\u8a8d\u53ef\u30a8\u30e9\u30fc\u30cf\u30f3\u30c9\u30ea\u30f3\u30b0**: 401 Unauthorized / 403 Forbidden \u306eHTTP\u4f8b\u5916\u304cAPI\u5c64\u3067\u9069\u5207\u306b\u30cf\u30f3\u30c9\u30ea\u30f3\u30b0\u3055\u308c\u3066\u3044\u308b\u3053\u3068\u3002\n4. **\u4eee\u540d\u5316\u30fb\u533f\u540d\u5316\u306e\u5fb9\u5e95**: \u30ed\u30b0\u304a\u3088\u3073\u516c\u958b\u30de\u30c3\u30c1\u30f3\u30b0\u7d50\u679c\u306b\u304a\u3044\u3066\u3001`talent_label` \u3084\u4eee\u540d\u5316\u8b58\u5225\u5b50\u304c\u7528\u3044\u3089\u308c\u3066\u3044\u308b\u3053\u3068\u3002\n5. **DoS\u30fb\u4e0d\u6b63\u30a2\u30af\u30bb\u30b9\u9632\u5fa1**: \u30ec\u30fc\u30c8\u30ea\u30df\u30c3\u30bf\u30fc\uff08[`src/rate_limit.py`](../src/rate_limit.py)\uff09\u304c\u6709\u52b9\u306b\u6a5f\u80fd\u3057\u3066\u3044\u308b\u3053\u3068\u3002\n\n---\n\n## 2. 10\u4eee\u8aac\u3068\u691c\u8a3c\u57fa\u6e96\n\n| \u4eee\u8aac | \u691c\u8a3c\u5185\u5bb9 | \u5408\u683c\u57fa\u6e96 |\n|---|---|---|\n| **H1** | \u4e3b\u8981\u30e2\u30b8\u30e5\u30fc\u30eb\u5b9f\u5728\u6027 | `app.py`, `aptitude_demo.py`, `supabase_client.py`, `sales_email_match.py` \u304c\u5b9f\u5728 |\n| **H2** | \u69cb\u9020\u7684\u975e\u6c38\u7d9a\u6027 | `aptitude_demo.py` \u304cDB/\u6c38\u7d9a\u5316\u30e9\u30a4\u30d6\u30e9\u30ea\u3092import\u3057\u3066\u3044\u306a\u3044 |\n| **H3** | \u6a5f\u5bc6\u60c5\u5831\u6f0f\u6d29\u30d1\u30bf\u30fc\u30f3 | \u30b3\u30fc\u30c9\u30d9\u30fc\u30b9\u5185\u306b\u5e73\u6587\u30b7\u30fc\u30af\u30ec\u30c3\u30c8\u30fb\u30c8\u30fc\u30af\u30f3\u6b63\u898f\u8868\u73fe\u30d1\u30bf\u30fc\u30f3\u304c0\u4ef6 |\n| **H4** | \u8a8d\u8a3c\u30a8\u30e9\u30fc\u51e6\u7406 | `app.py` \u5185\u306b 401/403 \u30a8\u30e9\u30fc\u30cf\u30f3\u30c9\u30ea\u30f3\u30b0\u304c\u5b58\u5728 |\n| **H5** | \u30bb\u30ad\u30e5\u30ea\u30c6\u30a3Runbook | `docs/SECURITY_INCIDENT_RESPONSE_RUNBOOK.md` \u304c\u5b9f\u5728 |\n| **H6** | \u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u8a2d\u8a08\u66f8 | `docs/APTITUDE_MOTIVATION_DEMO_PRIVACY_DESIGN.md` \u304c\u5b9f\u5728 |\n| **H7** | \u4eee\u540d\u5316\u30fb\u533f\u540d\u5316 | `pseudonym` / `talent_label` \u306b\u3088\u308b\u533f\u540d\u5316\u51e6\u7406\u304c\u5b58\u5728 |\n| **H8** | \u30ac\u30fc\u30c9\u4ed5\u69d8\u66f8 | \u672c\u4ed5\u69d8\u66f8\u304c\u5b9f\u5728 |\n| **H9** | \u30ec\u30fc\u30c8\u30ea\u30df\u30c3\u30c8 | `src/rate_limit.py` \u306e RateLimiter \u304c\u5b9f\u5728 |\n| **H10** | \u5168\u4f53\u5065\u5168\u6027 | \u5168\u4eee\u8aac\u304cPASS\u3057\u3001\u30c9\u30ea\u30d5\u30c8\u304c0\u3067\u3042\u308b\u3053\u3068 |\n\n---\n\n## 3. \u624b\u52d5\u5b9f\u884c\u65b9\u6cd5\n\n```powershell\npython scripts/audit_security_log_integrity.py\n```\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

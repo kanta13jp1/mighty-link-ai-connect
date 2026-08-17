@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPERATIONS_HANDOVER_REHEARSAL_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u4f1a\u793e\u904b\u7528\u5f15\u7d99\u304e\u30ea\u30cf\u30fc\u30b5\u30eb\u30fbBreak-glass \u30e9\u30f3\u30d6\u30c3\u30af\uff08T850\uff09\n\n- \u4f5c\u6210\u65e5: 2026-07-08\n- \u5bfe\u8c61WBS: T850\uff08\u5f15\u7d99\u304e\u30ea\u30cf\u30fc\u30b5\u30eb\u30fb\u6a29\u9650\u68da\u5378\u3057\u30fbBreak-glass\u78ba\u8a8d\uff09/ \u5b9f\u88c5: T850_1\uff08Claude Code\u30ec\u30fc\u30f3\u5dfb\u304d\u53d6\u308a\uff09\n- \u6b63\u672c\u30c7\u30fc\u30bf: `data/access_inventory.tsv`\n- \u76e3\u67fb\u30b9\u30af\u30ea\u30d7\u30c8: `scripts/audit_access_inventory.py` / \u8a3c\u8de1: `exports/access_inventory_audit.{json,md}`\n- \u95a2\u9023: [ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md](ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md)\uff08T818/T823\uff09\u30fb[DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md](DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md)\u30fb[SECRET_ROTATION_RUNBOOK.md](SECRET_ROTATION_RUNBOOK.md)\n- \u95a2\u9023\u8ab2\u984c: R122\uff08\u5358\u4e00\u969c\u5bb3\u70b9=\u30d0\u30b9\u4fc2\u65701\u306e\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u30b7\u30b9\u30c6\u30e0\uff09\n\n## 1. \u76ee\u7684\n\n\u904b\u7528\u62c5\u5f53\uff08\u73fe\u72b6\u306f\u6885\u6fa4\u5bdb\u592a\uff09\u304c\u4e0d\u5728\u3067\u3082\u3001\u4f1a\u793e\u5074\u306e\u5225\u62c5\u5f53\u304c\u30b5\u30fc\u30d3\u30b9\u3092\u7d99\u7d9a\u30fb\u5fa9\u65e7\u3067\u304d\u308b\u72b6\u614b\u3092\u3001**\u30ea\u30cf\u30fc\u30b5\u30eb**\u3067\u78ba\u8a8d\u3059\u308b\u3002\u6a29\u9650\u68da\u5378\u3057\uff08`data/access_inventory.tsv`\uff09\u3092\u6b63\u672c\u306b\u3001\u5404\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u30b7\u30b9\u30c6\u30e0\u306e\u4e00\u6b21/\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u6240\u6709\u8005\u30fbMFA\u30fbBreak-glass\u624b\u9806\u30fb\u79fb\u7ba1\u72b6\u614b\u3092\u7ba1\u7406\u3057\u3001\u76e3\u67fb\u3067\u7db2\u7f85\u6027\u3068\u5358\u4e00\u969c\u5bb3\u70b9\u3092\u6a5f\u68b0\u691c\u8a3c\u3059\u308b\u3002\n\n## 2. \u6a29\u9650\u68da\u5378\u3057\u306e\u73fe\u6cc1\uff082026-07-08 \u76e3\u67fb\uff09\n\n- \u30b7\u30b9\u30c6\u30e0\u7dcf\u6570 16\uff08\u30af\u30ea\u30c6\u30a3\u30ab\u30eb 8\uff09\u3002\n- **\u5358\u4e00\u969c\u5bb3\u70b9\uff08\u30d0\u30b9\u4fc2\u65701\u30fbbackup\u672a\u8a2d\u5b9a\u306e\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\uff09: 8\u4ef6**\uff08domain / firebase_hosting / firebase_functions / gcp_iam_billing / supabase / github_repo / github_actions_secrets / google_workspace\uff09\u3002\u73fe\u72b6\u306f\u6885\u6fa4\u500b\u4eba\u30a2\u30ab\u30a6\u30f3\u30c8\u8d77\u70b9\u306e\u305f\u3081\u60f3\u5b9a\u5185\u3060\u304c\u3001**GA\u306e\u7d99\u7d9a\u904b\u7528\u30ea\u30b9\u30af**\u3067\u3042\u308a\u3001T823\u4f1a\u793e\u79fb\u7ba1\u3067\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u6240\u6709\u8005\u3092\u78ba\u7acb\u3057\u3066\u89e3\u6d88\u3059\u308b\uff08R122\uff09\u3002\n- \u4f1a\u793e\u7ba1\u7406\u6e08\u307f: google_workspace / notebooklm\uff08\u4f1a\u793e\u63d0\u4f9bGoogle\u30a2\u30ab\u30a6\u30f3\u30c8\uff09\u3002\n- \u76e3\u67fb\u306f `python scripts/audit_access_inventory.py --fail-on-attention` \u3067\u518d\u5b9f\u884c\u3067\u304d\u308b\uff0810\u4eee\u8aac\u30fb\u73fe\u72b610/10 PASS\u3001SPOF\u306f\u4ef6\u6570\u3068\u3057\u3066\u5831\u544a\uff09\u3002\n\n## 3. \u5f15\u7d99\u304e\u30ea\u30cf\u30fc\u30b5\u30eb\u30fb\u30b7\u30ca\u30ea\u30aa\n\n\u5404\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u30b7\u30b9\u30c6\u30e0\u3067\u300c\u4e00\u6b21\u6240\u6709\u8005\u304c\u4e0d\u5728\u300d\u3092\u60f3\u5b9a\u3057\u3001\u5225\u62c5\u5f53\u304c\u4ee5\u4e0b\u3092\u5b9f\u65bd\u3067\u304d\u308b\u304b\u3092\u673a\u4e0a/\u5b9f\u5730\u3067\u78ba\u8a8d\u3059\u308b\u3002\u5408\u5426\u3092\u672c\u7bc0\u672b\u5c3e\u306b\u8a18\u9332\u3059\u308b\u3002\n\n| # | \u30b7\u30ca\u30ea\u30aa | \u78ba\u8a8d\u5185\u5bb9 | \u53c2\u7167 |\n| --- | --- | --- | --- |\n| S1 | \u672c\u756a\u969c\u5bb3\u3067Hosting/Functions\u3092\u623b\u3059 | \u5225\u62c5\u5f53\u304c\u76f4\u524drelease\u3078rollback\u3067\u304d\u308b | [PRODUCTION_ROLLBACK_RUNBOOK.md](PRODUCTION_ROLLBACK_RUNBOOK.md) |\n| S2 | DB\u304c\u7834\u640d/\u8aa4\u64cd\u4f5c | \u5225\u62c5\u5f53\u304cSupabase\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u304b\u3089\u5fa9\u5143\u3067\u304d\u308b\uff08T870\u3067CI\u5fa9\u65e7\u5f8c\uff09 | [SUPABASE_BACKUP_RESTORE_RUNBOOK.md](SUPABASE_BACKUP_RESTORE_RUNBOOK.md) |\n| S3 | Workspace\u540c\u671f\u304c\u505c\u6b62 | \u5225\u62c5\u5f53\u304cOAuth\u518d\u8a8d\u8a3c\u3057Sheets/Calendar\u540c\u671f\u3092\u5fa9\u65e7\u3067\u304d\u308b\uff08R121\u3067\u5b9f\u8a3c\u6e08\u307f\uff09 | [GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md](GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md) |\n| S4 | secret\u6f0f\u6d29\u306e\u7591\u3044 | \u5225\u62c5\u5f53\u304c\u8a72\u5f53secret\u3092rotation\u3057\u65e7\u5024\u3092\u5931\u52b9\u3067\u304d\u308b | [SECRET_ROTATION_RUNBOOK.md](SECRET_ROTATION_RUNBOOK.md) |\n| S5 | DNS/SSL\u969c\u5bb3 | \u5225\u62c5\u5f53\u304c\u304a\u540d\u524d.com\u306eDNS\u3092\u79fb\u7ba1\u524d\u8a18\u9332\u3078\u623b\u305b\u308b | [ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md](ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md) |\n| S6 | GitHub/CI/CD\u505c\u6b62 | \u5225\u62c5\u5f53\u304cActions/Pages/Deploy\u8a8d\u8a3c\u3092\u5fa9\u65e7\u3067\u304d\u308b\uff08T852\u306eWIF/ADC\u6b63\u898f\u5316\u5f8c\uff09 | [DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md](DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md) |\n\n## 4. Break-glass\uff08\u7dca\u6025\u30a2\u30af\u30bb\u30b9\u56de\u5fa9\uff09\u539f\u5247\n\n- \u5404\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u30b7\u30b9\u30c6\u30e0\u306eBreak-glass\u624b\u9806\u306f `data/access_inventory.tsv` \u306e `break_glass_doc` \u5217\u3067\u6b63\u672cdocs\u3078\u7d10\u3065\u3051\u308b\uff08\u76e3\u67fbH3/H9\u3067\u5b58\u5728\u3092\u691c\u8a3c\uff09\u3002\n- \u7dca\u6025\u6642\u3082**secret\u5024\u3092Issue\u30fbSheets\u30fbNotebookLM\u30fbSlack/Notion\u672c\u6587\u3078\u8cbc\u3089\u306a\u3044**\uff08\u68da\u5378\u3057\u306b\u3082\u9375\u5024\u306f\u4fdd\u6301\u3057\u306a\u3044\uff09\u3002\n- Break-glass\u767a\u52d5\u306f\u4e8b\u5f8c\u306b\u30ed\u30b0\u5316\u3057\u3001\u4f7f\u7528\u3057\u305f\u30a2\u30ab\u30a6\u30f3\u30c8/\u7d4c\u8def\u306e\u6a29\u9650\u3092\u70b9\u691c\u30fb\u5fc5\u8981\u306b\u5fdc\u3058rotation\u3059\u308b\u3002\n- \u4f1a\u793e\u79fb\u7ba1\u5f8c\u306f\u3001\u975e\u5e38\u6642Owner/Break-glass\u30a2\u30ab\u30a6\u30f3\u30c8\u3092**\u4f1a\u793e\u5074\u3067\u8907\u6570\u540d\u7ba1\u7406**\u3059\u308b\uff08\u500b\u4eba\u4f9d\u5b58\u3092\u6b8b\u3055\u306a\u3044\uff09\u3002\n\n## 5. \u662f\u6b63\u8a08\u753b\uff08SPOF\u89e3\u6d88\uff09\n\nR122\u306e8\u4ef6\u306eSPOF\u306f\u3001T823\uff08\u4f1a\u793e\u30a2\u30ab\u30a6\u30f3\u30c8\u672c\u79fb\u7ba1\uff09\u3067\u5404\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u30b7\u30b9\u30c6\u30e0\u306b\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u6240\u6709\u8005\uff08\u4f1a\u793e\u50742\u4eba\u76ee\u306eOwner/\u7ba1\u7406\u8005\uff09\u3092\u8a2d\u5b9a\u3057\u3066\u89e3\u6d88\u3059\u308b\u3002\u8a2d\u5b9a\u5f8c\u306f `data/access_inventory.tsv` \u306e `backup_owner` \u3092\u66f4\u65b0\u3057\u3001`audit_access_inventory.py` \u306eSPOF\u4ef6\u6570\u304c0\u306b\u306a\u308b\u3053\u3068\u3092\u5b8c\u4e86\u57fa\u6e96\u3068\u3059\u308b\u3002\n\n## 6. \u5b8c\u4e86\u57fa\u6e96\uff08T850\uff09\n\n- \u6a29\u9650\u68da\u5378\u3057\uff08`data/access_inventory.tsv`\uff09\u304c\u5168\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u9818\u57df\u3092\u7db2\u7f85\u3057\u76e3\u67fbgreen\uff08\u9054\u6210\uff09\u3002\n- \u5404\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u30b7\u30b9\u30c6\u30e0\u306bBreak-glass/\u5fa9\u65e7docs\u304c\u7d10\u3065\u304d\u3001\u53c2\u7167docs\u304c\u5b9f\u5728\uff08\u9054\u6210\uff09\u3002\n- \u5f15\u7d99\u304e\u30ea\u30cf\u30fc\u30b5\u30eb\u30fb\u30b7\u30ca\u30ea\u30aa\uff08\u00a73 S1-S6\uff09\u3092\u5b9a\u7fa9\uff08\u9054\u6210\uff09\u3002**\u5b9f\u5730\u30ea\u30cf\u30fc\u30b5\u30eb\u306e\u5408\u5426\u8a18\u9332\u3068\u3001SPOF\u306ebackup\u6240\u6709\u8005\u78ba\u7acb\uff08T823\u9023\u52d5\uff09\u306f\u4eba\u9593\u5de5\u7a0b\u3068\u3057\u3066\u6b8b\u308b\u3002**\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

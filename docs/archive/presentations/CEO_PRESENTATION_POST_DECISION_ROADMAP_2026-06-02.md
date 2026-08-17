@@ -157,7 +157,7 @@ CEO が 6/2 で即決しない場合の handoff。
 6. `git add data/WBS.tsv docs/CEO_MEETING_MINUTES_2026-06-02.md && git commit -m "[codex] feat: phase 7 WBS for direction X" && git push`
 7. `gh pr create + gh pr merge --squash` で main 反映 → (`feedback-session-commit-push-merge` 準拠)
 
-実行記録は [CODEX_CONTINUATION_NOTES.md](CODEX_CONTINUATION_NOTES.md) の「2026-06-02 (post-CEO meeting)」セクションに残す。
+実行記録は [CODEX_CONTINUATION_NOTES.md](../../CODEX_CONTINUATION_NOTES.md) の「2026-06-02 (post-CEO meeting)」セクションに残す。
 
 ---
 

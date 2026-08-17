@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WF-04_conversational_chat — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# WF-04 \u00b7 Conversational Chat \u2014 AI Interview\n\n> Subtitle: AI \u304c\u8cea\u554f / \u30e6\u30fc\u30b6\u30fc\u304c\u56de\u7b54 / \u6700\u7d42 fit \u3092\u7d50\u679c\u30d0\u30d6\u30eb\u3067\u63d0\u793a\u3002\n> \ud83d\udca1 Rationale: \u5fdc\u52df\u8005\u672c\u4eba\u304c\u76f4\u63a5\u4f7f\u3046\u5834\u5408\u306b\u89aa\u3057\u307f\u3084\u3059\u3044\u3002\u30c1\u30e3\u30c3\u30c8\u5c65\u6b74\u3067\u8aac\u660e\u8cac\u4efb\u3002\n\n## 1. Identity\n\n| key | value |\n| --- | --- |\n| id | `WF-04` |\n| category | conversational / chat |\n| status | spec-ready (visual = Canva slide 5) |\n| pick-when | \u5fdc\u52df\u8005\u672c\u4eba\u304c\u76f4\u63a5\u5229\u7528\u3001\u8aac\u660e\u8cac\u4efb\u304c\u5fc5\u8981\u3001AI \u30e9\u30a4\u30d6\u611f\u91cd\u8996 |\n| skip-when | HR \u4e00\u62ec\u51e6\u7406 / multi-candidate \u6bd4\u8f03 |\n| output target | `exports/wireframes/wf-04.html` |\n\n## 2. ASCII Layout\n\n```text\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 800 width \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  Mighty AI Interview                              [Reset] [\u2699]\u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502                                                              \u2502\n\u2502  \ud83e\udd16 AI: \u3053\u3093\u306b\u3061\u306f\u3002\u307e\u305a\u7d4c\u6b74\u66f8\u3092\u8cbc\u3063\u3066\u304f\u3060\u3055\u3044\u3002              \u2502\n\u2502                                                              \u2502\n\u2502         \ud83d\udc64 You: [\u7d4c\u6b74\u8cbc\u4ed8]                                    \u2502\n\u2502                                                              \u2502\n\u2502  \ud83e\udd16 AI: \u53d7\u3051\u53d6\u308a\u307e\u3057\u305f\u3002\u6b21\u306b\u6848\u4ef6\u7968\u3092\u304a\u9858\u3044\u3057\u307e\u3059\u3002           \u2502\n\u2502                                                              \u2502\n\u2502         \ud83d\udc64 You: [\u6848\u4ef6\u8cbc\u4ed8]                                    \u2502\n\u2502                                                              \u2502\n\u2502  \ud83e\udd16 AI: \u5206\u6790\u4e2d... \u231b                                          \u2502\n\u2502                                                              \u2502\n\u2502  \ud83e\udd16 AI: \u30d5\u30a3\u30c3\u30c8 88 / 100\u3002\u7406\u7531\u306f ...                         \u2502\n\u2502        [Card: Score gauge + summary]                         \u2502\n\u2502        [Card: QA \u63a8\u5968\u8cea\u554f 1/2]                                \u2502\n\u2502        [Card: Roadmap week1/2/3]                              \u2502\n\u2502                                                              \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 [textarea autosize] [\ud83d\udcce] [\u27a4 Send]                            \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\n## 3. Component Tree\n\n```html\n<main class=\"wf04\" role=\"log\" aria-label=\"AI interview transcript\">\n  <header><h1>Mighty AI Interview</h1><button data-act=\"reset\">Reset</button></header>\n  <ol class=\"wf04__messages\" id=\"messages\"></ol>\n  <form class=\"wf04__composer\" id=\"composer\">\n    <textarea id=\"input\" rows=\"1\" placeholder=\"\u30e1\u30c3\u30bb\u30fc\u30b8\u3092\u5165\u529b...\"></textarea>\n    <label class=\"btn\">\ud83d\udcce<input type=\"file\" hidden></label>\n    <button type=\"submit\">\u27a4 Send</button>\n  </form>\n</main>\n<template id=\"msg-tpl\">\n  <li class=\"wf04__msg\"><span class=\"wf04__avatar\"></span><div class=\"wf04__bubble\"></div></li>\n</template>\n```\n\n## 4. State Machine\n\n```text\ninit     \u2500\u2500 system msg \u2500\u2500> awaiting-engineer\nawaiting-engineer \u2500\u2500 user msg \u2500\u2500> parsing-engineer\nparsing-engineer \u2500\u2500 200 \u2500\u2500> awaiting-job\nawaiting-job \u2500\u2500 user msg \u2500\u2500> parsing-job\nparsing-job \u2500\u2500 200 \u2500\u2500> matching\nmatching \u2500\u2500 200 \u2500\u2500> done (result cards rendered)\nmatching \u2500\u2500 error \u2500\u2500> awaiting-job (retry hint)\nany \u2500\u2500 reset \u2500\u2500> init\n```\n\n## 5. Data Flow + API contract\n\n- \u521d\u56de system message \u3092 AI bubble \u3068\u3057\u3066\u30d7\u30c3\u30b7\u30e5\u3002\n- user message 1 (engineer) \u2192 `POST /api/parse` (`doc_type=engineer`) \u2192 parsed_text \u3092 \u5185\u90e8\u4fdd\u6301\u3001bubble \u306f user \u306b\u51fa\u3057\u305f raw text \u306e\u307e\u307e\u3002\n- user message 2 (job) \u2192 `POST /api/parse` (`doc_type=job`)\u3002\n- \u4e21 parse \u5b8c\u4e86\u3067 `POST /api/match` \u2192 score / summary / qa / roadmap \u3092 **\u8907\u6570 bubble** \u3067\u9806\u756a\u306b push\u3002\n\n## 6. Design Tokens (override)\n\n```css\n.wf04 { max-width: 800px; margin: 0 auto; display: grid;\n        grid-template-rows: auto 1fr auto; height: 100vh; }\n.wf04__messages { list-style:none; padding: var(--s-3); margin:0;\n                  overflow-y: auto; display: grid; gap: var(--s-3); }\n.wf04__msg { display:grid; grid-template-columns: 40px 1fr; gap: var(--s-3); }\n.wf04__msg--user { grid-template-columns: 1fr 40px; }\n.wf04__bubble { background: var(--c-surface); padding: var(--s-3);\n                border-radius: var(--r-lg); border: 1px solid var(--c-border); }\n.wf04__msg--user .wf04__bubble { background: var(--c-accent); color: var(--c-bg); }\n.wf04__composer { display:grid; grid-template-columns: 1fr auto auto;\n                  gap: var(--s-2); padding: var(--s-3); border-top: 1px solid var(--c-border); }\n```\n\n## 7. Interaction Spec\n\n- textarea: Enter \u3067\u9001\u4fe1\u3001Shift+Enter \u3067\u6539\u884c (composer-input handler)\u3002\n- \u9001\u4fe1\u4e2d\u306f composer disable + spinner avatar \u8868\u793a\u3002\n- new bubble \u8ffd\u52a0\u6642\u306b `messages.scrollTop = messages.scrollHeight` \u3067 auto-scroll\u3002\n- typing indicator: AI \u5fdc\u7b54\u5f85\u3061\u4e2d\u3001AI bubble \u306b\u4e09\u70b9\u30a2\u30cb\u30e1 (\"\u2026\")\u3002\n\n## 8. A11y\n\n- `role=\"log\" aria-live=\"polite\"` \u3067 screen reader \u304c\u65b0 message \u3092\u8aad\u3080\u3002\n- \u5404 bubble: user \u306f `<li aria-label=\"\u3042\u306a\u305f: ...\">`\u3001AI \u306f `<li aria-label=\"AI: ...\">`\u3002\n- composer textarea \u306f label = \"\u30e1\u30c3\u30bb\u30fc\u30b8\u3092\u5165\u529b\"\u3002\n- Reset \u306f `<button type=\"button\">`\u3001confirm dialog \u63a8\u5968\u3002\n\n## 9. Responsive\n\n| breakpoint | layout |\n| --- | --- |\n| \u2264 600 | full viewport\u3001composer sticky-bottom\u3001bubble max 80% |\n| 601-1024 | max-width 720\u3001center\u3001composer sticky-bottom |\n| \u2265 1025 | max-width 800\u3001composer \u901a\u5e38 flow |\n\n## 10. Out of Scope\n\n- \u904e\u53bb transcript \u6c38\u7d9a\u5316 (sessionStorage \u306e\u307f\u3001DB \u306a\u3057)\n- \u30de\u30eb\u30c1\u30bf\u30fc\u30f3\u672c\u683c\u5bfe\u8a71 (single-shot match \u306e\u307f\u3001follow-up question \u306f QA cards \u3067\u4ee3\u66ff)\n- \u97f3\u58f0\u5165\u529b / TTS\n\n## 11. Acceptance Criteria\n\n- [ ] AI \u304c\u6700\u521d\u306b\u7d4c\u6b74\u3092\u6c42\u3081\u308b system message \u3092\u51fa\u3059\n- [ ] user \u304c\u7d4c\u6b74\u8cbc\u4ed8 \u2192 AI \u304c parse \u5b8c\u4e86\u78ba\u8a8d \u2192 \u6848\u4ef6\u8981\u6c42 \u2192 \u7d50\u679c\u307e\u3067\u4e00\u5f80\u5fa9\u3067\u5230\u9054\n- [ ] result \u304c 3 \u7a2e bubble (score / qa / roadmap) \u3067\u9806\u756a\u306b\u51fa\u308b\n- [ ] Reset \u3067\u5168 message \u304c\u6d88\u3048\u3001\u521d\u671f system message \u306e\u307f\u6b8b\u308b\n- [ ] mobile \u3067 composer \u304c virtual keyboard \u51fa\u73fe\u6642\u306b\u96a0\u308c\u306a\u3044 (`@supports (height: 100dvh)`)\n- [ ] keyboard only \u3067\u9001\u4fe1\u5b8c\u8d70 (Enter \u3067\u9001\u308c\u308b)\n\n## 12. Implementation Prompt (LLM-ready)\n\n```text\nImplement WF-04 \"Conversational Chat\" for Mighty Skill-Bridge as exports/wireframes/wf-04.html.\n\nStack: vanilla HTML/JS. Use POST /api/parse twice (engineer then job), then POST /api/match.\n\nUX: AI initiates with system message asking for engineer profile. User pastes text \u2192 AI confirms via\nbubble \u2192 asks for job. After both parsed \u2192 AI shows \"matching...\" \u2192 emits 3 result bubbles\n(score gauge, QA cards, roadmap).\n\nTokens: docs/wireframes/README.md. Acceptance: docs/wireframes/WF-04_conversational_chat.md \u00a711.\n\nDo not touch root index.html. Single file output.\n```\n\n## 13. Starter Snippet\n\n```html\n<!doctype html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>WF-04 Conversational Chat</title>\n<style>\n:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-accent:#00F0FF;\n      --c-border:#2A2D3E;--r-lg:20px;--s-2:8px;--s-3:16px}\nbody{margin:0;background:var(--c-bg);color:var(--c-text);font-family:\"Yu Gothic UI\",sans-serif;\n     height:100dvh;display:grid}\n.wf04{max-width:800px;margin:0 auto;width:100%;display:grid;\n      grid-template-rows:auto 1fr auto;height:100dvh}\nheader{padding:var(--s-3);border-bottom:1px solid var(--c-border)}\n.wf04__messages{list-style:none;padding:var(--s-3);margin:0;overflow-y:auto;display:grid;gap:var(--s-3)}\n.wf04__msg{display:flex;gap:var(--s-2);max-width:80%}\n.wf04__msg--user{margin-left:auto;flex-direction:row-reverse}\n.wf04__bubble{background:var(--c-surface);padding:var(--s-3);border-radius:var(--r-lg);\n              border:1px solid var(--c-border);white-space:pre-wrap}\n.wf04__msg--user .wf04__bubble{background:var(--c-accent);color:var(--c-bg)}\n.wf04__composer{display:grid;grid-template-columns:1fr auto;gap:var(--s-2);\n                padding:var(--s-3);border-top:1px solid var(--c-border)}\ntextarea{background:#0a0b12;color:var(--c-text);border:1px solid var(--c-border);\n         border-radius:12px;padding:var(--s-3);resize:none;font:inherit}\nbutton{background:var(--c-accent);color:var(--c-bg);border:0;border-radius:12px;padding:0 var(--s-3);font-weight:700}\n</style></head><body>\n<main class=\"wf04\">\n  <header><strong>Mighty AI Interview</strong></header>\n  <ol class=\"wf04__messages\" id=\"msgs\" role=\"log\" aria-live=\"polite\"></ol>\n  <form class=\"wf04__composer\" id=\"cmp\">\n    <textarea id=\"inp\" rows=\"1\" placeholder=\"...\"></textarea>\n    <button type=\"submit\">\u27a4</button>\n  </form>\n</main>\n<script>\nconst state={step:\"engineer\", engineer:\"\", job:\"\"};\nconst $=s=>document.querySelector(s);\nfunction push(role, text){\n  const li=document.createElement(\"li\");\n  li.className=\"wf04__msg \"+(role===\"user\"?\"wf04__msg--user\":\"\");\n  const b=document.createElement(\"div\"); b.className=\"wf04__bubble\"; b.textContent=text;\n  li.appendChild(b); $(\"#msgs\").appendChild(li); $(\"#msgs\").scrollTop=1e9;\n}\npush(\"ai\",\"\u3053\u3093\u306b\u3061\u306f\u3002\u307e\u305a\u7d4c\u6b74\u66f8\u3092\u8cbc\u308a\u4ed8\u3051\u3066\u304f\u3060\u3055\u3044\u3002\");\n$(\"#cmp\").addEventListener(\"submit\", async e=>{\n  e.preventDefault(); const t=$(\"#inp\").value.trim(); if(!t) return;\n  push(\"user\", t); $(\"#inp\").value=\"\";\n  if(state.step===\"engineer\"){state.engineer=t;\n    const fd=new FormData();fd.append(\"text\",t);fd.append(\"doc_type\",\"engineer\");\n    await fetch(\"/api/parse\",{method:\"POST\",body:fd});\n    push(\"ai\",\"\u53d7\u3051\u53d6\u308a\u307e\u3057\u305f\u3002\u6b21\u306b\u6848\u4ef6\u7968\u3092\u304a\u9858\u3044\u3057\u307e\u3059\u3002\"); state.step=\"job\"; return;}\n  if(state.step===\"job\"){state.job=t;\n    const fd=new FormData();fd.append(\"text\",t);fd.append(\"doc_type\",\"job\");\n    await fetch(\"/api/parse\",{method:\"POST\",body:fd});\n    push(\"ai\",\"\u5206\u6790\u4e2d...\"); state.step=\"done\";\n    const m=await (await fetch(\"/api/match\",{method:\"POST\",\n      headers:{\"content-type\":\"application/json\"},\n      body:JSON.stringify({engineer_content:state.engineer,job_content:state.job})})).json();\n    push(\"ai\", `\u30d5\u30a3\u30c3\u30c8 ${m.final_score}/100\\n${m.summary}`);\n    push(\"ai\", \"\u63a8\u5968\u8cea\u554f:\\n\"+(m.qa||[]).map(q=>\"\u30fb\"+q.question).join(\"\\n\"));\n    push(\"ai\", `\u9031 1: ${m.roadmap_week1}\\n\u9031 2: ${m.roadmap_week2}\\n\u9031 3: ${m.roadmap_week3}`);\n  }\n});\n$(\"#inp\").addEventListener(\"keydown\",e=>{if(e.key===\"Enter\"&&!e.shiftKey){e.preventDefault();$(\"#cmp\").requestSubmit();}});\n</script></body></html>\n```\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

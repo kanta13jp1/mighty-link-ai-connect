@@ -200,7 +200,7 @@ Workspace / GitHub で共有可能です。
 - [ ] 公開デモ URL が Seedance API動画デモの `Mighty Skill-Bridge` UI を返す (README fallback ではない)
 - [ ] PowerPoint が Drive で開ける (`k-umezawa@ml-mightylink.com` 所有)
 - [ ] NotebookLM notebook (`75521ea6-...`) が 22 sources Ready
-- [ ] Google Sheets `Mighty-Link AI Connect WBS` が最新 ([sync_wbs_to_sheets.py](../scripts/sync_wbs_to_sheets.py) 実行直後)
+- [ ] Google Sheets `Mighty-Link AI Connect WBS` が最新 ([sync_wbs_to_sheets.py](../../../scripts/sync_wbs_to_sheets.py) 実行直後)
 - [ ] Google Calendar `Mighty Skill-Bridge 開発計画` は完了済みWBSイベントが削除され、未完了・実行中・会議イベントだけが残っている
 - [ ] 社長のスケジュール確保確認済 (90 分枠)
 - [ ] 寛太側でノート PC + ネットワーク + 公開 URL + ローカル FastAPI fallback すべて起動可能
@@ -214,7 +214,7 @@ Workspace / GitHub で共有可能です。
 | --- | --- | --- |
 | **5/27 (水)** | 長文版を社長へメール送付 (PPTX + DECISION_PACK PDF 添付) | 寛太 |
 | **5/29 (金)** | 短文版を念のため再送 (前メールが流れた場合の保険) | 寛太 (任意) |
-| **6/1 (月)** 21:00 JST | Final Review ([FINAL_REVIEW_CHECKLIST](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md)) 完了確認、6/2 朝の dry-run 準備完了通知 | 寛太 + Codex |
+| **6/1 (月)** 21:00 JST | Final Review ([FINAL_REVIEW_CHECKLIST](../../CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md)) 完了確認、6/2 朝の dry-run 準備完了通知 | 寛太 + Codex |
 | **6/2 (火)** 朝 | dry-run (25 分以内) | 全員 |
 | **6/2 (火)** 当日 | 打ち合わせ冒頭で「当日アジェンダ短文」を読み上げ | 寛太 |
 

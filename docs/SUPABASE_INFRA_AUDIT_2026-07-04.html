@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUPABASE_INFRA_AUDIT_2026-07-04 — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Supabase\u30a4\u30f3\u30d5\u30e9\u76e3\u67fb 2026-07-04\uff0810\u4eee\u8aac\u30fbT811/T837\u5224\u5b9a\u3068\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u691c\u8a3c\uff09\n\n\u4f5c\u6210\u65e5: 2026-07-04\n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Claude Code\uff08Codex\u62c5\u5f53\u306eT811\u3092\u5dfb\u304d\u53d6\u308a\uff09\n\u95a2\u9023WBS: T811\uff08\u5b8c\u4e86\uff09 / T837\uff08\u5b8c\u4e86\u30fb\u4e0d\u8981\u5224\u5b9a\uff09 / T852 / T870 / T871\n\u95a2\u9023\u8ab2\u984c/QA: R53 / R116 / R117 / QA-95\n\u95a2\u9023docs: [GO_NO_GO_DECISION_PACK_2026-07-07.md](GO_NO_GO_DECISION_PACK_2026-07-07.md) / [SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md](SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md) / [POSTMORTEM_2026-07-04_R114_MISSING_PROD_TABLES.md](POSTMORTEM_2026-07-04_R114_MISSING_PROD_TABLES.md)\n\n---\n\n## \u65b9\u5f0f\n\n\u300cSupabase PG \u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u306e\u6e96\u5099\u72b6\u6cc1\u300d\u306b\u3064\u3044\u3066\u53cd\u8a3c\u53ef\u80fd\u306a10\u4eee\u8aac\u3092\u7acb\u3066\u3001\u5c02\u7528\u30b9\u30af\u30ea\u30d7\u30c8\u30fbCI\u5c65\u6b74\u30fbGCP\u5b9f\u6a5f\u30fbmigration\u8d70\u67fb\u3067\u5168\u6570\u691c\u8a3c\u3057\u305f\u3002\n\n## \u691c\u8a3c\u7d50\u679c\n\n| # | \u4eee\u8aac | \u5224\u5b9a | \u6839\u62e0 |\n| --- | --- | --- | --- |\n| H1 | \u672c\u756aDB\u306fPG14\u306e\u307e\u307e\uff08EOL\u8d85\u904e\uff09 | **\u68c4\u5374\uff08\u60f3\u5b9a\u3068\u771f\u9006\uff09** | `check_supabase_postgres_version.py --execute` \u3067 **PostgreSQL 17.6** \u3092\u78ba\u8a8d\u30026/13\u65b0\u898f\u4f5c\u6210\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u306e\u305f\u3081\u6700\u521d\u304b\u3089\u6700\u65b0\u30e1\u30b8\u30e3\u30fc\u3060\u3063\u305f\u3002R53\u306f\u5b9f\u30d0\u30fc\u30b8\u30e7\u30f3\u672a\u78ba\u8a8d\u306e\u307e\u307e\u4e00\u822c\u544a\u77e5\u304b\u3089\u7acb\u3066\u305f\u8aa4\u30a2\u30e9\u30fc\u30e0 |\n| H2 | staging\u76f8\u5f53\u74b0\u5883\u304c\u5b58\u5728\u3057\u306a\u3044 | \u652f\u6301\uff08\u8a31\u5bb9\uff09 | SUPABASE_STAGING_DB_URL\u306f\u672a\u8a2d\u5b9a\u3002staging\u76f8\u5f53\u306f\u30ed\u30fc\u30ab\u30ebemulator\u30b9\u30bf\u30c3\u30af\uff08T-\u5c40\u6240\u691c\u8a3c\uff09\u3067\u904b\u7528\u3057\u3066\u304a\u308a\u3001\u5358\u4e00Supabase\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u69cb\u6210\u3002PG17.6\u306e\u305f\u3081\u5f53\u9762\u306e\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u6f14\u7fd2\u306f\u4e0d\u8981 |\n| H3 | \u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u306f\u6e96\u5099\u6e08\u307f | **\u68c4\u5374\uff08\u91cd\u5927\u306a\u9006\u767a\u898b\uff09** | **Supabase Daily Backup CI\u306f6/22\u4ee5\u964d\u306e\u516812\u56de\u304c\u5931\u6557\uff08\uff1d\u4e00\u5ea6\u3082\u6210\u529f\u3057\u3066\u3044\u306a\u3044\uff09**\u3002\u539f\u56e0: `SUPABASE_DB_URL`\u30fb`SUPABASE_BACKUP_GCS_URI` secret\u672a\u767b\u9332\u3001\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u7528GCS\u30d0\u30b1\u30c3\u30c8\u81ea\u4f53\u304c\u672a\u4f5c\u6210\uff08R116\uff09 |\n| H4 | PG17\u975e\u5bfe\u5fdc\u306e\u62e1\u5f35\u3092\u4f7f\u7528 | \u68c4\u5374 | CREATE EXTENSION / pgjwt / plv8 / timescaledb \u7b49\u306e\u4f7f\u7528\u7b87\u6240\u30bc\u30ed |\n| H5 | \u30a2\u30d7\u30eaSQL\u306bPG17\u975e\u4e92\u63db\u69cb\u6587 | \u68c4\u5374 | \u65e2\u306b17.6\u4e0a\u3067\u5168\u6a5f\u80fd\u52d5\u4f5c\u4e2d\uff08\u672c\u65e5\u306eR114\u691c\u8a3c\u542b\u3080\uff09 |\n| H6 | Runbook\u304cSupabase\u73fe\u884c\u624b\u9806\u3068\u4e56\u96e2 | \u68c4\u5374\uff08\u5f53\u9762moot\uff09 | Runbook\u306f\u5c06\u6765\u306e\u30e1\u30b8\u30e3\u30fc\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u7528\u3068\u3057\u3066\u4fdd\u6301\u3002\u73fe\u884c\u306f17.6\u3067\u6700\u65b0 |\n| H7 | \u30c0\u30a6\u30f3\u30bf\u30a4\u30e0\u8a31\u5bb9\u67a0\u304c\u672a\u5b9a\u7fa9 | moot | \u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u81ea\u4f53\u304c\u4e0d\u8981 |\n| H8 | pooler\u63a5\u7d9a\u6587\u5b57\u5217\u306e\u5909\u66f4\u304c\u5fc5\u8981 | \u68c4\u5374 | Supavisor pooler\u7d4c\u7531\u306717.6\u3078\u6b63\u5e38\u63a5\u7d9a\u4e2d |\n| H9 | PG14\u306e\u307e\u307e\u3067\u306f\u30bb\u30ad\u30e5\u30ea\u30c6\u30a30\u30d1\u30c3\u30c1 | moot | 17.6\u306e\u305f\u3081\u8a72\u5f53\u305b\u305a |\n| H10 | T837\u306e\u4eba\u9593\u624b\u9806\u304c7/6\u307e\u3067\u306b\u5b9f\u65bd\u4e0d\u80fd | moot | **T837\u306f\u4e0d\u8981**\u3002\u30d0\u30fc\u30b8\u30e7\u30f3\u78ba\u8a8d\u8a3c\u8de1\uff08exports/supabase_postgres_version_check.json\uff09\u3092\u3082\u3063\u3066\u5b8c\u4e86\u6271\u3044 |\n\n## \u76e3\u67fb\u4e2d\u306e\u8ffd\u52a0\u767a\u898b\n\n### R116: \u672c\u756aDB\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u30d1\u30a4\u30d7\u30e9\u30a4\u30f3\u304c\u4e00\u5ea6\u3082\u7a3c\u50cd\u3057\u3066\u3044\u306a\u3044\uff08HIGH\uff09\n\n- CI\u5931\u6557\u306e\u76f4\u63a5\u539f\u56e0: repository secret\u306f `FIREBASE_*` \u3068 WIF 2\u7a2e\u306e\u307f\u3067\u3001`SUPABASE_DB_URL`\u30fb`SUPABASE_BACKUP_GCS_URI` \u304c\u672a\u767b\u9332\u3002GCS\u30d0\u30b1\u30c3\u30c8\u3082\u672a\u4f5c\u6210\u3002\n- \u3055\u3089\u306b\u6df1\u3044\u539f\u56e0: **WIF\u30d0\u30a4\u30f3\u30c7\u30a3\u30f3\u30b0\u304c\u65e7\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\uff08project number 100664750415 / mighty-link-ai-connect-d7fa2\uff09\u306eWorkload Identity Pool\u306b\u3001\u8aa4\u3063\u305f\u30ed\u30fc\u30eb\uff08roles/iam.serviceAccountUser\u3002\u6b63\u3057\u304f\u306f roles/iam.workloadIdentityUser\uff09\u3067\u8a2d\u5b9a\u3055\u308c\u3066\u3044\u308b**\u3002secret\u306eWIF provider\u3082\u65e7\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3092\u6307\u3057\u3066\u3044\u308b\u53ef\u80fd\u6027\u304c\u9ad8\u3044\u3002\u3053\u308c\u306fT852\uff08Firebase CI/CD\u8a8d\u8a3c\u518d\u69cb\u6210\uff09\u306e\u6839\u672c\u539f\u56e0\u3068\u3082\u4e00\u81f4\u3059\u308b\u3002\n- **\u66ab\u5b9a\u5bfe\u5fdc\u6e08\u307f\uff082026-07-04\uff09**: \u8aad\u307f\u53d6\u308a\u5c02\u7528\u306e\u30ed\u30fc\u30ab\u30eb\u8ad6\u7406\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u3092\u53d6\u5f97\uff0811\u30c6\u30fc\u30d6\u30eb\u30fb21\u884c\u3001`backups/supabase/`\u914d\u4e0b\u30fbgit\u7ba1\u7406\u5916\uff09\u3002\u30c7\u30fc\u30bf\u91cf\u304c\u6975\u5c0f\u306e\u793e\u5185\u30d5\u30a7\u30fc\u30ba\u3067\u306f\u5341\u5206\u306a\u66ab\u5b9a\u7b56\u3002\n- \u6052\u4e45\u5bfe\u5fdc\uff08T870\u3001T852\u3068\u9023\u52d5\uff09: \u73fe\u884c\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u306bWIF\u30d7\u30fc\u30eb/\u30d7\u30ed\u30d0\u30a4\u30c0\u3092\u518d\u4f5c\u6210 \u2192 SA\u3078workloadIdentityUser\u4ed8\u4e0e \u2192 \u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u7528private\u30d0\u30b1\u30c3\u30c8\u4f5c\u6210 \u2192 secret 2\u7a2e\u767b\u9332 \u2192 workflow green\u78ba\u8a8d\u3002\n- **PUBLIC-02\uff08\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u30b2\u30fc\u30c8\uff09\u306f\u300c\u624b\u9806\u6574\u5099\u6e08\u307f\u300d\u3067PASS\u3068\u3057\u3066\u3044\u305f\u304c\u3001\u904b\u7528\u5b9f\u7e3e\u304c\u7121\u3044\u305f\u30817/7\u5224\u5b9a\u3067\u518d\u8a55\u4fa1\u3059\u308b\u3002**\n\n### R117: 6/16\u301c6/18\u306emigration\u3082\u672c\u756a\u672a\u9069\u7528\uff08HIGH\uff09\n\n\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u53d6\u5f97\u6642\u306e\u30c6\u30fc\u30d6\u30eb\u4e00\u89a7\u3067\u3001\u672c\u756a\u306f11\u30c6\u30fc\u30d6\u30eb\u306e\u307f\u3068\u5224\u660e\u3002**feedback_events\u3001support_requests\u3001\u55b6\u696d\u30e1\u30fc\u30eb\u7cfb9\u30c6\u30fc\u30d6\u30eb\u304c\u5b58\u5728\u3057\u306a\u3044**\uff08R114\u3068\u540c\u6839\u3002\u672c\u756a\u30b9\u30ad\u30fc\u30de\u306f\u301c6/15\u9803\u306einit_db\u5b9f\u884c\u6642\u70b9\u3067\u51cd\u7d50\u3055\u308c\u3066\u3044\u308b\uff09\u3002\u30d5\u30a3\u30fc\u30c9\u30d0\u30c3\u30af\u9001\u4fe1\u30fb\u30b5\u30dd\u30fc\u30c8\u554f\u3044\u5408\u308f\u305b\u30fb\u55b6\u696d\u30e1\u30fc\u30ebDB\u4fdd\u5b58\u306f\u672c\u756a\u3067\u5931\u6557\u3059\u308b\u72b6\u614b\u3002\n\n- \u5bfe\u5fdc: \u51aa\u7b49migration 3\u30d5\u30a1\u30a4\u30eb\uff08IF NOT EXISTS\u78ba\u8a8d\u6e08\u307f\uff09\u306e\u9069\u7528\u30b9\u30af\u30ea\u30d7\u30c8\u3092\u7528\u610f\u6e08\u307f\u3002R114\u3068\u540c\u69d8\u306b\u30e6\u30fc\u30b6\u30fc\u5b9f\u884c\u3067\u9069\u7528\u3059\u308b\u3002\n- \u9069\u7528\u5f8c\u3001T845 UAT\u306e\u300c\u672c\u756a\u5b9f\u66f8\u304d\u8fbc\u307f\u78ba\u8a8d\u300d\u5bfe\u8c61\u3078\u30d5\u30a3\u30fc\u30c9\u30d0\u30c3\u30af\u30fb\u30b5\u30dd\u30fc\u30c8\u30fb\u55b6\u696d\u30e1\u30fc\u30eb\u3092\u8ffd\u52a0\u3059\u308b\u3002\n\n## T811/T837\u306e\u5b8c\u4e86\u5224\u5b9a\n\n- T811: \u672c\u756aPG\u30e1\u30b8\u30e3\u30fc\u30d0\u30fc\u30b8\u30e7\u30f3\u78ba\u8a8d\uff0817.6\uff09\u3068\u300c\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u8a08\u753b\u4e0d\u8981\u300d\u306e\u5224\u5b9a\u3092\u3082\u3063\u3066\u5b8c\u4e86\u3002\u8a3c\u8de1: `exports/supabase_postgres_version_check.json`\u3002\n- T837: \u672c\u756a\u304c\u65e2\u306bPG15\u4ee5\u4e0a\uff0817.6\uff09\u306e\u305f\u3081\u5b9f\u884c\u4e0d\u8981\u3068\u5224\u5b9a\u3057\u5b8c\u4e86\u3002R53\u306e\u61f8\u5ff5\u306f\u89e3\u6d88\u3002\n- \u5c06\u6765\u306e\u30e1\u30b8\u30e3\u30fc\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u6642\u306f [SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md](SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md) \u3092\u4f7f\u7528\u3059\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

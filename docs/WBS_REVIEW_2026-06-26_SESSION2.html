@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WBS_REVIEW_2026-06-26_SESSION2 — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# WBS \u518d\u30ec\u30d3\u30e5\u30fc 2026-06-26 \u7b2c2\u30bb\u30c3\u30b7\u30e7\u30f3\n\n\u4f5c\u6210\u65e5: 2026-06-26\n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Codex\n\u95a2\u9023WBS: T844, T845, T846, T847, T848, T849, T850, T851, T852, T853, T854\n\u95a2\u9023Issue: #131, #132, #133, #134, #135, #136, #137, #138, #139, #140, #141\n\n---\n\n## \u7d50\u8ad6\n\nT844\u304b\u3089T852\u307e\u3067\u3067\u3001\u4f01\u753b\u3001\u8a2d\u8a08\u3001\u5b9f\u88c5\u3001\u30c6\u30b9\u30c8\u3001\u30ea\u30ea\u30fc\u30b9\u3001\u5b9f\u904b\u7528\u3001\u4fdd\u5b88\u3001\u4f1a\u793e\u904b\u7528\u5f15\u7d99\u304e\u3001Firebase CI/CD\u672c\u756a\u30c7\u30d7\u30ed\u30a4\u8a8d\u8a3c\u306e\u4e3b\u8981\u30b2\u30fc\u30c8\u306fWBS\u306b\u5165\u3063\u3066\u3044\u308b\u3002\n\n\u305f\u3060\u3057\u3001T849\u306e\u5b8c\u4e86\u6761\u4ef6\u306fGitHub Issues/Project\u672a\u5b8c\u4e860\u3092\u660e\u8a18\u3057\u3066\u3044\u305f\u4e00\u65b9\u3067\u3001Sheets\u6b63\u672c\u3067\u3042\u308b `data/issues_tracker.tsv` \u3068 `data/qa_tracker.tsv` \u306e\u6700\u7d42\u68da\u5378\u3057\u3092\u72ec\u7acb\u30b2\u30fc\u30c8\u3068\u3057\u3066\u660e\u793a\u3057\u3066\u3044\u306a\u304b\u3063\u305f\u3002\u8ab2\u984c\u7ba1\u7406\u8868\u3084QA\u8868\u306b\u958b\u767a\u5fc5\u9808open/\u672a\u56de\u7b54\u304c\u6b8b\u3063\u305f\u307e\u307eWBS\u5168\u5b8c\u4e86\u306b\u306a\u308b\u3068\u3001\u30b5\u30a4\u30c8\u958b\u767a\u5b8c\u4e86\u5ba3\u8a00\u306e\u8a3c\u8de1\u304c\u5f31\u304f\u306a\u308b\u3002\n\n\u305d\u306e\u305f\u3081\u3001\u6b21\u3092\u8ffd\u52a0\u3057\u305f\u3002\n\n| ID | \u5185\u5bb9 | \u72b6\u614b |\n| --- | --- | --- |\n| T853 | \u672c\u30ec\u30d3\u30e5\u30fc\u3002\u8ab2\u984c/QA\u6700\u7d42\u30bc\u30ed\u30b2\u30fc\u30c8\u306e\u8ffd\u52a0\u5224\u5b9a | \u5b8c\u4e86 |\n| T854 | \u8ab2\u984c\u7ba1\u7406\u8868\u30fbQA\u8868\u306e\u672a\u89e3\u6c7a/\u672a\u56de\u7b54\u68da\u5378\u3057\u3068\u958b\u767a\u30d6\u30ed\u30c3\u30ab\u30fc\u30bc\u30ed\u5316 | \u5b8c\u4e86 |\n| PUBLIC-15 | \u8ab2\u984c\u7ba1\u7406\u8868\u30fbQA\u8868\u306e\u958b\u767a\u5fc5\u9808open/\u672a\u56de\u7b54\u304c0\u3067\u3042\u308b\u3053\u3068\u3092public_paid_launch\u30b2\u30fc\u30c8\u3078\u8ffd\u52a0 | PASS |\n| R101 | \u8ab2\u984c\u7ba1\u7406\u8868\u30fbQA\u8868\u306e\u672a\u89e3\u6c7a/\u672a\u56de\u7b54\u304c\u6700\u7d42\u5b8c\u4e86\u6761\u4ef6\u306b\u660e\u793a\u3055\u308c\u3066\u3044\u306a\u3044\u30ea\u30b9\u30af | resolved |\n| QA-78 | \u8ab2\u984c\u7ba1\u7406\u8868\u3084QA\u8868\u306bopen/\u672a\u56de\u7b54\u304c\u6b8b\u3063\u3066\u3044\u3066\u3082WBS\u5168\u5b8c\u4e86\u6642\u306b\u5b8c\u4e86\u3068\u8a00\u3048\u308b\u304b\u3078\u306e\u56de\u7b54 | \u56de\u7b54\u6e08 |\n\n## 2026-06-27 T854\u5b9f\u65bd\u7d50\u679c\n\n`data/issues_tracker.tsv`\u3001`data/qa_tracker.tsv`\u3001GitHub Issues/Project\u3092\u68da\u5378\u3057\u3057\u3001\u53e4\u3044open\u8ab2\u984c\u3092\u89e3\u6c7a\u6e08\u307f\u3001\u975e\u30d6\u30ed\u30c3\u30ab\u30fc\u3001\u307e\u305f\u306f\u5f8c\u7d9aWBS/Go-NoGo\u30b2\u30fc\u30c8\u3078\u79fb\u7ba1\u3057\u305f\u3002QA\u8868\u306e\u82f1\u8a9e `answered` \u8868\u8a18\u306f `\u56de\u7b54\u6e08` \u3078\u6b63\u898f\u5316\u3057\u305f\u3002\n\n`python scripts/audit_issue_qa_blockers.py --fail-on-blockers` \u306e\u7d50\u679c\u306f `pass` \u3067\u3042\u308a\u3001\u8ab2\u984c\u30d6\u30ed\u30c3\u30ab\u30fc0\u4ef6\u3001QA\u30d6\u30ed\u30c3\u30ab\u30fc0\u4ef6\u3092 `exports/issue_qa_blocker_audit.*` \u306b\u8a3c\u8de1\u5316\u3057\u305f\u3002\u8a73\u7d30\u306f [ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md](ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md) \u3092\u6b63\u672c\u3068\u3059\u308b\u3002\n\n## \u88dc\u5f37\u5f8c\u306e\u5b8c\u4e86\u5b9a\u7fa9\n\n\u30b5\u30a4\u30c8\u958b\u767a\u5b8c\u4e86\u306e\u6700\u7d42\u5ba3\u8a00\u306f\u5f15\u304d\u7d9a\u304dT849\u3067\u884c\u3046\u3002T849\u3092\u5b8c\u4e86\u3067\u304d\u308b\u6761\u4ef6\u306f\u6b21\u306e\u901a\u308a\u3002\n\n1. `data/WBS.tsv` \u306e\u5168\u30bf\u30b9\u30af\u304c\u5b8c\u4e86\u3057\u3066\u3044\u308b\u3002\n2. `data/release_go_no_go_criteria.tsv` \u306e\u516c\u958b\u524d\u5fc5\u9808\u30b2\u30fc\u30c8\u304c `PASS` \u307e\u305f\u306f\u627f\u8a8d\u6e08\u307f\u3067\u3042\u308b\u3002\n3. GitHub Issues / Project #1 \u306b\u672a\u5b8c\u4e86\u306e\u958b\u767a\u5fc5\u9808Issue\u304c\u6b8b\u3063\u3066\u3044\u306a\u3044\u3002\n4. `data/issues_tracker.tsv` \u306e\u958b\u767a\u5fc5\u9808open\u8ab2\u984c\u304c0\u3001\u307e\u305f\u306f\u975e\u30d6\u30ed\u30c3\u30ab\u30fc/\u4fdd\u5b88\u79fb\u7ba1\u3068\u3057\u3066\u4eba\u9593\u627f\u8a8d\u6e08\u307f\u3067\u3042\u308b\u3002\n5. `data/qa_tracker.tsv` \u306e\u672a\u56de\u7b54/\u672a\u627f\u8a8dQA\u304c0\u3001\u307e\u305f\u306f\u975e\u30d6\u30ed\u30c3\u30ab\u30fc/\u4fdd\u5b88\u79fb\u7ba1\u3068\u3057\u3066\u4eba\u9593\u627f\u8a8d\u6e08\u307f\u3067\u3042\u308b\u3002\n6. Google Sheets\u3001Google Calendar\u3001Drive/NotebookLM\u5411\u3051docs\u304c\u6700\u65b0\u306eWBS/docs\u3068\u540c\u671f\u6e08\u307f\u3067\u3042\u308b\u3002\n7. `main`\u3001`master`\u3001GA tag\u3001GitHub Release\u3001Firebase Hosting/Functions\u3001\u516c\u958b\u30c7\u30e2URL\u306e\u5185\u5bb9\u304c\u4e00\u81f4\u3057\u3066\u3044\u308b\u3002\n8. \u4f1a\u793e\u30a2\u30ab\u30a6\u30f3\u30c8\u79fb\u7ba1\u3001\u8acb\u6c42\u3001\u6a29\u9650\u3001Break-glass\u3001secret\u7ba1\u7406\u304c\u4f1a\u793e\u904b\u7528\u3078\u5f15\u304d\u7d99\u304c\u308c\u3066\u3044\u308b\u3002\n9. GitHub Actions\u304b\u3089Firebase Hosting/Functions\u3078\u3001\u4f1a\u793e\u7ba1\u7406\u306eWIF/service account/secret\u7d4c\u8def\u3067\u672c\u756adeploy\u3067\u304d\u308b\u3053\u3068\u304c\u3001\u30a2\u30d7\u30ea\u5909\u66f4\u3092\u542b\u3080main CI\u3067\u78ba\u8a8d\u3055\u308c\u3066\u3044\u308b\u3002\n10. secret\u3001OAuth token\u3001\u5b9f\u30e1\u30fc\u30eb\u672c\u6587\u3001CSV\u539f\u672c\u3001\u500b\u4eba\u30c7\u30fc\u30bf\u5b9f\u5024\u3001\u5951\u7d04\u91d1\u984d\u5b9f\u5024\u304cGitHub\u3001Sheets\u3001docs\u3001NotebookLM\u3001Issue\u3078\u8a18\u9332\u3055\u308c\u3066\u3044\u306a\u3044\u3002\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\n\n\u4eca\u56de\u306e\u5224\u65ad\u3067\u306f\u3001\u6b21\u306e\u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3092\u78ba\u8a8d\u3057\u305f\u3002\n\n- OpenAI Codex AGENTS.md\n- Claude Code overview\n- Gemini API models\n- Google Sheets API batchUpdate\n- Google Calendar API overview\n- Firebase Hosting / Firebase CLI\n- GitHub Actions / OIDC for Google Cloud / Projects automation / Releases\n- Supabase Row Level Security\n\n\u9577\u3044\u5f15\u7528\u306f\u6b8b\u3055\u305a\u3001WBS\u3078\u52b9\u304f\u5dee\u5206\u3060\u3051\u3092\u53cd\u6620\u3057\u305f\u3002\u8ffd\u52a0\u306e\u6a5f\u80fd\u958b\u767a\u30bf\u30b9\u30af\u3067\u306f\u306a\u304f\u3001\u5b8c\u6210\u5224\u5b9a\u306e\u8a3c\u8de1\u3092\u5f37\u304f\u3059\u308b\u305f\u3081\u306e\u6700\u7d42\u54c1\u8cea\u30b2\u30fc\u30c8\u3068\u3057\u3066T854\u3092\u8ffd\u52a0\u3057\u305f\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

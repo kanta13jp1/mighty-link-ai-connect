@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SITE_BRIEF — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# AI Agent Decision Guide Site Brief\n\nSYNTHETIC_DATA_ONLY\n\n## Purpose\n\nShow that an AI agent can turn an explicit test specification into a polished, verifiable, publicly available product in a short live demo. The site itself helps a reader choose among five AI agents by the work to be done, not by a generic score.\n\n## Audience\n\n- Business and engineering leaders evaluating AI-agent adoption\n- Developers comparing coding and specification-driven workflows\n- Knowledge workers considering cross-tool delegation\n\n## Product scope\n\n1. Codex\n2. Claude Code\n3. Claude Cowork\n4. Kiro\n5. Antigravity\n\nThe site must not add adjacent products merely to make the catalog look larger. Depth, traceability, and a useful decision model are more important than product count.\n\n## Required evidence\n\nEach product profile must show:\n\n- A locally served icon downloaded from an official product property\n- The current public version and date, or an explicit statement that no product version is published\n- The latest relevant official update with title, date, summary, and direct link\n- The latest relevant official video and blog post with dates and direct links\n- Official documentation, release history, and pricing links\n- The date on which the sources were verified\n\n## Decision model\n\nThe detailed comparison uses 13 practical dimensions:\n\n1. Primary work\n2. Interaction surface\n3. Working method\n4. Persistent instructions\n5. Capability extensions\n6. MCP and integrations\n7. Browser capability\n8. Parallel and background work\n9. Automation and embedding\n10. Evidence and review\n11. Safety boundary\n12. Pricing and usage limits\n13. Adoption cautions\n\nThe UI lets the user filter by work scenario, search all profile text, and compare at most two products side by side.\n\n## Accuracy rules\n\n- Verified at: 2026-08-13 JST\n- Use only first-party pages and first-party official video channels as evidence.\n- Do not invent fixed daily or monthly request limits when the provider describes variable capacity.\n- Do not present a model version as a product version.\n- Claude Cowork is a SaaS product without a published semantic product version; say so directly.\n- All external facts may change. Keep the verification date visible and link to the source beside the claim.\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

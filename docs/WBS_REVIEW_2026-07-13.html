@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WBS_REVIEW_2026-07-13 — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# WBS \u518d\u30ec\u30d3\u30e5\u30fc 2026-07-13\n\n\u4f5c\u6210\u65e5: 2026-07-13  \n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Codex  \n\u95a2\u9023WBS: T752, T768, T778, T791, T793, T798, T801, T807, T813, T819, T823, T831, T834, T839, T845, T849, T850, T862, T866, T870, T876, T879, T893  \n\u95a2\u9023\u8ab2\u984c/QA: R111, R137, QA-91, QA-123\n\n## \u7d50\u8ad6\n\n2026-07-13\u958b\u59cb\u6642\u70b9\u306eWBS\u306f319\u4ef6\u3001\u672a\u5b8c\u4e8622\u4ef6\u3060\u3063\u305f\u3002T888\u301cT892\u306a\u3069AI\u30ec\u30fc\u30f3\u306e\u54c1\u8cea\u30ac\u30fc\u30c9\u306f\u524d\u5012\u3057\u5b8c\u4e86\u3057\u305f\u4e00\u65b9\u3001\u4eba\u9593\u78ba\u8a8d\u3001\u5916\u90e8\u7ba1\u7406\u753b\u9762\u3001\u672c\u756aSupabase\u3001\u5f15\u7d99\u304e\u5de5\u7a0b\u304c\u671f\u9650\u8d85\u904e\u3057\u3066\u3044\u308b\u3002\u524d\u5012\u3057\u5206\u3092\u5f8c\u6bb5\u3078\u53cd\u6620\u3057\u3064\u3064\u3001\u672a\u5b9f\u65bd\u4f5c\u696d\u3092\u904e\u53bb\u65e5\u306b\u6b8b\u3055\u306a\u3044\u3088\u30462026-07-13\u3092\u57fa\u6e96\u306b\u518d\u30d9\u30fc\u30b9\u30e9\u30a4\u30f3\u3057\u305f\u3002\n\n\u4eca\u56de\u8ffd\u52a0\u3057\u305fT893\u3067\u3001WBS\u3068GitHub Issues/Project\u306e\u540c\u671f\u6f0f\u308c\u3082\u5bfe\u8c61\u9650\u5b9a\u306e\u81ea\u52d5\u540c\u671f\u3078\u7f6e\u304d\u63db\u3048\u308b\u3002\u4f01\u753b\u3001\u8a2d\u8a08\u3001\u5b9f\u88c5\u3001\u30c6\u30b9\u30c8\u3001\u30ea\u30ea\u30fc\u30b9\u3001\u5b9f\u904b\u7528\u3001\u4fdd\u5b88\u306e\u5de5\u7a0b\u7db2\u7f85\u3068\u3001\u304a\u540d\u524d.com\u3001Firebase\u3001Supabase\u306e\u78ba\u5b9a\u30b9\u30bf\u30c3\u30af\u306fT889\u30ac\u30fc\u30c9\u3067\u5f15\u304d\u7d9a\u304d\u691c\u8a3c\u3059\u308b\u3002\n\n## \u518d\u30d9\u30fc\u30b9\u30e9\u30a4\u30f3\n\n| WBS | \u30ec\u30fc\u30f3 | \u65b0\u3057\u3044\u671f\u9593 | \u5224\u65ad |\n| --- | --- | --- | --- |\n| T778 / T866 | Codex + \u4eba\u9593 | 7/13-7/15 | \u5b9f\u88c5\u6e08\u307f\u3002\u672c\u756amigration\u30fb\u66f8\u8fbc\u307f\u78ba\u8a8d\u3092\u540c\u3058\u67a0\u3067\u9589\u3058\u308b |\n| T834 / T819 | \u4eba\u9593 | 7/13-7/14 | \u8a8d\u8a3c\u60c5\u5831\u524a\u9664\u3092\u6700\u512a\u5148\u30027/8\u5b9a\u4f8b\u306f\u5b9f\u65bd\u7d50\u679c\u78ba\u8a8d\u3068\u8b70\u4e8b\u9332\u53cd\u6620\u3078\u4fee\u6b63 |\n| T876 | Antigravity | 7/14 | \u30d0\u30c3\u30af\u30a8\u30f3\u30c9\u5b8c\u4e86\u6e08\u307f\u306e\u305f\u3081UI\u306e\u307f1\u65e5\u67a0 |\n| T831 | \u4eba\u9593 | 7/14-7/15 | Drive\u9332\u753b\u6574\u7406 |\n| T798 / T839 | \u4eba\u9593 + Claude Code | 7/14-7/16 | \u6cd5\u52d9\u78ba\u8a8d\u3068\u30d9\u30f3\u30c0\u30fcDPA\u78ba\u8a8d\u3092\u540c\u3058\u5224\u65ad\u67a0\u3078\u96c6\u7d04 |\n| T870 | Codex + \u4eba\u9593 | 7/14-7/16 | WIF\u3001private bucket\u3001secret\u3001CI green\u3092\u4e00\u62ec\u78ba\u8a8d |\n| T752 | Antigravity | 7/15-7/16 | T876 UI\u5b8c\u4e86\u5f8c\u306b\u30aa\u30f3\u30dc\u30fc\u30c7\u30a3\u30f3\u30b0\u3092\u56fa\u5b9a |\n| T823 | \u4eba\u9593 + Codex | 7/15-7/17 | \u4f1a\u793e\u30a2\u30ab\u30a6\u30f3\u30c8\u30fb\u8acb\u6c42\u30fb\u6240\u6709\u6a29\u79fb\u7ba1 |\n| T768 | Antigravity + Gemini | 7/17-7/20 | \u4e3b\u8981UI\u56fa\u5b9a\u5f8c\u306bi18n\u3078\u7740\u624b |\n| T845 | Codex + Antigravity | 7/17-7/20 | \u672c\u756a\u66f8\u8fbc\u307f\u3068\u65b0UI\u3092\u542b\u3080\u6700\u7d42UAT |\n| T850 | \u4eba\u9593 + Codex + Claude Code | 7/18-7/20 | T823\u5f8c\u306b\u5b9f\u5730\u5f15\u7d99\u304e\u30fbbackup owner\u78ba\u8a8d |\n| T801 / T849 | \u4eba\u9593 + AI | 7/21 | \u30ec\u30c8\u30ed\u30b9\u30da\u30af\u30c6\u30a3\u30d6\u3068\u6280\u8853\u30af\u30ed\u30fc\u30ba\u5224\u5b9a\u3092\u9023\u7d9a\u5b9f\u65bd |\n| T879 | \u4eba\u9593 + Workspace | 7/18-7/22 | 7/22 13:00\u5b9a\u4f8b\u306f\u56fa\u5b9a\u3001\u30a2\u30b8\u30a7\u30f3\u30c0\u958b\u59cb\u30921\u65e5\u524d\u5012\u3057 |\n\n## \u6709\u511f\u5316\u5224\u65ad\u306e\u524d\u5012\u3057\n\n\u5f53\u9762\u793e\u5185\u5229\u7528\u3001\u5b9f\u8ab2\u91d1\u306a\u3057\u306e\u30b9\u30b3\u30fc\u30d7\u306f\u7dad\u6301\u3059\u308b\u3002\u7d4c\u55b6\u5224\u65ad\u3092\u524d\u5012\u3057\u3057\u3066\u3082\u52dd\u624b\u306blive\u8ab2\u91d1\u306f\u6709\u52b9\u5316\u3057\u306a\u3044\u3002\n\n| WBS | \u65b0\u3057\u3044\u671f\u9593 | \u6761\u4ef6 |\n| --- | --- | --- |\n| T862 | 7/24 | \u6709\u511f\u516c\u958b\u30fblive\u8ab2\u91d1\u306e\u5b9f\u65bd\u53ef\u5426\u3092\u7d4c\u55b6\u5224\u65ad |\n| T791 | 7/27-7/28 | T862\u304cGo\u306e\u5834\u5408\u306e\u307f\u3001\u73fe\u884cStripe\u516c\u5f0fDocs\u3067\u5b9f\u88c5\u65b9\u5f0f\u3092\u518d\u78ba\u8a8d |\n| T807 / T813 | 7/27-7/29 | Customer Portal live\u30fb\u7a0e\u52d9\u8a2d\u5b9a\u306fT862 Go\u5f8c\u306e\u307f |\n| T793 | 7/30-7/31 | \u4e00\u822c\u544a\u77e5\u306f\u6709\u511f\u516c\u958b\u627f\u8a8d\u5f8c\u306e\u307f |\n\n## \u30b2\u30fc\u30c8\n\n- T849\u306f\u6709\u511f\u516c\u958b\u30bf\u30b9\u30af\u3092\u5bfe\u8c61\u5916\u3068\u3057\u3001\u793e\u5185\u5411\u3051\u6280\u8853\u30af\u30ed\u30fc\u30ba\u3092\u5224\u5b9a\u3059\u308b\u3002\n- \u4eba\u9593\u4f9d\u5b58\u30bf\u30b9\u30af\u306fAI\u304c\u5b8c\u4e86\u6271\u3044\u306b\u3057\u306a\u3044\u3002\u8a3c\u8de1\u304c\u306a\u3051\u308c\u3070\u7fcc\u65e5\u3078\u6a5f\u68b0\u7684\u306b\u5148\u9001\u308a\u305b\u305a\u3001R111\u3067\u7d4c\u55b6\u5224\u65ad\u3078\u4e0a\u3052\u308b\u3002\n- \u5b8c\u4e86\u30bf\u30b9\u30af\u306fSheets\u3078\u5c65\u6b74\u3092\u6b8b\u3057\u3001Calendar\u304b\u3089\u524a\u9664\u3059\u308b\u3002\n- \u6bce\u30bb\u30c3\u30b7\u30e7\u30f3\u306e\u5b8c\u4e86\u30fb\u66f4\u65b0WBS\u306fT893\u306e\u4ed5\u7d44\u307f\u3067Issue\u3068Project #1\u3078\u540c\u671f\u3059\u308b\u3002\n\n## \u65e7\u6587\u66f8\u6574\u7406\n\n`WBS_REVIEW_2026-07-01.md` \u3068 `WBS_REVIEW_2026-07-03.md` \u306f\u672c\u66f8\u3078\u7d71\u5408\u3057\u3066\u524a\u9664\u3057\u305f\u3002\u904e\u53bb\u5224\u65ad\u306fGit\u5c65\u6b74\u306b\u6b8b\u308b\u30022026-06-26\u4ee5\u524d\u306e\u76e3\u67fb\u6587\u66f8\u306f\u3001\u6cd5\u52d9\u30fbGo/No-Go\u30fb\u8ab2\u984c\u7ba1\u7406\u8868\u306e\u8a3c\u8de1\u53c2\u7167\u304c\u6b8b\u308b\u305f\u3081\u3001\u73fe\u6642\u70b9\u3067\u306f\u5c65\u6b74\u8cc7\u6599\u3068\u3057\u3066\u4fdd\u6301\u3059\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

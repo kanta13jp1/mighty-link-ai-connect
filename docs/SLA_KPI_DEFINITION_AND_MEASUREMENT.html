@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLA_KPI_DEFINITION_AND_MEASUREMENT — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u30b5\u30fc\u30d3\u30b9\u54c1\u8ceaKPI\u30fbSLA\u5b9a\u7fa9\u3068\u8a08\u6e2c\u57fa\u76e4\u6574\u5099 (T762)\n\n**Mighty Skill-Bridge** \u672c\u756a\u30b5\u30fc\u30d3\u30b9\u306e\u54c1\u8cea\u76ee\u6a19\uff08KPI\uff09\u3068\u30b5\u30fc\u30d3\u30b9\u30ec\u30d9\u30eb\u5408\u610f\uff08SLA\uff09\u3092\u5b9a\u7fa9\u3057\u3001\u7d99\u7d9a\u7684\u306b\u8a08\u6e2c\u30fb\u5831\u544a\u3059\u308b\u305f\u3081\u306e\u57fa\u76e4\u3092\u6574\u5099\u3057\u307e\u3059\u3002\n\n---\n\n## \u30d0\u30fc\u30b8\u30e7\u30f3\u5c65\u6b74\n\n| \u65e5\u4ed8 | \u30d0\u30fc\u30b8\u30e7\u30f3 | \u5185\u5bb9 | \u8d77\u7a3f\u8005 |\n| :--- | :--- | :--- | :--- |\n| 2026-06-10 | v1.0.0 | \u521d\u7248\u4f5c\u6210\uff08KPI/SLA\u5b9a\u7fa9\u30fbSupabase\u30d3\u30e5\u30fc\u30fb\u6708\u6b21\u30ec\u30dd\u30fc\u30c8\u4ed5\u69d8\uff09 | Claude Code |\n| 2026-07-05 | v1.1.0 | T778\u5b9f\u88c5: \u00a73\u306e\u30d3\u30e5\u30fc\u3092migration `20260705000000_sla_measurement_views.sql` \u3068\u3057\u3066\u5b9f\u88c5\uff08uptime_checks\u30c6\u30fc\u30d6\u30eb\u65b0\u8a2d\u3001WAU\u306fprofiles.last_login\u4e0d\u5728\u306e\u305f\u3081matches\u30d9\u30fc\u30b9\u3078\u518d\u8a2d\u8a08\u3001\u5fdc\u7b54\u6642\u9593\u30fb\u8a3a\u65ad\u7cbe\u5ea6\u30d3\u30e5\u30fc\u8ffd\u52a0\uff09\u3002\u8a08\u6e2c\u8a18\u9332\u306f `check_uptime_targets.py --record-db`\u3001\u30ec\u30dd\u30fc\u30c8\u306f `generate_sla_measurement_report.py` | Claude Code |\n\n---\n\n## 1. SLA \u5b9a\u7fa9\n\n### 1.1 \u7a3c\u50cd\u7387\uff08Availability\uff09\n\n| \u30c6\u30a3\u30a2 | \u76ee\u6a19\u5024 | \u6708\u9593\u8a31\u5bb9\u30c0\u30a6\u30f3\u30bf\u30a4\u30e0 | \u5bfe\u8c61\u671f\u9593 |\n| :--- | :--- | :--- | :--- |\n| \u672c\u756a\uff08\u30d1\u30a4\u30ed\u30c3\u30c8\u671f\uff09 | **99.5%** | \u7d04 3.6 \u6642\u9593/\u6708 | 2026-06\u301c2026-09 |\n| \u672c\u756a\uff08\u4e00\u822c\u516c\u958b\u5f8c\uff09 | **99.9%** | \u7d04 43 \u5206/\u6708 | 2026-10\u301c |\n\n\u8a08\u6e2c\u65b9\u6cd5\uff1aGoogle Cloud Monitoring \u306e Uptime Check\uff081\u5206\u9593\u9694\uff09\u3067 `https://<\u672c\u756aURL>/api/v1/health` \u3092\u76e3\u8996\u3002\n\n### 1.2 API \u30ec\u30b9\u30dd\u30f3\u30b9\u30bf\u30a4\u30e0\uff08Latency\uff09\n\n| \u30d1\u30fc\u30bb\u30f3\u30bf\u30a4\u30eb | \u76ee\u6a19\u5024 | \u5bfe\u8c61\u30a8\u30f3\u30c9\u30dd\u30a4\u30f3\u30c8 |\n| :--- | :--- | :--- |\n| P50 (\u4e2d\u592e\u5024) | \u2264 1.5 \u79d2 | \u5168\u30a8\u30f3\u30c9\u30dd\u30a4\u30f3\u30c8 |\n| P95 | \u2264 3.0 \u79d2 | \u5168\u30a8\u30f3\u30c9\u30dd\u30a4\u30f3\u30c8 |\n| P99 | \u2264 8.0 \u79d2 | AI\u8a3a\u65ad\u30a8\u30f3\u30c9\u30dd\u30a4\u30f3\u30c8\uff08`/api/v1/diagnose`\uff09 |\n\n### 1.3 \u30a8\u30e9\u30fc\u7387\n\n| \u6307\u6a19 | \u76ee\u6a19\u5024 |\n| :--- | :--- |\n| HTTP 5xx \u30a8\u30e9\u30fc\u7387 | \u2264 0.5% |\n| AI\u8a3a\u65ad \u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\u7387 | \u2264 2.0% |\n\n---\n\n## 2. KPI \u5b9a\u7fa9\n\n### 2.1 \u30d3\u30b8\u30cd\u30b9 KPI\n\n| KPI | \u5b9a\u7fa9 | \u8a08\u6e2c\u983b\u5ea6 | \u76ee\u6a19\uff08\u30d1\u30a4\u30ed\u30c3\u30c8\u671f\uff09 |\n| :--- | :--- | :--- | :--- |\n| \u8a3a\u65ad\u5b9f\u884c\u4ef6\u6570 | `matches` \u30c6\u30fc\u30d6\u30eb\u306e INSERT \u4ef6\u6570 | \u65e5\u6b21 | \u2265 5 \u4ef6/\u9031 |\n| \u8a3a\u65ad\u7cbe\u5ea6\u30b9\u30b3\u30a2 | \u30e6\u30fc\u30b6\u30fc\u304c\u300c\u5f79\u306b\u7acb\u3063\u305f\u300d\u3092\u9078\u629e\u3057\u305f\u5272\u5408 | \u9031\u6b21 | \u2265 70% |\n| \u30a2\u30af\u30c6\u30a3\u30d6\u30e6\u30fc\u30b6\u30fc\u6570 | \u904e\u53bb7\u65e5\u9593\u306b\u30ed\u30b0\u30a4\u30f3\u3057\u305f `profiles` \u4ef6\u6570 | \u9031\u6b21 | \u2265 3 \u540d |\n| \u30aa\u30f3\u30dc\u30fc\u30c7\u30a3\u30f3\u30b0\u5b8c\u4e86\u7387 | \u767b\u9332\u2192\u521d\u56de\u8a3a\u65ad\u5b8c\u4e86\u307e\u3067\u306e\u5272\u5408 | \u6708\u6b21 | \u2265 80% |\n\n### 2.1.1 \u5229\u7528\u72b6\u6cc1\u30a2\u30ca\u30ea\u30c6\u30a3\u30af\u30b9 KPI\uff08T800\uff09\n\n2026-06-27\u306bT800\u3068\u3057\u3066\u3001\u533f\u540d\u30a4\u30d9\u30f3\u30c8\u8a08\u6e2c\u3092 `POST /api/analytics/event` \u3068 `usage_analytics_events` \u306b\u5c0e\u5165\u3057\u305f\u3002Firebase Analytics SDK\u306e\u81ea\u52d5\u53ce\u96c6\u306f\u307e\u3060\u6709\u52b9\u5316\u305b\u305a\u3001\u516c\u958b\u30c7\u30e2\u3067\u306f\u500b\u4eba\u60c5\u5831\u3092\u4fdd\u5b58\u3057\u306a\u3044\u30d5\u30a1\u30fc\u30b9\u30c8\u30d1\u30fc\u30c6\u30a3\u8a08\u6e2c\u3092\u6b63\u672c\u3068\u3059\u308b\u3002\n\n| KPI | \u5b9a\u7fa9 | \u8a08\u6e2c\u983b\u5ea6 | \u76ee\u6a19\uff08\u30d1\u30a4\u30ed\u30c3\u30c8\u671f\uff09 |\n| :--- | :--- | :--- | :--- |\n| \u5229\u7528\u30a4\u30d9\u30f3\u30c8\u6570 | `usage_analytics_events` \u306e\u7dcf\u4ef6\u6570 | \u65e5\u6b21 | \u30c7\u30e2\u64cd\u4f5c\u3054\u3068\u306b\u5897\u52a0 |\n| 7\u65e5\u9593\u5229\u7528\u30a4\u30d9\u30f3\u30c8\u6570 | \u904e\u53bb7\u65e5\u9593\u306e\u30a4\u30d9\u30f3\u30c8\u4ef6\u6570 | \u9031\u6b21 | \u4e3b\u8981\u6a5f\u80fd\u78ba\u8a8d\u6642\u306b1\u4ef6\u4ee5\u4e0a |\n| 7\u65e5\u9593\u533f\u540d\u30bb\u30c3\u30b7\u30e7\u30f3\u6570 | \u904e\u53bb7\u65e5\u9593\u306e `session_pseudonym` distinct\u4ef6\u6570 | \u9031\u6b21 | \u793e\u5185\u78ba\u8a8d\u53c2\u52a0\u8005\u6570\u3068\u6982\u306d\u4e00\u81f4 |\n| \u30da\u30fc\u30b8\u8868\u793a\u6570 | `event_name = 'page_view'` \u306e\u4ef6\u6570 | \u65e5\u6b21 | \u30c7\u30e2\u78ba\u8a8d\u3054\u3068\u306b\u5897\u52a0 |\n\n\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u5236\u5fa1:\n\n- IP\u30a2\u30c9\u30ec\u30b9\u3001\u751fUser-Agent\u3001\u30d5\u30a9\u30fc\u30e0\u672c\u6587\u3001\u6c0f\u540d\u3001\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3001\u96fb\u8a71\u756a\u53f7\u3001URL\u30af\u30a8\u30ea\u6587\u5b57\u5217\u3092\u4fdd\u5b58\u3057\u306a\u3044\u3002\n- \u30d6\u30e9\u30a6\u30b6localStorage\u306e\u533f\u540d\u30bb\u30c3\u30b7\u30e7\u30f3ID\u306f\u30b5\u30fc\u30d0\u30fc\u5074\u3067 `usage-<digest>` \u306b\u7591\u4f3cID\u5316\u3059\u308b\u3002\n- \u7ba1\u7406\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9 `GET /api/admin/operations-dashboard` \u3068CSV export\u306bT800 KPI\u3092\u8868\u793a\u3059\u308b\u3002\n\n### 2.2 \u30a4\u30f3\u30d5\u30e9 KPI\n\n| KPI | \u5b9a\u7fa9 | \u8a08\u6e2c\u983b\u5ea6 | \u76ee\u6a19 |\n| :--- | :--- | :--- | :--- |\n| Gemini API \u30b3\u30b9\u30c8 | \u6708\u9593 Gemini API \u8cbb\u7528\uff08USD\uff09 | \u6708\u6b21 | \u2264 $50/\u6708 |\n| Firebase \u6708\u9593\u30b3\u30b9\u30c8 | Hosting + Functions + Auth \u5408\u8a08 | \u6708\u6b21 | \u2264 $30/\u6708 |\n| Supabase DB \u4f7f\u7528\u91cf | DB \u30b5\u30a4\u30ba\uff08MB\uff09 | \u6708\u6b21 | \u2264 500 MB\uff08Free tier\u4e0a\u9650\uff09 |\n| Cloud Functions \u5b9f\u884c\u6642\u9593 | \u6708\u9593\u7d2f\u8a08\u5b9f\u884c\u6642\u9593\uff08ms\uff09 | \u6708\u6b21 | \u2264 400,000 ms\uff08\u7121\u6599\u67a0\u5185\uff09 |\n\n---\n\n## 3. Supabase \u30d3\u30e5\u30fc\u8a2d\u8a08\uff08\u8a08\u6e2c\u57fa\u76e4\uff09\n\n> [!NOTE]\n> **2026-07-05\uff08T778\uff09\u5b9f\u88c5\u6e08\u307f\u3002** \u6b63\u672c\u306f `supabase/migrations/20260705000000_sla_measurement_views.sql`\u3002\u4ee5\u4e0b\u306e\u521d\u7248\u30c9\u30e9\u30d5\u30c8SQL\u3068\u306e\u5dee\u5206: (1) `profiles.last_login` \u306f\u5b9f\u30b9\u30ad\u30fc\u30de\u306b\u5b58\u5728\u3057\u306a\u3044\u305f\u3081\u3001WAU\u306f `matches` \u30d9\u30fc\u30b9\uff08=\u8a3a\u65ad\u5b9f\u884c\u8005\uff09\u3078\u518d\u8a2d\u8a08\u3002(2) `uptime_checks` \u30c6\u30fc\u30d6\u30eb\u3092\u65b0\u8a2d\u3057\u3001`scripts/check_uptime_targets.py --record-db` \u304c\u7a3c\u50cd\u7387\u3068\u5fdc\u7b54\u6642\u9593\u30b5\u30f3\u30d7\u30eb\u3092\u8a18\u9332\u3002(3) \u5fdc\u7b54\u6642\u9593P50/P95\u30d3\u30e5\u30fc\uff08`kpi_daily_response_time`\uff09\u3068\u8a3a\u65ad\u7cbe\u5ea6\u30d3\u30e5\u30fc\uff08`kpi_weekly_diagnosis_accuracy`\u3001feedback_events\u306ehelpful\u7387\uff09\u3001\u533f\u540d\u30bb\u30c3\u30b7\u30e7\u30f3\u30d3\u30e5\u30fc\uff08`kpi_weekly_anonymous_sessions`\uff09\u3092\u8ffd\u52a0\u3002(4) \u5168\u30d3\u30e5\u30fc\u306f anon/authenticated \u304b\u3089 REVOKE\u3002SLA\u30ec\u30dd\u30fc\u30c8\u306f `python scripts/generate_sla_measurement_report.py` \u304c `exports/sla_measurement_report.{json,md}` \u3092\u751f\u6210\u3057\u3001\u6708\u6b21\u54c1\u8cea\u30d5\u30ed\u30fc\uff08T764/T808\uff09\u304cSheets\u3078\u96c6\u8a08\u3059\u308b\u3002\n\n### 3.1 \u65e5\u6b21\u8a3a\u65ad\u4ef6\u6570\u30d3\u30e5\u30fc\n\n```sql\nCREATE OR REPLACE VIEW public.kpi_daily_diagnoses AS\nSELECT\n  DATE_TRUNC('day', created_at AT TIME ZONE 'Asia/Tokyo') AS diagnosis_date,\n  COUNT(*) AS diagnosis_count,\n  COUNT(DISTINCT user_id) AS unique_users,\n  AVG(fit_score) AS avg_fit_score,\n  PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY fit_score) AS median_fit_score\nFROM public.matches\nWHERE created_at >= NOW() - INTERVAL '90 days'\nGROUP BY 1\nORDER BY 1 DESC;\n```\n\n### 3.2 \u9031\u6b21\u30a2\u30af\u30c6\u30a3\u30d6\u30e6\u30fc\u30b6\u30fc\u30d3\u30e5\u30fc\n\n```sql\nCREATE OR REPLACE VIEW public.kpi_weekly_active_users AS\nSELECT\n  DATE_TRUNC('week', last_login AT TIME ZONE 'Asia/Tokyo') AS week_start,\n  COUNT(DISTINCT user_id) AS wau\nFROM public.profiles\nWHERE last_login >= NOW() - INTERVAL '12 weeks'\nGROUP BY 1\nORDER BY 1 DESC;\n```\n\n### 3.3 SLA \u7a3c\u50cd\u7387\u8a08\u7b97\u30d3\u30e5\u30fc\uff08Uptime \u30c1\u30a7\u30c3\u30af\u7d50\u679c\u3092 Supabase \u306b\u4fdd\u5b58\u3059\u308b\u5834\u5408\uff09\n\n```sql\n-- uptime_checks \u30c6\u30fc\u30d6\u30eb\u304c\u5b58\u5728\u3059\u308b\u524d\u63d0\nCREATE OR REPLACE VIEW public.kpi_monthly_availability AS\nSELECT\n  DATE_TRUNC('month', checked_at) AS month,\n  COUNT(*) AS total_checks,\n  SUM(CASE WHEN status = 'UP' THEN 1 ELSE 0 END) AS up_checks,\n  ROUND(\n    100.0 * SUM(CASE WHEN status = 'UP' THEN 1 ELSE 0 END) / COUNT(*),\n    3\n  ) AS availability_pct\nFROM public.uptime_checks\nGROUP BY 1\nORDER BY 1 DESC;\n```\n\n---\n\n## 4. \u6708\u6b21\u54c1\u8cea\u30ec\u30dd\u30fc\u30c8\u4ed5\u69d8\n\n### 4.1 \u30ec\u30dd\u30fc\u30c8\u69cb\u6210\n\n```\ndocs/QUALITY_REPORT_YYYY-MM.md\n\u251c\u2500\u2500 1. SLA \u9054\u6210\u72b6\u6cc1\u30b5\u30de\u30ea\u30fc\uff08\u7a3c\u50cd\u7387\u30fb\u30ec\u30b9\u30dd\u30f3\u30b9\u30fb\u30a8\u30e9\u30fc\u7387\uff09\n\u251c\u2500\u2500 2. \u30d3\u30b8\u30cd\u30b9 KPI\uff08\u8a3a\u65ad\u4ef6\u6570\u30fb\u7cbe\u5ea6\u30fbDAU/WAU\uff09\n\u251c\u2500\u2500 3. \u30a4\u30f3\u30d5\u30e9\u30b3\u30b9\u30c8\u5b9f\u7e3e\uff08Gemini / Firebase / Supabase\uff09\n\u251c\u2500\u2500 4. \u30a4\u30f3\u30b7\u30c7\u30f3\u30c8\u4e00\u89a7\uff08\u767a\u751f P1/P2/P3 \u4ef6\u6570\u30fbMTTR\uff09\n\u251c\u2500\u2500 5. \u7fcc\u6708\u306e\u6539\u5584\u30a2\u30af\u30b7\u30e7\u30f3\n\u2514\u2500\u2500 6. \u53c2\u7167: \u30dd\u30b9\u30c8\u30e2\u30fc\u30c6\u30e0\u30fbGitHub Issues\n```\n\n### 4.2 \u81ea\u52d5\u751f\u6210\u30b9\u30af\u30ea\u30d7\u30c8\u4ed5\u69d8\uff08T764 \u3067\u5b9f\u88c5\uff09\n\n```python\n# scripts/generate_monthly_quality_report.py\n# \u5b9f\u884c: python scripts/generate_monthly_quality_report.py --month 2026-06\n#\n# \u51e6\u7406\u30d5\u30ed\u30fc:\n# 1. Supabase \u304b\u3089 kpi_daily_diagnoses / kpi_weekly_active_users \u3092\u53d6\u5f97\n# 2. Google Cloud Monitoring API \u304b\u3089 Uptime Check \u30c7\u30fc\u30bf\u3092\u53d6\u5f97\n# 3. Sentry API \u304b\u3089\u30a8\u30e9\u30fc\u7387\u30fb\u30a4\u30f3\u30b7\u30c7\u30f3\u30c8\u6570\u3092\u53d6\u5f97\n# 4. GCP Billing API \u304b\u3089\u6708\u9593\u30b3\u30b9\u30c8\u5b9f\u7e3e\u3092\u53d6\u5f97\n# 5. docs/QUALITY_REPORT_{YYYY-MM}.md \u3092\u81ea\u52d5\u751f\u6210\n# 6. Google Sheets \u306e\u300c\u6708\u6b21KPI\u30ec\u30dd\u30fc\u30c8\u300d\u30bf\u30d6\u306b\u66f8\u304d\u8fbc\u307f\n```\n\n---\n\n## 5. \u30a2\u30e9\u30fc\u30c8\u95be\u5024\u3068\u901a\u77e5\u8a2d\u5b9a\n\n| \u6307\u6a19 | \u8b66\u544a\uff08Warning\uff09 | \u7dca\u6025\uff08Critical\uff09 | \u901a\u77e5\u5148 |\n| :--- | :--- | :--- | :--- |\n| \u7a3c\u50cd\u7387\uff08\u76f4\u8fd124h\uff09 | < 99.8% | < 99.0% | Slack #alerts |\n| P95 \u30ec\u30b9\u30dd\u30f3\u30b9 | > 2.0 \u79d2 | > 5.0 \u79d2 | Slack #alerts |\n| 5xx \u30a8\u30e9\u30fc\u7387\uff08\u76f4\u8fd11h\uff09 | > 1.0% | > 5.0% | Slack #alerts + \u30e1\u30fc\u30eb |\n| Gemini API \u30b3\u30b9\u30c8 | $40/\u6708 | $50/\u6708 | \u30e1\u30fc\u30eb |\n| Supabase DB \u4f7f\u7528\u91cf | 400 MB | 480 MB | Slack #alerts |\n\n---\n\n## 6. SLA \u9055\u53cd\u6642\u306e\u5bfe\u5fdc\u30d5\u30ed\u30fc\n\nSLA \u9055\u53cd\uff08\u7a3c\u50cd\u7387 < 99.5%\uff09\u304c\u78ba\u8a8d\u3055\u308c\u305f\u5834\u5408\uff1a\n\n1. **\u5373\u6642**: Slack #alerts \u306b\u81ea\u52d5\u901a\u77e5\uff08Google Cloud Monitoring \u30a2\u30e9\u30fc\u30c8\u30dd\u30ea\u30b7\u30fc\uff09\n2. **24\u6642\u9593\u4ee5\u5185**: \u6839\u672c\u539f\u56e0\u5206\u6790\uff08RCA\uff09\u3092\u5b9f\u65bd\u3057\u3001[INCIDENT_POSTMORTEM_RUNBOOK.md](INCIDENT_POSTMORTEM_RUNBOOK.md) \u306b\u5f93\u3063\u3066 `docs/POSTMORTEM_YYYY-MM-DD_<ID>_<SLUG>.md` \u3092\u4f5c\u6210\n3. **\u7fcc\u6708\u306e\u6708\u6b21\u30ec\u30dd\u30fc\u30c8**: SLA \u9055\u53cd\u306e\u7d4c\u7def\u30fb\u5f71\u97ff\u30fb\u518d\u767a\u9632\u6b62\u7b56\u3092\u8a18\u8f09\n\n---\n\n## 7. \u95a2\u9023\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\n\n- [\u707d\u5bb3\u5fa9\u65e7\u30fb\u30a8\u30b9\u30ab\u30ec\u30fc\u30b7\u30e7\u30f3\u9023\u7d61\u7db2\u30e9\u30f3\u30d6\u30c3\u30af](DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md)\n- [Firebase / Supabase \u30b7\u30b9\u30c6\u30e0\u30a2\u30fc\u30ad\u30c6\u30af\u30c1\u30e3\u8a73\u7d30\u8a2d\u8a08\u66f8](FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md)\n- [Supabase Database \u7269\u7406\u8a2d\u8a08\u3068\u30a4\u30f3\u30c7\u30c3\u30af\u30b9\u8a2d\u8a08](SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md)\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

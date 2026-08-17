@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>README — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Wireframes \u2014 Implementation-Ready Spec Pack\n\n\u4f5c\u6210\u65e5: 2026-05-24\n\u30aa\u30fc\u30ca\u30fc: Claude Code \u30ec\u30fc\u30f3 (docs / spec)\n\u5bfe\u8c61 WBS: T658-wireframe-deck / T658-mcp-extend\n\u95a2\u9023:\n[CEO_PRESENTATION_PREP](../archive/presentations/CEO_PRESENTATION_PREP_2026-06-02.md) /\n[MCP_CANVA_FIGMA_SETUP_GUIDE](../archive/presentations/MCP_CANVA_FIGMA_SETUP_GUIDE_2026-06-02.md) \u00a74.7 /\nCanva v2 deck: <https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit>\n\n---\n\n## \u3053\u306e\u30d1\u30c3\u30af\u306e\u4f4d\u7f6e\u3065\u3051\n\n[Canva v2 wireframe deck](https://docs.google.com/presentation/d/1JKu7tAw1h4BqXMAsF41qolbQPUKj8KLW/edit) \u306f\u793e\u9577\u5224\u65ad\u7528\u306e **visual mockup**\u3002\u672c\u30d1\u30c3\u30af\u306f\u540c\u3058 10 \u30d1\u30bf\u30fc\u30f3\u3092 **AI \u306b\u6e21\u3057\u3066\u305d\u306e\u307e\u307e\u5b9f\u88c5\u3067\u304d\u308b\u7c92\u5ea6\u306e spec** \u306b\u5c55\u958b\u3057\u305f\u3082\u306e\u3002\n\n\u5404 spec \u306f\u4ee5\u4e0b\u3092\u542b\u3080\u305f\u3081\u3001\u793e\u9577 6/2 \u5224\u65ad\u5f8c\u306b **\u300c@docs/wireframes/WF-XX_*.md \u3092\u5b9f\u88c5\u300d**\u3068\u30d7\u30ed\u30f3\u30d7\u30c8\u3059\u308c\u3070\u3001\u73fe\u30d7\u30ed\u30c8 (`FastAPI + vanilla HTML/JS`) \u4e0a\u3067\u5b9f\u88c5\u7740\u624b\u3067\u304d\u308b:\n\n1. **Identity** \u2014 id / category / pick-when \u30de\u30c8\u30ea\u30af\u30b9\n2. **ASCII Layout** \u2014 \u30c6\u30ad\u30b9\u30c8 wireframe\n3. **Component Tree** \u2014 semantic HTML skeleton\n4. **State Machine** \u2014 initial \u2192 loading \u2192 loaded \u2192 error\n5. **Data Flow + API contract** \u2014 \u3069\u306e `src/app.py` endpoint \u3092\u53e9\u304f\u304b\n6. **Design Tokens** \u2014 Mighty cyber palette + per-WF override\n7. **Interaction Spec** \u2014 event / trigger / debounce\n8. **A11y** \u2014 ARIA role / keyboard nav\n9. **Responsive** \u2014 desktop / tablet / mobile breakpoint\n10. **Out of Scope** \u2014 \u610f\u56f3\u7684\u306b\u542b\u3081\u306a\u3044\u8981\u7d20\n11. **Acceptance Criteria** \u2014 pass/fail checklist\n12. **Implementation Prompt** \u2014 LLM-ready \u30b3\u30d4\u30da\u7528\n13. **Starter Snippet** \u2014 drop-in HTML \u9aa8\u683c\n\n---\n\n## Stack \u524d\u63d0\n\n| \u9805\u76ee | \u5024 |\n| --- | --- |\n| **backend** | FastAPI (`src/app.py`\u30012065 \u884c) |\n| **frontend** | vanilla HTML/JS single-file (`index.html` + `src/index.html` \u30df\u30e9\u30fc) |\n| **build** | \u306a\u3057 (Python serve only) |\n| **public URL** | <https://kanta13jp1.github.io/mighty-link-ai-connect/> |\n| **local dev** | `python src/app.py` \u2192 `http://localhost:8000/` |\n| **public demo guard** | `python scripts/verify_public_demo.py` \u3092 CI \u3067\u5b9f\u884c |\n\n\u5b9f\u88c5\u6642\u306e **\u5f37\u3044\u5236\u7d04** (\u73fe\u30d7\u30ed\u30c8\u6e96\u62e0):\n\n- \u65b0 build step (webpack/vite) \u8ffd\u52a0\u7981\u6b62 \u2014 single HTML + CDN script \u306e\u307f\n- \u65b0 framework (React/Vue) \u8ffd\u52a0\u7981\u6b62 \u2014 vanilla JS\n- `src/index.html` \u3068 root `index.html` \u306f\u5fc5\u305a\u53cc\u65b9\u66f4\u65b0 ([scripts/render_seedance_video_demo_ui.py](../../scripts/render_seedance_video_demo_ui.py) \u3092\u6d41\u7528)\n- `verify_public_demo.py` \u304c\u63a2\u3059\u30de\u30fc\u30ab\u30fc (`Mighty Skill-Bridge` / `/api/parse` / `/api/match` \u7b49) \u3092\u6d88\u3055\u306a\u3044\n\n---\n\n## \u65e2\u5b58 API contract (\u5168 WF \u304c\u5229\u7528)\n\n### `POST /api/parse`\n\n`multipart/form-data`:\n\n| field | type | required | note |\n| --- | --- | --- | --- |\n| `text` | string | file \u672a\u6307\u5b9a\u6642\u306f\u5fc5\u9808 | \u7d4c\u6b74\u66f8 / \u6848\u4ef6\u7968\u30c6\u30ad\u30b9\u30c8 |\n| `file` | binary | text \u672a\u6307\u5b9a\u6642\u306f\u5fc5\u9808 | PDF / image / txt |\n| `doc_type` | string | required | `\"engineer\"` \u307e\u305f\u306f `\"job\"` |\n\nresponse (200):\n\n```json\n{\n  \"parsed_text\": \"...\",\n  \"structured\": { \"name\": \"...\", \"title\": \"...\", \"skills\": {...}, \"years\": 5, ... },\n  \"audit\": { \"ai_mode\": \"live\"|\"fallback\", \"fallback_reason\": \"...\" }\n}\n```\n\n### `POST /api/match`\n\n`application/json`:\n\n```json\n{\n  \"engineer_content\": \"...\",\n  \"job_content\": \"...\"\n}\n```\n\nresponse (200):\n\n```json\n{\n  \"final_score\": 50-100,\n  \"scores\": {\"skill\": int, \"culture\": int, \"growth\": int, \"performing\": int},\n  \"summary\": \"...\",\n  \"qa\": [{\"question\":\"...\",\"answer\":\"...\",\"tip\":\"...\"}, ...],\n  \"roadmap_week1\": \"...\",\n  \"roadmap_week2\": \"...\",\n  \"roadmap_week3\": \"...\",\n  \"audit\": { ... }\n}\n```\n\n\u305d\u306e\u4ed6: `GET /api/health` / `GET /api/audit/recent` / `GET /api/knowledge-flow/status` / `POST /api/knowledge-flow/generate` / `POST /api/seedance/video-demo` / `GET /api/admin/usage`\n\n---\n\n## Mighty cyber palette (\u5168 WF \u5171\u901a design token)\n\n```css\n:root {\n  --c-bg:        #0D0E15;  /* cyber black */\n  --c-surface:   #161824;  /* deep navy */\n  --c-text:      #F1F5FF;  /* cool white */\n  --c-text-sub:  #C5CAE0;  /* gray white */\n  --c-accent:    #00F0FF;  /* neon blue */\n  --c-success:   #39FF14;  /* neon green */\n  --c-danger:    #FF3366;  /* neon red */\n  --c-border:    #2A2D3E;\n  --r-sm: 6px; --r-md: 12px; --r-lg: 20px;\n  --s-1: 4px; --s-2: 8px; --s-3: 16px; --s-4: 24px; --s-5: 40px;\n  --fs-h1: 32px; --fs-h2: 22px; --fs-body: 16px; --fs-sm: 13px;\n}\n```\n\nBreakpoints: `--bp-mobile: 480px` / `--bp-tablet: 900px` / `--bp-desktop: 1280px`.\n\n---\n\n## 20 patterns index\n\n| # | spec | \u5f37\u307f | \u5f31\u307f | \u60f3\u5b9a\u30e6\u30fc\u30b6\u30fc |\n| --- | --- | --- | --- | --- |\n| **WF-01** | [Vertical Hero Stack](WF-01_vertical_hero_stack.md) | mobile-first / iPad \u30d7\u30ec\u30bc\u30f3 | desktop \u4f59\u767d\u591a | SES \u55b6\u696d |\n| **WF-02** | [Split Form (\u73fe\u884c)](WF-02_split_form.md) | desktop \u8996\u899a\u5bfe\u7f6e | mobile \u7e26\u9577\u5316 | \u30c7\u30b9\u30af\u30c8\u30c3\u30d7 HR |\n| **WF-03** | [Step Wizard](WF-03_step_wizard.md) | \u521d\u56de\u30e6\u30fc\u30b6\u30fc\u89aa\u548c | \u6163\u308c\u308b\u3068\u9045\u3044 | \u793e\u5185\u4eba\u4e8b |\n| **WF-04** | [Conversational Chat](WF-04_conversational_chat.md) | \u5fdc\u52df\u8005\u89aa\u548c / \u5c65\u6b74 | \u9ad8\u901f\u51e6\u7406\u306b\u4e0d\u5411\u304d | \u5fdc\u52df\u8005\u672c\u4eba |\n| **WF-05** | [DnD 4 Quadrant](WF-05_dnd_quadrant.md) | \u8907\u6570\u4e26\u5217\u7ba1\u7406 | \u5b66\u7fd2\u30b3\u30b9\u30c8\u9ad8 | \u4e2d\u898f\u6a21\u4eba\u4e8b |\n| **WF-06** | [Kanban Pipeline](WF-06_kanban_pipeline.md) | \u9032\u6357\u8ffd\u8de1\u6a19\u6e96 | \u5165\u529b UI \u5225\u9014\u8981 | \u30ea\u30af\u30eb\u30fc\u30bf\u30fc |\n| **WF-07** | [Comparison Table](WF-07_comparison_table.md) | \u7d4c\u55b6\u5831\u544a\u6700\u5f37 | \u5165\u529b UI \u5225\u9014\u8981 | \u6700\u7d42\u6c7a\u88c1\u8005 |\n| **WF-08** | [Dashboard Tiles](WF-08_dashboard_tiles.md) | \u7d4c\u55b6\u5c64\u4e00\u89a7 | drill-down \u5225\u9014 | \u793e\u9577 / \u7d4c\u55b6\u5c64 |\n| **WF-09** | [Inline Live Preview](WF-09_inline_live_preview.md) | AI \u30e9\u30a4\u30d6\u611f\u6700\u5927 | API \u8ab2\u91d1\u91cd\u3044 | \u793e\u9577\u30c7\u30e2\u5c02\u7528 |\n| **WF-10** | [Search Catalog](WF-10_search_catalog.md) | \u30c7\u30fc\u30bf\u84c4\u7a4d\u5f8c\u306e\u5165\u53e3 | \u521d\u671f\u30c7\u30fc\u30bf 0 \u3067\u7a7a | \u30ea\u30af\u30eb\u30fc\u30bf\u30fc\u65e5\u5e38 |\n| **WF-11** | Voice Interview (impl \u76f4\u63a5\u3001spec md \u306a\u3057) | \u97f3\u58f0\u5165\u529b / \u96fb\u8a71\u9762\u63a5\u306e\u611f\u89e6 | \u30ce\u30a4\u30ba / \u8a8d\u8b58\u7cbe\u5ea6 | \u5fdc\u52df\u8005\u672c\u4eba |\n| **WF-12** | Calendar Timeline (impl \u76f4\u63a5) | \u914d\u5c5e\u8a08\u753b\u306e\u6642\u9593\u8ef8\u304c\u4e00\u76ee | 8 \u9031\u56fa\u5b9a\u3001\u30ba\u30fc\u30e0\u672a\u5bfe\u5fdc | \u914d\u5c5e\u8a08\u753b PM |\n| **WF-13** | Map / Geo View (impl \u76f4\u63a5) | \u901a\u52e4\u8ddd\u96e2\u3092\u5224\u5b9a\u8ef8\u306b | \u5730\u56f3\u306f SVG \u7c21\u6613\u3001\u672c\u7269\u306e Maps API \u672a\u7d71\u5408 | \u52e4\u52d9\u5730\u4f9d\u5b58\u6848\u4ef6 |\n| **WF-14** | Spreadsheet Editor (impl \u76f4\u63a5) | \u30d1\u30ef\u30fc\u30e6\u30fc\u30b6\u30fc\u304c\u5373\u7de8\u96c6\u3067\u304d\u308b | formula \u306f\u64ec\u4f3c\u7684 | \u30d1\u30ef\u30fc\u30e6\u30fc\u30b6\u30fc HR |\n| **WF-15** | Card Swipe (impl \u76f4\u63a5) | 1 \u4ef6\u305a\u3064\u96c6\u4e2d\u5224\u65ad | \u4e26\u5217\u6bd4\u8f03\u3067\u304d\u306a\u3044 | 1 \u4ef6\u305a\u3064\u96c6\u4e2d\u3057\u305f\u3044\u5224\u5b9a\u8005 |\n| **WF-16** | Org Tree (impl \u76f4\u63a5) | \u968e\u5c64\u30d3\u30e5\u30fc\u3067\u914d\u7f6e\u5168\u4f53\u628a\u63e1 | \u6a2a\u30b9\u30af\u30ed\u30fc\u30eb\u6df1\u3044\u3068\u8f9b\u3044 | \u7d44\u7e54\u914d\u7f6e\u8cac\u4efb\u8005 |\n| **WF-17** | A vs B Diff (impl \u76f4\u63a5) | 2 \u5019\u88dc\u7d5e\u308a\u8fbc\u307f\u306b\u7279\u5316 | 3+ \u540c\u6642\u6bd4\u8f03\u306f WF-07 \u3078 | \u6700\u7d42 2 \u540d\u304b\u3089 1 \u540d\u9078\u5b9a |\n| **WF-18** | Notification Inbox (impl \u76f4\u63a5) | event \u99c6\u52d5\u904b\u7528\u306b\u5f37\u3044 | \u901a\u77e5\u8a2d\u5b9a UI \u5225\u9014\u8981 | \u5e38\u99d0\u904b\u7528\u62c5\u5f53 |\n| **WF-19** | Onboarding Tour (impl \u76f4\u63a5) | empty state \u3092\u6b53\u8fce\u306b\u5909\u63db | \u6163\u308c\u305f\u3089\u90aa\u9b54 | \u65b0\u898f\u30e6\u30fc\u30b6\u30fc\u521d\u56de |\n| **WF-20** | Print Report (impl \u76f4\u63a5) | A4 PDF / \u7d4c\u55b6\u5c64\u914d\u5e03\u8cc7\u6599 | \u30a4\u30f3\u30bf\u30e9\u30af\u30b7\u30e7\u30f3\u306a\u3057 | \u7d4c\u55b6\u5c64\u914d\u5e03 |\n\n> WF-01\u301cWF-10 \u306f\u5c02\u7528 spec md (`WF-XX_*.md`) \u3092\u6301\u3061\u307e\u3059\u304c\u3001WF-11\u301cWF-20 \u306f impl HTML \u3092\u76f4\u63a5\u8aad\u3093\u3067\u4ed5\u69d8\u3092\u628a\u63e1\u3059\u308b\u60f3\u5b9a\u3067\u3059\u3002\n> \u5fc5\u8981\u306b\u5fdc\u3058\u3066 `docs/wireframes/WF-11_voice_interview.md` \u7b49\u3092 follow-up \u30bb\u30c3\u30b7\u30e7\u30f3\u3067\u8ffd\u52a0\u53ef\u80fd\u3067\u3059\u3002\n\n---\n\n## \u4f7f\u3044\u65b9 (AI \u5b9f\u88c5\u30d7\u30ed\u30f3\u30d7\u30c8)\n\n### Claude Code / Codex \u30bb\u30c3\u30b7\u30e7\u30f3\u3067\n\n```text\n@docs/wireframes/WF-03_step_wizard.md \u3092\u5b9f\u88c5\u3057\u3066\u304f\u3060\u3055\u3044\u3002\n\u51fa\u529b\u306f exports/wireframes/wf-03.html \u5358\u4e00\u30d5\u30a1\u30a4\u30eb\u3002\n\u65e2\u5b58 src/app.py \u306e /api/parse + /api/match \u3092 fetch \u3067\u547c\u3073\u51fa\u3057\u3066\u304f\u3060\u3055\u3044\u3002\nverify_public_demo.py \u304c\u7834\u58ca\u3055\u308c\u306a\u3044\u3088\u3046\u3001root index.html \u306f\u89e6\u3089\u306a\u3044\u3067\u304f\u3060\u3055\u3044\u3002\n```\n\n### \u81ea\u52d5\u5316 (\u5c06\u6765)\n\n```powershell\npython scripts/generate_wireframe_impl.py --wf 03 --out exports/wireframes/wf-03.html\n```\n\n(`generate_wireframe_impl.py` \u306f\u672c\u30d1\u30c3\u30af\u5b9f\u88c5\u5f8c\u3001\u5fc5\u8981\u6642\u306b Codex \u30ec\u30fc\u30f3\u3067\u4f5c\u6210\u60f3\u5b9a)\n\n### \u6a5f\u68b0\u53ef\u8aad\u7248\n\n[`exports/wireframes/wireframes_spec.json`](../../exports/wireframes/wireframes_spec.json) \u306b 10 \u30d1\u30bf\u30fc\u30f3\u5168 spec \u3092\u7d71\u5408\u3002\u30d7\u30ed\u30b0\u30e9\u30e0\u304b\u3089\u4e00\u62ec\u51e6\u7406\u3059\u308b\u5834\u5408 / LLM \u30d7\u30ed\u30f3\u30d7\u30c8\u306b\u4e00\u6c17\u306b\u6e21\u3059\u5834\u5408\u306b\u5229\u7528\u3002\n\n---\n\n## \u53d7\u3051\u5165\u308c\u57fa\u6e96 (\u672c\u30d1\u30c3\u30af\u81ea\u4f53)\n\n- [x] 10 WF \u5168 spec \u304c\u540c\u4e00\u69cb\u9020 (13 \u30bb\u30af\u30b7\u30e7\u30f3) \u3067\u66f8\u304b\u308c\u3066\u3044\u308b\n- [x] \u65e2\u5b58 API \u4ed5\u69d8 (`/api/parse` / `/api/match`) \u3068\u6574\u5408\n- [x] Mighty cyber palette \u3092 design token \u3067\u5171\u901a\u5316\n- [x] \u5404 spec \u306b LLM-ready Implementation Prompt \u3068 Starter Snippet \u3092\u542b\u3080\n- [x] `verify_public_demo.py` \u3092\u7834\u58ca\u3057\u306a\u3044 (root index.html \u3092\u5909\u66f4\u3057\u306a\u3044)\n- [x] `exports/wireframes/wireframes_spec.json` \u540c\u68b1\u3067\u6a5f\u68b0\u53ef\u8aad\u5316\u6e08\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

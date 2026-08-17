@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Supabase \u30af\u30a8\u30ea\u6027\u80fd\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u904b\u7528 Runbook (T761)\n\n\u4f5c\u6210\u65e5: 2026-06-15  \n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Codex  \n\u5bfe\u8c61: Supabase PostgreSQL / Firebase Functions / \u672c\u756a API\n\n## \u76ee\u7684\n\nSupabase Dashboard \u306e Query Performance\u3001Performance Advisor\u3001Index Advisor \u3068\u3001`scripts/diagnose_supabase_performance.py` \u306e\u8a3a\u65ad\u7d50\u679c\u3092\u7a81\u304d\u5408\u308f\u305b\u3001\u30b9\u30ed\u30fc\u30af\u30a8\u30ea\u3068\u30a4\u30f3\u30c7\u30c3\u30af\u30b9\u5909\u66f4\u306e\u5224\u65ad\u3092\u8a3c\u8de1\u5316\u3059\u308b\u3002T761 \u306f\u300c\u3059\u3050\u306b index DDL \u3092\u9069\u7528\u3059\u308b\u300d\u30bf\u30b9\u30af\u3067\u306f\u306a\u304f\u3001\u904b\u7528\u8005\u304c\u5b89\u5168\u306b\u5224\u65ad\u3067\u304d\u308b\u30ec\u30d3\u30e5\u30fc\u6210\u679c\u7269\u3068\u9031\u6b21\u30b2\u30fc\u30c8\u3092\u6574\u3048\u308b\u30bf\u30b9\u30af\u3067\u3042\u308b\u3002\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\n\n2026-06-15 \u306b\u4ee5\u4e0b\u3092\u78ba\u8a8d\u3057\u305f\u3002\n\n- Supabase Performance Tuning / Query Optimization: Query Performance \u3068 `EXPLAIN` \u3092\u4f7f\u3044\u3001\u5b9f\u30af\u30a8\u30ea\u30fb\u5b9f\u30c7\u30fc\u30bf\u91cf\u306b\u57fa\u3065\u3044\u3066\u6700\u9069\u5316\u3059\u308b\u3002\n- Supabase Performance and Security Advisors: Advisor \u306e\u8b66\u544a\u306f\u5b9a\u671f\u78ba\u8a8d\u3057\u3001\u5f71\u97ff\u7bc4\u56f2\u3068\u4fee\u6b63\u65b9\u91dd\u3092\u8a18\u9332\u3059\u308b\u3002\n- Supabase index_advisor / Managing Indexes: \u63a8\u5968 index \u306f\u65e2\u5b58 index \u3068 query plan \u3092\u6bd4\u8f03\u3057\u3001\u66f8\u304d\u8fbc\u307f\u30b3\u30b9\u30c8\u3082\u542b\u3081\u3066\u5224\u65ad\u3059\u308b\u3002\n- Supabase pg_stat_statements / Debugging and monitoring: `pg_stat_statements` \u3068 `supabase inspect db` \u3092\u4f75\u7528\u3057\u3001total time\u3001mean time\u3001seq scan\u3001unused index \u3092\u78ba\u8a8d\u3059\u308b\u3002\n- GitHub Actions / Google Sheets batchUpdate: dry-run \u6210\u679c\u7269\u306f CI \u3067\u58ca\u308c\u306a\u3044\u3053\u3068\u3092\u78ba\u8a8d\u3057\u3001WBS\u30fb\u8ab2\u984c\u30fbQA \u306f Sheets \u3078\u4e00\u62ec\u540c\u671f\u3059\u308b\u3002\n\n## \u9031\u6b21\u30ec\u30d3\u30e5\u30fc\u624b\u9806\n\n1. \u8a3a\u65ad SQL \u3068 dry-run \u30ec\u30dd\u30fc\u30c8\u3092\u751f\u6210\u3059\u308b\u3002\n\n```powershell\npython scripts/diagnose_supabase_performance.py --dry-run\n```\n\n2. T761 \u30ec\u30d3\u30e5\u30fc\u6210\u679c\u7269\u3092\u751f\u6210\u3059\u308b\u3002\n\n```powershell\npython scripts/generate_supabase_query_performance_review.py --fail-on-critical\n```\n\n3. `exports/supabase_query_performance_review.md` \u3092\u958b\u304d\u3001Dashboard Checklist \u306e\u5404\u884c\u3092\u78ba\u8a8d\u3059\u308b\u3002\n\n4. Supabase Dashboard \u3067\u4ee5\u4e0b\u3092\u78ba\u8a8d\u3059\u308b\u3002\n\n| \u753b\u9762 | \u78ba\u8a8d\u5185\u5bb9 | \u5224\u5b9a |\n| --- | --- | --- |\n| Database > Query Performance | total time / mean time / calls \u306e\u4e0a\u4f4dSQL | API\u30eb\u30fc\u30c8\u307e\u305f\u306fUI\u64cd\u4f5c\u3078\u7d10\u3065\u3051\u3067\u304d\u308b\u304b |\n| Database > Performance Advisor | \u672c\u756a\u5f71\u97ff\u306e\u3042\u308b\u8b66\u544a | GitHub Issue \u3068\u8ab2\u984c\u7ba1\u7406\u8868\u306b\u8a18\u9332\u3059\u308b\u304b |\n| Database > Index Advisor | \u63a8\u5968 index \u3068\u65e2\u5b58 index | `EXPLAIN` \u3068\u696d\u52d9\u30af\u30a8\u30ea\u5f62\u72b6\u3067\u6839\u62e0\u304c\u3042\u308b\u304b |\n| SQL Editor / CLI | `supabase inspect db ...` | Dashboard \u6240\u898b\u3068\u77db\u76fe\u3057\u306a\u3044\u304b |\n\n5. \u5909\u66f4\u5019\u88dc\u304c\u3042\u308b\u5834\u5408\u306f\u3001T761 \u3067\u76f4\u63a5DDL\u3092\u9069\u7528\u305b\u305a\u3001\u5225Issue/WBS\u3078\u5207\u308a\u51fa\u3059\u3002\n\n## \u672c\u756aDB\u3092\u4f7f\u3046\u8a3a\u65ad\n\n\u672c\u756a\u5b9f\u884c\u306f\u627f\u8a8d\u6e08\u307f\u306e\u30e1\u30f3\u30c6\u30ca\u30f3\u30b9\u67a0\u3067\u306e\u307f\u884c\u3046\u3002`SUPABASE_DB_URL` \u306f\u74b0\u5883\u5909\u6570\u3060\u3051\u3067\u6e21\u3057\u3001docs\u3001Sheets\u3001Issue\u3001\u30ed\u30b0\u3078\u5024\u3092\u6b8b\u3055\u306a\u3044\u3002\n\n```powershell\n$env:SUPABASE_DB_URL = \"postgresql://postgres:<password>@<pooler-host>:6543/postgres?sslmode=require\"\npython scripts/diagnose_supabase_performance.py --execute --api-url https://mightylink-app.com/api/health\npython scripts/generate_supabase_query_performance_review.py --fail-on-critical\n```\n\n\u6210\u679c\u7269:\n\n| \u30d5\u30a1\u30a4\u30eb | \u5185\u5bb9 |\n| --- | --- |\n| `exports/supabase_performance_report.json` | T750 \u8a3a\u65ad\u30ec\u30dd\u30fc\u30c8\u3002secret-like\u5024\u306fredact\u6e08\u307f |\n| `exports/supabase_query_performance_review.json` | T761 \u30ec\u30d3\u30e5\u30fc\u5224\u5b9a\u3002CI\u3084Sheets\u9023\u643a\u306e\u5165\u529b |\n| `exports/supabase_query_performance_review.md` | \u4eba\u9593\u304c\u8aad\u3080 Dashboard review checklist |\n\n## `supabase inspect db` \u30b3\u30de\u30f3\u30c9\n\nDashboard \u6240\u898b\u306e\u88cf\u53d6\u308a\u3068\u3057\u3066\u3001\u4ee5\u4e0b\u3092\u4f7f\u7528\u3059\u308b\u3002\n\n```powershell\nsupabase inspect db outliers\nsupabase inspect db index-usage\nsupabase inspect db unused-indexes\nsupabase inspect db seq-scans\nsupabase inspect db cache-hit\nsupabase inspect db locks\nsupabase inspect db blocking\n```\n\nCLI \u304c\u4f7f\u3048\u306a\u3044\u5834\u5408\u306f Dashboard \u3068 T750 SQL bundle \u306e\u307f\u3067\u30ec\u30d3\u30e5\u30fc\u3057\u3001CLI\u672a\u5b9f\u884c\u3092 Issue \u306e\u524d\u63d0\u6761\u4ef6\u306b\u660e\u8a18\u3059\u308b\u3002\n\n## \u30a4\u30f3\u30c7\u30c3\u30af\u30b9\u5909\u66f4\u306e\u53d7\u3051\u5165\u308c\u6761\u4ef6\n\n- \u540c\u3058SQL\u307e\u305f\u306f\u540c\u3058\u696d\u52d9\u64cd\u4f5c\u3067\u3001Query Performance \u3068 `pg_stat_statements` \u306e\u4e21\u65b9\u306b\u9045\u5ef6\u6839\u62e0\u304c\u3042\u308b\u3002\n- Index Advisor \u306e\u63d0\u6848\u304c\u65e2\u5b58 index \u3068\u91cd\u8907\u3057\u3066\u3044\u306a\u3044\u3002\n- staging \u307e\u305f\u306f production-like data \u3067 `EXPLAIN (ANALYZE, BUFFERS)` \u3092\u6bd4\u8f03\u6e08\u307f\u3002\n- \u66f8\u304d\u8fbc\u307f\u983b\u5ea6\u3001\u5bb9\u91cf\u3001maintenance cost \u3092\u78ba\u8a8d\u6e08\u307f\u3002\n- GitHub Issue\u3001\u8ab2\u984c\u7ba1\u7406\u8868\u3001WBS\u3001rollback note \u304c\u63c3\u3063\u3066\u3044\u308b\u3002\n- \u672c\u756a\u7d1a\u30c6\u30fc\u30d6\u30eb\u3067\u306f `CREATE INDEX CONCURRENTLY` \u3092\u512a\u5148\u3057\u3001transaction \u5185\u3067\u306f\u5b9f\u884c\u3057\u306a\u3044\u3002\n\n## \u5b8c\u4e86\u6761\u4ef6\n\nT761 \u306f\u4ee5\u4e0b\u3092\u6e80\u305f\u3057\u305f\u6642\u70b9\u3067\u5b8c\u4e86\u3068\u3059\u308b\u3002\n\n- `scripts/generate_supabase_query_performance_review.py` \u304c T750 \u8a3a\u65ad\u30ec\u30dd\u30fc\u30c8\u304b\u3089\u30ec\u30d3\u30e5\u30fc\u6210\u679c\u7269\u3092\u751f\u6210\u3059\u308b\u3002\n- CI \u304c dry-run \u8a3a\u65ad\u3068 T761 \u30ec\u30d3\u30e5\u30fc\u751f\u6210\u3092\u5b9f\u884c\u3059\u308b\u3002\n- `exports/supabase_query_performance_review.md` \u306b Supabase Dashboard \u306e\u78ba\u8a8d\u89b3\u70b9\u304c\u6b8b\u308b\u3002\n- WBS\u3001\u8ab2\u984c\u7ba1\u7406\u8868\u3001QA\u8868\u3001GitHub Issue / Project\u3001Calendar \u304c\u540c\u671f\u3055\u308c\u308b\u3002\n\n## \u95a2\u9023\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\n\n- [PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md](PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md)\n- [SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md](SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md)\n- [DB_MIGRATION_MANAGEMENT_RUNBOOK.md](DB_MIGRATION_MANAGEMENT_RUNBOOK.md)\n- [SUPABASE_CONNECTION_POOLING_RUNBOOK.md](SUPABASE_CONNECTION_POOLING_RUNBOOK.md)\n- [INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md](INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md)\n- [WBS.md](WBS.md)\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INCIDENT_POSTMORTEM_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u969c\u5bb3\u30a4\u30f3\u30b7\u30c7\u30f3\u30c8\u5bfe\u5fdc\u8a18\u9332\u30fb\u30dd\u30b9\u30c8\u30e2\u30fc\u30c6\u30e0\u904b\u7528 Runbook (T810)\n\n\u4f5c\u6210\u65e5: 2026-06-13  \n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Claude Code / VSCode + Codex  \n\u5bfe\u8c61: Mighty Skill-Bridge / Mighty-Link AI Connect \u672c\u756a\u904b\u7528\n\n## 1. \u76ee\u7684\n\n\u672c\u66f8\u306f\u3001\u672c\u756a\u969c\u5bb3\u3084\u91cd\u5927\u306a\u54c1\u8cea\u52a3\u5316\u304c\u767a\u751f\u3057\u305f\u3068\u304d\u306b\u3001\u539f\u56e0\u30fb\u5f71\u97ff\u30fb\u5fa9\u65e7\u30fb\u518d\u767a\u9632\u6b62\u3092\u540c\u3058\u7c92\u5ea6\u3067\u8a18\u9332\u3057\u3001WBS / \u8ab2\u984c\u7ba1\u7406\u8868 / GitHub Issues / Project \u3078\u5fc5\u305a\u63a5\u7d9a\u3059\u308b\u305f\u3081\u306e\u6a19\u6e96\u624b\u9806\u3067\u3042\u308b\u3002\n\nT749 \u306e DR Runbook \u306f\u300c\u767a\u751f\u6642\u306b\u3069\u3046\u52d5\u304f\u304b\u300d\u3092\u6271\u3044\u3001\u672c\u66f8\u306f\u300c\u5fa9\u65e7\u5f8c\u306b\u4f55\u3092\u6b8b\u3057\u3001\u4f55\u3092\u6b21\u306e\u6539\u5584\u3078\u9001\u308b\u304b\u300d\u3092\u6271\u3046\u3002\n\n## 2. \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\n\n2026-06-13 \u306b\u4ee5\u4e0b\u3092\u78ba\u8a8d\u3057\u305f\u3002\n\n- Firebase Hosting custom domain / release management: \u672c\u756aURL\u30fbHosting release\u30fbrollback\u306e\u78ba\u8a8d\u89b3\u70b9\n- Supabase backups / migrations: DB\u969c\u5bb3\u6642\u306ebackup\u3001PITR\u3001migration\u8a18\u9332\u306e\u78ba\u8a8d\u89b3\u70b9\n- GitHub Projects automation: Issue close \u3068 Project Done \u306e\u540c\u671f\u89b3\u70b9\n- Slack developer docs: \u969c\u5bb3\u901a\u77e5\u30fb\u66f4\u65b0\u5171\u6709\u5148\u306e\u8a2d\u8a08\u89b3\u70b9\n- OpenAI / Anthropic / Google Gemini / Microsoft Foundry: AI\u99c6\u52d5\u958b\u767a\u3067\u306f\u3001agent\u4f5c\u696d\u306e\u8a3c\u8de1\u30fb\u6a29\u9650\u30fb\u5916\u90e8tool\u5229\u7528\u3092\u6b8b\u3059\u3053\u3068\n- Stripe docs: \u8ab2\u91d1\u969c\u5bb3\u6642\u306f sandbox / live mode \u3068API version\u3092\u8a18\u9332\u3059\u308b\u3053\u3068\n\n## 3. \u4f5c\u6210\u30c8\u30ea\u30ac\u30fc\n\n\u6b21\u306e\u3044\u305a\u308c\u304b\u306b\u8a72\u5f53\u3057\u305f\u5834\u5408\u3001\u5fa9\u65e7\u304b\u308924\u6642\u9593\u4ee5\u5185\u306b `docs/POSTMORTEM_YYYY-MM-DD_<ID>_<SLUG>.md` \u3092\u4f5c\u6210\u3059\u308b\u3002\n\n| \u6761\u4ef6 | \u5fc5\u9808\u5ea6 | \u4f8b |\n| --- | --- | --- |\n| P1/P2\u969c\u5bb3 | \u5fc5\u9808 | \u672c\u756a\u505c\u6b62\u3001\u30c7\u30fc\u30bf\u640d\u5931\u3001\u30ed\u30b0\u30a4\u30f3\u4e0d\u53ef\u3001\u8ab2\u91d1\u4e0d\u53ef |\n| \u91cd\u5927\u306a\u672c\u756aAPI\u969c\u5bb3 | \u5fc5\u9808 | `/api/*` 502/504\u3001Cloud Run / Functions \u30cf\u30f3\u30b0 |\n| \u30c7\u30fc\u30bf\u6574\u5408\u6027\u30fbRLS\u30fb\u6a29\u9650\u4e8b\u6545 | \u5fc5\u9808 | \u8aa4\u516c\u958b\u3001tenant\u5206\u96e2\u4e0d\u5099\u3001service role\u8aa4\u7528 |\n| \u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u76e3\u67fb\u3067High\u4ee5\u4e0a | \u5fc5\u9808 | secret\u6f0f\u6d29\u3001\u4f9d\u5b58CVE\u3001\u8a8d\u53ef\u56de\u907f |\n| P3\u969c\u5bb3\u3067\u518d\u767a\u53ef\u80fd\u6027\u304c\u9ad8\u3044 | \u63a8\u5968 | \u4e00\u90e8\u6a5f\u80fd\u505c\u6b62\u3001\u6027\u80fd\u52a3\u5316\u3001\u5916\u90e8API\u969c\u5bb3 |\n\n## 4. \u8a18\u9332\u30d5\u30a1\u30a4\u30eb\u547d\u540d\n\n```text\ndocs/POSTMORTEM_YYYY-MM-DD_<ISSUE_ID>_<SHORT_TITLE>.md\n```\n\n\u4f8b:\n\n```text\ndocs/POSTMORTEM_2026-06-11_R44_PRODUCTION_API_502.md\n```\n\n## 5. \u5fc5\u9808\u30e1\u30bf\u30c7\u30fc\u30bf\n\n\u5404\u30dd\u30b9\u30c8\u30e2\u30fc\u30c6\u30e0\u306b\u306f\u4ee5\u4e0b\u3092\u5fc5\u305a\u5165\u308c\u308b\u3002\n\n| \u9805\u76ee | \u8a18\u9332\u5185\u5bb9 |\n| --- | --- |\n| Incident ID | \u8ab2\u984c\u7ba1\u7406\u8868\u306eID\u3002\u4f8b: `R44` |\n| Severity | P1 / P2 / P3 / P4 |\n| Status | investigating / mitigated / resolved / monitoring |\n| Detection time | \u6700\u521d\u306b\u691c\u77e5\u3057\u305f\u6642\u523b |\n| Recovery time | \u30e6\u30fc\u30b6\u30fc\u5f71\u97ff\u304c\u89e3\u6d88\u3057\u305f\u6642\u523b |\n| Impact | \u5f71\u97ffURL\u3001API\u3001\u30e6\u30fc\u30b6\u30fc\u7bc4\u56f2\u3001\u30c7\u30fc\u30bf\u5f71\u97ff |\n| Root cause | \u6280\u8853\u539f\u56e0\u3068\u904b\u7528\u539f\u56e0\u3092\u5206\u3051\u3066\u8a18\u8f09 |\n| What worked | \u6709\u52b9\u3060\u3063\u305f\u691c\u77e5\u30fb\u8abf\u67fb\u30fb\u5fa9\u65e7\u624b\u9806 |\n| What did not work | \u9045\u5ef6\u3001\u76f2\u70b9\u3001\u518d\u73fe\u4e0d\u80fd\u3060\u3063\u305f\u70b9 |\n| Preventive actions | \u8ab2\u984c\u7ba1\u7406\u8868ID\u3001WBS ID\u3001GitHub Issue\u3078\u63a5\u7d9a |\n| Validation | \u5fa9\u65e7\u5f8c\u306b\u5b9f\u884c\u3057\u305f\u30c6\u30b9\u30c8\u30fb\u516c\u958b\u30c7\u30e2\u78ba\u8a8d |\n\n## 6. \u6a19\u6e96\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\n\n```markdown\n# \u30dd\u30b9\u30c8\u30e2\u30fc\u30c6\u30e0: <\u969c\u5bb3\u30bf\u30a4\u30c8\u30eb> (<YYYY-MM-DD>)\n\n## \u6982\u8981\n\n- Incident ID:\n- Severity:\n- Status:\n- \u691c\u77e5\u65e5\u6642:\n- \u5fa9\u65e7\u65e5\u6642:\n- MTTR:\n- \u5f71\u97ff\u7bc4\u56f2:\n- \u95a2\u9023WBS:\n- \u95a2\u9023GitHub Issue:\n- \u95a2\u9023Runbook:\n\n## \u30bf\u30a4\u30e0\u30e9\u30a4\u30f3\n\n| \u6642\u523b | \u51fa\u6765\u4e8b | \u62c5\u5f53 | \u8a3c\u8de1 |\n| --- | --- | --- | --- |\n| HH:MM | \u691c\u77e5 |  |  |\n| HH:MM | \u539f\u56e0\u4eee\u8aac |  |  |\n| HH:MM | \u7de9\u548c |  |  |\n| HH:MM | \u5fa9\u65e7\u78ba\u8a8d |  |  |\n\n## \u5f71\u97ff\n\n- \u30e6\u30fc\u30b6\u30fc\u5f71\u97ff:\n- \u30c7\u30fc\u30bf\u5f71\u97ff:\n- \u8ab2\u91d1\u5f71\u97ff:\n- \u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u5f71\u97ff:\n- CEO\u5171\u6709URL / \u8ca9\u58f2URL\u3078\u306e\u5f71\u97ff:\n\n## \u6839\u672c\u539f\u56e0\n\n### \u6280\u8853\u539f\u56e0\n\n### \u904b\u7528\u539f\u56e0\n\n### \u306a\u305c\u4e8b\u524d\u691c\u77e5\u3067\u304d\u306a\u304b\u3063\u305f\u304b\n\n## \u5bfe\u5fdc\n\n### \u7de9\u548c\u7b56\n\n### \u6052\u4e45\u5bfe\u5fdc\n\n### \u5fa9\u65e7\u5f8c\u691c\u8a3c\n\n## \u518d\u767a\u9632\u6b62\u30a2\u30af\u30b7\u30e7\u30f3\n\n| ID | \u30a2\u30af\u30b7\u30e7\u30f3 | \u30aa\u30fc\u30ca\u30fc | \u671f\u9650 | \u9023\u643a\u5148 |\n| --- | --- | --- | --- | --- |\n| Rxx |  |  | YYYY-MM-DD | WBS / GitHub Issue |\n\n## \u5b66\u3073\n\n## \u30af\u30ed\u30fc\u30ba\u6761\u4ef6\n\n- [ ] \u8ab2\u984c\u7ba1\u7406\u8868\u3078\u53cd\u6620\u3057\u305f\n- [ ] GitHub Issue / Project\u3078\u53cd\u6620\u3057\u305f\n- [ ] WBS\u3078\u53cd\u6620\u3057\u305f\n- [ ] \u95a2\u9023Runbook\u3092\u66f4\u65b0\u3057\u305f\n- [ ] \u5fa9\u65e7\u5f8c\u691c\u8a3c\u3092\u8a18\u9332\u3057\u305f\n```\n\n## 7. \u8ab2\u984c\u7ba1\u7406\u8868\u3078\u306e\u9023\u643a\u30eb\u30fc\u30eb\n\n\u518d\u767a\u9632\u6b62\u30a2\u30af\u30b7\u30e7\u30f3\u306f `data/issues_tracker.tsv` \u3078\u5fc5\u305a\u53cd\u6620\u3059\u308b\u3002\n\n- \u65e2\u5b58\u8ab2\u984c\u304c\u3042\u308b\u5834\u5408: \u8a72\u5f53\u884c\u306e `\u95a2\u9023 docs` \u306b\u30dd\u30b9\u30c8\u30e2\u30fc\u30c6\u30e0\u3092\u8ffd\u52a0\u3059\u308b\n- \u65b0\u898f\u8ab2\u984c\u306e\u5834\u5408: `Rxx` \u3092\u63a1\u756a\u3057\u3001`\u95a2\u9023 WBS` \u3068 `\u95a2\u9023 Issue` \u3092\u5165\u308c\u308b\n- WBS\u30bf\u30b9\u30af\u3068\u3057\u3066\u5b9f\u88c5\u3059\u308b\u5834\u5408: `\u95a2\u9023 WBS` \u306b\u5bfe\u8c61ID\u3092\u5165\u308c\u308b\n- \u5b8c\u4e86\u3057\u305f\u5834\u5408: `\u72b6\u614b=resolved`\u3001`\u66f4\u65b0\u65e5` \u3092\u66f4\u65b0\u3059\u308b\n\n## 8. R44 \u5b9f\u4f8b\n\n\u672c\u904b\u7528\u306e\u521d\u56de\u9069\u7528\u4f8b\u3068\u3057\u3066\u30012026-06-11 \u306e\u672c\u756a `/api/*` 502/504 \u969c\u5bb3\u3092 [POSTMORTEM_2026-06-11_R44_PRODUCTION_API_502.md](POSTMORTEM_2026-06-11_R44_PRODUCTION_API_502.md) \u306b\u8a18\u9332\u3057\u305f\u3002\n\n## 9. \u95a2\u9023\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\n\n- [DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md](DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md)\n- [PRODUCTION_ROLLBACK_RUNBOOK.md](PRODUCTION_ROLLBACK_RUNBOOK.md)\n- [SUPABASE_BACKUP_RESTORE_RUNBOOK.md](SUPABASE_BACKUP_RESTORE_RUNBOOK.md)\n- [SLA_KPI_DEFINITION_AND_MEASUREMENT.md](SLA_KPI_DEFINITION_AND_MEASUREMENT.md)\n- [SECURITY_AUDIT_RUNBOOK.md](SECURITY_AUDIT_RUNBOOK.md)\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

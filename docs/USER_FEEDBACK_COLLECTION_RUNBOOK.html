@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USER_FEEDBACK_COLLECTION_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# User Feedback Collection Runbook (T763)\n\n\u4f5c\u6210\u65e5: 2026-06-16  \n\u5bfe\u8c61: \u8a3a\u65ad\u7d50\u679c\u8a55\u4fa1\u30dc\u30bf\u30f3 / Net Promoter Score / Supabase\u96c6\u8a08\u9023\u643a\n\n## \u76ee\u7684\n\n\u8a3a\u65ad\u7d50\u679c\u753b\u9762\u3067\u5229\u7528\u8005\u306e\u300c\u5f79\u306b\u7acb\u3063\u305f / \u6539\u5584\u3057\u305f\u3044\u300d\u3068NPS\u30b9\u30b3\u30a2\u3092\u53ce\u96c6\u3057\u3001Mighty Skill-Bridge\u306e\u8a3a\u65ad\u7cbe\u5ea6\u3001\u8aac\u660e\u54c1\u8cea\u3001\u904b\u7528\u54c1\u8cea\u306e\u6539\u5584\u6750\u6599\u3068\u3057\u3066\u84c4\u7a4d\u3059\u308b\u3002\n\n## \u516c\u5f0fDocs\u78ba\u8a8d\n\n2026-06-16 \u306e\u30bb\u30c3\u30b7\u30e7\u30f3\u958b\u59cb\u6642\u70b9\u3067\u3001\u4ee5\u4e0b\u306e\u516c\u5f0fDocs\u3092\u78ba\u8a8d\u3057\u305f\u3002\n\n- Firebase Hosting / Cloud Functions: https://firebase.google.com/docs/hosting / https://firebase.google.com/docs/functions\n- Supabase Data API / Row Level Security / JavaScript insert: https://supabase.com/docs/guides/api / https://supabase.com/docs/guides/database/postgres/row-level-security / https://supabase.com/docs/reference/javascript/insert\n- Google Sheets batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate\n- GitHub Actions: https://docs.github.com/en/actions\n\n## \u5b9f\u88c5\u6982\u8981\n\n### \u30d5\u30ed\u30f3\u30c8\u30a8\u30f3\u30c9\n\n`index.html` \u306e\u8a3a\u65ad\u7d50\u679c\u30ec\u30dd\u30fc\u30c8\u306b\u30d5\u30a3\u30fc\u30c9\u30d0\u30c3\u30af\u5e2f\u3092\u8ffd\u52a0\u3057\u305f\u3002\n\n- \u8a55\u4fa1: `helpful` / `not_helpful`\n- NPS: 0\u301c10\n- \u88dc\u8db3\u30b3\u30e1\u30f3\u30c8: \u4efb\u610f\u3001\u6700\u59271000\u6587\u5b57\n- \u7d10\u3065\u3051: `/api/match` \u306e `db_match_id`\n- \u30bb\u30c3\u30b7\u30e7\u30f3\u8b58\u5225\u5b50: localStorage\u306e\u30e9\u30f3\u30c0\u30e0ID\n\n\u9759\u7684GitHub Pages\u74b0\u5883\u3067\u306f `/api/feedback` \u304c\u5b58\u5728\u3057\u306a\u3044\u305f\u3081\u9001\u4fe1\u5931\u6557\u8868\u793a\u306b\u306a\u308b\u3002\u672c\u756aFirebase Functions\u74b0\u5883\u3067\u306fFastAPI endpoint\u306bPOST\u3055\u308c\u308b\u3002\n\n### API\n\n`src/app.py` \u306b\u4ee5\u4e0b\u3092\u8ffd\u52a0\u3057\u305f\u3002\n\n- `POST /api/feedback`\n  - \u516c\u958b\u9001\u4fe1\u7528\n  - \u30ec\u30fc\u30c8\u5236\u9650: expensive API\u67a0\n  - rating / nps_score / comment length \u3092\u691c\u8a3c\n- `GET /api/feedback/summary`\n  - Basic Auth\u5fc5\u9808\n  - \u7dcf\u4ef6\u6570\u3001rating\u5225\u4ef6\u6570\u3001NPS\u5e73\u5747\u3001\u76f4\u8fd1\u30a4\u30d9\u30f3\u30c8\u3092\u8fd4\u3059\n\n### \u30c7\u30fc\u30bf\u30d9\u30fc\u30b9\n\n`feedback_events` \u30c6\u30fc\u30d6\u30eb\u3092\u8ffd\u52a0\u3057\u305f\u3002\n\n- `match_result_id`: `match_results.id` \u3078\u306e\u53c2\u7167\n- `rating`: `helpful` / `not_helpful`\n- `nps_score`: 0\u301c10\n- `comment`, `source`, `page_url`, `session_id`, `metadata`, `created_at`\n\n\u8ffd\u52a0\u30d5\u30a1\u30a4\u30eb:\n\n- `db/migrations/postgres/20260616000000_feedback_events.sql`\n- `db/migrations/sqlite/20260616000000_feedback_events.sql`\n- `supabase/migrations/20260616000000_feedback_events.sql`\n\nSupabase\u5074\u306fRLS\u3092\u6709\u52b9\u5316\u3057\u3001\u533f\u540dREST\u516c\u958b\u30dd\u30ea\u30b7\u30fc\u306f\u4f5c\u6210\u3057\u306a\u3044\u3002\u30d5\u30a3\u30fc\u30c9\u30d0\u30c3\u30af\u9001\u4fe1\u306fFastAPI\u7d4c\u7531\u306b\u9650\u5b9a\u3059\u308b\u3002\n\n## \u904b\u7528\u624b\u9806\n\n1. \u672c\u756a\u53cd\u6620\u5f8c\u3001\u8a3a\u65ad\u7d50\u679c\u753b\u9762\u3067\u8a55\u4fa1\u3092\u9001\u4fe1\u3059\u308b\u3002\n2. \u7ba1\u7406\u8005\u306f `GET /api/feedback/summary` \u3092Basic Auth\u4ed8\u304d\u3067\u78ba\u8a8d\u3059\u308b\u3002\n3. \u6708\u6b21\u54c1\u8cea\u30ec\u30dd\u30fc\u30c8\uff08T764/T808\uff09\u3078NPS\u5e73\u5747\u3001\u5426\u5b9a\u8a55\u4fa1\u6bd4\u7387\u3001\u4ee3\u8868\u30b3\u30e1\u30f3\u30c8\u3092\u8ee2\u8a18\u307e\u305f\u306f\u81ea\u52d5\u96c6\u8a08\u3059\u308b\u3002\n4. \u660e\u78ba\u306a\u4e0d\u5177\u5408\u30fb\u6539\u5584\u8981\u671b\u306f `data/issues_tracker.tsv` \u3068 GitHub Issues \u3078\u767b\u9332\u3059\u308b\u3002\n\n## \u78ba\u8a8d\u30b3\u30de\u30f3\u30c9\n\n```powershell\npython -m pytest tests/test_api.py tests/test_db_migration_management.py\npython scripts/manage_db_migrations.py validate --engine sqlite\npython scripts/manage_db_migrations.py validate --engine postgres\npython scripts/manage_db_migrations.py validate --engine supabase\n```\n\n## \u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u3068\u6ce8\u610f\u70b9\n\n- \u30b3\u30e1\u30f3\u30c8\u6b04\u306b\u306f\u500b\u4eba\u60c5\u5831\u3092\u5165\u529b\u3057\u306a\u3044\u524d\u63d0\u3067UI/\u904b\u7528\u3092\u6848\u5185\u3059\u308b\u3002\n- \u7ba1\u7406\u8005\u5411\u3051\u96c6\u8a08API\u306f\u30b3\u30e1\u30f3\u30c8\u5168\u6587\u3067\u306f\u306a\u304f `comment_excerpt` \u3092\u8fd4\u3059\u3002\n- Supabase anon REST\u304b\u3089\u76f4\u63a5\u8aad\u307e\u305b\u306a\u3044\u305f\u3081\u3001RLS\u30dd\u30ea\u30b7\u30fc\u306f\u8ffd\u52a0\u3057\u306a\u3044\u3002\n- T800\u306e\u30a4\u30d9\u30f3\u30c8\u8a08\u6e2c\u3067\u306f\u3001\u500b\u4eba\u8b58\u5225\u5b50\u3067\u306f\u306a\u304f\u7591\u4f3cID\u5316\u3057\u305f\u30bb\u30c3\u30b7\u30e7\u30f3\u5358\u4f4d\u306e\u533f\u540d\u96c6\u8a08\u3078\u5bc4\u305b\u308b\u3002\u30d5\u30a3\u30fc\u30c9\u30d0\u30c3\u30af\u30b3\u30e1\u30f3\u30c8\u672c\u6587\u3084\u9023\u7d61\u5148\u3092 `usage_analytics_events` \u306b\u4fdd\u5b58\u3057\u306a\u3044\u3002\n\n## \u5f8c\u7d9a\u30bf\u30b9\u30af\u3078\u306e\u63a5\u7d9a\n\n- T790: \u554f\u3044\u5408\u308f\u305b\u30d5\u30a9\u30fc\u30e0/\u30b5\u30dd\u30fc\u30c8\u5c0e\u7dda\u3078\u3001\u5426\u5b9a\u8a55\u4fa1\u6642\u306e\u554f\u3044\u5408\u308f\u305b\u8a98\u5c0e\u3092\u8ffd\u52a0\u3067\u304d\u308b\u3002\n- T778: SLA/\u54c1\u8cea\u30d3\u30e5\u30fc\u306bNPS\u5e73\u5747\u3068\u5426\u5b9a\u8a55\u4fa1\u7387\u3092\u8ffd\u52a0\u3067\u304d\u308b\u3002\n- T800: Supabase/FastAPI\u30d9\u30fc\u30b9\u306e\u533f\u540d\u30a4\u30d9\u30f3\u30c8\u8a08\u6e2cKPI\u3078\u7d71\u5408\u6e08\u307f\u3002Firebase Analytics SDK\u3092\u4f7f\u3046\u5834\u5408\u306f\u540c\u610fUI\u3068\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u30dd\u30ea\u30b7\u30fc\u3092\u518d\u78ba\u8a8d\u3059\u308b\u3002\n- T808: \u6708\u6b21\u54c1\u8cea\u30ec\u30dd\u30fc\u30c8\u81ea\u52d5\u914d\u4fe1\u3078NPS\u96c6\u8a08\u3092\u63a5\u7d9a\u3059\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

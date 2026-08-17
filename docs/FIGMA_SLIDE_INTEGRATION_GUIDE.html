@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIGMA_SLIDE_INTEGRATION_GUIDE — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Figma Slide Template & Plugin Integration Guide\n\n\u3053\u306e\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u306f\u3001Figma\u3067\u4f5c\u6210\u3057\u305f\u6d17\u7df4\u3055\u308c\u305f\u30c7\u30b6\u30a4\u30f3\uff082026\u5e74\u30e2\u30c0\u30f3SaaS / Studio\u6c34\u6e96\uff09\u3092\u3001PowerPoint\uff08PPTX\uff09\u304a\u3088\u3073\u672c\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u306e\u81ea\u52d5\u751f\u6210\u30b9\u30af\u30ea\u30d7\u30c8\uff08[`scripts/generate_ceo_presentation_deck.py`](../scripts/generate_ceo_presentation_deck.py)\uff09\u3068\u5b8c\u5168\u9023\u643a\u3055\u305b\u308b\u305f\u3081\u306e\u5b9f\u8df5\u30ac\u30a4\u30c9\u3067\u3059\u3002\n\n---\n\n## 1. \u30c7\u30b6\u30a4\u30f3\u30c8\u30fc\u30af\u30f3\u8a2d\u8a08\uff08Figma \u00d7 Code\u540c\u671f\uff09\n\n\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u30eb\u30fc\u30c8\u306e [`docs/design_tokens.json`](design_tokens.json) \u306b\u3001W3C Design Tokens Community Group\u898f\u683c\u306b\u6e96\u62e0\u3057\u305f\u30c7\u30b6\u30a4\u30f3\u30c8\u30fc\u30af\u30f3\u3092\u5b9a\u7fa9\u3057\u3066\u3044\u307e\u3059\u3002\n\n### \u4e3b\u8981\u30ab\u30e9\u30fc\u30d1\u30ec\u30c3\u30c8\uff08Figma Modern Studio\uff09\n| \u30c8\u30fc\u30af\u30f3\u540d | HEX / \u5024 | \u7528\u9014 |\n| :--- | :--- | :--- |\n| `color.background.page` | `#0B0F19` (Deep Ink) | \u30b9\u30e9\u30a4\u30c9\u5168\u4f53\u306e\u6697\u8272\u30ad\u30e3\u30f3\u30d0\u30b9\u80cc\u666f |\n| `color.background.surface` | `#151E2E` (Dark Slate) | \u5404\u7a2e\u30ab\u30fc\u30c9\u30fb\u30d1\u30cd\u30eb\u30b3\u30f3\u30c6\u30ca\u80cc\u666f |\n| `color.background.surfaceSubtle` | `#1E293B` | \u30c1\u30c3\u30d7\u30fb\u30d8\u30c3\u30c0\u30fc\u30fb\u30db\u30d0\u30fc\u9818\u57df |\n| `color.brand.cyan` | `#38BDF8` | \u30d7\u30e9\u30a4\u30de\u30ea\u30a2\u30af\u30bb\u30f3\u30c8\u3001\u30a2\u30a4\u30d6\u30ed\u30fc\u3001\u4e3b\u8981\u30e1\u30c8\u30ea\u30af\u30b9 |\n| `color.brand.emerald` | `#10B981` | \u6210\u529f\u30fb\u5b8c\u4e86\u30fb\u691c\u8a3c\u6e08\u307f\u6307\u6a19 |\n| `color.brand.amber` | `#F59E0B` | \u9032\u884c\u4e2d\u30fb\u6ce8\u610f\u559a\u8d77\u30fb\u540c\u671f\u4e2d |\n| `color.brand.rose` | `#F43F5E` | \u30ac\u30fc\u30c9\u30ec\u30fc\u30eb\u30fb\u30ea\u30b9\u30af\u30fb\u91cd\u8981\u9805\u76ee |\n| `color.border.subtle` | `#2A364F` | \u30ab\u30fc\u30c9\u5883\u754c\u7dda\uff081px\uff09 |\n\n### \u30bf\u30a4\u30dd\u30b0\u30e9\u30d5\u30a3\u30fb\u30b9\u30da\u30fc\u30b7\u30f3\u30b0\n- **Display Font**: `Plus Jakarta Sans` / `Inter`\uff08\u6b27\u6587\u30bf\u30a4\u30c8\u30eb\u30fb\u6570\u5b57\u30fb\u30a2\u30a4\u30d6\u30ed\u30fc\uff09\n- **Body Font**: `Noto Sans JP` / `Yu Gothic`\uff08\u672c\u6587\u30fb\u65e5\u672c\u8a9e\u89e3\u8aac\uff09\n- **Mono Font**: `JetBrains Mono` / `Consolas`\uff08ID\u30fb\u30d5\u30a1\u30a4\u30eb\u30d1\u30b9\u30fb\u65e5\u6642\uff09\n- **8px Grid**: \u4f59\u767d\u30fb\u30d1\u30c7\u30a3\u30f3\u30b0\u306f `8px`, `16px`, `24px`, `32px` \u3092\u53b3\u683c\u306b\u9069\u7528\n- **Corner Radius**: \u30ab\u30fc\u30c9\u30b3\u30f3\u30c6\u30ca\u306f `12px`\u3001\u30d0\u30c3\u30b8\u30fb\u30c1\u30c3\u30d7\u306f `9999px`\uff08Pill\u5f62\u72b6\uff09\n\n---\n\n## 2. Figma\u30b9\u30e9\u30a4\u30c9\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\u69cb\u9020\uff0816:9 / 1920x1080\uff09\n\nFigma\u3067\u65b0\u898f\u30b9\u30e9\u30a4\u30c9\u3092\u4f5c\u6210\u3059\u308b\u969b\u306f\u3001\u4ee5\u4e0b\u306e\u30d5\u30ec\u30fc\u30e0\u69cb\u9020\u3067\u30ec\u30a4\u30a2\u30a6\u30c8\u3092\u7d71\u4e00\u3057\u307e\u3059\u3002\n\n```\nFrame: Slide (1920 x 1080 px / 16:9)\n\u251c\u2500\u2500 Background (#0B0F19)\n\u251c\u2500\u2500 Layout Grid: 12 Columns (Margin: 80px, Gutter: 24px)\n\u251c\u2500\u2500 Header Component\n\u2502   \u251c\u2500\u2500 Decorative Top Bar (32x4px, #38BDF8)\n\u2502   \u251c\u2500\u2500 Eyebrow Tag (Mono 14px, Bold, #38BDF8, e.g. \"01 / DECISION SCOPE\")\n\u2502   \u2514\u2500\u2500 Main Title (Display 36px, Bold, #F8FAFC)\n\u251c\u2500\u2500 Body Container (Auto Layout: Horizontal or 3-Column Grid)\n\u2502   \u251c\u2500\u2500 Card 1 (#151E2E, Radius: 16px, Border: 1px #2A364F)\n\u2502   \u251c\u2500\u2500 Card 2 (#151E2E, Radius: 16px, Border: 1px #2A364F)\n\u2502   \u2514\u2500\u2500 Card 3 (#151E2E, Radius: 16px, Border: 1px #2A364F)\n\u251c\u2500\u2500 Evidence Panel (#151E2E, Radius: 12px, Bottom Docked)\n\u2514\u2500\u2500 Footer Component\n    \u251c\u2500\u2500 Left: Slide Counter & Source Note (Mono 12px, #64748B)\n    \u2514\u2500\u2500 Right: Project / Deck Name (#94A3B8)\n```\n\n---\n\n## 3. \u304a\u3059\u3059\u3081Figma\u30d7\u30e9\u30b0\u30a4\u30f3 & \u9023\u643a\u624b\u9806\n\n### \u63a8\u5968\u30d7\u30e9\u30b0\u30a4\u30f3\n\n1. **Tokens Studio for Figma (Figma Tokens)**\n   - `docs/design_tokens.json` \u3092\u76f4\u63a5\u30a4\u30f3\u30dd\u30fc\u30c8\u3057\u3001Figma\u306eColor Styles / Typography / Variables\u3092\u4e00\u62ec\u751f\u6210\u3002\n   - Figma\u4e0a\u3067\u8272\u3084\u89d2\u4e38\u3092\u5909\u66f4\u5f8c\u3001JSON\u3078\u5373\u6642\u30a8\u30af\u30b9\u30dd\u30fc\u30c8\u53ef\u80fd\u3002\n\n2. **Pitchdeck Presentation Studio**\n   - Figma\u30b9\u30e9\u30a4\u30c9\u3092\u30cd\u30a4\u30c6\u30a3\u30d6\u7de8\u96c6\u53ef\u80fd\u306a `.pptx` \u5f62\u5f0f\u3067\u76f4\u63a5\u30a8\u30af\u30b9\u30dd\u30fc\u30c8\u3002\n   - \u30c6\u30ad\u30b9\u30c8\u30ec\u30a4\u30e4\u30fc\u304c\u753b\u50cf\u5316\u3055\u308c\u305a\u3001PowerPoint\u4e0a\u3067\u306e\u30c6\u30ad\u30b9\u30c8\u7de8\u96c6\u304c\u53ef\u80fd\u3002\n\n3. **Magicul Figma to PowerPoint Converter**\n   - \u30d9\u30af\u30bf\u30fc\u56f3\u5f62\u3001\u30a2\u30a4\u30b3\u30f3\u3001\u30aa\u30fc\u30c8\u30ec\u30a4\u30a2\u30a6\u30c8\u3092PPTX\u306e\u30cd\u30a4\u30c6\u30a3\u30d6\u30b7\u30a7\u30a4\u30d7\u306b\u5909\u63db\u3002\n\n---\n\n## 4. \u81ea\u52d5\u751f\u6210\u30b9\u30af\u30ea\u30d7\u30c8\u306b\u3088\u308bPPTX\u51fa\u529b\n\n\u672c\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u306e\u30b9\u30af\u30ea\u30d7\u30c8\u3092\u5b9f\u884c\u3059\u308b\u3053\u3068\u3067\u3001Figma Design Tokens\u306b\u6e96\u62e0\u3057\u305fPPTX\u3092\u5373\u5ea7\u306b\u751f\u6210\u3067\u304d\u307e\u3059\u3002\n\n```powershell\n# Figma Modern Studio \u30c6\u30fc\u30de (Dark Ink & \u30ab\u30fc\u30c9\u578b\u30ec\u30a4\u30a2\u30a6\u30c8)\npython scripts/generate_ceo_presentation_deck.py --style figma-modern\n\n# \u5f93\u6765\u306e\u30a8\u30b0\u30bc\u30af\u30c6\u30a3\u30d6\u30e9\u30a4\u30c8\u30c6\u30fc\u30de\npython scripts/generate_ceo_presentation_deck.py --style default\n```\n\n### \u751f\u6210\u6210\u679c\u7269\n- PPTX\u30d5\u30a1\u30a4\u30eb: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02_figma-modern.pptx`\n- \u30b5\u30de\u30ea\u30fc\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02_figma-modern.md`\n- \u30de\u30cb\u30d5\u30a7\u30b9\u30c8: `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02_figma-modern.json`\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

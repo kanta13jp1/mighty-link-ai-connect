@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HYPOTHESIS_AUDIT_2026-07-04 — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u4eee\u8aac\u99c6\u52d5\u578b\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u5065\u5168\u6027\u76e3\u67fb 2026-07-04\uff0810\u4eee\u8aac\u306e\u5168\u6570\u691c\u8a3c\uff09\n\n\u4f5c\u6210\u65e5: 2026-07-04\n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Claude Code\n\u95a2\u9023WBS: T868\uff08\u672c\u76e3\u67fb\uff09 / T811 / T831 / T834 / T837 / T852\n\u95a2\u9023\u8ab2\u984c/QA: R111 / R112 / R113 / QA-94\n\u95a2\u9023docs: [GO_NO_GO_DECISION_PACK_2026-07-07.md](GO_NO_GO_DECISION_PACK_2026-07-07.md) / `WBS_REVIEW_2026-07-13`\n\n---\n\n## \u65b9\u5f0f\n\n\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u5065\u5168\u6027\u306b\u3064\u3044\u3066\u53cd\u8a3c\u53ef\u80fd\u306a\u4eee\u8aac\u309210\u500b\u7acb\u3066\u3001\u305d\u308c\u305e\u308c\u3092\u30b3\u30de\u30f3\u30c9\u5b9f\u884c\u30fb\u30ed\u30b0\u30fb\u5916\u5f62\u76e3\u8996\u3067\u691c\u8a3c\u3057\u305f\u3002\u300c\u652f\u6301\u300d= \u554f\u984c\u304c\u5b9f\u5728\u3057\u5bfe\u5fdc\u304c\u5fc5\u8981\u3001\u300c\u68c4\u5374\u300d= \u554f\u984c\u306a\u3057\uff08\u5065\u5168\uff09\u3002\n\n## \u691c\u8a3c\u7d50\u679c\n\n| # | \u4eee\u8aac | \u5224\u5b9a | \u6839\u62e0 | \u5bfe\u5fdc |\n| --- | --- | --- | --- | --- |\n| H1 | 7/4\u671f\u9650\u306e\u30bf\u30b9\u30af\u306b\u672a\u5b8c\u4e86\u304c\u6b8b\u3063\u3066\u3044\u308b | **\u652f\u6301** | T811\uff08PG14\u8a08\u753b\u30fbCodex\uff09\u3001T831/T834\uff08\u4eba\u9593\uff09\u3001T852\uff08CI\u8a8d\u8a3c\u30fbCodex+\u4eba\u9593\uff09\u306e4\u4ef6\u304c\u672a\u5b8c\u4e86 | 4\u4ef6\u30927/5\u3078\u518d\u8a2d\u5b9a\uff08T837\u958b\u59cb\u30827/5\u3078\u9023\u52d5\uff09\u3002T811/T852\u306fGA\u5224\u5b9a\u6761\u4ef6\u306e\u305f\u30817/5\u5fc5\u7740 |\n| H2 | \u672c\u756a3URL\u306fgreen\u3092\u7dad\u6301\u3057\u3066\u3044\u308b | \u68c4\u5374\uff08\u6b63\u5e38\uff09 | `check_uptime_targets.py`: ok=3 / warning=0 / failed=0 | \u4e0d\u8981 |\n| H3 | R114\u4fee\u5fa9\u5f8c\u306b\u65b0\u305f\u306a\u672c\u756aDB\u30a8\u30e9\u30fc\u304c\u767a\u751f\u3057\u3066\u3044\u308b | \u68c4\u5374\uff08\u6b63\u5e38\uff09 | Cloud Run\u30ed\u30b0\u76f4\u8fd18h\u3067 `Database insert` \u30a8\u30e9\u30fc\u306f\u4fee\u5fa9\u524d\uff0804:31\uff09\u306e2\u4ef6\u306e\u307f | \u4e0d\u8981 |\n| H4 | \u8ab2\u984c/QA\u306e\u958b\u767a\u30d6\u30ed\u30c3\u30ab\u30fc0\u304c\u7dad\u6301\u3055\u308c\u3066\u3044\u308b | **\u652f\u6301**\uff083\u4ef6\u691c\u51fa\uff09 | `audit_issue_qa_blockers.py`: \u8ab2\u984c\u30d6\u30ed\u30c3\u30ab\u30fc3\uff08R111/R112/R113\uff09\u3001QA\u30d6\u30ed\u30c3\u30ab\u30fc0 | 3\u4ef6\u3068\u30827/7 T833\u30fb7/8\u5b9a\u4f8b\u3067\u89e3\u6d88\u7d4c\u8def\u78ba\u5b9a\u6e08\u307f\u3002**T849\u524d\u306e\u30af\u30ed\u30fc\u30ba\u5fc5\u9808\uff08PUBLIC-15\uff09**\u3092 R111 \u30e1\u30e2\u306b\u660e\u8a18 |\n| H5 | docs\u306b\u53e4\u3044\u8a18\u8ff0\u304c\u6b8b\u3063\u3066\u3044\u308b | **\u4e00\u90e8\u652f\u6301** | \u5f53\u6642\u306e7/3\u30ec\u30d3\u30e5\u30fc\u306e\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u30d1\u30b9\u8868\u306b\u65e7\u5b9a\u4f8b\u65e5\uff087/2\u4eee\u30fb7/3\u671f\u9650\uff09\u304c\u6b8b\u5b58\u3057\u3066\u3044\u305f | 7/8(\u6c34)15:00\u78ba\u5b9a\u3078\u4fee\u6b63\u6e08\u307f\u3002\u65e7\u30ec\u30d3\u30e5\u30fc\u306f2026-07-13\u7d71\u5408\u7248\u3078\u96c6\u7d04\u3057\u3001\u904e\u53bb\u5224\u65ad\u306fGit\u5c65\u6b74\u3067\u4fdd\u6301 |\n| H6 | WBS.md \u304cTSV\u304b\u3089\u306e\u518d\u751f\u6210\u3068\u4e00\u81f4\u3059\u308b | \u68c4\u5374\uff08\u6b63\u5e38\uff09 | `generate_wbs_md.py` \u518d\u5b9f\u884c\u5f8c `git diff` \u5dee\u5206\u306a\u3057 | \u4e0d\u8981 |\n| H7 | WBS\u5b8c\u4e86\u30bf\u30b9\u30af\u306b\u7d10\u3065\u304fopen Issue\u304c\u6b8b\u3063\u3066\u3044\u308b | \u68c4\u5374\uff08\u6b63\u5e38\uff09 | open Issue 7\u4ef6\uff08#126/#132/#136/#137/#139/#154/#158\uff09\u306f\u3059\u3079\u3066\u672a\u5b8c\u4e86\u30bf\u30b9\u30af\u306b\u5bfe\u5fdc | \u4e0d\u8981 |\n| H8 | Calendar\u306e\u30a2\u30af\u30c6\u30a3\u30d6\u30a4\u30d9\u30f3\u30c8\u6570\u304c\u672a\u5b8c\u4e86\u30bf\u30b9\u30af\u6570\u3068\u4e00\u81f4\u3057\u306a\u3044 | \u68c4\u5374\uff08\u6b63\u5e38\uff09 | closeout\u540c\u671f\u3067 Active=28 = \u672a\u5b8c\u4e8628\u4ef6\u3092\u7167\u5408\uff08\u5b8c\u4e86\u30a4\u30d9\u30f3\u30c8\u306f\u524a\u9664\u6e08\u307f\u904b\u7528\uff09 | \u4e0d\u8981 |\n| H9 | Gemini\u30e2\u30c7\u30eb\u30dd\u30ea\u30b7\u30fc\uff083.5-flash\u65e2\u5b9a\u30fblatest\u7981\u6b62\uff09\u304c\u7834\u3089\u308c\u3066\u3044\u308b | \u68c4\u5374\uff08\u6b63\u5e38\uff09 | `audit_gemini_model_policy.py` passed | \u4e0d\u8981 |\n| H10 | docs/data\u306bsecret\u69d8\u306e\u5024\u304c\u6df7\u5165\u3057\u3066\u3044\u308b | \u68c4\u5374\uff08\u6b63\u5e38\uff09 | \u30d1\u30bf\u30fc\u30f3\u30b9\u30ad\u30e3\u30f3\uff08API key/JWT/DB URL\uff09\u3067\u306e\u30d2\u30c3\u30c8\u306f\u3059\u3079\u3066 `<password>` \u7b49\u306eplaceholder\u3001\u30ed\u30fc\u30ab\u30eb\u30a8\u30df\u30e5\u30ec\u30fc\u30bf\u5024\u3001\u691c\u51fa\u7528\u6b63\u898f\u8868\u73fe | \u4e0d\u8981 |\n\n## \u7d50\u8ad6\n\n10\u4eee\u8aac\u4e2d\u3001\u5b9f\u554f\u984c\u306f **H1\uff08\u671f\u9650\u8d85\u904e4\u4ef6\uff09\u3068 H5\uff08stale\u8a18\u8ff01\u4ef6\uff09\u306e\u307f**\u3067\u3001\u3044\u305a\u308c\u3082\u672c\u76e3\u67fb\u5185\u3067\u4fee\u6b63\u6e08\u307f\u3002H4 \u306e3\u4ef6\u306f\u7ba1\u7406\u3055\u308c\u305f\u30b2\u30fc\u30c8\uff08\u89e3\u6d88\u7d4c\u8def\u30fb\u671f\u9650\u78ba\u5b9a\u6e08\u307f\uff09\u3067\u3042\u308a\u65b0\u898f\u30ea\u30b9\u30af\u3067\u306f\u306a\u3044\u3002\u672c\u756a\u7cfb\uff08\u7a3c\u50cd\u30fbDB\u30fb\u30e2\u30c7\u30eb\u30dd\u30ea\u30b7\u30fc\u30fbsecret\u885b\u751f\u30fb\u540c\u671f\u6574\u5408\uff09\u306f\u3059\u3079\u3066\u5065\u5168\u3002\n\n7/8 \u793e\u5185GA\u306b\u5411\u3051\u305f\u6b8b\u30af\u30ea\u30c6\u30a3\u30ab\u30eb\u306f\u3001Codex\u30ec\u30fc\u30f3\u306e **T811\u2192T837\uff08PG\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u30017/5-7/6\uff09\u3068 T852\uff08CI\u8a8d\u8a3c\u30017/5\uff09**\u3001\u4eba\u9593\u306e **T798\uff08\u6cd5\u52d9\u30017/6\uff09\u30fbT823\uff08\u79fb\u7ba1\u30017/5\uff09\u30fbT831/T834\uff087/5\uff09**\u3002\u5224\u5b9a\u624b\u9806\u306f [GO_NO_GO_DECISION_PACK_2026-07-07.md](GO_NO_GO_DECISION_PACK_2026-07-07.md) \u3092\u6b63\u672c\u3068\u3059\u308b\u3002\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\uff082026-07-04\uff09\n\n\u672c\u65e5\u5206\u306f Supabase changelog\uff08PG14\u30b5\u30dd\u30fc\u30c8\u9664\u53bb 2026-07-01 \u306e\u88cf\u53d6\u308a\u3001\u5224\u5b9a\u30d1\u30c3\u30af\u3078\u53cd\u6620\u6e08\u307f\uff09\u3068 Stripe test mode/Sandboxes\uff08\u524d\u30bb\u30c3\u30b7\u30e7\u30f3\u3001T791\u3078\u53cd\u6620\u6e08\u307f\uff09\u3002\u305d\u306e\u4ed6\u306e\u5bfe\u8c61\u306f\u4eca\u56de\u306e\u76e3\u67fb\u7bc4\u56f2\u306b\u5f71\u97ff\u306a\u3057\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

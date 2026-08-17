@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTEBOOKLM_SYNC_TIMEOUT_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# NotebookLM \u540c\u671f\u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\u5bfe\u7b56 Runbook\n\n\u4f5c\u6210\u65e5: 2026-06-21\n\u5bfe\u8c61WBS: T826 / T830\n\n## \u76ee\u7684\n\n`docs/` \u304b\u3089 Google Docs / Google Drive / NotebookLM sources \u3078\u540c\u671f\u3059\u308b\u51e6\u7406\u3068\u3001NotebookLM \u306b\u9577\u6587\u56de\u7b54\u3092\u751f\u6210\u3055\u305b\u308b\u51e6\u7406\u3092\u5206\u96e2\u3059\u308b\u3002\n\n\u524d\u56de\u306e\u540c\u671f\u3067\u306f\u3001Drive \u3078\u306e\u53d6\u308a\u8fbc\u307f\u3068 NotebookLM source \u8ffd\u52a0\u306f\u5b8c\u4e86\u3057\u305f\u4e00\u65b9\u3067\u3001NotebookLM \u306e `ask` \u751f\u6210\u304c\u9577\u6642\u9593\u5316\u3057\u3001\u30bb\u30c3\u30b7\u30e7\u30f3 closeout \u5168\u4f53\u304c\u4e0d\u5b89\u5b9a\u306b\u306a\u3063\u305f\u3002\u4eca\u5f8c\u306f closeout \u306e\u4e3b\u5224\u5b9a\u3092\u300csource \u540c\u671f\u5b8c\u4e86\u300d\u306b\u7f6e\u304d\u3001\u56de\u7b54\u751f\u6210\u306f\u5fc5\u8981\u6642\u3060\u3051\u5225\u30d5\u30a7\u30fc\u30ba\u3067\u5b9f\u884c\u3059\u308b\u3002\n\n2026-06-21\u306e\u518d\u767a\uff08T830\uff09\u3067\u306f\u3001`--skip-asks --skip-source-refresh --source-timeout-seconds 60` \u3068 `--drive-only` \u306e\u4e21\u65b9\u304c5\u5206\u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\u3057\u305f\u3002\u539f\u56e0\u306f NotebookLM CLI \u3067\u306f\u306a\u304f\u3001`--drive-only` \u3067\u3082\u5168 `docs/*.md` \u3092\u6bce\u56deGoogle Docs\u3078\u518d\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3057\u3066\u3044\u305f\u3053\u3068\u306b\u3088\u308bDrive\u540c\u671f\u6642\u9593\u306e\u5897\u5927\u3060\u3063\u305f\u3002\n\nT830\u3067 `exports/knowledge_flow/notebooklm_docs_manifest.json` \u306e `source_digest` \u3068\u30ed\u30fc\u30ab\u30ebmtime\u3092\u4f7f\u3046\u5dee\u5206\u540c\u671f\u306b\u5909\u66f4\u3057\u305f\u3002\u672a\u5909\u66f4docs\u306f\u65e2\u5b58Drive document ID\u3092\u4fe1\u983c\u3057\u3066skip\u3057\u3001\u5909\u66f4docs\u3060\u3051\u3092Drive API\u3078\u9001\u308b\u3002\u5168\u4ef6\u518d\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u304c\u5fc5\u8981\u306a\u5834\u5408\u3060\u3051 `--force-drive-sync` \u3092\u4f7f\u3046\u3002\n\n## \u6a19\u6e96\u624b\u9806\n\n### 1. Drive \u3060\u3051\u540c\u671f\u3059\u308b\n\nNotebookLM CLI \u306e\u72b6\u614b\u306b\u4f9d\u5b58\u305b\u305a\u3001Google Drive \u5074\u306e docs \u540c\u671f\u3060\u3051\u3092\u66f4\u65b0\u3059\u308b\u5834\u5408:\n\n```powershell\npython scripts/sync_docs_to_notebooklm.py --drive-only\n```\n\n\u901a\u5e38\u306f\u5dee\u5206\u540c\u671f\u3067\u52d5\u4f5c\u3059\u308b\u3002T830\u691c\u8a3c\u3067\u306f\u300194\u4ef6\u4e2d88\u4ef6\u3092\u672a\u5909\u66f4skip\u30016\u4ef6\u3060\u3051\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3057\u300132\u79d2\u3067\u5b8c\u4e86\u3057\u305f\u3002\n\n\u5168docs\u3092\u5f37\u5236\u7684\u306bDrive\u3078\u518d\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u3059\u308b\u5834\u5408:\n\n```powershell\npython scripts/sync_docs_to_notebooklm.py --drive-only --force-drive-sync\n```\n\n### 2. NotebookLM sources \u307e\u3067\u540c\u671f\u3059\u308b\n\nNotebookLM CLI \u306b\u30ed\u30b0\u30a4\u30f3\u6e08\u307f\u3067\u3001NotebookLM notebook \u306e source set \u3092\u66f4\u65b0\u3057\u305f\u3044\u304c\u3001\u56de\u7b54\u751f\u6210\u3092\u5f85\u305f\u306a\u3044\u5834\u5408:\n\n```powershell\npython scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60\n```\n\nT830\u691c\u8a3c\u3067\u306f\u3001Drive docs 94\u4ef6\u3092\u3059\u3079\u3066\u672a\u5909\u66f4skip\u3057\u3001NotebookLM source refresh\u3082skip\u3057\u306617\u79d2\u3067\u5b8c\u4e86\u3057\u305f\u3002\n\n\u3053\u306e\u30b3\u30de\u30f3\u30c9\u306f\u6b21\u3092\u884c\u3046\u3002\n\n- `docs/*.md` \u3092 Workspace \u7ba1\u7406\u306e Google Docs \u3078\u540c\u671f\u3059\u308b\u3002\n- NotebookLM notebook \u306b Drive docs \u3092 source \u3068\u3057\u3066\u8ffd\u52a0\u307e\u305f\u306f\u66f4\u65b0\u3059\u308b\u3002\n- manifest \u306b Notebook ID \u304c\u6b8b\u3063\u3066\u3044\u306a\u3044\u5834\u5408\u3067\u3082\u3001\u540c\u540d\u306e\u65e2\u5b58Notebook\u3092\u518d\u5229\u7528\u3057\u3001\u65b0\u898fNotebook\u306e\u91cd\u8907\u4f5c\u6210\u3092\u907f\u3051\u308b\u3002\n- `--skip-source-refresh` \u6307\u5b9a\u6642\u306f\u3001\u65e2\u5b58source\u306e\u5f37\u5236refresh\u3092\u540c\u4e00closeout\u5185\u3067\u306f\u884c\u308f\u305a\u3001\u9577\u6642\u9593\u5316\u3092\u907f\u3051\u308b\u3002\n- `exports/knowledge_flow/notebooklm_agent_brief.md` \u3068 `notebooklm_ceo_slide_outline.md` \u306b\u306f\u3001source \u540c\u671f\u5b8c\u4e86\u3092\u793a\u3059\u30d7\u30ec\u30fc\u30b9\u30db\u30eb\u30c0\u30fc\u3092\u66f8\u304f\u3002\n- `exports/knowledge_flow/notebooklm_docs_manifest.json` \u306b `ask_generation.status = skipped` \u3092\u8a18\u9332\u3059\u308b\u3002\n\n### 3. NotebookLM \u306e\u56de\u7b54\u751f\u6210\u3092\u5225\u5b9f\u884c\u3059\u308b\n\nAgent Brief \u3084 CEO Slide Outline \u3092 NotebookLM \u3067\u518d\u751f\u6210\u3057\u305f\u3044\u5834\u5408:\n\n```powershell\npython scripts/sync_docs_to_notebooklm.py --ask-timeout-seconds 900\n```\n\n\u65e2\u5b9a\u306e `NOTEBOOKLM_COMMAND_TIMEOUT_SECONDS` \u306f 420 \u79d2\u3002\u9577\u6587\u56de\u7b54\u751f\u6210\u3060\u3051\u3092\u5ef6\u9577\u3057\u305f\u3044\u5834\u5408\u306f\u3001`--ask-timeout-seconds` \u3067\u660e\u793a\u3059\u308b\u3002\n\n## \u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\u6642\u306e\u6271\u3044\n\n`notebooklm summary` \u307e\u305f\u306f `notebooklm ask` \u304c\u30bf\u30a4\u30e0\u30a2\u30a6\u30c8\u3057\u305f\u5834\u5408\u3001\u30b9\u30af\u30ea\u30d7\u30c8\u306f\u672a\u51e6\u7406\u4f8b\u5916\u3067\u843d\u3068\u3055\u305a\u3001\u8a72\u5f53\u30b3\u30de\u30f3\u30c9\u306e return code \u3092 `124` \u3068\u3057\u3066 manifest \u306b\u8a18\u9332\u3059\u308b\u3002\n\n\u3053\u306e\u5834\u5408\u3067\u3082\u3001Drive \u540c\u671f\u3068 NotebookLM source \u540c\u671f\u304c\u5b8c\u4e86\u3057\u3066\u3044\u308c\u3070\u3001source set \u306f\u6b21\u56de\u306e\u56de\u7b54\u751f\u6210\u306b\u518d\u5229\u7528\u3067\u304d\u308b\u3002\n\n## \u6b8b\u7559\u30d7\u30ed\u30bb\u30b9\u78ba\u8a8d\n\nNotebookLM CLI \u304c\u9577\u6642\u9593\u5fdc\u7b54\u3057\u306a\u3044\u5834\u5408\u306f\u3001\u6b8b\u7559\u30d7\u30ed\u30bb\u30b9\u3092\u78ba\u8a8d\u3059\u308b\u3002\n\n```powershell\nGet-Process | Where-Object { $_.ProcessName -match 'python|notebook|chrome|msedge' } |\n  Select-Object ProcessName,Id,CPU,WorkingSet |\n  Sort-Object WorkingSet -Descending\n```\n\n\u4e0d\u8981\u306a\u30d7\u30ed\u30bb\u30b9\u3092\u7d42\u4e86\u3059\u308b\u5834\u5408\u306f\u3001\u5bfe\u8c61\u306e\u30d7\u30ed\u30bb\u30b9ID\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u500b\u5225\u306b\u7d42\u4e86\u3059\u308b\u3002\u7121\u95a2\u4fc2\u306a\u30d6\u30e9\u30a6\u30b6\u3084\u30a8\u30c7\u30a3\u30bf\u3092\u307e\u3068\u3081\u3066\u7d42\u4e86\u3057\u306a\u3044\u3002\n\n## \u904b\u7528\u5224\u65ad\n\n- closeout \u3092\u5b89\u5b9a\u3055\u305b\u305f\u3044: `--drive-only` \u307e\u305f\u306f `--skip-asks`\n- NotebookLM source \u306e\u8ffd\u52a0\u72b6\u614b\u3092\u4fdd\u3061\u305f\u3044: `--skip-asks --skip-source-refresh --source-timeout-seconds 60`\n- \u65e2\u5b58source\u3082\u5f37\u5236refresh\u3057\u305f\u3044: `--skip-asks --source-timeout-seconds 120` \u306a\u3069\u3001\u6642\u9593\u3092\u53d6\u308c\u308b\u6642\u306b\u5225\u5b9f\u884c\u3059\u308b\n- NotebookLM \u751f\u6210\u7269\u305d\u306e\u3082\u306e\u304c\u5fc5\u8981: `--ask-timeout-seconds 900`\n- CLI \u8a8d\u8a3c\u304c\u5207\u308c\u3066\u3044\u308b: `python scripts/notebooklm_login_workspace.py` \u3092\u5b9f\u884c\u3057\u3001\u4f1a\u793e\u63d0\u4f9b Google \u30a2\u30ab\u30a6\u30f3\u30c8 `k-umezawa@ml-mightylink.com` \u3067\u30ed\u30b0\u30a4\u30f3\u3059\u308b\n- Drive docs\u3092\u5f37\u5236\u518d\u4f5c\u6210\u3057\u305f\u3044: `--force-drive-sync` \u3092\u660e\u793a\u3059\u308b\u3002\u901a\u5e38closeout\u3067\u306f\u6307\u5b9a\u3057\u306a\u3044\u3002\n\n## \u95a2\u9023\u30d5\u30a1\u30a4\u30eb\n\n- `scripts/sync_docs_to_notebooklm.py`\n- `tests/test_sync_docs_to_notebooklm.py`\n- `exports/knowledge_flow/notebooklm_docs_manifest.json`\n- `exports/knowledge_flow/notebooklm_cli_next_steps.md`\n- `exports/knowledge_flow/notebooklm_agent_brief.md`\n- `exports/knowledge_flow/notebooklm_ceo_slide_outline.md`\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAGING_ENVIRONMENT_OPERATION_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Firebase / Supabase \u30b9\u30c6\u30fc\u30b8\u30f3\u30b0\u74b0\u5883\u904b\u7528 Runbook (T788)\n\n\u4f5c\u6210\u65e5: 2026-06-11  \n\u30aa\u30fc\u30ca\u30fc: VSCode + Codex \u30ec\u30fc\u30f3  \n\u95a2\u9023: [FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md](FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md) / [FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md](FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md) / [SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md](SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md) / [SETUP_GUIDE.md](SETUP_GUIDE.md)\n\n---\n\n## \u76ee\u7684\n\n\u672c\u756a\u53cd\u6620\u524d\u306b\u3001Firebase Hosting preview channel \u3068 Supabase staging \u74b0\u5883\u3067\u5909\u66f4\u3092\u691c\u8a3c\u3057\u3001production \u306e JWT secret\u30fbDB\u30fbservice role key \u3068\u6df7\u5728\u3057\u306a\u3044\u72b6\u614b\u3092\u4fdd\u8a3c\u3059\u308b\u3002T788 \u306e\u5b8c\u4e86\u6761\u4ef6\u306f\u6b21\u306e3\u70b9\u3068\u3059\u308b\u3002\n\n1. Firebase Hosting preview channel \u306e\u624b\u9806\u3068\u7981\u6b62\u4e8b\u9805\u304c\u660e\u6587\u5316\u3055\u308c\u3066\u3044\u308b\u3002\n2. Supabase staging/prod \u306e URL\u30fbanon key\u30fbJWT secret fingerprint\u30fbservice role key \u306e\u5206\u96e2\u3092\u691c\u8a3c\u3067\u304d\u308b\u3002\n3. WBS/Sheets/Calendar/GitHub Issue/Project \u306b\u5b8c\u4e86\u8a3c\u8de1\u3092\u6b8b\u305b\u308b\u3002\n\n## \u516c\u5f0fdocs\u78ba\u8a8d\u30e1\u30e2\n\n2026-06-11 \u306e\u4f5c\u696d\u958b\u59cb\u6642\u306b\u3001Firebase Hosting preview channel\u3001Firebase CLI\u3001Supabase Branching\u3001Supabase Local Development\u3001Supabase RLS \u306e\u516c\u5f0fdocs\u3092\u78ba\u8a8d\u3057\u305f\u3002\u53cd\u6620\u3057\u305f\u904b\u7528\u30eb\u30fc\u30eb\u306f\u6b21\u306e\u901a\u308a\u3002\n\n- Firebase Hosting \u306e preview channel \u306f\u672c\u756a\u306e live channel \u3078\u51fa\u3055\u305a\u306bURL\u4ed8\u304d\u306e\u4e00\u6642\u691c\u8a3c\u74b0\u5883\u3092\u4f5c\u308b\u7528\u9014\u306b\u4f7f\u3046\u3002\n- Firebase CLI \u306f Application Default Credentials \u307e\u305f\u306f\u30b5\u30fc\u30d3\u30b9\u30a2\u30ab\u30a6\u30f3\u30c8\u3092\u512a\u5148\u3057\u3001legacy token \u4f9d\u5b58\u3092\u5897\u3084\u3055\u306a\u3044\u3002\n- Supabase Branching \u306f staging/QA/dev \u306e persistent branch \u3068\u3001PR\u5411\u3051\u306e ephemeral preview branch \u3092\u4f7f\u3044\u5206\u3051\u308b\u3002\n- Supabase branch \u306f\u72ec\u7acb\u3057\u305fAPI credentials\u3092\u6301\u3064\u305f\u3081\u3001staging/prod \u306e URL\u30fb\u30ad\u30fc\u30fbJWT secret fingerprint \u3092\u540c\u4e00\u306b\u3057\u306a\u3044\u3002\n- Supabase RLS \u306f\u30e6\u30fc\u30b6\u30fc\u304c\u7de8\u96c6\u53ef\u80fd\u306a `user_metadata` \u30af\u30ec\u30fc\u30e0\u3092\u8a8d\u53ef\u5224\u65ad\u306b\u4f7f\u308f\u306a\u3044\u3002Firebase UID \u9023\u643a\u306f\u65e2\u5b58\u8a2d\u8a08\u3069\u304a\u308a `public.firebase_uid()` \u3068\u30b5\u30fc\u30d0\u30fc\u5074\u691c\u8a3c\u3092\u6b63\u3068\u3059\u308b\u3002\n\n## \u74b0\u5883\u30de\u30c8\u30ea\u30af\u30b9\n\n| \u74b0\u5883 | Firebase | Supabase | \u7528\u9014 | \u30c7\u30fc\u30bf |\n| --- | --- | --- | --- | --- |\n| local | Firebase Emulator / local FastAPI | Supabase Local CLI | \u958b\u767a\u30fb\u5358\u4f53\u691c\u8a3c | synthetic seed \u306e\u307f |\n| staging | Firebase Hosting preview channel `staging` | Supabase persistent branch \u307e\u305f\u306f\u691c\u8a3c\u7528\u30d7\u30ed\u30b8\u30a7\u30af\u30c8 | \u672c\u756a\u53cd\u6620\u524d\u306e\u7d50\u5408\u691c\u8a3c | \u672c\u756a\u500b\u4eba\u30c7\u30fc\u30bf\u306e\u30b3\u30d4\u30fc\u7981\u6b62 |\n| production | Firebase Hosting live channel / Cloud Run / Functions | Supabase production project | CEO\u5171\u6709URL\u3068\u672c\u756a\u904b\u7528 | \u672c\u756a\u30c7\u30fc\u30bf |\n\n## \u5fc5\u9808\u74b0\u5883\u5909\u6570\n\n\u5024\u305d\u306e\u3082\u306e\u306f\u30ea\u30dd\u30b8\u30c8\u30ea\u306b\u4fdd\u5b58\u3057\u306a\u3044\u3002fingerprint \u306f `sha256:<\u77ed\u7e2e\u5024>` \u306e\u3088\u3046\u306a\u975e\u79d8\u5bc6\u5024\u3060\u3051\u3092\u8a18\u9332\u3057\u3066\u3088\u3044\u3002\n\n| \u5909\u6570 | \u7528\u9014 | \u30eb\u30fc\u30eb |\n| --- | --- | --- |\n| `FIREBASE_PROJECT_ID` | production Firebase project | `.firebaserc` \u306e default \u3068\u4e00\u81f4\u3055\u305b\u308b |\n| `FIREBASE_STAGING_PROJECT_ID` | \u5c02\u7528staging project\u3092\u4f7f\u3046\u5834\u5408 | production \u3068\u540c\u4e00\u7981\u6b62 |\n| `FIREBASE_HOSTING_PREVIEW_CHANNEL` | preview channel\u540d | \u672a\u8a2d\u5b9a\u6642\u306f `staging`\u3001`live/prod/production/main/master/default` \u7981\u6b62 |\n| `FIREBASE_FUNCTIONS_DEPLOY_ENABLED` | Functions deploy opt-in | staging\u691c\u8a3c\u4e2d\u306f\u539f\u5247\u672a\u8a2d\u5b9a/false |\n| `ALLOW_STAGING_FUNCTIONS_DEPLOY` | Functions deploy\u4e8c\u91cd\u78ba\u8a8d | `FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true` \u306e\u6642\u3060\u3051 `true` \u306b\u3059\u308b |\n| `SUPABASE_STAGING_URL` / `SUPABASE_PROD_URL` | Supabase endpoint | \u540c\u4e00\u7981\u6b62 |\n| `SUPABASE_STAGING_ANON_KEY` / `SUPABASE_PROD_ANON_KEY` | browser\u5411\u3051anon key | \u540c\u4e00\u7981\u6b62 |\n| `SUPABASE_STAGING_JWT_SECRET_FINGERPRINT` / `SUPABASE_PROD_JWT_SECRET_FINGERPRINT` | JWT secret\u6bd4\u8f03\u7528fingerprint | \u540c\u4e00\u7981\u6b62\u3001raw secret\u4fdd\u5b58\u7981\u6b62 |\n| `SUPABASE_STAGING_SERVICE_ROLE_KEY` / `SUPABASE_PROD_SERVICE_ROLE_KEY` | backend secret | \u540c\u4e00\u7981\u6b62\u3001\u30ed\u30fc\u30ab\u30eb\u5e38\u99d0\u306f\u4e0d\u8981 |\n\n## \u4e8b\u524d\u691c\u8a3c\n\nstaging deploy \u307e\u305f\u306fDB migration\u524d\u306b\u5fc5\u305a\u5b9f\u884c\u3059\u308b\u3002\n\n```powershell\npython scripts/verify_staging_environment_config.py --fail-on-critical\n```\n\nJSON\u3067\u76e3\u67fb\u30ed\u30b0\u3092\u6b8b\u3059\u5834\u5408:\n\n```powershell\npython scripts/verify_staging_environment_config.py --json --output reports/staging_environment_config.json\n```\n\n`warning` \u306f\u300c\u672c\u756a\u4e8b\u6545\u306b\u306f\u76f4\u7d50\u3057\u306a\u3044\u304c\u3001staging\u63a5\u7d9a\u60c5\u5831\u304c\u672a\u8a2d\u5b9a\u300d\u3092\u8868\u3059\u3002`critical` \u306f deploy/migration \u3092\u6b62\u3081\u308b\u3002\n\n## Firebase Hosting preview channel \u624b\u9806\n\n1. \u5909\u66f4\u3092\u30ed\u30fc\u30ab\u30eb\u3067\u691c\u8a3c\u3059\u308b\u3002\n\n```powershell\npython -m pytest\npython scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/\n```\n\n2. preview channel\u540d\u3092\u56fa\u5b9a\u3059\u308b\u3002\n\n```powershell\n$env:FIREBASE_HOSTING_PREVIEW_CHANNEL = \"staging\"\n```\n\n3. staging\u8a2d\u5b9a\u30c1\u30a7\u30c3\u30af\u3092\u901a\u3059\u3002\n\n```powershell\npython scripts/verify_staging_environment_config.py --fail-on-critical\n```\n\n4. Hosting\u3060\u3051\u3092preview channel\u3078\u51fa\u3059\u3002Functions\u306f opt-in \u307e\u3067\u542b\u3081\u306a\u3044\u3002\n\n```powershell\nfirebase hosting:channel:deploy $env:FIREBASE_HOSTING_PREVIEW_CHANNEL --project $env:FIREBASE_PROJECT_ID --expires 7d\n```\n\n5. preview URL\u3067\u8a8d\u8a3c\u30fbAPI\u306a\u3057\u8868\u793a\u30fb\u4e3b\u8981CTA\u3092\u78ba\u8a8d\u3059\u308b\u3002CEO\u5171\u6709URL\u306f GitHub Pages \u306e\u307e\u307e\u306a\u306e\u3067\u3001preview URL\u3092CEO\u306b\u6052\u4e45\u5171\u6709\u3057\u306a\u3044\u3002\n\n6. \u4e0d\u8981\u306b\u306a\u3063\u305fpreview channel\u306f\u524a\u9664\u3059\u308b\u3002\n\n```powershell\nfirebase hosting:channel:delete $env:FIREBASE_HOSTING_PREVIEW_CHANNEL --project $env:FIREBASE_PROJECT_ID\n```\n\n## Supabase staging\u904b\u7528\n\nSupabase\u306f\u6b21\u306e\u512a\u5148\u9806\u4f4d\u3067 staging \u3092\u78ba\u4fdd\u3059\u308b\u3002\n\n1. Supabase Branching \u306e persistent branch \u3092 staging/QA/dev \u7528\u306b\u4f5c\u6210\u3059\u308b\u3002\n2. Branching\u3092\u4f7f\u3048\u306a\u3044\u5834\u5408\u306f\u691c\u8a3c\u7528\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3092\u5225\u9014\u4f5c\u6210\u3059\u308b\u3002\n3. Pull request\u3054\u3068\u306e\u77ed\u547d\u691c\u8a3c\u306f ephemeral preview branch \u3092\u4f7f\u3044\u3001\u5b8c\u4e86\u5f8c\u306b\u524a\u9664\u3059\u308b\u3002\n\n\u904b\u7528\u30eb\u30fc\u30eb:\n\n- production \u306e personal data \u3092 staging \u3078\u30b3\u30d4\u30fc\u3057\u306a\u3044\u3002\u5fc5\u8981\u306a\u30c7\u30fc\u30bf\u306f synthetic seed \u3068\u533f\u540d\u5316\u30b5\u30f3\u30d7\u30eb\u3067\u4f5c\u308b\u3002\n- migration \u306f local -> staging -> production \u306e\u9806\u306b\u9032\u3081\u308b\u3002\n- staging migration\u5f8c\u306b `tests/test_rls_policies.py` \u3068\u95a2\u4fc2\u3059\u308bAPI\u30c6\u30b9\u30c8\u3092\u901a\u3059\u3002\n- `service_role` key \u306f Cloud Functions / Cloud Run / CI \u306esecret store\u306b\u306e\u307f\u7f6e\u304d\u3001\u30d5\u30ed\u30f3\u30c8\u30a8\u30f3\u30c9\u30fbdocs\u30fbWBS\u30fbSheets\u306b\u306f\u66f8\u304b\u306a\u3044\u3002\n- RLS policy\u306f `user_metadata` \u3092\u53c2\u7167\u3057\u306a\u3044\u3002\u30e6\u30fc\u30b6\u30fc\u5c5e\u6027\u306b\u3088\u308b\u8a8d\u53ef\u304c\u5fc5\u8981\u306a\u5834\u5408\u306f\u3001\u6539\u5909\u4e0d\u80fd\u306a app metadata \u307e\u305f\u306fDB\u5074\u306e\u30ed\u30fc\u30eb\u30c6\u30fc\u30d6\u30eb\u3092\u4f7f\u3046\u3002\n\n## \u672c\u756a\u53cd\u6620\u524d\u30c1\u30a7\u30c3\u30af\u30ea\u30b9\u30c8\n\n- [ ] `python scripts/verify_staging_environment_config.py --fail-on-critical` \u304c critical \u306a\u3057\u3002\n- [ ] Firebase preview channel URL\u3067\u4e3b\u8981\u753b\u9762\u304c\u8868\u793a\u3067\u304d\u308b\u3002\n- [ ] Functions deploy \u306f `FIREBASE_FUNCTIONS_DEPLOY_ENABLED=true` \u3068 `ALLOW_STAGING_FUNCTIONS_DEPLOY=true` \u306e\u4e21\u65b9\u304c\u5fc5\u8981\u3002\n- [ ] Supabase staging/prod URL\u30fbanon key\u30fbJWT secret fingerprint \u304c\u4e00\u81f4\u3057\u3066\u3044\u306a\u3044\u3002\n- [ ] service role key \u3092\u30ed\u30fc\u30ab\u30eb\u30fbdocs\u30fbGit\u5dee\u5206\u3078\u51fa\u3057\u3066\u3044\u306a\u3044\u3002\n- [ ] `python -m pytest tests/test_staging_environment_config.py tests/test_rls_policies.py` \u304c\u6210\u529f\u3002\n- [ ] \u516c\u958b\u30c7\u30e2 guard \u304c\u6210\u529f\u3002\n- [ ] WBS/Sheets/Calendar/GitHub Issue/Project \u3092\u540c\u671f\u3057\u3001\u5b8c\u4e86\u6e08\u307fCalendar\u30a4\u30d9\u30f3\u30c8\u306f\u524a\u9664\u6e08\u307f\u3002\n\n## \u30ed\u30fc\u30eb\u30d0\u30c3\u30af\n\n- Hosting preview\u306e\u554f\u984c\u306f channel \u524a\u9664\u3067\u6b62\u3081\u308b\u3002\n- staging DB migration\u306e\u554f\u984c\u306f staging branch/project\u3092\u7834\u68c4\u3057\u3066\u518d\u4f5c\u6210\u3059\u308b\u3002production\u3078\u672a\u9069\u7528\u306a\u3089\u672c\u756arollback\u306f\u4e0d\u8981\u3002\n- production\u3078\u9069\u7528\u5f8c\u306b\u554f\u984c\u304c\u51fa\u305f\u5834\u5408\u306f [PRODUCTION_ROLLBACK_RUNBOOK.md](PRODUCTION_ROLLBACK_RUNBOOK.md) \u3068 [DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md](DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md) \u306b\u5f93\u3044\u3001RLS\u30fbmigration\u30fb\u516c\u958bURL\u5f71\u97ff\u3092\u5207\u308a\u5206\u3051\u308b\u3002\n\n## \u30c4\u30fc\u30eb\u30ec\u30fc\u30f3\n\n- Antigravity + Gemini: preview URL\u306e\u8996\u899a\u78ba\u8a8d\u3001UI polish\u3001browser-agent\u30c1\u30a7\u30c3\u30af\u3002\n- VSCode + Codex: staging\u8a2d\u5b9a\u691c\u8a3c\u3001Firebase/Supabase CLI\u3001CI\u3001WBS/Sheets/Calendar/GitHub\u540c\u671f\u3002\n- VSCode + Claude Code: Runbook\u30ec\u30d3\u30e5\u30fc\u3001RLS/secret\u5206\u96e2\u30ec\u30d3\u30e5\u30fc\u3001\u6cd5\u52d9\u30fb\u904b\u7528\u30c1\u30a7\u30c3\u30af\u30ea\u30b9\u30c8\u6574\u5099\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

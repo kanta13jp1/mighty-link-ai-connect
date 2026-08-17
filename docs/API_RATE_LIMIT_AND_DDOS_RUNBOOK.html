@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API_RATE_LIMIT_AND_DDOS_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# API \u30ec\u30fc\u30c8\u5236\u9650\u30fbDDoS \u7de9\u548c Runbook\n\n**\u95a2\u9023 WBS**: T753\n**\u95a2\u9023\u8ab2\u984c**: R61\n**\u5bfe\u8c61**: FastAPI (`src/app.py`) / Firebase Hosting / Cloud Run / Supabase / Google Workspace \u9023\u643a\n\n## \u76ee\u7684\n\nMighty Skill-Bridge \u306e\u516c\u958b\u30c7\u30e2\u304a\u3088\u3073\u5c06\u6765\u306e\u672c\u756a API \u3067\u3001\u904e\u5270\u30ea\u30af\u30a8\u30b9\u30c8\u306b\u3088\u308b Gemini / Seedance / Google Sheets \u547c\u3073\u51fa\u3057\u306e\u6d6a\u8cbb\u3001\u8a8d\u8a3c\u753b\u9762\u3078\u306e\u7dcf\u5f53\u305f\u308a\u3001CPU/DB \u8ca0\u8377\u306e\u6025\u5897\u3092\u6291\u3048\u308b\u3002\n\n\u672c\u5b9f\u88c5\u306f FastAPI \u30d7\u30ed\u30bb\u30b9\u5185\u306e\u30d0\u30c3\u30af\u30b9\u30c8\u30c3\u30d7\u3067\u3042\u308a\u3001DDoS \u306e\u7b2c\u4e00\u9632\u885b\u7dda\u306f Firebase Hosting / Cloud Run \u524d\u6bb5\u3001\u5fc5\u8981\u306b\u5fdc\u3058\u305f Cloud Armor\u3001App Check\u3001CDN/WAF\u3001Supabase \u5074\u306e\u63a5\u7d9a\u4e0a\u9650\u30fbRLS \u3067\u62c5\u3046\u3002\n\n## \u73fe\u5728\u306e\u9069\u7528\u7bc4\u56f2\n\n| \u7a2e\u5225 | \u5bfe\u8c61 | \u65e2\u5b9a\u5024 |\n| --- | --- | --- |\n| \u30d8\u30eb\u30b9\u30c1\u30a7\u30c3\u30af\u9664\u5916 | `/`, `/api/health`, `/favicon.ico`, Chrome DevTools workspace route | \u5236\u9650\u306a\u3057 |\n| \u9ad8\u30b3\u30b9\u30c8 API | `POST /api/parse`, `POST /api/match`, `POST /api/seedance/video-demo`, `POST /api/sync` | 20 req / 60 sec / client |\n| \u6210\u679c\u7269\u751f\u6210 | `POST /api/knowledge-flow/generate` | 6 req / 60 sec / client |\n| \u7ba1\u7406\u30fb\u8a8d\u8a3c\u7cfb | `/admin`, `/admin/usage`, `/api/admin/*`, `/api/audit/recent`, `/api/db-test`, `/exports/*` | 30 req / 60 sec / client |\n| \u4e00\u822c API | \u305d\u306e\u4ed6 `/api/*` | 120 req / 60 sec / client |\n\n\u8d85\u904e\u6642\u306f HTTP `429` \u3092\u8fd4\u3057\u3001`Retry-After`, `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` \u30d8\u30c3\u30c0\u30fc\u3092\u4ed8\u4e0e\u3059\u308b\u3002\n\n## \u74b0\u5883\u5909\u6570\n\n| \u5909\u6570 | \u65e2\u5b9a\u5024 | \u7528\u9014 |\n| --- | ---: | --- |\n| `RATE_LIMIT_ENABLED` | `true` | \u30ec\u30fc\u30c8\u5236\u9650\u306e\u6709\u52b9\u5316\u3002\u969c\u5bb3\u6642\u306e\u4e00\u6642\u5207\u308a\u623b\u3057\u306e\u307f `0` |\n| `RATE_LIMIT_WINDOW_SECONDS` | `60` | \u96c6\u8a08\u30a6\u30a3\u30f3\u30c9\u30a6\u79d2\u6570 |\n| `RATE_LIMIT_MAX_REQUESTS` | `120` | \u4e00\u822c API \u4e0a\u9650 |\n| `RATE_LIMIT_AUTH_MAX_REQUESTS` | `30` | \u7ba1\u7406\u30fb\u8a8d\u8a3c\u30fbexports \u4e0a\u9650 |\n| `RATE_LIMIT_EXPENSIVE_MAX_REQUESTS` | `20` | Gemini / Seedance / Sheets \u7cfb\u306e\u9ad8\u30b3\u30b9\u30c8 API \u4e0a\u9650 |\n| `RATE_LIMIT_GENERATION_MAX_REQUESTS` | `6` | NotebookLM/Drive \u5411\u3051\u6210\u679c\u7269\u751f\u6210 API \u4e0a\u9650 |\n\n## \u691c\u8a3c\n\n```powershell\npython -m pytest tests/test_api.py\npython scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/\n```\n\n\u624b\u52d5\u78ba\u8a8d:\n\n```powershell\n$body = @{ prompt = \"rate limit test\" } | ConvertTo-Json\n1..25 | ForEach-Object {\n  try {\n    Invoke-WebRequest -Uri \"http://127.0.0.1:8000/api/seedance/video-demo\" -Method POST -ContentType \"application/json\" -Body $body -UseBasicParsing\n  } catch {\n    $_.Exception.Response.StatusCode.value__\n  }\n}\n```\n\n## \u904b\u7528\u65b9\u91dd\n\n1. \u901a\u5e38\u30c7\u30e2\u306f\u65e2\u5b9a\u5024\u306e\u307e\u307e\u904b\u7528\u3059\u308b\u3002\n2. \u6709\u511f\u30d7\u30e9\u30f3\u958b\u59cb\u6642\u306f\u3001Cloud Run \u306e\u540c\u6642\u5b9f\u884c\u6570\u30fb\u6700\u5927\u30a4\u30f3\u30b9\u30bf\u30f3\u30b9\u6570\u3001Firebase App Check\u3001Cloud Armor rate-based rule\u3001Supabase connection pool \u306e\u9806\u306b\u524d\u6bb5\u4fdd\u8b77\u3092\u8ffd\u52a0\u3059\u308b\u3002\n3. `429` \u304c\u901a\u5e38\u30e6\u30fc\u30b6\u30fc\u3067\u983b\u767a\u3059\u308b\u5834\u5408\u306f\u3001`/api/admin/usage` \u3068 Cloud Logging \u3067\u9ad8\u30b3\u30b9\u30c8 API \u306e\u547c\u3073\u51fa\u3057\u5143\u30fb\u6642\u523b\u30fb\u7d4c\u8def\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u4e0a\u9650\u5024\u3092\u8abf\u6574\u3059\u308b\u3002\n4. \u653b\u6483\u7591\u3044\u306e\u5834\u5408\u306f\u3001`RATE_LIMIT_EXPENSIVE_MAX_REQUESTS` \u3068 `RATE_LIMIT_AUTH_MAX_REQUESTS` \u3092\u4e00\u6642\u7684\u306b\u4e0b\u3052\u3001\u5fc5\u8981\u306a\u3089 Firebase/Cloud Run \u5074\u3067\u8a72\u5f53 IP / ASN / \u56fd\u5225\u5236\u5fa1\u3092\u5b9f\u65bd\u3059\u308b\u3002\n5. \u30d7\u30ed\u30bb\u30b9\u5185 limiter \u306f\u30a4\u30f3\u30b9\u30bf\u30f3\u30b9\u3054\u3068\u306b\u72ec\u7acb\u3059\u308b\u305f\u3081\u3001\u8907\u6570\u30a4\u30f3\u30b9\u30bf\u30f3\u30b9\u3067\u53b3\u5bc6\u306a\u5168\u4f53\u5236\u9650\u304c\u5fc5\u8981\u306b\u306a\u3063\u305f\u6642\u70b9\u3067 Redis / Memorystore / Cloud Armor \u3078\u79fb\u884c\u3059\u308b\u3002\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\n\n- Google Cloud Armor rate limiting: <https://cloud.google.com/armor/docs/rate-limiting-overview>\n- Firebase App Check: <https://firebase.google.com/docs/app-check>\n- Supabase RLS / database security: <https://supabase.com/docs/guides/database/postgres/row-level-security>\n- FastAPI / Starlette middleware: <https://www.starlette.io/middleware/>\n\n## \u5909\u66f4\u5c65\u6b74\n\n| \u65e5\u4ed8 | \u5909\u66f4 |\n| --- | --- |\n| 2026-06-14 | T753 \u3067 FastAPI \u5171\u901a\u30ec\u30fc\u30c8\u5236\u9650 middleware\u3001`src/rate_limit.py`\u3001pytest\u3001R61 \u3092\u8ffd\u52a0 |\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

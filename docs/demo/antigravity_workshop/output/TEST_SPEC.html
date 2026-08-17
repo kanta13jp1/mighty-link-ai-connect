@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST_SPEC — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Test Specification: AI Agent Decision Guide\n\nSYNTHETIC_DATA_ONLY\n\nThis specification is written before final browser polish. It defines what must remain true as the agent edits the site.\n\n## TS-01 Product scope\n\nThe dataset contains exactly five unique products: Codex, Claude Code, Claude Cowork, Kiro, and Antigravity. Old rehearsal products such as Devin, Cursor Agent, Windsurf, and Copilot Workspace must not appear in the current site or dataset.\n\n## TS-02 Official icon provenance\n\nEvery product references a local icon file and an HTTPS source URL on an official first-party property. Every local icon exists, is non-empty, and is rendered with meaningful alternative text on product cards.\n\n## TS-03 Version and date evidence\n\nEvery profile has a public version label, an ISO date, and a direct official release or changelog URL. Claude Cowork must explicitly state `\u516c\u958b\u7248\u756a\u53f7\u306a\u3057\uff08SaaS\uff09`; every other product must expose its current numeric version.\n\n## TS-04 Current official content\n\nEvery profile includes a latest update, official video, and official blog item. Each item requires a title, ISO date, and HTTPS URL. The site displays `2026-08-13 JST` as the verification date.\n\n## TS-05 Useful decision depth\n\nEvery product provides all 13 decision dimensions defined in `SITE_BRIEF.md`. The comparison UI supports one or two selected products, shows all dimensions, and prevents a third selection.\n\n## TS-06 Honest pricing and limits\n\nPricing text distinguishes published plan prices from variable usage capacity. Previously invented fixed counts such as `1\u65e5100\u56de`, `1\u65e51,000\u56de`, `1\u65e51\u4e07\u56de`, or `\u67083,000 PU` are forbidden.\n\n## TS-07 Source ledger\n\nThe page provides a source ledger with documentation, release or changelog, pricing, update, video, blog, and icon provenance links. All factual source hosts must be in the approved first-party domain allowlist.\n\n## TS-08 Accessible interaction\n\nScenario and comparison buttons expose `aria-pressed`; changing filters and selections is announced through `aria-live`; keyboard focus is visible; reduced-motion preferences are respected.\n\n## TS-09 Responsive layout\n\nAt 1440x900 and 390x844, official icons load, primary content is visible, and the page has no horizontal document overflow. The comparison table may scroll inside its own labeled region.\n\n## TS-10 Review and publication\n\nTen distinct self-review passes must be recorded in `SELF_REVIEW.md`. Automated tests, JavaScript syntax checks, desktop/mobile browser checks, and the GitHub Pages URL must pass before publication is called complete.\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

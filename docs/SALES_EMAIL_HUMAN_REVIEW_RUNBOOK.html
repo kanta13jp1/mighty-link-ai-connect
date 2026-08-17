@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALES_EMAIL_HUMAN_REVIEW_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u55b6\u696d\u30e1\u30fc\u30ebAI\u30de\u30c3\u30c1\u30f3\u30b0 \u4eba\u9593\u30ec\u30d3\u30e5\u30fc\u30fb\u8a55\u4fa1\u30ed\u30b0 Runbook\n\n- \u4f5c\u6210\u65e5: 2026-06-19\n- \u95a2\u9023WBS: T817, T817_6\n- \u95a2\u9023\u8ab2\u984c: R75, R82\n- \u30b9\u30c6\u30fc\u30bf\u30b9: T817_6 \u5b8c\u4e86\u3002\u63a1\u7528/\u5374\u4e0b/\u88dc\u6b63/\u8981\u78ba\u8a8d\u306e\u30ec\u30d3\u30e5\u30fc\u7d50\u679c\u3092\u3001\u533f\u540d\u5019\u88dc\u8005\u30ad\u30fc\u3068redacted\u6839\u62e0\u3060\u3051\u3067DB\u30fbJSON\u30fbMarkdown\u3078\u4fdd\u5b58\u3067\u304d\u308b\u3002\n\n---\n\n## \u76ee\u7684\n\nT817_5\u3067\u751f\u6210\u3057\u305f\u55b6\u696d\u30e1\u30fc\u30ebAI\u30de\u30c3\u30c1\u30f3\u30b0\u5019\u88dc\u306f\u3001\u55b6\u696d\u5224\u65ad\u306e\u88dc\u52a9\u3067\u3042\u308a\u3001\u81ea\u52d5\u78ba\u5b9a\u306b\u306f\u4f7f\u308f\u306a\u3044\u3002T817_6\u3067\u306f\u3001\u4eba\u9593\u304c\u5019\u88dc\u3092\u78ba\u8a8d\u3057\u3001`accepted`\u3001`rejected`\u3001`needs_review`\u3001`corrected` \u306e\u3044\u305a\u308c\u304b\u3067\u8a55\u4fa1\u30ed\u30b0\u3092\u6b8b\u3059\u3002\n\n\u30ec\u30d3\u30e5\u30fc\u6642\u3082\u30e1\u30fc\u30eb\u672c\u6587\u5168\u6587\u3001\u500b\u4eba\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3001\u96fb\u8a71\u756a\u53f7\u3001token/API key\u98a8\u6587\u5b57\u5217\u306f\u4fdd\u5b58\u3057\u306a\u3044\u3002\u5019\u88dc\u8005\u306f `talent_<hash>` \u306e\u533f\u540d\u30ad\u30fc\u3067\u6271\u3044\u3001\u516c\u958b\u8cc7\u6599\u30fbSheets\u30fbNotebookLM\u3078\u500b\u4eba\u9023\u7d61\u5148\u3092\u6d41\u3055\u306a\u3044\u3002\n\n## \u6b63\u672c\u30d5\u30a1\u30a4\u30eb\n\n| \u7528\u9014 | \u30d5\u30a1\u30a4\u30eb |\n| --- | --- |\n| \u30ec\u30d3\u30e5\u30fc\u88dc\u52a9\u30e2\u30b8\u30e5\u30fc\u30eb | `src/sales_email_review.py` |\n| CLI | `scripts/review_sales_email_match.py` |\n| API | `POST /api/sales-email/reviews`, `GET /api/sales-email/reviews/summary` in `src/app.py` |\n| DB\u4fdd\u5b58\u5148 | `project_requirements`, `talent_profiles_from_email`, `email_match_results`, `email_match_feedback` |\n| \u30ec\u30d3\u30e5\u30fc\u6210\u679c\u7269 | `exports/sales_email_review_log.json`, `exports/sales_email_review_log.md` |\n| \u30c6\u30b9\u30c8 | `tests/test_sales_email_review.py` |\n\n## API\n\n\u30ec\u30d3\u30e5\u30fc\u767b\u9332\u306fBasic Auth\u5fc5\u9808\u3002\n\n```http\nPOST /api/sales-email/reviews\nAuthorization: Basic ...\nContent-Type: application/json\n\n{\n  \"match_key\": \"match_...\",\n  \"feedback_status\": \"corrected\",\n  \"corrected_score\": 41,\n  \"corrected_notes\": \"SQL/Oracle\u4e0d\u8db3\u3002\u518d\u78ba\u8a8d\u304c\u5fc5\u8981\u3002\",\n  \"corrected_fields\": {\"missing_skills\": [\"SQL\", \"Oracle\"]},\n  \"next_action\": \"Oracle\u7d4c\u9a13\u306e\u8a3c\u8de1\u3092\u78ba\u8a8d\u3059\u308b\"\n}\n```\n\n`feedback_status` \u306f `accepted`\u3001`rejected`\u3001`needs_review`\u3001`corrected` \u306e\u307f\u8a31\u53ef\u3059\u308b\u3002`needs_review` \u306f `email_match_results.review_status` \u3067\u306f `pending` \u3068\u3057\u3066\u4fdd\u6301\u3057\u3001`email_match_feedback.feedback_status` \u3078\u8a73\u7d30\u3092\u6b8b\u3059\u3002\n\n\u96c6\u8a08\u78ba\u8a8d:\n\n```http\nGET /api/sales-email/reviews/summary?limit=20\nAuthorization: Basic ...\n```\n\n## CLI\n\n\u30ed\u30fc\u30ab\u30eb\u3067\u30ec\u30d3\u30e5\u30fc\u8a3c\u8de1\u3092\u4f5c\u308b\u5834\u5408:\n\n```powershell\npython scripts/review_sales_email_match.py `\n  --match-report exports\\sales_email_match_review.json `\n  --json-report exports\\sales_email_review_log.json `\n  --markdown-report exports\\sales_email_review_log.md `\n  --feedback-status needs_review `\n  --notes \"Java overlap\u306f\u3042\u308b\u304cSQL/Oracle\u4e0d\u8db3\u306e\u305f\u3081\u55b6\u696d\u9023\u7d61\u524d\u306b\u78ba\u8a8d\u3059\u308b\" `\n  --next-action \"Oracle/SQL\u7d4c\u9a13\u306e\u8a3c\u8de1\u3092\u78ba\u8a8d\u3059\u308b\" `\n  --replace\n```\n\n## DB\u4fdd\u5b58\u65b9\u91dd\n\n1. \u30ec\u30d3\u30e5\u30fc\u5bfe\u8c61\u306e `project_key` \u3068 `talent_key` \u304b\u3089\u3001\u5b89\u5168\u306a\u6848\u4ef6\u30fb\u533f\u540d\u8981\u54e1\u30b5\u30de\u30ea\u3092DB\u3078\u4f5c\u6210\u307e\u305f\u306f\u518d\u5229\u7528\u3059\u308b\u3002\n2. `email_match_results.metadata.match_key` \u3067\u5019\u88dc\u30da\u30a2\u3092\u8b58\u5225\u3057\u3001\u91cd\u8907\u30ec\u30d3\u30e5\u30fc\u6642\u3082\u540c\u3058match_result\u3078\u7d10\u3065\u3051\u308b\u3002\n3. `email_match_feedback` \u306b\u30ec\u30d3\u30e5\u30fc\u5c65\u6b74\u3092\u8ffd\u8a18\u3057\u3001\u88dc\u6b63\u30b9\u30b3\u30a2\u3001\u88dc\u6b63\u30e1\u30e2\u3001\u6b21\u30a2\u30af\u30b7\u30e7\u30f3\u3092\u4fdd\u5b58\u3059\u308b\u3002\n4. API\u5fdc\u7b54\u3001DB metadata\u3001JSON/Markdown\u6210\u679c\u7269\u306b\u306fredacted\u6e08\u307f\u30ec\u30d3\u30e5\u30fc\u30b3\u30e1\u30f3\u30c8\u3060\u3051\u3092\u51fa\u529b\u3059\u308b\u3002\n\n## \u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u65b9\u91dd\n\n- \u516c\u958bREST\u304b\u3089\u306e\u76f4\u63a5\u66f8\u304d\u8fbc\u307f\u306f\u4f7f\u308f\u305a\u3001FastAPI\u306eBasic Auth\u4ed8\u304d\u7ba1\u7406API\u7d4c\u7531\u306b\u9650\u5b9a\u3059\u308b\u3002\n- Supabase\u5074\u306fT817_3\u306eRLS/REVOKE\u65b9\u91dd\u3092\u7dad\u6301\u3057\u3001\u533f\u540dREST\u3078 `email_match_feedback` \u3092\u958b\u653e\u3057\u306a\u3044\u3002\n- \u30ec\u30d3\u30e5\u30fc\u30b3\u30e1\u30f3\u30c8\u306e\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3001\u96fb\u8a71\u756a\u53f7\u3001secret-like\u5024\u306f\u4fdd\u5b58\u524d\u306b `<email:redacted>`\u3001`<phone:redacted>`\u3001`<secret:redacted>` \u3078\u7f6e\u63db\u3059\u308b\u3002\n- `accepted` \u3067\u3042\u3063\u3066\u3082\u3001\u5b9f\u30e1\u30fc\u30eb\u63a5\u7d9a\u5f8c\u306e\u4fdd\u6301/\u524a\u9664\u3001\u76e3\u67fb\u3001\u8ca0\u8377\u3001\u6a29\u9650\u78ba\u8a8d\u306fT817_7\u3067\u5225\u9014\u78ba\u8a8d\u3059\u308b\u3002\n\n## \u691c\u8a3c\n\n```powershell\npython -m pytest tests/test_sales_email_review.py tests/test_sales_email_match.py -q\npython -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract.py tests/test_sales_email_match.py tests/test_sales_email_review.py tests/test_sales_email_schema_migrations.py tests/test_db_migration_management.py tests/test_rls_policies.py -q\n```\n\n\u691c\u8a3c\u89b3\u70b9:\n\n- Basic Auth\u306a\u3057\u3067\u30ec\u30d3\u30e5\u30fc\u767b\u9332\u3067\u304d\u306a\u3044\u3002\n- \u63a1\u7528/\u5374\u4e0b/\u88dc\u6b63/\u8981\u78ba\u8a8d\u306e\u30ec\u30d3\u30e5\u30fc\u304c\u4fdd\u5b58\u3067\u304d\u308b\u3002\n- DB\u306e `email_match_feedback` \u3068JSON/Markdown\u6210\u679c\u7269\u306b\u30ec\u30d3\u30e5\u30fc\u5c65\u6b74\u304c\u6b8b\u308b\u3002\n- \u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3001\u96fb\u8a71\u756a\u53f7\u3001secret-like\u5024\u304cAPI\u5fdc\u7b54\u30fb\u6210\u679c\u7269\u3078\u6df7\u5165\u3057\u306a\u3044\u3002\n\n## \u6b21\u5de5\u7a0b\n\n- T817_7: \u5b9f\u30e1\u30fc\u30eb\u63a5\u7d9a\u5f8c\u306e\u4fdd\u6301/\u524a\u9664\u3001\u76e3\u67fb\u30ed\u30b0\u3001\u8ca0\u8377\u3001\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u3001\u30a2\u30ab\u30a6\u30f3\u30c8\u6a29\u9650\u3001Go/No-Go\u518d\u5224\u5b9a\u3092\u884c\u3046\u3002\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\n\n- Supabase Row Level Security: https://supabase.com/docs/guides/database/postgres/row-level-security\n- Supabase Python Client: https://supabase.com/docs/reference/python/introduction\n- Supabase Production Checklist: https://supabase.com/docs/guides/deployment/going-into-prod\n- \u55b6\u696d\u30e1\u30fc\u30eb\u81ea\u52d5\u53d6\u308a\u8fbc\u307f \u63a5\u7d9a\u65b9\u5f0f\u78ba\u8a8d\u30c1\u30a7\u30c3\u30af\u30ea\u30b9\u30c8: [SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md](SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md)\n- Google Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate\n- GitHub Actions Docs: https://docs.github.com/actions\n- OpenAI Codex Best Practices: https://developers.openai.com/codex/learn/best-practices\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

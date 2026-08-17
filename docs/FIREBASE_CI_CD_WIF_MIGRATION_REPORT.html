@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIREBASE_CI_CD_WIF_MIGRATION_REPORT — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Firebase CI/CD WIF\u79fb\u884c \uff06 \u30ec\u30ac\u30b7\u30fcTOKEN\u5ec3\u6b62\u30ec\u30dd\u30fc\u30c8\n\n\u4f5c\u6210\u65e5: 2026-07-08  \n\u95a2\u9023WBS: T852  \n\u95a2\u9023\u8ab2\u984c: R100  \n\u95a2\u9023QA: QA-77  \n\n## 1. \u6982\u8981\n\nGitHub Actions\u4e0a\u306e\u672c\u756a\u30c7\u30d7\u30ed\u30a4\u30d1\u30a4\u30d7\u30e9\u30a4\u30f3\uff08`CI/CD Pipeline`\uff09\u306b\u304a\u3044\u3066\u3001\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u30ea\u30b9\u30af\u306e\u9ad8\u3044\u6c38\u7d9a\u7684\u306a `FIREBASE_TOKEN`\uff08\u30ec\u30ac\u30b7\u30fcToken\uff09\u306e\u4f9d\u5b58\u3092\u5b8c\u5168\u306b\u6392\u9664\u3057\u3001Workload Identity Federation (WIF) \u304a\u3088\u3073 Application Default Credentials (ADC) \u3092\u7528\u3044\u305f\u30bb\u30ad\u30e5\u30a2\u306a\u8a8d\u8a3c\u69cb\u9020\u3078\u306e\u79fb\u884c\u3092\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002\n\n## 2. \u79fb\u884c\u5bfe\u5fdc\u5185\u5bb9\n\n### (1) \u30ef\u30fc\u30af\u30d5\u30ed\u30fc\u30d5\u30a1\u30a4\u30eb\u306e\u4fee\u6b63\uff08[.github/workflows/deploy.yml](../.github/workflows/deploy.yml)\uff09\n- \u30c7\u30d7\u30ed\u30a4\u306e\u74b0\u5883\u5909\u6570\uff08`env`\uff09\u304b\u3089 `FIREBASE_TOKEN` \u30b7\u30fc\u30af\u30ec\u30c3\u30c8\u306e\u8aad\u307f\u8fbc\u307f\u3092\u5b8c\u5168\u306b\u524a\u9664\u3057\u307e\u3057\u305f\u3002\n- \u30c7\u30d7\u30ed\u30a4\u5b9f\u884c\u30b9\u30af\u30ea\u30d7\u30c8\u304b\u3089\u3001\u65e7 `FIREBASE_TOKEN` \u306b\u3088\u308b\u8a8d\u8a3c\u30d5\u30a9\u30fc\u30eb\u30d0\u30c3\u30af\u51e6\u7406\uff08`--token` \u6307\u5b9a\uff09\u3092\u3059\u3079\u3066\u524a\u9664\u3057\u3001WIF/ADC \u306b\u3088\u308bGoogle Cloud\u306e\u8a8d\u8a3c\u30d5\u30a1\u30a4\u30eb\uff08`GOOGLE_APPLICATION_CREDENTIALS`\uff09\u7d4c\u7531\u306e\u307f\u3067 `firebase deploy` \u304c\u52d5\u4f5c\u3059\u308b\u30b3\u30fc\u30c9\u69cb\u6210\u306b\u4e00\u672c\u5316\u3057\u307e\u3057\u305f\u3002\n\n### (2) \u8a8d\u8a3c\u7d4c\u8def\u306e\u6b63\u5e38\u6027\u691c\u8a3c\n- `google-github-actions/auth@v3` \u3092\u7528\u3044\u305f Workload Identity \u7d4c\u7531\u306e\u30c8\u30fc\u30af\u30f3\u53d6\u5f97\u304c\u6b63\u5e38\u306b\u52d5\u4f5c\u3057\u3001Firebase CLI \u304c\u74b0\u5883\u5909\u6570 `GOOGLE_APPLICATION_CREDENTIALS` \u3092\u4ecb\u3057\u3066\u6b63\u898f\u306e\u30b5\u30fc\u30d3\u30b9\u30a2\u30ab\u30a6\u30f3\u30c8\u6a29\u9650\u3067\u672c\u756aFirebase Hosting\u30d7\u30ed\u30b8\u30a7\u30af\u30c8 (`mighty-link-ai-connect-13d22`) \u3078\u30a2\u30af\u30bb\u30b9\u3067\u304d\u308b\u3053\u3068\u3092\u78ba\u8a8d\u3057\u307e\u3057\u305f\u3002\n\n## 3. \u79fb\u884c\u52b9\u679c\u3068\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u5411\u4e0a\u70b9\n\n1. **\u9577\u671f\u6301\u7d9a\u30c8\u30fc\u30af\u30f3\u306e\u5ec3\u6b62**: \u6f0f\u6d29\u6642\u306b\u6c38\u7d9a\u7684\u306a\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u5909\u66f4\u6a29\u9650\u3092\u4e0e\u3048\u308b `FIREBASE_TOKEN` \u304c\u5b8c\u5168\u306b\u5ec3\u6b62\u3055\u308c\u3001GitHub Actions\u5074\u3067\u306e\u30b7\u30fc\u30af\u30ec\u30c3\u30c8\u6f0f\u6d29\u30ea\u30b9\u30af\u304c\u6975\u5c0f\u5316\u3055\u308c\u307e\u3057\u305f\u3002\n2. **\u77ed\u5bff\u547d\u30a2\u30af\u30bb\u30b9\u30ad\u30fc\u306e\u4f7f\u7528**: \u30c7\u30d7\u30ed\u30a4\u306e\u90fd\u5ea6\u3001Google Cloud\u4e0a\u306eWorkload Identity\u30d7\u30fc\u30eb\u3092\u4ecb\u3057\u3066\u52d5\u7684\u306b\u77ed\u5bff\u547d\u306eOAuth\u30c8\u30fc\u30af\u30f3\u304c\u767a\u884c\u3055\u308c\u308b\u305f\u3081\u3001\u8a8d\u8a3c\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u304c\u6700\u65b0\u306e\u696d\u754c\u6a19\u6e96\u30ec\u30d9\u30eb\u306b\u5f37\u5316\u3055\u308c\u307e\u3057\u305f\u3002\n3. **\u660e\u793a\u7684\u306a\u30a8\u30e9\u30fc\u30cf\u30f3\u30c9\u30ea\u30f3\u30b0**: \u8a8d\u8a3c\u30d5\u30a1\u30a4\u30eb\u304c\u898b\u3064\u304b\u3089\u306a\u3044\u3001\u307e\u305f\u306fWIF\u3067\u306e\u63a5\u7d9a\u306b\u5931\u6557\u3057\u305f\u5834\u5408\u306f\u76f4\u3061\u306b\u30c7\u30d7\u30ed\u30a4\u30d7\u30ed\u30bb\u30b9\u304c\u30a8\u30e9\u30fc\u7d42\u4e86\u3059\u308b\u3088\u3046\u306b\u306a\u308a\u3001\u610f\u56f3\u3057\u306a\u3044\u8a8d\u8a3c\u72b6\u614b\u3067\u306e\u30c7\u30d7\u30ed\u30a4\u6df7\u5165\u304c\u9632\u6b62\u3055\u308c\u307e\u3059\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

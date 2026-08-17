@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISSUE_QA_BLOCKER_AUDIT_2026-06-27 — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u8ab2\u984c\u7ba1\u7406\u8868\u30fbQA\u8868 \u958b\u767a\u30d6\u30ed\u30c3\u30ab\u30fc\u68da\u5378\u3057\uff08T854\uff09\n\n- \u5b9f\u65bd\u65e5: 2026-06-27\n- \u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Codex / VSCode + Claude Code\n- \u95a2\u9023WBS: T853, T854, T849\n- \u95a2\u9023Issue: #141\n- \u95a2\u9023\u30ea\u30b9\u30af/QA: R101, QA-78, PUBLIC-15\n\n---\n\n## 2026-07-01 T858\u5b8c\u4e86\u5f8c\u8ffd\u8a18\n\nT770\u3067\u65b0\u898fopen\u5316\u3057\u305f `R110` \u306f\u3001T858\u306e100\u540c\u6642\u30e6\u30fc\u30b6\u30fc/300\u30ea\u30af\u30a8\u30b9\u30c8\u518d\u8a66\u9a13\u306b\u3088\u308a\u89e3\u6c7a\u6e08\u307f\u3078\u623b\u3057\u305f\u3002\n\n\u518d\u8a66\u9a13\u7d50\u679c\u306f `docs/LOAD_TEST_100_USERS_REPORT_2026-07-01.md` \u3068 `exports/load_test_100_users_2026-07-01.json` \u3092\u6b63\u672c\u3068\u3057\u3001\u30a8\u30e9\u30fc0\u3001\u5168\u4f53P50 508.52ms\u3001P95 943.81ms\u3001P99 1155.32ms\u3001`/api/match` P95 1133.85ms\u3067SLA\u3092\u6e80\u305f\u3057\u305f\u3002\n\n\u3053\u306e\u305f\u3081\u3001\u8ab2\u984c\u7ba1\u7406\u8868\u306e\u958b\u767a\u5fc5\u9808open\u306f0\u4ef6\u3001QA\u8868\u306e\u672a\u56de\u7b54\u306f0\u4ef6\u3078\u5fa9\u5e30\u3057\u3001`PUBLIC-15` \u306f `PASS` \u3068\u3057\u3066\u6271\u3046\u3002\u305f\u3060\u3057 `public_paid_launch` \u5168\u4f53\u306f\u3001\u6cd5\u52d9\u3001\u4fa1\u683c\u3001\u8ab2\u91d1\u3001Firebase CI/CD\u3001DNS/HTTPS\u3001\u5b9f\u30e1\u30fc\u30eb\u63a5\u7d9a\u3001\u672c\u756aUAT\u3001\u4f1a\u793e\u904b\u7528\u5f15\u7d99\u304e\u306a\u3069\u6b8b\u30b2\u30fc\u30c8\u304c\u3042\u308b\u305f\u3081\u5f15\u304d\u7d9a\u304d `NO_GO` \u3068\u3059\u308b\u3002\n\n## 2026-07-01 \u8ffd\u8a18\n\n2026-06-27\u306eT854\u6642\u70b9\u3067\u306f `PUBLIC-15` \u306f `PASS` \u3060\u3063\u305f\u304c\u30012026-07-01\u306eT770\u8ca0\u8377\u30c6\u30b9\u30c8\u306b\u3088\u308a `R110`\uff08100\u540c\u6642\u30e6\u30fc\u30b6\u30fc\u8ca0\u8377\u30c6\u30b9\u30c8\u3067`/api/match`\u306eP95\u304cSLA 3\u79d2\u3092\u8d85\u904e\uff09\u3092\u65b0\u898fopen\u5316\u3057\u305f\u3002\n\n\u6700\u65b0\u306e `python scripts/audit_issue_qa_blockers.py` \u5b9f\u884c\u7d50\u679c\u306f\u6b21\u306e\u3068\u304a\u308a\u3002\n\n| \u5bfe\u8c61 | \u7d50\u679c |\n| --- | --- |\n| \u8ab2\u984c\u884c\u6570 | 153 |\n| QA\u884c\u6570 | 119 |\n| \u8ab2\u984c\u30d6\u30ed\u30c3\u30ab\u30fc\u6570 | 1 |\n| QA\u30d6\u30ed\u30c3\u30ab\u30fc\u6570 | 0 |\n| \u76e3\u67fb\u5224\u5b9a | `blocked` |\n\n\u3057\u305f\u304c\u3063\u3066\u3001\u73fe\u6642\u70b9\u306e `PUBLIC-15` \u306fT858\u5b8c\u4e86\u307e\u3067 `BLOCKED` \u3068\u3057\u3066\u6271\u3046\u3002T854\u306e\u68da\u5378\u3057\u7d50\u679c\u306f\u5c65\u6b74\u8a3c\u8de1\u3068\u3057\u3066\u4fdd\u6301\u3059\u308b\u304c\u3001\u73fe\u5728\u306e\u958b\u767a\u5b8c\u4e86\u5224\u5b9a\u306f `exports/issue_qa_blocker_audit.*` \u3068 `data/release_go_no_go_criteria.tsv` \u3092\u6b63\u672c\u3068\u3059\u308b\u3002\n\n---\n\n## \u76ee\u7684\n\nWBS\u5168\u5b8c\u4e86\u6642\u306b\u300c\u30b5\u30a4\u30c8\u958b\u767a\u5b8c\u4e86\u300d\u3068\u5ba3\u8a00\u3067\u304d\u308b\u3088\u3046\u3001Sheets\u6b63\u672c\u3067\u3042\u308b `data/issues_tracker.tsv` \u3068 `data/qa_tracker.tsv` \u3092\u68da\u5378\u3057\u3057\u3001\u672a\u5206\u985e\u306e\u958b\u767a\u5fc5\u9808open\u8ab2\u984c\u3068\u672a\u56de\u7b54/\u672a\u627f\u8a8dQA\u3092\u30bc\u30ed\u306b\u3059\u308b\u3002\n\n\u524a\u9664\u3060\u3051\u3067\u51e6\u7406\u305b\u305a\u3001\u5404\u884c\u3092\u6b21\u306e\u3044\u305a\u308c\u304b\u3078\u5206\u985e\u3057\u305f\u3002\n\n| \u5206\u985e | \u610f\u5473 |\n| --- | --- |\n| `resolved` | \u5b9f\u88c5\u3001\u6587\u66f8\u5316\u3001\u307e\u305f\u306f\u5f8c\u7d9a\u30bf\u30b9\u30af\u5b8c\u4e86\u306b\u3088\u308a\u89e3\u6c7a\u6e08\u307f |\n| `transferred` | \u672a\u5b8c\u4e86\u306e\u5b9f\u30b2\u30fc\u30c8\u3068\u3057\u3066WBS\u307e\u305f\u306fGo/No-Go\u3078\u79fb\u7ba1\u6e08\u307f |\n| `accepted_non_blocker` | \u958b\u767a\u5b8c\u4e86\u306e\u5fc5\u9808\u6761\u4ef6\u3067\u306f\u306a\u304f\u3001\u901a\u5e38\u4fdd\u5b88\u307e\u305f\u306f\u8b66\u544a\u3068\u3057\u3066\u8a31\u5bb9 |\n| `closed` | \u65e2\u306b\u9589\u9396\u6e08\u307f |\n\n## \u68da\u5378\u3057\u524d\u306e\u72b6\u614b\n\n| \u5bfe\u8c61 | \u72b6\u614b |\n| --- | --- |\n| \u8ab2\u984c\u7ba1\u7406\u8868 | `open` 34\u4ef6 |\n| QA\u8868 | `answered` 7\u4ef6\u3001`\u56de\u7b54\u6e08` 65\u4ef6\u3001`\u60f3\u5b9a\u6e08` 39\u4ef6 |\n\nQA\u8868\u306e `answered` \u306f\u56de\u7b54\u6e08\u307f\u306e\u82f1\u8a9e\u8868\u8a18\u63fa\u308c\u3060\u3063\u305f\u305f\u3081\u3001\u3059\u3079\u3066 `\u56de\u7b54\u6e08` \u3078\u6b63\u898f\u5316\u3057\u305f\u3002\n\n## \u68da\u5378\u3057\u5f8c\u306e\u72b6\u614b\n\n`python scripts/audit_issue_qa_blockers.py --fail-on-blockers` \u3092\u5b9f\u884c\u3057\u3001\u6b21\u306e\u7d50\u679c\u3092\u5f97\u305f\u3002\n\n| \u5bfe\u8c61 | \u7d50\u679c |\n| --- | --- |\n| \u8ab2\u984c\u884c\u6570 | 145 |\n| QA\u884c\u6570 | 111 |\n| \u8ab2\u984c\u30d6\u30ed\u30c3\u30ab\u30fc\u6570 | 0 |\n| QA\u30d6\u30ed\u30c3\u30ab\u30fc\u6570 | 0 |\n| \u76e3\u67fb\u5224\u5b9a | `pass` |\n\n\u751f\u6210\u8a3c\u8de1:\n\n- `exports/issue_qa_blocker_audit.md`\n- `exports/issue_qa_blocker_audit.json`\n\n## \u91cd\u8981\u306a\u79fb\u7ba1\u5224\u65ad\n\n| \u8ab2\u984c | \u5224\u65ad |\n| --- | --- |\n| R99 | \u30b5\u30a4\u30c8\u958b\u767a\u5b8c\u4e86\u7dcf\u5408\u5224\u5b9a\u306fT849\u3078\u79fb\u7ba1 |\n| R100 | Firebase CI/CD\u672c\u756a\u30c7\u30d7\u30ed\u30a4\u8a8d\u8a3c\u306fT852 / PUBLIC-14\u3078\u79fb\u7ba1 |\n| R96 | \u5f93\u696d\u54e1\u9069\u6027\u30c4\u30fc\u30eb\u306e\u898b\u7a4d/DPA/API\u6761\u4ef6\u306fT839\u3078\u79fb\u7ba1 |\n| R75 | \u55b6\u696d\u30e1\u30fc\u30ebAI\u306e\u5b9f\u30e1\u30fc\u30eb\u63a5\u7d9a\u5f8chardening\u306fT817_7 / T836\u3078\u79fb\u7ba1 |\n| R48 | \u898f\u7d04\u30fb\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u30dd\u30ea\u30b7\u30fc\u672c\u6587\u78ba\u5b9a\u306fT798 / PUBLIC-04\u3078\u79fb\u7ba1 |\n| R51 | \u6599\u91d1\u30fb\u7279\u5546\u6cd5\u78ba\u5b9a\u306fT804 / PUBLIC-08\u3078\u79fb\u7ba1 |\n| R53 | Supabase Postgres\u30a2\u30c3\u30d7\u30b0\u30ec\u30fc\u30c9\u5b9f\u884c\u306fT837\u3078\u79fb\u7ba1 |\n| R93 | Notion/Slack\u672c\u9001\u4fe1\u7528secret\u8a2d\u5b9a\u306fT823 / T850\u3078\u79fb\u7ba1 |\n\n\u79fb\u7ba1\u6e08\u307f\u306e\u8ab2\u984c\u306f\u300c\u306a\u304f\u306a\u3063\u305f\u300d\u306e\u3067\u306f\u306a\u304f\u3001\u958b\u767a\u5b8c\u4e86\u5224\u5b9a\u306e\u6b63\u3057\u3044\u5834\u6240\u3078\u79fb\u3057\u305f\u3002\u3057\u305f\u304c\u3063\u3066 `public_paid_launch` \u306f\u5f15\u304d\u7d9a\u304dNo-Go\u3067\u3042\u308a\u3001T845\u3001T849\u3001T850\u3001T852\u306a\u3069\u306e\u6b8b\u30b2\u30fc\u30c8\u5b8c\u4e86\u5f8c\u306b\u518d\u5224\u5b9a\u3059\u308b\u3002\n\n## \u53e4\u3044/\u975e\u63a1\u7528\u30b5\u30fc\u30d3\u30b9\u7531\u6765\u306e\u8ab2\u984c\n\n6/2\u793e\u9577\u30d7\u30ec\u30bc\u30f3\u6e96\u5099\u3001Seedance/BytePlus\u3001Canva/Figma\u81ea\u52d5\u5316\u3001Antigravity hooks/voice transcription\u306a\u3069\u3001\u73fe\u884cGA\u672c\u756a\u6a5f\u80fd\u3067\u306f\u306a\u3044\u8ab2\u984c\u306fT848\u306e\u5916\u90e8SaaS/AI\u30e2\u30c7\u30eb\u51cd\u7d50\u7d50\u679c\u306b\u5408\u308f\u305b\u3066 `resolved` \u307e\u305f\u306f `accepted_non_blocker` \u3068\u3057\u305f\u3002\n\n6/2\u5411\u3051\u306e `docs/CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md` \u306f\u3001\u73fe\u884c\u6b63\u672c\u3067\u306f\u306a\u304f\u6b74\u53f2\u7684\u30c6\u30f3\u30d7\u30ec\u3068\u3057\u3066\u6271\u3046\u3002\u73fe\u884c\u6b63\u672c\u306f `data/WBS.tsv`\u3001`docs/WBS.md`\u30012026-06-17\u8b70\u4e8b\u9332\u3001Go/No-Go\u8cc7\u6599\u3067\u3042\u308b\u3002\n\n## PUBLIC-15\u5224\u5b9a\n\n`PUBLIC-15` \u306f `PASS` \u3078\u66f4\u65b0\u3057\u305f\u3002\n\n\u305f\u3060\u3057\u3001\u3053\u308c\u306f\u300c\u8ab2\u984c\u7ba1\u7406\u8868\u30fbQA\u8868\u306b\u672a\u5206\u985eopen/\u672a\u56de\u7b54\u304c\u6b8b\u3063\u3066\u3044\u306a\u3044\u300d\u3068\u3044\u3046\u610f\u5473\u3067\u3042\u308a\u3001\u4e00\u822c\u516c\u958b\u30fb\u6709\u511f\u30ed\u30fc\u30f3\u30c1\u306e\u8a31\u53ef\u3067\u306f\u306a\u3044\u3002\u6b8b\u308bNo-Go\u8981\u56e0\u306f `PUBLIC-13`\u3001`PUBLIC-14`\u3001\u6cd5\u52d9/\u4fa1\u683c/\u8ab2\u91d1/\u8ca0\u8377/\u5b9f\u30e1\u30fc\u30eb\u63a5\u7d9a\u306a\u3069\u306e\u5404\u30b2\u30fc\u30c8\u3067\u7ba1\u7406\u3059\u308b\u3002\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\n\n\u4eca\u56de\u306e\u68da\u5378\u3057\u3067\u306f\u3001\u516c\u5f0fDocs\u78ba\u8a8d\u5bfe\u8c61\u3092T848\u306e\u51cd\u7d50Runbook\u3068\u540c\u3058\u63a1\u7528/\u975e\u63a1\u7528\u65b9\u91dd\u3067\u898b\u76f4\u3057\u305f\u3002\u7279\u306bGitHub Actions\u3001Google Sheets API\u3001Firebase Hosting\u3001Supabase\u3001Stripe\u3001Slack\u3001Notion\u3001Figma\u3001Canva\u3001OpenAI Codex\u3001Claude Code\u306e\u73fe\u5728\u306e\u6271\u3044\u3092\u78ba\u8a8d\u3057\u3001secret\u3084\u8a8d\u8a3c\u60c5\u5831\u306e\u5b9f\u5024\u3092\u8ab2\u984c\u8868\u3001QA\u8868\u3001docs\u3001NotebookLM\u3001GitHub Issue\u3078\u6b8b\u3055\u306a\u3044\u65b9\u91dd\u3092\u7dad\u6301\u3057\u305f\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

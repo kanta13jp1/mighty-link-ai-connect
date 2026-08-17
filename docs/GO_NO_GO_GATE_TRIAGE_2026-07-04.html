@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GO_NO_GO_GATE_TRIAGE_2026-07-04 — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# public_paid_launch \u30b2\u30fc\u30c8\u4ed5\u5206\u3051\u30c9\u30e9\u30d5\u30c8 2026-07-04\uff08R112\u5bfe\u5fdc\uff09\n\n\u4f5c\u6210\u65e5: 2026-07-04\n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Claude Code\n\u30b9\u30c6\u30fc\u30bf\u30b9: **\u30c9\u30e9\u30d5\u30c8\uff08T833 2026-07-07 \u3067\u95a2\u4fc2\u8005\u627f\u8a8d\u5f8c\u306b data/release_go_no_go_criteria.tsv \u3078\u53cd\u6620\uff09**\n\u95a2\u9023WBS: T863\uff08\u672c\u30c9\u30e9\u30d5\u30c8\uff09 / T833 / T862 / T791\n\u95a2\u9023\u8ab2\u984c/QA: R112 / QA-92 / QA-93\n\u95a2\u9023docs: [INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md) / [PRODUCTION_GO_NO_GO_CHECKLIST.md](PRODUCTION_GO_NO_GO_CHECKLIST.md)\n\n---\n\n## \u76ee\u7684\n\n2026-07-03 \u306e T861 \u30b9\u30b3\u30fc\u30d7\u518d\u5b9a\u7fa9\uff082026-07-08 \u306f\u793e\u5185\u5411\u3051GA\u30fb\u5b9f\u8ab2\u91d1\u306a\u3057\uff09\u306b\u3088\u308a\u3001\u6709\u511f\u516c\u958b\u524d\u63d0\u3067\u5b9a\u7fa9\u3055\u308c\u305f public_paid_launch \u30b2\u30fc\u30c8\u3092\u305d\u306e\u307e\u307e 7/8 \u5224\u5b9a\u306b\u9069\u7528\u3059\u308b\u3068\u5b9f\u614b\u3068\u4e56\u96e2\u3059\u308b\uff08R112\uff09\u3002\u672c\u30c9\u30e9\u30d5\u30c8\u306f 21 \u30b2\u30fc\u30c8\u3092\u6b21\u306e3\u5206\u985e\u3078\u4ed5\u5206\u3051\u3057\u3001T833\uff087/7\uff09\u306e\u627f\u8a8d\u6750\u6599\u3068\u3059\u308b\u3002\n\n- **\u7dad\u6301**: \u793e\u5185GA\uff087/8\uff09\u306e\u5224\u5b9a\u306b\u5f15\u304d\u7d9a\u304d\u5fc5\u8981\n- **\u6761\u4ef6\u4ed8\u304dPASS**: \u793e\u5185GA\u306e\u7bc4\u56f2\u3067\u306f\u6e80\u305f\u3057\u3066\u3044\u308b\u3002T862 \u6709\u511f\u5316\u5224\u65ad\u6642\u306b\u518d\u78ba\u8a8d\n- **T862\u3078\u79fb\u7ba1**: \u6709\u511f\u516c\u958b\u6642\u306b\u518d\u6709\u52b9\u5316\u30027/8 \u5224\u5b9a\u3067\u306f\u5bfe\u8c61\u5916\n\n## \u4ed5\u5206\u3051\u8868\n\n| \u30b2\u30fc\u30c8 | \u73fe\u72b6 | \u63d0\u6848 | \u7406\u7531 |\n| --- | --- | --- | --- |\n| DEMO-01\u301c05 | PASS | \u7dad\u6301\uff08PASS\uff09 | controlled demo \u30b9\u30b3\u30fc\u30d7\u306f\u5909\u66f4\u306a\u3057 |\n| PUBLIC-01 \u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u76e3\u67fb | PASS | \u7dad\u6301\uff08PASS\uff09 | \u793e\u5185\u5229\u7528\u3067\u3082\u672c\u756a\u30b7\u30b9\u30c6\u30e0\u3068\u3057\u3066\u5fc5\u8981 |\n| PUBLIC-02 \u30d0\u30c3\u30af\u30a2\u30c3\u30d7/\u5fa9\u5143 | PASS | \u7dad\u6301\uff08PASS\uff09 | \u540c\u4e0a |\n| PUBLIC-03 SLA/KPI | PASS | \u7dad\u6301\uff08PASS\uff09 | \u540c\u4e0a |\n| PUBLIC-04 \u898f\u7d04\u30fb\u30dd\u30ea\u30b7\u30fc\u6cd5\u52d9\u78ba\u8a8d | HUMAN_GATE | **\u7dad\u6301**\uff08T798\u3001\u301c7/6\uff09 | \u5f93\u696d\u54e1\u500b\u4eba\u30c7\u30fc\u30bf\uff08\u8a3a\u65ad\u30fb\u52e4\u6020\u30fb\u30e1\u30fc\u30eb\uff09\u3092\u6271\u3046\u305f\u3081\u793e\u5185GA\u3067\u3082\u6cd5\u52d9\u78ba\u8a8d\u3092\u7dad\u6301\u3002\u305f\u3060\u3057\u8ab2\u91d1\u898f\u7d04\u30fb\u7279\u5546\u6cd5\u306e\u4fa1\u683c\u78ba\u5b9a\u90e8\u5206\u306f T862 \u3078\u5148\u9001\u308a\u53ef |\n| PUBLIC-05 \u540c\u610f\u30c1\u30a7\u30c3\u30af\u30dc\u30c3\u30af\u30b9 | PASS | \u7dad\u6301\uff08PASS\uff09 | \u5b9f\u88c5\u6e08\u307f |\n| PUBLIC-06 \u30aa\u30f3\u30dc\u30fc\u30c7\u30a3\u30f3\u30b0 | BLOCKED | **\u7dad\u6301**\uff08T752\u3001\u301c7/5\uff09 | \u793e\u5185\u30e6\u30fc\u30b6\u30fc\u306e\u767b\u9332\u30fb\u30a2\u30af\u30c6\u30a3\u30d9\u30fc\u30b7\u30e7\u30f3\u306b\u5fc5\u8981 |\n| PUBLIC-07 \u6cd5\u5b9a\u30da\u30fc\u30b8/\u30d5\u30c3\u30bf\u30fc | PASS | \u7dad\u6301\uff08PASS\uff09 | \u5b9f\u88c5\u6e08\u307f |\n| PUBLIC-08 \u4fa1\u683cCEO\u627f\u8a8d | HUMAN_GATE | **\u6761\u4ef6\u4ed8\u304dPASS** | T804 \u306f 2026-07-03 \u306b\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u30aa\u30fc\u30ca\u30fc\u304c\u4eee\u6c7a\u5b9a\u3092\u627f\u8a8d\u3057\u3066\u5b8c\u4e86\u3002\u793e\u5185GA\u3067\u306f\u5b9f\u8ab2\u91d1\u304c\u767a\u751f\u3057\u306a\u3044\u305f\u3081 PASS \u6271\u3044\u3068\u3057\u3001CEO \u306e\u6700\u7d42\u4fa1\u683c\u78ba\u8a8d\u306f T862 \u3067\u5b9f\u65bd |\n| PUBLIC-09 Stripe\u8ab2\u91d1\u5b9f\u88c5\u30fbPortal live | BLOCKED | **\u5206\u5272**: T791\uff08Sandbox\u5b9f\u88c5\u30fbWebhook\u691c\u8a3c\uff09\u307e\u3067\u793e\u5185GA\u30b2\u30fc\u30c8\u3068\u3057\u3066\u7dad\u6301\u3002Customer Portal live \u691c\u8a3c\uff08T807\uff09\u306f **T862\u3078\u79fb\u7ba1** | \u5b9f\u8ab2\u91d1\u306a\u3057\u306e\u305f\u3081 live \u691c\u8a3c\u306f\u4e0d\u8981\u3002\u4ed5\u7d44\u307f\u306e\u5b9f\u88c5\u691c\u8a3c\uff08T791\uff09\u306f 7/5 \u307e\u3067 |\n| PUBLIC-10 \u8ca0\u8377\u30c6\u30b9\u30c8/SLA | PASS | \u7dad\u6301\uff08PASS\uff09 | T858 \u3067\u9054\u6210\u6e08\u307f |\n| PUBLIC-11 \u55b6\u696d\u30e1\u30fc\u30ebAI\u30de\u30c3\u30c1\u30f3\u30b0MVP | BLOCKED | **\u7dad\u6301**\uff08T817/T817_7\u3001\u301c7/5\uff09 | \u793e\u5185\u30e6\u30fc\u30b6\u30fc\u306e\u4e2d\u6838\u6a5f\u80fd |\n| PUBLIC-12 \u30ea\u30ea\u30fc\u30b9/\u30d0\u30fc\u30b8\u30e7\u30cb\u30f3\u30b0 | PASS | \u7dad\u6301\uff08PASS\uff09 | \u6574\u5099\u6e08\u307f |\n| PUBLIC-13 \u5b8c\u6210\u5224\u5b9a\u4e00\u5f0f | BLOCKED | **\u7dad\u6301**\uff08T845/T849/T850\u3001\u301c7/8\uff09 | \u30b5\u30a4\u30c8\u958b\u767a\u5b8c\u4e86\u5224\u5b9a\u306f\u30b9\u30b3\u30fc\u30d7\u4e0d\u5909\uff08\u6709\u511f\u5316\u7cfb\u30bf\u30b9\u30af\u306f\u30b2\u30fc\u30c8\u5bfe\u8c61\u5916: QA-91/QA-93\uff09 |\n| PUBLIC-14 Firebase CI/CD\u8a8d\u8a3c | BLOCKED | **\u7dad\u6301**\uff08T852\u3001\u301c7/4\uff09 | \u30c7\u30d7\u30ed\u30a4\u7d4c\u8def\u306f\u793e\u5185GA\u3067\u3082\u5fc5\u9808 |\n| PUBLIC-15 \u8ab2\u984c/QA \u30bc\u30ed | PASS | \u7dad\u6301\uff08PASS\u3001T849\u3067\u518d\u78ba\u8a8d\uff09 | \u518d\u78ba\u8a8d\u6642\u306b R111\uff087/7\u89e3\u6d88\u4e88\u5b9a\uff09\u3068 R112\uff08T833\u3067\u89e3\u6d88\uff09\u306e\u30af\u30ed\u30fc\u30ba\u3092\u78ba\u8a8d\u3059\u308b |\n| PUBLIC-16 \u8ca9\u58f2URL DNS/HTTPS | **PASS**\uff082026-07-04\u5fa9\u65e7\uff09 | \u7dad\u6301\uff08PASS\uff09 | \u304a\u540d\u524d.com\u30c9\u30e1\u30a4\u30f3\u60c5\u5831\u8a8d\u8a3c\u306e\u5b8c\u4e86\u3067clientHold\u89e3\u9664\u3002\u76e3\u8996green\uff08T855\u5b8c\u4e86\u3001\u66ab\u5b9aGo\u5224\u65ad\u306f\u4e0d\u8981\u306b\uff09 |\n\n**\u7d50\u679c**: T862 \u3078\u79fb\u7ba1\u3059\u308b\u306e\u306f PUBLIC-09 \u306e live \u691c\u8a3c\u90e8\u5206\uff08T807\uff09\u306e\u307f\u3002PUBLIC-08 \u306f\u6761\u4ef6\u4ed8\u304d PASS\u3002\u4ed6\u306f\u3059\u3079\u3066\u793e\u5185GA\u30b2\u30fc\u30c8\u3068\u3057\u3066\u7dad\u6301\u3059\u308b\u30027/8 GA \u5224\u5b9a\u306b\u52b9\u304f\u6b8b\u30d6\u30ed\u30c3\u30ab\u30fc\u306f T752 / T791 / T798 / T817_7 / T845 / T849 / T850 / T852 / T855\uff08+\u4eba\u9593\u30b2\u30fc\u30c8 T819/T823/T831/T834/T836\uff09\u3067\u3001\u6628\u65e5\u306e\u518d\u30d9\u30fc\u30b9\u30e9\u30a4\u30f3\u65e5\u7a0b\u3068\u4e00\u81f4\u3059\u308b\u3002\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\uff082026-07-04\uff09\n\n- **Stripe \u306f\u73fe\u5728\u3001\u30ec\u30ac\u30b7\u30fc test mode \u3067\u306f\u306a\u304f Sandboxes \u3092\u63a8\u5968**\uff08test mode \u306f\u8a2d\u5b9a\u304c live mode \u3068\u5171\u6709\u3055\u308c\u308b\u3002Sandbox \u306f\u6700\u59275\u500b\u3001\u8a2d\u5b9a\u5b8c\u5168\u5206\u96e2\u3001V1/V2 API \u5bfe\u5fdc\uff09\u3002T791 \u306f default test mode \u3067\u306f\u306a\u304f**\u5c02\u7528 Sandbox** \u3067\u5b9f\u88c5\u30fb\u691c\u8a3c\u3057\u3001live \u8a2d\u5b9a\u3078\u306e\u8aa4\u64cd\u4f5c\u30ea\u30b9\u30af\u3092\u6392\u9664\u3059\u308b\u3002QA-93 \u306e\u300ctest mode\u300d\u306f\u300cStripe Sandbox\uff08\u307e\u305f\u306f test \u74b0\u5883\uff09\u300d\u3068\u8aad\u307f\u66ff\u3048\u308b\u3002\n- go-live \u6642\uff08T862 \u5f8c\uff09\u306f account switcher \u3067 Sandbox \u3092\u629c\u3051\u3001live API key \u3078\u5207\u66ff\u3001secret \u306f\u74b0\u5883\u5909\u6570\u7ba1\u7406\uff08\u30b3\u30df\u30c3\u30c8\u7981\u6b62\uff09\u2014 \u65e2\u5b58\u306e T776 \u8a2d\u8a08\u30fbsecret \u975e\u8a18\u9332\u30eb\u30fc\u30eb\u3068\u6574\u5408\u3002\n\n## \u30b9\u30b1\u30b8\u30e5\u30fc\u30eb\u306e\u30b9\u30ea\u30c3\u30d7\u8abf\u6574\uff082026-07-04\uff09\n\n- T811\uff08PG14 \u30d0\u30fc\u30b8\u30e7\u30f3\u78ba\u8a8d\u30fb\u8a08\u753b\uff09: 7/3 \u5fc5\u7740\u304c\u672a\u5b8c\u4e86\u306e\u305f\u3081 7/4 \u3078\u66f4\u65b0\u3002T837\uff08\u301c7/6\uff09\u306e\u524d\u63d0\u3068\u3057\u3066\u672c\u65e5\u4e2d\u306e\u5b8c\u4e86\u304c\u5fc5\u8981\u3002\n- T819\uff087/2 \u5b9a\u4f8b\u306e\u5b9f\u65bd\u3068\u5831\u544a\uff09: 7/4 \u3078\u66f4\u65b0\u3002\u5b9f\u65bd\u6e08\u307f\u3067\u3042\u308c\u3070\u4eba\u9593\u304c\u30b9\u30c6\u30fc\u30bf\u30b9\u3092\u5b8c\u4e86\u306b\u3059\u308b\u3002\n\n## T833\uff087/7\uff09\u3078\u306e\u5f15\u304d\u7d99\u304e\n\n1. \u672c\u4ed5\u5206\u3051\u8868\u3092\u627f\u8a8d\u307e\u305f\u306f\u4fee\u6b63\u3059\u308b\u3002\n2. \u627f\u8a8d\u5f8c\u3001`data/release_go_no_go_criteria.tsv` \u306e PUBLIC-08\uff08\u6761\u4ef6\u4ed8\u304dPASS\u5316\uff09\u3068 PUBLIC-09\uff08T791\u30b9\u30b3\u30fc\u30d7\u3078\u306e\u5206\u5272\u3001T807 \u306e T862 \u79fb\u7ba1\uff09\u3092\u66f4\u65b0\u3057\u3001R112 \u3092 resolved \u306b\u3059\u308b\u3002\n3. PUBLIC-16 \u304c\u672a\u5fa9\u65e7\u306e\u5834\u5408\u306e\u66ab\u5b9a Go \u53ef\u5426\u3092\u5224\u65ad\u3059\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

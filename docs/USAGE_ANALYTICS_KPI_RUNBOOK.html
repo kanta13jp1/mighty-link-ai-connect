@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USAGE_ANALYTICS_KPI_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# T800 \u5229\u7528\u72b6\u6cc1\u30a2\u30ca\u30ea\u30c6\u30a3\u30af\u30b9\u8a08\u6e2c\u8a2d\u8a08\u30fb\u904b\u7528\u30e9\u30f3\u30d6\u30c3\u30af\n\n- WBS: T800\n- \u72b6\u614b: \u5b8c\u4e86\n- \u66f4\u65b0\u65e5: 2026-06-27\n- \u5bfe\u8c61: \u516c\u958b\u30c7\u30e2\u3001Firebase Hosting \u914d\u4fe1\u7248\u3001\u5c06\u6765\u306e\u672c\u756a\u30b5\u30a4\u30c8\n- \u5b9f\u88c5: `POST /api/analytics/event`, `usage_analytics_events`, \u7ba1\u7406\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9 CSV\n\n---\n\n## \u76ee\u7684\n\n\u516c\u958b\u30c7\u30e2\u3068\u672c\u756a\u524d\u691c\u8a3c\u3067\u3001\u3069\u306e\u753b\u9762\u3084\u5c0e\u7dda\u304c\u4f7f\u308f\u308c\u3066\u3044\u308b\u304b\u3092\u3001\u500b\u4eba\u60c5\u5831\u3092\u4fdd\u5b58\u305b\u305a\u306b\u78ba\u8a8d\u3067\u304d\u308b\u3088\u3046\u306b\u3059\u308b\u3002WBS\u304c\u3059\u3079\u3066\u5b8c\u4e86\u3057\u305f\u6642\u306b\u958b\u767a\u5b8c\u4e86\u3068\u5224\u65ad\u3067\u304d\u308b\u3088\u3046\u3001\u5229\u7528\u5b9f\u614bKPI\u3092\u7ba1\u7406\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3068Sheets\u9023\u643a\u5bfe\u8c61\u3078\u542b\u3081\u308b\u3002\n\nGitHub Pages\u306e\u9759\u7684\u516c\u958b\u30c7\u30e2\u3067\u306f\u540c\u4e00\u30aa\u30ea\u30b8\u30f3\u306bFastAPI\u304c\u5b58\u5728\u3057\u306a\u3044\u305f\u3081\u3001\u30d5\u30ed\u30f3\u30c8\u30a8\u30f3\u30c9\u306e\u30a4\u30d9\u30f3\u30c8\u9001\u4fe1\u306f404\u3092\u51fa\u3055\u306a\u3044\u3088\u3046\u306bskip\u3059\u308b\u3002Firebase/Functions\u914d\u4fe1\u3001\u30ed\u30fc\u30ab\u30ebFastAPI\u3001\u5c06\u6765\u306e\u672c\u756aAPI\u540c\u4e00\u30aa\u30ea\u30b8\u30f3\u3067\u306f\u9001\u4fe1\u3059\u308b\u3002\n\n---\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\n\n2026-06-27\u306eT800\u5b9f\u88c5\u3067\u306f\u3001\u6b21\u306e\u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u306e\u65b9\u91dd\u3092\u78ba\u8a8d\u3057\u305f\u3002\n\n- Firebase Analytics: `https://firebase.google.com/docs/analytics`\n- Firebase Analytics events: `https://firebase.google.com/docs/analytics/ios/events`\n- Supabase Row Level Security: `https://supabase.com/docs/guides/database/postgres/row-level-security`\n- Supabase API security: `https://supabase.com/docs/guides/api/securing-your-api`\n- Google Sheets API batchUpdate: `https://developers.google.com/workspace/sheets/api/guides/batchupdate`\n- GitHub Projects API: `https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects`\n\nFirebase Analytics\u306f\u5c06\u6765\u306eFirebase Hosting\u672c\u756a\u904b\u7528\u3067\u5229\u7528\u5019\u88dc\u306b\u6b8b\u3059\u3002\u305f\u3060\u3057\u73fe\u6642\u70b9\u3067\u306f\u3001\u516c\u958b\u30c7\u30e2\u306e\u540c\u610f\u30fb\u6700\u5c0f\u5316\u30fbSupabase\u76e3\u67fb\u3092\u512a\u5148\u3057\u3001SDK\u306e\u81ea\u52d5\u53ce\u96c6\u3067\u306f\u306a\u304f\u30d5\u30a1\u30fc\u30b9\u30c8\u30d1\u30fc\u30c6\u30a3API\u3067\u533f\u540d\u30a4\u30d9\u30f3\u30c8\u3060\u3051\u3092\u53ce\u96c6\u3059\u308b\u3002\n\n---\n\n## \u53ce\u96c6\u30a4\u30d9\u30f3\u30c8\n\n| event_name | \u610f\u5473 | \u4e3b\u306ametadata |\n| --- | --- | --- |\n| `page_view` | \u30da\u30fc\u30b8\u8868\u793a | `surface` |\n| `section_view` | \u4e3b\u8981\u30bb\u30af\u30b7\u30e7\u30f3\u8868\u793a | `section_id` |\n| `cta_click` | \u30dc\u30bf\u30f3\u3001\u30a2\u30f3\u30ab\u30fc\u30af\u30ea\u30c3\u30af | `element`, `element_id`, `href` |\n| `form_submit` | \u30d5\u30a9\u30fc\u30e0\u9001\u4fe1\u958b\u59cb | `form_id` |\n| `form_success` | \u30d5\u30a9\u30fc\u30e0\u51e6\u7406\u6210\u529f | API\u5074\u306e\u5c06\u6765\u62e1\u5f35\u7528 |\n| `form_error` | \u30d5\u30a9\u30fc\u30e0\u51e6\u7406\u5931\u6557 | API\u5074\u306e\u5c06\u6765\u62e1\u5f35\u7528 |\n| `dashboard_export` | \u7ba1\u7406\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9CSV\u51fa\u529b | \u7ba1\u7406\u8005\u64cd\u4f5c\u306e\u5c06\u6765\u62e1\u5f35\u7528 |\n\n---\n\n## \u4fdd\u5b58\u3057\u306a\u3044\u60c5\u5831\n\n- IP\u30a2\u30c9\u30ec\u30b9\n- \u751f\u306eUser-Agent\n- \u6c0f\u540d\n- \u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\n- \u96fb\u8a71\u756a\u53f7\n- \u30d5\u30a9\u30fc\u30e0\u672c\u6587\n- API\u30ad\u30fc\u3001token\u3001secret\u3001password\n- URL\u30af\u30a8\u30ea\u6587\u5b57\u5217\n\n\u30bb\u30c3\u30b7\u30e7\u30f3ID\u306f `USAGE_ANALYTICS_PSEUDONYM_SALT` \u3092\u4f7f\u3044\u3001`usage-<digest>` \u306b\u5909\u63db\u3057\u3066\u4fdd\u5b58\u3059\u308b\u3002\u30d6\u30e9\u30a6\u30b6\u5074\u306elocalStorage\u306b\u306f\u30e9\u30f3\u30c0\u30e0\u306a\u533f\u540d\u30bb\u30c3\u30b7\u30e7\u30f3ID\u3060\u3051\u3092\u4fdd\u5b58\u3059\u308b\u3002\n\n---\n\n## DB\u3068RLS\n\nSupabase migration:\n\n- `supabase/migrations/20260627000200_usage_analytics_events.sql`\n\n\u30c6\u30fc\u30d6\u30eb:\n\n- `public.usage_analytics_events`\n\n\u5236\u5fa1:\n\n- `ALTER TABLE public.usage_analytics_events ENABLE ROW LEVEL SECURITY`\n- `REVOKE ALL ON TABLE public.usage_analytics_events FROM anon, authenticated`\n- `REVOKE ALL ON SEQUENCE public.usage_analytics_events_id_seq FROM anon, authenticated`\n\n\u30a2\u30d7\u30ea\u30b1\u30fc\u30b7\u30e7\u30f3\u7d4c\u7531\u306e\u96c6\u8a08API\u3060\u3051\u3067\u78ba\u8a8d\u3057\u3001Supabase anon REST\u304b\u3089\u76f4\u63a5\u8aad\u307e\u305b\u306a\u3044\u3002\n\n---\n\n## API\n\n### `POST /api/analytics/event`\n\n\u30ea\u30af\u30a8\u30b9\u30c8\u4f8b:\n\n```json\n{\n  \"event_name\": \"page_view\",\n  \"event_surface\": \"public_demo\",\n  \"page_url\": \"/#survey-section\",\n  \"session_id\": \"usage-local-random-id\",\n  \"metadata\": {\n    \"surface\": \"home\"\n  }\n}\n```\n\n\u30ec\u30b9\u30dd\u30f3\u30b9\u4f8b:\n\n```json\n{\n  \"status\": \"success\",\n  \"event_id\": 1,\n  \"event_name\": \"page_view\",\n  \"privacy\": {\n    \"session_pseudonymized\": true,\n    \"ip_address_stored\": false,\n    \"raw_user_agent_stored\": false,\n    \"form_contents_stored\": false\n  }\n}\n```\n\n---\n\n## KPI\n\n\u7ba1\u7406\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9 `GET /api/admin/operations-dashboard` \u306b\u6b21\u3092\u8ffd\u52a0\u3057\u305f\u3002\n\n- `usage_analytics_events`\n- `usage_events_last_7_days`\n- `usage_unique_sessions_last_7_days`\n- `usage_page_views`\n\nCSV `GET /api/admin/operations-dashboard/report.csv` \u306b\u306f\u3001`usage_analytics`\u3001`usage_analytics_event`\u3001`usage_analytics_surface` \u884c\u3092\u51fa\u529b\u3059\u308b\u3002\n\n---\n\n## \u904b\u7528\n\n1. \u516c\u958b\u30c7\u30e2\u307e\u305f\u306f\u672c\u756a\u30b5\u30a4\u30c8\u3067\u4e3b\u8981\u5c0e\u7dda\u3092\u64cd\u4f5c\u3059\u308b\u3002\n2. \u7ba1\u7406\u8005Basic\u8a8d\u8a3c\u3067 `/api/admin/operations-dashboard` \u3092\u78ba\u8a8d\u3059\u308b\u3002\n3. \u5fc5\u8981\u306b\u5fdc\u3058\u3066 `/api/admin/operations-dashboard/report.csv` \u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3059\u308b\u3002\n4. \u6708\u6b21\u54c1\u8cea\u5831\u544a\u3067\u306f\u3001T800\u306eKPI\u3068WBS\u5b8c\u4e86\u72b6\u6cc1\u3092\u5408\u308f\u305b\u3066\u78ba\u8a8d\u3059\u308b\u3002\n5. Firebase Analytics SDK\u3078\u79fb\u884c\u3059\u308b\u5834\u5408\u306f\u3001\u4e8b\u524d\u306b\u30d7\u30e9\u30a4\u30d0\u30b7\u30fc\u30dd\u30ea\u30b7\u30fc\u3001\u540c\u610fUI\u3001\u30aa\u30d7\u30c8\u30a2\u30a6\u30c8\u5c0e\u7dda\u3001BigQuery\u9023\u643a\u53ef\u5426\u3092\u518d\u5be9\u67fb\u3059\u308b\u3002\n\n---\n\n## \u691c\u8a3c\n\n\u5bfe\u8c61\u30c6\u30b9\u30c8:\n\n- `tests/test_api.py::test_admin_operations_dashboard_requires_auth_aggregates_and_exports_csv`\n- `tests/test_data_retention_runbook.py`\n\n\u78ba\u8a8d\u9805\u76ee:\n\n- \u672a\u8a8d\u8a3c\u3067\u7ba1\u7406\u30c0\u30c3\u30b7\u30e5\u30dc\u30fc\u30c9\u3092\u8aad\u3081\u306a\u3044\n- \u7121\u52b9\u306a\u30a4\u30d9\u30f3\u30c8\u540d\u3092\u62d2\u5426\u3059\u308b\n- \u30bb\u30c3\u30b7\u30e7\u30f3ID\u304c\u7591\u4f3cID\u5316\u3055\u308c\u308b\n- IP\u30a2\u30c9\u30ec\u30b9\u3001\u751fUser-Agent\u3001\u30d5\u30a9\u30fc\u30e0\u672c\u6587\u3092\u4fdd\u5b58\u3057\u306a\u3044\n- RLS\u3068anon/authenticated revoke\u304cmigration\u306b\u5b58\u5728\u3059\u308b\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

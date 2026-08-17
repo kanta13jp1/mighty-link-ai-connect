@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIGMA_POWERPOINT_DEMO — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Antigravity 2.0 + Figma MCP + PowerPoint 5\u5206\u30c7\u30e2\n\n\u3053\u306e\u30bb\u30b0\u30e1\u30f3\u30c8\u306fWeb\u5236\u4f5c\u3092\u4e3b\u5f79\u3068\u3059\u308b30\u5206\u30c7\u30e2\u306e\u3046\u3061\u3001MCP\u306e\u5f79\u5272\u3092\u898b\u305b\u308b5\u5206\u9593\u3067\u3059\u3002Antigravity 2.0\u304b\u3089Figma remote MCP\u3078\u63a5\u7d9a\u3057\u30013\u679a\u306eFigma Slides\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002\u4f5c\u6210\u5f8c\u306fFigma\u306e\u6a19\u6e96UI\u304b\u3089\u7de8\u96c6\u53ef\u80fd\u306aPPTX\u3068\u3057\u3066\u66f8\u304d\u51fa\u3057\u3001PowerPoint\u3067\u958b\u304d\u307e\u3059\u3002\n\n## 5\u5206\u306e\u9032\u884c\n\n| \u6642\u523b | \u64cd\u4f5c | \u6210\u529f\u306e\u8a3c\u62e0 |\n| --- | --- | --- |\n| 00:00-00:45 | `PROMPT_05_MCP_CHECK.txt`\u3092\u5168\u6587\u8cbc\u308a\u4ed8\u3051 | account\u3001team\u3001project\u3001Slides\u66f8\u304d\u8fbc\u307fTool\u30925\u884c\u3067\u78ba\u8a8d |\n| 00:45-03:00 | `PROMPT_12_FIGMA_POWERPOINT.txt`\u3092\u5168\u6587\u8cbc\u308a\u4ed8\u3051 | \u6307\u5b9aproject\u306b3\u679a\u306e\u7de8\u96c6\u53ef\u80fd\u306aFigma Slides\u3068URL\u304c\u8fd4\u308b |\n| 03:00-03:45 | Figma\u30673\u679a\u3092\u30b0\u30ea\u30c3\u30c9\u78ba\u8a8d | \u30bf\u30a4\u30c8\u30eb\u3001\u6587\u5b57\u5207\u308c\u3001\u91cd\u306a\u308a\u3001\u79d8\u5bc6\u60c5\u58310\u4ef6 |\n| 03:45-04:30 | `File > Export slides to > PPTX` | Structure\u3092editable PPTX equivalent\u306b\u3057\u3066\u66f8\u304d\u51fa\u3059 |\n| 04:30-05:00 | PowerPoint\u3067\u958b\u304f | 3\u679a\u3001\u7de8\u96c6\u53ef\u80fd\u30c6\u30ad\u30b9\u30c8\u3001\u30d5\u30a9\u30f3\u30c8\u3001\u6539\u884c\u3092\u78ba\u8a8d |\n\n## \u5f79\u5272\u5206\u62c5\n\n- Antigravity 2.0: \u76ee\u7684\u3001\u5236\u7d04\u3001\u5b8c\u4e86\u6761\u4ef6\u3092\u8aad\u307f\u3001\u9069\u5207\u306aSkill\u3068MCP Tool\u3092\u9806\u756a\u306b\u4f7f\u3046\u3002\n- Figma MCP: Antigravity 2.0\u3068Figma\u306e\u9593\u3067\u3001account\u3001file\u3001slide\u3001layer\u306a\u3069\u306e\u69cb\u9020\u5316\u3055\u308c\u305f\u6587\u8108\u3068\u64cd\u4f5c\u3092\u53d7\u3051\u6e21\u3059\u3002\n- Figma Slides: \u7de8\u96c6\u53ef\u80fd\u306a\u30b9\u30e9\u30a4\u30c9\u3001\u30ec\u30a4\u30a2\u30a6\u30c8\u3001\u914d\u8272\u3001\u30bf\u30a4\u30dd\u30b0\u30e9\u30d5\u30a3\u3092\u4fdd\u6301\u3059\u308b\u3002\n- PowerPoint: \u914d\u5e03\u30fb\u6295\u5f71\u7528\u306ePPTX\u3092\u958b\u304d\u3001\u5909\u63db\u5f8c\u306e\u30d5\u30a9\u30f3\u30c8\u3001\u6539\u884c\u3001\u8272\u3001\u9759\u6b62\u753b\u5316\u3092\u6700\u7d42\u78ba\u8a8d\u3059\u308b\u3002\n- \u4eba: \u4f5c\u6210\u5148\u3001\u6a29\u9650\u3001\u5171\u6709\u7bc4\u56f2\u3001\u66f8\u304d\u51fa\u3057\u3001\u505c\u6b62\u5224\u65ad\u3092\u6301\u3064\u3002\n\nMCP\u306f\u8cc7\u6599\u306e\u54c1\u8cea\u3092\u81ea\u52d5\u4fdd\u8a3c\u3059\u308b\u6a5f\u80fd\u3067\u306f\u3042\u308a\u307e\u305b\u3093\u3002AI\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u304c\u5916\u90e8\u30b5\u30fc\u30d3\u30b9\u306e\u6587\u8108\u3068Tool\u3092\u3001\u8a31\u53ef\u3055\u308c\u305f\u7bc4\u56f2\u3067\u5229\u7528\u3059\u308b\u305f\u3081\u306e\u6a19\u6e96\u63a5\u7d9a\u3067\u3059\u3002\n\n## \u4e8b\u524d\u6e96\u5099\n\n1. Antigravity 2.0\u3078\u30b5\u30a4\u30f3\u30a4\u30f3\u3057\u3001\u30c7\u30e2\u5c02\u7528Project\u3060\u3051\u3092\u958b\u304f\u3002\n2. Settings > Customizations > Installed MCP Servers\u3067Figma remote MCP\u3092\u63a5\u7d9a\u3057\u3001OAuth\u3092\u5b8c\u4e86\u3059\u308b\u3002\n3. Figma account\u3001team\u3001project\u3092\u6b21\u3078\u56fa\u5b9a\u3059\u308b\u3002\n   - account: `kanta13jp1`\n   - team: `kanta13jp1's team`\n   - plan key: `team::1404381379512110171`\n   - project: `Team project`\n   - project ID: `264549730`\n4. Figma Slides\u306e\u4f5c\u6210\u30013\u679a\u306e\u78ba\u8a8d\u3001PPTX\u66f8\u304d\u51fa\u3057\u3092\u4e00\u5ea6\u30ea\u30cf\u30fc\u30b5\u30eb\u3059\u308b\u3002\n5. \u5b8c\u6210\u6e08\u307fFigma Slides URL\u3068\u4e88\u5099PPTX\u3092\u30ed\u30fc\u30ab\u30eb\u306b\u7528\u610f\u3059\u308b\u3002\n6. Figma\u306e\u5229\u7528\u4e0a\u9650\u3068\u66f8\u304d\u8fbc\u307fTool\u306e\u6709\u7121\u3092\u5f53\u65e5\u671d\u306b\u78ba\u8a8d\u3059\u308b\u3002\n7. \u9867\u5ba2\u60c5\u5831\u3001\u500b\u4eba\u60c5\u5831\u3001API\u30ad\u30fc\u3001token\u3092\u30d7\u30ed\u30f3\u30d7\u30c8\u3001Figma\u3001PowerPoint\u3078\u5165\u308c\u306a\u3044\u3002\n\n\u4f1a\u5834\u3067\u306fFigma OAuth\u3001team\u5909\u66f4\u3001project\u5909\u66f4\u3001\u30d7\u30e9\u30f3\u5909\u66f4\u3092\u884c\u3044\u307e\u305b\u3093\u3002\n\n## \u5f53\u65e5\u306e\u64cd\u4f5c\n\n1. Antigravity 2.0\u3078`PROMPT_05_MCP_CHECK.txt`\u3092\u5168\u6587\u8cbc\u308a\u4ed8\u3051\u308b\u3002\n2. 5\u884c\u306e\u7d50\u679c\u304c\u3059\u3079\u3066\u4e88\u5b9a\u3069\u304a\u308a\u306a\u3089\u3001`PROMPT_12_FIGMA_POWERPOINT.txt`\u3092\u5168\u6587\u8cbc\u308a\u4ed8\u3051\u308b\u3002\n3. \u8fd4\u3055\u308c\u305fFigma Slides URL\u3092\u958b\u304d\u30013\u679a\u3092\u30b0\u30ea\u30c3\u30c9\u8868\u793a\u3059\u308b\u3002\n4. \u30bf\u30a4\u30c8\u30eb\u3001\u4f59\u767d\u3001\u6587\u5b57\u5207\u308c\u3001\u91cd\u306a\u308a\u3001\u5171\u6709\u7bc4\u56f2\u3092\u78ba\u8a8d\u3059\u308b\u3002\n5. Figma Slides\u3067`Main menu > File > Export slides to`\u3092\u958b\u304f\u3002\n6. File type\u3092`PPTX`\u3001Content\u3092`all slides`\u3001Structure\u3092`editable PPTX equivalent`\u306b\u3059\u308b\u3002\n7. PowerPoint\u3067\u958b\u304d\u30013\u679a\u3042\u308b\u3053\u3068\u3068\u30c6\u30ad\u30b9\u30c8\u3092\u9078\u629e\u30fb\u7de8\u96c6\u3067\u304d\u308b\u3053\u3068\u3092\u78ba\u8a8d\u3059\u308b\u3002\n\n## 90\u79d2\u5fa9\u65e7\n\n- 30\u79d2: account\u3001team\u3001project\u3001Tool\u306e\u3044\u305a\u308c\u304b\u304c\u9055\u3048\u3070\u30e9\u30a4\u30d6\u4f5c\u6210\u3092\u505c\u6b62\u3059\u308b\u3002\n- 60\u79d2: \u30ea\u30cf\u30fc\u30b5\u30eb\u6e08\u307fFigma Slides URL\u3092\u958b\u304d\u3001\u4f5c\u6210\u6e08\u307f3\u679a\u3092\u898b\u305b\u308b\u3002\n- 90\u79d2: Figma\u3082\u958b\u3051\u306a\u3051\u308c\u3070\u3001\u5b8c\u6210\u6e08\u307fPPTX\u3092PowerPoint\u3067\u958b\u3044\u3066\u6d41\u308c\u3092\u8aac\u660e\u3059\u308b\u3002\n\nStarter\u30d7\u30e9\u30f3\u306eMCP\u5229\u7528\u4e0a\u9650\u306b\u9054\u3057\u305f\u5834\u5408\u3082\u518d\u8a8d\u8a3c\u3084\u9023\u7d9a\u518d\u8a66\u884c\u3092\u305b\u305a\u3001\u5b8c\u6210\u6e08\u307f\u6210\u679c\u7269\u3078\u5207\u308a\u66ff\u3048\u307e\u3059\u3002\u5931\u6557\u3092\u96a0\u3055\u305a\u3001\u300c\u63a5\u7d9a\u5148\u306e\u5236\u7d04\u3092\u691c\u77e5\u3057\u3001\u4eba\u304c\u505c\u6b62\u5224\u65ad\u3057\u305f\u8a3c\u62e0\u300d\u3068\u3057\u3066\u8aac\u660e\u3057\u307e\u3059\u3002\n\n## PowerPoint\u5909\u63db\u6642\u306e\u78ba\u8a8d\u70b9\n\n- PowerPoint\u306b\u306a\u3044\u30d5\u30a9\u30f3\u30c8\u306f\u65e2\u5b9a\u30d5\u30a9\u30f3\u30c8\u3078\u7f6e\u304d\u63db\u308f\u308b\u5834\u5408\u304c\u3042\u308b\u3002\n- Figma Slides\u306e\u30b0\u30e9\u30c7\u30fc\u30b7\u30e7\u30f3\u306f\u5358\u8272\u3078\u5909\u63db\u3055\u308c\u308b\u3002\n- \u30a4\u30f3\u30bf\u30e9\u30af\u30b7\u30e7\u30f3\u3068\u30b3\u30fc\u30c9\u30d6\u30ed\u30c3\u30af\u306f\u9759\u6b62\u753b\u50cf\u306b\u306a\u308b\u3002\n- \u8907\u96d1\u306a\u56f3\u5f62\u3088\u308a\u3001\u6587\u5b57\u3001\u5358\u7d14\u56f3\u5f62\u3001\u753b\u50cf\u3092\u512a\u5148\u3059\u308b\u3002\n- \u66f8\u304d\u51fa\u3057\u5f8c\u306b3\u679a\u3001\u6587\u5b57\u5207\u308c0\u4ef6\u3001\u79d8\u5bc6\u60c5\u58310\u4ef6\u3001\u7de8\u96c6\u53ef\u80fd\u30c6\u30ad\u30b9\u30c8\u3092\u78ba\u8a8d\u3059\u308b\u3002\n\n## \u516c\u5f0f\u8cc7\u6599\n\n- Antigravity 2.0 overview: https://www.antigravity.google/docs/overview\n- Antigravity MCP: https://antigravity.google/docs/mcp\n- Figma MCP guide: https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server\n- Figma Slides PPTX export: https://help.figma.com/hc/en-us/articles/24848334599447-Export-from-Figma-Slides\n\n## \u30ea\u30cf\u30fc\u30b5\u30eb\u6e08\u307f\u53c2\u8003\u8cc7\u6599\n\n- Team project: https://www.figma.com/files/team/1404381379512110171/project/264549730\n- 36\u679aFigma Slides: https://www.figma.com/slides/t1LgWfEHQKTAkCxsxUFkgD\n- \u7de8\u96c6\u53ef\u80fdPPTX: `exports/mighty_skill_bridge_antigravity_user_guide_2026_figma_redesign.pptx`\n- \u518d\u751f\u6210script: `scripts/generate_antigravity_user_guide_figma_redesign.mjs`\n\n\u3053\u308c\u3089\u306f5\u5206\u30bb\u30b0\u30e1\u30f3\u30c8\u304c\u505c\u6b62\u6761\u4ef6\u306b\u9054\u3057\u305f\u5834\u5408\u306e\u8aac\u660e\u7528\u4e88\u5099\u3067\u3059\u3002\u672c\u756a\u3067\u306f\u65e2\u5b5836\u679a\u3092\u5909\u66f4\u305b\u305a\u3001`PROMPT_12_FIGMA_POWERPOINT.txt`\u3067\u65b0\u898f3\u679a\u3060\u3051\u3092\u4f5c\u6210\u3057\u307e\u3059\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

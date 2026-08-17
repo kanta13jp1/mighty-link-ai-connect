@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Supabase Daily Backup CI \u5fa9\u65e7\u30fb\u904b\u7528 Runbook\uff08T870 / R116\uff09\n\n\u6700\u7d42\u66f4\u65b0: 2026-07-25\n\u5bfe\u8c61: `.github/workflows/supabase-backup.yml`\n\u95a2\u9023: T741 / T771 / T852 / T870 / R116 / PUBLIC-02\n\n## \u73fe\u5728\u306e\u69cb\u6210\n\n2026-07-25 \u306b\u3001\u5931\u6557\u3057\u7d9a\u3051\u3066\u3044\u305f\u65e5\u6b21\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u7d4c\u8def\u3092\u73fe\u884cGCP\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3078\u518d\u69cb\u6210\u3057\u305f\u3002\n\n| \u9805\u76ee | \u8a2d\u5b9a |\n| --- | --- |\n| GCP project | `mighty-link-ai-connect-13d22`\uff08project number `526991227996`\uff09 |\n| WIF pool | `github-backup-pool` |\n| WIF provider | `mighty-link-backup` |\n| GitHub repository ID | `1244319528` |\n| \u8a31\u53ef\u30d6\u30e9\u30f3\u30c1 | `refs/heads/master` |\n| Service account | `supabase-backup-ci@mighty-link-ai-connect-13d22.iam.gserviceaccount.com` |\n| GCS bucket | `mighty-link-ai-connect-13d22-supabase-backups`\uff08`asia-northeast1`\uff09 |\n| \u4fdd\u5b58prefix | `supabase/` |\n| \u5b9f\u884c\u6642\u523b | \u6bce\u65e5 03:00 JST\uff08`0 18 * * *` UTC\uff09 |\n\nDB URL\u3068\u8a8d\u8a3c\u60c5\u5831\u306e\u5024\u306fGitHub Actions Secrets\u3060\u3051\u306b\u4fdd\u5b58\u3057\u3001docs\u3001data\u3001Issue\u3001\u30ed\u30b0\u3078\u8a18\u9332\u3057\u306a\u3044\u3002\n\n## \u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u5883\u754c\n\n- GitHub OIDC\u304b\u3089\u77ed\u671f\u8cc7\u683c\u60c5\u5831\u3092\u767a\u884c\u3057\u3001\u30b5\u30fc\u30d3\u30b9\u30a2\u30ab\u30a6\u30f3\u30c8\u9375\u306f\u4f5c\u6210\u3057\u306a\u3044\u3002\n- Provider\u306fGitHub\u306e\u6570\u5024repository ID\u3068`master`\u30d6\u30e9\u30f3\u30c1\u306e\u4e21\u65b9\u3067\u5236\u9650\u3059\u308b\u3002\n- Service account\u306b\u306f`roles/iam.workloadIdentityUser`\u3060\u3051\u3092\u4ed8\u4e0e\u3059\u308b\u3002\n- Bucket\u6a29\u9650\u306f`roles/storage.objectCreator`\u3068`roles/storage.objectViewer`\u306b\u9650\u5b9a\u3059\u308b\u3002\n- Bucket\u306fUniform bucket-level access\u3068Public access prevention\u3092\u6709\u52b9\u5316\u3059\u308b\u3002\n- Object retention\u306f7\u65e5\u3001lifecycle\u524a\u9664\u306f30\u65e5\u3068\u3059\u308b\u3002\n- \u672c\u756a\u5fa9\u5143\u306f\u4eba\u9593\u306eGo/No-Go\u306a\u3057\u306b\u5b9f\u884c\u3057\u306a\u3044\u3002\n\n\u65e7\u969c\u5bb3\u306e\u539f\u56e0\u306f\u3001\u65e7project number `100664750415`\uff08`d7fa2`\uff09\u5074\u3078\u306e\u8aa4\u3063\u305f\n`roles/iam.serviceAccountUser` binding\u3001\u73fe\u884cproject\u5074\u306eWIF/bucket\u672a\u4f5c\u6210\u3001\n`SUPABASE_DB_URL`\u3068`SUPABASE_BACKUP_GCS_URI`\u672a\u767b\u9332\u3060\u3063\u305f\u3002\n\n## GitHub Actions Secrets\n\nWorkflow\u304c\u53c2\u7167\u3059\u308bsecret\u540d\u306f\u6b21\u306e4\u4ef6\u3002\n\n| Secret | \u5185\u5bb9 |\n| --- | --- |\n| `GCP_BACKUP_WORKLOAD_IDENTITY_PROVIDER` | \u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u5c02\u7528WIF provider resource name |\n| `GCP_BACKUP_SERVICE_ACCOUNT_EMAIL` | \u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u5c02\u7528service account email |\n| `SUPABASE_BACKUP_GCS_URI` | private bucket\u306e`gs://.../supabase` URI |\n| `SUPABASE_DB_URL` | \u672c\u756aSupabase Supavisor pooler\u63a5\u7d9a\u6587\u5b57\u5217 |\n\n\u767b\u9332\u6e08\u307f\u304b\u306f\u5024\u3092\u8868\u793a\u305b\u305a\u78ba\u8a8d\u3059\u308b\u3002\n\n```powershell\ngh secret list | Select-String 'GCP_BACKUP_|SUPABASE_'\n```\n\n## Bucket policy\n\n\u8a2d\u5b9a\u30d5\u30a1\u30a4\u30eb: `.github/config/supabase-backup-lifecycle.json`\n\n```powershell\ngcloud storage buckets update gs://mighty-link-ai-connect-13d22-supabase-backups `\n  --retention-period=P7D `\n  --lifecycle-file=.github/config/supabase-backup-lifecycle.json\n```\n\nretention policy\u306f\u30ed\u30c3\u30af\u3057\u306a\u3044\u3002\u904b\u7528\u79fb\u7ba1\u5f8c\u306b\u4f1a\u793e\u7ba1\u7406\u8005\u304c\u6cd5\u52d9\u30fb\u30b3\u30b9\u30c8\u8981\u4ef6\u3092\u78ba\u8a8d\u3057\u3001\u5fc5\u8981\u306a\u3089\u30ed\u30c3\u30af\u3092\u5225\u627f\u8a8d\u3067\u5b9f\u65bd\u3059\u308b\u3002\n\n## \u624b\u52d5\u5b9f\u884c\u3068\u78ba\u8a8d\n\n```powershell\ngh workflow run \"Supabase Daily Backup\" --ref master\ngh run list --workflow \"Supabase Daily Backup\" --limit 1\n```\n\n\u6210\u529f\u6761\u4ef6:\n\n1. `Validate backup configuration`\u304c\u6210\u529f\u3059\u308b\u3002\n2. `Authenticate to Google Cloud via WIF`\u304c\u6210\u529f\u3059\u308b\u3002\n3. `Create backup and upload to GCS`\u304c\u6210\u529f\u3059\u308b\u3002\n4. `Verify uploaded backup manifest`\u304c\u6210\u529f\u3059\u308b\u3002\n5. GCS\u4e0a\u306emanifest\u304c`status=created`\u3067\u30013\u3064\u306eSQL\u30d5\u30a1\u30a4\u30eb\u306eSHA-256\u3092\u4fdd\u6301\u3059\u308b\u3002\n\n\u30aa\u30d6\u30b8\u30a7\u30af\u30c8\u306e\u5b58\u5728\u78ba\u8a8d:\n\n```powershell\ngcloud storage ls --recursive gs://mighty-link-ai-connect-13d22-supabase-backups/supabase\n```\n\nDB URL\u3001SQL\u5185\u5bb9\u3001manifest\u5168\u6587\u306fIssue\u3084\u30c1\u30e3\u30c3\u30c8\u3078\u8cbc\u3089\u306a\u3044\u3002\n\n## \u5fa9\u5143\u78ba\u8a8d\n\n\u672c\u756aDB\u3078\u306f\u76f4\u63a5\u623b\u3055\u306a\u3044\u3002\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u305fsnapshot\u3092\u4f1a\u793e\u7ba1\u7406\u306e\u65b0\u898f\u30fb\u975e\u672c\u756aSupabase project\u3078\u5fa9\u5143\u3057\u3001RLS/API/\u516c\u958b\u30c7\u30e2guard\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u672c\u756a\u5fa9\u5143\u53ef\u5426\u3092\u5224\u65ad\u3059\u308b\u3002\n\n```powershell\n$env:SUPABASE_RESTORE_DB_URL = \"<non-production target>\"\npython scripts/restore_supabase_database.py backups/supabase/<snapshot> --dry-run\n```\n\n`restore_supabase_database.py`\u306fmanifest\u306bSHA-256\u304c\u3042\u308b\u5834\u5408\u3001\u6539\u3056\u3093\u30fb\u7834\u640d\u3092\u691c\u51fa\u3057\u3066\u5fa9\u5143\u3092\u62d2\u5426\u3059\u308b\u3002\u5b9f\u5fa9\u5143\u306b\u306f`--confirm-restore`\u304c\u5fc5\u8981\u3002\n\n## \u969c\u5bb3\u5207\u308a\u5206\u3051\n\n| \u75c7\u72b6 | \u78ba\u8a8d |\n| --- | --- |\n| `Missing ...` | 4\u3064\u306eGitHub Actions Secrets\u306e\u767b\u9332\u65e5\u6642\u3092\u78ba\u8a8d |\n| WIF `unauthorized_client` | provider\u306erepository ID\u3001branch\u6761\u4ef6\u3001`workloadIdentityUser` binding\u3092\u78ba\u8a8d |\n| GCS 403 | bucket IAM\u306eobjectCreator/objectViewer\u3068service account\u3092\u78ba\u8a8d |\n| DB\u63a5\u7d9a\u5931\u6557 | Supavisor pooler\u63a5\u7d9a\u6587\u5b57\u5217\u3001SSL\u3001\u30d1\u30b9\u30ef\u30fc\u30c9rotation\u3092\u78ba\u8a8d |\n| checksum mismatch | \u305d\u306esnapshot\u3092\u4f7f\u7528\u7981\u6b62\u306b\u3057\u3001\u76f4\u524d\u306e\u6b63\u5e38snapshot\u3067\u518d\u691c\u8a3c |\n\n## \u5b8c\u4e86\u30fb\u904b\u7528\u5224\u5b9a\n\n- \u624b\u52d5`workflow_dispatch`\u304cgreen\u3002\n- GCS\u306b\u5b9f\u30d0\u30c3\u30af\u30a2\u30c3\u30d74\u30d5\u30a1\u30a4\u30eb\u304c\u5b58\u5728\u3002\n- synthetic snapshot\u306e\u5fa9\u5143dry-run\u304cgreen\u3002\n- \u7fcc\u65e5\u306escheduled run\u3082green\u3002\n- T870\u5b8c\u4e86\u3001R116 resolved\u3001PUBLIC-02\u518d\u5224\u5b9a\u3092\u8a3c\u8de1\u4ed8\u304d\u3067\u66f4\u65b0\u3002\n\n\u516c\u5f0f\u53c2\u7167:\n\n- Google Cloud Workload Identity Federation for deployment pipelines\n- `google-github-actions/auth`\n- Google Cloud Storage IAM roles\n- Supabase Database Backups\n\n## 2026-07-25 \u5fa9\u65e7\u7d50\u679c\n\n- GitHub Actions run `30148170561`\u304csuccess\u3002\n- WIF\u8a8d\u8a3c\u3001PG17.6 dump\u3001GCS upload\u3001manifest\u518d\u53d6\u5f97\u691c\u8a3c\u304c\u3059\u3079\u3066\u6210\u529f\u3002\n- Snapshot `20260725T064931Z`\u3068\u3057\u30664 objects\u30012,001,119 bytes\u3092\u4fdd\u5b58\u3002\n- Manifest\u306f`status=created`\u3001SQL 3\u30d5\u30a1\u30a4\u30eb\u306eSHA-256\u3092\u4fdd\u6301\u3002\n- GCS\u304b\u3089\u5b9fsnapshot\u3092\u4e00\u6642\u53d6\u5f97\u3057\u3001checksum\u691c\u8a3c\u4ed8\u304drestore dry-run\u306b\u6210\u529f\u3002\n- \u672c\u756aDB\u3078\u306erestore\u306f\u5b9f\u65bd\u3057\u3066\u3044\u306a\u3044\u3002\n- \u8a3c\u8de1: `exports/supabase_backup_recovery_2026-07-25.{json,md}`\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

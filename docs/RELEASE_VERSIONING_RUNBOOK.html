@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RELEASE_VERSIONING_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u30ea\u30ea\u30fc\u30b9\u30ce\u30fc\u30c8\u30fb\u30d0\u30fc\u30b8\u30e7\u30cb\u30f3\u30b0\u904b\u7528Runbook\n\n\u4f5c\u6210\u65e5: 2026-06-19  \n\u5bfe\u8c61: Mighty-Link AI Connect / Mighty Skill-Bridge  \n\u95a2\u9023WBS: T806  \n\u95a2\u9023Issue: #113  \n\n## \u76ee\u7684\n\nMighty-Link AI Connect\u306e\u30ea\u30ea\u30fc\u30b9\u5c65\u6b74\u3092\u3001`CHANGELOG.md`\u3001SemVer\u5f62\u5f0f\u306e`VERSION`\u3001Git tag\u3001GitHub Releases\u3001WBS/Sheets/Calendar/NotebookLM\u306e\u540c\u671f\u3067\u4e00\u8cab\u7ba1\u7406\u3059\u308b\u3002\n\n\u672cRunbook\u306f\u3001\u7ba1\u7406\u4e0b\u30c7\u30e2\u3001\u793e\u5185\u78ba\u8a8d\u3001\u4e00\u822c\u516c\u958b\u3001\u6709\u511f\u30ed\u30fc\u30f3\u30c1\u3092\u6df7\u540c\u3057\u306a\u3044\u305f\u3081\u3001T746\u306eGo/No-Go\u5224\u5b9a\u3068\u5fc5\u305a\u63a5\u7d9a\u3059\u308b\u3002\n\n## \u30d0\u30fc\u30b8\u30e7\u30f3\u65b9\u91dd\n\n| \u7a2e\u5225 | \u5f62\u5f0f | \u4f8b | \u7528\u9014 |\n| --- | --- | --- | --- |\n| \u7ba1\u7406\u4e0b\u30c7\u30e2 | `MAJOR.MINOR.PATCH-controlled-demo.N` | `0.1.0-controlled-demo.1` | CEO\u8aac\u660e\u3001\u793e\u5185\u9650\u5b9a\u78ba\u8a8d\u3001\u975eGA\u306e\u5b89\u5b9a\u70b9 |\n| \u516c\u958b\u5019\u88dc | `MAJOR.MINOR.PATCH-rc.N` | `1.0.0-rc.1` | public_paid_launch\u306e\u6700\u7d42\u5019\u88dc |\n| \u4e00\u822c\u516c\u958b/\u6709\u511f\u30ed\u30fc\u30f3\u30c1 | `MAJOR.MINOR.PATCH` | `1.0.0` | CEO/\u6cd5\u52d9/\u958b\u767a\u8cac\u4efb\u8005\u627f\u8a8d\u5f8c\u306eGA |\n| \u7dca\u6025\u4fee\u6b63 | `MAJOR.MINOR.PATCH` | `1.0.1` | \u672c\u756a\u969c\u5bb3\u3084\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u4fee\u6b63 |\n\n\u30bf\u30b0\u540d\u306f\u5e38\u306b `v` prefix \u3092\u4ed8\u3051\u308b\u3002\u4f8b: `v0.1.0-controlled-demo.1`\u3002\n\n## \u521d\u56de\u30ea\u30ea\u30fc\u30b9\u5883\u754c\n\n2026-06-19\u6642\u70b9\u306e\u521d\u56de\u30bf\u30b0\u306f `v0.1.0-controlled-demo.1` \u3068\u3059\u308b\u3002\u3053\u308c\u306f\u7ba1\u7406\u4e0b\u30c7\u30e2\u7528\u306e\u30d7\u30ec\u30ea\u30ea\u30fc\u30b9\u3067\u3042\u308a\u3001\u4e00\u822c\u516c\u958b\u30fb\u6709\u511f\u30ed\u30fc\u30f3\u30c1\u3067\u306f\u306a\u3044\u3002\n\nT746\u306e\u73fe\u5224\u5b9a\u306f\u6b21\u306e\u901a\u308a\u3002\n\n- `controlled_demo`: GO\n- `public_paid_launch`: NO_GO\n\n\u3057\u305f\u304c\u3063\u3066\u3001GitHub Releases\u3067\u306f `--prerelease` \u3092\u4ed8\u3051\u308b\u3002`latest`\u76f8\u5f53\u3084GA\u8868\u73fe\u306f\u4f7f\u308f\u306a\u3044\u3002\n\n## \u66f4\u65b0\u5bfe\u8c61\n\n1. `VERSION`\n2. `CHANGELOG.md`\n3. `docs/RELEASE_VERSIONING_RUNBOOK.md`\n4. `exports/release_versioning_review.json`\n5. `exports/release_versioning_review.md`\n6. `data/WBS.tsv`\n7. `data/issues_tracker.tsv`\n8. `data/qa_tracker.tsv`\n9. `data/test_results.tsv`\n10. GitHub tag / GitHub Release\n\n## \u30ea\u30ea\u30fc\u30b9\u624b\u9806\n\n### 1. \u5224\u5b9a\u3068\u5dee\u5206\u78ba\u8a8d\n\n```powershell\npython scripts/generate_production_go_no_go_review.py\npython scripts/validate_release_versioning.py --expected-version 0.1.0-controlled-demo.1\ngit status --short --branch\n```\n\n`public_paid_launch` \u304c `NO_GO` \u306e\u5834\u5408\u306f\u3001\u30bf\u30b0\u540d\u307e\u305f\u306fRelease\u672c\u6587\u306b `controlled-demo` \u3084 `rc` \u3092\u542b\u3081\u3001GitHub Release\u306fprerelease\u306b\u3059\u308b\u3002\n\n### 2. \u5909\u66f4\u5185\u5bb9\u306e\u8a18\u9332\n\n- \u30e6\u30fc\u30b6\u30fc\u306b\u898b\u305b\u308b\u5909\u66f4\u306f `CHANGELOG.md` \u306b\u66f8\u304f\u3002\n- \u5185\u90e8\u904b\u7528\u3060\u3051\u306e\u5909\u66f4\u306fRunbook\u3084WBS\u306b\u6b8b\u3059\u3002\n- secret\u3001OAuth token\u3001DB\u63a5\u7d9a\u6587\u5b57\u5217\u3001Slack webhook\u3001Stripe key\u3001Supabase service role key\u306f\u66f8\u304b\u306a\u3044\u3002\n\n### 3. \u691c\u8a3c\n\n```powershell\npython -m pytest tests/test_release_versioning.py -q\npython -m pytest -q\npython scripts/verify_google_workspace_account.py\npython scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8\npython scripts/sync_wbs_to_calendar.py\npython scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/\n```\n\ndocs\u5909\u66f4\u304c\u3042\u308b\u5834\u5408\u306fNotebookLM/Drive\u540c\u671f\u3082\u884c\u3046\u3002\n\n### 4. commit / push / tag / GitHub Release\n\n```powershell\ngit add VERSION CHANGELOG.md docs/RELEASE_VERSIONING_RUNBOOK.md exports/release_versioning_review.* data/WBS.tsv docs/WBS.md\ngit commit -m \"chore(T806): establish release versioning workflow\"\ngit push origin main\ngit push origin main:master\ngit tag -a v0.1.0-controlled-demo.1 -m \"v0.1.0 controlled demo prerelease\"\ngit push origin v0.1.0-controlled-demo.1\ngh release create v0.1.0-controlled-demo.1 --title \"v0.1.0 controlled demo prerelease\" --notes-file exports/release_versioning_review.md --prerelease\n```\n\n\u30bf\u30b0\u306f\u30b3\u30df\u30c3\u30c8\u5f8c\u306b\u4f5c\u6210\u3057\u3001`main`\u3068`master`\u304c\u540c\u3058commit\u3092\u6307\u3059\u3053\u3068\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u767a\u884c\u3059\u308b\u3002\n\n### 5. \u30af\u30ed\u30fc\u30ba\u30a2\u30a6\u30c8\u540c\u671f\n\n- WBS/Sheets: `T806`\u3092\u5b8c\u4e86\u306b\u3059\u308b\u3002\n- Calendar: \u5b8c\u4e86\u6e08\u307fT806\u30a4\u30d9\u30f3\u30c8\u3092\u524a\u9664\u3059\u308b\u3002\n- GitHub Issue: #113\u3092close\u3057\u3001Project #1\u3092Done\u306b\u3059\u308b\u3002\n- NotebookLM/Drive: docs\u3068\u751f\u6210\u7269\u3092\u540c\u671f\u3059\u308b\u3002\n\n## GitHub Release\u672c\u6587\u30c6\u30f3\u30d7\u30ec\u30fc\u30c8\n\n```markdown\n# v0.1.0 controlled demo prerelease\n\nThis is a controlled-demo prerelease for CEO/internal review.\n\n## Scope\n\n- controlled_demo: GO\n- public_paid_launch: NO_GO\n\n## Highlights\n\n- Custom domain and Firebase-managed HTTPS baseline.\n- Sales-email AI matching MVP foundations through human review.\n- Company account migration preparation.\n- Release governance, rollback, monitoring, and support operations.\n\n## Validation\n\n- pytest\n- WBS/Sheets/Calendar synchronization\n- Public demo guard\n- NotebookLM/Drive synchronization\n\n## Boundary\n\nThis release is not a public paid launch.\n```\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\n\n- GitHub Releases\u306f\u3001\u30bf\u30b0\u306b\u7d10\u3065\u304f\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u5c65\u6b74\u3092\u30ea\u30ea\u30fc\u30b9\u30da\u30fc\u30b8\u3068\u3057\u3066\u516c\u958b\u3067\u304d\u3001\u30ea\u30ea\u30fc\u30b9\u4f5c\u6210\u6642\u306b\u65b0\u898f\u30bf\u30b0\u4f5c\u6210\u307e\u305f\u306f\u65e2\u5b58\u30bf\u30b0\u6307\u5b9a\u304c\u3067\u304d\u308b\u3002\n- GitHub Releases\u306fprerelease\u3068\u3057\u3066\u4f5c\u6210\u3067\u304d\u308b\u305f\u3081\u3001`public_paid_launch`\u304cNo-Go\u306e\u72b6\u614b\u3067\u3082\u7ba1\u7406\u4e0b\u30c7\u30e2\u306e\u8a3c\u8de1\u3068\u3057\u3066\u4f7f\u3048\u308b\u3002\n- GitHub Actions secrets\u306fGitHub Releases\u672c\u6587\u3084CHANGELOG\u3078\u51fa\u3055\u305a\u3001Secrets/Environment secrets\u5074\u3067\u7ba1\u7406\u3059\u308b\u3002\n- SemVer 2.0.0\u3067\u306f\u3001`MAJOR.MINOR.PATCH`\u3092\u57fa\u672c\u3068\u3057\u3001\u30cf\u30a4\u30d5\u30f3\u4ee5\u964d\u306epre-release\u8b58\u5225\u5b50\u3092\u4f7f\u7528\u3067\u304d\u308b\u3002\n\n## \u53c2\u7167\n\n- [GitHub Docs: About releases](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)\n- [GitHub Docs: Managing releases in a repository](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)\n- [GitHub Docs: Using secrets in GitHub Actions](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets)\n- [Semantic Versioning 2.0.0](https://semver.org/)\n- [PRODUCTION_GO_NO_GO_CHECKLIST.md](PRODUCTION_GO_NO_GO_CHECKLIST.md)\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

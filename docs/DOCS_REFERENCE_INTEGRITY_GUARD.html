@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOCS_REFERENCE_INTEGRITY_GUARD — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \ud83d\udd17 \u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u53c2\u7167\u6574\u5408\u6027\u30ac\u30fc\u30c9 (T891)\n\n> `docs/` \u914d\u4e0b\u306e\u5168 Markdown \u304c\u3001**\u58ca\u308c\u305f\u30ea\u30f3\u30af\u30fb\u6a5f\u7a2e\u4f9d\u5b58\u306e\u7d76\u5bfe\u30d1\u30b9\u30fb\u30ea\u30dd\u30b8\u30c8\u30ea\u5916\u3078\u306e\u53c2\u7167**\u3092\u6301\u305f\u306a\u3044\u3053\u3068\u3092\u3001**\u4eba\u9593\u304c\u624b\u9806\u3069\u304a\u308a\u5b9f\u884c\u3057\u3066 OK/NG \u3092\u5224\u65ad\u3067\u304d\u308b**\u3088\u3046\u306b\u5b9a\u7fa9\u3057\u305f\u30ac\u30fc\u30c9\u4ed5\u69d8\u66f8\u3002\n>\n> docs \u306f3\u30ec\u30fc\u30f3\uff08Antigravity / Codex / Claude Code\uff09\u304c\u66f8\u304d\u8db3\u3059\u5927\u898f\u6a21\u30ca\u30ec\u30c3\u30b8\u30d9\u30fc\u30b9\u3067\u3001\u30ea\u30f3\u30af\u5207\u308c\u30fb`file:///c:/Users/...` \u306e\u7d76\u5bfe\u30d1\u30b9\u30fb`~/.claude` \u30e1\u30e2\u30ea\u7b49\u30ea\u30dd\u30b8\u30c8\u30ea\u5916\u3078\u306e\u53c2\u7167\u304c\u6df7\u3058\u308b\u3068\u3001docs \u304c\u4fe1\u983c\u3067\u304d\u306a\u304f\u306a\u308a\u3001**\u9673\u8150\u5316 doc \u306e\u5b89\u5168\u306a\u524a\u9664\u3082\u963b\u5bb3\u3059\u308b**\uff08\u4f55\u304c\u305d\u306e\u30d5\u30a1\u30a4\u30eb\u3092\u53c2\u7167\u3057\u3066\u3044\u308b\u304b\u5206\u304b\u3089\u306a\u3044\uff09\u3002\u672c\u30ac\u30fc\u30c9\u306f\u305d\u308c\u3092 CI \u3067\u843d\u3068\u3059\u3002\n\n---\n\n## 1. \u76ee\u7684\n\n- docs \u5185\u306e\u5168\u30ea\u30f3\u30af\u304c**\u79fb\u690d\u53ef\u80fd\u306a repo-relative \u53c2\u7167**\u3067\u3001\u304b\u3064**\u5b9f\u5728\u30d5\u30a1\u30a4\u30eb\u306b\u89e3\u6c7a**\u3059\u308b\u3053\u3068\u3092\u4fdd\u8a3c\u3059\u308b\u3002\n- \u5c06\u6765\u306e\u9673\u8150\u5316 doc \u524a\u9664\u3092\u5b89\u5168\u5316\u3059\u308b\uff08\u524a\u9664\u5bfe\u8c61\u3092\u53c2\u7167\u3059\u308b doc \u304c\u6b8b\u3063\u3066\u3044\u308c\u3070\u672c\u30ac\u30fc\u30c9\u304c\u843d\u3061\u308b\uff09\u3002\n\n## 2. \u5b9f\u884c\u65b9\u6cd5\n\n```powershell\npython scripts/audit_docs_reference_integrity.py\npython -m pytest tests/test_docs_reference_integrity.py -q\n```\n\n\u76e3\u67fb\u306f `exports/docs_reference_integrity_audit.{json,md}` \u306b\u7d50\u679c\u3092\u51fa\u529b\u3057\u300110\u4eee\u8aac\u3059\u3079\u3066 PASS \u3067\u7d42\u4e86\u30b3\u30fc\u30c9 0\u30011\u3064\u3067\u3082 FAIL \u3067 1 \u3092\u8fd4\u3059\u3002\n\n## 3. 10\u4eee\u8aac\uff08\u4eba\u9593\u304c\u78ba\u8a8d\u3067\u304d\u308b\u89b3\u70b9\uff09\n\n| \u4eee\u8aac | \u5185\u5bb9 | OK \u3068\u8a00\u3048\u308b\u6761\u4ef6 |\n| :-- | :-- | :-- |\n| H1 | \u8d70\u67fb\u5bfe\u8c61 | docs \u304c50\u4ef6\u4ee5\u4e0a\u3042\u308a\u3001\u5185\u90e8\u30ea\u30f3\u30af\uff08http/mailto\u4ee5\u5916\uff09\u30921\u4ef6\u4ee5\u4e0a\u691c\u51fa |\n| H2 | \u975e\u79fb\u690d\u30d1\u30b9\u6392\u9664 | `file:///` \u7d76\u5bfe\u30d1\u30b9\u306e\u30ea\u30f3\u30af\u304c0\u4ef6 |\n| H3 | \u30ea\u30dd\u30b8\u30c8\u30ea\u5916\u53c2\u7167\u6392\u9664 | \u30ea\u30dd\u30b8\u30c8\u30ea\u5916\uff08`~/.claude` \u7b49\uff09\u3092\u6307\u3059\u30ea\u30f3\u30af\u304c0\u4ef6 |\n| H4 | docs\u2192docs | `*.md` \u3078\u306e\u76f8\u5bfe\u30ea\u30f3\u30af\u304c\u3059\u3079\u3066\u5b9f\u5728\u306b\u89e3\u6c7a |\n| H5 | docs\u2192\u30b3\u30fc\u30c9 | `scripts/*.py`\u30fb`tests/*.py` \u3078\u306e\u30ea\u30f3\u30af\u304c\u3059\u3079\u3066\u5b9f\u5728 |\n| H6 | docs\u2192\u30c7\u30fc\u30bf | `data/*.tsv`\u30fb`exports/*` \u3078\u306e\u30ea\u30f3\u30af\u304c\u3059\u3079\u3066\u5b9f\u5728 |\n| H7 | docs\u2192\u305d\u306e\u4ed6 | `src/`\u30fbconfig \u7b49\u305d\u306e\u4ed6 repo \u5185\u30ea\u30f3\u30af\u304c\u3059\u3079\u3066\u5b9f\u5728 |\n| H8 | \u30a2\u30f3\u30ab\u30fc\u4ed8\u304d | `file.md#section` \u5f62\u5f0f\u306e\u30d5\u30a1\u30a4\u30eb\u90e8\u5206\u304c\u5b9f\u5728 |\n| H9 | \u672a\u89e3\u6c7a0 | repo-relative \u30ea\u30f3\u30af\u306e\u672a\u89e3\u6c7a\u304c\u5408\u8a080\u4ef6 |\n| H10 | \u5168\u4f53\u6574\u5408 | H1\u301cH9 \u304c\u3059\u3079\u3066 PASS\uff08\u30ea\u30f3\u30af\u30c9\u30ea\u30d5\u30c80\uff09 |\n\n## 4. \u5224\u5b9a\n\n- **OK**: `python scripts/audit_docs_reference_integrity.py` \u304c\u300c\u7dcf\u5408\u5224\u5b9a: \u2705 PASS\u300d\u3092\u8868\u793a\u3057\u3001`tests/test_docs_reference_integrity.py` \u304c\u5168\u4ef6 green\u3002\n- **NG**: \u3044\u305a\u308c\u304b\u306e\u4eee\u8aac\u304c \u274c\u3002\u76e3\u67fb\u51fa\u529b\u306e\u300c\u8a73\u7d30\u300d\u5217\u306b\u3001`file:///` \u30ea\u30f3\u30af\u30fb\u5916\u90e8\u30ea\u30f3\u30af\u30fb\u672a\u89e3\u6c7a\u30ea\u30f3\u30af\uff08doc/code/data/other \u5225\uff09\u30fb\u672a\u89e3\u6c7a\u30a2\u30f3\u30ab\u30fc\u304c\u5177\u4f53\u7684\u306b\u5217\u6319\u3055\u308c\u308b\u3002\n\n## 5. NG \u6642\u306e\u5bfe\u5fdc\n\n1. **H2 `file:///`**: \u6a5f\u7a2e\u4f9d\u5b58\u306e\u7d76\u5bfe\u30d1\u30b9\u3092 **repo-relative**\uff08docs \u5185\u304b\u3089\u306f `../data/...`\u3001\u540c\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u306e doc \u306f `NAME.md`\uff09\u306b\u76f4\u3059\u3002\n2. **H3 \u5916\u90e8\u53c2\u7167**: `~/.claude` \u7b49\u30ea\u30dd\u30b8\u30c8\u30ea\u5916\u306e\u30d5\u30a1\u30a4\u30eb\u3078\u306e\u30ea\u30f3\u30af\u306f**\u30ea\u30f3\u30af\u3092\u5916\u3059**\uff08\u30a4\u30f3\u30e9\u30a4\u30f3\u30b3\u30fc\u30c9\u7b49\u306e\u7d20\u30c6\u30ad\u30b9\u30c8\u306b\u3059\u308b\uff09\u3002\u30e1\u30e2\u30ea\u306f\u30ea\u30dd\u30b8\u30c8\u30ea\u306b\u542b\u3081\u306a\u3044\u3002\n3. **H4\u301cH8 \u30ea\u30f3\u30af\u5207\u308c**: \u53c2\u7167\u5148\u3092\u5b9f\u5728\u30d1\u30b9\u306b\u4fee\u6b63\u3001\u307e\u305f\u306f\u30d5\u30a1\u30a4\u30eb\u3092\u8ffd\u52a0/\u5fa9\u6d3b\u3055\u305b\u308b\u3002doc \u3092\u524a\u9664\u3059\u308b\u5834\u5408\u306f\u3001\u672c\u30ac\u30fc\u30c9\u3067**\u305d\u306e doc \u3092\u53c2\u7167\u3059\u308b\u7b87\u6240\u304c\u6b8b\u3063\u3066\u3044\u306a\u3044**\u3053\u3068\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u524a\u9664\u3059\u308b\u3002\n4. \u4fee\u6b63\u5f8c\u306b\u76e3\u67fb\u3068\u30c6\u30b9\u30c8\u3092\u518d\u5b9f\u884c\u3057 10/10 PASS \u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u30b3\u30df\u30c3\u30c8\u3002\n\n## 6. \u88dc\u8db3\n\n- \u672c\u30ac\u30fc\u30c9\u306f docs \u5185\u306e**\u30ea\u30f3\u30af\u89e3\u6c7a**\u3092\u4fdd\u8a3c\u3059\u308b\u3002\u30c8\u30e9\u30c3\u30ab\u30fc\u304c\u53c2\u7167\u3059\u308b\u30d5\u30a1\u30a4\u30eb\u306e\u6574\u5408\u306f [TRACKER_INTEGRITY_GUARD.md](TRACKER_INTEGRITY_GUARD.md)\uff08T890\uff09\u3001WBS \u5de5\u7a0b\u7db2\u7f85\u306f [WBS_LIFECYCLE_COVERAGE_GUARD.md](WBS_LIFECYCLE_COVERAGE_GUARD.md)\uff08T889\uff09\u304c\u62c5\u4fdd\u3059\u308b\u3002\n- \u521d\u56de\u6574\u5099\uff08T891\uff09\u3067 `file:///` 10\u4ef6\u30fbrepo\u5916/\u30ea\u30f3\u30af\u5207\u308c11\u4ef6\uff08\u8a0821\u4ef6\u30fb9docs\uff09\u3092\u691c\u51fa\u30fb\u4fee\u6b63\u3057\u305f\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

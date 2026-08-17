@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WF-07_comparison_table — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# WF-07 \u00b7 Comparison Table \u2014 Multi-candidate Matrix\n\n> Subtitle: \u5019\u88dc (rows) \u00d7 \u8a55\u4fa1\u8ef8 (cols)\u3002color-coded score\u3002\n> \ud83d\udca1 Rationale: \u7d4c\u55b6\u5831\u544a/\u6700\u7d42\u6c7a\u88c1\u3067\u6700\u5f37\u30021 \u753b\u9762\u3067 5-10 \u5019\u88dc\u3092\u6bd4\u8f03\u3067\u304d\u308b\u3002\n\n## 1. Identity\n\n| key | value |\n| --- | --- |\n| id | `WF-07` |\n| category | comparison / data-grid |\n| status | spec-ready (visual = Canva slide 8) |\n| pick-when | \u7d4c\u55b6\u5c64\u3078\u306e\u5831\u544a\u3001\u6700\u7d42 5-10 \u5019\u88dc\u7d5e\u308a\u8fbc\u307f |\n| skip-when | \u5358\u767a\u5206\u6790\u3001\u5165\u529b UI \u306a\u3057 (\u524d\u51e6\u7406 WF \u3068\u7d44\u307f\u5408\u308f\u305b\u524d\u63d0) |\n| output target | `exports/wireframes/wf-07.html` |\n\n## 2. ASCII Layout\n\n```text\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 1440 width \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  Comparison \u00b7 \u6848\u4ef6: \u682a\u5f0f\u4f1a\u793eX Senior Python              [Export CSV]            \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 \u5019\u88dc        \u2502 Skill   \u2502 Culture \u2502 Growth  \u2502 Performing   \u2502 Final \u25bc              \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502 A\u3055\u3093       \u2502  88 \ud83d\udfe2  \u2502  82 \ud83d\udfe2  \u2502  75 \ud83d\udfe1  \u2502  90 \ud83d\udfe2       \u2502  85 \ud83d\udfe2               \u2502\n\u2502 B\u3055\u3093       \u2502  72 \ud83d\udfe1  \u2502  90 \ud83d\udfe2  \u2502  88 \ud83d\udfe2  \u2502  70 \ud83d\udfe1       \u2502  80 \ud83d\udfe2               \u2502\n\u2502 C\u3055\u3093       \u2502  60 \ud83d\udd34  \u2502  70 \ud83d\udfe1  \u2502  85 \ud83d\udfe2  \u2502  65 \ud83d\udfe1       \u2502  70 \ud83d\udfe1               \u2502\n\u2502 D\u3055\u3093       \u2502  95 \ud83d\udfe2  \u2502  60 \ud83d\udd34  \u2502  70 \ud83d\udfe1  \u2502  88 \ud83d\udfe2       \u2502  78 \ud83d\udfe1               \u2502\n\u2502 E\u3055\u3093       \u2502  80 \ud83d\udfe2  \u2502  85 \ud83d\udfe2  \u2502  72 \ud83d\udfe1  \u2502  75 \ud83d\udfe1       \u2502  78 \ud83d\udfe1               \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                                     [+ Add Candidate]\n```\n\n## 3. Component Tree\n\n```html\n<main class=\"wf07\">\n  <header><h1>Comparison</h1>\n    <p>\u6848\u4ef6: <strong id=\"job-title\">--</strong></p>\n    <button data-act=\"export-csv\">Export CSV</button></header>\n  <table class=\"wf07__matrix\">\n    <thead><tr><th scope=\"col\">\u5019\u88dc</th>\n      <th scope=\"col\" data-sort=\"skill\">Skill</th>\n      <th scope=\"col\" data-sort=\"culture\">Culture</th>\n      <th scope=\"col\" data-sort=\"growth\">Growth</th>\n      <th scope=\"col\" data-sort=\"performing\">Performing</th>\n      <th scope=\"col\" data-sort=\"final_score\" aria-sort=\"descending\">Final \u25bc</th></tr></thead>\n    <tbody id=\"rows\"></tbody>\n  </table>\n  <button data-act=\"add\">+ Add Candidate</button>\n</main>\n```\n\n## 4. State Machine\n\n```text\nempty \u2500\u2500 set job + add candidate \u2500\u2500> rows = 1 (sorted by final)\nrows  \u2500\u2500 add candidate           \u2500\u2500> rows += 1 (re-sort)\nrows  \u2500\u2500 click column header     \u2500\u2500> resort by that column\nrows  \u2500\u2500 export CSV              \u2500\u2500> client download\n```\n\n## 5. Data Flow + API contract\n\n- Job text \u3092\u753b\u9762\u4e0a\u90e8\u3067 1 \u5ea6\u5165\u529b (modal or input row) \u2192 state.job_content\u3002\n- Add Candidate: \u7d4c\u6b74 textarea \u2192 `POST /api/parse` (engineer) \u2192 `POST /api/match` ({engineer_content, job_content: state.job_content}) \u2192 row \u8ffd\u52a0\u3002\n- Sort: client side (`Array.sort`)\u3001`aria-sort` \u5c5e\u6027\u66f4\u65b0\u3002\n\n## 6. Design Tokens (override)\n\n```css\n.wf07__matrix { width: 100%; border-collapse: collapse; background: var(--c-surface); }\n.wf07__matrix th, .wf07__matrix td { padding: var(--s-3); text-align: left;\n                                       border-bottom: 1px solid var(--c-border); }\n.wf07__matrix th { cursor: pointer; user-select: none; color: var(--c-text-sub); }\n.wf07__matrix th[aria-sort] { color: var(--c-accent); }\n.wf07__matrix td[data-band=\"high\"] { background: rgba(57,255,20,0.12); color: var(--c-success); }\n.wf07__matrix td[data-band=\"mid\"]  { background: rgba(0,240,255,0.10); color: var(--c-accent); }\n.wf07__matrix td[data-band=\"low\"]  { background: rgba(255,51,102,0.10); color: var(--c-danger); }\n.wf07__matrix tr:hover { background: rgba(255,255,255,0.04); }\n```\n\n## 7. Interaction Spec\n\n- Column header click: toggle asc/desc\u3001`aria-sort=\"ascending\"`/`\"descending\"` \u66f4\u65b0\u3001\u4ed6\u5217\u306e `aria-sort` \u524a\u9664\u3002\n- Cell \u306e\u8272\u306f score band (\u226580 high / 65-79 mid / <65 low)\u3002\n- Export CSV: BOM \u4ed8\u304d UTF-8 \u3067 `<job>_<timestamp>.csv` \u3092 `URL.createObjectURL` \u3067\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3002\n- Row click: drawer \u3067\u8a73\u7d30 (QA / roadmap / summary)\u3002\n\n## 8. A11y\n\n- `<table>` semantic + `<th scope=\"col\">` + `aria-sort` \u306e\u6b63\u898f\u5229\u7528\u3002\n- \u8272\u3060\u3051\u306b\u983c\u3089\u305a band \u30d0\u30c3\u30b8 (\ud83d\udfe2/\ud83d\udfe1/\ud83d\udd34) \u3092\u4f75\u8a18\u3001screen reader \u7528 `aria-label=\"high score\"`\u3002\n- keyboard: header `<button>` \u5316\u3001Enter \u3067 sort\u3002\n- Row drawer \u306f `<dialog>`\u3001Esc \u3067\u9589\u3058\u308b\u3002\n\n## 9. Responsive\n\n| breakpoint | layout |\n| --- | --- |\n| \u2264 700 | table \u3092 `<details>` per row \u306b\u5909\u63db (\u5217\u30d8\u30c3\u30c0 \u2192 \u30e9\u30d9\u30eb\u5316) |\n| 701-1100 | table \u5168 6 \u5217\u3001horizontal scroll \u8a31\u5bb9 |\n| \u2265 1101 | table fixed columns\u3001Sticky header (`position: sticky; top: 0`) |\n\n## 10. Out of Scope\n\n- \u8907\u6570 job \u540c\u6642\u6bd4\u8f03 (1 job at a time)\n- Backend persistence (client only)\n- Pivot table \u5909\u63db\n- Chart \u63cf\u753b (\u2192 WF-08)\n\n## 11. Acceptance Criteria\n\n- [ ] 5 \u5019\u88dc\u8ffd\u52a0\u3067 table 5 \u884c\u3001Final \u5217 desc sort\n- [ ] \u5404 score cell \u304c band \u8272 (high/mid/low) \u3067\u7740\u8272\u3001\u7d75\u6587\u5b57\u30d0\u30c3\u30b8\u4f75\u8a18\n- [ ] \u5217\u30d8\u30c3\u30c0\u30af\u30ea\u30c3\u30af\u3067 sort \u5207\u66ff\u3001`aria-sort` \u304c\u66f4\u65b0\u3055\u308c\u308b\n- [ ] Export CSV \u3067 UTF-8 BOM \u4ed8\u304d CSV \u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u53ef\n- [ ] mobile (\u2264700) \u3067 details \u8868\u793a\u306b\u7e2e\u9000\n- [ ] keyboard \u3067\u5168 sort/add/export \u5b8c\u8d70\n- [ ] verify_public_demo.py pass\n\n## 12. Implementation Prompt (LLM-ready)\n\n```text\nImplement WF-07 \"Comparison Table\" for Mighty Skill-Bridge as exports/wireframes/wf-07.html.\n\nStack: vanilla HTML/JS. Use POST /api/parse + POST /api/match per Add Candidate.\n\nUI: 6-column table (\u5019\u88dc / Skill / Culture / Growth / Performing / Final). Sortable headers\nwith aria-sort. Score band coloring + emoji badge. Job text input at top (1 job per session).\nAdd Candidate modal: paste engineer text \u2192 parse \u2192 match against current job \u2192 append row.\nExport CSV: UTF-8 BOM, filename includes timestamp.\n\nMobile (\u2264700) collapses to <details> per row. Acceptance: docs/wireframes/WF-07 \u00a711.\nNo backend changes, no build. Single file.\n```\n\n## 13. Starter Snippet\n\n```html\n<!doctype html><html lang=\"ja\"><head><meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>WF-07 Comparison</title>\n<style>\n:root{--c-bg:#0D0E15;--c-surface:#161824;--c-text:#F1F5FF;--c-text-sub:#C5CAE0;\n      --c-accent:#00F0FF;--c-success:#39FF14;--c-danger:#FF3366;--c-border:#2A2D3E;\n      --r-md:12px;--s-3:16px}\nbody{margin:0;background:var(--c-bg);color:var(--c-text);font-family:\"Yu Gothic UI\",sans-serif;padding:var(--s-3)}\n.wf07__matrix{width:100%;border-collapse:collapse;background:var(--c-surface);border-radius:var(--r-md);overflow:hidden}\n.wf07__matrix th,.wf07__matrix td{padding:var(--s-3);text-align:left;border-bottom:1px solid var(--c-border)}\n.wf07__matrix th{cursor:pointer;color:var(--c-text-sub);user-select:none;position:sticky;top:0;background:var(--c-surface)}\n.wf07__matrix th[aria-sort]{color:var(--c-accent)}\n.wf07__matrix td[data-band=\"high\"]{background:rgba(57,255,20,.12);color:var(--c-success)}\n.wf07__matrix td[data-band=\"mid\"]{background:rgba(0,240,255,.10);color:var(--c-accent)}\n.wf07__matrix td[data-band=\"low\"]{background:rgba(255,51,102,.10);color:var(--c-danger)}\nbutton{background:var(--c-accent);color:var(--c-bg);border:0;border-radius:var(--r-md);padding:8px 16px;font-weight:700;margin-top:var(--s-3)}\ninput{background:#0a0b12;color:var(--c-text);border:1px solid var(--c-border);border-radius:var(--r-md);padding:8px;font:inherit}\n</style></head><body>\n<h1>Comparison</h1>\n<p>\u6848\u4ef6: <input id=\"job\" placeholder=\"\u6848\u4ef6\u30c6\u30ad\u30b9\u30c8\" size=\"60\"></p>\n<table class=\"wf07__matrix\"><thead><tr>\n  <th>\u5019\u88dc</th><th data-key=\"skill\">Skill</th><th data-key=\"culture\">Culture</th>\n  <th data-key=\"growth\">Growth</th><th data-key=\"performing\">Performing</th>\n  <th data-key=\"final_score\" aria-sort=\"descending\">Final \u25bc</th></tr></thead>\n<tbody id=\"rows\"></tbody></table>\n<button id=\"add\">+ Add Candidate</button>\n<button id=\"csv\">Export CSV</button>\n<script>\nconst state={rows:[],sortKey:\"final_score\",dir:-1};\nfunction band(s){return s>=80?\"high\":s<65?\"low\":\"mid\"}\nfunction badge(s){return s>=80?\"\ud83d\udfe2\":s<65?\"\ud83d\udd34\":\"\ud83d\udfe1\"}\nfunction render(){state.rows.sort((a,b)=>(a[state.sortKey]-b[state.sortKey])*state.dir);\n  document.getElementById(\"rows\").innerHTML=state.rows.map(r=>\n    `<tr><td>${r.name}</td>`+[\"skill\",\"culture\",\"growth\",\"performing\",\"final_score\"].map(k=>\n      `<td data-band=\"${band(r[k])}\">${r[k]} ${badge(r[k])}</td>`).join(\"\")+`</tr>`).join(\"\");}\ndocument.querySelectorAll(\"th[data-key]\").forEach(th=>th.addEventListener(\"click\",()=>{\n  const k=th.dataset.key;\n  if(state.sortKey===k){state.dir*=-1}else{state.sortKey=k;state.dir=-1}\n  document.querySelectorAll(\"th[data-key]\").forEach(x=>x.removeAttribute(\"aria-sort\"));\n  th.setAttribute(\"aria-sort\",state.dir<0?\"descending\":\"ascending\"); render();}));\ndocument.getElementById(\"add\").addEventListener(\"click\",async()=>{\n  const eng=prompt(\"\u7d4c\u6b74\u66f8\"); if(!eng) return;\n  const job=document.getElementById(\"job\").value.trim();\n  if(!job){alert(\"\u5148\u306b\u6848\u4ef6\u3092\u5165\u529b\");return;}\n  const m=await (await fetch(\"/api/match\",{method:\"POST\",headers:{\"content-type\":\"application/json\"},\n    body:JSON.stringify({engineer_content:eng,job_content:job})})).json();\n  state.rows.push({name:eng.split(\"\\n\")[0].slice(0,16),...m.scores,final_score:m.final_score});\n  render();});\ndocument.getElementById(\"csv\").addEventListener(\"click\",()=>{\n  const head=\"\u5019\u88dc,Skill,Culture,Growth,Performing,Final\\n\";\n  const body=state.rows.map(r=>[r.name,r.skill,r.culture,r.growth,r.performing,r.final_score].join(\",\")).join(\"\\n\");\n  const blob=new Blob([\"\ufeff\"+head+body],{type:\"text/csv\"});\n  const a=document.createElement(\"a\"); a.href=URL.createObjectURL(blob);\n  a.download=`comparison_${Date.now()}.csv`; a.click();});\n</script></body></html>\n```\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

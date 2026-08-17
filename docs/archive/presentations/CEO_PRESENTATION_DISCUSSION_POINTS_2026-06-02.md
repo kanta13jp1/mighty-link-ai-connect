@@ -3,7 +3,7 @@
 作成日: 2026-05-22
 オーナー: VSCode + Claude Code レーン (本ファイルの維持) / 当日進行は人間 + Codex 共同
 対応 WBS: **T605** 選択肢整理 (5/26-5/28 予定 → 5/22 前倒し完遂)
-関連: [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md) / [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) / [CEO_PRESENTATION_QA_PACK_2026-06-02.md](CEO_PRESENTATION_QA_PACK_2026-06-02.md) (T607) / [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md)
+関連: [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md) / [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) / [CEO_PRESENTATION_QA_PACK_2026-06-02.md](CEO_PRESENTATION_QA_PACK_2026-06-02.md) (T607) / [MULTI_AI_WORKFLOW.md](../../MULTI_AI_WORKFLOW.md)
 
 ---
 
@@ -91,7 +91,7 @@
 
 ## D-4: AI エンジン選定方針 (2026-05-22 新規論点)
 
-**論点**: Gemini ファミリーに張るか、複数 AI を比較しながら進めるか。Best Practices Refresh ([MULTI_AI_WORKFLOW.md Best Practices Refresh](MULTI_AI_WORKFLOW.md#best-practices-refresh-2026-05-22)) では **固定の未来モデル名や未確認の公開時期を判断材料にしない** ことを確認済み。毎セッション開始時にGemini API公式モデル一覧を確認し、現行モデルの品質・速度・コスト・quotaで選ぶ。
+**論点**: Gemini ファミリーに張るか、複数 AI を比較しながら進めるか。Best Practices Refresh ([MULTI_AI_WORKFLOW.md Best Practices Refresh](../../MULTI_AI_WORKFLOW.md#best-practices-refresh-2026-05-22)) では **固定の未来モデル名や未確認の公開時期を判断材料にしない** ことを確認済み。毎セッション開始時にGemini API公式モデル一覧を確認し、現行モデルの品質・速度・コスト・quotaで選ぶ。
 
 **選択肢**:
 
@@ -105,7 +105,7 @@
 - Q1. A / B / C / D のどれを採用するか
 - Q2. (B 選択なら) 各 AI のコスト上限を月いくらに置くか
 
-**補足**: 開発体制としては既に C に近い 3-tool 構成 (Antigravity+Gemini / Codex / Claude Code) が走っている ([MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md))。「サービスの中で使う AI エンジン」と「開発に使う AI ツール」は別問題なので混同しないこと。
+**補足**: 開発体制としては既に C に近い 3-tool 構成 (Antigravity+Gemini / Codex / Claude Code) が走っている ([MULTI_AI_WORKFLOW.md](../../MULTI_AI_WORKFLOW.md))。「サービスの中で使う AI エンジン」と「開発に使う AI ツール」は別問題なので混同しないこと。
 
 ---
 
@@ -240,7 +240,7 @@
 
 - [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md) #6/2で決める事項 と本書 D 系は対応関係。**矛盾があれば本書を優先**して PREP.md を Claude Code レーンが更新。
 - [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) #判断マトリクス は本書 D-1 の補足。
-- [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) E 系 (判断材料) に本書を `E-1' 論点リスト構造化` として追加する候補。
+- [CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md](../../CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md) E 系 (判断材料) に本書を `E-1' 論点リスト構造化` として追加する候補。
 
 ---
 

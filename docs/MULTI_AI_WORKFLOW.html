@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MULTI_AI_WORKFLOW — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Multi-AI \u958b\u767a\u30ef\u30fc\u30af\u30d5\u30ed\u30fc\n\n\u66f4\u65b0\u65e5: 2026-07-13\n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Codex  \n\u95a2\u9023: [WBS.md](WBS.md) / [WBS_SYNC_GUIDE.md](WBS_SYNC_GUIDE.md) / [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) / [CODEX_CONTINUATION_NOTES.md](CODEX_CONTINUATION_NOTES.md)\n\n---\n\n## \u76ee\u7684\n\nMighty-Link AI Connect \u306f\u3001Antigravity + Gemini\u3001VSCode + Codex\u3001VSCode + Claude Code \u306e\u4e09\u3064\u3092\u5f79\u5272\u5206\u62c5\u3057\u3066\u4f7f\u3046\u3002\u5404\u30bb\u30c3\u30b7\u30e7\u30f3\u3067\u540c\u3058\u54c1\u8cea\u30b2\u30fc\u30c8\u3092\u901a\u3057\u3001WBS\u3001\u8ab2\u984c\u7ba1\u7406\u8868\u3001QA\u8868\u3001Google Sheets\u3001Google Calendar\u3001GitHub Issues\u3001GitHub Project \u306e\u72b6\u614b\u304c\u305a\u308c\u306a\u3044\u3088\u3046\u306b\u3059\u308b\u3002\n\n\u3053\u306e\u6587\u66f8\u306f\u6bce\u56de\u306e\u958b\u767a\u958b\u59cb\u304b\u3089 closeout \u307e\u3067\u306e\u6a19\u6e96\u624b\u9806\u3092\u5b9a\u7fa9\u3059\u308b\u3002\u53e4\u3044\u30e2\u30c7\u30eb\u540d\u3001\u672a\u78ba\u8a8d\u306e\u672a\u6765\u6a5f\u80fd\u3001\u89e3\u6c7a\u6e08\u307f\u306e\u66ab\u5b9a\u30d6\u30ed\u30c3\u30ab\u30fc\u3001\u53e4\u3044\u540c\u671f\u4ef6\u6570\u306f\u73fe\u884c\u30ac\u30a4\u30c9\u3068\u3057\u3066\u6b8b\u3055\u306a\u3044\u3002\n\n---\n\n## \u30ec\u30fc\u30f3\u5206\u62c5\n\n| \u30ec\u30fc\u30f3 | \u4e3b\u62c5\u5f53 | \u4f7f\u3046\u5834\u9762 |\n| --- | --- | --- |\n| Antigravity + Gemini | UI\u3001\u30de\u30eb\u30c1\u30e2\u30fc\u30c0\u30eb\u3001\u30d6\u30e9\u30a6\u30b6\u78ba\u8a8d | \u30d5\u30ed\u30f3\u30c8\u30a8\u30f3\u30c9 polish\u3001\u753b\u50cf\u30fb\u52d5\u753b\u30fb\u97f3\u58f0\u3092\u542b\u3080\u30c7\u30e2\u3001\u8996\u899a\u78ba\u8a8d\u3001Gemini API \u306e\u73fe\u884c\u30e2\u30c7\u30eb\u3092\u4f7f\u3046\u691c\u8a3c |\n| VSCode + Codex | \u5b9f\u88c5\u3001\u540c\u671f\u3001\u81ea\u52d5\u5316\u3001GitHub | FastAPI\u3001Firebase/Supabase\u3001Google Workspace API\u3001CI\u3001GitHub CLI\u3001WBS/Sheets/Calendar\u540c\u671f\u3001public demo guard |\n| VSCode + Claude Code | \u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3001\u30ec\u30d3\u30e5\u30fc\u3001triage | \u4ed5\u69d8\u30fb\u8b70\u4e8b\u9332\u30fbRunbook\u3001WBS\u7db2\u7f85\u6027\u76e3\u67fb\u3001PR\u30ec\u30d3\u30e5\u30fc\u3001\u8ab2\u984c/QA\u306e\u6574\u7406\u3001\u53e4\u3044docs\u306e\u524a\u9664\u5224\u65ad |\n\n\u7af6\u5408\u3057\u305d\u3046\u306a\u3068\u304d\u306f\u3001WBS\u306e\u8a72\u5f53\u30bf\u30b9\u30af\u3068 `data/WBS.tsv` \u3092\u6b63\u672c\u306b\u3059\u308b\u3002\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3060\u3051\u3067\u72b6\u6cc1\u3092\u78ba\u5b9a\u305b\u305a\u3001\u6700\u5f8c\u306b\u540c\u671f\u30b9\u30af\u30ea\u30d7\u30c8\u3068 GitHub \u306e\u72b6\u614b\u3067\u78ba\u8a8d\u3059\u308b\u3002\n\n---\n\n## \u30bb\u30c3\u30b7\u30e7\u30f3\u958b\u59cb\u30b2\u30fc\u30c8\n\n1. `docs/` \u306e\u95a2\u9023\u6587\u66f8\u3092\u8aad\u3080\u3002\u4eca\u56de\u306e\u4f5c\u696d\u306b\u76f4\u63a5\u95a2\u4fc2\u3059\u308b\u8981\u4ef6\u3001\u8a2d\u8a08\u3001Runbook\u3001WBS\u3092\u512a\u5148\u3059\u308b\u3002\n2. \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u306e\u6700\u65b0\u7248\u3092\u78ba\u8a8d\u3059\u308b\u3002\u5e83\u3044\u4e00\u89a7\u3092\u6bce\u56de\u78ba\u8a8d\u3057\u3064\u3064\u3001\u4eca\u56de\u306e\u4f5c\u696d\u306b\u5f71\u97ff\u3059\u308b\u3082\u306e\u306f\u5fc5\u305a\u6839\u62e0\u3068\u3057\u3066\u4f7f\u3046\u3002\n3. \u4eca\u65e5\u5b8c\u4e86\u3059\u308bWBS\u30bf\u30b9\u30af\u3092\u4e00\u3064\u6c7a\u3081\u308b\u3002\u4e0d\u8db3\u30bf\u30b9\u30af\u304c\u898b\u3064\u304b\u3063\u305f\u5834\u5408\u306f `data/WBS.tsv` \u306b\u8ffd\u52a0\u3057\u3001\u540c\u3058\u30bb\u30c3\u30b7\u30e7\u30f3\u3067\u5b8c\u4e86\u3067\u304d\u308b\u7bc4\u56f2\u306a\u3089\u5b8c\u4e86\u307e\u3067\u9032\u3081\u308b\u3002\n4. \u8ab2\u984c\u3084QA\u304c\u767a\u751f\u3057\u305f\u3089\u3001`data/issues_tracker.tsv` \u3068 `data/qa_tracker.tsv` \u306b\u53cd\u6620\u3059\u308b\u3002\n5. secret\u3001OAuth token\u3001\u5b9f\u30e1\u30fc\u30eb\u672c\u6587\u3001\u500b\u4eba\u9023\u7d61\u5148\u3001FTP/DB/Stripe\u306e\u8a8d\u8a3c\u60c5\u5831\u306f GitHub\u3001Sheets\u3001Issue\u3001Slack\u3001Notion\u3001NotebookLM\u3001docs \u306b\u8a18\u9332\u3057\u306a\u3044\u3002\n\n---\n\n## \u516c\u5f0fDocs\u78ba\u8a8d\u5bfe\u8c61\n\n\u6bce\u30bb\u30c3\u30b7\u30e7\u30f3\u3067\u4ee5\u4e0b\u3092\u78ba\u8a8d\u3059\u308b\u3002\u4f5c\u696d\u5bfe\u8c61\u306b\u8a72\u5f53\u3057\u306a\u3044\u3082\u306e\u306f\u300c\u5f71\u97ff\u306a\u3057\u300d\u3068\u3057\u3066\u6271\u3044\u3001docs\u306b\u9577\u3044\u5f15\u7528\u3084\u53e4\u3044\u30e2\u30c7\u30eb\u540d\u3092\u6b8b\u3055\u306a\u3044\u3002\n\n| \u9818\u57df | \u516c\u5f0f\u78ba\u8a8d\u5148 |\n| --- | --- |\n| Anthropic / Claude Code | Claude Code overview\u3001memory\u3001settings\u3001security |\n| OpenAI / Codex | Codex overview\u3001AGENTS.md\u3001best practices\u3001MCP\u3001Codex manual |\n| Google / Gemini / Workspace | Gemini models\u3001context caching\u3001Sheets batchUpdate\u3001Firebase docs |\n| Microsoft | Microsoft Foundry\u3001Azure OpenAI / Foundry Models |\n| Meta / Llama | Llama docs\u3001Meta\u516c\u958b\u30da\u30fc\u30b8\u3001\u516c\u5f0fLlama GitHub |\n| Amazon | Amazon Bedrock user guide |\n| Apple | Machine Learning\u3001Human Interface Guidelines |\n| xAI / Grok | xAI docs |\n| Kimi / Moonshot | Kimi API docs |\n| MiMo | XiaomiMiMo/MiMo \u516c\u5f0fGitHub |\n| DeepSeek | DeepSeek API docs |\n| ByteDance / BytePlus | Seedance\u3001BytePlus ModelArk docs |\n| GitHub | Issues\u3001Projects\u3001Actions\u3001Pages\u3001secrets |\n| Slack | Slack Developer Docs |\n| Notion | Notion API docs |\n| Obsidian | Obsidian Help |\n| Unity | Unity docs / Unity Manual |\n| Figma | Figma REST / Plugin docs |\n| Canva | Canva Apps SDK docs |\n| Reddit | Reddit Devvit docs |\n| InsForge | InsForge docs\u3001`https://insforge.dev/skill.md` |\n| Firecrawl | Firecrawl docs |\n| Discord | Discord Developer docs |\n| Stripe | Billing\u3001Customer Portal\u3001Tax\u3001API reference |\n| Supabase | Supabase docs\u3001changelog\u3001RLS\u3001Postgres upgrade notes |\n| \u304a\u540d\u524d.com | \u304a\u540d\u524d.com\u30d8\u30eb\u30d7\u3001\u30c9\u30e1\u30a4\u30f3/DNS/WordPress/FTP\u95a2\u9023 |\n\n2026-07-18 \u30bb\u30c3\u30b7\u30e7\u30f3\u78ba\u8a8d\u30e1\u30e2\uff08T897 / T879\uff09:\n\n- Google Calendar API events \u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\u3092\u78ba\u8a8d\u3057\u305f\uff08T879\uff09\u3002\u7d42\u65e5\u30a4\u30d9\u30f3\u30c8\u306f `start.date`/`end.date` \u3067\u7d42\u4e86\u65e5\u304c\u6392\u4ed6\u7684\u3068\u3044\u3046\u4ed5\u69d8\u306f `sync_wbs_to_calendar.py` \u306e\u73fe\u884c\u5b9f\u88c5\uff08\u7d42\u4e86\u65e5+1\u65e5\uff09\u3068\u4e00\u81f4\u3002`eventLabelVersion`/\u4f1a\u8b70\u30c7\u30fc\u30bf\u306e `createRequest` \u63a8\u5968\u306f\u73fe\u884c\u306e\u5168\u65e5\u30a4\u30d9\u30f3\u30c8\u540c\u671f\u306b\u306f\u5f71\u97ff\u306a\u3057\u3002\u63a1\u7528\u5909\u66f4\u306a\u3057\u3002\n\n- Anthropic Claude Code\u306ememory docs\u3092\u78ba\u8a8d\u3057\u305f\u3002`CLAUDE.md` \u304b\u3089 `@AGENTS.md` \u3092\u30a4\u30f3\u30dd\u30fc\u30c8\u3059\u308b\u73fe\u884c\u69cb\u6210\u306f\u5f15\u304d\u7d9a\u304d\u516c\u5f0f\u63a8\u5968\u3069\u304a\u308a\u3002auto memory\u306eMEMORY.md\u8aad\u8fbc\u4e0a\u9650\uff08200\u884c/25KB\uff09\u306b\u7559\u610f\u3002\u63a1\u7528\u5909\u66f4\u306a\u3057\u3002\n- OpenAI Codex docs\u306e\u6240\u5728\u5909\u66f4\u3092\u691c\u51fa\u3057\u305f: `developers.openai.com/codex/guides/agents-md` \u306f `learn.chatgpt.com/docs/agent-configuration/agents-md` \u3078308\u6052\u4e45\u30ea\u30c0\u30a4\u30ec\u30af\u30c8\u3055\u308c\u308b\u3002AGENTS.md\u306f\u30b0\u30ed\u30fc\u30d0\u30eb\u2192\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u306e\u968e\u5c64\u30de\u30fc\u30b8\uff08\u8fd1\u63a5\u512a\u5148\uff09\u3068 `AGENTS.override.md` \u306b\u5bfe\u5fdc\u3002\u65e7URL\u306f\u30ea\u30c0\u30a4\u30ec\u30af\u30c8\u3067\u5230\u9054\u53ef\u80fd\u306a\u305f\u3081\u4e00\u89a7\u306f\u5909\u66f4\u305b\u305a\u3001\u6b21\u56de\u4ee5\u964d\u306f\u65b0URL\u3092\u76f4\u63a5\u53c2\u7167\u3057\u3066\u3088\u3044\u3002\n- Google Sheets `batchUpdate` \u3092\u78ba\u8a8d\u3057\u305f\u3002\u30d0\u30c3\u30c1\u306e\u30a2\u30c8\u30df\u30c3\u30af\u6027\uff081\u4ef6\u5931\u6557\u3067\u5168\u4f53\u4e0d\u9069\u7528\uff09\u3068field mask\u306e\u9078\u629e\u7684\u66f4\u65b0\u306e\u63a8\u5968\u306f `scripts/sync_wbs_to_sheets.py` \u306e\u73fe\u884c\u65b9\u91dd\u3068\u6574\u5408\u3002\u63a1\u7528\u5909\u66f4\u306a\u3057\u3002\n- GitHub Issues/Projects\u3001Sheets\u306e\u6b63\u672c\u540c\u671f\u3001Calendar\u306e\u5b8c\u4e86\u30a4\u30d9\u30f3\u30c8\u524a\u9664\u306e\u904b\u7528\u306f2026-07-13\uff08T893\uff09\u306e\u5224\u65ad\u3092\u7dad\u6301\u3059\u308b\u3002\n- WBS\u306f `WBS_REVIEW_2026-07-13` \u306e\u518d\u30d9\u30fc\u30b9\u30e9\u30a4\u30f3\u3092\u7dad\u6301\u3057\u3064\u3064\u3001T897\u3067\u672a\u5b8c\u4e86\u30bf\u30b9\u30af\u306e\u65e5\u7a0b\u30922026-07-18\u57fa\u6e96\u3078\u5f15\u304d\u76f4\u3057\u305f\uff08`scripts/recalculate_wbs_schedule.py`\u3001\u691c\u8a3c\u306f UAT TS-23\uff09\u3002\n\n2026-07-19 \u30bb\u30c3\u30b7\u30e7\u30f3\u78ba\u8a8d\u30e1\u30e2\uff08T862_1\uff09:\n\n- **Stripe\uff08\u91cd\u8981\u30fb\u8981\u8ffd\u8de1\uff09**: \u5f93\u91cf\u8ab2\u91d1\u306e\u516c\u5f0fDocs\u3092\u78ba\u8a8d\u3002Stripe\u306f**\u65b0\u898f\u306e\u5f93\u91cf\u8ab2\u91d1\u5b9f\u88c5\u3067\u306f Billing Meters \u3067\u306f\u306a\u304f Metronome \u3092\u63a8\u5968**\u3059\u308b\u65b9\u91dd\u306b\u66f4\u65b0\uff08Billing Meters \u306f\u65e2\u5b58\u5b9f\u88c5\u5411\u3051\u306b\u7d99\u7d9a\u63d0\u4f9b\u3002Connect/Checkout/Adaptive Pricing/Workflows \u3068\u306e\u5b8c\u5168\u4e92\u63db\u304c\u5fc5\u8981\u306a\u5834\u5408\u306f Billing Meters \u3092\u7d99\u7d9a\uff09\u3002T791\uff08Billing Meters API \u524d\u63d0\u30fb\u672a\u7740\u624b\uff09\u306b\u5f71\u97ff\u3057\u3046\u308b\u305f\u3081 R143 \u3092\u8d77\u7968\u3002T791\u5b9f\u88c5\u958b\u59cb\u6642\u306b\u516c\u5f0fDashboard/Docs\u3067\u6700\u7d42\u65b9\u5f0f\u3092\u518d\u5224\u5b9a\u3059\u308b\uff08AGENTS.md\u306e\u300c\u5b9f\u88c5\u958b\u59cb\u6642\u306bAPI version\u518d\u78ba\u8a8d\u300d\u65b9\u91dd\u306b\u5305\u542b\uff09\u3002\u5f53\u30d7\u30ed\u30c0\u30af\u30c8\u306f Customer Portal\uff08\u89e3\u7d04\uff1aT807\uff09/Checkout \u4e92\u63db\u3092\u8981\u3059\u308b\u305f\u3081\u3001\u73fe\u6642\u70b9\u3067\u306f Billing Meters \u7d99\u7d9a\u304c\u6709\u529b\u3002\u63a1\u7528\u306f\u5b9f\u88c5\u958b\u59cb\u6642\u306b\u78ba\u5b9a\u3002\n- Anthropic Claude Code docs\uff08memory/settings\uff09\u3092\u78ba\u8a8d\u3002`CLAUDE.md`\u2192`@AGENTS.md` \u30a4\u30f3\u30dd\u30fc\u30c8\u69cb\u6210\u3068\u30ed\u30fc\u30ab\u30eb\u5c02\u7528\u8a2d\u5b9a\uff08`.claude/settings.local.json`/`CLAUDE.local.md`\u975e\u30b3\u30df\u30c3\u30c8\uff09\u306f\u516c\u5f0f\u63a8\u5968\u3069\u304a\u308a\u3002\u63a1\u7528\u5909\u66f4\u306a\u3057\u3002\n- Supabase / Firebase: \u30b5\u30fc\u30d0\u30fc\u30ec\u30b9\u69cb\u6210\uff08\u30a4\u30f3\u30d5\u30e9\u56fa\u5b9a\u8cbb\u00a50\uff09\u306e\u524d\u63d0\u306b\u5909\u66f4\u306a\u3057\u3002\u6709\u511f\u5316\u5224\u65ad\uff08T862\uff09\u306e\u30b3\u30b9\u30c8\u6750\u6599\u306f `COST_REPORT_2026-06.md` \u3092\u6b63\u3068\u3059\u308b\u3002\u63a1\u7528\u5909\u66f4\u306a\u3057\u3002\n- \u304a\u540d\u524d.com / GitHub / Sheets / Calendar \u904b\u7528\u306f 2026-07-13\uff08T893\uff09\u30fb2026-07-18\uff08T897/T899\uff09\u306e\u5224\u65ad\u3092\u7dad\u6301\u3002\u63a1\u7528\u5909\u66f4\u306a\u3057\u3002\n\n---\n\n## WBS\u3068\u540c\u671f\n\n`data/WBS.tsv` \u304c\u6b63\u672c\u3002`docs/WBS.md` \u306f `python scripts/generate_wbs_md.py` \u3067\u518d\u751f\u6210\u3059\u308b\u3002\n\n\u5b8c\u4e86\u3057\u305f\u30bf\u30b9\u30af\u306f\u6b21\u3092\u884c\u3046\u3002\n\n1. `data/WBS.tsv` \u306e\u72b6\u614b\u3092 `\u5b8c\u4e86` \u306b\u3059\u308b\u3002\n2. `docs/WBS.md` \u3092\u518d\u751f\u6210\u3059\u308b\u3002\n3. \u5fc5\u8981\u306a\u8ab2\u984c/QA\u3092 tracker TSV \u306b\u53cd\u6620\u3059\u308b\u3002\n4. `python scripts/sync_wbs_to_github.py TXXX --dry-run` \u5f8c\u3001\u540c\u3058ID\u3092\u5b9f\u540c\u671f\u3059\u308b\u3002\n5. `python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8` \u3092\u5b9f\u884c\u3059\u308b\u3002\n6. `python scripts/sync_wbs_to_calendar.py` \u3092\u5b9f\u884c\u3059\u308b\u3002\u5b8c\u4e86\u6e08\u307fWBS\u306b\u7d10\u3065\u304fCalendar\u30a4\u30d9\u30f3\u30c8\u306f\u524a\u9664\u3055\u308c\u308b\u3002\n\n---\n\n## closeout\n\n\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u6319\u52d5\u307e\u305f\u306fdocs\u3092\u5909\u3048\u305f\u30bb\u30c3\u30b7\u30e7\u30f3\u3067\u306f\u3001\u6b21\u3092\u5b9f\u884c\u3059\u308b\u3002\n\n```powershell\npython scripts/generate_knowledge_flow_demo.py\npython scripts/sync_wbs_to_github.py TXXX --dry-run\npython scripts/sync_wbs_to_github.py TXXX --report exports/github_wbs_sync_report.json\npython scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8\npython scripts/sync_wbs_to_calendar.py\npython scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/\n```\n\nNotebookLM\u5411\u3051docs\u3092\u5909\u66f4\u3057\u305f\u5834\u5408\u306f\u3001\u8ffd\u52a0\u3067\u6b21\u3092\u5b9f\u884c\u3059\u308b\u3002\n\n```powershell\npython scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60\npython scripts/generate_ceo_presentation_deck.py\npython scripts/upload_notebooklm_docs_to_drive.py\n```\n\n\u6700\u5f8c\u306b commit\u3001push `main`\u3001`main` \u304b\u3089 `master` \u3078\u53cd\u6620\u3057\u3001GitHub Pages \u306eCEO\u5171\u6709URL\u3092\u5b88\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATTENDANCE_WORKFLOW_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u52e4\u52d9\u8868\u81ea\u52d5\u89e3\u6790\u30fb\u52e4\u6020\u627f\u8a8d\u30ef\u30fc\u30af\u30d5\u30ed\u30fc Runbook\n\n- \u5bfe\u8c61WBS: T841\n- \u95a2\u9023\u8ab2\u984c: R98\n- \u4f5c\u6210\u65e5: 2026-06-24\n- \u30ec\u30fc\u30f3: Antigravity + Gemini / VSCode + Codex / VSCode + Claude Code\n- \u6280\u8853\u524d\u63d0: \u30d5\u30ed\u30f3\u30c8\u30a8\u30f3\u30c9 `index.html`\u3001\u30d0\u30c3\u30af\u30a8\u30f3\u30c9 FastAPI on Firebase Functions\u3001DB Supabase\n\n## \u7d50\u8ad6\n\nT841\u3067\u306f\u3001\u793e\u5185\u5411\u3051\u52e4\u6020\u7ba1\u7406UI\u3092\u3001\u30b8\u30e7\u30d6\u30ab\u30f3\u76f8\u5f53\u306e\u7c21\u6613\u6253\u523b\u4fdd\u5b58\u3001\u52e4\u52d9\u8868CSV\u89e3\u6790\u3001\u7ba1\u7406\u8005\u627f\u8a8d\u30ed\u30b0\u3078\u63a5\u7d9a\u3057\u305f\u3002\u793e\u54e1\u540d\u3084\u793e\u54e1\u756a\u53f7\u305d\u306e\u3082\u306e\u3001CSV\u539f\u672c\u3001\u5143\u30d5\u30a1\u30a4\u30eb\u540d\u306f\u4fdd\u5b58\u305b\u305a\u3001\u793e\u5185\u78ba\u8a8d\u30b3\u30fc\u30c9\u304b\u3089\u4f5c\u308b\u533f\u540d\u30ad\u30fc\u3068\u96c6\u8a08\u30e1\u30bf\u30c7\u30fc\u30bf\u3060\u3051\u3092\u4fdd\u5b58\u3059\u308b\u3002\n\n## \u4fdd\u5b58\u3059\u308b\u9805\u76ee\n\n| \u9805\u76ee | \u4fdd\u5b58\u65b9\u6cd5 |\n| --- | --- |\n| \u793e\u5185\u78ba\u8a8d\u30b3\u30fc\u30c9 | `ATTENDANCE_PSEUDONYM_SALT` \u3068\u30cf\u30c3\u30b7\u30e5\u5316\u3057 `subject_pseudonym` \u306e\u307f\u4fdd\u5b58 |\n| \u6253\u523b | `clock_in` / `clock_out` / `break_start` / `break_end` \u3068\u8a18\u9332\u6642\u523b |\n| \u52e4\u52d9\u8868CSV | \u539f\u672c\u306f\u4fdd\u5b58\u305b\u305a\u3001\u30d5\u30a1\u30a4\u30ebdigest\u3001\u62e1\u5f35\u5b50\u3001\u96c6\u8a08\u5024\u3060\u3051\u4fdd\u5b58 |\n| \u96c6\u8a08\u5024 | \u5b9f\u52b4\u50cd\u5206\u3001\u6642\u9593\u5916\u52b4\u50cd\u5206\u3001\u4f11\u65e5\u51fa\u52e4\u65e5\u6570\u3001\u6df1\u591c\u52b4\u50cd\u5206\u3001\u7570\u5e38\u4ef6\u6570 |\n| \u627f\u8a8d | `pending_approval` \u304b\u3089 `approved` / `rejected` \u3078\u66f4\u65b0\u3057\u3001\u7ba1\u7406\u8005\u30ec\u30d3\u30e5\u30fc\u6642\u523b\u3092\u4fdd\u5b58 |\n\n## \u4fdd\u5b58\u3057\u306a\u3044\u9805\u76ee\n\n- \u6c0f\u540d\u3001\u793e\u54e1\u756a\u53f7\u3001\u30e1\u30fc\u30eb\u30a2\u30c9\u30ec\u30b9\u3001\u96fb\u8a71\u756a\u53f7\u3002\n- CSV\u539f\u672c\u3001PDF\u539f\u672c\u3001\u5143\u30d5\u30a1\u30a4\u30eb\u540d\u3002\n- \u52e4\u6020\u30c7\u30fc\u30bf\u306e\u751f\u660e\u7d30\u884c\u3002\n- \u30b8\u30e7\u30d6\u30ab\u30f3\u3084Google Workspace\u306e\u8a8d\u8a3c\u60c5\u5831\u3001API key\u3001token\u3001secret\u3002\n\n## CSV\u5f62\u5f0f\n\n\u521d\u671fPoC\u3067\u306fCSV\u307e\u305f\u306f\u30c6\u30ad\u30b9\u30c8CSV\u306e\u307f\u5bfe\u5fdc\u3059\u308b\u3002PDF\u306f\u539f\u672c\u4fdd\u5b58\u3084OCR\u8aa4\u8aad\u306e\u30ea\u30b9\u30af\u304c\u3042\u308b\u305f\u3081\u3001T841\u3067\u306f\u81ea\u52d5\u89e3\u6790\u5bfe\u8c61\u5916\u3068\u3057\u3001\u5c06\u6765\u306e\u5916\u90e8OCR/Google Drive\u9023\u643a\u78ba\u8a8d\u5f8c\u306b\u518d\u5224\u5b9a\u3059\u308b\u3002\n\n\u5bfe\u5fdc\u30d8\u30c3\u30c0\u4f8b:\n\n```csv\ndate,work_hours,overtime_hours,midnight_hours,holiday_work,anomaly\n2026-06-01,8.0,1.5,0,0,\u306a\u3057\n2026-06-02,9.0,2.0,0.5,1,\u6253\u523b\u6f0f\u308c\n```\n\n\u65e5\u672c\u8a9e\u30d8\u30c3\u30c0\u306f `\u5b9f\u52b4\u50cd\u6642\u9593`\u3001`\u6b8b\u696d\u6642\u9593`\u3001`\u6df1\u591c\u52b4\u50cd\u6642\u9593`\u3001`\u4f11\u65e5\u51fa\u52e4`\u3001`\u6253\u523b\u6f0f\u308c`\u3001`\u7570\u5e38` \u306a\u3069\u3092\u8aad\u307f\u53d6\u308b\u3002\n\n## API\n\n### \u6253\u523b\u4fdd\u5b58\n\n`POST /api/attendance/punch`\n\n```json\n{\n  \"employee_identifier\": \"emp-2026-001\",\n  \"event_type\": \"in\",\n  \"consented\": true,\n  \"source\": \"attendance_widget\",\n  \"page_url\": \"/\",\n  \"session_id\": \"browser-session-id\"\n}\n```\n\n### \u52e4\u52d9\u8868CSV\u89e3\u6790\n\n`POST /api/attendance/timesheet/parse`\n\nmultipart form-data:\n\n- `file`: CSV\u307e\u305f\u306f\u30c6\u30ad\u30b9\u30c8CSV\n- `employee_identifier`\n- `consented=true`\n- `consent_version=MSB-ATTENDANCE-2026-06`\n- `source`\n- `page_url`\n- `session_id`\n\n\u6210\u529f\u6642\u306f `import_id`\u3001`subject_pseudonym`\u3001`approval_status=pending_approval`\u3001\u96c6\u8a08\u5024\u3001privacy controls\u3092\u8fd4\u3059\u3002\n\n### \u52e4\u52d9\u8868\u627f\u8a8d\n\n`POST /api/attendance/timesheet/approve`\n\nBasic Auth\u5fc5\u9808\u3002\n\n```json\n{\n  \"import_id\": 1,\n  \"decision\": \"approved\"\n}\n```\n\n### \u7ba1\u7406\u8005\u30b5\u30de\u30ea\u30fc\n\n`GET /api/attendance/summary`\n\nBasic Auth\u5fc5\u9808\u3002\u6253\u523b\u4ef6\u6570\u3001\u52e4\u52d9\u8868\u53d6\u8fbc\u4ef6\u6570\u3001\u627f\u8a8d\u72b6\u614b\u5225\u4ef6\u6570\u3001\u627f\u8a8d\u6e08\u307f\u5e73\u5747\u3001\u6700\u8fd1\u306e\u53d6\u8fbc\u3060\u3051\u3092\u8fd4\u3059\u3002\n\n## Supabase\u9069\u7528\n\n\u672c\u756aDB\u306b\u306f `supabase/migrations/20260624000001_attendance_workflow.sql` \u3092\u9069\u7528\u3059\u308b\u3002\n\n- `public.attendance_punch_events` \u3068 `public.attendance_timesheet_imports` \u3092\u4f5c\u6210\u3059\u308b\u3002\n- RLS\u3092\u6709\u52b9\u5316\u3059\u308b\u3002\n- `anon` \u3068 `authenticated` \u306e\u76f4\u63a5\u30c6\u30fc\u30d6\u30eb\u6a29\u9650\u3092revoke\u3059\u308b\u3002\n- \u66f8\u304d\u8fbc\u307f\u3001\u89e3\u6790\u3001\u627f\u8a8d\u3001summary\u306fFastAPI\u7d4c\u7531\u306b\u9650\u5b9a\u3059\u308b\u3002\n\n## \u904b\u7528\u624b\u9806\n\n1. \u672c\u756a\u53cd\u6620\u524d\u306b `ATTENDANCE_PSEUDONYM_SALT` \u3092\u4f1a\u793e\u7ba1\u7406secret\u3068\u3057\u3066\u8a2d\u5b9a\u3059\u308b\u3002\n2. \u6253\u523b/CSV\u89e3\u6790\u524d\u306b\u540c\u610f\u30c1\u30a7\u30c3\u30af\u304c\u5fc5\u9808\u3067\u3042\u308b\u3053\u3068\u3092\u78ba\u8a8d\u3059\u308b\u3002\n3. \u7ba1\u7406\u8005\u627f\u8a8d\u306fBasic Auth\u4ed8\u304dAPI\u3067\u5b9f\u65bd\u3059\u308b\u3002\n4. Sheets\u3001Issue\u3001docs\u3001NotebookLM\u3078\u500b\u4eba\u5225\u52e4\u6020\u660e\u7d30\u3084CSV\u539f\u672c\u3092\u8ee2\u8a18\u3057\u306a\u3044\u3002\n5. \u30b8\u30e7\u30d6\u30ab\u30f3\u672c\u9023\u643a\u3092\u884c\u3046\u5834\u5408\u306f\u3001T823/T836\u306e\u4f1a\u793e\u30a2\u30ab\u30a6\u30f3\u30c8\u79fb\u7ba1\u3068OAuth/\u7ba1\u7406\u8005\u627f\u8a8d\u5f8c\u306b\u3001secret\u975e\u8a18\u9332\u306e\u63a5\u7d9aRunbook\u3092\u8ffd\u52a0\u3059\u308b\u3002\n\n## \u691c\u8a3c\n\n- `tests/test_api.py::test_attendance_punch_timesheet_parse_approval_and_summary`\n- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/`\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\n\n2026-06-24\u306e\u30bb\u30c3\u30b7\u30e7\u30f3\u3067\u3001OpenAI Codex\u3001Anthropic Claude Code\u3001Google Gemini/Workspace\u3001Firebase Hosting/Functions\u3001Supabase RLS\u3001GitHub Actions/Issues/Projects\u3001Slack\u3001Notion\u3001Figma\u3001Stripe\u3001Discord\u3001Firecrawl\u3001\u304a\u540d\u524d.com \u306a\u3069\u306e\u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u3092\u78ba\u8a8d\u3057\u305f\u3002T841\u306b\u306f\u7279\u306b\u3001Firebase Functions\u306eAPI\u5883\u754c\u3001Supabase RLS\u3001Google Sheets batchUpdate\u3001GitHub Projects\u3001Claude Code/Codex\u306e\u5b89\u5168\u306a\u30bb\u30c3\u30b7\u30e7\u30f3\u904b\u7528\u65b9\u91dd\u3092\u53cd\u6620\u3057\u305f\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

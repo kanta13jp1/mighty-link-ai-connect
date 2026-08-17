@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE5 — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \ud83d\ude80 \u30d7\u30ed\u30c0\u30af\u30c8\u5f37\u5316 \u30d5\u30a7\u30fc\u30ba5\u4ed5\u69d8\u66f8\u30fb\u8a2d\u8a08\u66f8 (T980\u301cT983)\n\n\u672c\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u306f\u3001\u7b2c5\u671fPdM\u30ec\u30d3\u30e5\u30fc\u306b\u57fa\u3065\u304d\u3001Harvey AI, Rippling, ServiceTitan, Stripe Connect\u7b49\u306e\u696d\u754c\u30c8\u30c3\u30d7\u30af\u30e9\u30b9Vertical SaaS\u6c34\u6e96\u3078\u5230\u9054\u3059\u308b\u305f\u3081\u306e4\u5927\u9032\u5316\u30a2\u30af\u30b7\u30e7\u30f3\uff08T980\u301cT983\uff09\u306e\u6280\u8853\u4ed5\u69d8\u66f8\u3067\u3059\u3002\n\n---\n\n## 1. Action 17: SES\u500b\u5225\u5951\u7d04\u66f8\u30fb\u767a\u6ce8\u66f8AI\u81ea\u52d5\u751f\u6210\uff06\u6cd5\u5b9a\u30c1\u30a7\u30c3\u30af (T980)\n\n### 1.1 \u80cc\u666f\u3068\u76ee\u7684\n\u6210\u7d04\u6c7a\u5b9a\u5f8c\u306e\u6e96\u59d4\u4efb\u5951\u7d04\u30fb\u6d3e\u9063\u5951\u7d04\u306b\u304a\u3051\u308b\u7cbe\u7b97\u5e45\uff08\u4f8b: 140h\u301c180h\uff09\u3001\u5358\u4fa1\u3001\u652f\u6255\u3044\u30b5\u30a4\u30c8\u3001\u6307\u63ee\u547d\u4ee4\u6a29\u30fb\u507d\u88c5\u8acb\u8ca0\u30ea\u30b9\u30af\u6761\u9805\u3092AI\u304c\u81ea\u52d5\u30c1\u30a7\u30c3\u30af\u3057\u3001\u5373\u6642\u7de0\u7d50\u53ef\u80fd\u306a\u500b\u5225\u5951\u7d04\u66f8\uff08Markdown/PDF\uff09\u3092\u751f\u6210\u3059\u308b\u3002\n\n### 1.2 \u4e3b\u306a\u4ed5\u69d8\n- **\u30e2\u30b8\u30e5\u30fc\u30eb**: `src/ses_contract_generator.py`\n- **\u6a5f\u80fd**:\n  - \u6e96\u59d4\u4efb\uff08\u5584\u7ba1\u6ce8\u610f\u7fa9\u52d9\u30fb\u6210\u679c\u7269\u8cac\u4efb\u306a\u3057\uff09\u30fb\u6d3e\u9063\u30fb\u8acb\u8ca0\u306e\u5404\u985e\u578b\u306b\u9069\u5408\u3057\u305f\u6761\u6587\u81ea\u52d5\u751f\u6210\u3002\n  - \u7cbe\u7b97\u6642\u9593\u5e45\u30fb\u904e\u4e0d\u8db3\u63a7\u9664\u30fb\u652f\u6255\u3044\u30b5\u30a4\u30c8\u306e\u6574\u5408\u6027\u691c\u8a3c\u3002\n  - \u96fb\u5b50\u7f72\u540d\u9023\u643a\u7528\u30e1\u30bf\u30c7\u30fc\u30bf\uff08CloudSign / freee\u30b5\u30a4\u30f3\u4e92\u63db\uff09\u51fa\u529b\u3002\n\n---\n\n## 2. Action 18: \u30ea\u30a2\u30eb\u30bf\u30a4\u30e0\u9700\u7d66\u9023\u52d5\u30fb\u6700\u5927\u5229\u76ca\u30d7\u30e9\u30a4\u30b7\u30f3\u30b0AI (T981)\n\n### 2.1 \u80cc\u666f\u3068\u76ee\u7684\n\u6848\u4ef6\u306e\u7af6\u5408\u500d\u7387\u30fb\u30b9\u30ad\u30eb\u5e0c\u5c11\u6027\u30fb\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u4e88\u7b97\u4e0a\u9650\u304b\u3089\u3001\u6210\u7d04\u78ba\u738780%\u4ee5\u4e0a\u3092\u7dad\u6301\u3057\u305f\u307e\u307e\u6700\u5927\u5229\u76ca\u3092\u7372\u5f97\u3067\u304d\u308b\u63d0\u793a\u5358\u4fa1\uff08Yield Price\uff09\u3092AI\u304c\u7b97\u51fa\u30fb\u63d0\u6848\u3059\u308b\u3002\n\n### 2.2 \u4e3b\u306a\u4ed5\u69d8\n- **\u30e2\u30b8\u30e5\u30fc\u30eb**: `src/yield_pricing_optimizer.py`\n- **\u6a5f\u80fd**:\n  - \u6700\u9069\u63d0\u793a\u5358\u4fa1\uff08Recommended Yield Rate: +5\u301c15\u4e07\u5186/\u6708\uff09\u306e\u7b97\u51fa\u3002\n  - \u60f3\u5b9a\u7c97\u5229\u984d\u5411\u4e0a\u30b7\u30df\u30e5\u30ec\u30fc\u30b7\u30e7\u30f3\uff08Annual Profit Gain\uff09\u3002\n  - \u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u3078\u306e\u5024\u4e0a\u3052\u6253\u8a3a\u6839\u62e0\u30c6\u30ad\u30b9\u30c8\uff08Skill Premium Justification\uff09\u751f\u6210\u3002\n\n---\n\n## 3. Action 19: \u7a3c\u50cd\u30a8\u30f3\u30b8\u30cb\u30a2\u96e2\u8077\u30fb\u5951\u7d04\u9014\u4e2d\u7d42\u4e86\u30ea\u30b9\u30af\u65e9\u671f\u691c\u77e5 (T982)\n\n### 3.1 \u80cc\u666f\u3068\u76ee\u7684\n\u7a3c\u50cd\u4e2d\u30a8\u30f3\u30b8\u30cb\u30a2\u306e\u6708\u9593\u6b8b\u696d\u6642\u9593\u63a8\u79fb\u3001\u5b9a\u4f8b\u30d1\u30eb\u30b9\u30b5\u30fc\u30d9\u30a4\u306e\u611f\u60c5\u6975\u6027\u30b9\u30b3\u30a2\u304b\u3089\u3001\u9000\u8077\u30fb\u4f53\u8abf\u4e0d\u826f\u30fb\u73fe\u5834\u4e0d\u6e80\u306b\u3088\u308b\u9014\u4e2d\u9000\u5834\u30ea\u30b9\u30af\uff08Churn Risk\uff09\u3092\u4e8b\u524d\u691c\u77e5\u3057\u3001\u55b6\u696d\u30fb\u30d5\u30a9\u30ed\u30fc\u62c5\u5f53\u3078\u30a2\u30e9\u30fc\u30c8\u901a\u77e5\u3059\u308b\u3002\n\n### 3.2 \u4e3b\u306a\u4ed5\u69d8\n- **\u30e2\u30b8\u30e5\u30fc\u30eb**: `src/talent_retention_predictor.py`\n- **\u6a5f\u80fd**:\n  - \u6b8b\u696d\u6642\u9593\uff0845h\u8d85/\u904e\u5c11\u7a3c\u50cd\uff09\u304a\u3088\u3073\u30d1\u30eb\u30b9\u30b9\u30b3\u30a2\uff081\u301c5\u70b9\uff09\u306b\u3088\u308b\u30ea\u30b9\u30af\u7dcf\u5408\u30b9\u30b3\u30a2\u30ea\u30f3\u30b0\u3002\n  - \u30a2\u30e9\u30fc\u30c8\u30ec\u30d9\u30eb\uff08`GREEN_SAFE`, `YELLOW_WATCH`, `RED_CRITICAL_CHURN`\uff09\u3002\n  - \u55b6\u696d\u5411\u3051\u5373\u6642\u4e88\u9632\u30a2\u30af\u30b7\u30e7\u30f3\u30d7\u30e9\u30f3\uff081on1\u30d2\u30a2\u30ea\u30f3\u30b0\u3001\u5358\u4fa1\u30fb\u74b0\u5883\u4ea4\u6e09\u7b49\uff09\u306e\u81ea\u52d5\u63d0\u6848\u3002\n\n---\n\n## 4. Action 20: \u30d1\u30fc\u30c8\u30ca\u30fc\u4f01\u696d\u9593\u30af\u30ed\u30b9\u30dc\u30fc\u30c0\u30fc\u6848\u4ef6\u30fb\u4eba\u6750\u30b7\u30a7\u30a2\u30ea\u30f3\u30b0\u6d41\u901a\u57fa\u76e4 (T983)\n\n### 4.1 \u80cc\u666f\u3068\u76ee\u7684\n\u81ea\u793e\u5358\u4f53\u3067\u306f\u30a2\u30b5\u30a4\u30f3\u3067\u304d\u306a\u3044\u4f59\u5270\u4eba\u6750\u3084\u5bfe\u5fdc\u4e0d\u80fd\u306a\u7a7a\u304d\u6848\u4ef6\u3092\u3001\u8a8d\u5b9a\u6e08\u307f\u30d1\u30fc\u30c8\u30ca\u30fc\u4f01\u696d\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u5185\u3067\u76f8\u4e92\u6d41\u901a\u3055\u305b\u3001\u6210\u7d04\u6642\u306e\u624b\u6570\u6599\u5206\u914d\uff08Take-rate\uff09\u3092\u81ea\u52d5\u8a08\u91cf\u30fb\u7ba1\u7406\u3059\u308b\u3002\n\n### 4.2 \u4e3b\u306a\u4ed5\u69d8\n- **\u30e2\u30b8\u30e5\u30fc\u30eb**: `src/talent_exchange_network.py`\n- **\u6a5f\u80fd**:\n  - \u4f01\u696d\u9593\u30d7\u30fc\u30eb\u3078\u306e\u533f\u540d\u6848\u4ef6\u30fb\u4eba\u6750\u306e\u51fa\u54c1\uff08Offer & Request\uff09\u3002\n  - \u4f01\u696d\u9593\u30de\u30c3\u30c1\u30f3\u30b0\u6210\u7acb\u6642\u306e\u624b\u6570\u6599\uff08\u4f8b: \u6708\u984d\u6210\u7d04\u984d\u306e5\u301c10%\uff09\u81ea\u52d5\u8a08\u7b97\u3002\n  - Stripe Connect / Invoice \u9023\u643a\u7528\u6d41\u901a\u53f0\u5e33\uff08GMV Ledger\uff09\u306e\u7ba1\u7406\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

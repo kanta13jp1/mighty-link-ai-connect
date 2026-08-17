@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEMINI_CLI_MIGRATION_AUDIT_2026-06-17 — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Gemini CLI / Code Assist \u6b8b\u5b58\u4f9d\u5b58\u76e3\u67fb\u30ec\u30dd\u30fc\u30c8\uff08T803\uff09\n\n\u4f5c\u6210\u65e5: 2026-06-17  \n\u5bfe\u8c61\u30bf\u30b9\u30af: T803  \n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Codex / Antigravity + Gemini  \n\u95a2\u9023: [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) / [ANTIGRAVITY_CLI_EVALUATION_REPORT.md](ANTIGRAVITY_CLI_EVALUATION_REPORT.md) / [WBS.md](WBS.md)\n\n---\n\n## \u7d50\u8ad6\n\n2026-06-18 \u306b\u4e88\u5b9a\u3055\u308c\u3066\u3044\u308b Gemini CLI / Gemini Code Assist \u500b\u4eba\u5411\u3051\u63d0\u4f9b\u505c\u6b62\u3001\u304a\u3088\u3073 Firebase extension for Gemini CLI \u306e\u7d42\u4e86\u306b\u5099\u3048\u3001\u30ea\u30dd\u30b8\u30c8\u30ea\u5185\u306e\u6b8b\u5b58\u4f9d\u5b58\u3092\u6700\u7d42\u78ba\u8a8d\u3057\u305f\u3002\n\n\u7d50\u679c\u3068\u3057\u3066\u3001CI\u3001scripts\u3001src\u3001Firebase/Supabase \u8a2d\u5b9a\u3001VSCode \u63a8\u5968\u62e1\u5f35\u3001AGENTS.md \u306a\u3069\u306e\u5b9f\u904b\u7528\u30d5\u30a1\u30a4\u30eb\u306b\u306f\u3001Gemini CLI / Gemini Code Assist / Firebase Gemini CLI \u62e1\u5f35\u3078\u306e\u73fe\u5f79\u4f9d\u5b58\u306f\u898b\u3064\u304b\u3089\u306a\u304b\u3063\u305f\u3002Google\u7cfb\u306e\u958b\u767a\u30ec\u30fc\u30f3\u306f\u3001T693\u3067\u8a55\u4fa1\u6e08\u307f\u306e Antigravity CLI / Antigravity IDE \u3092\u7d99\u7d9a\u5229\u7528\u3059\u308b\u3002\n\n## \u516c\u5f0f\u60c5\u5831\u306e\u78ba\u8a8d\n\n\u4eca\u56de\u306e\u5224\u65ad\u306f\u30012026-06-17\u6642\u70b9\u3067\u4ee5\u4e0b\u306e\u516c\u5f0f\u60c5\u5831\u3092\u78ba\u8a8d\u3057\u3066\u884c\u3063\u305f\u3002\n\n- [Google Developers Blog: Transitioning Gemini CLI to Antigravity CLI](https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/)\n- [Gemini Code Assist consumer accounts](https://developers.google.com/gemini-code-assist/docs/deprecations/code-assist-individuals)\n- [Firebase extension for Gemini CLI](https://firebase.google.com/docs/ai-assistance/gcli-extension)\n- [Firebase release notes](https://firebase.google.com/support/release-notes)\n- [Gemini API model docs](https://ai.google.dev/gemini-api/docs/models)\n\n\u78ba\u8a8d\u5185\u5bb9:\n\n- 2026-06-18 \u4ee5\u964d\u3001Gemini Code Assist for individuals / Google AI Pro / Google AI Ultra \u306e Gemini CLI \u3068 Gemini Code Assist IDE extension \u306f\u30ea\u30af\u30a8\u30b9\u30c8\u63d0\u4f9b\u3092\u505c\u6b62\u3059\u308b\u3002\n- Gemini Code Assist Standard / Enterprise \u306f\u5225\u67a0\u3067\u3042\u308a\u3001\u4eca\u56de\u306e\u500b\u4eba\u5411\u3051\u505c\u6b62\u3068\u306f\u6271\u3044\u304c\u7570\u306a\u308b\u3002\n- Firebase extension for Gemini CLI \u3082\u540c\u65e5\u306b\u505c\u6b62\u5bfe\u8c61\u3068\u306a\u308b\u305f\u3081\u3001Firebase\u7cfb\u306e\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u652f\u63f4\u306f Gemini CLI extension \u7d4c\u7531\u3067\u306f\u306a\u304f Antigravity \u5074\u3078\u5bc4\u305b\u308b\u3002\n- Gemini API \u306e\u30e2\u30c7\u30eb\u5229\u7528\u306f CLI \u505c\u6b62\u3068\u306f\u5225\u7cfb\u7d71\u306e\u305f\u3081\u3001\u672c\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u306e Gemini API \u9023\u643a\u81ea\u4f53\u306f\u7d99\u7d9a\u53ef\u80fd\u3002\n\n## \u76e3\u67fb\u65b9\u6cd5\n\n`scripts/verify_gemini_cli_migration.py` \u3092\u8ffd\u52a0\u3057\u3001\u4ee5\u4e0b\u3092\u5206\u96e2\u3057\u3066\u76e3\u67fb\u3057\u305f\u3002\n\n- \u5b9f\u904b\u7528\u4f9d\u5b58: `.github/`\u3001`scripts/`\u3001`src/`\u3001`firebase.json`\u3001`.firebaserc`\u3001`supabase/`\u3001`.vscode/extensions.json`\u3001`AGENTS.md` \u306a\u3069\u3002\n- \u5c65\u6b74\u53c2\u7167: `docs/`\u3001`data/WBS.tsv`\u3001`exports/mighty_development_plan.ics` \u306a\u3069\u3002\n\n\u691c\u51fa\u5bfe\u8c61:\n\n- `gemini extensions install https://github.com/firebase/agent-skills/`\n- `firebase/agent-skills` \u307e\u305f\u306f `gcli-extension` \u306e\u5b9f\u904b\u7528\u5229\u7528\n- `gemini auth` / `gemini chat` / `gemini extensions` \u306a\u3069\u306e Gemini CLI \u30b3\u30de\u30f3\u30c9\u5b9f\u884c\n- `google.geminicodeassist` \u306a\u3069 Gemini Code Assist IDE extension \u63a8\u5968\u8a2d\u5b9a\n- \u5b9f\u904b\u7528\u8a2d\u5b9a\u5185\u3067\u306e Gemini CLI \u73fe\u5f79\u4f9d\u5b58\u8a18\u8ff0\n\n## \u76e3\u67fb\u7d50\u679c\n\n\u5b9f\u884c\u30b3\u30de\u30f3\u30c9:\n\n```powershell\npython scripts/verify_gemini_cli_migration.py --project-root . --output-dir exports --date 2026-06-17\npython -m pytest tests/test_gemini_cli_migration.py -q\n```\n\n\u7d50\u679c:\n\n- \u5b9f\u904b\u7528\u30d5\u30a1\u30a4\u30eb\u306e\u6b8b\u5b58\u4f9d\u5b58: 0\u4ef6\n- \u5c65\u6b74\u53c2\u7167: 11\u4ef6\uff08\u5b8c\u4e86\u6e08\u307fT803\u30a4\u30d9\u30f3\u30c8\u524a\u9664\u5f8c\u306e\u6700\u7d42ICS\u53cd\u6620\u6e08\u307f\uff09\n- Antigravity CLI: PATH\u4e0a\u3067\u691c\u51fa\u6e08\u307f\n- Gemini CLI: PATH\u4e0a\u3067\u672a\u691c\u51fa\n- pytest: 4\u4ef6 PASS\n\n\u751f\u6210\u7269:\n\n- `exports/gemini_cli_migration_audit.json`\n- `exports/gemini_cli_migration_audit.md`\n\n\u5c65\u6b74\u53c2\u7167\u3068\u3057\u3066\u6b8b\u3063\u3066\u3044\u308b `docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md`\u3001`docs/MULTI_AI_WORKFLOW.md`\u3001`docs/CODEX_CONTINUATION_NOTES.md`\u3001`data/WBS.tsv` \u306a\u3069\u306e\u8a18\u8ff0\u306f\u3001T693/T803 \u306e\u79fb\u884c\u7d4c\u7def\u3092\u793a\u3059\u8a3c\u8de1\u3067\u3042\u308a\u3001\u73fe\u5f79\u306e\u5b9f\u884c\u4f9d\u5b58\u3067\u306f\u306a\u3044\u3002\n\n## \u4eca\u5f8c\u306e\u30ac\u30fc\u30c9\u30ec\u30fc\u30eb\n\n- \u672c\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u3067\u306f\u3001Google\u7cfb\u306e\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u958b\u767a\u30ec\u30fc\u30f3\u3092 Antigravity CLI / Antigravity IDE \u306b\u5bc4\u305b\u308b\u3002\n- `gemini extensions install https://github.com/firebase/agent-skills/` \u3092 setup \u624b\u9806\u3001CI\u3001scripts\u3001docs \u306e\u73fe\u5f79\u624b\u9806\u3068\u3057\u3066\u8ffd\u52a0\u3057\u306a\u3044\u3002\n- `.vscode/extensions.json` \u306b `google.geminicodeassist` \u3092\u63a8\u5968\u62e1\u5f35\u3068\u3057\u3066\u8ffd\u52a0\u3057\u306a\u3044\u3002\n- Gemini API \u306e\u5229\u7528\u306f\u7d99\u7d9a\u3057\u3066\u3088\u3044\u304c\u3001Gemini CLI \u4f9d\u5b58\u3068\u306f\u660e\u78ba\u306b\u5206\u3051\u308b\u3002\n- docs\u5185\u306b Gemini CLI \u306e\u8a18\u8ff0\u3092\u6b8b\u3059\u5834\u5408\u306f\u3001\u79fb\u884c\u5c65\u6b74\u30fb\u505c\u6b62\u5bfe\u5fdc\u30fb\u76e3\u67fb\u8a3c\u8de1\u3067\u3042\u308b\u3053\u3068\u3092\u660e\u793a\u3059\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03 — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u793e\u5185\u5229\u7528\u30d5\u30a7\u30fc\u30ba\u3068\u8ab2\u91d1\u30b9\u30b3\u30fc\u30d7\u306e\u6c7a\u5b9a 2026-07-03\n\n\u4f5c\u6210\u65e5: 2026-07-03\n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Claude Code\n\u30b9\u30c6\u30fc\u30bf\u30b9: **\u6c7a\u5b9a\uff08\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u30aa\u30fc\u30ca\u30fc\u627f\u8a8d 2026-07-03\uff09**\n\u95a2\u9023WBS: T861\uff08\u672c\u6c7a\u5b9a\uff09 / T862\uff08\u6709\u511f\u516c\u958b\u30fb\u8ab2\u91d1live\u6709\u52b9\u5316\u306e\u5b9f\u65bd\u5224\u65ad\uff09 / T804 / T791 / T793 / T807 / T813 / T833 / T845 / T849\n\u95a2\u9023\u8ab2\u984c/QA: R111 / R112 / QA-92 / QA-93\n\u95a2\u9023docs: [PRICING_PLAN_PROVISIONAL_2026-07-03.md](PRICING_PLAN_PROVISIONAL_2026-07-03.md) / [STRIPE_BILLING_INTEGRATION_DESIGN.md](STRIPE_BILLING_INTEGRATION_DESIGN.md) / `WBS_REVIEW_2026-07-13`\n\n---\n\n## \u6c7a\u5b9a\u5185\u5bb9\n\n2026-07-03\u3001\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u30aa\u30fc\u30ca\u30fc\uff08\u6885\u6fa4\u5bdb\u592a\uff09\u304c\u6b21\u3092\u6c7a\u5b9a\u3057\u305f\u3002\n\n1. **\u6599\u91d1\u30d7\u30e9\u30f3\u4eee\u6c7a\u5b9a\u306e\u627f\u8a8d**: [PRICING_PLAN_PROVISIONAL_2026-07-03.md](PRICING_PLAN_PROVISIONAL_2026-07-03.md) \u306e\u5185\u5bb9\u3092\u5f53\u9762\u306e\u6b63\u3068\u3059\u308b\uff08T804 \u5b8c\u4e86\uff09\u3002\n2. **\u5f53\u9762\u306f\u793e\u5185\u30e6\u30fc\u30b6\u30fc\u306e\u307f\u304c\u4f7f\u7528\u3059\u308b**: 2026-07-08 \u306e\u672c\u756a\u30ea\u30ea\u30fc\u30b9\u306f**\u793e\u5185\u5411\u3051GA\uff08internal launch\uff09**\u3068\u3059\u308b\u3002\n3. **\u8ab2\u91d1\u6a5f\u80fd\u306f\u300c\u4ed5\u7d44\u307f\u300d\u306e\u307f\u5b9f\u88c5\u3059\u308b**: Stripe \u8ab2\u91d1\u306f test mode \u3067\u306e\u5b9f\u88c5\u30fb\u691c\u8a3c\uff08T791\uff09\u307e\u3067\u3092\u5b8c\u4e86\u6761\u4ef6\u3068\u3057\u3001**live \u8ab2\u91d1\u306f\u6709\u52b9\u5316\u3057\u306a\u3044**\u3002\u5b9f\u969b\u306e\u8ab2\u91d1\u306f\u767a\u751f\u3057\u306a\u3044\u3002\n4. **\u6709\u511f\u516c\u958b\u30fblive\u8ab2\u91d1\u306e\u6642\u671f\u306f\u672a\u5b9a**: \u4e00\u822c\u516c\u958b\u30fb\u6709\u511f\u5316\u306e\u5b9f\u65bd\u5224\u65ad\u306f\u65b0\u8a2d\u306e **T862** \u3067\u884c\u3046\uff08\u521d\u56de\u30ec\u30d3\u30e5\u30fc 2026-07-31\u3001\u4ee5\u5f8c\u6708\u6b21\u3067\u518d\u78ba\u8a8d\uff09\u3002\n\n## \u30bf\u30b9\u30af\u3078\u306e\u5f71\u97ff\n\n| \u30bf\u30b9\u30af | \u6271\u3044 |\n| --- | --- |\n| T804\uff08\u4fa1\u683c\u6c7a\u5b9a\u30fbCEO\u627f\u8a8d\uff09 | **\u5b8c\u4e86**\u3002\u4eee\u6c7a\u5b9a\u5185\u5bb9\u3092\u5f53\u9762\u306e\u6b63\u3068\u3057\u3066\u63a1\u7528\u3002\u793e\u5185\u5229\u7528\u30d5\u30a7\u30fc\u30ba\u3067\u306f\u8ab2\u91d1\u304c\u767a\u751f\u3057\u306a\u3044\u305f\u3081\u3001CEO \u306e\u6700\u7d42\u4fa1\u683c\u78ba\u8a8d\u306f\u6709\u511f\u516c\u958b\u5224\u65ad\uff08T862\uff09\u6642\u306b\u5b9f\u65bd\u3059\u308b |\n| T791\uff08Stripe Billing Meters \u5b9f\u88c5\uff09 | **\u7d99\u7d9a\uff087/4-7/5\uff09**\u3002test mode \u3067\u306e Meter\u30fbWebhook\u30fb\u51aa\u7b49\u51e6\u7406\u306e\u5b9f\u88c5\u691c\u8a3c\u307e\u3067\u3092\u5b8c\u4e86\u6761\u4ef6\u3068\u3059\u308b\u3002live \u9069\u7528\u306f T862 \u5f8c\u3078\u79fb\u7ba1 |\n| T807\uff08Customer Portal live \u6709\u52b9\u5316\uff09 | **T862 \u5f8c\u3078\u79fb\u7ba1**\u3002\u65e5\u7a0b\u306f placeholder\uff082026-08-03\u301c\uff09\u3068\u3057\u3001T862 \u5224\u65ad\u6642\u306b\u518d\u8a2d\u5b9a |\n| T813\uff08\u30a4\u30f3\u30dc\u30a4\u30b9\u30fbStripe Tax \u8a2d\u5b9a\uff09 | **T862 \u5f8c\u3078\u79fb\u7ba1**\u3002\u5b9f\u8ab2\u91d1\u304c\u767a\u751f\u3059\u308b\u307e\u3067\u9069\u683c\u8acb\u6c42\u66f8\u30fb\u6d88\u8cbb\u7a0e\u51e6\u7406\u306f\u4e0d\u8981 |\n| T793\uff08\u30d7\u30ec\u30b9\u30ea\u30ea\u30fc\u30b9\u30fbSNS \u544a\u77e5\uff09 | **T862 \u5f8c\u3078\u79fb\u7ba1**\u3002\u793e\u5185\u5229\u7528\u306e\u307f\u306e\u9593\u306f\u4e00\u822c\u5411\u3051\u544a\u77e5\u3092\u884c\u308f\u306a\u3044 |\n| T833\uff08Go/No-Go \u518d\u5224\u5b9a 7/7\uff09 | **\u7d99\u7d9a**\u3002\u5224\u5b9a\u5bfe\u8c61\u3092\u300c\u793e\u5185\u672c\u756aGA\u306e\u53ef\u5426\u300d\u3068\u3057\u3001\u6709\u511f\u516c\u958b\u6642\u671f\u306e\u5224\u65ad\u306f T862 \u3078\u79fb\u7ba1\u3057\u305f\u3053\u3068\u3092\u95a2\u4fc2\u8005\u304c\u627f\u8a8d\u3059\u308b |\n| T845\uff08\u6700\u7d42E2E/UAT\uff09 | **\u7d99\u7d9a**\u3002\u8ab2\u91d1\u5c0e\u7dda\u306f Stripe test mode \u3067\u691c\u8a3c\u3059\u308b |\n| T849\uff08\u30b5\u30a4\u30c8\u958b\u767a\u5b8c\u4e86\u5224\u5b9a 7/8\uff09 | **\u7d99\u7d9a**\u3002T793/T807/T813/T862 \u306f T849 \u30b2\u30fc\u30c8\u306e\u5bfe\u8c61\u5916\u3068\u3059\u308b\uff08QA-93\u3002QA-91 \u306e GA \u5f8c\u4fdd\u5b88\u30bf\u30b9\u30af\u3068\u540c\u3058\u6271\u3044\uff09 |\n\n## public_paid_launch \u30b2\u30fc\u30c8\u3078\u306e\u5f71\u97ff\uff08R112\uff09\n\n`data/release_go_no_go_criteria.tsv` \u306e PUBLIC-xx \u30b2\u30fc\u30c8\u306f\u300c\u4e00\u822c\u516c\u958b\u30fb\u6709\u511f\u30ed\u30fc\u30f3\u30c1\u300d\u3092\u524d\u63d0\u306b\u5b9a\u7fa9\u3055\u308c\u3066\u3044\u308b\u3002\u4eca\u56de\u306e\u6c7a\u5b9a\u3067 2026-07-08 \u306e\u30ea\u30ea\u30fc\u30b9\u304c\u793e\u5185\u5411\u3051GA\u3068\u306a\u3063\u305f\u305f\u3081\u3001\u6709\u511f\u5316\u306b\u306e\u307f\u95a2\u4fc2\u3059\u308b\u30b2\u30fc\u30c8\uff08Stripe live \u691c\u8a3c\u7b49\uff09\u306e\u6271\u3044\u3092\u518d\u5b9a\u7fa9\u3059\u308b\u5fc5\u8981\u304c\u3042\u308b\u3002\u3053\u308c\u306f R112 \u3068\u3057\u3066\u8d77\u7968\u3057\u30012026-07-07 \u306e T833 \u3067\u95a2\u4fc2\u8005\u304c\u78ba\u5b9a\u3059\u308b\u3002\n\n## \u793e\u5185\u5229\u7528\u30d5\u30a7\u30fc\u30ba\u306e\u904b\u7528\u539f\u5247\n\n- Stripe \u306f test mode \u306e\u307f\u3002live mode \u306e API key\u30fbWebhook endpoint \u306f\u8a2d\u5b9a\u3057\u306a\u3044\u3002\n- \u8ab2\u91d1 UI\uff08/billing \u5c0e\u7dda\uff09\u306f\u52d5\u4f5c\u78ba\u8a8d\u306e\u305f\u3081\u6b8b\u3059\u304c\u3001\u5b9f\u6c7a\u6e08\u306f\u767a\u751f\u3055\u305b\u306a\u3044\u3002\n- \u7279\u5546\u6cd5\u8868\u8a18\u30fb\u8ab2\u91d1\u898f\u7d04\u306e\u3010\u8981\u78ba\u8a8d\u3011\u7b87\u6240\u306f\u6709\u511f\u516c\u958b\u307e\u3067\u78ba\u5b9a\u3055\u305b\u306a\u3044\uff08[TOKUSHOHO_NOTATION.md](TOKUSHOHO_NOTATION.md) \u306e\u524d\u63d0\u3069\u304a\u308a\uff09\u3002\n- \u6709\u511f\u516c\u958b\u306e\u5224\u65ad\u6750\u6599\uff08\u793e\u5185\u5229\u7528\u5b9f\u7e3e\u30fb\u30b3\u30b9\u30c8\u30fbSLA \u5b9f\u6e2c\uff09\u306f T862 \u30ec\u30d3\u30e5\u30fc\u3078\u6708\u6b21\u3067\u5f15\u304d\u7d99\u3050\u3002\n\n## T862\uff08\u6709\u511f\u516c\u958b\u30fb\u8ab2\u91d1live\u6709\u52b9\u5316\u306e\u5b9f\u65bd\u5224\u65ad\uff09\u306e\u5b8c\u4e86\u6761\u4ef6\n\n1. \u7d4c\u55b6\u5224\u65ad\u3068\u3057\u3066\u6709\u511f\u516c\u958b\u306e\u5b9f\u65bd\u53ef\u5426\u30fb\u6642\u671f\u3092\u6c7a\u5b9a\u3059\u308b\u3002\n2. \u5b9f\u65bd\u3059\u308b\u5834\u5408: CEO \u306e\u6700\u7d42\u4fa1\u683c\u78ba\u8a8d\uff08T804 \u306e\u4eee\u6c7a\u5b9a\u8868\u306e\u518d\u627f\u8a8d\u307e\u305f\u306f\u4fee\u6b63\uff09\u3001T807/T813/T793 \u306e\u65e5\u7a0b\u518d\u8a2d\u5b9a\u3001public_paid_launch \u30b2\u30fc\u30c8\u306e\u518d\u6709\u52b9\u5316\uff08R112 \u306e\u518d\u5b9a\u7fa9\u7d50\u679c\u306b\u5f93\u3046\uff09\u3092\u884c\u3046\u3002\n3. \u5b9f\u65bd\u3057\u306a\u3044\u5834\u5408: \u6b21\u56de\u30ec\u30d3\u30e5\u30fc\u65e5\u3092\u8a2d\u5b9a\u3057\u3001\u5224\u65ad\u6750\u6599\u3092\u66f4\u65b0\u3057\u3066\u7d99\u7d9a\u3059\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

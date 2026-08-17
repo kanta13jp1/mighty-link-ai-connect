@@ -92,7 +92,7 @@
 
 **関連論点**: [D-4 AI エンジン選定方針](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-4-ai-エンジン選定方針-2026-05-22-新規論点)
 
-**回答方針**: 「**止まりません**」と即答。deterministic fallback パイプラインを実装済 ([BACKEND_AI_PIPELINE.md](BACKEND_AI_PIPELINE.md), [CODEX_CONTINUATION_NOTES.md:69-111](CODEX_CONTINUATION_NOTES.md)) で、Gemini quota 切れ中でも `AI_FORCE_MOCK=1` で 4 軸スコアが算出される。**当日デモが Gemini quota 切れ状態 (5/27 18:48 復帰待ち) なので、deterministic fallback 動作を実際に見せられる** ことを強調。
+**回答方針**: 「**止まりません**」と即答。deterministic fallback パイプラインを実装済 ([BACKEND_AI_PIPELINE.md](BACKEND_AI_PIPELINE.md), [CODEX_CONTINUATION_NOTES.md:69-111](../../CODEX_CONTINUATION_NOTES.md)) で、Gemini quota 切れ中でも `AI_FORCE_MOCK=1` で 4 軸スコアが算出される。**当日デモが Gemini quota 切れ状態 (5/27 18:48 復帰待ち) なので、deterministic fallback 動作を実際に見せられる** ことを強調。
 
 **保留時の対応**: 完全マルチクラウド AI 化 (Claude / GPT 同時待機) を求められた場合は QA-06 で再回答。
 
@@ -102,7 +102,7 @@
 
 **関連論点**: [D-4 AI エンジン選定方針](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-4-ai-エンジン選定方針-2026-05-22-新規論点)
 
-**回答方針**: 「**開発体制では既に 3-tool 並走中**」と説明 ([MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md)):
+**回答方針**: 「**開発体制では既に 3-tool 並走中**」と説明 ([MULTI_AI_WORKFLOW.md](../../MULTI_AI_WORKFLOW.md)):
 
 - Antigravity + Gemini (主開発)
 - VSCode + Codex / GPT-5.5 (実装 PR / sync スクリプト)
@@ -118,7 +118,7 @@
 
 **関連論点**: [D-3 最優先機能](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-3-最優先機能-62--616-の-2-週間で作るもの) (選択肢 A: AI スコア根拠の説明強化)
 
-**回答方針**: 「**現状でも structured payload で根拠を返している**」と即答。`/api/match` レスポンスに `matched_skills`, `missing_skills`, 4 軸スコア根拠が含まれる ([CODEX_CONTINUATION_NOTES.md:74-78](CODEX_CONTINUATION_NOTES.md))。さらに `/api/audit/recent` で AI 判定 JSONL ログが取得可能 ([T305 完了](../data/WBS.tsv))。「6/16 までに UI 上で根拠を見せる機能 (D-3 選択肢 A) を最優先で実装可能」と提案。
+**回答方針**: 「**現状でも structured payload で根拠を返している**」と即答。`/api/match` レスポンスに `matched_skills`, `missing_skills`, 4 軸スコア根拠が含まれる ([CODEX_CONTINUATION_NOTES.md:74-78](../../CODEX_CONTINUATION_NOTES.md))。さらに `/api/audit/recent` で AI 判定 JSONL ログが取得可能 ([T305 完了](../../../data/WBS.tsv))。「6/16 までに UI 上で根拠を見せる機能 (D-3 選択肢 A) を最優先で実装可能」と提案。
 
 **保留時の対応**: なし。即答カテゴリ。
 
@@ -128,7 +128,7 @@
 
 **関連論点**: [D-4](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#d-4-ai-エンジン選定方針-2026-05-22-新規論点), [Risks & Blockers R1](CEO_PRESENTATION_PREP_2026-06-02.md#risks--blockers-2026-05-22-時点)
 
-**回答方針**: **重要な訂正**: 固定の未来モデル名や「来月」前提では判断しない。毎セッション開始時にGemini API公式モデル一覧を確認し、現行のFlash/Pro/マルチモーダル対応モデルを品質・速度・コスト・quotaで比較して採用する。**R1はdocs staleリスクとして解消済** ([MULTI_AI_WORKFLOW.md Best Practices Refresh](MULTI_AI_WORKFLOW.md#best-practices-refresh-2026-05-22))。
+**回答方針**: **重要な訂正**: 固定の未来モデル名や「来月」前提では判断しない。毎セッション開始時にGemini API公式モデル一覧を確認し、現行のFlash/Pro/マルチモーダル対応モデルを品質・速度・コスト・quotaで比較して採用する。**R1はdocs staleリスクとして解消済** ([MULTI_AI_WORKFLOW.md Best Practices Refresh](../../MULTI_AI_WORKFLOW.md#best-practices-refresh-2026-05-22))。
 
 **保留時の対応**: 方向性確定後に、採用候補モデルのswitchコストと評価観点を提示する。
 
@@ -166,7 +166,7 @@
 
 **回答方針**: 「**現状の WBS 更新者は寛太 + Codex レーン**」と明示。3-tool 体制下で:
 
-- WBS.tsv 書き込み = Codex のみ ([MULTI_AI_WORKFLOW.md 競合解決ルール](MULTI_AI_WORKFLOW.md))
+- WBS.tsv 書き込み = Codex のみ ([MULTI_AI_WORKFLOW.md 競合解決ルール](../../MULTI_AI_WORKFLOW.md))
 - Sheets 同期 = `python scripts/sync_wbs_to_sheets.py` (自動化済)
 - 進捗確認 = 社長は Sheets / Calendar を見るだけで良い
 
@@ -178,7 +178,7 @@
 
 **関連論点**: [O-4 チーム拡大シナリオ](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#o-4-チーム拡大シナリオ)
 
-**回答方針**: 「**現状は寛太 + 3 AI ツール (Antigravity+Gemini / Codex / Claude Code) で並走**」と明示。3 AI 並走で人 1 名相当 × 3 の効率が出ている根拠を示す ([MULTI_AI_WORKFLOW.md day-by-day オーナーシップ表](MULTI_AI_WORKFLOW.md#day-by-day-オーナーシップ))。追加採用が必要になる閾値 (例: 顧客 3 社同時パイロット時) を提示。
+**回答方針**: 「**現状は寛太 + 3 AI ツール (Antigravity+Gemini / Codex / Claude Code) で並走**」と明示。3 AI 並走で人 1 名相当 × 3 の効率が出ている根拠を示す ([MULTI_AI_WORKFLOW.md day-by-day オーナーシップ表](../../MULTI_AI_WORKFLOW.md#day-by-day-オーナーシップ))。追加採用が必要になる閾値 (例: 顧客 3 社同時パイロット時) を提示。
 
 **保留時の対応**: O-4 は Optional。当日触れず議事録だけ残す。
 
@@ -193,9 +193,9 @@
 **回答方針**: 4 重防御を即座に提示:
 
 1. **公開 URL は限定共有** (社長共有 URL のみ、外部公開禁止)
-2. **OAuth は Workspace アカウント `k-umezawa@ml-mightylink.com` 固定** ([T647 完了](../data/WBS.tsv), `python scripts/verify_google_workspace_account.py` で検証)
+2. **OAuth は Workspace アカウント `k-umezawa@ml-mightylink.com` 固定** ([T647 完了](../../../data/WBS.tsv), `python scripts/verify_google_workspace_account.py` で検証)
 3. **認証情報マスキング有効** (ANTIGRAVITY_GUIDE.md:61-62 Credential Masking)
-4. **AI 判定 JSONL ログはローカル保存** ([T305](../data/WBS.tsv))、外部送信なし
+4. **AI 判定 JSONL ログはローカル保存** ([T305](../../../data/WBS.tsv))、外部送信なし
 
 **保留時の対応**: 「正式運用前に法務 / コンプラ確認が必要」と社長判断を引き出し、Notion 議事録 DB に該当タスクを起票。
 
@@ -203,7 +203,7 @@
 
 ### QA-14: 「公開 URL が落ちたらデモはどうするのか?」
 
-**関連論点**: [F-1 / F-2 バックアップ](CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md), [T613 デモバックアップ](../data/WBS.tsv)
+**関連論点**: [F-1 / F-2 バックアップ](../../CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md), [T613 デモバックアップ](../../../data/WBS.tsv)
 
 **回答方針**: 「**5 重のバックアップ導線を準備済**」と即答 ([DECISION_PACK デモ障害時の代替導線](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md#デモ障害時の代替導線)):
 
@@ -219,7 +219,7 @@
 
 ### QA-15: 「Slack / Notion で社長宛のメンションが流れるが、誰が読む権限を持つのか?」
 
-**関連論点**: [T622 権限・情報管理](../data/WBS.tsv)
+**関連論点**: [T622 権限・情報管理](../../../data/WBS.tsv)
 
 **回答方針**: 「**Slack 連携は 6/2 時点で未開通**」と先制 ([R3](CEO_PRESENTATION_PREP_2026-06-02.md#risks--blockers-2026-05-22-時点))。Slack CLI/MCP 未露出 → live send はしない。Notion は MCP 経由で証跡ページのみ作成、社長個人宛の通知は飛ばさない。「正式採用前に通知範囲・閲覧権限を社長確認」のフローを D-6 で確定する。
 
@@ -273,7 +273,7 @@
 
 ### QA-20: 「6/2 で決まったら、次は何を作るのか?」
 
-**関連論点**: [T615 決定後ロードマップ枠](../data/WBS.tsv), [O-1 WBS UI 内製化](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#o-1-wbs-ui-内製化)
+**関連論点**: [T615 決定後ロードマップ枠](../../../data/WBS.tsv), [O-1 WBS UI 内製化](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md#o-1-wbs-ui-内製化)
 
 **回答方針**: 「**方向性別に 3 つのロードマップ枠を準備済**」(T615 は次セッション完遂予定)。
 
@@ -289,7 +289,7 @@
 
 ### QA-21: 「次回はいつ会えるか?」
 
-**関連論点**: 当日アジェンダ ([T614 事前送付メモ](../data/WBS.tsv))
+**関連論点**: 当日アジェンダ ([T614 事前送付メモ](../../../data/WBS.tsv))
 
 **回答方針**: 6/16 (T615 ロードマップ整理直後の 2 週間後) を第一候補として提示。社長の予定により 6/9 or 6/23 を予備候補。
 

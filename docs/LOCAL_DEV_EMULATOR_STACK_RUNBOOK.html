@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOCAL_DEV_EMULATOR_STACK_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# Firebase Emulator / Supabase Local \u958b\u767a\u74b0\u5883 Runbook (T760)\n\n\u4f5c\u6210\u65e5: 2026-06-15  \n\u62c5\u5f53\u30ec\u30fc\u30f3: VSCode + Codex  \n\u95a2\u9023: [FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md](FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md) / [DB_MIGRATION_MANAGEMENT_RUNBOOK.md](DB_MIGRATION_MANAGEMENT_RUNBOOK.md) / [STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md](STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md)\n\n## \u76ee\u7684\n\nFirebase Hosting / Auth / Functions \u3068 Supabase PostgreSQL \u3092\u30ed\u30fc\u30ab\u30eb\u3060\u3051\u3067\u8d77\u52d5\u3057\u3001production \u306e Firebase project\u3001Supabase DB\u3001service role key\u3001\u5b9f\u30e6\u30fc\u30b6\u30fc\u30c7\u30fc\u30bf\u306b\u89e6\u308c\u305a\u306b\u7d71\u5408\u30c6\u30b9\u30c8\u3067\u304d\u308b\u72b6\u614b\u3092\u6a19\u6e96\u5316\u3059\u308b\u3002\n\nT760 \u306e\u5b8c\u4e86\u6761\u4ef6\u306f\u6b21\u306e4\u70b9\u3002\n\n- `firebase.json` \u306b Auth / Functions / Hosting / Emulator UI \u306e\u56fa\u5b9a\u30dd\u30fc\u30c8\u3092\u5b9a\u7fa9\u3059\u308b\u3002\n- `supabase/config.toml` \u3068 `supabase/seed.sql` \u3092\u30ed\u30fc\u30ab\u30eb\u958b\u767a\u7528\u306b\u6574\u5099\u3057\u3001seed \u306f\u5408\u6210\u30c7\u30fc\u30bf\u3060\u3051\u306b\u3059\u308b\u3002\n- `scripts/verify_local_dev_stack.py` \u3068 pytest \u3067\u8a2d\u5b9a\u30fbseed\u30fbsecret\u6df7\u5165\u3092\u691c\u8a3c\u3067\u304d\u308b\u3002\n- GitHub Actions \u306e `Local Dev Stack Validation` \u3067 PR/push \u6642\u306b\u540c\u3058\u691c\u8a3c\u3092\u8d70\u3089\u305b\u308b\u3002\n\n## \u516c\u5f0f Docs \u78ba\u8a8d\u30e1\u30e2\n\n2026-06-15 \u306e\u4f5c\u696d\u958b\u59cb\u6642\u306b\u3001Firebase Emulator Suite\u3001Supabase Local CLI\u3001GitHub Actions \u306e\u516c\u5f0fDocs\u3092\u78ba\u8a8d\u3057\u305f\u3002\u53cd\u6620\u3057\u305f\u904b\u7528\u30eb\u30fc\u30eb\u306f\u6b21\u306e\u3068\u304a\u308a\u3002\n\n- Firebase Emulator Suite \u306f `firebase.json` \u306e `emulators` \u8a2d\u5b9a\u3092\u6b63\u3068\u3057\u3001Auth / Functions / Hosting / UI \u306e\u30dd\u30fc\u30c8\u3092\u56fa\u5b9a\u3059\u308b\u3002\n- Supabase CLI \u306f `supabase init` \u3067\u751f\u6210\u3055\u308c\u308b `supabase/config.toml` \u3092Git\u7ba1\u7406\u3057\u3001`supabase start` \u3067 API `54321`\u3001DB `54322`\u3001Studio `54323` \u3092\u4f7f\u3046\u3002\n- Supabase local \u306f Docker \u30b3\u30f3\u30c6\u30ca\u3067\u52d5\u304f\u305f\u3081\u3001\u30ed\u30fc\u30ab\u30eb\u691c\u8a3c\u306f Docker Desktop \u307e\u305f\u306f\u4e92\u63db\u30e9\u30f3\u30bf\u30a4\u30e0\u304c\u524d\u63d0\u3002\n- secret \u306f config \u306b\u76f4\u66f8\u304d\u305b\u305a\u3001\u5fc5\u8981\u6642\u306f\u74b0\u5883\u5909\u6570\u53c2\u7167\u306b\u3059\u308b\u3002production URL / service role key \u306f\u30ed\u30fc\u30ab\u30eb\u7d71\u5408\u30c6\u30b9\u30c8\u306e\u524d\u306b\u5fc5\u305a\u5916\u3059\u3002\n- GitHub Actions \u3067\u306f Docker/Firebase\u3092\u8d77\u52d5\u3057\u306a\u3044\u9759\u7684\u691c\u8a3c\u3092\u5148\u306b\u901a\u3057\u3001\u91cd\u3044\u7d71\u5408\u30c6\u30b9\u30c8\u306f\u660e\u793a\u7684\u306a workflow_dispatch \u307e\u305f\u306f\u30ed\u30fc\u30ab\u30eb\u3067\u5b9f\u884c\u3059\u308b\u3002\n\n## \u56fa\u5b9a\u30dd\u30fc\u30c8\n\n| \u30b5\u30fc\u30d3\u30b9 | URL / \u30dd\u30fc\u30c8 | \u7528\u9014 |\n| --- | --- | --- |\n| Firebase Emulator UI | `http://127.0.0.1:4000` | Auth / Functions / Hosting \u306e\u30ed\u30fc\u30ab\u30eb\u72b6\u614b\u78ba\u8a8d |\n| Firebase Hosting Emulator | `http://127.0.0.1:5000` | \u9759\u7684\u30d5\u30a1\u30a4\u30eb\u3068 Hosting rewrite \u306e\u78ba\u8a8d |\n| Firebase Functions Emulator | `http://127.0.0.1:5001` | API / Cloud Functions \u306e\u30ed\u30fc\u30ab\u30eb\u78ba\u8a8d |\n| Firebase Auth Emulator | `http://127.0.0.1:9099` | \u8a8d\u8a3c\u30d5\u30ed\u30fc\u306e\u30ed\u30fc\u30ab\u30eb\u78ba\u8a8d |\n| Supabase API | `http://127.0.0.1:54321` | REST / GraphQL / Auth API |\n| Supabase PostgreSQL | `postgresql://postgres:postgres@127.0.0.1:54322/postgres` | \u30ed\u30fc\u30ab\u30ebDB |\n| Supabase Studio | `http://127.0.0.1:54323` | DB\u30c6\u30fc\u30d6\u30eb\u30fbseed\u78ba\u8a8d |\n\n## \u521d\u56de\u30bb\u30c3\u30c8\u30a2\u30c3\u30d7\n\n```powershell\n# Node.js 20+ \u3068 Firebase CLI / Supabase CLI / Docker Desktop \u304c\u524d\u63d0\nfirebase --version\nsupabase --version\ndocker version\n\n# \u8a2d\u5b9a\u306e\u9759\u7684\u691c\u8a3c\npython scripts/verify_local_dev_stack.py --fail-on-critical\n\n# DB migration \u3068 T760 \u691c\u8a3c\u30c6\u30b9\u30c8\npython scripts/manage_db_migrations.py validate --engine supabase\npython -m pytest tests/test_local_dev_stack.py tests/test_db_migration_management.py tests/test_rls_policies.py\n```\n\nSupabase CLI \u3092 `npx` \u7d4c\u7531\u3067\u4f7f\u3046\u5834\u5408\u306f Node.js 20 \u4ee5\u4e0a\u304c\u5fc5\u8981\u3002\u30b0\u30ed\u30fc\u30d0\u30eb `npm install -g supabase` \u306f\u4f7f\u308f\u305a\u3001Scoop / standalone binary / `npx supabase` \u3092\u4f7f\u3046\u3002\n\n## \u8d77\u52d5\u624b\u9806\n\nPowerShell \u3067 production DB URL \u304c\u6b8b\u3063\u3066\u3044\u306a\u3044\u3053\u3068\u3092\u78ba\u8a8d\u3057\u3066\u304b\u3089\u8d77\u52d5\u3059\u308b\u3002\n\n```powershell\nRemove-Item Env:SUPABASE_DB_URL -ErrorAction SilentlyContinue\npython scripts/verify_local_dev_stack.py --check-env --fail-on-critical\n\nsupabase start\nfirebase emulators:start --only auth,functions,hosting\n```\n\n\u5225\u30bf\u30fc\u30df\u30ca\u30eb\u3067API\u3084UI\u306e\u30c6\u30b9\u30c8\u3092\u5b9f\u884c\u3059\u308b\u3002\n\n```powershell\n$env:SUPABASE_DB_URL = \"postgresql://postgres:postgres@127.0.0.1:54322/postgres\"\n$env:FIREBASE_AUTH_EMULATOR_HOST = \"127.0.0.1:9099\"\n\npython -m pytest tests/test_api.py tests/test_rls_policies.py\n```\n\n\u7d42\u4e86\u6642\u306f\u6b21\u3092\u5b9f\u884c\u3059\u308b\u3002\n\n```powershell\nsupabase stop\nRemove-Item Env:SUPABASE_DB_URL -ErrorAction SilentlyContinue\nRemove-Item Env:FIREBASE_AUTH_EMULATOR_HOST -ErrorAction SilentlyContinue\n```\n\n## \u691c\u8a3c\u30b9\u30af\u30ea\u30d7\u30c8\n\n`scripts/verify_local_dev_stack.py` \u306f\u6b21\u3092\u78ba\u8a8d\u3059\u308b\u3002\n\n- `firebase.json` / `.firebaserc` \u304c\u8aad\u3081\u308b\u3002\n- Firebase Emulator \u306e\u56fa\u5b9a\u30dd\u30fc\u30c8\u304c `9099` / `5001` / `5000` / `4000` \u3067\u3042\u308b\u3002\n- `singleProjectMode` \u304c\u6709\u52b9\u3067\u3042\u308b\u3002\n- `supabase/config.toml` \u304c\u8aad\u3081\u3001`project_id` \u304c production \u540d\u3067\u306f\u306a\u3044\u3002\n- Supabase API / DB / Studio \u306e\u56fa\u5b9a\u30dd\u30fc\u30c8\u304c `54321` / `54322` / `54323` \u3067\u3042\u308b\u3002\n- `supabase/seed.sql` \u304c\u5b58\u5728\u3057\u3001`example.test` \u306e\u5408\u6210\u30c7\u30fc\u30bf\u3060\u3051\u3092\u4f7f\u3063\u3066\u3044\u308b\u3002\n- local stack config \u306b secret-like \u306a\u5024\u304c\u542b\u307e\u308c\u3066\u3044\u306a\u3044\u3002\n- `--check-env` \u6307\u5b9a\u6642\u3001`SUPABASE_DB_URL` \u304c\u672a\u8a2d\u5b9a\u307e\u305f\u306f `127.0.0.1:54322` \u3092\u6307\u3057\u3066\u3044\u308b\u3002\n\n\u30ec\u30dd\u30fc\u30c8\u306f `exports/local_dev_stack_report.json` \u306b\u51fa\u529b\u3055\u308c\u308b\u3002\n\n## CI\n\n`.github/workflows/local-dev-stack-validate.yml` \u306f\u6b21\u306e\u5909\u66f4\u3067\u8d77\u52d5\u3059\u308b\u3002\n\n- `firebase.json`\n- `.firebaserc`\n- `supabase/config.toml`\n- `supabase/seed.sql`\n- `supabase/migrations/**`\n- `scripts/verify_local_dev_stack.py`\n- `tests/test_local_dev_stack.py`\n\nCI\u3067\u306f\u9759\u7684\u691c\u8a3c\u3068 `tests/test_local_dev_stack.py` \u306e\u307f\u3092\u5b9f\u884c\u3059\u308b\u3002Docker\u30a4\u30e1\u30fc\u30b8\u53d6\u5f97\u3092\u4f34\u3046 `supabase start` \u306f\u30ed\u30fc\u30ab\u30eb\u307e\u305f\u306f\u660e\u793a\u7684\u306a\u7d71\u5408\u30c6\u30b9\u30c8\u3067\u5b9f\u65bd\u3059\u308b\u3002\n\n## \u7981\u6b62\u4e8b\u9805\n\n- production \u306e `SUPABASE_DB_URL`\u3001`service_role` key\u3001Firebase service account JSON \u3092\u30ed\u30fc\u30ab\u30ebseed\u3084docs\u306b\u8cbc\u3089\u306a\u3044\u3002\n- `supabase/seed.sql` \u306b\u5b9f\u540d\u3001\u5b9f\u30e1\u30fc\u30eb\u3001\u4f1a\u793e\u30c9\u30e1\u30a4\u30f3\u30e1\u30fc\u30eb\u3001\u9867\u5ba2\u30c7\u30fc\u30bf\u3092\u5165\u308c\u306a\u3044\u3002\n- staging / production migration \u3092\u30ed\u30fc\u30ab\u30eb\u691c\u8a3c\u306a\u3057\u3067\u76f4\u63a5\u9069\u7528\u3057\u306a\u3044\u3002\n- completed WBS \u306e Calendar event \u3092\u6b8b\u3055\u306a\u3044\u3002\u5b8c\u4e86\u5f8c\u306f\u901a\u5e38\u306e WBS closeout sync \u3067\u524a\u9664\u3059\u308b\u3002\n\n## \u30c8\u30e9\u30d6\u30eb\u5bfe\u5fdc\n\n| \u75c7\u72b6 | \u539f\u56e0 | \u5bfe\u51e6 |\n| --- | --- | --- |\n| `verify_local_dev_stack.py` \u304c `local_env.supabase_db_url` critical \u3092\u51fa\u3059 | production \u307e\u305f\u306fstaging\u306eDB URL\u304c\u74b0\u5883\u5909\u6570\u306b\u6b8b\u3063\u3066\u3044\u308b | `Remove-Item Env:SUPABASE_DB_URL` \u5f8c\u306b\u518d\u5b9f\u884c\u3059\u308b |\n| `supabase start` \u304c Docker \u30a8\u30e9\u30fc\u3067\u6b62\u307e\u308b | Docker Desktop / \u4e92\u63db\u30e9\u30f3\u30bf\u30a4\u30e0\u304c\u8d77\u52d5\u3057\u3066\u3044\u306a\u3044 | Docker\u3092\u8d77\u52d5\u3057\u3001`docker version` \u304c\u901a\u308b\u3053\u3068\u3092\u78ba\u8a8d\u3059\u308b |\n| seed\u6295\u5165\u3067RLS\u3084\u5916\u90e8\u30ad\u30fc\u30a8\u30e9\u30fc\u306b\u306a\u308b | migration\u304c\u672a\u9069\u7528\u3001\u307e\u305f\u306fseed\u304cschema\u3068\u305a\u308c\u3066\u3044\u308b | `supabase db reset` \u3067 migration + seed \u3092\u518d\u9069\u7528\u3057\u3001seed\u5dee\u5206\u3092\u4fee\u6b63\u3059\u308b |\n| Firebase Emulator UI \u304c\u958b\u3051\u306a\u3044 | `firebase.json` \u306e UI port \u5909\u66f4\u307e\u305f\u306f\u30dd\u30fc\u30c8\u7af6\u5408 | `python scripts/verify_local_dev_stack.py --fail-on-critical` \u3092\u901a\u3057\u3001\u7af6\u5408\u30d7\u30ed\u30bb\u30b9\u3092\u7d42\u4e86\u3059\u308b |\n\n## \u5b8c\u4e86\u8a18\u9332\n\n2026-06-15 \u306b T760 \u3068\u3057\u3066\u3001\u8a2d\u5b9a\u30d5\u30a1\u30a4\u30eb\u3001Runbook\u3001\u691c\u8a3c\u30b9\u30af\u30ea\u30d7\u30c8\u3001pytest\u3001GitHub Actions workflow \u3092\u8ffd\u52a0\u3057\u305f\u3002\u5f8c\u7d9a\u306e T761 / T761_1 \u3067\u306f\u3001Supabase\u30af\u30a8\u30ea\u76e3\u8996\u3068 Firebase/Supabase quota\u30fberror alert \u3092\u672c\u756a\u904b\u7528\u5411\u3051\u306b\u63a5\u7d9a\u3059\u308b\u3002\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>

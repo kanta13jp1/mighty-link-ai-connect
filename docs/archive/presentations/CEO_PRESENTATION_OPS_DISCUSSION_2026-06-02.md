@@ -3,7 +3,7 @@
 作成日: 2026-05-22
 オーナー: VSCode + Claude Code レーン
 対応 WBS: **T606** 運用・体制論点 (5/28-5/29 予定 → 5/22 前倒し完遂)
-関連: [DISCUSSION_POINTS](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md) (T605) / [QA_PACK](CEO_PRESENTATION_QA_PACK_2026-06-02.md) (T607) / [DECISION_PACK](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) (T611) / [MULTI_AI_WORKFLOW](MULTI_AI_WORKFLOW.md)
+関連: [DISCUSSION_POINTS](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md) (T605) / [QA_PACK](CEO_PRESENTATION_QA_PACK_2026-06-02.md) (T607) / [DECISION_PACK](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) (T611) / [MULTI_AI_WORKFLOW](../../MULTI_AI_WORKFLOW.md)
 
 ---
 
@@ -26,7 +26,7 @@
 | VSCode + Codex レーン | AI | (24h 稼働可、Gemini quota 独立) | 実装 PR / SQL / CI / sync スクリプト / gh CLI |
 | VSCode + Claude Code レーン | AI | (Gemini quota 独立) | docs / triage / WBS 調停 / 本書執筆 |
 
-詳細は [MULTI_AI_WORKFLOW.md 3-Tool 構成](MULTI_AI_WORKFLOW.md#3-tool-構成)。
+詳細は [MULTI_AI_WORKFLOW.md 3-Tool 構成](../../MULTI_AI_WORKFLOW.md#3-tool-構成)。
 
 ### 1.2 6/2 後シナリオ (サービス方向性別)
 
@@ -46,7 +46,7 @@
 
 ## 2. 運用責任分担 (6/2 後)
 
-### 2.1 5 正本 ([FLEET-OPS 規約](MULTI_AI_WORKFLOW.md))
+### 2.1 5 正本 ([FLEET-OPS 規約](../../MULTI_AI_WORKFLOW.md))
 
 | 正本 | 場所 | 更新責任 | 閲覧 |
 | --- | --- | --- | --- |

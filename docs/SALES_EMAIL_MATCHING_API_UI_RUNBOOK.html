@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALES_EMAIL_MATCHING_API_UI_RUNBOOK — Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #0b0f19;
+            color: #e2e8f0;
+            padding: 32px 20px;
+            margin: 0;
+        }
+        .doc-container {
+            max-width: 980px;
+            margin: 0 auto;
+            background: #131b2e;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 24px;
+            color: #8bdcff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .back-link:hover { text-decoration: underline; }
+        .markdown-body {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .mermaid {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="doc-container">
+        <a href="../../index.html" class="back-link">← ホームに戻る</a>
+        <article class="markdown-body" id="rendered-doc"></article>
+    </div>
+    <script>
+        const rawMarkdown = "# \u55b6\u696d\u30e1\u30fc\u30ebAI\u30de\u30c3\u30c1\u30f3\u30b0\u691c\u7d22API/UI Runbook\n\n- \u4f5c\u6210\u65e5: 2026-06-19\n- \u95a2\u9023WBS: T817, T817_5, T817_6, T920, T923\n- \u95a2\u9023Issue: #110\n- \u95a2\u9023\u8ab2\u984c: R75, R82, R83\n- \u30b9\u30c6\u30fc\u30bf\u30b9: T817_5 \u5b8c\u4e86\u3002T817_6\u3067\u4eba\u9593\u30ec\u30d3\u30e5\u30fc\u3001\u8a55\u4fa1\u30ed\u30b0\u3001`email_match_feedback` \u4fdd\u5b58\u3082\u5b8c\u4e86\u3002T920\u3067\u5fc5\u9808\u30b9\u30ad\u30eb\u3001\u5358\u4fa1\u7bc4\u56f2\u3001\u30d5\u30ea\u30fc\u30ef\u30fc\u30c9\u3001\u9069\u5408\u5ea6\u3001T923\u3067\u6848\u4ef6\u30e1\u30fc\u30eb\u53d7\u4fe1\u65e5\u306e\u671f\u9593\u7d5e\u308a\u8fbc\u307f\u3092\u8ffd\u52a0\u3002\u672c\u756ahardening\u306fT817_7\u3067\u5b9f\u88c5\u3059\u308b\u3002\n\n---\n\n## \u76ee\u7684\n\nT817_4\u3067\u751f\u6210\u3057\u305f\u5b89\u5168\u306a\u55b6\u696d\u30e1\u30fc\u30eb\u62bd\u51fa\u30ec\u30d3\u30e5\u30fcJSON\u3092\u5165\u529b\u306b\u3001\u6848\u4ef6\u304b\u3089\u5019\u88dc\u4eba\u6750\u3001\u4eba\u6750\u304b\u3089\u5019\u88dc\u6848\u4ef6\u3092\u53cc\u65b9\u5411\u306b\u30ea\u30b9\u30c8\u30a2\u30c3\u30d7\u3059\u308b\u3002\u5019\u88dc\u306b\u306f\u30b9\u30b3\u30a2\u3001\u30b9\u30ad\u30eb\u4e00\u81f4\u3001\u6761\u4ef6\u4e00\u81f4\u3001\u6839\u62e0\u3001\u4e0d\u4e00\u81f4\u7406\u7531\u3092\u4ed8\u3051\u308b\u3002\n\n\u3053\u306e\u6bb5\u968e\u3067\u306f\u55b6\u696d\u5224\u65ad\u3078\u81ea\u52d5\u78ba\u5b9a\u3057\u306a\u3044\u3002\u3059\u3079\u3066\u306e\u5019\u88dc\u306f `review_status=pending` \u3068\u3057\u3001T817_6\u306e `POST /api/sales-email/reviews` \u3067\u4eba\u9593\u30ec\u30d3\u30e5\u30fc\u306e\u63a1\u7528\u3001\u5374\u4e0b\u3001\u8981\u78ba\u8a8d\u3001\u88dc\u6b63\u3092\u4fdd\u5b58\u3059\u308b\u3002\n\n## \u6b63\u672c\u30d5\u30a1\u30a4\u30eb\n\n| \u7528\u9014 | \u30d5\u30a1\u30a4\u30eb |\n| --- | --- |\n| \u30de\u30c3\u30c1\u30f3\u30b0\u30b5\u30fc\u30d3\u30b9 | `src/sales_email_match.py` |\n| CLI | `scripts/build_sales_email_match_review.py` |\n| API | `GET /api/sales-email/matches` in `src/app.py` |\n| UI | `src/index.html`, `index.html` \u306e\u6848\u4ef6\u5019\u88dc\u6bd4\u8f03\u30dc\u30fc\u30c9 |\n| \u30c6\u30b9\u30c8 | `tests/test_sales_email_match.py`, `tests/test_sales_email_review.py` |\n| \u5165\u529b | `exports/sales_email_extraction_review.json` |\n| \u51fa\u529b | `exports/sales_email_match_review.json`, `exports/sales_email_match_review.md` |\n| \u4eba\u9593\u30ec\u30d3\u30e5\u30fc | `exports/sales_email_review_log.json`, `exports/sales_email_review_log.md` |\n\n## API\n\n```http\nGET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_rate=60&max_rate=90&search_query=AWS&received_from=2026-07-01&received_to=2026-07-31&min_score=80&limit=20\n```\n\n\u4e3b\u306aquery:\n\n| query | \u5185\u5bb9 |\n| --- | --- |\n| `direction` | `project_to_talent` \u307e\u305f\u306f `talent_to_project` |\n| `skills` | \u30ab\u30f3\u30de\u533a\u5207\u308a\u306e\u30b9\u30ad\u30eb\u6761\u4ef6 |\n| `remote` | `remote`, `hybrid`, `onsite` \u306a\u3069 |\n| `min_score` | 0\u301c100\u306e\u6700\u4f4e\u30b9\u30b3\u30a2 |\n| `limit` | \u6700\u5927100\u4ef6 |\n| `project_key` | \u7279\u5b9a\u6848\u4ef6\u3078\u306e\u7d5e\u308a\u8fbc\u307f |\n| `talent_key` | \u7279\u5b9a\u533f\u540d\u5019\u88dc\u8005\u3078\u306e\u7d5e\u308a\u8fbc\u307f |\n| `min_rate` | \u6848\u4ef6\u5358\u4fa1\u30ec\u30f3\u30b8\u306e\u4e0b\u9650\u6761\u4ef6\uff08\u4e07\u5186/\u6708\uff09\u3002\u6848\u4ef6\u4e0a\u9650\u304c\u3053\u306e\u5024\u672a\u6e80\u306e\u5834\u5408\u306f\u9664\u5916 |\n| `max_rate` | \u6848\u4ef6\u5358\u4fa1\u30ec\u30f3\u30b8\u306e\u4e0a\u9650\u6761\u4ef6\uff08\u4e07\u5186/\u6708\uff09\u3002\u6848\u4ef6\u4e0b\u9650\u304c\u3053\u306e\u5024\u3092\u8d85\u3048\u308b\u5834\u5408\u306f\u9664\u5916 |\n| `search_query` | \u6848\u4ef6\u540d\u3001\u533f\u540d\u8981\u54e1\u30e9\u30d9\u30eb\u3001\u69cb\u9020\u5316\u30b9\u30ad\u30eb\u3001\u9001\u4fe1\u5143\u30c9\u30e1\u30a4\u30f3\u3001redacted evidence \u306e\u90e8\u5206\u4e00\u81f4 |\n| `received_from` | \u6848\u4ef6\u30e1\u30fc\u30eb\u53d7\u4fe1\u65e5\u306e\u958b\u59cb\u65e5\u3002JST\u57fa\u6e96\u306e `YYYY-MM-DD` |\n| `received_to` | \u6848\u4ef6\u30e1\u30fc\u30eb\u53d7\u4fe1\u65e5\u306e\u7d42\u4e86\u65e5\u3002JST\u57fa\u6e96\u306e `YYYY-MM-DD` |\n\n`min_rate` / `max_rate` \u306f\u6848\u4ef6\u5358\u4fa1\u30ec\u30f3\u30b8\u3068\u306e\u91cd\u306a\u308a\u3067\u5224\u5b9a\u3059\u308b\u3002\u5358\u4fa1\u6761\u4ef6\u3092\u6307\u5b9a\u3057\u305f\u5834\u5408\u3001\u5358\u4fa1\u304c\u672a\u62bd\u51fa\u306e\u6848\u4ef6\u306f\u8aa4\u8a8d\u9632\u6b62\u306e\u305f\u3081\u9664\u5916\u3059\u308b\u3002\u4e0b\u9650\u304c\u4e0a\u9650\u3092\u8d85\u3048\u308b\u5834\u5408\u3084\u8ca0\u6570\u306f `400` \u3067\u62d2\u5426\u3059\u308b\u3002\n\n`received_from` / `received_to` \u306f\u6848\u4ef6\u30e1\u30fc\u30eb\u306e\u53d7\u4fe1\u65e5\u3092\u4e21\u7aef\u542b\u307f\u3067\u5224\u5b9a\u3059\u308b\u3002\u5143\u65e5\u6642\u304cRFC 2822\u307e\u305f\u306fISO\u5f62\u5f0f\u3067\u3082JST\u3078\u6b63\u898f\u5316\u3057\u3001\u671f\u9593\u6307\u5b9a\u6642\u306e\u65e5\u4ed8\u4e0d\u660e\u6848\u4ef6\u306f\u9664\u5916\u3059\u308b\u3002\u958b\u59cb\u65e5\u304c\u7d42\u4e86\u65e5\u3092\u8d85\u3048\u308b\u5834\u5408\u3084\u5b9f\u5728\u3057\u306a\u3044\u65e5\u4ed8\u306f `400` \u3067\u62d2\u5426\u3059\u308b\u3002\u671f\u9593\u5224\u5b9a\u306f `limit` \u9069\u7528\u524d\u306b\u884c\u3046\u3002\n\n\u8fd4\u5374\u5185\u5bb9:\n\n- `projects`: \u6848\u4ef6\u8981\u4ef6\u306e\u5b89\u5168\u306a\u8981\u7d04\n- `talents`: \u533f\u540d\u5316\u6e08\u307f\u5019\u88dc\u8005\u306e\u5b89\u5168\u306a\u8981\u7d04\n- `matches`: \u5019\u88dc\u30da\u30a2\u3001score\u3001score_breakdown\u3001matched_skills\u3001missing_skills\u3001matched_conditions\u3001mismatch_reasons\u3001match_reason\n\n## UI\n\n\u6848\u4ef6\u5019\u88dc\u6bd4\u8f03\u30dc\u30fc\u30c9\u306f\u3001`/api/sales-email/matches` \u304c\u6210\u529f\u3057\u305f\u5834\u5408\u306b\u55b6\u696d\u30e1\u30fc\u30eb\u7531\u6765\u306e\u6848\u4ef6\u3068\u533f\u540d\u5019\u88dc\u8005\u3092\u512a\u5148\u8868\u793a\u3059\u308b\u3002API\u304c\u4f7f\u3048\u306a\u3044\u5834\u5408\u306f\u65e2\u5b58\u306e\u30c7\u30e2\u5019\u88dc\u306bfallback\u3059\u308b\u3002\n\n\u516c\u958b\u30de\u30c3\u30c1\u30f3\u30b0\u9032\u6357\u30c6\u30fc\u30d6\u30eb\u306e\u4e0a\u90e8\u3067\u306f\u3001\u30d5\u30ea\u30fc\u30ef\u30fc\u30c9\u3001\u6848\u4ef6\u306e\u5fc5\u9808\u30b9\u30ad\u30eb\u3001\u5358\u4fa1\u4e0b\u9650/\u4e0a\u9650\u3001\u9069\u5408\u5ea6\u3001\u6848\u4ef6\u30e1\u30fc\u30eb\u53d7\u4fe1\u65e5\u306e\u958b\u59cb\u65e5/\u7d42\u4e86\u65e5\u3067\u7d5e\u308a\u8fbc\u3080\u3002\u53d7\u4fe1\u65e5\u3092\u5909\u66f4\u3057\u305f\u5834\u5408\u306fAPI\u3067\u671f\u9593\u3092\u5148\u306b\u9069\u7528\u3057\u3001\u305d\u308c\u4ee5\u5916\u306e\u6761\u4ef6\u306f\u53d6\u5f97\u6e08\u307f\u5019\u88dc\u3078\u30ea\u30a2\u30eb\u30bf\u30a4\u30e0\u306b\u9069\u7528\u3059\u308b\u3002\u4ef6\u6570\u8868\u793a\u306f\u300c\u8868\u793a\u4e2d / \u53d6\u5f97\u6e08\u307f\u5168\u4ef6\u300d\u3092\u793a\u3059\u3002\u6761\u4ef6\u306b\u4e00\u81f4\u3057\u306a\u3044\u5834\u5408\u306f0\u4ef6\u8868\u793a\u3092\u7dad\u6301\u3057\u3001\u30c7\u30e2\u5019\u88dc\u3078\u623b\u3055\u306a\u3044\u3002\u30ea\u30bb\u30c3\u30c8\u30dc\u30bf\u30f3\u3067\u5168\u6761\u4ef6\u3092\u89e3\u9664\u3057\u3066API\u3092\u518d\u53d6\u5f97\u3059\u308b\u3002\n\n\u30c6\u30fc\u30d6\u30eb\u306b\u306f\u4ee5\u4e0b\u3092\u8868\u793a\u3059\u308b:\n\n- \u5019\u88dc\u8005\n- \u7dcf\u5408\u30de\u30c3\u30c1\u5ea6\n- \u30b9\u30ad\u30eb\u9069\u5408\n- \u6761\u4ef6\u9069\u5408\n- \u6839\u62e0\u4fe1\u983c\u5ea6\n- \u5c1a\u53ef\u30b9\u30ad\u30eb\u9069\u5408\n- \u4e00\u81f4\u6839\u62e0\n- \u78ba\u8a8d/\u4e0d\u8db3\n\nCSV\u30a8\u30af\u30b9\u30dd\u30fc\u30c8\u306b\u3082\u6839\u62e0\u3068\u78ba\u8a8d\u30dd\u30a4\u30f3\u30c8\u3092\u542b\u3081\u308b\u3002\n\n## \u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u65b9\u91dd\n\n1. \u5165\u529bJSON\u306b `raw_email_body_not_written`, `email_phone_secret_patterns_redacted_from_evidence`, `talent_identity_anonymized` \u304c\u306a\u3044\u5834\u5408\u306fAPI/CLI\u3067\u62d2\u5426\u3059\u308b\u3002\n2. \u30de\u30c3\u30c1\u30f3\u30b0\u51e6\u7406\u3067\u306f\u30e1\u30fc\u30eb\u672c\u6587\u5168\u6587\u3092\u8aad\u307e\u306a\u3044\u3002T817_4\u306eredacted evidence\u3068\u69cb\u9020\u5316\u9805\u76ee\u3060\u3051\u3092\u4f7f\u3046\u3002\n3. UI\u8868\u793a\u306f\u533f\u540d\u5019\u88dc\u8005\u30ad\u30fc\u3092\u4f7f\u3044\u3001\u6c0f\u540d\u3084\u9023\u7d61\u5148\u306f\u8868\u793a\u3057\u306a\u3044\u3002\n4. `review_status=pending` \u3092\u7dad\u6301\u3057\u3001\u4eba\u9593\u30ec\u30d3\u30e5\u30fc\u524d\u306b\u55b6\u696d\u5229\u7528\u306e\u78ba\u5b9a\u5224\u65ad\u3078\u4f7f\u308f\u306a\u3044\u3002\u30ec\u30d3\u30e5\u30fc\u5f8c\u3082\u5b9f\u30e1\u30fc\u30eb\u63a5\u7d9a\u5f8c\u306e\u904b\u7528hardening\u304c\u7d42\u308f\u308b\u307e\u3067\u306f\u516c\u958b\u30fb\u6709\u511f\u5229\u7528\u3078\u4f7f\u308f\u306a\u3044\u3002\n5. \u5b9f\u30e1\u30fc\u30eb\u63a5\u7d9a\u5f8c\u3082NotebookLM\u3001GitHub\u3001Sheets\u3078\u672c\u6587\u5168\u6587\u3084\u500b\u4eba\u9023\u7d61\u5148\u3092\u540c\u671f\u3057\u306a\u3044\u3002\n\n## \u5b9f\u884c\u65b9\u6cd5\n\n```powershell\npython scripts/build_sales_email_match_review.py `\n  --input-report exports\\sales_email_extraction_review.json `\n  --json-report exports\\sales_email_match_review.json `\n  --markdown-report exports\\sales_email_match_review.md `\n  --direction project_to_talent `\n  --skills Java `\n  --limit 20\n```\n\n## \u691c\u8a3c\n\n```powershell\npython -m pytest tests/test_sales_email_match.py tests/test_public_matching_filters.py -q\npython -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract.py tests/test_sales_email_match.py tests/test_sales_email_schema_migrations.py tests/test_db_migration_management.py tests/test_rls_policies.py -q\n```\n\n\u691c\u8a3c\u89b3\u70b9:\n\n- \u6848\u4ef6\u3068\u533f\u540d\u5019\u88dc\u8005\u306e\u5019\u88dc\u30da\u30a2\u3092\u751f\u6210\u3067\u304d\u308b\u3002\n- \u30b9\u30ad\u30eb\u30d5\u30a3\u30eb\u30bf\u3068\u6700\u4f4e\u30b9\u30b3\u30a2\u3067\u7d5e\u308a\u8fbc\u3081\u308b\u3002\n- \u5358\u4fa1\u30ec\u30f3\u30b8\u3001\u9001\u4fe1\u5143\u30c9\u30e1\u30a4\u30f3\u3092\u542b\u3080\u30d5\u30ea\u30fc\u30ef\u30fc\u30c9\u3001\u5fc5\u9808\u30b9\u30ad\u30eb\u3067\u7d5e\u308a\u8fbc\u3081\u308b\u3002\n- \u6848\u4ef6\u30e1\u30fc\u30eb\u53d7\u4fe1\u65e5\u306e\u958b\u59cb\u65e5/\u7d42\u4e86\u65e5\u3067\u7d5e\u308a\u8fbc\u3081\u3001\u4e00\u89a7\u306e\u53d7\u4fe1\u65e5\u5217\u3068\u4e00\u81f4\u3059\u308b\u3002\n- JST\u3078\u306e\u65e5\u4ed8\u6b63\u898f\u5316\u3001\u671f\u9593\u7aef\u306e\u5305\u542b\u3001\u4e0d\u6b63\u671f\u9593\u306e400\u62d2\u5426\u304c\u6b63\u3057\u3044\u3002\n- \u5358\u4fa1\u4e0d\u660e\u6848\u4ef6\u306f\u5358\u4fa1\u6307\u5b9a\u6642\u306b\u9664\u5916\u3055\u308c\u30010\u4ef6\u306e\u7d50\u679c\u304c\u30c7\u30e2\u884c\u3078\u623b\u3089\u306a\u3044\u3002\n- API\u5fdc\u7b54\u3068CLI\u51fa\u529b\u306b\u500b\u4eba\u30e1\u30fc\u30eb\u3001\u96fb\u8a71\u756a\u53f7\u3001secret-like\u5024\u304c\u51fa\u306a\u3044\u3002\n- UI\u304c\u55b6\u696d\u30e1\u30fc\u30eb\u5019\u88dc\u3092\u512a\u5148\u3057\u3001API\u304c\u4f7f\u3048\u306a\u3044\u5834\u5408\u306f\u65e2\u5b58\u30c7\u30e2\u3078fallback\u3059\u308b\u3002\n\n## \u6b21\u5de5\u7a0b\n\n- T817_6: \u5b8c\u4e86\u3002\u4eba\u9593\u30ec\u30d3\u30e5\u30fc\u3067\u63a1\u7528/\u5374\u4e0b/\u8981\u78ba\u8a8d/\u88dc\u6b63\u3092\u4fdd\u5b58\u3057\u3001`email_match_feedback` \u3068redacted\u8a55\u4fa1\u30ed\u30b0\u3078\u63a5\u7d9a\u6e08\u307f\u3002\n- T817_7: \u5b9f\u30e1\u30fc\u30eb\u63a5\u7d9a\u5f8c\u306e\u4fdd\u6301/\u524a\u9664\u3001\u76e3\u67fb\u30ed\u30b0\u3001\u8ca0\u8377\u3001\u30a2\u30ab\u30a6\u30f3\u30c8\u6a29\u9650\u3001Go/No-Go\u3092\u78ba\u8a8d\u3059\u308b\u3002\n\n## \u516c\u5f0f\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\u78ba\u8a8d\u30e1\u30e2\n\n- OpenAI Codex Best Practices: https://developers.openai.com/codex/learn/best-practices\n- Gemini API Models: https://ai.google.dev/gemini-api/docs/models\n- \u55b6\u696d\u30e1\u30fc\u30eb\u81ea\u52d5\u53d6\u308a\u8fbc\u307f \u63a5\u7d9a\u65b9\u5f0f\u78ba\u8a8d\u30c1\u30a7\u30c3\u30af\u30ea\u30b9\u30c8: [SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md](SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md)\n- Supabase Row Level Security: https://supabase.com/docs/guides/database/postgres/row-level-security\n- Google Sheets API batchUpdate: https://developers.google.com/workspace/sheets/api/guides/batchupdate\n";
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Render Mermaid code blocks
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        });
+
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            });
+            mermaid.run();
+        }
+    </script>
+</body>
+</html>
