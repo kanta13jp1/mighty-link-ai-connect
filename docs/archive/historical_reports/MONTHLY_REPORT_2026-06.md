@@ -150,4 +150,4 @@
 - [WBS スプレッドシート](https://docs.google.com/spreadsheets/d/1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8)
 - [GitHub リポジトリ](https://github.com/kanta13jp1/mighty-link-ai-connect)
 - [公開デモ URL](https://kanta13jp1.github.io/mighty-link-ai-connect/)
-- [SLA/KPI 定義](SLA_KPI_DEFINITION_AND_MEASUREMENT.md) / [レポート仕様 (T767)](MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md)
+- [SLA/KPI 定義](../../SLA_KPI_DEFINITION_AND_MEASUREMENT.md) / [レポート仕様 (T767)](../../MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md)

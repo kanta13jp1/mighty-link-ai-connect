@@ -60,10 +60,15 @@ def fetch_url(url: str) -> str:
     auth = None
     import os
     try:
+        from dotenv import load_dotenv
+        load_dotenv(PROJECT_ROOT / ".env")
+    except Exception:
+        pass
+    try:
         sys.path.insert(0, str(PROJECT_ROOT / "src"))
         from app import BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD
-        user = BASIC_AUTH_USERNAME
-        pwd = BASIC_AUTH_PASSWORD
+        user = os.environ.get("BASIC_AUTH_USERNAME") or BASIC_AUTH_USERNAME
+        pwd = os.environ.get("BASIC_AUTH_PASSWORD") or BASIC_AUTH_PASSWORD
     except Exception:
         user = os.environ.get("BASIC_AUTH_USERNAME", "admin")
         pwd = os.environ.get("BASIC_AUTH_PASSWORD", "mighty-link-pass")

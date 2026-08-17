@@ -1,7 +1,7 @@
 # セキュリティ監査レポート: 2026-Q2（初回）
 
 **Mighty Skill-Bridge** 本番環境の四半期セキュリティ監査（初回 / T789）の結果報告です。
-[四半期セキュリティ監査ランブック](SECURITY_AUDIT_RUNBOOK.md) の 4 軸チェックリストに準拠して実施しました。
+[四半期セキュリティ監査ランブック](../../SECURITY_AUDIT_RUNBOOK.md) の 4 軸チェックリストに準拠して実施しました。
 
 - **実施日**: 2026-06-12
 - **実施者**: Claude Code（VSCode + Claude Code レーン） + 梅澤 寛太
@@ -19,7 +19,7 @@
 | シークレット漏洩 (パターンスキャン + git 追跡確認) | ✅ PASS | 0 件（誤検知 1 件のみ） | 0 件 |
 | 外部ペネトレーション疑似診断 (T805/T835) | ✅ PASS（Firebase本番URLヘッダ修正済） | High 0 / secret-like値露出 0 | 0 件 |
 
-**総合判定**: PASS（controlled demo / public paid launch のセキュリティヘッダ観点） — High 検出は監査セッション内で修正完了し、未解決だった R49（starlette CVE）/ R50（requests timeout）/ R52（FastAPI startup deprecated）も T802 で修正完了。2026-06-13 の再スキャンで Bandit High/Medium 0 件、pip-audit 0 件、pytest 21 件通過を確認した。2026-06-21 の T805 疑似診断では High 0 / secret-like値露出 0 を確認し、2026-06-23 の T835 で Firebase Hosting本番URLへ CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS を設定した。デプロイ後の `https://mightylink-app.com/` 再診断も HIGH 0 / MED 0 / LOW 0 / INFO 0 でPASS。GitHub Pages は controlled demo mirror とし、任意HTTPヘッダを設定できない制約を [EXTERNAL_PENTEST_RUNBOOK.md](EXTERNAL_PENTEST_RUNBOOK.md) に記録済み。T745のドラフト規約同意UI/APIガードは2026-06-27に完了済み。public paid launch 全体は法務本文確定、正式アカウント同意履歴、課金live検証、負荷試験、営業メールAIマッチング実メールhardening等の別ゲートが残るため、リリース総合判定は引き続きGo/No-Goチェックリストで扱う。
+**総合判定**: PASS（controlled demo / public paid launch のセキュリティヘッダ観点） — High 検出は監査セッション内で修正完了し、未解決だった R49（starlette CVE）/ R50（requests timeout）/ R52（FastAPI startup deprecated）も T802 で修正完了。2026-06-13 の再スキャンで Bandit High/Medium 0 件、pip-audit 0 件、pytest 21 件通過を確認した。2026-06-21 の T805 疑似診断では High 0 / secret-like値露出 0 を確認し、2026-06-23 の T835 で Firebase Hosting本番URLへ CSP / X-Content-Type-Options / Referrer-Policy / Permissions-Policy / frame protection / HSTS を設定した。デプロイ後の `https://mightylink-app.com/` 再診断も HIGH 0 / MED 0 / LOW 0 / INFO 0 でPASS。GitHub Pages は controlled demo mirror とし、任意HTTPヘッダを設定できない制約を [EXTERNAL_PENTEST_RUNBOOK.md](../../EXTERNAL_PENTEST_RUNBOOK.md) に記録済み。T745のドラフト規約同意UI/APIガードは2026-06-27に完了済み。public paid launch 全体は法務本文確定、正式アカウント同意履歴、課金live検証、負荷試験、営業メールAIマッチング実メールhardening等の別ゲートが残るため、リリース総合判定は引き続きGo/No-Goチェックリストで扱う。
 
 ---
 
@@ -77,7 +77,7 @@ npm audit: ルート `package.json` なしのため対象外。
 
 ## 5. 外部ペネトレーション疑似診断（T805）
 
-`python scripts/run_external_pentest_review.py --timeout 15` を実行し、[EXTERNAL_PENTEST_RUNBOOK.md](EXTERNAL_PENTEST_RUNBOOK.md) と `exports/external_pentest_review.*` に証跡を保存した。
+`python scripts/run_external_pentest_review.py --timeout 15` を実行し、[EXTERNAL_PENTEST_RUNBOOK.md](../../EXTERNAL_PENTEST_RUNBOOK.md) と `exports/external_pentest_review.*` に証跡を保存した。
 
 | 対象 | 到達 | High | Medium | Low | 主要メモ |
 | :--- | :--- | ---: | ---: | ---: | :--- |

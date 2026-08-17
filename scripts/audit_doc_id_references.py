@@ -61,6 +61,14 @@ ALLOWLIST: dict[str, str] = {
     # 解決済み課題 R40「T774/T775 二重定義」の履歴記述内の言及（MONTHLY_REPORT_2026-06.md）。
     # T775 は重複として削除された側で、記述は正確な履歴。
     "T775": "解決済み課題R40（T774/T775二重定義）の履歴記述内の言及",
+    # 6/2 社長プレゼン決定後ロードマップ案（CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md）内の提案枠ID。
+    "T720": "6/2社長プレゼン決定後ロードマップ案内の仮ID",
+    "T721": "6/2社長プレゼン決定後ロードマップ案内の仮ID",
+    "T722": "6/2社長プレゼン決定後ロードマップ案内の仮ID",
+    "T723": "6/2社長プレゼン決定後ロードマップ案内の仮ID",
+    "T724": "6/2社長プレゼン決定後ロードマップ案内の仮ID",
+    "T725": "6/2社長プレゼン決定後ロードマップ案内の仮ID",
+    "T726": "6/2社長プレゼン決定後ロードマップ案内の仮ID",
 }
 
 
@@ -104,10 +112,11 @@ def dangling(referenced: set[str], valid: set[str], allowlist: set[str]) -> set[
 def _scan_docs() -> dict[str, set[str]]:
     """{doc_name: referenced_ids} for every scanned doc."""
     out: dict[str, set[str]] = {}
-    for path in sorted(DOCS.glob("*.md")):
+    for path in sorted(DOCS.rglob("*.md")):
         if path.name in EXCLUDE_DOCS:
             continue
-        out[path.name] = referenced_ids(read(path))
+        rel = path.relative_to(DOCS).as_posix()
+        out[rel] = referenced_ids(read(path))
     return out
 
 

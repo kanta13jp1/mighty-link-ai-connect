@@ -24,7 +24,7 @@
   - サーバーレスのためコールドスタートと接続プール枯渇が新たな運用論点になり、[Supabase 接続プール運用](SUPABASE_CONNECTION_POOLING_RUNBOOK.md) と [パフォーマンス診断](PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md) が必要になった。
   - Postgres のメジャーバージョン EOL 追従が自前の責務になった（[Postgres アップグレード](SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md)）。
 - **ステータス**: 採用済み
-- **根拠docs**: [ホスティング/DB選定報告書](HOSTING_AND_DATABASE_SELECTION.md) / [コストレポート 2026-06](COST_REPORT_2026-06.md) / [Supabase インフラ監査](SUPABASE_INFRA_AUDIT_2026-07-04.md)
+- **根拠docs**: [ホスティング/DB選定報告書](HOSTING_AND_DATABASE_SELECTION.md) / [コストレポート 2026-06](archive/historical_reports/COST_REPORT_2026-06.md) / [Supabase インフラ監査](SUPABASE_INFRA_AUDIT_2026-07-04.md)
 
 ## ADR-0002: 本番ドメインは専用ドメインを新規取得し、レジストラに お名前.com を用いる
 
@@ -34,11 +34,11 @@
   - **会社ドメイン `ml-mightylink.com` のサブドメイン利用** — 課題 **R54** の調査で、`kanta13jp@gmail.com` の全12プロジェクト・`k-umezawa@ml-mightylink.com` の全3プロジェクトのいずれにも当該 Cloud DNS ゾーンが存在せず、**ゾーン所有アカウントを特定できなかった**ため CNAME を追加できない。公開期日を守れないため却下。
   - **GitHub Pages の既定ドメインのみで公開** — CEO 共有済みの公開デモURLとしては機能するが、販売URLとして独自ドメインの HTTPS 提供が必要なため、これ単独では不採用（デモ用途としては現在も併用）。
 - **影響**:
-  - ドメインの更新・DNS 管理責任が自プロジェクト側になり、**更新失効が停止リスク**になった。実際に 2026-06-27 に DNS/HTTPS の停止事象が発生している（[インシデント記録](CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md)）。
+  - ドメインの更新・DNS 管理責任が自プロジェクト側になり、**更新失効が停止リスク**になった。実際に 2026-06-27 に DNS/HTTPS の停止事象が発生している（[インシデント記録](archive/historical_reports/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md)）。
   - 死活監視で `https://mightylink-app.com/` を厳格HTTPS監視の対象にした（[死活監視Runbook](UPTIME_MONITORING_AND_ALERT_RUNBOOK.md)）。
   - サービス終了時はドメインの自動更新停止時期を明示的に決める必要がある（[EOL計画](SERVICE_EOL_DECOMMISSIONING_PLAN.md) §7）。
 - **ステータス**: 採用済み
-- **根拠docs**: [本番ドメイン設定ガイド](PRODUCTION_DOMAIN_SETUP_GUIDE.md) / [カスタムドメイン停止インシデント](CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md) / 課題管理表 `data/issues_tracker.tsv` の R54
+- **根拠docs**: [本番ドメイン設定ガイド](PRODUCTION_DOMAIN_SETUP_GUIDE.md) / [カスタムドメイン停止インシデント](archive/historical_reports/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md) / 課題管理表 `data/issues_tracker.tsv` の R54
 
 ## ADR-0003: AIモデルに Google Gemini（Flash 系）を主推論基盤として採用する
 
@@ -51,7 +51,7 @@
   - AI が利用不可でも機能停止しないよう、**決定論的フォールバック**（`AI_FORCE_MOCK=1`）を実装した。ただし利用者に「サンプル値」と明示する透明性が必須になった（`scripts/audit_diagnosis_fallback_transparency.py`）。
   - モデル版の非推奨・EOL 追従が定期運用義務になった（[Geminiモデル追従Runbook](GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md)、年次確認は[運用カレンダー](OPERATIONS_CADENCE_CALENDAR.md)）。版ポリシー適合は `scripts/audit_gemini_model_policy.py` が検証する。
 - **ステータス**: 採用済み
-- **根拠docs**: [コストレポート 2026-06](COST_REPORT_2026-06.md) / [Geminiモデル追従・移行Runbook](GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md)
+- **根拠docs**: [コストレポート 2026-06](archive/historical_reports/COST_REPORT_2026-06.md) / [Geminiモデル追従・移行Runbook](GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md)
 
 ## ADR-0004: 課金基盤に Stripe を採用し、live 有効化は経営判断まで行わない
 
