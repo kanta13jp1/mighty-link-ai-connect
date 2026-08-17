@@ -3739,8 +3739,14 @@ async def serve_doc_file(file_path: str, raw: bool = False):
     with open(target_path, "r", encoding="utf-8", errors="replace") as f:
         content = f.read()
 
+    if file_path.endswith((".html", ".htm")):
+        return HTMLResponse(content, media_type="text/html; charset=utf-8")
+    if file_path.endswith(".css"):
+        return Response(content, media_type="text/css; charset=utf-8")
+    if file_path.endswith(".js"):
+        return Response(content, media_type="application/javascript; charset=utf-8")
     if raw or not file_path.endswith((".md", ".markdown", ".txt")):
-        return PlainTextResponse(content, media_type="text/markdown; charset=utf-8")
+        return PlainTextResponse(content, media_type="text/plain; charset=utf-8")
 
     escaped_title = html.escape(os.path.basename(file_path))
     json_content = json.dumps(content)
@@ -3752,6 +3758,7 @@ async def serve_doc_file(file_path: str, raw: bool = False):
     <title>{escaped_title} - Mighty-Link Documentation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
     <style>
         body {{
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -3761,7 +3768,7 @@ async def serve_doc_file(file_path: str, raw: bool = False):
             margin: 0;
         }}
         .doc-container {{
-            max-width: 960px;
+            max-width: 980px;
             margin: 0 auto;
             background: #131b2e;
             padding: 40px;
@@ -3786,6 +3793,14 @@ async def serve_doc_file(file_path: str, raw: bool = False):
             font-size: 15px;
             line-height: 1.7;
         }}
+        .mermaid {{
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            text-align: center;
+        }}
     </style>
 </head>
 <body>
@@ -3796,6 +3811,24 @@ async def serve_doc_file(file_path: str, raw: bool = False):
     <script>
         const rawMarkdown = {json_content};
         document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+
+        // Convert Mermaid code blocks into graphical diagrams
+        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {{
+            const pre = block.parentElement;
+            const div = document.createElement('div');
+            div.className = 'mermaid';
+            div.textContent = block.textContent;
+            pre.parentNode.replaceChild(div, pre);
+        }});
+
+        if (typeof mermaid !== 'undefined') {{
+            mermaid.initialize({{
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose'
+            }});
+            mermaid.run();
+        }}
     </script>
 </body>
 </html>"""

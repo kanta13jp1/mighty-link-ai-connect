@@ -1,0 +1,12 @@
+{
+  "session-log-recorder": {
+    "enabled": true,
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python scripts/record_session_log.py",
+        "timeout": 30
+      }
+    ]
+  }
+}
