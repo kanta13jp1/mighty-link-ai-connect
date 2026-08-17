@@ -25,9 +25,12 @@ def get_free_port() -> int:
 def fastapi_server():
     """Module-scoped fixture starting uvicorn on a dynamic free port (Port 0) to avoid TIME_WAIT and port conflicts."""
     port = get_free_port()
+    env = dict(os.environ)
+    env["AI_FORCE_MOCK"] = "true"
     server_process = subprocess.Popen(
         [sys.executable, "-m", "uvicorn", "app:app", "--host", "127.0.0.1", "--port", str(port)],
-        cwd=os.path.join(PROJECT_ROOT, "src")
+        cwd=os.path.join(PROJECT_ROOT, "src"),
+        env=env
     )
     
     base_url = f"http://127.0.0.1:{port}"

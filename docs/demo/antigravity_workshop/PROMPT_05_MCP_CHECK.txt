@@ -1,26 +1,27 @@
-Prompt 5 / Figma MCPの接続と作成先を読み取り確認する
+Prompt 5 / Canva MCPの接続と利用可能Toolを読み取り確認する
 
-Antigravity 2.0のSettings > Customizations > Installed MCP Serversで、Figma remote MCPの接続状態を確認してください。
+Antigravity 2.0のSettings > Customizations > Installed MCP Serversで、Canva remote MCPの接続状態を確認してください。
 
 確認条件:
-- この段階ではFigmaファイルを作成・編集・削除しない
+- この段階ではCanvaデザインを作成・編集・削除しない
 - OAuth再認証を要求された場合は、その場で認証せず停止する
 - APIキー、token、cookie、認証情報を表示しない
 
-接続済みの場合は、Figma MCPの読み取り専用Toolだけを使い、次を確認してください。
+接続済みの場合は、読み取り専用Toolだけを使って次を確認してください。
 
-1. 接続中のFigmaアカウント
-2. team / planが`kanta13jp1's team`であること
-3. plan keyが`team::1404381379512110171`であること
-4. 作成先project IDが`264549730`であること
-5. Figma Slidesの新規作成とcanvas書き込みに必要なToolが利用可能か
+1. 接続中のCanvaアカウント
+2. design search / content readが利用可能か
+3. presentation generationが利用可能か
+4. design import / editingが利用可能か
+5. PPTX export Toolの有無。なければCanva画面から手動Downloadとする
 
 結果は次の5行だけで返してください。
 
 MCP: CONNECTED または STOP
 ACCOUNT: <emailまたは非機密のhandle>
-TEAM: <team名>
-PROJECT: <project ID>
-WRITE TO SLIDES: AVAILABLE または UNAVAILABLE
+READ / SEARCH: AVAILABLE または UNAVAILABLE
+CREATE / EDIT: AVAILABLE または UNAVAILABLE
+PPTX EXPORT: TOOL / MANUAL / UNAVAILABLE
 
 STOPの場合は理由を1行だけ追加し、設定変更や認証を開始しないでください。
+正本: docs/demo/antigravity_workshop/PROMPT_05_MCP_CHECK.txt

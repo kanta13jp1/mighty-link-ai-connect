@@ -4,12 +4,15 @@ Prompt 1 / /find-skillsで専門能力を探す
 
 5製品を比較するAI Agent Learning Hubの、情報設計、Webデザイン、レスポンシブ品質、アクセシビリティを改善できるAgent Skillを探してください。
 
-最初にskills.shの上位候補を確認し、次にSkills CLIで`npx skills find "frontend design"`を実行してください。候補は3件までに絞り、次を表で比較してください。
+最初に利用可能なSkillカタログを確認し、必要ならSkills CLIで npx skills find "frontend design" を実行してください。候補は3件までに絞り、次を比較してください。
 - Skill名と用途
-- インストール数
 - 公開元とGitHub stars
-- セキュリティ監査の結果
-- インストールコマンド
-- skills.shのURL
+- ライセンス
+- セキュリティ監査（SKILL.md、scripts、外部通信、実行コマンドの監査結果）
+- project-localのインストール方法
+- 公式またはrepository URL
 
-公開元の信頼性、利用実績、監査結果を確認して推奨を1件選び、このデモで何を改善させるかを2行で説明してください。まだSkillのインストール、ファイル変更、外部サービスへの書き込みは行わないでください。
+インストール数や公開元とGitHub starsだけで安全性を判断しないでください。公開元、内容、権限、変更範囲を確認して推奨を1件選び、このデモで改善する点を2行で説明してください。
+
+まだSkillのインストール、ファイル変更、外部サービスへの書き込みは行わないでください。
+正本: docs/demo/antigravity_workshop/PROMPT_01_FIND_SKILLS.txt

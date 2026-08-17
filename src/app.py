@@ -3742,60 +3742,61 @@ async def serve_doc_file(file_path: str, raw: bool = False):
     if raw or not file_path.endswith((".md", ".markdown", ".txt")):
         return PlainTextResponse(content, media_type="text/markdown; charset=utf-8")
 
-    escaped_content = html.escape(content)
-    doc_title = html.escape(os.path.basename(file_path))
+    escaped_title = html.escape(os.path.basename(file_path))
+    json_content = json.dumps(content)
     html_content = f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{doc_title} - Mighty-Link Document</title>
+    <title>{escaped_title} - Mighty-Link Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         body {{
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
             background: #0b0f19;
             color: #e2e8f0;
             padding: 32px 20px;
             margin: 0;
         }}
         .doc-container {{
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
             background: #131b2e;
             padding: 40px;
-            border-radius: 12px;
+            border-radius: 16px;
             border: 1px solid #1e293b;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.5);
         }}
         .back-link {{
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             margin-bottom: 24px;
-            color: #60a5fa;
+            color: #8bdcff;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
         }}
         .back-link:hover {{ text-decoration: underline; }}
-        pre {{
-            white-space: pre-wrap;
-            word-break: break-word;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            font-size: 14px;
-            line-height: 1.6;
-            color: #cbd5e1;
-            background: #090d16;
-            padding: 24px;
-            border-radius: 8px;
-            border: 1px solid #1e293b;
+        .markdown-body {{
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+            font-size: 15px;
+            line-height: 1.7;
         }}
     </style>
 </head>
 <body>
     <div class="doc-container">
         <a href="/" class="back-link">← ホームに戻る</a>
-        <pre>{escaped_content}</pre>
+        <article class="markdown-body" id="rendered-doc"></article>
     </div>
+    <script>
+        const rawMarkdown = {json_content};
+        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+    </script>
 </body>
 </html>"""
     return HTMLResponse(html_content)

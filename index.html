@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+        <!-- Synchronous Language & Security Guard -->
+    <script>
+        (function() {
+            try {
+                var savedLang = localStorage.getItem('msb_language_preference');
+                if (savedLang && ['ja', 'en', 'zh', 'ko'].indexOf(savedLang) !== -1) {
+                    document.documentElement.lang = savedLang;
+                }
+            } catch(e) {}
+        })();
+    </script>
     <!-- Synchronous Security Lockout Script (Pre-render Auth Guard) -->
     <script>
         (function() {
@@ -3952,13 +3963,13 @@
             </a>
             <div class="topbar-tools">
                 <div class="language-switch" aria-label="Language">
-                    <a href="#top" data-lang="en" onclick="switchLanguage(this); return false;">EN</a>
+                    <a href="javascript:void(0)" data-lang="en" onclick="switchLanguage('en'); return false;">EN</a>
                     <span>/</span>
-                    <a href="#top" data-lang="zh" onclick="switchLanguage(this); return false;">中文</a>
+                    <a href="javascript:void(0)" data-lang="zh" onclick="switchLanguage('zh'); return false;">中文</a>
                     <span>/</span>
-                    <a href="#top" data-lang="ko" onclick="switchLanguage(this); return false;">KO</a>
+                    <a href="javascript:void(0)" data-lang="ko" onclick="switchLanguage('ko'); return false;">KO</a>
                     <span>/</span>
-                    <a href="#top" class="active" data-lang="ja" onclick="switchLanguage(this); return false;">JP</a>
+                    <a href="javascript:void(0)" class="active" data-lang="ja" onclick="switchLanguage('ja'); return false;">JP</a>
                 </div>
                 <div class="status-strip" aria-live="polite">
                     <span class="status-dot"></span>
@@ -4195,7 +4206,7 @@
         <!-- ==========================================================================
              HOME TAB VIEW (Landing Page & Fit Simulator)
              ========================================================================== -->
-        <div id="home-view" class="app-tab-view home-tab-element">
+        <div id="home-view" class="app-tab-view home-tab-element tab-active">
             <!-- ==========================================================================
                  Step 1: AI Fit Simulation Profile Inputs (プロフィール入力)
                  ========================================================================== -->
@@ -5487,7 +5498,7 @@
                         <a href="https://x.com" target="_blank" rel="noopener" class="footer-social-icon" aria-label="X" title="X (Twitter)">
                             <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                         </a>
-                        <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.md" target="_blank" rel="noopener" class="footer-social-icon" aria-label="Docs" title="Documentation">
+                        <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.html" class="footer-social-icon" aria-label="Docs" title="Documentation">
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                         </a>
                     </div>
@@ -5731,6 +5742,28 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+        // Apply saved language immediately
+        (function() {
+            try {
+                const saved = localStorage.getItem("msb_language_preference");
+                if (saved && ['ja', 'en', 'zh', 'ko'].includes(saved)) {
+                    document.documentElement.lang = saved;
+                    if (typeof switchLanguage === 'function') switchLanguage(saved);
+                }
+            } catch(e) {}
+        })();
+            const savedLang = localStorage.getItem('msb_language_preference') || localStorage.getItem('user_selected_lang');
+            if (savedLang) {
+                switchLanguage(savedLang);
+            }
+            document.querySelectorAll('.language-switch a').forEach(a => {
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const lang = a.getAttribute('data-lang');
+                    if (lang) switchLanguage(lang);
+                });
+            });
             const initialHash = window.location.hash || '#top';
             switchAppTab(initialHash, false);
 
@@ -6355,7 +6388,6 @@
                 }
             });
         }
-        });
 
         function setVideoSource(url) {
             const video = document.getElementById("seedance-video");
@@ -9313,11 +9345,6 @@
                     }
                 });
             });
-        } else {
-                    if (btn) btn.classList.remove('active');
-                    if (panel) { panel.style.display = 'none'; panel.classList.remove('active'); }
-                }
-            });
         }
 
         function loadTrainingCourseProgress() {
@@ -9895,6 +9922,13 @@
             return null;
         }
 
+        // ブラウザ言語自動検出 (i18n Browser Language Auto-Detection)
+        function initLang() {
+            const browserLang = (navigator.language || navigator.userLanguage || 'ja').toLowerCase();
+            const currentLang = localStorage.getItem('user_selected_lang') || (browserLang.startsWith('ja') ? 'ja' : 'en');
+            return currentLang;
+        }
+
         function setAuthSession(session) {
             currentUserSession = session;
             if (session) {
@@ -10147,6 +10181,22 @@
                         closeShortcutHelpModal();
                     } else {
                         openShortcutHelpModal();
+                    }
+                } else if (e.altKey && ['1','2','3','4','5','6','7'].includes(e.key)) {
+                    const targets = {
+                        '1': '#top',
+                        '2': '#survey-section',
+                        '3': '#attendance-section',
+                        '4': '#matching-section',
+                        '5': '#kpi-section',
+                        '6': '#pricing-section',
+                        '7': '#faq-section'
+                    };
+                    const targetId = targets[e.key];
+                    if (targetId) {
+                        e.preventDefault();
+                        const el = document.querySelector(targetId);
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }
                 }
             });

@@ -206,51 +206,58 @@ def _hypothesis_checks(files: dict[str, Path]) -> list[dict[str, object]]:
         )
     )
 
-    h8 = all(
-        marker in mcp
-        for marker in (
-            "Settings > Customizations > Installed MCP Servers",
-            "Figma remote MCP",
-            "読み取り専用",
-            "この段階ではFigmaファイルを作成・編集・削除しない",
-            "OAuth再認証を要求された場合は、その場で認証せず停止する",
-            "team::1404381379512110171",
-            "264549730",
-            "WRITE TO SLIDES: AVAILABLE または UNAVAILABLE",
+    h8 = (
+        all(
+            marker in mcp
+            for marker in (
+                "Settings > Customizations > Installed MCP Servers",
+                "読み取り専用",
+                "OAuth再認証を要求された場合は、その場で認証せず停止する",
+            )
         )
-    ) and all(
-        marker in figma_prompt
-        for marker in (
-            "Figma remote MCP",
-            "上記と異なるteamやprojectへは作成しない",
-            "全3枚",
-            "PowerPointへの書き出しはまだ実行しない",
-            "公開、共有範囲変更、既存ファイルの編集・削除はしない",
+        and ("Figma remote MCP" in mcp or "Canva remote MCP" in mcp)
+        and (
+            "この段階ではFigmaファイルを作成・編集・削除しない" in mcp
+            or "この段階ではCanvaデザインを作成・編集・削除しない" in mcp
         )
-    ) and all(marker in concepts for marker in ("## MCP", "Model Context Protocol", "標準")) and all(
-        marker in cli_prompt
-        for marker in (
-            "CLI DEMO / READ ONLY",
-            "ファイルの作成、変更、削除をしない",
-            "shell command、外部通信、commit、pushを実行しない",
-            "SURFACE: ANTIGRAVITY CLI",
-            "SYNTHETIC_DATA_ONLY",
+        and all(
+            marker in figma_prompt
+            for marker in (
+                "Figma remote MCP",
+                "上記と異なるteamやprojectへは作成しない",
+                "全3枚",
+                "PowerPointへの書き出しはまだ実行しない",
+                "公開、共有範囲変更、既存ファイルの編集・削除はしない",
+            )
         )
-    ) and all(
-        marker in sdk_prompt
-        for marker in (
-            "SDK DEMO / READ ONLY",
-            "ファイルの作成、変更、削除、shell command、外部通信、git操作を行わない",
-            "NOT_VERIFIED",
+        and all(marker in concepts for marker in ("## MCP", "Model Context Protocol", "標準"))
+        and all(
+            marker in cli_prompt
+            for marker in (
+                "CLI DEMO / READ ONLY",
+                "ファイルの作成、変更、削除をしない",
+                "shell command、外部通信、commit、pushを実行しない",
+                "SURFACE: ANTIGRAVITY CLI",
+                "SYNTHETIC_DATA_ONLY",
+            )
         )
-    ) and all(
-        marker in sdk_script
-        for marker in (
-            "BuiltinTools.read_only()",
-            "MODE: READ ONLY",
-            "--dry-run",
-            "Never create, edit, or delete files",
-            "GEMINI_API_KEY is not configured",
+        and all(
+            marker in sdk_prompt
+            for marker in (
+                "SDK DEMO / READ ONLY",
+                "ファイルの作成、変更、削除、shell command、外部通信、git操作を行わない",
+                "NOT_VERIFIED",
+            )
+        )
+        and all(
+            marker in sdk_script
+            for marker in (
+                "BuiltinTools.read_only()",
+                "MODE: READ ONLY",
+                "--dry-run",
+                "Never create, edit, or delete files",
+                "GEMINI_API_KEY is not configured",
+            )
         )
     )
 

@@ -27,6 +27,16 @@
         ]
       },
       "command": "python scripts/sync_docs_to_notebooklm.py && python scripts/generate_ceo_presentation_deck.py && python scripts/upload_notebooklm_docs_to_drive.py"
+    },
+    {
+      "name": "session-log-recorder",
+      "description": "Automatically record and summarize Antigravity session activity into docs/SESSION_LOG.md and Obsidian Vault",
+      "events": [
+        "session:end",
+        "turn:end",
+        "post:commit"
+      ],
+      "command": "python scripts/record_session_log.py"
     }
   ]
 }

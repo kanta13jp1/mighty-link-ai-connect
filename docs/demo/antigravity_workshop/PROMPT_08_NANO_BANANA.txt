@@ -1,8 +1,8 @@
-Prompt 8 / Q&A用: Nano Bananaで実画像を作って差し替える
+Prompt 8 / Q&A用: Nano Banana Pro 2で実画像を作って差し替える
 
 /frontend-design
 
-Antigravityのgenerative image toolを使い、AI Agent Learning Hubのヒーロー用画像を1枚だけ生成してください。Antigravity公式Modelsページで、画像生成ToolがNano Banana 2を使用することを確認してから実行してください。
+Antigravityのgenerative image toolを使い、AI Agent Learning Hubのヒーロー用画像を1枚だけ生成してください。実行前にAntigravity公式Modelsページを確認し、generative image toolがNano Banana Pro 2を使用することを確認してください。
 
 画像要件:
 - 1600x900の横長ラスター画像
@@ -11,6 +11,13 @@ Antigravityのgenerative image toolを使い、AI Agent Learning Hubのヒーロ
 - 既存の明るい業務向け配色と本文の可読性を損なわない
 - assets/agent-workflow-hero.pngへ保存し、適切な日本語altを付ける
 
-重要: CSSの色切替やプリセットボタンを「Nano Banana」と呼ばないでください。Nano Bananaシミュレーター、テーマ切替、別製品、料金、クォータを追加しないでください。画像生成Toolが使えない場合は既存画像を維持し、模擬実装をせず「SKIPPED」と報告してください。commitとpushは実行しないでください。
+重要:
+- CSSの色切替やプリセットを画像生成と呼ばない
+- 模擬実装、テーマ切替、別製品、料金、クォータを追加しない
+- Toolまたは公式Modelsページを確認できない場合は既存画像を維持し、SKIPPEDと報告する
+- commitとpushは実行しない
 
 /browserで1440x900と390x844を確認し、「使用したTool／生成画像／ブラウザ確認」を3行で報告してください。
+
+公式確認先: https://antigravity.google/docs/models
+正本: docs/demo/antigravity_workshop/PROMPT_08_NANO_BANANA.txt
