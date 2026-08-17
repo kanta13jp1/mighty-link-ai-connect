@@ -16,8 +16,8 @@ Mighty Skill-Bridge の開発は、Antigravity + Gemini、VSCode + Codex、VSCod
 
 ---
 
-## 2. Hooks 構成設計（.antigravity/hooks.json）
-ワークスペースのルートに [.antigravity/hooks.json](../.antigravity/hooks.json) を配備し、以下の2つの自律自動トリガーを定義しました。
+## 2. Hooks 構成設計（.agents/hooks.json）
+ワークスペースのルートに [.agents/hooks.json](../.agents/hooks.json) を配備し、公式ライフサイクルフック仕様（`Stop`, `PreInvocation`, `PostToolUse` 等）に準拠した自律自動トリガーを定義しました。
 
 ### 2.1 WBS＆カレンダー自動同期トリガー (wbs-sheets-calendar-sync)
 * **監視イベント**: `file:modified` (ファイル更新)
