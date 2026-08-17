@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 960" width="1440" height="960" style="background:url(#bg-grad);">
+        
+    <!-- Global Sidebar (Left: 250px) -->
+    <g id="Global_App_Sidebar">
+        <rect width="250" height="960" rx="24" fill="#090d16" stroke="#161f30" stroke-width="1.2"/>
+        
+        <!-- Brand -->
+        <rect x="24" y="28" width="34" height="34" rx="10" fill="#162a15" stroke="#baff66" stroke-width="1.2"/>
+        <text x="41" y="50" fill="#baff66" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">🛡️</text>
+        <text x="68" y="44" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="0.5">MIGHTY LINK</text>
+        <text x="68" y="56" fill="#8b949e" font-family="Arial, sans-serif" font-size="10">AI CONNECT PORTAL</text>
+
+        <!-- Navigation Links -->
+        
+        <g transform="translate(16, 110)">
+            <rect width="218" height="40" rx="8" fill="transparent" stroke="transparent" stroke-width="1"/>
+            <text x="16" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="15">🏠</text>
+            <text x="44" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">ホーム</text>
+            
+        </g>
+        <g transform="translate(16, 156)">
+            <rect width="218" height="40" rx="8" fill="transparent" stroke="transparent" stroke-width="1"/>
+            <text x="16" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="15">🤝</text>
+            <text x="44" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">営業メールマッチング</text>
+            
+        </g>
+        <g transform="translate(16, 202)">
+            <rect width="218" height="40" rx="8" fill="#162a15" stroke="#baff66" stroke-width="1"/>
+            <text x="16" y="25" fill="#ffffff" font-family="Arial, sans-serif" font-size="15">🛡️</text>
+            <text x="44" y="25" fill="#ffffff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">管理者ダッシュボード</text>
+            <circle cx="200" cy="20" r="3.5" fill="#baff66"/>
+        </g>
+        <g transform="translate(16, 248)">
+            <rect width="218" height="40" rx="8" fill="transparent" stroke="transparent" stroke-width="1"/>
+            <text x="16" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="15">⏱️</text>
+            <text x="44" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">勤怠管理</text>
+            
+        </g>
+        <g transform="translate(16, 294)">
+            <rect width="218" height="40" rx="8" fill="transparent" stroke="transparent" stroke-width="1"/>
+            <text x="16" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="15">📊</text>
+            <text x="44" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">適性アンケート</text>
+            
+        </g>
+        <g transform="translate(16, 340)">
+            <rect width="218" height="40" rx="8" fill="transparent" stroke="transparent" stroke-width="1"/>
+            <text x="16" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="15">📈</text>
+            <text x="44" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">自己診断デモ</text>
+            
+        </g>
+        <g transform="translate(16, 386)">
+            <rect width="218" height="40" rx="8" fill="transparent" stroke="transparent" stroke-width="1"/>
+            <text x="16" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="15">⚙️</text>
+            <text x="44" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">初期セットアップ</text>
+            
+        </g>
+        <g transform="translate(16, 432)">
+            <rect width="218" height="40" rx="8" fill="transparent" stroke="transparent" stroke-width="1"/>
+            <text x="16" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="15">📖</text>
+            <text x="44" y="25" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" font-weight="500">研修ガイド</text>
+            
+        </g>
+
+        <!-- Bottom User Card -->
+        <g transform="translate(16, 880)">
+            <rect width="218" height="56" rx="12" fill="#0d1424" stroke="#1e293b" stroke-width="1"/>
+            <circle cx="34" cy="28" r="16" fill="#162e12" stroke="#baff66" stroke-width="1.2"/>
+            <text x="34" y="33" fill="#baff66" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">佐</text>
+            <text x="60" y="24" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">佐藤 賢太</text>
+            <text x="60" y="40" fill="#baff66" font-family="Arial, sans-serif" font-size="10">最高統括管理者</text>
+            <circle cx="198" cy="28" r="4" fill="#baff66"/>
+        </g>
+    </g>
+        <g id="Main_Content_Viewport" transform="translate(270, 20)">
+            <rect width="1150" height="920" rx="20" fill="#0c101a" stroke="#161f30" stroke-width="1.2"/>
+            <text x="30" y="45" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">VIEW: 02: 管理者統合ダッシュボード & 監査ログ</text>
+            
+            <!-- Topbar Tools -->
+            <g transform="translate(760, 25)">
+                <rect width="360" height="36" rx="8" fill="#131b2e" stroke="#1e293b"/>
+                <text x="20" y="23" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12">EN / 中文 / KO / <tspan fill="#baff66" font-weight="bold">JP</tspan></text>
+                <text x="180" y="23" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">🔑 ログイン</text>
+                <text x="280" y="23" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">🌗 ライト</text>
+            </g>
+
+            <!-- Screen Specific Wireframe Content Container -->
+            <g transform="translate(30, 80)">
+                <rect width="1090" height="810" rx="14" fill="#090d16" stroke="#162235"/>
+                <text x="30" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="bold">02: 管理者統合ダッシュボード & 監査ログ</text>
+                <text x="30" y="75" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">Production-ready UI/UX component structure with zero layout shift.</text>
+                
+                <!-- 3 Feature Mock Cards -->
+                <g transform="translate(30, 110)">
+                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
+                    <text x="20" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section A: Core Functional Panel</text>
+                    <rect x="20" y="55" width="290" height="120" rx="8" fill="#0c1220" stroke="#19253a"/>
+                    <rect x="20" y="190" width="290" height="240" rx="8" fill="#0c1220" stroke="#19253a"/>
+                    <rect x="20" y="445" width="290" height="180" rx="8" fill="#0c1220" stroke="#19253a"/>
+                </g>
+
+                <g transform="translate(380, 110)">
+                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
+                    <text x="20" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section B: AI Analytics & Actions</text>
+                    <rect x="20" y="55" width="290" height="280" rx="8" fill="#0c1220" stroke="#19253a"/>
+                    <rect x="20" y="350" width="290" height="275" rx="8" fill="#0c1220" stroke="#19253a"/>
+                </g>
+
+                <g transform="translate(730, 110)">
+                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
+                    <text x="20" y="35" fill="#ffd166" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section C: Operations & SLA</text>
+                    <rect x="20" y="55" width="290" height="570" rx="8" fill="#0c1220" stroke="#19253a"/>
+                </g>
+            </g>
+        </g>
+        </svg>

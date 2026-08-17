@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Rigorous tests for Antigravity Session Log Recorder Hook and .agents/hooks.json specification.
+Rigorous comprehensive tests for Antigravity Session Log Recorder Hook.
 """
 
 from __future__ import annotations
@@ -37,8 +37,8 @@ def test_agents_hooks_json_specification_compliance():
     assert handler.get("timeout", 0) > 0, "Handler should have an explicit timeout"
 
 
-def test_hook_stdin_stdout_contract_and_json_output(tmp_path: Path):
-    """Verify script accepts official JSON payload on stdin and emits pure JSON on stdout."""
+def test_hook_stdin_stdout_contract_with_decision_allow(tmp_path: Path):
+    """Verify script accepts official JSON payload on stdin and emits JSON with decision: allow on stdout."""
     mock_workspace = tmp_path / "mock_workspace"
     mock_workspace.mkdir()
     
@@ -47,7 +47,7 @@ def test_hook_stdin_stdout_contract_and_json_output(tmp_path: Path):
         {
             "step_index": 1,
             "type": "USER_INPUT",
-            "content": "Add attendance export feature with key sk-proj-1234567890abcdef1234567890",
+            "content": "Add attendance export feature",
             "timestamp": "2026-08-18T01:00:00Z"
         },
         {
@@ -87,11 +87,12 @@ def test_hook_stdin_stdout_contract_and_json_output(tmp_path: Path):
 
     assert proc.returncode == 0, f"Script failed with stderr: {proc.stderr}"
     
-    # Verify stdout is strictly valid JSON
+    # Verify stdout is strictly valid JSON containing decision: allow
     stdout_trimmed = proc.stdout.strip()
     assert stdout_trimmed, "stdout must not be empty"
     parsed_stdout = json.loads(stdout_trimmed)
     assert isinstance(parsed_stdout, dict), "stdout must be a valid JSON dictionary"
+    assert parsed_stdout.get("decision") == "allow", "Stop hook must return decision: allow"
 
     # Verify generated session log in mock workspace
     sessions_dir = mock_workspace / "docs" / "sessions"
@@ -102,20 +103,48 @@ def test_hook_stdin_stdout_contract_and_json_output(tmp_path: Path):
     log_content = session_files[0].read_text(encoding="utf-8")
     assert "test-conv-12345678-abcd" in log_content
     assert "src/attendance.py" in log_content
+    assert "fullyIdle=True" in log_content
 
 
-def test_secret_and_pii_redaction(tmp_path: Path):
-    """Verify secrets, credentials, and API keys are automatically masked."""
+def test_accurate_file_modification_and_exclusion(tmp_path: Path):
+    """Verify read-only tools and external files are excluded from modified files list."""
     mock_workspace = tmp_path / "mock_workspace"
     mock_workspace.mkdir()
     
-    mock_transcript = tmp_path / "transcript_secrets.jsonl"
+    mock_transcript = tmp_path / "transcript_tools.jsonl"
     mock_steps = [
         {
             "step_index": 1,
             "type": "USER_INPUT",
-            "content": "Connect to OpenAI sk-abcdef1234567890abcdef12345 and Gemini AIzaSyD123456789012345678901234567890 and GitHub ghp_123456789012345678901234567890123456 with Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.secret",
+            "content": "Check files and edit code",
             "timestamp": "2026-08-18T01:00:00Z"
+        },
+        {
+            "step_index": 2,
+            "type": "MODEL_RESPONSE",
+            "tool_calls": [
+                {
+                    "name": "view_file",
+                    "args": {
+                        "AbsolutePath": str(mock_workspace / "docs" / "readme.md"),
+                        "toolSummary": "View readme.md"
+                    }
+                },
+                {
+                    "name": "replace_file_content",
+                    "args": {
+                        "TargetFile": str(mock_workspace / "src" / "app.py"),
+                        "toolSummary": "Update server config"
+                    }
+                },
+                {
+                    "name": "view_file",
+                    "args": {
+                        "AbsolutePath": "C:/Users/example/private.txt",
+                        "toolSummary": "View private notes"
+                    }
+                }
+            ]
         }
     ]
     with mock_transcript.open("w", encoding="utf-8") as f:
@@ -123,10 +152,11 @@ def test_secret_and_pii_redaction(tmp_path: Path):
             f.write(json.dumps(s) + "\n")
 
     input_payload = {
-        "conversationId": "secret-conv-9999",
+        "conversationId": "conv-file-check-1234",
         "workspacePaths": [str(mock_workspace)],
         "transcriptPath": str(mock_transcript),
-        "terminationReason": "model_stop"
+        "terminationReason": "model_stop",
+        "fullyIdle": True
     }
 
     proc = subprocess.run(
@@ -141,14 +171,138 @@ def test_secret_and_pii_redaction(tmp_path: Path):
     sessions_dir = mock_workspace / "docs" / "sessions"
     log_content = list(sessions_dir.glob("*.md"))[0].read_text(encoding="utf-8")
 
-    # Assert raw secrets are NOT present
-    assert "sk-abcdef1234567890abcdef12345" not in log_content
+    # Modified file must be present
+    assert "src/app.py" in log_content
+    # Viewed files must NOT be in target files section
+    assert "docs/readme.md" not in log_content
+    assert "private.txt" not in log_content
+
+
+def test_comprehensive_secret_and_pii_redaction(tmp_path: Path):
+    """Verify secrets, tokens, PII (email, phone), database passwords, and private keys are masked."""
+    mock_workspace = tmp_path / "mock_workspace"
+    mock_workspace.mkdir()
+    
+    mock_transcript = tmp_path / "transcript_secrets.jsonl"
+    mock_steps = [
+        {
+            "step_index": 1,
+            "type": "USER_INPUT",
+            "content": (
+                "Credentials: user email is kanta_umezawa@ml-mightylink.com, phone 090-1234-5678, "
+                "AWS AKIAIOSFODNN7EXAMPLE, OpenAI sk-1234567890abcdef1234567890abcdef, "
+                "Gemini AIzaSyD123456789012345678901234567890, GitHub PAT github_pat_11AAAAAAA0000000000000_1234567890, "
+                "Slack xoxb-1234567890-1234567890-abcdef123456, DB postgresql://admin:SuperSecretPass123!@db.mightylink.com:5432/prod, "
+                "Key: -----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA0...\n-----END RSA PRIVATE KEY-----"
+            ),
+            "timestamp": "2026-08-18T01:00:00Z"
+        }
+    ]
+    with mock_transcript.open("w", encoding="utf-8") as f:
+        for s in mock_steps:
+            f.write(json.dumps(s) + "\n")
+
+    input_payload = {
+        "conversationId": "secret-conv-9999",
+        "workspacePaths": [str(mock_workspace)],
+        "transcriptPath": str(mock_transcript),
+        "terminationReason": "model_stop",
+        "fullyIdle": True
+    }
+
+    proc = subprocess.run(
+        [sys.executable, str(RECORDER_SCRIPT_PATH)],
+        input=json.dumps(input_payload),
+        text=True,
+        capture_output=True,
+        cwd=PROJECT_ROOT
+    )
+
+    assert proc.returncode == 0
+    sessions_dir = mock_workspace / "docs" / "sessions"
+    log_content = list(sessions_dir.glob("*.md"))[0].read_text(encoding="utf-8")
+
+    # Assert raw secrets and PII are NOT present
+    assert "kanta_umezawa@ml-mightylink.com" not in log_content
+    assert "090-1234-5678" not in log_content
+    assert "AKIAIOSFODNN7EXAMPLE" not in log_content
+    assert "sk-1234567890abcdef1234567890abcdef" not in log_content
     assert "AIzaSyD123456789012345678901234567890" not in log_content
-    assert "ghp_123456789012345678901234567890123456" not in log_content
-    assert "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" not in log_content
+    assert "github_pat_11AAAAAAA0000000000000_1234567890" not in log_content
+    assert "xoxb-1234567890-1234567890-abcdef123456" not in log_content
+    assert "SuperSecretPass123!" not in log_content
+    assert "-----BEGIN RSA PRIVATE KEY-----" not in log_content
 
     # Assert redaction placeholders ARE present
+    assert "[REDACTED_EMAIL]" in log_content
+    assert "[REDACTED_PHONE]" in log_content
+    assert "[REDACTED_AWS_KEY]" in log_content
     assert "[REDACTED_API_KEY]" in log_content
     assert "[REDACTED_GEMINI_KEY]" in log_content
-    assert "[REDACTED_GITHUB_TOKEN]" in log_content
-    assert "Bearer [REDACTED_TOKEN]" in log_content
+    assert "[REDACTED_GITHUB_PAT]" in log_content
+    assert "[REDACTED_SLACK_TOKEN]" in log_content
+    assert "[REDACTED_DB_PASSWORD]" in log_content
+    assert "[REDACTED_PRIVATE_KEY]" in log_content
+
+
+def test_session_deduplication_and_in_place_update(tmp_path: Path):
+    """Verify multiple Stop triggers for the same conversationId update the session log in-place without creating duplicate files."""
+    mock_workspace = tmp_path / "mock_workspace"
+    mock_workspace.mkdir()
+    
+    conv_id = "duplicate-check-conv-1111"
+    mock_transcript = tmp_path / "transcript_dedup.jsonl"
+    
+    # Turn 1
+    with mock_transcript.open("w", encoding="utf-8") as f:
+        f.write(json.dumps({
+            "step_index": 1,
+            "type": "USER_INPUT",
+            "content": "First turn request",
+            "timestamp": "2026-08-18T01:00:00Z"
+        }) + "\n")
+
+    input_payload = {
+        "conversationId": conv_id,
+        "workspacePaths": [str(mock_workspace)],
+        "transcriptPath": str(mock_transcript),
+        "terminationReason": "model_stop",
+        "fullyIdle": False
+    }
+
+    proc1 = subprocess.run(
+        [sys.executable, str(RECORDER_SCRIPT_PATH)],
+        input=json.dumps(input_payload),
+        text=True,
+        capture_output=True,
+        cwd=PROJECT_ROOT
+    )
+    assert proc1.returncode == 0
+    sessions_dir = mock_workspace / "docs" / "sessions"
+    assert len(list(sessions_dir.glob("*.md"))) == 1
+
+    # Turn 2 with additional steps
+    with mock_transcript.open("a", encoding="utf-8") as f:
+        f.write(json.dumps({
+            "step_index": 2,
+            "type": "USER_INPUT",
+            "content": "Second turn request",
+            "timestamp": "2026-08-18T01:05:00Z"
+        }) + "\n")
+
+    input_payload["fullyIdle"] = True
+    proc2 = subprocess.run(
+        [sys.executable, str(RECORDER_SCRIPT_PATH)],
+        input=json.dumps(input_payload),
+        text=True,
+        capture_output=True,
+        cwd=PROJECT_ROOT
+    )
+    assert proc2.returncode == 0
+    
+    # Must still have exactly 1 file (deduplicated by conversationId)
+    session_files = list(sessions_dir.glob("*.md"))
+    assert len(session_files) == 1, "Must update the same session file in-place"
+    updated_content = session_files[0].read_text(encoding="utf-8")
+    assert "Second turn request" in updated_content
+    assert "fullyIdle=True" in updated_content

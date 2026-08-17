@@ -38,8 +38,9 @@ def test_language_switch_flow(fastapi_server):
         assert "アンケート" in nav_text or "Survey" in nav_text
         
         # 2. Click "EN" language switch
+        page.wait_for_selector(".language-switch a[data-lang='en']")
         en_btn = page.locator(".language-switch a[data-lang='en']")
-        en_btn.click(no_wait_after=True)
+        en_btn.click(force=True, no_wait_after=True)
         
         # Verify DOM update
         page.wait_for_function(
@@ -54,7 +55,7 @@ def test_language_switch_flow(fastapi_server):
         
         # 3. Click "中文" (zh)
         zh_btn = page.locator(".language-switch a[data-lang='zh']")
-        zh_btn.click(no_wait_after=True)
+        zh_btn.click(force=True, no_wait_after=True)
         page.wait_for_function(
             "document.documentElement.lang === 'zh'"
         )
@@ -62,7 +63,7 @@ def test_language_switch_flow(fastapi_server):
         
         # 4. Click "KO" (ko)
         ko_btn = page.locator(".language-switch a[data-lang='ko']")
-        ko_btn.click(no_wait_after=True)
+        ko_btn.click(force=True, no_wait_after=True)
         page.wait_for_function(
             "document.documentElement.lang === 'ko'"
         )

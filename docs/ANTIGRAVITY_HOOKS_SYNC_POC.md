@@ -1,70 +1,61 @@
-# Mighty Skill-Bridge：Antigravity Hooks による自動同期 PoC 検証レポート（T695）
+# Mighty Skill-Bridge：Antigravity Lifecycle Hooks 設計およびセッション自動記録仕様レポート（T695）
 
-**作成日**: 2026年6月3日  
-**ステータス**: 完了  
+**作成日**: 2026年6月3日（最終改訂: 2026年8月18日）  
+**ステータス**: 設計・実装改訂  
 **対象フェーズ**: 7. 次期開発・運用（連携）  
-**関連タスク**: **T695** Antigravity hooks機能によるsyncスクリプト自動起動の可否検証  
+**関連タスク**: **T695** Antigravity hooks機能による自動記録・同期スクリプト連携の設計・検証  
 **関連Issue/課題**: [R4](../data/issues_tracker.tsv#L5) (同期漏れ・セッションドリフトによる成果物不整合リスク)
 
 ---
 
 ## 1. 背景と目的
 Mighty Skill-Bridge の開発は、Antigravity + Gemini、VSCode + Codex、VSCode + Claude Code の3つのAIツールが役割分担（レーン）を行いながら並行して進められています。
-各AIレーンが作成したWBSのステータス変更（`data/WBS.tsv`）や、設計ドキュメントの新規作成（`docs/*.md`）を、手動でGoogle Sheets、Google Calendar、Google Drive、Notion、GitHubへ同期させる運用は、ヒューマンエラーによる「同期漏れ」や「WBS情報の不整合」を発生させる温床となります。
+各AIレーンがどのような作業・指示・変更・アクションを行ったかを自動追跡し、セッションログとして `docs/sessions/` および Obsidian Vault に確実に記録することは、ナレッジの属人化とセッションドリフトを防止する上で極めて重要です。
 
-本PoC（`T695`）では、Google公式開発者ブログにてアナウンスされた **Antigravity CLI (v1.107.0+) の JSON hooks 機能** を活用し、特定のファイル更新を検知してバックグラウンドで自動同期スクリプト群を自律起動するための設定定義・検証を目的とします。
-
----
-
-## 2. Hooks 構成設計（.agents/hooks.json）
-ワークスペースのルートに [.agents/hooks.json](../.agents/hooks.json) を配備し、公式ライフサイクルフック仕様（`Stop`, `PreInvocation`, `PostToolUse` 等）に準拠した自律自動トリガーを定義しました。
-
-### 2.1 WBS＆カレンダー自動同期トリガー (wbs-sheets-calendar-sync)
-* **監視イベント**: `file:modified` (ファイル更新)
-* **対象ファイル**: `data/WBS.tsv` (WBSソースファイル)
-* **実行コマンド**: 
-  ```powershell
-  python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8 && python scripts/sync_wbs_to_calendar.py
-  ```
-* **効果**: AIエージェントや人間がローカルの `data/WBS.tsv` を変更（タスクを完了に更新するなど）した瞬間、スプレッドシートへの進捗書き込み、Ganttチャート更新、および完了済みカレンダーイベントの削除が自動的にバックグラウンドで起動します。
-
-### 2.2 ドキュメント＆スライド＆NotebookLM自動同期トリガー (docs-notebooklm-sync)
-* **監視イベント**: `file:modified`, `file:created` (ファイル更新・ファイル新規作成)
-* **対象ファイル**: `docs/*.md` (Markdownドキュメント全般)
-* **実行コマンド**: 
-  ```powershell
-  python scripts/sync_docs_to_notebooklm.py --skip-asks --skip-source-refresh --source-timeout-seconds 60 && python scripts/generate_ceo_presentation_deck.py && python scripts/upload_notebooklm_docs_to_drive.py
-  ```
-* **効果**: 設計書や議事録が追加・更新されるたび、自動でGoogleドライブにアップロードされ、NotebookLMのナレッジベースが常に最新状態に維持されます。また、PPTXプレゼン資料も自動的に再生成され、ドライブ上の共有ファイルに同期されます。
+本設計では、Google Antigravity 公式仕様（`.agents/hooks.json`）に準拠した **Lifecycle Hooks** を定義し、セッション終了時（`Stop` イベント）に自律的にセッション履歴とサニタイズされた証跡を記録する構成を策定・実装します。
 
 ---
 
-## 3. 実機PoC検証手順と動作検証結果
+## 2. 公式 Hooks 構成設計（.agents/hooks.json）
+ワークスペースのルートに [.agents/hooks.json](../.agents/hooks.json) を配備し、公式の `Stop` ライフサイクルイベントハンドラーを定義しています。
 
-### 3.1 CLIフックローカル認識テスト
-Antigravity CLIでワークスペースを初期化した際、`.antigravity/hooks.json` が正常にロードされ、イベント監視デーモンが動作することを確認しました。
-
-```powershell
-# Antigravity CLIによるフック確認コマンド実行例
-antigravity-ide.cmd --list-hooks
-```
-**出力**:
-```text
-[+] 2 hooks loaded from .antigravity/hooks.json:
-  - wbs-sheets-calendar-sync [file:modified on data/WBS.tsv] -> Executing sync_wbs_to_sheets & calendar...
-  - docs-notebooklm-sync [file:modified, file:created on docs/*.md] -> Executing sync_docs_to_notebooklm & pptx...
+```json
+{
+  "session-log-recorder": {
+    "enabled": true,
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python scripts/record_session_log.py",
+        "timeout": 30
+      }
+    ]
+  }
+}
 ```
 
-### 3.2 動作検証証跡
-* **WBSトリガー検証**: `data/WBS.tsv` のステータスを `完了` に更新した瞬間、GCP OAuth クレデンシャルを介したスプレッドシート更新および完了カレンダーイベントの削除プロセスが自動起動し、正常に同期されることを実証。
-* **Docsトリガー検証**: 本ドキュメント `docs/ANTIGRAVITY_HOOKS_SYNC_POC.md` を作成した瞬間、Google Drive 上へ Google Docs 形式で35件目の文書として同期され、PPTX資料が更新されたことをログにて確認。
+### 2.1 入出力プロトコル契約
+1. **標準入力 (stdin)**:
+   - Antigravity 実行エンジンから JSON ペイロード（`conversationId`, `transcriptPath`, `workspacePaths`, `terminationReason`, `fullyIdle`）を受信。
+2. **標準出力 (stdout)**:
+   - 公式 `Stop` 仕様に従い、`{"decision": "allow"}` の純粋な JSON を出力。
+   - 実行時の詳細・警告メッセージはすべて `sys.stderr` に出力して JSON 出力を汚染しない。
+3. **セキュリティ & PII サニタイズ**:
+   - メールアドレス、電話番号、OpenAI/Gemini/GitHub/AWS/Slack トークン、データベースパスワード、秘密鍵、`.env` などの機密文字列を正規表現で自動検知し、`[REDACTED_*]` に置換。
 
 ---
 
-## 4. 結論と次期展開
+## 3. 実装および自動テスト検証
 
-### 💡 結論：自動化トリガーPoCは「大成功」
-本PoCにより、3ツール（Antigravity, Codex, Claude Code）がどのレーンで開発を行っても、**コミット前に手動で同期スクリプトを呼び出す必要がなくなり、自律的にナレッジ連携が機能する土台**が完成しました。
+### 3.1 ユニットテストスイート (`tests/test_session_log_recorder.py`)
+- `test_agents_hooks_json_specification_compliance`: `.agents/hooks.json` のスキーマ検証
+- `test_hook_stdin_stdout_contract_with_decision_allow`: 標準入力 JSON 読込と `{"decision": "allow"}` 出力検証
+- `test_accurate_file_modification_and_exclusion`: 閲覧ツール（`view_file`）および外部パス除外の検証
+- `test_comprehensive_secret_and_pii_redaction`: PII・APIキー・接続文字列・秘密鍵の包括的マスキング検証
+- `test_session_deduplication_and_in_place_update`: 同一 Conversation ID におけるインプレース更新・重複防止検証
 
-### 🚀 将来の拡張（コミット前コードクレンジング）
-今後は、`git commit` 直前に Antigravity hooks をトリガーし、`ruff format` および `markdownlint --fix` を自動起動してコードの静的品質を自律的に維持するコミット前クローズド運用の導入を予定しています。
+---
+
+## 4. 運用上の留意事項
+- Antigravity IDE / CLI の実行ループ停止時に `.agents/hooks.json` が読み込まれ、自動的に [`docs/sessions/`](sessions/) および [`docs/SESSION_LOG.md`](SESSION_LOG.md) へ最新の作業概要が記録されます。
+- 同一セッション内で複数回の実行停止が発生した場合は、Conversation ID に基づき同一ログファイルが最新状態で上書き更新（インプレース更新）されます。

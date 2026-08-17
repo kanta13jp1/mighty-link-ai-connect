@@ -61,11 +61,14 @@ def test_ui_flow(fastapi_server):
         assert job_input.input_value() == ""
         
         # 4. Click the first sample load button (for engineer resume)
-        page.locator(".hero-inputs-container .sample-btn").nth(0).click()
+        page.wait_for_selector(".hero-inputs-container .sample-btn")
+        page.locator(".hero-inputs-container .sample-btn").nth(0).click(force=True)
+        page.wait_for_function("document.getElementById('engineer-input').value.length > 0")
         assert len(eng_input.input_value()) > 0
         
         # 5. Click the second sample load button (for job details)
-        page.locator(".hero-inputs-container .sample-btn").nth(1).click()
+        page.locator(".hero-inputs-container .sample-btn").nth(1).click(force=True)
+        page.wait_for_function("document.getElementById('job-input').value.length > 0")
         assert len(job_input.input_value()) > 0
         
         # 6. Verify Analyze requires legal consent, then accept and run

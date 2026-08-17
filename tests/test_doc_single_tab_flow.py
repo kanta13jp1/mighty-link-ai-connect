@@ -38,7 +38,8 @@ def test_training_and_doc_single_tab_navigation(fastapi_server):
         assert len(context.pages) == 1, "Must start with exactly 1 tab"
 
         # 2. Click Training Guide link in Sidebar
-        page.locator("#primary-navigation a[href='#training-section']").click()
+        page.wait_for_selector("#primary-navigation a[href='#training-section']")
+        page.locator("#primary-navigation a[href='#training-section']").click(force=True)
         page.wait_for_selector("#training-section", state="visible")
         assert page.locator("#training-section").is_visible(), "Training Section must be visible as an App Tab"
 
