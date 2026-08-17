@@ -89,6 +89,9 @@ EXEMPT_GUARDS: dict[str, str] = {
     "audit_external_api_usage.py":
         "運用日次ツール(T736): 正本がgitignoreのローカル台帳 data/external_api_usage.jsonl で、"
         "レポート先も reports/。作業ツリーの整合とは無関係なためプリフライト対象外",
+    "audit_sessions.py":
+        "ローカル対話ログ集計ツール: Antigravityのローカルbrain会話ログ（transcript.jsonl）を集計・監査する"
+        "デバッグ・運用ツールであり、リポジトリ作業ツリー整合とは無関係なためプリフライト対象外",
 }
 
 

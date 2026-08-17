@@ -220,3 +220,6 @@
 - **NG例（失敗する時）**: 完了済みタスクの issue が閉じられずに残っている（T849 の「GitHub Issues 未完了0」を実態より悪く見せる）
 - **実行タイミング**: GAクローズ判定（T849）前、および定期的な棚卸し時に `python scripts/audit_github_issue_wbs_sync.py`
 
+### audit_sessions.py
+- **対象外理由**: ローカル対話ログ集計ツール。Antigravityのローカルbrain会話ログ（transcript.jsonl）を集計・監査するデバッグ・運用ツールであり、リポジトリ作業ツリー整合とは無関係なためプリフライト対象外。
+

@@ -24,11 +24,17 @@ app.EXTERNAL_API_USAGE_LOG_FILE = os.path.join(app.DATA_DIR, "external_api_usage
 app.AI_FORCE_MOCK = True
 app.GEMINI_READY = False
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture(autouse=True)
 def setup_test_db():
+    # Configure app to use isolated testing directory
+    app.DATA_DIR = os.path.join(PROJECT_ROOT, "data_test")
+    app.DB_PATH = os.path.join(app.DATA_DIR, "mighty_skill_bridge.db")
+    app.AUDIT_DIR = os.path.join(app.DATA_DIR, "audit")
+    app.EXTERNAL_API_USAGE_LOG_FILE = os.path.join(app.DATA_DIR, "external_api_usage.jsonl")
+    app.AI_FORCE_MOCK = True
+    app.GEMINI_READY = False
+
     # Setup clean testing directory
-    if os.path.exists(app.DATA_DIR):
-        shutil.rmtree(app.DATA_DIR)
     os.makedirs(app.DATA_DIR, exist_ok=True)
     os.makedirs(app.AUDIT_DIR, exist_ok=True)
     
@@ -36,10 +42,6 @@ def setup_test_db():
     app.init_db()
     
     yield
-    
-    # Cleanup after testing completes
-    if os.path.exists(app.DATA_DIR):
-        shutil.rmtree(app.DATA_DIR)
 
 @pytest.fixture
 def client():

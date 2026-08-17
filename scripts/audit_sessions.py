@@ -12,8 +12,8 @@ def mask_sensitive(text):
         return text
     # Mask emails
     text = re.sub(r'[\w\.-]+@[\w\.-]+\.\w+', '[EMAIL_MASKED]', text)
-    # Mask potential tokens/keys
-    text = re.sub(r'(Bearer\s+|token=|[A-Za-z0-9_-]{20,})', lambda m: m.group(0)[:4] + '***' if len(m.group(0)) > 8 else '***', text)
+    # Mask secrets/tokens
+    text = re.sub(r'(sk-[A-Za-z0-9_-]{10,}|ghp_[A-Za-z0-9_-]{10,}|eyJ[A-Za-z0-9_-]{20,})', '***TOKEN_MASKED***', text)
     return text
 
 for d in os.listdir(brain_dir):
@@ -36,7 +36,6 @@ for d in os.listdir(brain_dir):
             "last_user_msg": "",
             "last_model_msg": "",
             "last_tool_call": "",
-            "last_tool_result": "",
             "summary": "ログなし（ディレクトリのみ）",
             "status": "不明"
         })
@@ -47,7 +46,6 @@ for d in os.listdir(brain_dir):
     last_user_msg = ""
     last_model_msg = ""
     last_tool_call = ""
-    last_tool_result = ""
     step_count = 0
     tools_called = []
     
@@ -74,30 +72,47 @@ for d in os.listdir(brain_dir):
                             tname = tc.get("name") or tc.get("toolAction") or tc.get("toolSummary") or str(tc)
                             tools_called.append(tname)
                             last_tool_call = tname
-                elif "tool" in stype.lower() or "result" in stype.lower():
-                    last_tool_result = content[:300] if content else ""
             except Exception:
                 pass
 
+    # Extract role from first user msg
+    role = "未定義"
+    first_clean = first_user_msg.replace("<USER_REQUEST>", "").replace("</USER_REQUEST>", "").strip()
+    role_match = re.search(r'あなたは([^\s。]+担当)です', first_clean) or re.search(r'あなたは([^\s。]+)です', first_clean) or re.search(r'担当[：:]\s*([^\s\n]+)', first_clean)
+    if role_match:
+        role = role_match.group(1)
+    elif "フッター" in first_clean:
+        role = "Webフッター担当"
+    elif "フロントエンド" in first_clean:
+        role = "フロントエンド開発方針担当"
+    elif "Git Worktree" in first_clean:
+        role = "Git Worktree担当"
+    elif "教育担当" in first_clean:
+        role = "教育担当"
+    elif "スキル一覧" in first_clean:
+        role = "スキル一覧・評価担当"
+
     # Status deduction
-    # Let's inspect last user message vs last model/tool
     status_eval = "進行中"
+    last_clean_user = last_user_msg.replace("<USER_REQUEST>", "").replace("</USER_REQUEST>", "").strip()
     if not last_user_msg:
         status_eval = "未開始/空"
-    elif any(k in last_user_msg.lower() for k in ["直っていません", "エラー", "ng", "動かない", "修正して", "request_changes", "失敗"]):
-        # check if model replied after last user message
+    elif any(k in last_clean_user.lower() for k in ["直っていません", "エラー", "ng", "request_changes", "失敗", "動かない"]):
         status_eval = "要対応/未解決"
-    elif "完了" in last_model_msg or "pass" in last_model_msg.lower() or "合意" in last_model_msg:
+    elif any(k in last_model_msg for k in ["完了しました", "全件 PASS", "合意完了", "PASS (ドリフト0)"]):
         status_eval = "完了/確認待機"
+    elif "進めて" in last_clean_user or "実行" in last_clean_user:
+        status_eval = "進行中/実行中"
 
     sessions.append({
         "id": d,
+        "role": role,
         "mtime": mtime,
         "mtime_jst": datetime.datetime.fromtimestamp(mtime, datetime.timezone(datetime.timedelta(hours=9))).strftime("%Y-%m-%d %H:%M:%S"),
         "has_log": True,
         "steps": step_count,
-        "first_user_msg": mask_sensitive(first_user_msg[:300]),
-        "last_user_msg": mask_sensitive(last_user_msg[:300]),
+        "first_user_msg": mask_sensitive(first_clean[:300]),
+        "last_user_msg": mask_sensitive(last_clean_user[:300]),
         "last_model_msg": mask_sensitive(last_model_msg[:300]),
         "last_tool_call": mask_sensitive(str(last_tool_call)[:150]),
         "tools_called_count": len(tools_called),
@@ -110,12 +125,3 @@ with open("exports/session_audit_summary.json", "w", encoding="utf-8") as f:
     json.dump(sessions, f, ensure_ascii=False, indent=2)
 
 print(f"Total sessions parsed: {len(sessions)}")
-print("\n=== Recent 15 Sessions (JST) ===")
-for i, s in enumerate(sessions[:15]):
-    print(f"[{i+1}] ID: {s['id']}")
-    print(f"    JST: {s['mtime_jst']} | Steps: {s['steps']}")
-    print(f"    First User: {s['first_user_msg'][:80]}")
-    print(f"    Last User:  {s['last_user_msg'][:80]}")
-    print(f"    Last Model: {s['last_model_msg'][:80]}")
-    print(f"    Last Tool:  {s['last_tool_call']}")
-    print("-" * 60)

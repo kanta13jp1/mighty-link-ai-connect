@@ -64,6 +64,7 @@
 | **セキュリティ** | Information Security | 情報資産やシステムを不正アクセスや漏洩から保護する設計・運用体系。本プロダクトでは Fail-closed 原則、RLS、生データ非保持、仮名化ID等を適用。 |
 | **認証** | Authentication (Auth) | アクセス者が正規の本人であることを証明・検証する仕組み（認可の前段階）。本プロダクトでは Firebase Auth や Google OAuth を使用し、Supabase RLS と連携。 |
 | **例外処理** | Exception Handling | プログラム実行時のエラーを検知・安全に補獲・回復する処理構造。エラー握りつぶしを禁止し、Fail-closed 原則やフォーム/ダッシュボード等の自動監査ガードで品質を確保。 |
+| **SRE** | Site Reliability Engineering | ソフトウェア工学でシステムの信頼性・可用性・スケーラビリティを高める規律。SLO管理、トイル削減、運用Runbook体系化を推進。 |
 
 ---
 

@@ -28,7 +28,7 @@ def setup_test_db():
     app.SUPABASE_SDK_ACTIVE = False
 
     if os.path.exists(app.DATA_DIR):
-        shutil.rmtree(app.DATA_DIR)
+        shutil.rmtree(app.DATA_DIR, ignore_errors=True)
     os.makedirs(app.DATA_DIR, exist_ok=True)
     os.makedirs(app.AUDIT_DIR, exist_ok=True)
     app.init_db()
@@ -36,7 +36,7 @@ def setup_test_db():
     yield
 
     if os.path.exists(app.DATA_DIR):
-        shutil.rmtree(app.DATA_DIR)
+        shutil.rmtree(app.DATA_DIR, ignore_errors=True)
     for name, value in original_values.items():
         setattr(app, name, value)
 
