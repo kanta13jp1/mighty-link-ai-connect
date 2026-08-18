@@ -3749,31 +3749,41 @@ async def serve_doc_file(file_path: str, raw: bool = False):
         return PlainTextResponse(content, media_type="text/plain; charset=utf-8")
 
     escaped_title = html.escape(os.path.basename(file_path))
-    json_content = json.dumps(content)
+    escaped_markdown = html.escape(content)
     html_content = f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{escaped_title} - Mighty-Link Documentation</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-dark.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
     <style>
+        :root {{
+            --bg: #0b0f19;
+            --panel: #131b2e;
+            --border: #1e293b;
+            --text: #e2e8f0;
+            --text-muted: #8b949e;
+            --brand-green: #baff66;
+            --brand-blue: #8bdcff;
+        }}
+        * {{ box-sizing: border-box; }}
         body {{
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: #0b0f19;
-            color: #e2e8f0;
+            background: var(--bg);
+            color: var(--text);
             padding: 32px 20px;
             margin: 0;
+            line-height: 1.6;
         }}
         .doc-container {{
-            max-width: 980px;
+            max-width: 1040px;
             margin: 0 auto;
-            background: #131b2e;
+            background: var(--panel);
             padding: 40px;
             border-radius: 16px;
-            border: 1px solid #1e293b;
+            border: 1px solid var(--border);
             box-shadow: 0 12px 36px rgba(0,0,0,0.5);
         }}
         .back-link {{
@@ -3781,7 +3791,7 @@ async def serve_doc_file(file_path: str, raw: bool = False):
             align-items: center;
             gap: 6px;
             margin-bottom: 24px;
-            color: #8bdcff;
+            color: var(--brand-blue);
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
@@ -3789,46 +3799,101 @@ async def serve_doc_file(file_path: str, raw: bool = False):
         .back-link:hover {{ text-decoration: underline; }}
         .markdown-body {{
             background-color: transparent !important;
-            color: #e2e8f0 !important;
+            color: var(--text) !important;
             font-size: 15px;
             line-height: 1.7;
+        }}
+        .markdown-body h1, .markdown-body h2, .markdown-body h3 {{
+            color: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }}
+        .markdown-body a {{ color: var(--brand-blue); text-decoration: none; }}
+        .markdown-body a:hover {{ text-decoration: underline; }}
+        .markdown-body table {{
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }}
+        .markdown-body th, .markdown-body td {{
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            text-align: left;
+        }}
+        .markdown-body th {{
+            background: rgba(255,255,255,0.05);
+            font-weight: 700;
+        }}
+        .markdown-body code {{
+            background: rgba(255,255,255,0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 0.9em;
+            color: var(--brand-green);
+        }}
+        .markdown-body pre {{
+            background: #090d16;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+        }}
+        .markdown-body pre code {{
+            background: transparent;
+            padding: 0;
+            color: inherit;
         }}
         .mermaid {{
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 8px;
             padding: 16px;
-            margin: 16px 0;
+            margin: 20px 0;
             text-align: center;
+            min-height: 80px;
         }}
     </style>
 </head>
 <body>
     <div class="doc-container">
         <a href="/" class="back-link">← ホームに戻る</a>
+        <textarea id="raw-markdown" style="display:none;" aria-hidden="true">{escaped_markdown}</textarea>
         <article class="markdown-body" id="rendered-doc"></article>
     </div>
     <script>
-        const rawMarkdown = {json_content};
-        document.getElementById('rendered-doc').innerHTML = marked.parse(rawMarkdown);
+        (function() {{
+            try {{
+                const rawEl = document.getElementById('raw-markdown');
+                const rawText = rawEl ? rawEl.value : '';
+                const renderedDoc = document.getElementById('rendered-doc');
+                if (renderedDoc && typeof marked !== 'undefined') {{
+                    renderedDoc.innerHTML = marked.parse(rawText);
+                }}
 
-        // Convert Mermaid code blocks into graphical diagrams
-        document.querySelectorAll('pre code.language-mermaid').forEach((block) => {{
-            const pre = block.parentElement;
-            const div = document.createElement('div');
-            div.className = 'mermaid';
-            div.textContent = block.textContent;
-            pre.parentNode.replaceChild(div, pre);
-        }});
+                // Convert Mermaid code blocks into graphical diagrams
+                document.querySelectorAll('pre code.language-mermaid').forEach((block) => {{
+                    const pre = block.parentElement;
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = block.textContent;
+                    pre.parentNode.replaceChild(div, pre);
+                }});
 
-        if (typeof mermaid !== 'undefined') {{
-            mermaid.initialize({{
-                startOnLoad: true,
-                theme: 'dark',
-                securityLevel: 'loose'
-            }});
-            mermaid.run();
-        }}
+                if (typeof mermaid !== 'undefined') {{
+                    mermaid.initialize({{
+                        startOnLoad: true,
+                        theme: 'dark',
+                        securityLevel: 'loose'
+                    }});
+                    mermaid.run();
+                }}
+            }} catch (err) {{
+                console.error("Markdown/Mermaid rendering error:", err);
+            }}
+        }})();
     </script>
 </body>
 </html>"""

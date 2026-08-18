@@ -73,43 +73,64 @@
     </g>
         <g id="Main_Content_Viewport" transform="translate(270, 20)">
             <rect width="1150" height="920" rx="20" fill="#0c101a" stroke="#161f30" stroke-width="1.2"/>
-            <text x="30" y="45" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">VIEW: 07: 社内役割別研修ガイド (3コース統合タブ)</text>
             
-            <!-- Topbar Tools -->
-            <g transform="translate(760, 25)">
-                <rect width="360" height="36" rx="8" fill="#131b2e" stroke="#1e293b"/>
-                <text x="20" y="23" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12">EN / 中文 / KO / <tspan fill="#baff66" font-weight="bold">JP</tspan></text>
-                <text x="180" y="23" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">🔑 ログイン</text>
-                <text x="280" y="23" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">🌗 ライト</text>
+        <!-- Training Guide 3-Course Curriculum -->
+        <g transform="translate(30, 20)">
+            <text x="0" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="bold">社内役割別研修・オンボーディングガイド</text>
+            <text x="0" y="55" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">役割別カリキュラムを選択し、機能解説・受講ポイント・操作手順を確認</text>
+            
+            <g transform="translate(0, 80)">
+                <!-- 3 Tabs Header -->
+                <g transform="translate(0, 0)">
+                    <rect width="340" height="45" rx="8" fill="#162a15" stroke="#baff66"/>
+                    <text x="170" y="28" fill="#baff66" font-family="Arial, sans-serif" font-size="13" font-weight="bold" text-anchor="middle">① 全社員基礎研修 (選択中)</text>
+                </g>
+                <g transform="translate(365, 0)">
+                    <rect width="340" height="45" rx="8" fill="#101726" stroke="#1e293b"/>
+                    <text x="170" y="28" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">② 営業・HR専門研修</text>
+                </g>
+                <g transform="translate(730, 0)">
+                    <rect width="340" height="45" rx="8" fill="#101726" stroke="#1e293b"/>
+                    <text x="170" y="28" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">③ 管理者管理研修</text>
+                </g>
+
+                <!-- Course 1 Panel Container -->
+                <g transform="translate(0, 65)">
+                    <rect width="1070" height="675" rx="14" fill="#101726" stroke="#1e293b"/>
+                    
+                    <text x="30" y="45" fill="#baff66" font-family="Arial, sans-serif" font-size="18" font-weight="bold">コース①: 全社員基礎研修（オンボーディング・勤怠・アンケート）</text>
+                    <text x="30" y="75" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">初期セットアップ、適性アンケート回答、勤怠打刻の手順を完全習得します。</text>
+
+                    <!-- Curriculum Grid -->
+                    <g transform="translate(30, 110)">
+                        <rect width="490" height="180" rx="10" fill="#090d16" stroke="#161f30"/>
+                        <text x="24" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Lesson 1: 初期アクティベーション</text>
+                        <text x="24" y="65" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="12">アカウント発行後の初期セットアップと規約同意フロー</text>
+                        <rect x="24" y="115" width="200" height="40" rx="6" fill="#131b2e" stroke="#1e293b"/>
+                        <text x="124" y="140" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">⚙️ セットアップへ移動</text>
+                    </g>
+
+                    <g transform="translate(550, 110)">
+                        <rect width="490" height="180" rx="10" fill="#090d16" stroke="#161f30"/>
+                        <text x="24" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Lesson 2: 勤怠打刻 ＆ 36協定理解</text>
+                        <text x="24" y="65" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="12">打刻操作と月次残業時間の自己管理ポイント</text>
+                        <rect x="24" y="115" width="200" height="40" rx="6" fill="#131b2e" stroke="#1e293b"/>
+                        <text x="124" y="140" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12" text-anchor="middle">⏱️ 勤怠管理へ移動</text>
+                    </g>
+
+                    <!-- Documentation Link Card (Single Tab) -->
+                    <g transform="translate(30, 320)">
+                        <rect width="1010" height="280" rx="10" fill="#090d16" stroke="#161f30"/>
+                        <text x="30" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">📚 研修詳細資料・ハンドブック (同一タブで閲覧)</text>
+                        
+                        <rect x="30" y="70" width="950" height="60" rx="8" fill="#131b2e" stroke="#1e293b"/>
+                        <text x="50" y="105" fill="#8bdcff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">📖 全社員向け基礎研修ハンドブック (FOUNDATION_TRAINING_HANDBOOK.md)</text>
+                        
+                        <rect x="30" y="145" width="950" height="60" rx="8" fill="#131b2e" stroke="#1e293b"/>
+                        <text x="50" y="180" fill="#8bdcff" font-family="Arial, sans-serif" font-size="13" font-weight="bold">📖 開発ナレッジフロー・シーケンス図 (SEQUENCE_DIAGRAMS.md)</text>
+                    </g>
+                </g>
             </g>
-
-            <!-- Screen Specific Wireframe Content Container -->
-            <g transform="translate(30, 80)">
-                <rect width="1090" height="810" rx="14" fill="#090d16" stroke="#162235"/>
-                <text x="30" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="bold">07: 社内役割別研修ガイド (3コース統合タブ)</text>
-                <text x="30" y="75" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">Production-ready UI/UX component structure with zero layout shift.</text>
-                
-                <!-- 3 Feature Mock Cards -->
-                <g transform="translate(30, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section A: Core Functional Panel</text>
-                    <rect x="20" y="55" width="290" height="120" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="190" width="290" height="240" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="445" width="290" height="180" rx="8" fill="#0c1220" stroke="#19253a"/>
-                </g>
-
-                <g transform="translate(380, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section B: AI Analytics & Actions</text>
-                    <rect x="20" y="55" width="290" height="280" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="350" width="290" height="275" rx="8" fill="#0c1220" stroke="#19253a"/>
-                </g>
-
-                <g transform="translate(730, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#ffd166" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section C: Operations & SLA</text>
-                    <rect x="20" y="55" width="290" height="570" rx="8" fill="#0c1220" stroke="#19253a"/>
-                </g>
-            </g>
+        </g>
         </g>
         </svg>

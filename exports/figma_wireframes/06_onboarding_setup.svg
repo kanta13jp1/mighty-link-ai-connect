@@ -73,43 +73,48 @@
     </g>
         <g id="Main_Content_Viewport" transform="translate(270, 20)">
             <rect width="1150" height="920" rx="20" fill="#0c101a" stroke="#161f30" stroke-width="1.2"/>
-            <text x="30" y="45" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">VIEW: 06: 初期セットアップ & アカウント有効化</text>
             
-            <!-- Topbar Tools -->
-            <g transform="translate(760, 25)">
-                <rect width="360" height="36" rx="8" fill="#131b2e" stroke="#1e293b"/>
-                <text x="20" y="23" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12">EN / 中文 / KO / <tspan fill="#baff66" font-weight="bold">JP</tspan></text>
-                <text x="180" y="23" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">🔑 ログイン</text>
-                <text x="280" y="23" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">🌗 ライト</text>
+        <!-- Onboarding & Setup -->
+        <g transform="translate(30, 20)">
+            <text x="0" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="bold">初期セットアップ ＆ アカウント有効化</text>
+            <text x="0" y="55" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">3ステップで組織設定・規約同意・アカウント有効化を完了</text>
+            
+            <!-- 3-Step Wizard Cards -->
+            <g transform="translate(0, 80)">
+                <!-- Step 1 (Done) -->
+                <g transform="translate(0, 0)">
+                    <rect width="340" height="450" rx="12" fill="#101726" stroke="#baff66" stroke-width="1.5"/>
+                    <text x="20" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Step 1: 組織プロファイル</text>
+                    <rect x="20" y="55" width="300" height="36" rx="6" fill="#090d16"/>
+                    <text x="32" y="78" fill="#ffffff" font-family="Arial, sans-serif" font-size="12">社名: 株式会社マイティリンク</text>
+                    <text x="20" y="420" fill="#baff66" font-family="Arial, sans-serif" font-size="12">✓ 設定完了</text>
+                </g>
+
+                <!-- Step 2 (Active) -->
+                <g transform="translate(365, 0)">
+                    <rect width="340" height="450" rx="12" fill="#162a15" stroke="#baff66" stroke-width="2"/>
+                    <text x="20" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Step 2: 規約同意・法定開示</text>
+                    <rect x="20" y="55" width="300" height="300" rx="6" fill="#090d16" stroke="#1e293b"/>
+                    <text x="32" y="85" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">利用規約、プライバシーポリシー、特商法表記</text>
+                    <text x="20" y="420" fill="#ffd166" font-family="Arial, sans-serif" font-size="12">● 現在進行中 (同意チェック必須)</text>
+                </g>
+
+                <!-- Step 3 (Pending) -->
+                <g transform="translate(730, 0)">
+                    <rect width="340" height="450" rx="12" fill="#101726" stroke="#1e293b"/>
+                    <text x="20" y="35" fill="#8b949e" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Step 3: アカウント有効化</text>
+                    <rect x="20" y="55" width="300" height="300" rx="6" fill="#090d16"/>
+                    <text x="20" y="420" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">○ 待機中</text>
+                </g>
+
+                <!-- Big Activation Action -->
+                <g transform="translate(0, 480)">
+                    <rect width="1070" height="260" rx="14" fill="#101726" stroke="#1e293b"/>
+                    <text x="30" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">利用規約・プライバシーポリシーに同意して有効化</text>
+                    <rect x="30" y="160" width="1010" height="60" rx="10" fill="#162a15" stroke="#baff66"/>
+                    <text x="535" y="197" fill="#baff66" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">🚀 アカウントを有効化して利用開始</text>
+                </g>
             </g>
-
-            <!-- Screen Specific Wireframe Content Container -->
-            <g transform="translate(30, 80)">
-                <rect width="1090" height="810" rx="14" fill="#090d16" stroke="#162235"/>
-                <text x="30" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="bold">06: 初期セットアップ & アカウント有効化</text>
-                <text x="30" y="75" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">Production-ready UI/UX component structure with zero layout shift.</text>
-                
-                <!-- 3 Feature Mock Cards -->
-                <g transform="translate(30, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section A: Core Functional Panel</text>
-                    <rect x="20" y="55" width="290" height="120" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="190" width="290" height="240" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="445" width="290" height="180" rx="8" fill="#0c1220" stroke="#19253a"/>
-                </g>
-
-                <g transform="translate(380, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section B: AI Analytics & Actions</text>
-                    <rect x="20" y="55" width="290" height="280" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="350" width="290" height="275" rx="8" fill="#0c1220" stroke="#19253a"/>
-                </g>
-
-                <g transform="translate(730, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#ffd166" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section C: Operations & SLA</text>
-                    <rect x="20" y="55" width="290" height="570" rx="8" fill="#0c1220" stroke="#19253a"/>
-                </g>
-            </g>
+        </g>
         </g>
         </svg>

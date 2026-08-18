@@ -3975,7 +3975,7 @@
                     <span class="status-dot"></span>
                     <span id="api-status">Seedance API Preview</span>
                     <span>/</span>
-                    <a href="admin" style="color: var(--blue); font-weight: 700; text-decoration: underline;" target="_blank" rel="noopener">Admin</a>
+                    <a href="admin" style="color: var(--blue); font-weight: 700; text-decoration: underline;">Admin</a>
                 </div>
                 <div id="auth-nav-container" style="display: flex; align-items: center; gap: 8px;">
                     <button class="auth-btn-nav" id="open-login-btn" onclick="openAuthModal('login')" data-i18n="auth_login_btn">🔑 ログイン</button>
@@ -5358,10 +5358,10 @@
                 <button class="sample-btn" onclick="generateKnowledgeFlowArtifacts()">Refresh</button>
             </div>
             <div class="knowledge-flow-grid">
-                <a class="artifact-link" href="exports/knowledge_flow/notebooklm_agent_brief.md" target="_blank" rel="noopener"><strong>NotebookLM</strong><span>Agent brief</span></a>
-                <a class="artifact-link" href="exports/knowledge_flow/slack_ceo_update.md" target="_blank" rel="noopener"><strong>Slack</strong><span>Update draft</span></a>
-                <a class="artifact-link" href="exports/knowledge_flow/notion_decision_log.csv" target="_blank" rel="noopener"><strong>Notion</strong><span>Decision log</span></a>
-                <a class="artifact-link" href="exports/knowledge_flow/obsidian_vault/Mighty%20Skill-Bridge%20Home.md" target="_blank" rel="noopener"><strong>Obsidian</strong><span>Vault home</span></a>
+                <a class="artifact-link" href="exports/knowledge_flow/notebooklm_agent_brief.md"><strong>NotebookLM</strong><span>Agent brief</span></a>
+                <a class="artifact-link" href="exports/knowledge_flow/slack_ceo_update.md"><strong>Slack</strong><span>Update draft</span></a>
+                <a class="artifact-link" href="exports/knowledge_flow/notion_decision_log.csv"><strong>Notion</strong><span>Decision log</span></a>
+                <a class="artifact-link" href="exports/knowledge_flow/obsidian_vault/Mighty%20Skill-Bridge%20Home.md"><strong>Obsidian</strong><span>Vault home</span></a>
             </div>
             <div id="knowledge-flow-output" class="knowledge-flow-output">Ready.</div>
         </section>
@@ -5513,7 +5513,7 @@
                     <h3>資料リンク</h3>
                     <a href="docs/DEVELOPMENT_KNOWLEDGE_FLOW.html">Mighty Knowledge Flow</a>
                     <a href="exports/sequence-diagrams/index.html">Mighty Architecture (シーケンス図)</a>
-                    <a href="admin" target="_blank" rel="noopener">管理者画面 (DB直通)</a>
+                    <a href="admin">管理者画面 (DB直通)</a>
                 </div>
                 <div class="footer-column">
                     <h3>法定・規約</h3>
@@ -5775,7 +5775,7 @@
                 const targetLink = e.target.closest('a[href^="#"]');
                 if (targetLink && !targetLink.hasAttribute('onclick')) {
                     const href = targetLink.getAttribute('href');
-                    if (href && href !== '#' && !href.startsWith('#training-modal')) {
+                    if (href && href !== '#') {
                         e.preventDefault();
                         switchAppTab(href, true);
                     }
@@ -7177,7 +7177,7 @@
         function generateKnowledgeFlowArtifacts() {
             const output = document.getElementById("knowledge-flow-output");
             output.innerHTML = knowledgeFlowArtifacts
-                .map(path => `<a href="${path}" target="_blank" rel="noopener">${path}</a>`)
+                .map(path => `<a href="${path}">${path}</a>`)
                 .join("<br>");
         }
 

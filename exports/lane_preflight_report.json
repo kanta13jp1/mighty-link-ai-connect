@@ -1,6 +1,6 @@
 {
   "task": "T894",
-  "mode": "fast",
+  "mode": "full",
   "guard_count": 28,
   "exempt_count": 3,
   "test_file_count": 154,
@@ -119,10 +119,11 @@
     }
   },
   "pytest": {
-    "skipped": true,
+    "skipped": false,
     "failed": 0,
-    "errors": 0,
-    "collected": 0
+    "errors": 1,
+    "collected": 879,
+    "exit_code": 1
   },
   "hypotheses": [
     {
@@ -152,14 +153,14 @@
     {
       "id": "H5",
       "title": "pytest tests/ の failed/error が0",
-      "passed": true,
-      "detail": "高速モード(未実行) — push前に --full を実行すること"
+      "passed": false,
+      "detail": "failed=0, errors=1"
     },
     {
       "id": "H6",
       "title": "収集テストが400件以上(スイート縮退検知)",
       "passed": true,
-      "detail": "高速モード(未実行) — push前に --full を実行すること"
+      "detail": "収集=879"
     },
     {
       "id": "H7",
@@ -182,9 +183,9 @@
     {
       "id": "H10",
       "title": "プリフライト全体が完全・整合(ドリフト0)",
-      "passed": true,
-      "detail": "先行ドリフト=なし"
+      "passed": false,
+      "detail": "先行ドリフト=あり"
     }
   ],
-  "all_passed": true
+  "all_passed": false
 }

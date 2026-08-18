@@ -73,43 +73,50 @@
     </g>
         <g id="Main_Content_Viewport" transform="translate(270, 20)">
             <rect width="1150" height="920" rx="20" fill="#0c101a" stroke="#161f30" stroke-width="1.2"/>
-            <text x="30" y="45" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">VIEW: 04: 従業員適性・状況診断アンケート</text>
             
-            <!-- Topbar Tools -->
-            <g transform="translate(760, 25)">
-                <rect width="360" height="36" rx="8" fill="#131b2e" stroke="#1e293b"/>
-                <text x="20" y="23" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12">EN / 中文 / KO / <tspan fill="#baff66" font-weight="bold">JP</tspan></text>
-                <text x="180" y="23" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">🔑 ログイン</text>
-                <text x="280" y="23" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">🌗 ライト</text>
-            </g>
-
-            <!-- Screen Specific Wireframe Content Container -->
-            <g transform="translate(30, 80)">
-                <rect width="1090" height="810" rx="14" fill="#090d16" stroke="#162235"/>
-                <text x="30" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="bold">04: 従業員適性・状況診断アンケート</text>
-                <text x="30" y="75" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">Production-ready UI/UX component structure with zero layout shift.</text>
+        <!-- Survey / Employee Assessment -->
+        <g transform="translate(30, 20)">
+            <text x="0" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="bold">従業員向け適性・状況診断アンケート</text>
+            <text x="0" y="55" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">現在の業務負荷・成長意欲・キャリア希望を迅速に可視化</text>
+            
+            <g transform="translate(0, 80)">
+                <rect width="1070" height="740" rx="14" fill="#101726" stroke="#1e293b"/>
                 
-                <!-- 3 Feature Mock Cards -->
-                <g transform="translate(30, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section A: Core Functional Panel</text>
-                    <rect x="20" y="55" width="290" height="120" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="190" width="290" height="240" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="445" width="290" height="180" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <!-- Q1 -->
+                <g transform="translate(30, 40)">
+                    <text x="0" y="20" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Q1. 現在のプロジェクトにおける業務負荷・スケジュール感はどうですか？</text>
+                    <g transform="translate(0, 35)">
+                        <circle cx="20" cy="15" r="8" fill="#162a15" stroke="#baff66"/>
+                        <text x="36" y="20" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="13">1. 余裕がある</text>
+                        <circle cx="160" cy="15" r="8" fill="#162a15" stroke="#baff66"/>
+                        <circle cx="160" cy="15" r="4" fill="#baff66"/>
+                        <text x="176" y="20" fill="#baff66" font-family="Arial, sans-serif" font-size="13" font-weight="bold">2. 適切・順調 (選択中)</text>
+                        <circle cx="330" cy="15" r="8" fill="#090d16" stroke="#8b949e"/>
+                        <text x="346" y="20" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">3. やや負荷が高い</text>
+                    </g>
                 </g>
 
-                <g transform="translate(380, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section B: AI Analytics & Actions</text>
-                    <rect x="20" y="55" width="290" height="280" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="350" width="290" height="275" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <!-- Q2 -->
+                <g transform="translate(30, 140)">
+                    <text x="0" y="20" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Q2. 今後1年で特に習得・強化したい技術スタック・役割は？</text>
+                    <rect x="0" y="35" width="1010" height="100" rx="8" fill="#090d16" stroke="#161f30"/>
+                    <text x="20" y="65" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="13">AIエージェント開発およびクラウドネイティブアーキテクチャ設計</text>
                 </g>
 
-                <g transform="translate(730, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#ffd166" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section C: Operations & SLA</text>
-                    <rect x="20" y="55" width="290" height="570" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <!-- Q3 -->
+                <g transform="translate(30, 280)">
+                    <text x="0" y="20" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Q3. 直近のキャリア面談希望の有無</text>
+                    <g transform="translate(0, 35)">
+                        <circle cx="20" cy="15" r="8" fill="#162a15" stroke="#baff66"/>
+                        <circle cx="20" cy="15" r="4" fill="#baff66"/>
+                        <text x="36" y="20" fill="#baff66" font-family="Arial, sans-serif" font-size="13" font-weight="bold">希望する (今月中に面談設定)</text>
+                    </g>
                 </g>
+
+                <!-- Submit Button -->
+                <rect x="30" y="640" width="1010" height="56" rx="10" fill="#162a15" stroke="#baff66"/>
+                <text x="535" y="675" fill="#baff66" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle">📨 アンケート回答を送信</text>
             </g>
+        </g>
         </g>
         </svg>

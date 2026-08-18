@@ -73,43 +73,64 @@
     </g>
         <g id="Main_Content_Viewport" transform="translate(270, 20)">
             <rect width="1150" height="920" rx="20" fill="#0c101a" stroke="#161f30" stroke-width="1.2"/>
-            <text x="30" y="45" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">VIEW: 03: 勤怠管理 & 36協定AI解析</text>
             
-            <!-- Topbar Tools -->
-            <g transform="translate(760, 25)">
-                <rect width="360" height="36" rx="8" fill="#131b2e" stroke="#1e293b"/>
-                <text x="20" y="23" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12">EN / 中文 / KO / <tspan fill="#baff66" font-weight="bold">JP</tspan></text>
-                <text x="180" y="23" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">🔑 ログイン</text>
-                <text x="280" y="23" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">🌗 ライト</text>
-            </g>
-
-            <!-- Screen Specific Wireframe Content Container -->
-            <g transform="translate(30, 80)">
-                <rect width="1090" height="810" rx="14" fill="#090d16" stroke="#162235"/>
-                <text x="30" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="bold">03: 勤怠管理 & 36協定AI解析</text>
-                <text x="30" y="75" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">Production-ready UI/UX component structure with zero layout shift.</text>
+        <!-- Attendance & 36 Compliance -->
+        <g transform="translate(30, 20)">
+            <text x="0" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="bold">勤怠管理 ＆ 36協定・残業リスクAI解析</text>
+            <text x="0" y="55" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">打刻集計・残業予測アラート・CSV一括インポートを完備</text>
+            
+            <!-- Left: Calendar / Timesheet (620px) -->
+            <g transform="translate(0, 80)">
+                <rect width="620" height="740" rx="14" fill="#101726" stroke="#1e293b"/>
+                <text x="24" y="35" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">📅 2026年8月 勤務表カレンダー</text>
                 
-                <!-- 3 Feature Mock Cards -->
-                <g transform="translate(30, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section A: Core Functional Panel</text>
-                    <rect x="20" y="55" width="290" height="120" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="190" width="290" height="240" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="445" width="290" height="180" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <!-- Weekday Header -->
+                <g transform="translate(24, 60)">
+                    <rect width="572" height="30" rx="6" fill="#090d16"/>
+                    <text x="30" y="20" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">月</text>
+                    <text x="110" y="20" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">火</text>
+                    <text x="190" y="20" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">水</text>
+                    <text x="270" y="20" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">木</text>
+                    <text x="350" y="20" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">金</text>
+                    <text x="430" y="20" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12">土</text>
+                    <text x="510" y="20" fill="#ff7b72" font-family="Arial, sans-serif" font-size="12">日</text>
                 </g>
 
-                <g transform="translate(380, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section B: AI Analytics & Actions</text>
-                    <rect x="20" y="55" width="290" height="280" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="350" width="290" height="275" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <!-- Sample Days Grid -->
+                <rect x="24" y="100" width="572" height="520" rx="8" fill="#090d16" stroke="#161f30"/>
+                <text x="50" y="140" fill="#baff66" font-family="Arial, sans-serif" font-size="12">09:00 - 18:00 (実働8h)</text>
+                <text x="50" y="170" fill="#baff66" font-family="Arial, sans-serif" font-size="12">09:00 - 18:30 (残業0.5h)</text>
+
+                <!-- Action Button -->
+                <rect x="24" y="650" width="572" height="50" rx="10" fill="#162a15" stroke="#baff66"/>
+                <text x="310" y="682" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="middle">⏱️ 現在時刻で出勤打刻</text>
+            </g>
+
+            <!-- Right: 36 Compliance Meter (430px) -->
+            <g transform="translate(640, 80)">
+                <rect width="430" height="740" rx="14" fill="#101726" stroke="#1e293b"/>
+                <text x="24" y="35" fill="#ffd166" font-family="Arial, sans-serif" font-size="15" font-weight="bold">⚠️ 36協定・残業時間モニタリング</text>
+                
+                <!-- Gauge -->
+                <g transform="translate(24, 70)">
+                    <rect width="382" height="180" rx="10" fill="#090d16" stroke="#161f30"/>
+                    <text x="20" y="35" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">当月累計残業時間</text>
+                    <text x="20" y="80" fill="#baff66" font-family="Arial, sans-serif" font-size="36" font-weight="bold">14.5 <tspan font-size="18">/ 45.0 時間</tspan></text>
+                    <rect x="20" y="110" width="342" height="14" rx="7" fill="#161f30"/>
+                    <rect x="20" y="110" width="110" height="14" rx="7" fill="#baff66"/>
+                    <text x="20" y="150" fill="#baff66" font-family="Arial, sans-serif" font-size="12">健全: 上限45時間まで残り 30.5時間</text>
                 </g>
 
-                <g transform="translate(730, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#ffd166" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section C: Operations & SLA</text>
-                    <rect x="20" y="55" width="290" height="570" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <!-- CSV Ingest Box -->
+                <g transform="translate(24, 280)">
+                    <rect width="382" height="420" rx="10" fill="#090d16" stroke="#161f30"/>
+                    <text x="20" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">📂 勤怠CSVインポート・一括解析</text>
+                    <rect x="20" y="60" width="342" height="240" rx="8" fill="#04060a" stroke="#162a15" stroke-dasharray="6"/>
+                    <text x="191" y="170" fill="#8b949e" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">CSVファイルをここにドラッグ＆ドロップ</text>
+                    <rect x="20" y="330" width="342" height="50" rx="8" fill="#131b2e" stroke="#1e293b"/>
+                    <text x="191" y="362" fill="#8bdcff" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">CSVファイルを選択</text>
                 </g>
             </g>
+        </g>
         </g>
         </svg>

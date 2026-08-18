@@ -73,43 +73,75 @@
     </g>
         <g id="Main_Content_Viewport" transform="translate(270, 20)">
             <rect width="1150" height="920" rx="20" fill="#0c101a" stroke="#161f30" stroke-width="1.2"/>
-            <text x="30" y="45" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">VIEW: 01: 営業メールAIマッチング & 提案ハブ</text>
             
-            <!-- Topbar Tools -->
-            <g transform="translate(760, 25)">
-                <rect width="360" height="36" rx="8" fill="#131b2e" stroke="#1e293b"/>
-                <text x="20" y="23" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12">EN / 中文 / KO / <tspan fill="#baff66" font-weight="bold">JP</tspan></text>
-                <text x="180" y="23" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">🔑 ログイン</text>
-                <text x="280" y="23" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">🌗 ライト</text>
-            </g>
-
-            <!-- Screen Specific Wireframe Content Container -->
-            <g transform="translate(30, 80)">
-                <rect width="1090" height="810" rx="14" fill="#090d16" stroke="#162235"/>
-                <text x="30" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="bold">01: 営業メールAIマッチング & 提案ハブ</text>
-                <text x="30" y="75" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">Production-ready UI/UX component structure with zero layout shift.</text>
+        <!-- Sales Email AI Matching Hub -->
+        <g transform="translate(30, 20)">
+            <text x="0" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="bold">営業メール AIマッチング ＆ 提案ハブ</text>
+            <text x="0" y="55" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">受信メールから案件要件を自動抽出し、最適人材を1-Clickで提案生成</text>
+            
+            <!-- Left: Incoming Sales Email Queue (480px) -->
+            <g transform="translate(0, 80)">
+                <rect width="500" height="740" rx="14" fill="#101726" stroke="#1e293b"/>
+                <text x="24" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">📥 受信案件メール一覧 (新着 12件)</text>
                 
-                <!-- 3 Feature Mock Cards -->
-                <g transform="translate(30, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section A: Core Functional Panel</text>
-                    <rect x="20" y="55" width="290" height="120" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="190" width="290" height="240" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="445" width="290" height="180" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <!-- Email Item 1 (Selected) -->
+                <g transform="translate(16, 55)">
+                    <rect width="468" height="120" rx="10" fill="#162a15" stroke="#baff66" stroke-width="1.5"/>
+                    <text x="20" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">【急募】FinTech向けPython/GCPリードエンジニア</text>
+                    <text x="20" y="55" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">送信元: 株式会社サイバーソリューションズ / 10分前</text>
+                    <rect x="20" y="70" width="80" height="24" rx="6" fill="#090d16"/>
+                    <text x="32" y="86" fill="#baff66" font-family="Arial, sans-serif" font-size="11">単価 110万</text>
+                    <rect x="110" y="70" width="90" height="24" rx="6" fill="#090d16"/>
+                    <text x="120" y="86" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11">フルリモート</text>
+                </g>
+                
+                <!-- Email Item 2 -->
+                <g transform="translate(16, 190)">
+                    <rect width="468" height="120" rx="10" fill="#090d16" stroke="#161f30"/>
+                    <text x="20" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">AWS/Kubernetes インフラ刷新プロジェクト</text>
+                    <text x="20" y="55" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">送信元: クラウドネイティブ株式会社 / 1時間前</text>
                 </g>
 
-                <g transform="translate(380, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section B: AI Analytics & Actions</text>
-                    <rect x="20" y="55" width="290" height="280" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="350" width="290" height="275" rx="8" fill="#0c1220" stroke="#19253a"/>
-                </g>
-
-                <g transform="translate(730, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#ffd166" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section C: Operations & SLA</text>
-                    <rect x="20" y="55" width="290" height="570" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <!-- Email Item 3 -->
+                <g transform="translate(16, 325)">
+                    <rect width="468" height="120" rx="10" fill="#090d16" stroke="#161f30"/>
+                    <text x="20" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Next.js/React フロントエンド開発リード</text>
+                    <text x="20" y="55" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">送信元: グロースハック合同会社 / 3時間前</text>
                 </g>
             </g>
+
+            <!-- Right: Matched Candidates & 1-Click Proposal (550px) -->
+            <g transform="translate(520, 80)">
+                <rect width="550" height="740" rx="14" fill="#101726" stroke="#1e293b"/>
+                <text x="24" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold">⚡ 最適適合人材 (マッチ度 96%)</text>
+                
+                <!-- Candidate Card -->
+                <g transform="translate(20, 55)">
+                    <rect width="510" height="240" rx="10" fill="#090d16" stroke="#161f30"/>
+                    <circle cx="50" cy="50" r="24" fill="#162e12" stroke="#baff66"/>
+                    <text x="50" y="56" fill="#baff66" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">山</text>
+                    <text x="90" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">山田 太郎 (34歳 / 経験8年)</text>
+                    <text x="90" y="65" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">シニアバックエンドエンジニア / GCP認定プロフェッショナル</text>
+                    
+                    <text x="30" y="110" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="13">マッチング根拠: Python/FastAPI 実務7年, GCP BigQuery/Cloud Run 設計実績</text>
+                    <rect x="30" y="130" width="100" height="26" rx="6" fill="#162a15" stroke="#baff66"/>
+                    <text x="45" y="148" fill="#baff66" font-family="Arial, sans-serif" font-size="11">一致: 98%</text>
+                </g>
+
+                <!-- Proposal Preview & Action -->
+                <g transform="translate(20, 315)">
+                    <rect width="510" height="400" rx="10" fill="#090d16" stroke="#161f30"/>
+                    <text x="20" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">✉️ 自動生成 提案メール文面プレビュー</text>
+                    <rect x="20" y="55" width="470" height="250" rx="6" fill="#04060a" stroke="#131b2e"/>
+                    <text x="35" y="85" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="12">件名: 【ご提案】FinTech案件向け即戦力エンジニア（山田）のご推薦</text>
+                    <text x="35" y="115" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">サイバーソリューションズ ご担当者様</text>
+                    <text x="35" y="135" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">平素より大変お世話になっております。Mighty-Linkの佐藤です。</text>
+                    <text x="35" y="155" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">ご提示いただいたPython/GCPリード案件に合致する要員をご提案いたします...</text>
+                    
+                    <rect x="20" y="325" width="470" height="50" rx="8" fill="#162a15" stroke="#baff66"/>
+                    <text x="255" y="357" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="middle">🚀 1-Click で提案メールを送信</text>
+                </g>
+            </g>
+        </g>
         </g>
         </svg>

@@ -4,7 +4,7 @@
     "Stop": [
       {
         "type": "command",
-        "command": "python scripts/record_session_log.py",
+        "command": "python -c \"import sys, subprocess, pathlib; cwd = pathlib.Path.cwd(); candidates = [cwd / 'scripts' / 'record_session_log.py', cwd.parent / 'scripts' / 'record_session_log.py', pathlib.Path(r'C:/Users/kanta/GitHub/mighty-link-ai-connect/scripts/record_session_log.py')]; target = next((c for c in candidates if c.is_file()), None); sys.exit(1) if target is None else sys.exit(subprocess.run([sys.executable, str(target)]).returncode)\"",
         "timeout": 30
       }
     ]

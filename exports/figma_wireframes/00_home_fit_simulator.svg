@@ -73,43 +73,74 @@
     </g>
         <g id="Main_Content_Viewport" transform="translate(270, 20)">
             <rect width="1150" height="920" rx="20" fill="#0c101a" stroke="#161f30" stroke-width="1.2"/>
-            <text x="30" y="45" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">VIEW: 00: ホーム / AIフィットシミュレーター & ブランド動画</text>
             
-            <!-- Topbar Tools -->
-            <g transform="translate(760, 25)">
-                <rect width="360" height="36" rx="8" fill="#131b2e" stroke="#1e293b"/>
-                <text x="20" y="23" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12">EN / 中文 / KO / <tspan fill="#baff66" font-weight="bold">JP</tspan></text>
-                <text x="180" y="23" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">🔑 ログイン</text>
-                <text x="280" y="23" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">🌗 ライト</text>
-            </g>
-
-            <!-- Screen Specific Wireframe Content Container -->
-            <g transform="translate(30, 80)">
-                <rect width="1090" height="810" rx="14" fill="#090d16" stroke="#162235"/>
-                <text x="30" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="bold">00: ホーム / AIフィットシミュレーター & ブランド動画</text>
-                <text x="30" y="75" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">Production-ready UI/UX component structure with zero layout shift.</text>
+        <!-- Home / AI Fit Simulator -->
+        <g transform="translate(30, 20)">
+            <text x="0" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="bold">AI スキル・カルチャー適合シミュレーター</text>
+            <text x="0" y="55" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">即戦力性・カルチャー・成長性・定着率をリアルタイム多軸解析</text>
+            
+            <!-- Left: Profile Inputs (480px) -->
+            <g transform="translate(0, 80)">
+                <rect width="520" height="740" rx="14" fill="#101726" stroke="#1e293b"/>
+                <text x="24" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">求職者・人材プロファイル入力</text>
                 
-                <!-- 3 Feature Mock Cards -->
-                <g transform="translate(30, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section A: Core Functional Panel</text>
-                    <rect x="20" y="55" width="290" height="120" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="190" width="290" height="240" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="445" width="290" height="180" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <rect x="24" y="55" width="472" height="40" rx="8" fill="#090d16" stroke="#161f30"/>
+                <text x="40" y="80" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">経験職種: フルスタックエンジニア / 5年</text>
+                
+                <rect x="24" y="110" width="472" height="120" rx="8" fill="#090d16" stroke="#161f30"/>
+                <text x="40" y="135" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">保有スキル: Python, TypeScript, React, GCP, Terraform</text>
+                
+                <rect x="24" y="245" width="472" height="40" rx="8" fill="#090d16" stroke="#161f30"/>
+                <text x="40" y="270" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">希望年収: 750万〜900万円 / フルリモート</text>
+                
+                <rect x="24" y="300" width="472" height="340" rx="8" fill="#090d16" stroke="#161f30"/>
+                <text x="40" y="330" fill="#baff66" font-family="Arial, sans-serif" font-size="13" font-weight="bold">候補者レーダーチャート &amp; AI適合レポート</text>
+                <circle cx="260" cy="480" r="100" fill="none" stroke="#1e293b" stroke-dasharray="4"/>
+                <polygon points="260,400 340,470 300,560 210,540 190,460" fill="rgba(186,255,102,0.15)" stroke="#baff66" stroke-width="2"/>
+                
+                <rect x="24" y="660" width="472" height="50" rx="10" fill="#162a15" stroke="#baff66"/>
+                <text x="260" y="692" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold" text-anchor="middle">⚡ 適合シミュレーションを実行</text>
+            </g>
+            
+            <!-- Right: 4-Axis Score & Video (530px) -->
+            <g transform="translate(540, 80)">
+                <rect width="530" height="340" rx="14" fill="#101726" stroke="#1e293b"/>
+                <text x="24" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold">4軸総合フィットスコア (94 / 100)</text>
+                
+                <g transform="translate(24, 60)">
+                    <text x="0" y="15" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="12">即戦力性 (Performing-Fit)</text>
+                    <rect x="200" y="5" width="280" height="12" rx="6" fill="#090d16"/>
+                    <rect x="200" y="5" width="260" height="12" rx="6" fill="#baff66"/>
+                    <text x="490" y="15" fill="#baff66" font-family="Arial, sans-serif" font-size="12" font-weight="bold">93%</text>
+                </g>
+                <g transform="translate(24, 95)">
+                    <text x="0" y="15" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="12">カルチャー適合性 (Culture-Fit)</text>
+                    <rect x="200" y="5" width="280" height="12" rx="6" fill="#090d16"/>
+                    <rect x="200" y="5" width="250" height="12" rx="6" fill="#8bdcff"/>
+                    <text x="490" y="15" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">89%</text>
+                </g>
+                <g transform="translate(24, 130)">
+                    <text x="0" y="15" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="12">将来成長性 (Growth-Fit)</text>
+                    <rect x="200" y="5" width="280" height="12" rx="6" fill="#090d16"/>
+                    <rect x="200" y="5" width="270" height="12" rx="6" fill="#ffd166"/>
+                    <text x="490" y="15" fill="#ffd166" font-family="Arial, sans-serif" font-size="12" font-weight="bold">96%</text>
+                </g>
+                <g transform="translate(24, 165)">
+                    <text x="0" y="15" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="12">定着期待度 (Retention-Fit)</text>
+                    <rect x="200" y="5" width="280" height="12" rx="6" fill="#090d16"/>
+                    <rect x="200" y="5" width="265" height="12" rx="6" fill="#06d6a0"/>
+                    <text x="490" y="15" fill="#06d6a0" font-family="Arial, sans-serif" font-size="12" font-weight="bold">95%</text>
                 </g>
 
-                <g transform="translate(380, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section B: AI Analytics & Actions</text>
-                    <rect x="20" y="55" width="290" height="280" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="350" width="290" height="275" rx="8" fill="#0c1220" stroke="#19253a"/>
-                </g>
-
-                <g transform="translate(730, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#ffd166" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section C: Operations & SLA</text>
-                    <rect x="20" y="55" width="290" height="570" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <!-- Video Showcase Box -->
+                <g transform="translate(0, 360)">
+                    <rect width="530" height="380" rx="14" fill="#101726" stroke="#1e293b"/>
+                    <text x="24" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">サービス紹介デモビデオ</text>
+                    <rect x="24" y="55" width="482" height="300" rx="10" fill="#000000" stroke="#1e293b"/>
+                    <circle cx="265" cy="205" r="30" fill="rgba(186,255,102,0.2)" stroke="#baff66" stroke-width="2"/>
+                    <polygon points="260,195 275,205 260,215" fill="#baff66"/>
                 </g>
             </g>
+        </g>
         </g>
         </svg>

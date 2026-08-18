@@ -73,43 +73,64 @@
     </g>
         <g id="Main_Content_Viewport" transform="translate(270, 20)">
             <rect width="1150" height="920" rx="20" fill="#0c101a" stroke="#161f30" stroke-width="1.2"/>
-            <text x="30" y="45" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">VIEW: 02: 管理者統合ダッシュボード & 監査ログ</text>
             
-            <!-- Topbar Tools -->
-            <g transform="translate(760, 25)">
-                <rect width="360" height="36" rx="8" fill="#131b2e" stroke="#1e293b"/>
-                <text x="20" y="23" fill="#8bdcff" font-family="Arial, sans-serif" font-size="12">EN / 中文 / KO / <tspan fill="#baff66" font-weight="bold">JP</tspan></text>
-                <text x="180" y="23" fill="#8b949e" font-family="Arial, sans-serif" font-size="11">🔑 ログイン</text>
-                <text x="280" y="23" fill="#ffffff" font-family="Arial, sans-serif" font-size="11">🌗 ライト</text>
+        <!-- Admin Dashboard & Audit Trail -->
+        <g transform="translate(30, 20)">
+            <text x="0" y="30" fill="#ffffff" font-family="Arial, sans-serif" font-size="22" font-weight="bold">管理者統合ダッシュボード ＆ 監査ログ</text>
+            <text x="0" y="55" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">組織全体の権限ロール、APIクォータ消費、セキュリティログを一元監視</text>
+            
+            <!-- Top 3 Metrics Cards -->
+            <g transform="translate(0, 80)">
+                <rect width="340" height="110" rx="12" fill="#101726" stroke="#1e293b"/>
+                <text x="20" y="35" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">アクティブユーザー数</text>
+                <text x="20" y="75" fill="#ffffff" font-family="Arial, sans-serif" font-size="28" font-weight="bold">148 名</text>
+                <text x="240" y="75" fill="#baff66" font-family="Arial, sans-serif" font-size="14">+12% (前月比)</text>
+            </g>
+            <g transform="translate(365, 80)">
+                <rect width="340" height="110" rx="12" fill="#101726" stroke="#1e293b"/>
+                <text x="20" y="35" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">月間APIクォータ消費率</text>
+                <text x="20" y="75" fill="#8bdcff" font-family="Arial, sans-serif" font-size="28" font-weight="bold">42.8 %</text>
+                <text x="240" y="75" fill="#8bdcff" font-family="Arial, sans-serif" font-size="14">正常 (枠内)</text>
+            </g>
+            <g transform="translate(730, 80)">
+                <rect width="340" height="110" rx="12" fill="#101726" stroke="#1e293b"/>
+                <text x="20" y="35" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">セキュリティ脅威・ブロック</text>
+                <text x="20" y="75" fill="#ffd166" font-family="Arial, sans-serif" font-size="28" font-weight="bold">0 件</text>
+                <text x="240" y="75" fill="#baff66" font-family="Arial, sans-serif" font-size="14">完全健全</text>
             </g>
 
-            <!-- Screen Specific Wireframe Content Container -->
-            <g transform="translate(30, 80)">
-                <rect width="1090" height="810" rx="14" fill="#090d16" stroke="#162235"/>
-                <text x="30" y="45" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="bold">02: 管理者統合ダッシュボード & 監査ログ</text>
-                <text x="30" y="75" fill="#8b949e" font-family="Arial, sans-serif" font-size="13">Production-ready UI/UX component structure with zero layout shift.</text>
+            <!-- Bottom: User Management Table & Audit Log Timeline -->
+            <g transform="translate(0, 210)">
+                <!-- User Table (650px) -->
+                <rect width="650" height="610" rx="14" fill="#101726" stroke="#1e293b"/>
+                <text x="24" y="35" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">👥 アカウント・権限ロール管理</text>
                 
-                <!-- 3 Feature Mock Cards -->
-                <g transform="translate(30, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#baff66" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section A: Core Functional Panel</text>
-                    <rect x="20" y="55" width="290" height="120" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="190" width="290" height="240" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="445" width="290" height="180" rx="8" fill="#0c1220" stroke="#19253a"/>
-                </g>
+                <!-- Table Header -->
+                <rect x="24" y="55" width="602" height="36" rx="6" fill="#090d16"/>
+                <text x="40" y="78" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">氏名 / メール</text>
+                <text x="280" y="78" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">ロール</text>
+                <text x="420" y="78" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">最終ログイン</text>
+                <text x="550" y="78" fill="#8b949e" font-family="Arial, sans-serif" font-size="12" font-weight="bold">操作</text>
 
-                <g transform="translate(380, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section B: AI Analytics & Actions</text>
-                    <rect x="20" y="55" width="290" height="280" rx="8" fill="#0c1220" stroke="#19253a"/>
-                    <rect x="20" y="350" width="290" height="275" rx="8" fill="#0c1220" stroke="#19253a"/>
-                </g>
-
-                <g transform="translate(730, 110)">
-                    <rect width="330" height="660" rx="12" fill="#101726" stroke="#1c283f"/>
-                    <text x="20" y="35" fill="#ffd166" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Section C: Operations & SLA</text>
-                    <rect x="20" y="55" width="290" height="570" rx="8" fill="#0c1220" stroke="#19253a"/>
+                <!-- Row 1 -->
+                <g transform="translate(24, 100)">
+                    <text x="16" y="24" fill="#ffffff" font-family="Arial, sans-serif" font-size="13">佐藤 賢太 (sato@...)</text>
+                    <text x="256" y="24" fill="#baff66" font-family="Arial, sans-serif" font-size="12">最高統括管理者</text>
+                    <text x="396" y="24" fill="#8b949e" font-family="Arial, sans-serif" font-size="12">本日 09:12</text>
+                    <rect x="520" y="6" width="60" height="24" rx="4" fill="#161f30"/>
+                    <text x="535" y="22" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11">編集</text>
                 </g>
             </g>
+
+            <!-- Right: Audit Logs (400px) -->
+            <g transform="translate(670, 210)">
+                <rect width="400" height="610" rx="14" fill="#101726" stroke="#1e293b"/>
+                <text x="24" y="35" fill="#8bdcff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">🛡️ セキュリティ監査ログ (リアルタイム)</text>
+                <rect x="24" y="55" width="352" height="520" rx="8" fill="#090d16" stroke="#161f30"/>
+                <text x="40" y="85" fill="#baff66" font-family="Arial, sans-serif" font-size="11">[09:12] User LOGIN: sato@... (2FA PASS)</text>
+                <text x="40" y="115" fill="#8bdcff" font-family="Arial, sans-serif" font-size="11">[08:45] API SYNC: IMAP sales emails (12 ingested)</text>
+                <text x="40" y="145" fill="#ffd166" font-family="Arial, sans-serif" font-size="11">[07:30] BACKUP: Supabase pg_dump OK (14.2MB)</text>
+            </g>
+        </g>
         </g>
         </svg>

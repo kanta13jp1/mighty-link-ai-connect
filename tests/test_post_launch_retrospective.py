@@ -14,7 +14,11 @@ import re
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-RETRO = PROJECT_ROOT / "docs" / "POST_LAUNCH_RETROSPECTIVE_2026-07-18.md"
+RETRO = (
+    PROJECT_ROOT / "docs" / "POST_LAUNCH_RETROSPECTIVE_2026-07-18.md"
+    if (PROJECT_ROOT / "docs" / "POST_LAUNCH_RETROSPECTIVE_2026-07-18.md").exists()
+    else PROJECT_ROOT / "docs" / "archive" / "historical_reports" / "POST_LAUNCH_RETROSPECTIVE_2026-07-18.md"
+)
 
 FORBIDDEN_PATTERNS = [
     re.compile(r"sk_(?:live|test)_", re.IGNORECASE),

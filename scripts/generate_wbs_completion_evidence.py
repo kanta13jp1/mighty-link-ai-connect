@@ -40,7 +40,7 @@ EVIDENCE_INDEX = {
     "T876_1": "docs/APTITUDE_MOTIVATION_DEMO_PRIVACY_DESIGN.md",
     "T877_1": "tests/test_theme_toggle.py",
     "T850_1": "exports/access_inventory_audit.md",
-    "T866_1": "docs/POSTMORTEM_2026-07-04_R114_MISSING_PROD_TABLES.md",
+    "T866_1": "docs/archive/historical_reports/POSTMORTEM_2026-07-04_R114_MISSING_PROD_TABLES.md" if (PROJECT_ROOT / "docs/archive/historical_reports/POSTMORTEM_2026-07-04_R114_MISSING_PROD_TABLES.md").exists() else "docs/POSTMORTEM_2026-07-04_R114_MISSING_PROD_TABLES.md",
     "T875": "exports/custom_domain_dns_diagnostic.md",
 }
 NON_PASS_STATES = {"BLOCKED", "HUMAN_GATE", "WARNING"}
