@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import secrets
 import sys
 import tempfile
 from pathlib import Path
@@ -80,6 +81,11 @@ def has_path(obj: Any, dotted: str) -> bool:
 
 def probe_backend() -> dict[str, Any]:
     """Spin an isolated TestClient and capture the four key responses."""
+    os.environ["AI_FORCE_MOCK"] = "1"
+    os.environ["USE_SUPABASE"] = "0"
+    os.environ.setdefault("BASIC_AUTH_USERNAME", f"contract-audit-{os.getpid()}")
+    os.environ.setdefault("BASIC_AUTH_PASSWORD", secrets.token_urlsafe(32))
+
     import app  # noqa: E402
     from fastapi.testclient import TestClient  # noqa: E402
 

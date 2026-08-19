@@ -64,45 +64,33 @@ Firebase Hosting は、リライトより完全一致の静的ファイルを優
 ```
 
 ### 3.2 FastAPI (Python) での認証実装設計
-FastAPI のルート `/` に `HTTPBasic` の認証依存関係を追加します。未認証リクエストは `WWW-Authenticate: Basic` を伴うHTTP 401となり、HTML本文を返しません。
+FastAPI の管理ランタイム用ミドルウェアで、死活監視用の `/api/health` を除く全画面・全APIへ HTTP Basic 認証を適用します。未認証リクエストは `WWW-Authenticate: Basic` を伴うHTTP 401となり、HTML・業務API本文を返しません。個別ルートの認証依存関係も多層防御として維持します。
 
 * **セキュリティスキーマ**: `fastapi.security.HTTPBasic` を使用。
 * **認証情報の取得**: 環境変数 `BASIC_AUTH_USERNAME` および `BASIC_AUTH_PASSWORD` を参照。
-* **fail-closed**: Cloud Functions / Cloud Run の管理ランタイムで認証情報が欠けた場合、既知の開発用デフォルト値へ戻さずHTTP 503で閉鎖します。
-* **キャッシュ制御**: 認証後のHTMLへ `Cache-Control: private, no-store, max-age=0` を付与します。
+* **fail-closed**: 管理ランタイム・ローカル実行とも既知の開発用デフォルト値を持ちません。管理ランタイムで認証情報が欠けた場合、全保護ルートをHTTP 503で閉鎖します。
+* **シークレット分離**: GitHub Actions の `BASIC_AUTH_USERNAME` / `BASIC_AUTH_PASSWORD` 専用SecretsをFirebase Functionsの`.env`へデプロイ時に上書きし、欠落または最小長未満ならデプロイを停止します。
+* **キャッシュ制御**: 認証後の応答へ `Cache-Control: private, no-store, max-age=0` を付与します。
 
 ```python
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from fastapi.responses import HTMLResponse
+from fastapi import Request, status
+from fastapi.responses import JSONResponse
 import os
 import secrets
 
-security = HTTPBasic()
 is_managed_runtime = bool(os.environ.get("K_SERVICE") or os.environ.get("FUNCTION_TARGET"))
 username = os.environ.get("BASIC_AUTH_USERNAME")
 password = os.environ.get("BASIC_AUTH_PASSWORD")
 
-def verify_basic_auth(credentials: HTTPBasicCredentials = Depends(security)):
-    if is_managed_runtime and (not username or not password):
-        raise HTTPException(status_code=503, detail="Site authentication is not configured")
-    if not (
-        secrets.compare_digest(credentials.username, username)
-        and secrets.compare_digest(credentials.password, password)
-    ):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Basic"},
-        )
-    return credentials.username
-
-@app.get("/", response_class=HTMLResponse)
-def read_root(authenticated_user: str = Depends(verify_basic_auth)):
-    return HTMLResponse(
-        content=load_index_html(),
-        headers={"Cache-Control": "private, no-store, max-age=0"},
-    )
+@app.middleware("http")
+async def enforce_managed_runtime_authentication(request: Request, call_next):
+    if not is_managed_runtime or request.url.path == "/api/health":
+        return await call_next(request)
+    if not username or not password:
+        return JSONResponse(status_code=503, content={"detail": "Site authentication is not configured"})
+    # Authorizationヘッダーを復号し、UTF-8 bytesへ変換して
+    # secrets.compare_digest()でユーザー名・パスワードを比較する。
+    ...
 ```
 
 ### 3.3 IP制限の併用設計（将来的な拡張）
@@ -117,10 +105,10 @@ def read_root(authenticated_user: str = Depends(verify_basic_auth)):
 ## 4. 運用・管理ルール
 
 1. **認証情報のローテーション**:
-   * パイロットユーザーが変更されるたび、環境変数 `BASIC_AUTH_PASSWORD` を変更し、GitHub Actions経由で再デプロイを実施します。
-2. **監査ログでの認証試行記録**:
-   * 認証の成否、およびアクセス元のIPアドレスは、監査ログ（`data/audit/`）に自動記録され、不正アクセス試行の早期検出に使用されます。
+   * パイロットユーザーが変更されるたび、GitHub Actions専用Secretsの `BASIC_AUTH_USERNAME` / `BASIC_AUTH_PASSWORD` を更新し、GitHub Actions経由で再デプロイを実施します。値はリポジトリ・Workflowログ・報告書へ記載しません。
+2. **監査ログでのアクセス確認**:
+   * HTTPステータスとアクセス元情報はCloud Run / Cloud Functionsのリクエストログで確認します。アプリケーションはBasic Authの実値を記録しません。認証失敗専用イベントの長期保存は未実装であり、必要時は秘密値を含めない構造化ログとして別途実装します。
 3. **継続検証**:
    * `tests/test_firebase_hosting_auth_gate.py` が `public` 直下への通常ファイル混入と全パスリライト欠落を検知します。
-   * `tests/test_auth_security.py` が未認証401、認証済み200、管理ランタイムの認証設定欠落503、HTMLの `no-store` を検証します。
-   * 本番反映後は `https://mightylink-app.com/` が未認証で401を返し、HTMLマーカーを返さないことを外形確認します。
+   * `tests/test_auth_security.py` が未認証401、認証済み200、全業務APIの管理ランタイム認証、設定欠落503、既知資格情報の非埋め込み、`no-store` を検証します。
+   * 本番反映後は `https://mightylink-app.com/` と業務APIが未認証で401を返し、`/api/health` だけが未認証200を返すことを外形確認します。

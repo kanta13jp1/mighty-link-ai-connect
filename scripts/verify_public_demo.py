@@ -9,9 +9,11 @@ remain present even though FastAPI also serves src/index.html locally.
 """
 
 import argparse
+import os
 import sys
 import time
 from pathlib import Path
+from urllib.parse import urlparse
 
 import requests
 
@@ -57,24 +59,20 @@ def fetch_url(url: str) -> str:
     separator = "&" if "?" in url else "?"
     cache_busted_url = f"{url}{separator}codex_guard={int(time.time())}"
     
-    auth = None
-    import os
     try:
         from dotenv import load_dotenv
         load_dotenv(PROJECT_ROOT / ".env")
     except Exception:
         pass
-    try:
-        sys.path.insert(0, str(PROJECT_ROOT / "src"))
-        from app import BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD
-        user = os.environ.get("BASIC_AUTH_USERNAME") or BASIC_AUTH_USERNAME
-        pwd = os.environ.get("BASIC_AUTH_PASSWORD") or BASIC_AUTH_PASSWORD
-    except Exception:
-        user = os.environ.get("BASIC_AUTH_USERNAME", "admin")
-        pwd = os.environ.get("BASIC_AUTH_PASSWORD", "mighty-link-pass")
-    
-    if "mightylink-app.com" in url or "127.0.0.1" in url or "localhost" in url:
-        auth = (user, pwd)
+
+    auth = None
+    hostname = (urlparse(url).hostname or "").lower()
+    if hostname in {"mightylink-app.com", "www.mightylink-app.com", "127.0.0.1", "localhost"}:
+        user = os.environ.get("BASIC_AUTH_USERNAME")
+        password = os.environ.get("BASIC_AUTH_PASSWORD")
+        if not user or not password:
+            fail("BASIC_AUTH_USERNAME and BASIC_AUTH_PASSWORD are required for protected URL verification.")
+        auth = (user, password)
 
     response = requests.get(
         cache_busted_url,

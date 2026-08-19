@@ -19,6 +19,22 @@ from playwright.sync_api import sync_playwright
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "exports" / "knowledge_flow" / "screenshots"
 
+
+def load_http_credentials() -> dict[str, str]:
+    try:
+        from dotenv import load_dotenv
+        load_dotenv(PROJECT_ROOT / ".env")
+    except Exception:
+        pass
+
+    username = os.environ.get("BASIC_AUTH_USERNAME")
+    password = os.environ.get("BASIC_AUTH_PASSWORD")
+    if not username or not password:
+        raise RuntimeError(
+            "BASIC_AUTH_USERNAME and BASIC_AUTH_PASSWORD are required for protected screenshots."
+        )
+    return {"username": username, "password": password}
+
 def check_server_running(url: str) -> bool:
     try:
         r = httpx.get(url, timeout=2.0)
@@ -101,7 +117,7 @@ def main():
             context = browser.new_context(
                 viewport={"width": 1920, "height": 1080},
                 # Basic Auth credentials for admin dashboard
-                http_credentials={"username": "admin", "password": "mighty-link-pass"}
+                http_credentials=load_http_credentials(),
             )
             page = context.new_page()
             page.set_default_timeout(20000) # Safeguard: 20s default timeout for all actions to prevent indefinite hanging

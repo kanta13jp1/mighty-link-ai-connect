@@ -102,10 +102,83 @@ def test_managed_runtime_never_loads_local_basic_auth_defaults():
     assert result.returncode == 0, result.stderr
 
 
+def test_local_runtime_never_loads_basic_auth_defaults():
+    """Local execution must also fail closed when credentials are absent."""
+    env = os.environ.copy()
+    env["AI_FORCE_MOCK"] = "1"
+    env["USE_SUPABASE"] = "0"
+    env.pop("K_SERVICE", None)
+    env.pop("FUNCTION_TARGET", None)
+    env.pop("BASIC_AUTH_USERNAME", None)
+    env.pop("BASIC_AUTH_PASSWORD", None)
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            (
+                "import app; "
+                "assert app.IS_MANAGED_RUNTIME is False; "
+                "assert app.BASIC_AUTH_USERNAME is None; "
+                "assert app.BASIC_AUTH_PASSWORD is None"
+            ),
+        ],
+        cwd=SRC_DIR,
+        env=env,
+        capture_output=True,
+        text=True,
+        timeout=60,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+
+
+def test_managed_runtime_protects_all_non_health_routes(monkeypatch):
+    """Production must reject anonymous API access even on read-only routes."""
+    monkeypatch.setattr(app_module, "IS_MANAGED_RUNTIME", True)
+
+    health = client.get("/api/health")
+    anonymous = client.get("/api/onboarding/state")
+    authenticated = client.get(
+        "/api/onboarding/state",
+        auth=(BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD),
+    )
+
+    assert health.status_code == 200
+    assert anonymous.status_code == 401
+    assert anonymous.headers["www-authenticate"].startswith("Basic")
+    assert authenticated.status_code == 200
+    assert "no-store" in authenticated.headers["cache-control"]
+
+
+def test_managed_runtime_api_fails_closed_without_auth_configuration(monkeypatch):
+    monkeypatch.setattr(app_module, "IS_MANAGED_RUNTIME", True)
+    monkeypatch.setattr(app_module, "BASIC_AUTH_USERNAME", None)
+    monkeypatch.setattr(app_module, "BASIC_AUTH_PASSWORD", None)
+
+    response = client.get("/api/onboarding/state", auth=("unexpected", "unexpected"))
+
+    assert response.status_code == 503
+    assert response.headers["cache-control"] == "no-store"
+
+
+def test_runtime_and_support_scripts_do_not_embed_basic_auth_credentials():
+    targets = [
+        PROJECT_ROOT / "src" / "app.py",
+        PROJECT_ROOT / "scripts" / "verify_public_demo.py",
+        PROJECT_ROOT / "scripts" / "capture_demo_screenshots.py",
+    ]
+
+    for target in targets:
+        content = target.read_text(encoding="utf-8")
+        assert 'os.environ.get("BASIC_AUTH_PASSWORD",' not in content
+        assert "password: str =" not in content
+
+
 def test_index_html_contains_early_sync_lockout():
     """Verify index.html contains synchronous early auth lockout script in head."""
     index_path = PROJECT_ROOT / "index.html"
     content = index_path.read_text(encoding="utf-8")
     assert "early-auth-lockout-style" in content
     assert "Synchronous Security Lockout Script" in content
-

@@ -386,10 +386,6 @@ IS_MANAGED_RUNTIME = bool(os.environ.get("K_SERVICE") or os.environ.get("FUNCTIO
 BASIC_AUTH_USERNAME = os.environ.get("BASIC_AUTH_USERNAME")
 BASIC_AUTH_PASSWORD = os.environ.get("BASIC_AUTH_PASSWORD")
 
-if not IS_MANAGED_RUNTIME:
-    BASIC_AUTH_USERNAME = BASIC_AUTH_USERNAME or "admin"
-    BASIC_AUTH_PASSWORD = BASIC_AUTH_PASSWORD or "mighty-link-pass"
-
 security = HTTPBasic()
 security_optional = HTTPBasic(auto_error=False)
 api_rate_limiter = SlidingWindowRateLimiter()
@@ -424,6 +420,26 @@ RATE_LIMIT_GENERATION_API_PATHS = {
     "/api/knowledge-flow/generate",
 }
 
+UNAUTHENTICATED_MANAGED_PATHS = {"/api/health"}
+
+
+def basic_auth_matches(
+    provided_username: str,
+    provided_password: str,
+    expected_username: Optional[str] = None,
+    expected_password: Optional[str] = None,
+) -> bool:
+    """Compare Basic Auth credentials without leaking prefix timing information."""
+    username = BASIC_AUTH_USERNAME if expected_username is None else expected_username
+    password = BASIC_AUTH_PASSWORD if expected_password is None else expected_password
+    if not username or not password:
+        return False
+    return secrets.compare_digest(
+        provided_username.encode("utf-8"), username.encode("utf-8")
+    ) and secrets.compare_digest(
+        provided_password.encode("utf-8"), password.encode("utf-8")
+    )
+
 
 def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
     if not BASIC_AUTH_USERNAME or not BASIC_AUTH_PASSWORD:
@@ -432,9 +448,7 @@ def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)):
             detail="Site authentication is not configured",
         )
 
-    correct_username = secrets.compare_digest(credentials.username, BASIC_AUTH_USERNAME)
-    correct_password = secrets.compare_digest(credentials.password, BASIC_AUTH_PASSWORD)
-    if not (correct_username and correct_password):
+    if not basic_auth_matches(credentials.username, credentials.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
@@ -447,15 +461,61 @@ def verify_credentials_optional(credentials: Optional[HTTPBasicCredentials] = De
     """Read-only endpoints: allow unauthenticated access; validate if credentials are provided."""
     if credentials is None:
         return None
-    correct_username = secrets.compare_digest(credentials.username, BASIC_AUTH_USERNAME)
-    correct_password = secrets.compare_digest(credentials.password, BASIC_AUTH_PASSWORD)
-    if not (correct_username and correct_password):
+    if not BASIC_AUTH_USERNAME or not BASIC_AUTH_PASSWORD:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Site authentication is not configured",
+        )
+    if not basic_auth_matches(credentials.username, credentials.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Basic"},
         )
     return credentials.username
+
+
+def managed_auth_error_response(status_code: int, detail: str) -> JSONResponse:
+    headers = {"Cache-Control": "no-store"}
+    if status_code == status.HTTP_401_UNAUTHORIZED:
+        headers["WWW-Authenticate"] = 'Basic realm="Mighty-Link Demo"'
+    return JSONResponse(status_code=status_code, content={"detail": detail}, headers=headers)
+
+
+@app.middleware("http")
+async def enforce_managed_runtime_authentication(request: Request, call_next):
+    """Protect every managed-runtime route except the liveness endpoint."""
+    if not IS_MANAGED_RUNTIME or request.url.path in UNAUTHENTICATED_MANAGED_PATHS:
+        return await call_next(request)
+
+    if not BASIC_AUTH_USERNAME or not BASIC_AUTH_PASSWORD:
+        return managed_auth_error_response(
+            status.HTTP_503_SERVICE_UNAVAILABLE,
+            "Site authentication is not configured",
+        )
+
+    auth_header = request.headers.get("Authorization", "")
+    try:
+        auth_type, encoded_credentials = auth_header.split(" ", 1)
+        if auth_type.lower() != "basic":
+            raise ValueError("Unsupported authorization scheme")
+        decoded = base64.b64decode(encoded_credentials, validate=True).decode("utf-8")
+        username, password = decoded.split(":", 1)
+    except (ValueError, UnicodeDecodeError, base64.binascii.Error):
+        return managed_auth_error_response(
+            status.HTTP_401_UNAUTHORIZED,
+            "Authentication required",
+        )
+
+    if not basic_auth_matches(username, password):
+        return managed_auth_error_response(
+            status.HTTP_401_UNAUTHORIZED,
+            "Incorrect username or password",
+        )
+
+    response = await call_next(request)
+    response.headers.setdefault("Cache-Control", "private, no-store, max-age=0")
+    return response
 
 
 def rate_limit_rule_for_request(request: Request) -> Optional[Dict[str, object]]:
@@ -3672,12 +3732,16 @@ def resolve_or_insert_job(content: str) -> int:
 
 # Custom StaticFiles subclass to enforce Basic Authentication
 class BasicAuthStaticFiles(StaticFiles):
-    def __init__(self, *args, username: str = "admin", password: str = "mighty-link-pass", **kwargs):
+    def __init__(self, *args, username: Optional[str] = None, password: Optional[str] = None, **kwargs):
         super().__init__(*args, **kwargs)
         self.username = username
         self.password = password
 
     async def __call__(self, scope, receive, send):
+        if not self.username or not self.password:
+            await self._service_unavailable(send)
+            return
+
         request = Request(scope, receive)
         auth_header = request.headers.get("Authorization")
         if not auth_header:
@@ -3692,9 +3756,7 @@ class BasicAuthStaticFiles(StaticFiles):
             
             decoded = base64.b64decode(credentials).decode("utf-8")
             username, password = decoded.split(":", 1)
-            correct_username = secrets.compare_digest(username, self.username)
-            correct_password = secrets.compare_digest(password, self.password)
-            if not (correct_username and correct_password):
+            if not basic_auth_matches(username, password, self.username, self.password):
                 await self._unauthorized(send)
                 return
         except Exception:
@@ -3716,6 +3778,17 @@ class BasicAuthStaticFiles(StaticFiles):
         await send({
             "type": "http.response.body",
             "body": b"Unauthorized",
+        })
+
+    async def _service_unavailable(self, send):
+        await send({
+            "type": "http.response.start",
+            "status": 503,
+            "headers": [(b"content-type", b"text/plain; charset=utf-8"), (b"cache-control", b"no-store")],
+        })
+        await send({
+            "type": "http.response.body",
+            "body": b"Site authentication is not configured",
         })
 
 
