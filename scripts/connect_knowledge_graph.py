@@ -8,6 +8,7 @@ to master index hubs, ensuring 100% connectivity in Obsidian Graph View.
 """
 
 import re
+import subprocess
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -18,10 +19,31 @@ MASTER_GRAPH_FILE = DOCS_DIR / "MASTER_KNOWLEDGE_GRAPH.md"
 CACHE_DIR_NAMES = frozenset({".pytest_cache", ".mypy_cache", ".ruff_cache", "__pycache__"})
 
 
-def collect_md_files() -> list[Path]:
+def _git_index_markdown_files() -> list[Path] | None:
+    """Return tracked/staged Markdown files, or None outside a Git worktree."""
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(PROJECT_ROOT), "ls-files", "-z", "--", "*.md"],
+            capture_output=True,
+            check=False,
+        )
+    except OSError:
+        return None
+    if proc.returncode != 0:
+        return None
     return [
-        p for p in PROJECT_ROOT.glob("**/*.md")
-        if not any(
+        PROJECT_ROOT / raw.decode("utf-8", errors="surrogateescape")
+        for raw in proc.stdout.split(b"\0")
+        if raw
+    ]
+
+
+def collect_md_files() -> list[Path]:
+    indexed = _git_index_markdown_files()
+    candidates = indexed if indexed is not None else PROJECT_ROOT.glob("**/*.md")
+    return [
+        p for p in candidates
+        if p.is_file() and not any(
             part in {"venv", "node_modules", ".venv", ".git"} | CACHE_DIR_NAMES
             or (part.startswith(".") and part != p.name)
             for part in p.parts

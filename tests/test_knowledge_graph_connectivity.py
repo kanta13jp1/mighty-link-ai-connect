@@ -36,6 +36,22 @@ def test_collect_md_files_excludes_local_cache_directories(tmp_path, monkeypatch
     assert set(knowledge_graph.collect_md_files()) == {tracked_doc}
 
 
+def test_collect_md_files_uses_git_index_and_excludes_local_only_docs(tmp_path, monkeypatch):
+    tracked_doc = tmp_path / "docs" / "README.md"
+    local_only_doc = tmp_path / "docs" / "SESSION_unknown-.md"
+    tracked_doc.parent.mkdir()
+    tracked_doc.write_text("# Tracked\n", encoding="utf-8")
+    local_only_doc.write_text("# Local only\n", encoding="utf-8")
+    monkeypatch.setattr(knowledge_graph, "PROJECT_ROOT", tmp_path)
+    monkeypatch.setattr(
+        knowledge_graph,
+        "_git_index_markdown_files",
+        lambda: [tracked_doc],
+    )
+
+    assert knowledge_graph.collect_md_files() == [tracked_doc]
+
+
 def test_build_path_map_preserves_canonical_path_with_duplicate_basename(
     tmp_path, monkeypatch
 ):
