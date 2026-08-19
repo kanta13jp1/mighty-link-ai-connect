@@ -1,9 +1,9 @@
 {
   "task": "T894",
   "mode": "full",
-  "guard_count": 28,
+  "guard_count": 29,
   "exempt_count": 3,
-  "test_file_count": 154,
+  "test_file_count": 156,
   "guard_results": {
     "audit_access_inventory.py": {
       "exit_code": 0,
@@ -73,6 +73,10 @@
       "exit_code": 0,
       "evidence": true
     },
+    "audit_paid_launch_evidence.py": {
+      "exit_code": 0,
+      "evidence": true
+    },
     "audit_pricing_consistency.py": {
       "exit_code": 0,
       "evidence": true
@@ -121,16 +125,16 @@
   "pytest": {
     "skipped": false,
     "failed": 0,
-    "errors": 1,
-    "collected": 879,
-    "exit_code": 1
+    "errors": 0,
+    "collected": 900,
+    "exit_code": 0
   },
   "hypotheses": [
     {
       "id": "H1",
       "title": "プリフライト対象ガード10件以上かつテストファイル50件以上(sanity)",
       "passed": true,
-      "detail": "対象ガード=28, 対象外=3, テストファイル=154"
+      "detail": "対象ガード=29, 対象外=3, テストファイル=156"
     },
     {
       "id": "H2",
@@ -153,14 +157,14 @@
     {
       "id": "H5",
       "title": "pytest tests/ の failed/error が0",
-      "passed": false,
-      "detail": "failed=0, errors=1"
+      "passed": true,
+      "detail": "failed=0, errors=0"
     },
     {
       "id": "H6",
       "title": "収集テストが400件以上(スイート縮退検知)",
       "passed": true,
-      "detail": "収集=879"
+      "detail": "収集=900"
     },
     {
       "id": "H7",
@@ -183,9 +187,9 @@
     {
       "id": "H10",
       "title": "プリフライト全体が完全・整合(ドリフト0)",
-      "passed": false,
-      "detail": "先行ドリフト=あり"
+      "passed": true,
+      "detail": "先行ドリフト=なし"
     }
   ],
-  "all_passed": false
+  "all_passed": true
 }

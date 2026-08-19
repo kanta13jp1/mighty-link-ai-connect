@@ -1,0 +1,67 @@
+{
+  "task_id": "T988",
+  "generated_at": "2026-08-19T12:24:50.282434Z",
+  "passed": true,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "8/24経営判断パッケージが存在",
+      "passed": true,
+      "detail": "PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-08-24.md"
+    },
+    {
+      "id": "H2",
+      "title": "営業メール証拠の件数・モデル・fallback・精度限界を明記",
+      "passed": true,
+      "detail": "input_count=702, model=deterministic-sales-email-extractor-v1, fallback=True"
+    },
+    {
+      "id": "H3",
+      "title": "未立証の精度・削減率・法務完了を実績として断定しない",
+      "passed": true,
+      "detail": "unsupported_claims=なし"
+    },
+    {
+      "id": "H4",
+      "title": "SLA目標と月間実績を分離し、未計測を明示",
+      "passed": true,
+      "detail": "availability=None, p95=None"
+    },
+    {
+      "id": "H5",
+      "title": "実コスト未接続を黒字・固定費ゼロの実績へ読み替えない",
+      "passed": true,
+      "detail": "actuals=not configured, overall_status=unknown"
+    },
+    {
+      "id": "H6",
+      "title": "法定開示の構造PASSと未確定項目・人間承認を分離",
+      "passed": true,
+      "detail": "placeholder_count=31"
+    },
+    {
+      "id": "H7",
+      "title": "インフラ提出パックを人間承認済み証跡として扱わない",
+      "passed": true,
+      "detail": "human_signoff=unverified"
+    },
+    {
+      "id": "H8",
+      "title": "価格ドリフトPASSと価格関連の未確定事項を併記",
+      "passed": true,
+      "detail": "未確定マーカー=3件 (有償化前に確定対象)"
+    },
+    {
+      "id": "H9",
+      "title": "現行Stripe公式Docsに基づく方式判断を記録",
+      "passed": true,
+      "detail": "Billing Meters retained; reassess after Go before live activation"
+    },
+    {
+      "id": "H10",
+      "title": "未完了の人間ゲートがある間はfail-closedでNO-GO",
+      "passed": true,
+      "detail": "decision=NO-GO until evidence gates close"
+    }
+  ]
+}

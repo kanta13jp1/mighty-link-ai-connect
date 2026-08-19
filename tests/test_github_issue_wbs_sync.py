@@ -100,5 +100,5 @@ def test_unknown_task_id_is_unlinked_not_stale():
 def test_load_wbs_status_reads_the_real_tsv():
     status = recon.load_wbs_status()
     assert len(status) > 300
-    assert status.get("T849") == "未着手"
     assert status.get("T866") == "完了"
+    assert status.get("T988") == "完了"

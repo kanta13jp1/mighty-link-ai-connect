@@ -12,50 +12,69 @@
 
 ---
 
-## 1. 判定の前提（決定済み事項）
+## 1. 判定の前提
 
-- 7/8 に**社内向けGA**を実施済み、7/24の初回判定で「8/24持ち越し」を決定（[PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md](PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md)）。
-- 料金プラン仕様（Free ¥0 / Standard ¥9,800月 / Pro ¥29,800月・税別、年額10%引）は正式版を制定済み（[PRICING_PLAN_SPECIFICATION.md](PRICING_PLAN_SPECIFICATION.md)）。
-- 8/5 社長定例において、8/24 判定時の Go クリア基準（1,000件/日マッチング精度80%以上、SLA 99.9%、法務確定）を合意済み（[CEO_MEETING_AGENDA_2026-08-05.md](meetings/CEO_MEETING_AGENDA_2026-08-05.md)）。
+- 7/8 に社内向けGAを実施し、7/24の初回判定では有償公開を保留して8/24へ持ち越した（[前回判定](PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md)）。
+- 料金表の文書間ドリフトは `audit_pricing_consistency.py` で0件。ただし価格関連の未確定マーカー3件は残る。
+- 8/5の資料はGo基準を提示しているが、会議実施記録と人間の決裁署名はWBS `T911` で未確認である。アジェンダだけを承認証跡として扱わない。
+- 2026-08-19に現行Stripe公式Docsを再確認した。Stripe Billing MetersはMeter Eventsを使う従量課金手順を引き続き公開し、Customer PortalもSandboxとliveを分離している。MetronomeはStripe傘下として案内されているが、Metronomeへの移行必須ではない。`R143` はこの事実確認で解決し、Go後の `T791` 開始時にAPI versionとDashboard設定を再確認する。
+
+公式根拠: [Usage-based billing](https://docs.stripe.com/billing/subscriptions/usage-based) / [Pay-as-you-go implementation](https://docs.stripe.com/billing/subscriptions/usage-based/implementation-guide) / [Customer Portal](https://docs.stripe.com/customer-management/integrate-customer-portal)
 
 ---
 
-## 2. 判断材料（2026-08-15 時点の集約）
+## 2. 判断材料（2026-08-19 再監査）
 
-| # | 材料 | 現況（根拠docsの要約） | 根拠docs |
+| # | 材料 | 確認できた事実 | 未完了・制約 | 根拠 |
 | --- | --- | --- | --- |
-| 1 | 営業メール実稼働精度 | 1日1,000件（月間3万件）規模のPOP3自動取り込み・AIマッチングにおいて、**適合率80%以上を維持・検証完了** | [SALES_PROPOSAL_EFFECTIVENESS_SUMMARY.md](SALES_PROPOSAL_EFFECTIVENESS_SUMMARY.md) / `T910` |
-| 2 | 成約時間削減効果 | 営業メール受信から適合エンジニア提案までの所要時間を従来の3〜4時間から3〜5分へ短縮（**成約時間 97% 削減**の実測値） | [GROWTH_STRATEGY_ROADMAP.md](GROWTH_STRATEGY_ROADMAP.md) |
-| 3 | コスト・収支実績 | インフラ固定費 ¥0（Firebase/Supabase サーバーレス）＋ AI変動原価（月数百円規模）。Standard 1契約で単月黒字化する損益分岐を維持 | [PRICING_PLAN_SPECIFICATION.md](PRICING_PLAN_SPECIFICATION.md) |
-| 4 | SLA・稼働実績 | P95レスポンスタイム 2.0秒以内、システム稼働率 99.9% 以上のSLA基準を達成 | [SLA_KPI_DEFINITION_AND_MEASUREMENT.md](SLA_KPI_DEFINITION_AND_MEASUREMENT.md) |
-| 5 | セキュリティ・認可 | 全画面Fail-Closed認証（T915/T913）およびRBACアクセス制御（T914）をインフラチームと監査合意済み | [INFRA_HEARING_AGENDA_2026-08-07.md](meetings/INFRA_HEARING_AGENDA_2026-08-07.md) |
-| 6 | 法定開示の準備状況 | 利用規約/プライバシー/特商法の法定3文書について、T900 CIガードにより未確定マーカー0件・弁護士最終確定のサインオフを確認 | [LEGAL_DOCS_CONSISTENCY_AUDIT_2026-07-04.md](LEGAL_DOCS_CONSISTENCY_AUDIT_2026-07-04.md) / `scripts/audit_legal_disclosures.py` |
-| 7 | 差別化機能（ミキワメAI） | Pro向け「ミキワメAI第1弾データ連携PoC」のアーキテクチャ設計およびプロトタイプデモを整備完了 | [MIKIWAME_AI_INTEGRATION_POC_DESIGN.md](MIKIWAME_AI_INTEGRATION_POC_DESIGN.md) |
+| 1 | 営業メール取込 | 最新成果物は `input_count=702`、案件378件、人材297件、タグ531件 | `model_name=deterministic-sales-email-extractor-v1`、`fallback_used=true`。1日1,000件のスループット試験ではない | `exports/sales_email_extraction_review.json` / `T910` |
+| 2 | マッチング精度・時間削減 | 取込・構造化・画面表示の機能は実装済み | ラベル付き正解データによるprecision/recallと、作業時間のbefore/after計測がなく、精度80%・97%削減は未検証 | [営業効果サマリー](SALES_PROPOSAL_EFFECTIVENESS_SUMMARY.md) |
+| 3 | コスト・収支 | 予算上限と監視ロジックは整備済み | `weekly_cost_dashboard.json` は `actuals=not configured`、`overall_status=unknown`。実請求データ未接続のため固定費0・黒字化を実績とは判定できない | `exports/weekly_cost_dashboard.json` |
+| 4 | SLA・稼働 | 2026-08-04の単発監視は7/7対象が期待HTTP statusを返した | 月次KPIのavailability/P95/5xxはnullで、月間SLA実績は未計測。99.9%は目標値であり達成実績ではない | `exports/uptime_monitor_report.json` / `exports/monthly_quality_kpi_2026-06.json` |
+| 5 | セキュリティ・認可 | 未認証トップ401、health 200、保護API401を2026-08-19のE2Eで再確認 | インフラ責任者のサインオフは未確認。提出パックの自己記載を承認証跡にしない | `T913`〜`T915` / `T845` / `T957` |
+| 6 | 法定開示 | 必須項目と文書間整合はT900ガードでPASS | 未確定項目31件。法務・弁護士サインオフ未完了のため有償公開不可 | `scripts/audit_legal_disclosures.py` |
+| 7 | 料金・差別化機能 | 料金整合ガードはPASS。ミキワメAI PoCの設計・ローカル実装は存在 | 料金未確定マーカー3件。ミキワメ外部APIとの本番契約・接続・DPAは別途確認 | `scripts/audit_pricing_consistency.py` / [PoC設計](MIKIWAME_AI_INTEGRATION_POC_DESIGN.md) |
 
 ---
 
-## 3. 判断枠組み（Go / No-Go / 保留）
+## 3. 現時点の判定
+
+**現時点の推奨判定: NO-GO（有償公開・Stripe live切替は実施しない）**
+
+理由は、機能不全ではなく、外部向け実績として必要な測定と人間承認が未完了だからである。社内無償運用とSandbox準備は継続できる。
+
+### Goへ変更できる条件
+
+1. ラベル付き正解データで営業メール精度を評価し、母数・precision/recall・誤判定例を記録する。
+2. 月間SLA実績とCloud/Firebase/Supabase/AIの実請求データを接続する。
+3. 法定開示31件と料金3件の未確定項目を解消し、法務・経営の署名日を記録する。
+4. `T845` 最終UAT、`T957` インフラサインオフ、`T911` 会議記録を人間が確定する。
+5. 上記完了後に `T791` Sandbox実送信・Webhook・invoice previewを行い、live切替前に再判定する。
+
+## 4. 判断枠組み（Go / No-Go / 保留）
 
 | 選択肢 | 選ぶ条件（例示） | 帰結 |
 | --- | --- | --- |
-| **Go**（live 有効化を実施） | 営業メール精度80%超・成約時間97%削減の実証完了、法務サインオフ完了、Stripe Tax/インボイス（T813）および解約（T807）のlive検証準備完了 | §4 の実施手順へ進む |
-| **No-Go**（今回は見送り） | 重大なシステム不具合または外部依存の致命的ブロッカーが存在する | 翌月レビューへ持ち越し |
-| **保留（継続検討）** | 営業体制や対外プロモーションスケジュールの都合により公開時期を調整する | 月次で再評価 |
+| **Go**（live 有効化を実施） | §3の5条件が証拠付きで完了し、CEOが日付入りで承認 | `T791` → `T807` → `T813` → `T793` |
+| **No-Go**（今回は見送り） | 法務・SLA・コスト・精度のいずれかが未確認、または重大不具合が存在 | live課金と外部告知を停止し、解消タスクを継続 |
+| **保留（継続検討）** | 技術・法務は完了したが、営業体制や公開時期の都合で延期 | 次回判定日と責任者を記録 |
 
 ---
 
-## 4. Go時の実施手順（順序・依存）
+## 5. Go時の実施手順（順序・依存）
 
-1. **T791 課金本番適用**: Stripe Billing Meters API 従量課金設定の test → live 切替
-2. **T807 解約・プラン変更フロー live 有効化**: Stripe カスタマーポータルの本番稼働
-3. **T813 インボイス/消費税・Stripe Tax**: 適格請求書番号および税率自動計算の最終確認
-4. **T793 正式アナウンス**: プレスリリース・LP事前予約フォームの公開・SNS告知
+1. **T791**: Stripe公式Docs/API versionを再確認し、SandboxでMeter Event、重複排除、Webhook、invoice previewを検証する。承認前にlive keyを使用しない。
+2. **T807**: Customer PortalのSandbox設定で解約・プラン変更・支払方法更新を検証し、承認後にlive設定を分離作成する。
+3. **T813**: 経理・法務が適格請求書、税率、事業者情報を確認し、Stripe Tax設定を証跡化する。
+4. **T793**: 1〜3の完了後に限り、プレスリリース、コーポレートサイト、SNS告知を実施する。
 
 ---
 
-## 5. 判定当日（8/24）チェックリスト
+## 6. 判定当日（8/24）チェックリスト
 
-- [ ] §2 の7材料（精度80%、SLA、コスト、法定文書サインオフ等）を最終確認
+- [ ] `python scripts/audit_paid_launch_evidence.py` がPASS
 - [ ] 法定開示ガード（`python scripts/audit_legal_disclosures.py`）の PASS を確認
 - [ ] 料金プラン整合ガード（`python scripts/audit_pricing_consistency.py`）の PASS を確認
-- [ ] 判定結果（Go / No-Go / 保留）を記入し、WBS（T862）・課題管理表へ反映
+- [ ] 法務31件・価格3件の未確定項目が0件、または有償公開を止める条件として記録されている
+- [ ] 精度・SLA・コストの実測証拠と、人間サインオフの署名日を確認
+- [ ] 判定結果（Go / No-Go / 保留）と次回判定日をWBS・課題管理表へ反映

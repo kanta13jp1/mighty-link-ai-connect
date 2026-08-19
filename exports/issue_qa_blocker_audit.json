@@ -1,30 +1,20 @@
 {
-  "status": "blocked",
-  "generated_at": "2026-08-18T17:04:00Z",
+  "status": "pass",
+  "generated_at": "2026-08-19T12:24:49Z",
   "issue_total": 193,
   "qa_total": 176,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "open": 1,
-    "resolved": 171,
+    "resolved": 172,
     "transferred": 18
   },
   "qa_status_counts": {
     "回答済": 137,
     "想定済": 39
   },
-  "issue_blocker_count": 1,
+  "issue_blocker_count": 0,
   "qa_blocker_count": 0,
-  "issue_blockers": [
-    {
-      "id": "R143",
-      "severity": "中",
-      "category": "収益化",
-      "title": "Stripe公式が新規従量課金でBilling Meters→Metronome推奨へ方針変更",
-      "related_wbs": "T791;T807;T862",
-      "related_issue": ""
-    }
-  ],
+  "issue_blockers": [],
   "qa_blockers": []
 }

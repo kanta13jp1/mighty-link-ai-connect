@@ -75,6 +75,17 @@ def _import_parser():
     return importlib.import_module("sales_email_parser")
 
 
+def _offline_parser(parser_mod):
+    """Create a parser that cannot inherit the process-level Gemini API key."""
+    sentinel = object()
+    previous = os.environ.pop("GEMINI_API_KEY", sentinel)
+    try:
+        return parser_mod.SalesEmailParser(api_key=None)
+    finally:
+        if previous is not sentinel:
+            os.environ["GEMINI_API_KEY"] = previous
+
+
 def _compiled_blocked(policy: dict[str, Any]):
     import re
 
@@ -141,7 +152,7 @@ def build_hypotheses(policy: dict[str, Any]) -> list[dict[str, Any]]:
         try:
             os.environ["GEMINI_MODEL"] = "gemini-2.5-flash"
             resolved = parser_mod.get_gemini_model_name()
-            parser = parser_mod.SalesEmailParser(api_key=None)
+            parser = _offline_parser(parser_mod)
             ok = resolved == "gemini-2.5-flash" and parser.model_name == "gemini-2.5-flash"
             return ok, f"env上書き解決={resolved} / parser.model_name={parser.model_name}"
         finally:
@@ -169,7 +180,7 @@ def build_hypotheses(policy: dict[str, Any]) -> list[dict[str, Any]]:
 
     # H6: deterministic fallback returns schema-valid output without a key.
     def h6() -> tuple[bool, str]:
-        parser = parser_mod.SalesEmailParser(api_key=None)
+        parser = _offline_parser(parser_mod)
         details = []
         ok = True
         for s in SAMPLE_EMAILS:
@@ -192,7 +203,7 @@ def build_hypotheses(policy: dict[str, Any]) -> list[dict[str, Any]]:
 
     # H8: fallback output is deterministic (regression-comparable across migration).
     def h8() -> tuple[bool, str]:
-        parser = parser_mod.SalesEmailParser(api_key=None)
+        parser = _offline_parser(parser_mod)
         s = SAMPLE_EMAILS[0]
         a = parser.parse(s["subject"], s["body"]).model_dump_json()
         b = parser.parse(s["subject"], s["body"]).model_dump_json()

@@ -36,6 +36,17 @@ def test_live_comparison_skipped_without_key(monkeypatch):
     assert result["executed"] is False
 
 
+def test_offline_parser_ignores_process_api_key_and_restores_it(monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "test-placeholder-key")
+    parser_mod = evalmod._import_parser()
+
+    parser = evalmod._offline_parser(parser_mod)
+
+    assert parser.client is None
+    assert parser.api_key is None
+    assert evalmod.os.environ["GEMINI_API_KEY"] == "test-placeholder-key"
+
+
 def test_report_json_is_serializable(tmp_path):
     report = evalmod.build_report(evalmod.DEFAULT_POLICY_PATH, "2026-07-07", live=False)
     out = tmp_path / "eval.json"

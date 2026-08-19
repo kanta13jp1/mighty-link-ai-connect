@@ -68,6 +68,7 @@ GUARD_REGISTRY: dict[str, str] = {
     "audit_japanese_wording_consistency.py": "日本語UI/UX文言・用語整合性 (T917)",
     "audit_legal_disclosures.py": "法定開示(規約/プライバシー/特商法/課金)の必須項目網羅・整合 (T900)",
     "audit_operations_cadence.py": "定期運用サイクル一覧の網羅整合(運用抜け検知) (T907)",
+    "audit_paid_launch_evidence.py": "8/24有償化判断資料の実測証拠・人間ゲート整合 (T988)",
     "audit_pricing_consistency.py": "料金プラン金額の複数docs横断整合(価格ドリフト検知) (T901)",
     "audit_release_gate_currency.py": "リリース判定ゲートとWBS実態の整合(陳腐化ゲート検知) (T908)",
     "audit_runbook_catalog.py": "運用Runbookカタログの網羅整合(孤児/切れリンク検知) (T902)",

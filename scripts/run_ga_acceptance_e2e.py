@@ -7,10 +7,9 @@ real FastAPI application in-process (FastAPI TestClient over an isolated SQLite 
 AI in quota-safe mock mode) and exercises each GA flow as a hypothesis, then adds
 external evidence (production URL auth wall, public demo markers).
 
-What this harness does NOT cover — and what remains a human/credentialed step of
-T845 — is production Supabase write confirmation (適性/勤怠/アナリティクス/フィード
-バック/サポート/営業メール系9テーブル). feedback/support prod writes were already
-confirmed in T871; the rest need SUPABASE_DB_URL and are run by the operator.
+Production Supabase transactional write/readback/rollback verification is owned
+by T921 and covers 15 tables. This harness consumes that task boundary but does
+not replace the final human UAT and management sign-off required by T845.
 
 Outputs (the UAT evidence recorded to exports and, via trackers, to Sheets):
 
@@ -29,6 +28,7 @@ import sys
 import tempfile
 import urllib.error
 import urllib.request
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable
 
@@ -41,6 +41,11 @@ PROD_HEALTH_URL = f"{PROD_BASE_URL}/api/health"
 PROD_PROTECTED_URL = f"{PROD_BASE_URL}/api/matches"  # requires auth -> must be 401
 PUBLIC_DEMO_URL = "https://kanta13jp1.github.io/mighty-link-ai-connect/"
 PUBLIC_DEMO_MARKERS = ["Mighty", "AI"]
+
+
+def current_local_date() -> str:
+    """Return the operator's current local date for fresh evidence reports."""
+    return datetime.now().astimezone().date().isoformat()
 
 
 def _bootstrap_app():
@@ -252,7 +257,10 @@ def build_report(checked_at: str, timeout: int, skip_network: bool) -> dict[str,
         "hypotheses_passed": passed,
         "hypotheses": hypotheses,
         "external_evidence": external,
-        "scope_note": "アプリ層の自動E2E受入。本番Supabase実書き込み確認（適性/勤怠/アナリティクス/営業メール系）はSUPABASE_DB_URL必須の人間工程（feedback/supportはT871で確認済み）。",
+        "scope_note": (
+            "アプリ層の自動E2E受入。15テーブルの本番Supabaseトランザクション検証は"
+            "T921で完了済み。本レポートは経営・運用担当者による最終UATサインオフを代替しない。"
+        ),
     }
 
 
@@ -277,17 +285,17 @@ def render_markdown(report: dict[str, Any]) -> str:
         "",
         "## 残作業（T845の人間/認証情報依存工程）",
         "",
-        "- 本番Supabase実書き込み確認（適性/勤怠/アナリティクス/営業メール系9テーブル）: `SUPABASE_DB_URL` 設定のうえ運用者が実施。feedback/supportはT871で確認済み。",
+        "- 本番Supabase実書き込み確認: T921のGitHub Actions証跡で15/15テーブル、ROLLBACK、残存0件を確認済み。再実行が必要な場合のみ運用者が実施する。",
         "- Stripe課金導線: 社内GAは実課金なしのためT862へ移管（PUBLIC-09）。",
-        "- 実メール接続（営業メールAI）: T836接続情報受領後の追試（案A）。",
-        "- 最終UAT green判定と証跡のSheets同期・サインオフ: 7/8 15:00 定例（T819）。",
+        "- 営業メール実接続: T836/T910で接続・取込済み。精度80%の主張には別途ラベル付き正解データによる評価が必要。",
+        "- 最終UAT green判定と証跡のSheets同期・サインオフ: 2026-08-24の有償化判断前に経営・運用担当者が実施する。",
     ]
     return "\n".join(lines) + "\n"
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="GA acceptance E2E harness (T845_1)")
-    parser.add_argument("--checked-at", default="2026-07-08")
+    parser.add_argument("--checked-at", default=current_local_date())
     parser.add_argument("--timeout", type=int, default=15)
     parser.add_argument("--skip-network", action="store_true", help="skip prod URL / public demo network checks")
     parser.add_argument("--json-out", type=Path, default=DEFAULT_JSON)

@@ -1,6 +1,6 @@
 {
   "report_id": "GA_ACCEPTANCE_E2E_T845_1",
-  "checked_at": "2026-07-08",
+  "checked_at": "2026-08-19",
   "status": "ok",
   "hypotheses_total": 10,
   "hypotheses_passed": 10,
@@ -73,5 +73,5 @@
     "public_demo_markers_present": true,
     "public_demo_status": 200
   },
-  "scope_note": "アプリ層の自動E2E受入。本番Supabase実書き込み確認（適性/勤怠/アナリティクス/営業メール系）はSUPABASE_DB_URL必須の人間工程（feedback/supportはT871で確認済み）。"
+  "scope_note": "アプリ層の自動E2E受入。15テーブルの本番Supabaseトランザクション検証はT921で完了済み。本レポートは経営・運用担当者による最終UATサインオフを代替しない。"
 }

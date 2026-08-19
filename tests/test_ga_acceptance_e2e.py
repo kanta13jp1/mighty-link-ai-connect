@@ -8,6 +8,10 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 import run_ga_acceptance_e2e as ga
 
 
+def test_current_local_date_uses_iso_today():
+    assert ga.current_local_date() == ga.datetime.now().astimezone().date().isoformat()
+
+
 def test_in_process_ga_flows_all_pass():
     # skip_network keeps the app-tier E2E deterministic (no external calls).
     report = ga.build_report("2026-07-08", timeout=5, skip_network=True)
@@ -21,7 +25,8 @@ def test_report_shape_and_scope_note():
     report = ga.build_report("2026-07-08", timeout=5, skip_network=True)
     assert report["report_id"] == "GA_ACCEPTANCE_E2E_T845_1"
     assert report["hypotheses_total"] == 10
-    assert "本番Supabase実書き込み確認" in report["scope_note"]
+    assert "T921" in report["scope_note"]
+    assert "最終UATサインオフを代替しない" in report["scope_note"]
     assert report["external_evidence"]["executed"] is False
 
 
