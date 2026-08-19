@@ -482,6 +482,32 @@ def managed_auth_error_response(status_code: int, detail: str) -> JSONResponse:
     return JSONResponse(status_code=status_code, content={"detail": detail}, headers=headers)
 
 
+SECURITY_RESPONSE_HEADERS = {
+    "Content-Security-Policy": (
+        "default-src 'self'; base-uri 'self'; object-src 'none'; "
+        "frame-ancestors 'none'; form-action 'self'; "
+        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com data:; "
+        "img-src 'self' data: blob: https:; media-src 'self' data: blob:; "
+        "connect-src 'self' https://cdn.jsdelivr.net https://*.supabase.co "
+        "https://*.googleapis.com https://firebaseinstallations.googleapis.com "
+        "https://identitytoolkit.googleapis.com https://securetoken.googleapis.com "
+        "https://firestore.googleapis.com https://storage.googleapis.com; "
+        "manifest-src 'self' data:; worker-src 'self' blob:; frame-src 'self'; "
+        "upgrade-insecure-requests"
+    ),
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": (
+        "camera=(), microphone=(), geolocation=(), payment=(), usb=(), "
+        "bluetooth=(), clipboard-write=(self), fullscreen=(self)"
+    ),
+    "X-Frame-Options": "DENY",
+    "Strict-Transport-Security": "max-age=31536000",
+}
+
+
 @app.middleware("http")
 async def enforce_managed_runtime_authentication(request: Request, call_next):
     """Protect every managed-runtime route except the liveness endpoint."""
@@ -628,6 +654,15 @@ async def enforce_api_rate_limits(request: Request, call_next):
     response = await call_next(request)
     for header_name, header_value in headers.items():
         response.headers[header_name] = header_value
+    return response
+
+
+@app.middleware("http")
+async def add_security_response_headers(request: Request, call_next):
+    """Apply browser hardening headers to success and authentication responses."""
+    response = await call_next(request)
+    for header_name, header_value in SECURITY_RESPONSE_HEADERS.items():
+        response.headers.setdefault(header_name, header_value)
     return response
 
 

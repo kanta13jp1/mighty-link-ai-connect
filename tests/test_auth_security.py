@@ -50,6 +50,12 @@ def test_root_index_requires_basic_auth():
     assert anonymous.status_code == 401
     assert anonymous.headers["www-authenticate"] == "Basic"
     assert "Mighty Skill-Bridge" not in anonymous.text
+    assert anonymous.headers["content-security-policy"].startswith("default-src 'self'")
+    assert anonymous.headers["strict-transport-security"] == "max-age=31536000"
+    assert anonymous.headers["x-content-type-options"] == "nosniff"
+    assert anonymous.headers["x-frame-options"] == "DENY"
+    assert anonymous.headers["referrer-policy"] == "strict-origin-when-cross-origin"
+    assert "camera=()" in anonymous.headers["permissions-policy"]
 
     authenticated = client.get(
         "/",
@@ -59,6 +65,16 @@ def test_root_index_requires_basic_auth():
     assert "Mighty Skill-Bridge" in authenticated.text
     assert '<meta name="mighty-server-authenticated" content="true">' in authenticated.text
     assert "no-store" in authenticated.headers["cache-control"]
+    assert authenticated.headers["x-content-type-options"] == "nosniff"
+
+
+def test_health_response_includes_security_headers():
+    response = client.get("/api/health")
+
+    assert response.status_code == 200
+    assert response.headers["content-security-policy"].startswith("default-src 'self'")
+    assert response.headers["strict-transport-security"] == "max-age=31536000"
+    assert response.headers["x-content-type-options"] == "nosniff"
 
 
 def test_root_index_fails_closed_when_managed_credentials_are_missing(monkeypatch):

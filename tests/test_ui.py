@@ -4,7 +4,7 @@ import time
 import subprocess
 import httpx
 import pytest
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import expect, sync_playwright
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(PROJECT_ROOT, "src"))
@@ -63,26 +63,24 @@ def test_ui_flow(fastapi_server):
         # 4. Click the first sample load button (for engineer resume)
         page.wait_for_selector(".hero-inputs-container .sample-btn")
         page.locator(".hero-inputs-container .sample-btn").nth(0).click(force=True)
-        page.wait_for_function("document.getElementById('engineer-input').value.length > 0")
+        expect(eng_input).not_to_have_value("")
         assert len(eng_input.input_value()) > 0
         
         # 5. Click the second sample load button (for job details)
         page.locator(".hero-inputs-container .sample-btn").nth(1).click(force=True)
-        page.wait_for_function("document.getElementById('job-input').value.length > 0")
+        expect(job_input).not_to_have_value("")
         assert len(job_input.input_value()) > 0
         
         # 6. Verify Analyze requires legal consent, then accept and run
         analyze_btn = page.locator("#run-analysis-btn")
         analyze_btn.click()
-        page.wait_for_function(
-            "document.getElementById('legal-consent-status').textContent.includes('同意が必要')"
-        )
+        expect(page.locator("#legal-consent-status")).to_contain_text("同意が必要")
         page.locator("#legal-consent-checkbox").check()
         analyze_btn.click()
         
         # 7. Verify that the report section is active and displays a non-zero score
         page.wait_for_selector("#report-section.active", timeout=5000)
-        page.wait_for_function("document.getElementById('gauge-score').textContent !== '0'")
+        expect(page.locator("#gauge-score")).not_to_have_text("0")
         
         score_val = page.locator("#gauge-score").text_content()
         assert int(score_val) > 0
@@ -91,7 +89,7 @@ def test_ui_flow(fastapi_server):
         # 8. Verify that skills badges are populated in the DOM
         matched_badges = page.locator("#matched-skills-container .matched-badge")
         missing_badges = page.locator("#missing-skills-container .missing-badge")
-        page.wait_for_function("document.querySelectorAll('#matched-skills-container .matched-badge').length > 0")
+        expect(matched_badges.first).to_be_visible()
         
         assert matched_badges.count() > 0
         assert missing_badges.count() > 0
@@ -104,7 +102,7 @@ def test_ui_flow(fastapi_server):
         page.locator("#support-subject").fill("UI smoke support request")
         page.locator("#support-message").fill("The support contact form is visible and accepts a smoke-test request.")
         page.locator("#support-submit").click()
-        page.wait_for_function("document.getElementById('support-status').textContent === '送信済み'")
+        expect(page.locator("#support-status")).to_have_text("送信済み")
         assert page.locator("#support-status").text_content() == "送信済み"
         
         browser.close()
