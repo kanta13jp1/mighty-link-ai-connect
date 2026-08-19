@@ -5192,7 +5192,10 @@ async def serve_index(username: str = Depends(verify_credentials)):
                 print(f"[-] UTF-8 fallback failed: {e}. Trying CP932...")
                 with open(index_path, "r", encoding="cp932", errors="ignore") as f:
                     content = f.read()
-                    
+
+        server_auth_marker = '<meta name="mighty-server-authenticated" content="true">'
+        content = content.replace("</head>", f"    {server_auth_marker}\n</head>", 1)
+
         return HTMLResponse(
             content=content,
             headers={"Cache-Control": "private, no-store, max-age=0"},

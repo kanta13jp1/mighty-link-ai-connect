@@ -57,6 +57,7 @@ def test_root_index_requires_basic_auth():
     )
     assert authenticated.status_code == 200
     assert "Mighty Skill-Bridge" in authenticated.text
+    assert '<meta name="mighty-server-authenticated" content="true">' in authenticated.text
     assert "no-store" in authenticated.headers["cache-control"]
 
 
@@ -174,6 +175,12 @@ def test_runtime_and_support_scripts_do_not_embed_basic_auth_credentials():
         content = target.read_text(encoding="utf-8")
         assert 'os.environ.get("BASIC_AUTH_PASSWORD",' not in content
         assert "password: str =" not in content
+
+
+def test_static_demo_does_not_claim_server_authentication():
+    content = (PROJECT_ROOT / "index.html").read_text(encoding="utf-8")
+    assert '<meta name="mighty-server-authenticated" content="true">' not in content
+    assert "getServerAuthSession" in content
 
 
 def test_index_html_contains_early_sync_lockout():

@@ -9899,6 +9899,16 @@
         let currentAuthMode = 'login';
         let currentUserSession = null;
 
+        function getServerAuthSession() {
+            const marker = document.querySelector('meta[name="mighty-server-authenticated"][content="true"]');
+            if (!marker) return null;
+            return {
+                uid: 'server-basic-auth',
+                email: 'アクセス認証済み',
+                serverAuthenticated: true
+            };
+        }
+
         function getAuthSession() {
             try {
                 const stored = localStorage.getItem('mighty_auth_session');
@@ -9939,15 +9949,18 @@
             const openBtn = document.getElementById('open-login-btn');
             const userInfo = document.getElementById('auth-user-info');
             const userEmailEl = document.getElementById('auth-user-email');
+            const logoutBtn = document.querySelector('.auth-logout-btn');
 
             if (session && session.email) {
                 if (openBtn) openBtn.style.display = 'none';
                 if (userInfo) userInfo.style.display = 'inline-flex';
                 if (userEmailEl) userEmailEl.textContent = session.email;
+                if (logoutBtn) logoutBtn.style.display = session.serverAuthenticated ? 'none' : 'inline-flex';
                 closeAuthModal(true); // Allow closing
             } else {
                 if (openBtn) openBtn.style.display = 'inline-flex';
                 if (userInfo) userInfo.style.display = 'none';
+                if (logoutBtn) logoutBtn.style.display = 'inline-flex';
                 openAuthModal('login'); // Force open compulsory login wall
             }
         }
@@ -10103,7 +10116,7 @@
 
         // Initialize Auth UI & Mobile Navigation Scrollspy
         document.addEventListener("DOMContentLoaded", () => {
-            currentUserSession = getAuthSession();
+            currentUserSession = getServerAuthSession() || getAuthSession();
             updateAuthUI();
             try { renderOpsCharts({}); } catch (e) { /* ignore */ }
 
