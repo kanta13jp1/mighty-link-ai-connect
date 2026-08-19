@@ -3948,6 +3948,141 @@
             font-weight: 700 !important;
         }
 
+        /* Production review 2026-08-19: contain intrinsic select/table widths. */
+        .comparison-controls > .control-group {
+            flex: 1 1 320px;
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .comparison-controls > .control-group .select-wrapper {
+            flex: 1 1 auto;
+            width: 100%;
+            min-width: 0;
+            max-width: 440px;
+        }
+
+        .comparison-controls > .control-group .select-wrapper select {
+            width: 100%;
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        .table-responsive {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .app-shell-container {
+                padding-top: 72px !important;
+            }
+
+            .global-app-sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                height: 100dvh !important;
+                margin: 0 !important;
+            }
+
+            .global-main-area {
+                grid-column: 1;
+                grid-row: 1;
+                width: 100%;
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .hero {
+                padding: 92px 16px 32px;
+                gap: 24px;
+            }
+
+            .hero-video-frame {
+                height: auto;
+                aspect-ratio: 16 / 9;
+            }
+
+            .hero-inputs-container {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 16px;
+            }
+
+            .comparison-section {
+                padding-inline: 12px;
+            }
+
+            .comparison-container {
+                padding: 18px 16px;
+            }
+
+            .comparison-controls {
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .comparison-controls > .control-group {
+                flex: 1 1 100%;
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .comparison-controls > .control-group .select-wrapper {
+                max-width: none;
+            }
+
+            .control-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .control-actions .action-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .topbar {
+                min-height: 60px;
+                padding: 8px 12px;
+            }
+
+            .topbar-header {
+                gap: 8px;
+            }
+
+            .language-switch,
+            #auth-nav-container {
+                display: none !important;
+            }
+
+            .topbar-tools {
+                flex: 0 0 auto;
+                width: auto;
+                min-width: 0;
+                gap: 6px;
+                overflow: visible;
+            }
+
+            .theme-toggle {
+                width: 36px;
+                min-width: 36px;
+                padding: 0;
+            }
+
+            #theme-toggle-label {
+                display: none;
+            }
+
+            .mobile-menu {
+                flex: 0 0 36px;
+            }
+        }
+
     </style>
 </head>
 <body>
