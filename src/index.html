@@ -2677,8 +2677,11 @@
         }
         .form-grid-2col {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 28px;
+        }
+        .form-grid-2col > * {
+            min-width: 0;
         }
         @media (max-width: 900px) {
             .form-grid-2col {
@@ -4083,6 +4086,111 @@
             }
         }
 
+        /* Production layout repair: keep the fixed chrome separate from content spacing. */
+        .app-shell-container {
+            padding-top: 84px;
+        }
+
+        .hero {
+            padding-top: 32px;
+        }
+
+        /* The application chrome intentionally stays dark in both themes. */
+        :root[data-theme="light"] .topbar,
+        :root[data-theme="light"] .global-app-sidebar,
+        :root[data-theme="light"] .site-footer {
+            --panel: rgba(12, 13, 15, 0.78);
+            --panel-strong: rgba(20, 21, 23, 0.96);
+            --text: #f8fafc;
+            --muted: #cbd5e1;
+            --blue: #8bdcff;
+            --green: #baff66;
+            --line: rgba(255, 255, 255, 0.12);
+            --line-strong: rgba(255, 255, 255, 0.24);
+        }
+
+        :root[data-theme="light"] .panel,
+        :root[data-theme="light"] .comparison-container,
+        :root[data-theme="light"] .onboarding-panel,
+        :root[data-theme="light"] .aptitude-demo-panel,
+        :root[data-theme="light"] .analytics-hero-card,
+        :root[data-theme="light"] .kpi-bento-card {
+            color: #0f172a;
+            background: #ffffff !important;
+            border-color: rgba(15, 23, 42, 0.14) !important;
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+        }
+
+        :root[data-theme="light"] .panel:hover {
+            border-color: rgba(2, 132, 199, 0.32) !important;
+            box-shadow: 0 16px 36px rgba(15, 23, 42, 0.11);
+        }
+
+        :root[data-theme="light"] .textarea-input,
+        :root[data-theme="light"] .text-input,
+        :root[data-theme="light"] .select-input,
+        :root[data-theme="light"] .prompt-input,
+        :root[data-theme="light"] .matching-filter-control,
+        :root[data-theme="light"] .aptitude-demo-question,
+        :root[data-theme="light"] .aptitude-demo-options label {
+            color: #0f172a;
+            background: #f8fafc;
+            border-color: rgba(15, 23, 42, 0.16);
+        }
+
+        :root[data-theme="light"] .sample-btn,
+        :root[data-theme="light"] .action-btn.secondary-btn,
+        :root[data-theme="light"] .rating-btn,
+        :root[data-theme="light"] .auth-modal-tabs {
+            color: #0f172a;
+            background: #f1f5f9 !important;
+            border-color: rgba(15, 23, 42, 0.16);
+        }
+
+        :root[data-theme="light"] .legal-consent-panel,
+        :root[data-theme="light"] .aptitude-demo-notice,
+        :root[data-theme="light"] .aptitude-demo-empty {
+            color: #475569;
+            background: #ffffff;
+            border-color: rgba(2, 132, 199, 0.20);
+        }
+
+        :root[data-theme="light"] .internal-section h2,
+        :root[data-theme="light"] .internal-section h3,
+        :root[data-theme="light"] .internal-section h4 {
+            color: #0f172a !important;
+        }
+
+        :root[data-theme="light"] .comparison-table th {
+            color: #334155;
+            background: #f1f5f9;
+        }
+
+        @media (max-width: 700px) {
+            .hero {
+                padding: 20px 16px 32px;
+            }
+
+            #training-section .training-course-panel,
+            #training-section .training-course-panel > div {
+                min-width: 0;
+            }
+
+            #training-section .training-course-panel a {
+                overflow-wrap: anywhere;
+                word-break: break-word;
+            }
+
+            #training-section .training-course-panel > div:last-child {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            #training-section .training-course-panel > div:last-child label {
+                min-width: 0;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -4651,10 +4759,7 @@
              ステップ定義は /api/onboarding/state をSSOTとして取得し、UIとゲート判定が
              乖離しないようにする。進捗は localStorage のみに保持し、個人情報は保存しない。
              ========================================================================== -->
-        </div><!-- /#home-view -->
-
-
-         class="app-tab-view internal-section fade-in-on-scroll" aria-label="初期セットアップ・アクティベーション">
+        <section id="onboarding-section" class="app-tab-view internal-section fade-in-on-scroll" aria-label="初期セットアップ・アクティベーション">
             <div class="step-kicker" data-i18n="onboard_title">初期セットアップ</div>
             <div class="comparison-container">
                 <div class="comparison-controls">
@@ -5301,7 +5406,7 @@
                             <span style="font-size: 11px; font-weight: 700; color: var(--muted);">総管理エンジニア数</span>
                             <span style="font-size: 10px; font-weight: 800; color: var(--blue); background: rgba(139, 220, 255, 0.12); border-radius: 4px; padding: 2px 6px;">稼働率 95.2%</span>
                         </div>
-                        <div style="font-size: 26px; font-weight: 900; color: #ffffff;">42 <small style="font-size: 14px; color: var(--muted); font-weight: 500;">名</small></div>
+                        <div style="font-size: 26px; font-weight: 900; color: var(--text);">42 <small style="font-size: 14px; color: var(--muted); font-weight: 500;">名</small></div>
                         <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">稼働中 40名 / 即時待機 2名</div>
                     </div>
 
@@ -5331,7 +5436,7 @@
                             <span style="font-size: 11px; font-weight: 700; color: var(--muted);">セキュリティ＆稼働率</span>
                             <span style="font-size: 10px; font-weight: 800; color: var(--green); background: rgba(186, 255, 102, 0.12); border-radius: 4px; padding: 2px 6px;">監査ログ正常</span>
                         </div>
-                        <div style="font-size: 26px; font-weight: 900; color: #ffffff;">99.98<small style="font-size: 14px; font-weight: 600; color: var(--green);">%</small></div>
+                        <div style="font-size: 26px; font-weight: 900; color: var(--text);">99.98<small style="font-size: 14px; font-weight: 600; color: var(--green);">%</small></div>
                         <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">改ざん防止ハッシュ検証: <strong style="color: var(--green);">全件PASS</strong></div>
                     </div>
                 </div>

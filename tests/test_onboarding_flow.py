@@ -163,7 +163,7 @@ def test_activate_rejects_blank_account_identifier():
 # UI: the wizard exists in BOTH index mirrors and is driven by the server steps
 # --------------------------------------------------------------------------- #
 def assert_onboarding_ui(html: str):
-    assert 'id="onboarding-section"' in html
+    assert '<section id="onboarding-section" class="app-tab-view internal-section' in html
     assert 'href="#onboarding-section"' in html, "nav link to the wizard"
     assert 'id="onboarding-steps"' in html
     assert 'id="onboarding-progress"' in html
@@ -178,6 +178,14 @@ def assert_onboarding_ui(html: str):
     assert "function renderOnboardingSteps(" in html
     # progress persists locally between visits (no PII row server-side)
     assert "msb_onboarding_progress_v1" in html
+
+    # The wizard must remain inside the application shell. A missing opening
+    # section tag previously closed the shell early and broke every later tab.
+    home_close = html.index("<!-- end #home-view -->")
+    onboarding_open = html.index('<section id="onboarding-section"')
+    main_close = html.index("<!-- end .global-main-area -->")
+    assert home_close < onboarding_open < main_close
+    assert "</div><!-- /#home-view -->" not in html[home_close:onboarding_open]
 
 
 def test_public_index_has_onboarding_ui():
