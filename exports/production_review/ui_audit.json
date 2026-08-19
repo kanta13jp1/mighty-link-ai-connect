@@ -1,0 +1,35 @@
+{
+  "desktop": {
+    "clientWidth": 1440,
+    "scrollWidth": 1440,
+    "serverAuthMarker": true,
+    "selectWidth": 440,
+    "inputColumns": 2,
+    "sidebarPosition": "sticky",
+    "sidebarX": 20,
+    "mainY": 16,
+    "status": 200,
+    "horizontalOverflow": false,
+    "analysisScore": "25",
+    "consoleErrors": [],
+    "pageErrors": [],
+    "unexpectedFailedRequests": []
+  },
+  "mobile": {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "serverAuthMarker": true,
+    "selectWidth": 304,
+    "inputColumns": 1,
+    "sidebarPosition": "fixed",
+    "sidebarX": -280,
+    "mainY": 72,
+    "status": 200,
+    "horizontalOverflow": false,
+    "drawerOpened": true,
+    "drawerClosed": true,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "unexpectedFailedRequests": []
+  }
+}
