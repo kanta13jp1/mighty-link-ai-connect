@@ -36,7 +36,9 @@ jobs:
 
       - name: Install Playwright Browsers
         run: |
-          playwright install chromium --with-deps
+          # GitHub-hosted ubuntu images already include Chromium runtime libraries.
+          # Avoid apt mirror outages blocking an otherwise deployable release.
+          playwright install chromium
 
       - name: Syntax and Compile Check
         run: |
