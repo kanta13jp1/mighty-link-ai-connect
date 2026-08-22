@@ -1,9 +1,9 @@
 # Mighty Skill-Bridge：Antigravity Lifecycle Hooks 設計およびセッション自動記録仕様レポート（T695）
 
-**作成日**: 2026年6月3日（最終改訂: 2026年8月18日）  
+**作成日**: 2026年6月3日（最終改訂: 2026年8月22日）
 **ステータス**: 設計・実装改訂  
 **対象フェーズ**: 7. 次期開発・運用（連携）  
-**関連タスク**: **T695** Antigravity hooks機能による自動記録・同期スクリプト連携の設計・検証  
+**関連タスク**: **T695** Antigravity hooks機能による自動記録・同期スクリプト連携の設計・検証、**T992** Stop Hook実行パスの移植性修復と実コマンド回帰検証
 **関連Issue/課題**: [R4](../data/issues_tracker.tsv#L5) (同期漏れ・セッションドリフトによる成果物不整合リスク)
 
 ---
@@ -26,13 +26,15 @@ Mighty Skill-Bridge の開発は、Antigravity + Gemini、VSCode + Codex、VSCod
     "Stop": [
       {
         "type": "command",
-        "command": "python scripts/record_session_log.py",
+        "command": "python -c \"import sys, subprocess, pathlib; cwd = pathlib.Path.cwd(); candidates = [cwd / 'scripts' / 'record_session_log.py', cwd.parent / 'scripts' / 'record_session_log.py']; target = next((c for c in candidates if c.is_file()), None); sys.exit(1) if target is None else sys.exit(subprocess.run([sys.executable, str(target)]).returncode)\"",
         "timeout": 30
       }
     ]
   }
 }
 ```
+
+Antigravity IDE では Hook コマンドの作業ディレクトリが `.agents/` になる実行例があるため、プロジェクトルートと `.agents/` のどちらから起動されても `scripts/record_session_log.py` を相対探索できるようにしています。ユーザー固有の絶対パスは設定に保存しません。
 
 ### 2.1 入出力プロトコル契約
 1. **標準入力 (stdin)**:
@@ -49,6 +51,7 @@ Mighty Skill-Bridge の開発は、Antigravity + Gemini、VSCode + Codex、VSCod
 
 ### 3.1 ユニットテストスイート (`tests/test_session_log_recorder.py`)
 - `test_agents_hooks_json_specification_compliance`: `.agents/hooks.json` のスキーマ検証
+- `test_configured_stop_hook_command_executes_from_agents_directory`: `.agents/` を作業ディレクトリとして設定済みコマンドそのものを実行し、絶対パス非依存、stdin/stdout契約、ログ生成を検証
 - `test_hook_stdin_stdout_contract_with_decision_allow`: 標準入力 JSON 読込と `{"decision": "allow"}` 出力検証
 - `test_accurate_file_modification_and_exclusion`: 閲覧ツール（`view_file`）および外部パス除外の検証
 - `test_comprehensive_secret_and_pii_redaction`: PII・APIキー・接続文字列・秘密鍵の包括的マスキング検証

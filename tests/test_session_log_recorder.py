@@ -37,6 +37,62 @@ def test_agents_hooks_json_specification_compliance():
     assert handler.get("timeout", 0) > 0, "Handler should have an explicit timeout"
 
 
+def test_configured_stop_hook_command_executes_from_agents_directory(tmp_path: Path):
+    """Execute the configured command from Antigravity's observed .agents working directory."""
+    mock_workspace = tmp_path / "mock_workspace"
+    mock_workspace.mkdir()
+    mock_transcript = tmp_path / "transcript_hook_command.jsonl"
+    mock_transcript.write_text(
+        json.dumps(
+            {
+                "step_index": 1,
+                "type": "USER_INPUT",
+                "content": "Verify the configured Stop hook command",
+                "timestamp": "2026-08-22T01:00:00Z",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    payload = {
+        "executionNum": 1,
+        "terminationReason": "model_stop",
+        "fullyIdle": True,
+        "conversationId": "configured-hook-command-1234",
+        "workspacePaths": [str(mock_workspace)],
+        "transcriptPath": str(mock_transcript),
+        "artifactDirectoryPath": str(tmp_path / "artifacts"),
+        "modelName": "test-model",
+    }
+
+    hook_data = json.loads(HOOKS_JSON_PATH.read_text(encoding="utf-8"))
+    handler = hook_data["session-log-recorder"]["Stop"][0]
+    command = handler["command"]
+
+    normalized_command = command.replace("\\", "/").lower()
+    assert PROJECT_ROOT.as_posix().lower() not in normalized_command, (
+        "Hook command must not contain a machine-specific absolute project path"
+    )
+
+    proc = subprocess.run(
+        command,
+        input=json.dumps(payload),
+        text=True,
+        capture_output=True,
+        cwd=HOOKS_JSON_PATH.parent,
+        shell=True,
+        timeout=handler["timeout"],
+    )
+
+    assert proc.returncode == 0, f"Configured Hook failed: {proc.stderr}"
+    assert json.loads(proc.stdout.strip()).get("decision") == "allow"
+
+    session_files = list((mock_workspace / "docs" / "sessions").glob("*.md"))
+    assert len(session_files) == 1
+    assert "configured-hook-command-1234" in session_files[0].read_text(encoding="utf-8")
+
+
 def test_hook_stdin_stdout_contract_with_decision_allow(tmp_path: Path):
     """Verify script accepts official JSON payload on stdin and emits JSON with decision: allow on stdout."""
     mock_workspace = tmp_path / "mock_workspace"
