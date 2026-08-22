@@ -195,3 +195,22 @@ def test_production_targets_cover_auth_gate_and_health():
     assert expected_by_url["https://mightylink-app.com/"] == 401
     assert expected_by_url["https://mightylink-app.com/api/health"] == 200
     assert expected_by_url["https://mighty-link-ai-connect-13d22.web.app/"] == 401
+
+
+def test_protected_production_apis_expect_unauthorized():
+    targets = uptime.read_targets(PROJECT_ROOT / "data" / "uptime_targets.tsv")
+    expected_by_id = {target.target_id: target.expected_status for target in targets}
+
+    assert expected_by_id["UPTIME_CUSTOM_APTITUDE_LEGEND"] == 401
+    assert expected_by_id["UPTIME_CUSTOM_SALES_ANALYTICS"] == 401
+
+
+def test_workflow_always_uploads_uptime_report():
+    workflow = (
+        PROJECT_ROOT / ".github" / "workflows" / "uptime-monitor.yml"
+    ).read_text(encoding="utf-8")
+
+    assert "if: always()" in workflow
+    assert "uses: actions/upload-artifact@v6" in workflow
+    assert "path: exports/uptime_monitor_report.json" in workflow
+    assert "if-no-files-found: error" in workflow

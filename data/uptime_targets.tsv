@@ -3,6 +3,6 @@ UPTIME_PUBLIC_DEMO	GitHub Pages public demo	https://kanta13jp1.github.io/mighty-
 UPTIME_FIREBASE_AUTH_GATE	Firebase Hosting auth gate	https://mighty-link-ai-connect-13d22.web.app/	401	15	false	P1	Codex	保護対象ルートが未認証リクエストを拒否することを監視する。
 UPTIME_CUSTOM_AUTH_GATE	mightylink-app.com auth gate	https://mightylink-app.com/	401	15	false	P1	Codex	カスタムドメインの保護対象ルートが未認証リクエストを拒否することを監視する。
 UPTIME_CUSTOM_HEALTH	mightylink-app.com API health	https://mightylink-app.com/api/health	200	15	false	P1	Codex	Hostingリライト配下の公開ヘルスエンドポイントを監視する。
-UPTIME_CUSTOM_APTITUDE_LEGEND	mightylink-app.com aptitude legend API	https://mightylink-app.com/api/aptitude-demo/legend	200	15	false	P2	Antigravity	適性診断の評価基準点・凡例定義取得エンドポイントを監視する。
-UPTIME_CUSTOM_SALES_ANALYTICS	mightylink-app.com sales analytics API	https://mightylink-app.com/api/sales-email/analytics	200	15	false	P2	Antigravity	営業メール統計・集計解析エンドポイントを監視する。
+UPTIME_CUSTOM_APTITUDE_LEGEND	mightylink-app.com aptitude legend API	https://mightylink-app.com/api/aptitude-demo/legend	401	15	false	P2	Antigravity	認証必須の適性診断凡例APIが未認証リクエストを拒否することを監視する。
+UPTIME_CUSTOM_SALES_ANALYTICS	mightylink-app.com sales analytics API	https://mightylink-app.com/api/sales-email/analytics	401	15	false	P2	Antigravity	認証必須の営業メール統計APIが未認証リクエストを拒否することを監視する。
 UPTIME_CUSTOM_ADMIN_GATE	mightylink-app.com admin route gate	https://mightylink-app.com/admin	401	15	false	P1	Antigravity	管理者ダッシュボードルートの認証保護アクセス制御を監視する。
