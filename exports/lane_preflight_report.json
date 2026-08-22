@@ -1,6 +1,6 @@
 {
   "task": "T894",
-  "mode": "full",
+  "mode": "fast",
   "guard_count": 29,
   "exempt_count": 3,
   "test_file_count": 157,
@@ -123,11 +123,10 @@
     }
   },
   "pytest": {
-    "skipped": false,
+    "skipped": true,
     "failed": 0,
     "errors": 0,
-    "collected": 909,
-    "exit_code": 0
+    "collected": 0
   },
   "hypotheses": [
     {
@@ -158,13 +157,13 @@
       "id": "H5",
       "title": "pytest tests/ の failed/error が0",
       "passed": true,
-      "detail": "failed=0, errors=0"
+      "detail": "高速モード(未実行) — push前に --full を実行すること"
     },
     {
       "id": "H6",
       "title": "収集テストが400件以上(スイート縮退検知)",
       "passed": true,
-      "detail": "収集=909"
+      "detail": "高速モード(未実行) — push前に --full を実行すること"
     },
     {
       "id": "H7",
