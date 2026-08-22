@@ -70,3 +70,12 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: python scripts/check_uptime_targets.py --notify-on-failure
+
+      - name: Upload uptime monitor report
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: uptime-monitor-report
+          path: exports/uptime_monitor_report.json
+          if-no-files-found: error
+          retention-days: 14

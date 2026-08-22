@@ -194,4 +194,17 @@ def test_production_targets_cover_auth_gate_and_health():
 
     assert expected_by_url["https://mightylink-app.com/"] == 401
     assert expected_by_url["https://mightylink-app.com/api/health"] == 200
+    assert expected_by_url["https://mightylink-app.com/api/aptitude-demo/legend"] == 401
+    assert expected_by_url["https://mightylink-app.com/api/sales-email/analytics"] == 401
     assert expected_by_url["https://mighty-link-ai-connect-13d22.web.app/"] == 401
+
+
+def test_uptime_workflow_always_uploads_the_monitor_report():
+    workflow = (
+        PROJECT_ROOT / ".github" / "workflows" / "uptime-monitor.yml"
+    ).read_text(encoding="utf-8")
+
+    assert "name: Upload uptime monitor report" in workflow
+    assert "if: always()" in workflow
+    assert "path: exports/uptime_monitor_report.json" in workflow
+    assert "if-no-files-found: error" in workflow
