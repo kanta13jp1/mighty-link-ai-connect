@@ -58,6 +58,7 @@ EXCLUDE_DOCS = frozenset({
     "WBS.md",
     "CEO_MEETING_AGENDA_2026-08-05.md",
     "INFRA_HEARING_AGENDA_2026-08-07.md",
+    "STRIPE_TAX_AND_INVOICE_COMPLIANCE_RUNBOOK.md",
 })
 
 # ¥ amounts at monthly-plan scale: comma-grouped (¥9,800) or 4-7 bare digits
