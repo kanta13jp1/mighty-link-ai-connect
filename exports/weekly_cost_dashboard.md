@@ -1,27 +1,27 @@
 # Weekly Cost Allocation Dashboard
 
 - Task: T757
-- Generated: 2026-06-14T19:06:32Z
-- Period: 2026-06-09 to 2026-06-15
-- Overall status: unknown
+- Generated: 2026-08-24T04:44:14Z
+- Period: 2026-08-18 to 2026-08-24
+- Overall status: warning
 
 ## Summary
 
 | Metric | Value |
 | --- | ---: |
 | Weekly actual total | $0.00 |
-| Billable events | 0 |
-| Blocked events | 47 |
+| Billable events | 14 |
+| Blocked events | 44 |
 | Critical centers | 0 |
-| Warning centers | 0 |
-| Unknown actual centers | 7 |
+| Warning centers | 1 |
+| Unknown actual centers | 6 |
 
 ## Cost Centers
 
 | Cost center | Owner | Status | Weekly actual | Monthly budget | Billable | Blocked | Source |
 | --- | --- | --- | ---: | ---: | ---: | ---: | --- |
-| ai_api_gemini | Antigravity + Gemini | unknown | unknown | $20.00 | 0 | 0 | data/external_api_usage.jsonl; Google AI Studio usage; Cloud Billing export |
-| ai_api_seedance | Antigravity + Gemini | unknown | unknown | $20.00 | 0 | 47 | data/external_api_usage.jsonl; BytePlus ModelArk monitoring |
+| ai_api_gemini | Antigravity + Gemini | warning | unknown | $20.00 | 14 | 0 | data/external_api_usage.jsonl; Google AI Studio usage; Cloud Billing export |
+| ai_api_seedance | Antigravity + Gemini | unknown | unknown | $20.00 | 0 | 44 | data/external_api_usage.jsonl; BytePlus ModelArk monitoring |
 | firebase_google_cloud | VSCode + Codex | unknown | unknown | $10.00 | 0 | 0 | Cloud Billing BigQuery export; Firebase budgets |
 | github_actions | VSCode + Codex | unknown | unknown | $10.00 | 0 | 0 | GitHub Actions usage |
 | slack_notifications | VSCode + Codex | unknown | unknown | $0.00 | 0 | 0 | Slack incoming webhook / chat.postMessage |

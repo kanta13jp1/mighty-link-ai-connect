@@ -7,7 +7,7 @@
 > [!IMPORTANT]
 > **インシデント時はまず本カタログで状況→該当Runbookを引く。** 新規Runbookを追加したら必ず本カタログの該当カテゴリへ1行追加すること（未追加はCIガードが孤児として検知して失敗する）。
 
-- 運用Runbook総数: **46本**（9カテゴリ）
+- 運用Runbook総数: **47本**（9カテゴリ）
 
 ---
 
@@ -46,6 +46,7 @@
 ## 課金・コスト
 
 - [経理・税務・コスト管理 Runbook（T813/T823)](ACCOUNTING_AND_TAX_OPERATIONS_RUNBOOK.md) — 経理・インボイス・税務処理・コスト監査を行うとき
+- [インボイス制度・消費税処理・Stripe Tax 設定運用ランブック（T813)](STRIPE_TAX_AND_INVOICE_COMPLIANCE_RUNBOOK.md) — インボイス制度・消費税処理・Stripe Tax設定を運用するとき
 - [Stripe Customer Portal](STRIPE_CUSTOMER_PORTAL_RUNBOOK.md) — 解約/プラン変更のCustomer Portalを扱うとき
 - [週次課金・コスト配分ダッシュボード Runbook（T757)](WEEKLY_COST_DASHBOARD_RUNBOOK.md) — 週次のコスト配分を確認するとき
 
