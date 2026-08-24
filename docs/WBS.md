@@ -461,6 +461,7 @@ gantt
 | **T993** | 8. 本番運用・品質管理 | ドキュメント保守 | 小林社長Google Chat履歴の秘密情報除外・経営コンテキスト化 | Codex | VSCode + Codex + Markdown | 2026-05-21〜08-23のチャット履歴から経営要望、技術運用、アカウント所有、営業メール消失調査、会議調整を時系列化。FTP、WordPress、営業メール、Basic認証の実値、会議PIN、候補者個人情報を除外し、資格情報露出記録と未解決事項をdocs/meetings/CEO_CHAT_CONTEXT_2026-05-21_TO_2026-08-23.mdへ保存。T944へ受信担当者2名と8/25以降の設定確認待ちを反映 | 完了 |
 | **T994** | 8. 本番運用・品質管理 | 自動化 | POP3/IMAP営業メール取込と自律型営業オートパイロットエンジンの統合ブリッジ実装（Action 25: Autopilot Bridge） | Antigravity + Codex | VSCode + Codex + Antigravity + FastAPI | 第7期PdMレビューAction 25。夜間受信した営業メール（案件/人材）から要求スキル・予算・リモート可否を解析し、人材プールと適合評価を行って翌朝9時の提案待機キュー（AutopilotDispatchItem）を一貫自動生成するブリッジ（src/sales_email_autopilot_bridge.py）を実装。テスト（tests/test_sales_email_autopilot_bridge.py）を完了。 | 完了 |
 | **T995** | 8. 本番運用・品質管理 | プラットフォーム | 外部協調プラットフォーム連携ハブ（Slack/Teams/Notion/Canva）の実装（Action 26: External Hub） | Antigravity + Codex | VSCode + Codex + Antigravity + Webhooks | 第7期PdMレビューAction 26。高スコアマッチング成立・離職リスク検知・契約ドラフト確定イベントをSlack(Block Kit)、Teams(Adaptive Card)、Notion DB、Canvaプレゼン構成データへ自動フォーマット変換する連携ハブ（src/external_platform_hub.py）を実装。テスト（tests/test_external_platform_hub.py）を完了。 | 完了 |
+| **T996** | 8. 本番運用・品質管理 | 収益化 | 8/24有償化Go/No-Go判定の実施・保留判定確定記録およびStripe Sandbox契約検証・ミキワメAI CSVパース拡張 | Antigravity | Antigravity + Gemini | docs/PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-08-24.mdにて8/24月次判定（保留・社内無償運用継続・Sandbox準備完了）を確定・記録。Stripe Billing Meters Sandbox検証ハーネス（T958）のPASS確認、およびミキワメAI連携フェーズ2（src/structured_ai.py parse_mikiwame_csv_text, tests/test_structured_ai.py 8件PASS）を実装・完了化。次回月次判定は2026-09-24予定。 | 完了 |
 
 ---
 
