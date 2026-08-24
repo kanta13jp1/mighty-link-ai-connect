@@ -23,3 +23,8 @@
 研修ガイドをタブ化
 ソース上では実装されていますが、[Java
 - **変更ファイル**: .env", QUALITY_GUARD_CATALOG.md", SKILL.md", WBS.tsv", app.py"
+
+### [2026-08-19 17:53:16] Session `unknown-`
+- **詳細ログ**: [SESSION_unknown-.md](sessions/SESSION_unknown-.md)
+- **主な指示**: N/A
+- **変更ファイル**: None

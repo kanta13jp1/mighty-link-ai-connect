@@ -1,0 +1,342 @@
+{
+  "wide": {
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "document": {
+      "clientWidth": 1920,
+      "scrollWidth": 1920,
+      "scrollHeight": 13794
+    },
+    "body": {
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 13793.859375,
+      "display": "block",
+      "position": "static",
+      "overflowX": "hidden",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "shell": null,
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 57,
+      "display": "flex",
+      "position": "fixed",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "sidebar": {
+      "x": 140,
+      "y": 84,
+      "width": 260,
+      "height": 976,
+      "display": "block",
+      "position": "sticky",
+      "overflowX": "auto",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "main": {
+      "x": 424,
+      "y": 16,
+      "width": 1356,
+      "height": 9732.96875,
+      "display": "block",
+      "position": "static",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "hero": null,
+    "video": null,
+    "inputs": {
+      "x": 457,
+      "y": 626,
+      "width": 1290,
+      "height": 357,
+      "display": "grid",
+      "position": "static",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "authModalActive": false,
+    "visibleSections": [
+      "",
+      "",
+      "comparison-section",
+      "models",
+      "knowledge-flow-demo",
+      "support"
+    ],
+    "stylesheets": 2,
+    "fonts": "loaded",
+    "bodyTextLength": 23683,
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  "desktop": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "document": {
+      "clientWidth": 1440,
+      "scrollWidth": 1440,
+      "scrollHeight": 13794
+    },
+    "body": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 13793.859375,
+      "display": "block",
+      "position": "static",
+      "overflowX": "hidden",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "shell": null,
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 57,
+      "display": "flex",
+      "position": "fixed",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "sidebar": {
+      "x": 20,
+      "y": 84,
+      "width": 260,
+      "height": 796,
+      "display": "block",
+      "position": "sticky",
+      "overflowX": "auto",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "main": {
+      "x": 304,
+      "y": 16,
+      "width": 1116,
+      "height": 9732.96875,
+      "display": "block",
+      "position": "static",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "hero": null,
+    "video": null,
+    "inputs": {
+      "x": 337,
+      "y": 626,
+      "width": 1050,
+      "height": 357,
+      "display": "grid",
+      "position": "static",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "authModalActive": false,
+    "visibleSections": [
+      "",
+      "",
+      "comparison-section",
+      "models",
+      "knowledge-flow-demo",
+      "support"
+    ],
+    "stylesheets": 2,
+    "fonts": "loaded",
+    "bodyTextLength": 23683,
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  "tablet": {
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "document": {
+      "clientWidth": 1024,
+      "scrollWidth": 1024,
+      "scrollHeight": 13264
+    },
+    "body": {
+      "x": 0,
+      "y": 0,
+      "width": 1024,
+      "height": 13264.453125,
+      "display": "block",
+      "position": "static",
+      "overflowX": "hidden",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "shell": null,
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "width": 1024,
+      "height": 61,
+      "display": "flex",
+      "position": "fixed",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "sidebar": {
+      "x": -280,
+      "y": 0,
+      "width": 280,
+      "height": 768,
+      "display": "block",
+      "position": "fixed",
+      "overflowX": "auto",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "main": {
+      "x": 14,
+      "y": 72,
+      "width": 996,
+      "height": 9739.546875,
+      "display": "block",
+      "position": "static",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "hero": null,
+    "video": null,
+    "inputs": {
+      "x": 31,
+      "y": 682,
+      "width": 962,
+      "height": 357,
+      "display": "grid",
+      "position": "static",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "authModalActive": false,
+    "visibleSections": [
+      "",
+      "",
+      "comparison-section",
+      "models",
+      "knowledge-flow-demo",
+      "support"
+    ],
+    "stylesheets": 2,
+    "fonts": "loaded",
+    "bodyTextLength": 23601,
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "document": {
+      "clientWidth": 390,
+      "scrollWidth": 390,
+      "scrollHeight": 15272
+    },
+    "body": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 15271.78125,
+      "display": "block",
+      "position": "static",
+      "overflowX": "hidden",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "shell": null,
+    "topbar": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 60,
+      "display": "flex",
+      "position": "fixed",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "sidebar": {
+      "x": -280,
+      "y": 0,
+      "width": 280,
+      "height": 844,
+      "display": "block",
+      "position": "fixed",
+      "overflowX": "auto",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "main": {
+      "x": 14,
+      "y": 72,
+      "width": 362,
+      "height": 10514.15625,
+      "display": "block",
+      "position": "static",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "hero": null,
+    "video": null,
+    "inputs": {
+      "x": 31,
+      "y": 448.5,
+      "width": 328,
+      "height": 730,
+      "display": "grid",
+      "position": "static",
+      "overflowX": "visible",
+      "visibility": "visible",
+      "opacity": "1"
+    },
+    "authModalActive": false,
+    "visibleSections": [
+      "",
+      "",
+      "comparison-section",
+      "models",
+      "knowledge-flow-demo",
+      "support"
+    ],
+    "stylesheets": 2,
+    "fonts": "loaded",
+    "bodyTextLength": 23607,
+    "status": 200,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": []
+  }
+}

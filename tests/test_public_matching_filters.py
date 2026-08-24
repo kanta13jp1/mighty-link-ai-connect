@@ -32,6 +32,7 @@ def test_filter_controls_exist_in_both_html_files():
         assert "resetMatchingFilters()" in text
         assert "openProposalModal(" in text
         assert "copyProposalToClipboard()" in text
+        assert "launchMailerWithProposal()" in text
 
 
 def test_empty_filtered_results_do_not_fall_back_to_demo_rows():
