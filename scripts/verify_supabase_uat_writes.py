@@ -19,6 +19,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
+from urllib.parse import parse_qsl, unquote, urlsplit
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -44,6 +45,65 @@ LIVE_UAT_TABLES = (
 )
 
 ConnectionFactory = Callable[[str], Any]
+
+_SAFE_FAILURE_SUMMARY = (
+    "Live write verification failed. Database error details are intentionally "
+    "suppressed; inspect only the allowlisted failure code."
+)
+_SUPABASE_POOLER_HOST_RE = re.compile(
+    r"^[a-z0-9-]+\.pooler\.supabase\.com$", re.IGNORECASE
+)
+_SUPABASE_DIRECT_HOST_RE = re.compile(
+    r"^db\.[a-z0-9]+\.supabase\.co$", re.IGNORECASE
+)
+_PERCENT_ESCAPE_RE = re.compile(r"%(?![0-9a-fA-F]{2})")
+_RAW_PASSWORD_RESERVED_RE = re.compile(r"[/@?#\[\]]")
+
+
+def _invalid_database_url() -> ValueError:
+    return ValueError(
+        "SUPABASE_DB_URL is invalid. Rotate the database password and copy a "
+        "fresh Supabase connection string with percent-encoded credentials."
+    )
+
+
+def _validate_database_url(db_url: str) -> None:
+    """Validate a canonical Supabase PostgreSQL URL without exposing its parts."""
+    try:
+        parsed = urlsplit(db_url)
+        port = parsed.port
+        query = parse_qsl(parsed.query, keep_blank_values=True, strict_parsing=True)
+    except (TypeError, ValueError) as error:
+        raise _invalid_database_url() from error
+
+    if parsed.scheme.lower() not in {"postgres", "postgresql"}:
+        raise _invalid_database_url()
+    if parsed.fragment or parsed.path != "/postgres" or port not in {5432, 6543}:
+        raise _invalid_database_url()
+
+    raw_password = parsed.password
+    if (
+        not parsed.username
+        or raw_password is None
+        or not unquote(raw_password)
+        or _PERCENT_ESCAPE_RE.search(raw_password)
+        or _RAW_PASSWORD_RESERVED_RE.search(raw_password)
+    ):
+        raise _invalid_database_url()
+
+    username = unquote(parsed.username)
+    host = (parsed.hostname or "").lower()
+    is_pooler = _SUPABASE_POOLER_HOST_RE.fullmatch(host) is not None
+    is_direct = _SUPABASE_DIRECT_HOST_RE.fullmatch(host) is not None
+    if not (is_pooler or is_direct):
+        raise _invalid_database_url()
+    if is_pooler and re.fullmatch(r"postgres\.[a-z0-9]+", username) is None:
+        raise _invalid_database_url()
+    if is_direct and username != "postgres":
+        raise _invalid_database_url()
+
+    if query not in ([], [("sslmode", "require")]):
+        raise _invalid_database_url()
 
 
 def _timestamp() -> str:
@@ -85,16 +145,9 @@ def _base_result(mode: str) -> dict[str, Any]:
 
 
 def _redact_error(error: BaseException, db_url: str | None = None) -> str:
-    message = str(error)
-    if db_url:
-        message = message.replace(db_url, "[REDACTED_DATABASE_URL]")
-    message = re.sub(
-        r"(?i)\bpostgres(?:ql)?://[^\s@]+@",
-        "postgresql://***@",
-        message,
-    )
-    message = re.sub(r"(?i)\b(password\s*=\s*)[^\s]+", r"\1***", message)
-    return message[:500]
+    """Return no exception text because drivers can echo parsed credential fragments."""
+    del error, db_url
+    return _SAFE_FAILURE_SUMMARY
 
 
 def _offline_schema_contract() -> dict[str, Any]:
@@ -502,6 +555,13 @@ def verify_uat_db_writes(
         )
         return result
 
+    try:
+        _validate_database_url(url)
+    except ValueError:
+        result["failure_code"] = "invalid_database_url"
+        result["summary"] = _SAFE_FAILURE_SUMMARY
+        return result
+
     run_token = re.sub(r"[^a-zA-Z0-9_-]", "-", run_id or uuid.uuid4().hex)[:48]
     result["run_id"] = run_token
     factory = connection_factory or _default_connection_factory
@@ -552,7 +612,8 @@ def verify_uat_db_writes(
                 pass
         result["status"] = "FAIL"
         result["live_write_verified"] = False
-        result["summary"] = "Live write verification failed: " + _redact_error(error, url)
+        result["failure_code"] = "database_verification_failed"
+        result["summary"] = _redact_error(error, url)
     finally:
         if cursor is not None:
             try:
