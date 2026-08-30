@@ -96,10 +96,11 @@ def test_light_theme_uses_readable_content_and_navigation_surfaces(fastapi_serve
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=True)
         context = browser_context(browser, {"width": 1440, "height": 900})
+        context.add_init_script("window.localStorage.setItem('msb-theme', 'light')")
         page = context.new_page()
         page.route("**/*.mp4", lambda route: route.abort())
         page.goto(fastapi_server, wait_until="domcontentloaded")
-        page.evaluate("document.documentElement.dataset.theme = 'light'")
+        page.wait_for_function("document.documentElement.dataset.theme === 'light'")
 
         colors = page.evaluate(
             """() => {

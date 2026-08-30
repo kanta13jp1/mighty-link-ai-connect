@@ -34,7 +34,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install test dependencies
-        run: python -m pip install pytest
+        run: python -m pip install pytest httpx
 
       - name: Build uptime input
         run: python scripts/check_uptime_targets.py

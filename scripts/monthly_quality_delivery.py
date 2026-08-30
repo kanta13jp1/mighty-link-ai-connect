@@ -28,6 +28,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from network_security import require_https_url
+
 
 TASK_ID = "T808"
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -630,9 +632,10 @@ def post_to_notion(payload: dict[str, Any], env: dict[str, str] | None = None) -
     token = source.get("NOTION_API_KEY") or source.get("NOTION_TOKEN")
     if not token:
         raise CredentialMissing("NOTION_API_KEY or NOTION_TOKEN is required")
+    notion_url = require_https_url(NOTION_API_URL, allowed_hosts={"api.notion.com"})
     body = json.dumps(payload).encode("utf-8")
     request = urllib.request.Request(
-        NOTION_API_URL,
+        notion_url,
         data=body,
         headers={
             "Authorization": f"Bearer {token}",
@@ -643,7 +646,7 @@ def post_to_notion(payload: dict[str, Any], env: dict[str, str] | None = None) -
     )
     for attempt in range(2):
         try:
-            with urllib.request.urlopen(request, timeout=HTTP_TIMEOUT_SECONDS) as response:
+            with urllib.request.urlopen(request, timeout=HTTP_TIMEOUT_SECONDS) as response:  # nosec B310 -- webhook is validated HTTPS.  # nosec B310 -- exact Notion HTTPS host is enforced.
                 response_body = response.read().decode("utf-8")
                 data = json.loads(response_body) if response_body else {}
                 return {
@@ -717,14 +720,15 @@ def send_to_slack(payload: dict[str, Any], env: dict[str, str] | None = None) ->
     webhook_url = source.get("SLACK_WEBHOOK_URL")
     if not webhook_url:
         raise CredentialMissing("SLACK_WEBHOOK_URL is required")
+    safe_webhook_url = require_https_url(webhook_url)
     request = urllib.request.Request(
-        webhook_url,
+        safe_webhook_url,
         data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json"},
         method="POST",
     )
     try:
-        with urllib.request.urlopen(request, timeout=HTTP_TIMEOUT_SECONDS) as response:
+        with urllib.request.urlopen(request, timeout=HTTP_TIMEOUT_SECONDS) as response:  # nosec B310 -- webhook is validated HTTPS.
             body = response.read().decode("utf-8", errors="replace")
             if response.status >= 300:
                 raise DeliveryError(f"Slack webhook returned HTTP {response.status}: {body[:300]}")

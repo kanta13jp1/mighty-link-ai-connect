@@ -147,7 +147,9 @@ def _insert_and_read(
     if not row:
         raise RuntimeError(f"{table}: INSERT did not return an id")
     row_id = int(row[0])
-    cursor.execute(f"SELECT 1 FROM public.{table} WHERE id = %s", (row_id,))
+    if table not in LIVE_UAT_TABLES:
+        raise ValueError(f"Unsupported live UAT table: {table}")
+    cursor.execute(f"SELECT 1 FROM public.{table} WHERE id = %s", (row_id,))  # nosec B608 -- table is allowlisted.
     if cursor.fetchone() != (1,):
         raise RuntimeError(f"{table}: inserted row could not be read back")
     result["table_status"][table] = {
@@ -460,7 +462,7 @@ def _run_transactional_inserts(
 
 def _count_persisted_probes(cursor: Any, run_token: str) -> int:
     terms = [
-        f"(SELECT count(*) FROM public.{table} "
+        f"(SELECT count(*) FROM public.{table} "  # nosec B608 -- table is from immutable LIVE_UAT_TABLES.
         "WHERE metadata ->> 'uat_run_id' = %s)"
         for table in LIVE_UAT_TABLES
     ]

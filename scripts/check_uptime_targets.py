@@ -16,6 +16,8 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
+from network_security import require_https_url
+
 
 TASK_ID = "T743"
 DEFAULT_TARGETS_PATH = Path("data") / "uptime_targets.tsv"
@@ -131,14 +133,15 @@ def fetch_url(
     *,
     context: ssl.SSLContext | None = None,
 ) -> FetchResult:
+    safe_url = require_https_url(url)
     started = time.perf_counter()
     request = urllib.request.Request(
-        url,
+        safe_url,
         headers={"User-Agent": "Mighty-Link-Uptime-Monitor/1.0"},
         method="GET",
     )
     try:
-        with urllib.request.urlopen(request, timeout=timeout_seconds, context=context) as response:
+        with urllib.request.urlopen(request, timeout=timeout_seconds, context=context) as response:  # nosec B310 -- destination is validated HTTPS.
             elapsed_ms = round((time.perf_counter() - started) * 1000, 2)
             return FetchResult(
                 status_code=int(response.status),
@@ -198,7 +201,7 @@ def check_target(
                 fallback = fetcher(
                     target.url,
                     target.timeout_seconds,
-                    context=ssl._create_unverified_context(),
+                    context=ssl._create_unverified_context(),  # nosec B323 -- diagnostic retry is always reported as warning, never PASS.
                 )
                 fallback_ok = fallback.status_code == target.expected_status
                 return TargetResult(
@@ -301,14 +304,15 @@ def slack_payload(report: dict) -> dict:
 
 
 def send_slack_alert(webhook_url: str, payload: dict) -> None:
+    safe_webhook_url = require_https_url(webhook_url)
     body = json.dumps(payload).encode("utf-8")
     request = urllib.request.Request(
-        webhook_url,
+        safe_webhook_url,
         data=body,
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=DEFAULT_SLACK_TIMEOUT_SECONDS) as response:
+    with urllib.request.urlopen(request, timeout=DEFAULT_SLACK_TIMEOUT_SECONDS) as response:  # nosec B310 -- webhook is validated HTTPS.
         if response.status >= 300:
             raise RuntimeError(f"Slack webhook returned HTTP {response.status}")
 

@@ -17,7 +17,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
 from sales_email_imap import fetch_imap_emails
 from sales_email_ingest import dedupe_key, normalize_subject, canonical_body, safe_excerpt, sender_domain, sha256_hex
-from parse_sales_emails import DBAdapter, main as run_parser
+from parse_sales_emails import DBAdapter, _validated_sqlite_keys, main as run_parser
 from sales_email_extract import write_json_report, write_markdown_report
 from sales_email_match import main as run_matcher
 
@@ -51,10 +51,10 @@ def insert_sales_email_message(db: DBAdapter, payload: dict) -> int:
     else:
         try:
             cursor = db.sqlite_conn.cursor()
-            keys = payload.keys()
+            keys = _validated_sqlite_keys("sales_email_messages", payload)
             placeholders = ", ".join("?" for _ in keys)
             columns = ", ".join(keys)
-            query = f"INSERT INTO sales_email_messages ({columns}) VALUES ({placeholders})"
+            query = f"INSERT INTO sales_email_messages ({columns}) VALUES ({placeholders})"  # nosec B608 -- columns are allowlisted.
             cursor.execute(query, list(payload.values()))
             db.sqlite_conn.commit()
             return cursor.lastrowid
@@ -319,7 +319,7 @@ def sync_sales_emails_pipeline(
         try:
             cursor = db.sqlite_conn.cursor()
             placeholders = ", ".join("?" for _ in statuses)
-            cursor.execute(f"SELECT id FROM sales_email_messages WHERE ingest_status IN ({placeholders}) LIMIT 1", statuses)
+            cursor.execute(f"SELECT id FROM sales_email_messages WHERE ingest_status IN ({placeholders}) LIMIT 1", statuses)  # nosec B608 -- only parameter placeholder count is dynamic.
             has_unparsed = cursor.fetchone() is not None
         except Exception as e:
             print(f"[-] SQLite unparsed check failed: {e}")

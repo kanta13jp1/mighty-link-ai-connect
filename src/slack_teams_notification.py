@@ -5,8 +5,23 @@ import logging
 from typing import Any, Dict, List, Optional
 import urllib.request
 import urllib.error
+from urllib.parse import urlsplit
 
 logger = logging.getLogger(__name__)
+
+
+def _require_https_webhook_url(webhook_url: str) -> str:
+    normalized = webhook_url.strip()
+    parts = urlsplit(normalized)
+    if (
+        parts.scheme.lower() != "https"
+        or not parts.hostname
+        or parts.username is not None
+        or parts.password is not None
+    ):
+        raise ValueError("Webhook URL must be HTTPS and must not embed credentials")
+    return normalized
+
 
 def build_slack_instant_card(
     job_title: str,
@@ -118,13 +133,14 @@ def send_webhook_notification(webhook_url: Optional[str], payload: Dict[str, Any
         return {"status": "dry_run", "sent": False, "payload": payload}
 
     data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(
-        webhook_url,
-        data=data,
-        headers={"Content-Type": "application/json"}
-    )
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        safe_webhook_url = _require_https_webhook_url(webhook_url)
+        req = urllib.request.Request(
+            safe_webhook_url,
+            data=data,
+            headers={"Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:  # nosec B310 -- webhook is validated HTTPS.
             status_code = resp.getcode()
             return {"status": "success", "sent": True, "status_code": status_code}
     except Exception as e:
