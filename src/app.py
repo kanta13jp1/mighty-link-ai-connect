@@ -3531,9 +3531,14 @@ def db_fetch_by_ids(
 ) -> List[dict]:
     if not ids:
         return []
+    allowed_tables = {"match_results", "engineers", "jobs"}
+    if table not in allowed_tables:
+        raise ValueError(f"Unsupported export table: {table}")
+    if not columns or any(not re.fullmatch(r"[a-z][a-z0-9_]*", column) for column in columns):
+        raise ValueError("Export columns must be simple trusted identifiers")
     placeholder = db_placeholder(db_type)
     placeholders = ",".join([placeholder] * len(ids))
-    sql = f"SELECT {', '.join(columns)} FROM {table} WHERE id IN ({placeholders}) ORDER BY id DESC;"
+    sql = f"SELECT {', '.join(columns)} FROM {table} WHERE id IN ({placeholders}) ORDER BY id DESC;"  # nosec B608 -- table and identifier syntax are allowlisted.
     cursor.execute(sql, tuple(ids))
     return [db_row_to_export_dict(row, columns) for row in cursor.fetchall()]
 
@@ -3584,16 +3589,26 @@ def build_user_data_export(current_user: dict, session_id: str = "") -> dict:
         ]
         support_requests: List[dict] = []
         if user_email:
-            cursor.execute(
-                f"""
-                SELECT {', '.join(support_columns)}
+            support_sql = (
+                """
+                SELECT id, category, priority, contact_email, subject, message,
+                       status, source, page_url, session_id, metadata, created_at, updated_at
                 FROM support_requests
-                WHERE LOWER(contact_email) = LOWER({placeholder})
+                WHERE LOWER(contact_email) = LOWER(%s)
                 ORDER BY id DESC
-                LIMIT {placeholder};
-                """,
-                (user_email, USER_DATA_EXPORT_MAX_ROWS),
+                LIMIT %s;
+                """
+                if db_type == "postgres"
+                else """
+                SELECT id, category, priority, contact_email, subject, message,
+                       status, source, page_url, session_id, metadata, created_at, updated_at
+                FROM support_requests
+                WHERE LOWER(contact_email) = LOWER(?)
+                ORDER BY id DESC
+                LIMIT ?;
+                """
             )
+            cursor.execute(support_sql, (user_email, USER_DATA_EXPORT_MAX_ROWS))
             support_requests = [
                 db_row_to_export_dict(row, support_columns) for row in cursor.fetchall()
             ]
@@ -3612,16 +3627,26 @@ def build_user_data_export(current_user: dict, session_id: str = "") -> dict:
         ]
         feedback_events: List[dict] = []
         if clean_session_id:
-            cursor.execute(
-                f"""
-                SELECT {', '.join(feedback_columns)}
+            feedback_sql = (
+                """
+                SELECT id, match_result_id, rating, nps_score, comment, source,
+                       page_url, session_id, metadata, created_at
                 FROM feedback_events
-                WHERE session_id = {placeholder}
+                WHERE session_id = %s
                 ORDER BY id DESC
-                LIMIT {placeholder};
-                """,
-                (clean_session_id, USER_DATA_EXPORT_MAX_ROWS),
+                LIMIT %s;
+                """
+                if db_type == "postgres"
+                else """
+                SELECT id, match_result_id, rating, nps_score, comment, source,
+                       page_url, session_id, metadata, created_at
+                FROM feedback_events
+                WHERE session_id = ?
+                ORDER BY id DESC
+                LIMIT ?;
+                """
             )
+            cursor.execute(feedback_sql, (clean_session_id, USER_DATA_EXPORT_MAX_ROWS))
             feedback_events = [
                 db_row_to_export_dict(row, feedback_columns) for row in cursor.fetchall()
             ]
