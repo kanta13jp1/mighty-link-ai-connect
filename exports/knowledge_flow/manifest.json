@@ -1,11 +1,11 @@
 {
-  "generated_at_jst": "2026-08-30T23:59:15+09:00",
+  "generated_at_jst": "2026-08-31T02:13:15+09:00",
   "summary": {
     "total": 429,
-    "done": 413,
-    "active": 8,
+    "done": 414,
+    "active": 7,
     "todo": 8,
-    "completion_rate": 96,
+    "completion_rate": 97,
     "phase6_total": 90,
     "phase6_done": 90,
     "phase6_active": 0,
@@ -27,6 +27,7 @@
     "exports/knowledge_flow/notebooklm_agent_brief.json",
     "exports/knowledge_flow/notebooklm_ceo_slide_outline.md",
     "exports/knowledge_flow/notebooklm_ceo_slide_outline.json",
+    "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx",
     "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.md",
     "exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.json",
     "exports/knowledge_flow/obsidian_vault/Mighty Skill-Bridge Home.md",

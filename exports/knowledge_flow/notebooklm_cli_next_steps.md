@@ -1,15 +1,15 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-08-31T00:10:20+09:00
+Generated: 2026-08-31T02:16:51+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
 - Drive docs discovered: `169`
-- Drive docs uploaded: `135`
-- Drive docs skipped unchanged: `34`
-- NotebookLM CLI status: `skipped`
+- Drive docs uploaded: `3`
+- Drive docs skipped unchanged: `166`
+- NotebookLM CLI status: `auth_required`
 
 ## Google Docs Synced From docs/
 
@@ -197,7 +197,7 @@ During browser login, select `k-umezawa@ml-mightylink.com`.
 ## Last CLI Error
 
 ```text
-
+Authentication expired or invalid. Run 'notebooklm login' to re-authenticate.
 ```
 
 ## Agent Retrieval Command
