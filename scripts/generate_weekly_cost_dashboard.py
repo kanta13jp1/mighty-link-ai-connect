@@ -23,6 +23,8 @@ from email.message import EmailMessage
 from pathlib import Path
 from typing import Any
 
+from network_security import require_https_url
+
 
 TASK_ID = "T757"
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -447,14 +449,15 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
 
 
 def send_slack(webhook_url: str, payload: dict[str, Any]) -> None:
+    safe_webhook_url = require_https_url(webhook_url)
     body = json.dumps(payload).encode("utf-8")
     request = urllib.request.Request(
-        webhook_url,
+        safe_webhook_url,
         data=body,
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=15) as response:
+    with urllib.request.urlopen(request, timeout=15) as response:  # nosec B310 -- webhook is validated HTTPS.
         if response.status >= 300:
             raise RuntimeError(f"Slack webhook returned HTTP {response.status}")
 
