@@ -91,3 +91,8 @@ def test_evaluate_passes_on_the_real_repo():
     assert isinstance(results, list) and len(results) == 10
     failed = [r["id"] for r in results if not r["passed"]]
     assert not failed, f"release-gate hypotheses failing on real repo: {failed}"
+
+
+def test_rendered_audit_has_no_trailing_whitespace():
+    rendered = guard._render_md(guard.evaluate())
+    assert all(line == line.rstrip() for line in rendered.splitlines())

@@ -185,11 +185,12 @@ def _render_md(results: list[dict[str, Any]]) -> str:
     counts: dict[str, int] = {}
     for g in gates:
         counts[str(g.get("current_state", "?"))] = counts.get(str(g.get("current_state", "?")), 0) + 1
+    stale_suffix = f" {stale}" if stale else ""
     lines = [
         "# リリース判定ゲート整合性監査 (T908)",
         "",
         f"- ゲート総数: **{len(gates)}** / 内訳: " + ", ".join(f"{k}={v}" for k, v in sorted(counts.items())),
-        f"- 陳腐化ゲート(非PASSだが関連WBS全完了): **{len(stale)}件** {stale or ''}",
+        f"- 陳腐化ゲート(非PASSだが関連WBS全完了): **{len(stale)}件**{stale_suffix}",
         f"- 総合判定: {'✅ PASS (ドリフト0)' if ok else '❌ FAIL (ドリフトあり)'}",
         "",
         "> 本ガードは検知と可視化のみを行い、ゲートを自動的に PASS へ変更しない。",

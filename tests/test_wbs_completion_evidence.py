@@ -81,14 +81,14 @@ def test_reevaluate_candidate_kept_when_no_open_issue():
     assert out["reevaluate_candidates"] == ["TEST-02"]
 
 
-def test_real_repo_only_non_pass_unblocked_gates_become_reevaluate_candidates():
-    """PUBLIC-11 remains eligible while the revalidated PUBLIC-14 is PASS."""
+def test_real_repo_operational_blockers_prevent_false_reevaluation():
+    """PUBLIC-11 stays blocked by T944/T999 while PUBLIC-14 is PASS."""
     report = agg.build_report("2026-07-25")
     cands = report["remaining_for_ga"]["reevaluate_candidates"]
-    assert "PUBLIC-11" in cands
+    assert "PUBLIC-11" not in cands
     assert "PUBLIC-14" not in cands
     by_gate = {g["gate"]: g for g in report["remaining_for_ga"]["non_pass_gates"]}
-    assert by_gate["PUBLIC-11"]["open_issues"] == [], by_gate["PUBLIC-11"]
+    assert set(by_gate["PUBLIC-11"]["open_tasks"]) >= {"T944", "T999"}
     assert "PUBLIC-14" not in by_gate
 
 

@@ -1,6 +1,6 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-08-30T13:20:52Z",
+  "generated_at": "2026-08-30T13:39:39Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
@@ -212,12 +212,13 @@
       "current_state": "HUMAN_GATE",
       "owner": "人間 + Claude",
       "decision_authority": "CEO / 法務",
-      "related_wbs": "T798",
+      "related_wbs": "T798;T1003",
       "related_issue": "R36;R48;R51",
-      "last_checked": "2026-07-07",
-      "notes": "T833(7/7)判定: T869でdocs×実装の整合は検証済み。社内GAは社内利用フェーズ必須論点に限定して7/8定例までに人間確認。完全確定(【要法務確認】30箇所)は有償化前必須としてR111で管理 【再評価待ち: 2026-07-24時点で関連WBS T798 が完了。法務確認の確定要否の再判定が必要。T908ガードが検知】",
+      "last_checked": "2026-08-30",
+      "notes": "T798/T869で文書構造と実装整合は検証済みだが、【要法務確認】箇所の最終承認・承認者・承認日・版番号が未記録。T1003でCEO/法務の明示承認を取得するまでHUMAN_GATEとし、有償公開をfail-closedで禁止する。",
       "wbs_statuses": {
-        "T798": "完了"
+        "T798": "完了",
+        "T1003": "未着手"
       },
       "missing_evidence": []
     },
@@ -289,13 +290,14 @@
       "current_state": "WARNING",
       "owner": "人間",
       "decision_authority": "CEO",
-      "related_wbs": "T804;T862",
+      "related_wbs": "T804;T862;T1002",
       "related_issue": "R51",
-      "last_checked": "2026-07-25",
-      "notes": "T833(7/7)判定: T863仕分けどおり条件付きPASSを承認(T804仮承認7/3)。有償化時はT862でCEO最終価格を再確認。2026-07-09: 有償化判断T862をrelated_wbsへ明示リンク（条件付きPASSの解除条件） 【再評価待ち: 2026-07-25時点で関連WBS T804;T862 が全完了(7/24初回月次レビューで保留判定確定)。CEOによる再判定が必要。T908ガードが検知】",
+      "last_checked": "2026-08-30",
+      "notes": "T804の仮案とT862の保留判断は完了したが、CEO最終価格、無料枠、課金単位、税込/税別、有償化開始可否の承認記録がない。T1002で明示承認と文書反映が完了するまでWARNINGを維持し、Stripe liveを有効化しない。",
       "wbs_statuses": {
         "T804": "完了",
-        "T862": "完了"
+        "T862": "完了",
+        "T1002": "未着手"
       },
       "missing_evidence": []
     },
@@ -309,14 +311,15 @@
       "current_state": "BLOCKED",
       "owner": "Codex",
       "decision_authority": "開発責任者",
-      "related_wbs": "T776;T791;T807;T829",
+      "related_wbs": "T776;T791;T807;T813;T829",
       "related_issue": "R91;R106",
-      "last_checked": "2026-07-07",
-      "notes": "T833(7/7)判定: sandbox実装(T791)含め全面T862移管を承認(社内GAは実課金なし・QA-97)。T791/T807/T813はT862判断後に日程再設定",
+      "last_checked": "2026-08-30",
+      "notes": "設計・sandbox基盤は完了済み。実課金はCEO価格承認T1002後に限定し、T791 Billing Meters/Webhook live、T807 Customer Portal live、T813税・インボイス確認の3件が未完了であるためBLOCKEDを維持する。",
       "wbs_statuses": {
         "T776": "完了",
         "T791": "未着手",
         "T807": "未着手",
+        "T813": "未着手",
         "T829": "完了"
       },
       "missing_evidence": []
@@ -347,15 +350,15 @@
       "scope": "public_paid_launch",
       "category": "コア機能",
       "criterion": "6/17打ち合わせで最優先化された営業メールAIマッチングMVPが検証済み",
-      "evidence_source": "docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md; docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md; docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md; docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md; docs/SALES_EMAIL_MATCHING_API_UI_RUNBOOK.md; docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md; exports/sales_email_match_review.md; exports/sales_email_review_log.md; docs/meetings/2026-06-17_CEO_Meeting_Minutes.md",
+      "evidence_source": "docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md; docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md; docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md; docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md; docs/SALES_EMAIL_MATCHING_API_UI_RUNBOOK.md; docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md; exports/sales_email_match_review.md; exports/sales_email_review_log.md; docs/meetings/2026-06-17_CEO_Meeting_Minutes.md; .github/workflows/uptime-monitor.yml",
       "required_state": "PASS",
       "current_state": "BLOCKED",
       "owner": "Codex + Antigravity",
       "decision_authority": "CEO / 開発責任者",
-      "related_wbs": "T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7;T821",
-      "related_issue": "R75;R77;R78;R80;R81;R82;R83",
-      "last_checked": "2026-07-20",
-      "notes": "T833(7/7)判定: 案A仮決定(検証済みPoCデータで7/8 GA)。T817_7 hardeningは7/8-7/9、実接続はT836受領後に追加検証(R113) 【再評価待ち: 2026-07-20時点で関連WBS 9件(T817〜T817_7/T821)が全完了。last_checked=2026-07-07から13日間未再確認のため、CEO/開発責任者による再判定が必要。確認事項=実メール接続(T836)後の追加検証要否と、R113の案A(検証済みPoCデータでGA)の維持可否。T908ガードが検知】",
+      "related_wbs": "T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7;T821;T944;T999",
+      "related_issue": "R75;R77;R78;R80;R81;R82;R83;#255;#306",
+      "last_checked": "2026-08-30",
+      "notes": "PoC・抽出・マッチング・レビューUIは完了済み。実運用はT944のGMO削除元特定、パスワード回転、全クライアント再認証、24時間保持確認と、T999のSupabase DB Secret回転・15/15 transactional UATが未完了。Production Operations Monitorのsales-email-syncは空INBOX/接続/DB失敗を成功扱いせずfail-closedのまま維持し、両タスク完了までBLOCKEDとする。",
       "wbs_statuses": {
         "T817": "完了",
         "T817_1": "完了",
@@ -365,7 +368,9 @@
         "T817_5": "完了",
         "T817_6": "完了",
         "T817_7": "完了",
-        "T821": "完了"
+        "T821": "完了",
+        "T944": "実行中",
+        "T999": "実行中"
       },
       "missing_evidence": []
     },
@@ -398,10 +403,10 @@
       "current_state": "BLOCKED",
       "owner": "Codex + Claude Code + 人間",
       "decision_authority": "CEO / 法務 / 開発責任者",
-      "related_wbs": "T844;T845;T846;T847;T848;T849;T850_1",
+      "related_wbs": "T844;T845;T846;T847;T848;T849;T850;T850_1",
       "related_issue": "R99;#131;#132;#133;#134;#135;#136;#137",
-      "last_checked": "2026-07-07",
-      "notes": "T833(7/7)判定: T845/T850未実施。社内GAのGo条件(1)として7/8 15:00定例までにUAT green(本番DB実書き込み確認含む)が必須",
+      "last_checked": "2026-08-30",
+      "notes": "自動E2E・文書・保持削除・SaaS棚卸しは整備済み。T845人間UATサインオフ、T850 backup owner設定とS1-S6実地リハーサル、T849全件完了判定が未完了であるためBLOCKEDを維持する。T850_1のrunbook/監査ハーネス完了だけで会社運用引継ぎ完了とは扱わない。",
       "wbs_statuses": {
         "T844": "完了",
         "T845": "実行中",
@@ -409,6 +414,7 @@
         "T847": "完了",
         "T848": "完了",
         "T849": "実行中",
+        "T850": "実行中",
         "T850_1": "完了"
       },
       "missing_evidence": []
@@ -437,20 +443,21 @@
       "scope": "public_paid_launch",
       "category": "品質管理",
       "criterion": "課題管理表・QA表の開発必須open/未回答が0である",
-      "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Issue #141; GitHub Issue #150; GitHub Project #1",
+      "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Project #1",
       "required_state": "PASS",
       "current_state": "WARNING",
       "owner": "Codex + Claude Code + 人間",
       "decision_authority": "開発責任者 / CEO",
-      "related_wbs": "T853;T854;T858;T849",
-      "related_issue": "R101;R110;#141;#150",
-      "last_checked": "2026-07-07",
-      "notes": "T833(7/7)判定: blocker監査open4件はすべて判定・運用系(R111/R112/R113/R116)でコード/QA起因は0。R112は本判定でresolved、残3件は7/8定例とT870で解消予定",
+      "related_wbs": "T853;T854;T858;T849;T999",
+      "related_issue": "R101;R110;R151;#306",
+      "last_checked": "2026-08-30",
+      "notes": "2026-08-30監査は課題194行・QA176行、QAブロッカー0、開発必須課題ブロッカー1。残件はR151/T999（Supabase認証情報露出インシデント）のみで、Secret回転と安全な15/15再UAT完了までWARNINGを維持する。",
       "wbs_statuses": {
         "T853": "完了",
         "T854": "完了",
         "T858": "完了",
-        "T849": "実行中"
+        "T849": "実行中",
+        "T999": "実行中"
       },
       "missing_evidence": []
     },
