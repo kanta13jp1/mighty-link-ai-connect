@@ -39,7 +39,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install test dependencies
-        run: python -m pip install pytest
+        run: python -m pip install httpx pytest
 
       - name: Validate SQLite migrations
         run: python scripts/manage_db_migrations.py validate --engine sqlite
