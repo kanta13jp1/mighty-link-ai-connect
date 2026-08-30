@@ -1,14 +1,14 @@
 {
-  "generated_at_jst": "2026-08-31T02:16:51+09:00",
+  "generated_at_jst": "2026-08-31T03:41:18+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "drive_sync": {
     "force_upload": false,
     "docs_discovered": 169,
-    "uploaded": 3,
-    "skipped": 166,
+    "uploaded": 2,
+    "skipped": 167,
     "action_counts": {
-      "skipped_unchanged": 166,
-      "uploaded_updated": 3
+      "skipped_unchanged": 167,
+      "uploaded_updated": 2
     }
   },
   "google_docs": {
@@ -31,7 +31,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_account_ownership_migration_runbook_md": {
       "source": "docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md",
@@ -52,7 +52,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_accounting_and_tax_operations_runbook_md": {
       "source": "docs/ACCOUNTING_AND_TAX_OPERATIONS_RUNBOOK.md",
@@ -73,7 +73,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_admin_operations_dashboard_runbook_md": {
       "source": "docs/ADMIN_OPERATIONS_DASHBOARD_RUNBOOK.md",
@@ -94,7 +94,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_ai_cost_monitoring_and_quota_design_md": {
       "source": "docs/AI_COST_MONITORING_AND_QUOTA_DESIGN.md",
@@ -115,7 +115,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_ai_development_tool_subscription_policy_md": {
       "source": "docs/AI_DEVELOPMENT_TOOL_SUBSCRIPTION_POLICY.md",
@@ -136,7 +136,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_ai_saas_service_freeze_runbook_md": {
       "source": "docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md",
@@ -157,7 +157,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_antigravity_cli_evaluation_report_md": {
       "source": "docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md",
@@ -177,7 +177,7 @@
       "source_digest": "ffa1de30c94fb834498946bd42209a7a1d9342aa9bf722a7a977c42ee23c3cb6",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00",
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00"
     },
     "docs_antigravity_guide_md": {
@@ -198,7 +198,7 @@
       "source_digest": "5bd8b531239032d615a726d0ce593767c963a1c14ef3b9009ec6d19951f532ee",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00",
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00"
     },
     "docs_antigravity_hooks_sync_poc_md": {
@@ -220,7 +220,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_antigravity_managed_agents_cost_policy_md": {
       "source": "docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md",
@@ -240,7 +240,7 @@
       "source_digest": "63c1aa237bbff4f8c5a15d563569b9d60790c44f0735d7ddadae3cb806bee829",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00",
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00"
     },
     "docs_api_rate_limit_and_ddos_runbook_md": {
@@ -262,7 +262,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_aptitude_motivation_demo_privacy_design_md": {
       "source": "docs/APTITUDE_MOTIVATION_DEMO_PRIVACY_DESIGN.md",
@@ -283,7 +283,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_architecture_decision_records_md": {
       "source": "docs/ARCHITECTURE_DECISION_RECORDS.md",
@@ -304,7 +304,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_attendance_workflow_runbook_md": {
       "source": "docs/ATTENDANCE_WORKFLOW_RUNBOOK.md",
@@ -325,7 +325,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_audit_log_masking_and_encryption_md": {
       "source": "docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md",
@@ -346,7 +346,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_backend_ai_pipeline_md": {
       "source": "docs/BACKEND_AI_PIPELINE.md",
@@ -367,7 +367,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_billing_and_refund_policy_md": {
       "source": "docs/BILLING_AND_REFUND_POLICY.md",
@@ -388,7 +388,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_ceo_presentation_backup_guide_md": {
       "source": "docs/CEO_PRESENTATION_BACKUP_GUIDE.md",
@@ -408,7 +408,7 @@
       "source_digest": "6c20c1d26e57a2e80f8fcdafc79772f20b2a396559c2ad9d8e61e136c0787e28",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00",
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00"
     },
     "docs_ceo_presentation_final_review_checklist_md": {
@@ -430,7 +430,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_codex_continuation_notes_md": {
       "source": "docs/CODEX_CONTINUATION_NOTES.md",
@@ -451,7 +451,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_cold_storage_log_archive_runbook_md": {
       "source": "docs/COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md",
@@ -472,7 +472,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_cost_quota_alerts_guard_md": {
       "source": "docs/COST_QUOTA_ALERTS_GUARD.md",
@@ -493,7 +493,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_cost_report_2026_06_md": {
       "source": "docs/COST_REPORT_2026-06.md",
@@ -514,7 +514,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_custom_domain_uptime_incident_2026_06_27_md": {
       "source": "docs/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md",
@@ -535,7 +535,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_data_retention_deletion_anonymization_runbook_md": {
       "source": "docs/DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md",
@@ -556,7 +556,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_database_md": {
       "source": "docs/database.md",
@@ -577,7 +577,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_db_migration_management_runbook_md": {
       "source": "docs/DB_MIGRATION_MANAGEMENT_RUNBOOK.md",
@@ -598,7 +598,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_db_read_load_balancing_design_md": {
       "source": "docs/DB_READ_LOAD_BALANCING_DESIGN.md",
@@ -619,7 +619,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_demo_security_and_auth_design_md": {
       "source": "docs/DEMO_SECURITY_AND_AUTH_DESIGN.md",
@@ -640,7 +640,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_development_knowledge_flow_md": {
       "source": "docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
@@ -661,7 +661,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_devops_sre_operation_spec_md": {
       "source": "docs/DEVOPS_SRE_OPERATION_SPEC.md",
@@ -682,7 +682,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_disaster_recovery_and_escalation_runbook_md": {
       "source": "docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md",
@@ -703,7 +703,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_docs_reference_integrity_guard_md": {
       "source": "docs/DOCS_REFERENCE_INTEGRITY_GUARD.md",
@@ -724,7 +724,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_employee_assessment_response_runbook_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_RESPONSE_RUNBOOK.md",
@@ -745,7 +745,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_employee_assessment_shortlist_poc_plan_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_SHORTLIST_POC_PLAN.md",
@@ -766,7 +766,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_employee_assessment_tool_research_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md",
@@ -787,7 +787,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_employee_assessment_vendor_rfi_dpa_checklist_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_VENDOR_RFI_DPA_CHECKLIST.md",
@@ -808,7 +808,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_external_pentest_runbook_md": {
       "source": "docs/EXTERNAL_PENTEST_RUNBOOK.md",
@@ -829,7 +829,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_figma_slide_integration_guide_md": {
       "source": "docs/FIGMA_SLIDE_INTEGRATION_GUIDE.md",
@@ -850,7 +850,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_firebase_auth_supabase_rls_security_design_md": {
       "source": "docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md",
@@ -871,7 +871,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_firebase_ci_cd_wif_migration_report_md": {
       "source": "docs/FIREBASE_CI_CD_WIF_MIGRATION_REPORT.md",
@@ -892,7 +892,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_firebase_supabase_quota_error_alert_runbook_md": {
       "source": "docs/FIREBASE_SUPABASE_QUOTA_ERROR_ALERT_RUNBOOK.md",
@@ -913,7 +913,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_firebase_supabase_system_architecture_md": {
       "source": "docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md",
@@ -934,7 +934,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_gemini_cli_migration_audit_2026_06_17_md": {
       "source": "docs/GEMINI_CLI_MIGRATION_AUDIT_2026-06-17.md",
@@ -955,7 +955,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_gemini_model_version_migration_runbook_md": {
       "source": "docs/GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md",
@@ -976,7 +976,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_github_wbs_sync_runbook_md": {
       "source": "docs/GITHUB_WBS_SYNC_RUNBOOK.md",
@@ -997,7 +997,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_go_no_go_decision_pack_2026_07_07_md": {
       "source": "docs/GO_NO_GO_DECISION_PACK_2026-07-07.md",
@@ -1018,7 +1018,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_go_no_go_gate_triage_2026_07_04_md": {
       "source": "docs/GO_NO_GO_GATE_TRIAGE_2026-07-04.md",
@@ -1039,7 +1039,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_google_workspace_migration_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
@@ -1060,7 +1060,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_google_workspace_oauth_reauth_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md",
@@ -1081,7 +1081,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_growth_strategy_roadmap_md": {
       "source": "docs/GROWTH_STRATEGY_ROADMAP.md",
@@ -1102,7 +1102,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_handover_documentation_package_md": {
       "source": "docs/HANDOVER_DOCUMENTATION_PACKAGE.md",
@@ -1123,7 +1123,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_hosting_and_database_selection_md": {
       "source": "docs/HOSTING_AND_DATABASE_SELECTION.md",
@@ -1143,7 +1143,7 @@
       "source_digest": "8d92e64fc14138204b61866ce3c3d3efdddcbe368a2b44f9c580699c1cc15ffe",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00",
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00"
     },
     "docs_hypothesis_audit_2026_07_04_md": {
@@ -1165,7 +1165,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_incident_postmortem_runbook_md": {
       "source": "docs/INCIDENT_POSTMORTEM_RUNBOOK.md",
@@ -1186,7 +1186,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_infra_hearing_sign_off_pack_2026_08_07_md": {
       "source": "docs/INFRA_HEARING_SIGN_OFF_PACK_2026-08-07.md",
@@ -1207,7 +1207,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_infra_telemetry_dashboard_runbook_md": {
       "source": "docs/INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md",
@@ -1228,7 +1228,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_internal_launch_and_billing_scope_2026_07_03_md": {
       "source": "docs/INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md",
@@ -1249,7 +1249,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_issue_qa_blocker_audit_2026_06_27_md": {
       "source": "docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md",
@@ -1270,7 +1270,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_japanese_ui_ux_style_guide_md": {
       "source": "docs/JAPANESE_UI_UX_STYLE_GUIDE.md",
@@ -1291,7 +1291,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_lane_preflight_guard_md": {
       "source": "docs/LANE_PREFLIGHT_GUARD.md",
@@ -1312,7 +1312,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_attorney_review_results_r36_md": {
       "source": "docs/LEGAL_ATTORNEY_REVIEW_RESULTS_R36.md",
@@ -1333,7 +1333,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_consent_ui_and_api_runbook_md": {
       "source": "docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md",
@@ -1354,7 +1354,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_docs_consistency_audit_2026_07_04_md": {
       "source": "docs/LEGAL_DOCS_CONSISTENCY_AUDIT_2026-07-04.md",
@@ -1375,7 +1375,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_review_external_attorney_package_md": {
       "source": "docs/LEGAL_REVIEW_EXTERNAL_ATTORNEY_PACKAGE.md",
@@ -1396,7 +1396,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_review_resolution_draft_md": {
       "source": "docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md",
@@ -1417,7 +1417,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_review_signoff_tracker_md": {
       "source": "docs/LEGAL_REVIEW_SIGNOFF_TRACKER.md",
@@ -1438,7 +1438,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_load_test_100_users_report_2026_07_01_md": {
       "source": "docs/LOAD_TEST_100_USERS_REPORT_2026-07-01.md",
@@ -1459,7 +1459,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_local_dev_emulator_stack_runbook_md": {
       "source": "docs/LOCAL_DEV_EMULATOR_STACK_RUNBOOK.md",
@@ -1480,7 +1480,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_log_rotation_and_retention_runbook_md": {
       "source": "docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md",
@@ -1501,7 +1501,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:24+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_master_knowledge_graph_md": {
       "source": "docs/MASTER_KNOWLEDGE_GRAPH.md",
@@ -1519,8 +1519,10 @@
       "createdTime": "2026-08-08T09:46:40.758Z",
       "modifiedTime": "2026-08-30T17:16:26.738Z",
       "source_digest": "e107b82e91572c94a0257608d49611397577bc07b3bd02bb8ff5b36750e4396e",
-      "sync_action": "uploaded_updated",
-      "source_mtime_jst": "2026-08-31T02:13:16+09:00"
+      "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T03:40:19+09:00",
+      "sync_reason": "source_digest_match",
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_mikiwame_ai_integration_poc_design_md": {
       "source": "docs/MIKIWAME_AI_INTEGRATION_POC_DESIGN.md",
@@ -1541,7 +1543,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_monthly_progress_report_and_kpi_dashboard_md": {
       "source": "docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md",
@@ -1562,7 +1564,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_monthly_quality_report_delivery_runbook_md": {
       "source": "docs/MONTHLY_QUALITY_REPORT_DELIVERY_RUNBOOK.md",
@@ -1583,7 +1585,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_monthly_report_2026_06_md": {
       "source": "docs/MONTHLY_REPORT_2026-06.md",
@@ -1604,7 +1606,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_multi_ai_workflow_md": {
       "source": "docs/MULTI_AI_WORKFLOW.md",
@@ -1625,7 +1627,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_notebooklm_sync_timeout_runbook_md": {
       "source": "docs/NOTEBOOKLM_SYNC_TIMEOUT_RUNBOOK.md",
@@ -1646,7 +1648,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_obsidian_development_workflow_md": {
       "source": "docs/OBSIDIAN_DEVELOPMENT_WORKFLOW.md",
@@ -1667,7 +1669,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_operations_cadence_calendar_md": {
       "source": "docs/OPERATIONS_CADENCE_CALENDAR.md",
@@ -1688,7 +1690,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_operations_handover_rehearsal_runbook_md": {
       "source": "docs/OPERATIONS_HANDOVER_REHEARSAL_RUNBOOK.md",
@@ -1709,7 +1711,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_operations_runbook_catalog_md": {
       "source": "docs/OPERATIONS_RUNBOOK_CATALOG.md",
@@ -1730,7 +1732,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_paid_launch_go_no_go_decision_pack_2026_07_24_md": {
       "source": "docs/PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md",
@@ -1751,7 +1753,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_paid_launch_go_no_go_decision_pack_2026_08_24_md": {
       "source": "docs/PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-08-24.md",
@@ -1767,12 +1769,10 @@
         }
       ],
       "createdTime": "2026-08-19T14:08:12.892Z",
-      "modifiedTime": "2026-08-30T15:04:45.835Z",
-      "source_digest": "b14437bb2511402bb38b77d5d87afa8d0320bd24509759c4211c610afe9cb1b5",
-      "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
-      "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "modifiedTime": "2026-08-30T18:40:58.813Z",
+      "source_digest": "f2190c37ab0c4094ea10749fc59a3f608de1dbd06c95bca82d709225f375b02a",
+      "sync_action": "uploaded_updated",
+      "source_mtime_jst": "2026-08-31T03:35:52+09:00"
     },
     "docs_performance_diagnostic_and_index_optimization_runbook_md": {
       "source": "docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md",
@@ -1793,7 +1793,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_personal_info_disclosure_procedures_md": {
       "source": "docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md",
@@ -1814,7 +1814,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_pilot_closed_operation_design_md": {
       "source": "docs/PILOT_CLOSED_OPERATION_DESIGN.md",
@@ -1835,7 +1835,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_pilot_consent_template_md": {
       "source": "docs/PILOT_CONSENT_TEMPLATE.md",
@@ -1855,7 +1855,7 @@
       "source_digest": "bdb4628e1e6de861834eaeb1a2302708bfe6bbd36216aaa5e64563ce5c9756a7",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00",
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00"
     },
     "docs_pilot_participants_selection_md": {
@@ -1877,7 +1877,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_pilot_report_2026_06_16_md": {
       "source": "docs/PILOT_REPORT_2026-06-16.md",
@@ -1897,7 +1897,7 @@
       "source_digest": "f89a7e67c8568d3271aef920d5b073d6a941e988bfa6964eb5782a534faba6f4",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00",
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00"
     },
     "docs_post_launch_retrospective_2026_07_18_md": {
@@ -1919,7 +1919,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_postmortem_2026_06_11_r44_production_api_502_md": {
       "source": "docs/POSTMORTEM_2026-06-11_R44_PRODUCTION_API_502.md",
@@ -1940,7 +1940,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_postmortem_2026_07_04_r114_missing_prod_tables_md": {
       "source": "docs/POSTMORTEM_2026-07-04_R114_MISSING_PROD_TABLES.md",
@@ -1961,7 +1961,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_pricing_plan_provisional_2026_07_03_md": {
       "source": "docs/PRICING_PLAN_PROVISIONAL_2026-07-03.md",
@@ -1982,7 +1982,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_pricing_plan_specification_md": {
       "source": "docs/PRICING_PLAN_SPECIFICATION.md",
@@ -2003,7 +2003,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_privacy_policy_md": {
       "source": "docs/PRIVACY_POLICY.md",
@@ -2024,7 +2024,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN.md",
@@ -2045,7 +2045,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase2_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE2.md",
@@ -2066,7 +2066,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase3_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE3.md",
@@ -2087,7 +2087,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase4_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE4.md",
@@ -2108,7 +2108,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase5_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE5.md",
@@ -2129,7 +2129,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase6_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE6.md",
@@ -2150,7 +2150,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase7_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE7.md",
@@ -2171,7 +2171,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_production_acceptance_test_report_md": {
       "source": "docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md",
@@ -2192,7 +2192,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_production_domain_setup_guide_md": {
       "source": "docs/PRODUCTION_DOMAIN_SETUP_GUIDE.md",
@@ -2213,7 +2213,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_production_go_no_go_checklist_md": {
       "source": "docs/PRODUCTION_GO_NO_GO_CHECKLIST.md",
@@ -2234,7 +2234,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_production_rollback_runbook_md": {
       "source": "docs/PRODUCTION_ROLLBACK_RUNBOOK.md",
@@ -2255,7 +2255,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_production_site_review_2026_08_19_md": {
       "source": "docs/PRODUCTION_SITE_REVIEW_2026-08-19.md",
@@ -2276,7 +2276,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_project_glossary_md": {
       "source": "docs/PROJECT_GLOSSARY.md",
@@ -2297,7 +2297,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_project_stall_review_2026_08_19_md": {
       "source": "docs/PROJECT_STALL_REVIEW_2026-08-19.md",
@@ -2318,7 +2318,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_project_structure_md": {
       "source": "docs/PROJECT_STRUCTURE.md",
@@ -2339,7 +2339,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_quality_guard_catalog_md": {
       "source": "docs/QUALITY_GUARD_CATALOG.md",
@@ -2360,7 +2360,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_release_versioning_runbook_md": {
       "source": "docs/RELEASE_VERSIONING_RUNBOOK.md",
@@ -2381,7 +2381,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_requirements_md": {
       "source": "docs/requirements.md",
@@ -2402,7 +2402,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:12+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_ai_matching_requirements_md": {
       "source": "docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md",
@@ -2423,7 +2423,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_auto_ingest_connection_checklist_md": {
       "source": "docs/SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md",
@@ -2444,7 +2444,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_database_schema_runbook_md": {
       "source": "docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md",
@@ -2465,7 +2465,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_extraction_pipeline_runbook_md": {
       "source": "docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md",
@@ -2486,7 +2486,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_human_review_runbook_md": {
       "source": "docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md",
@@ -2507,7 +2507,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_ingestion_poc_runbook_md": {
       "source": "docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md",
@@ -2528,7 +2528,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_matching_api_ui_runbook_md": {
       "source": "docs/SALES_EMAIL_MATCHING_API_UI_RUNBOOK.md",
@@ -2549,7 +2549,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_proposal_effectiveness_summary_md": {
       "source": "docs/SALES_PROPOSAL_EFFECTIVENESS_SUMMARY.md",
@@ -2570,7 +2570,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_secret_rotation_runbook_md": {
       "source": "docs/SECRET_ROTATION_RUNBOOK.md",
@@ -2591,7 +2591,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_security_audit_report_2026_q2_md": {
       "source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md",
@@ -2612,7 +2612,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_security_audit_runbook_md": {
       "source": "docs/SECURITY_AUDIT_RUNBOOK.md",
@@ -2633,7 +2633,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_security_incident_response_runbook_md": {
       "source": "docs/SECURITY_INCIDENT_RESPONSE_RUNBOOK.md",
@@ -2654,7 +2654,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_security_log_integrity_guard_md": {
       "source": "docs/SECURITY_LOG_INTEGRITY_GUARD.md",
@@ -2675,7 +2675,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_security_scan_remediation_2026_08_30_md": {
       "source": "docs/SECURITY_SCAN_REMEDIATION_2026-08-30.md",
@@ -2696,7 +2696,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sequence_diagrams_md": {
       "source": "docs/SEQUENCE_DIAGRAMS.md",
@@ -2717,7 +2717,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_service_eol_decommissioning_plan_md": {
       "source": "docs/SERVICE_EOL_DECOMMISSIONING_PLAN.md",
@@ -2738,7 +2738,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_session_log_md": {
       "source": "docs/SESSION_LOG.md",
@@ -2759,7 +2759,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_setup_guide_md": {
       "source": "docs/SETUP_GUIDE.md",
@@ -2780,7 +2780,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sheets_trackers_schema_md": {
       "source": "docs/SHEETS_TRACKERS_SCHEMA.md",
@@ -2801,7 +2801,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sla_kpi_definition_and_measurement_md": {
       "source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md",
@@ -2822,7 +2822,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_staging_environment_operation_runbook_md": {
       "source": "docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md",
@@ -2843,7 +2843,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_stripe_billing_integration_design_md": {
       "source": "docs/STRIPE_BILLING_INTEGRATION_DESIGN.md",
@@ -2864,7 +2864,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_stripe_customer_portal_runbook_md": {
       "source": "docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md",
@@ -2885,7 +2885,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_stripe_tax_and_invoice_compliance_runbook_md": {
       "source": "docs/STRIPE_TAX_AND_INVOICE_COMPLIANCE_RUNBOOK.md",
@@ -2906,7 +2906,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_backup_ci_recovery_runbook_md": {
       "source": "docs/SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md",
@@ -2927,7 +2927,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_backup_restore_runbook_md": {
       "source": "docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md",
@@ -2948,7 +2948,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_connection_pooling_runbook_md": {
       "source": "docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md",
@@ -2969,7 +2969,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_database_physical_and_index_design_md": {
       "source": "docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md",
@@ -2990,7 +2990,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_infra_audit_2026_07_04_md": {
       "source": "docs/SUPABASE_INFRA_AUDIT_2026-07-04.md",
@@ -3011,7 +3011,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_postgres_upgrade_runbook_md": {
       "source": "docs/SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md",
@@ -3032,7 +3032,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_query_performance_dashboard_runbook_md": {
       "source": "docs/SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK.md",
@@ -3053,7 +3053,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:30+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_uat_credential_incident_2026_08_30_md": {
       "source": "docs/SUPABASE_UAT_CREDENTIAL_INCIDENT_2026-08-30.md",
@@ -3071,8 +3071,10 @@
       "createdTime": "2026-08-30T15:08:15.045Z",
       "modifiedTime": "2026-08-30T17:16:31.362Z",
       "source_digest": "045b27271aa98a6e5165b169840fe24037de7cbca9ea9b6c167786c3d2a06e4f",
-      "sync_action": "uploaded_updated",
-      "source_mtime_jst": "2026-08-31T02:10:48+09:00"
+      "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T02:10:48+09:00",
+      "sync_reason": "source_digest_match",
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_support_contact_and_escalation_runbook_md": {
       "source": "docs/SUPPORT_CONTACT_AND_ESCALATION_RUNBOOK.md",
@@ -3093,7 +3095,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_t862_paid_launch_legal_signoff_approval_md": {
       "source": "docs/T862_PAID_LAUNCH_LEGAL_SIGNOFF_APPROVAL.md",
@@ -3114,7 +3116,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_terms_and_privacy_annual_review_process_md": {
       "source": "docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md",
@@ -3135,7 +3137,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_terms_of_service_md": {
       "source": "docs/TERMS_OF_SERVICE.md",
@@ -3156,7 +3158,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_tokushoho_notation_md": {
       "source": "docs/TOKUSHOHO_NOTATION.md",
@@ -3177,7 +3179,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_tracker_integrity_guard_md": {
       "source": "docs/TRACKER_INTEGRITY_GUARD.md",
@@ -3198,7 +3200,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_uat_api_coverage_guard_md": {
       "source": "docs/UAT_API_COVERAGE_GUARD.md",
@@ -3219,7 +3221,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_uat_test_specification_md": {
       "source": "docs/UAT_TEST_SPECIFICATION.md",
@@ -3240,7 +3242,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_uptime_monitoring_and_alert_runbook_md": {
       "source": "docs/UPTIME_MONITORING_AND_ALERT_RUNBOOK.md",
@@ -3261,7 +3263,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_usage_analytics_kpi_runbook_md": {
       "source": "docs/USAGE_ANALYTICS_KPI_RUNBOOK.md",
@@ -3282,7 +3284,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_user_data_deletion_flow_md": {
       "source": "docs/USER_DATA_DELETION_FLOW.md",
@@ -3303,7 +3305,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_user_data_self_export_runbook_md": {
       "source": "docs/USER_DATA_SELF_EXPORT_RUNBOOK.md",
@@ -3324,7 +3326,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_user_feedback_collection_runbook_md": {
       "source": "docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md",
@@ -3345,7 +3347,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_user_guide_and_faq_md": {
       "source": "docs/USER_GUIDE_AND_FAQ.md",
@@ -3366,7 +3368,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_wbs_md": {
       "source": "docs/WBS.md",
@@ -3382,10 +3384,10 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-08-30T17:16:36.003Z",
-      "source_digest": "7b10f75a6f68447dfdf61f7e9b2df5a9d22e84da39d3e94e68754e7b85d109ee",
+      "modifiedTime": "2026-08-30T18:41:04.353Z",
+      "source_digest": "22585444f5cfe814e6f1b60a5aa04b1839498e96a4f2a25b9fff76dc5b7cc265",
       "sync_action": "uploaded_updated",
-      "source_mtime_jst": "2026-08-31T02:10:48+09:00"
+      "source_mtime_jst": "2026-08-31T03:35:52+09:00"
     },
     "docs_wbs_lifecycle_coverage_guard_md": {
       "source": "docs/WBS_LIFECYCLE_COVERAGE_GUARD.md",
@@ -3406,7 +3408,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:41+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_process_coverage_audit_2026_06_13_md": {
       "source": "docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md",
@@ -3427,7 +3429,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:41+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_process_coverage_audit_2026_06_25_md": {
       "source": "docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-25.md",
@@ -3448,7 +3450,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:41+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_review_2026_06_26_md": {
       "source": "docs/WBS_REVIEW_2026-06-26.md",
@@ -3469,7 +3471,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:41+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_review_2026_06_26_session2_md": {
       "source": "docs/WBS_REVIEW_2026-06-26_SESSION2.md",
@@ -3490,7 +3492,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:41+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_review_2026_07_13_md": {
       "source": "docs/WBS_REVIEW_2026-07-13.md",
@@ -3511,7 +3513,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:41+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_sync_guide_md": {
       "source": "docs/WBS_SYNC_GUIDE.md",
@@ -3532,7 +3534,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:41+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_weekly_cost_dashboard_runbook_md": {
       "source": "docs/WEEKLY_COST_DASHBOARD_RUNBOOK.md",
@@ -3553,7 +3555,7 @@
       "sync_action": "skipped_unchanged",
       "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-31T02:16:41+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     }
   },
   "notebooklm": {
@@ -3564,12 +3566,12 @@
   },
   "gemini_context_cache": {
     "status": "ready",
-    "cache_name": "cachedContents/uagzvhr6sc2sb1fcxspfaixz593zneuz0syi1vv4",
+    "cache_name": "cachedContents/hgcuvfdmfs736v168euoscq6rka59lxcas74feun",
     "display_name": "Mighty Skill-Bridge Development Knowledge 2026-06-02",
     "model": "models/gemini-3.5-flash",
     "ttl_seconds": 3600,
-    "created_time": "2026-08-30T17:16:50.442482+00:00",
-    "expire_time": "2026-08-30T18:16:48.644707+00:00",
+    "created_time": "2026-08-30T18:41:17.118539+00:00",
+    "expire_time": "2026-08-30T19:41:15.746005+00:00",
     "total_tokens_poc": "active"
   }
 }
