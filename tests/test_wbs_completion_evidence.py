@@ -1,7 +1,9 @@
 """T849_1 WBS completion evidence aggregator tests."""
 
 import sys
+from datetime import date, datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
@@ -81,6 +83,19 @@ def test_reevaluate_candidate_kept_when_no_open_issue():
     assert out["reevaluate_candidates"] == ["TEST-02"]
 
 
+def test_deferred_review_is_not_recommended_for_immediate_pass():
+    criteria = [{
+        "criterion_id": "TEST-DEFERRED", "current_state": "BLOCKED",
+        "related_wbs": "TZ1", "related_issue": "",
+        "notes": "【再評価待ち: 2026-09-24有償公開月次レビュー】延期CLOSE",
+    }]
+    wbs = [{"タスクID": "TZ1", "ステータス": "完了", "担当": "Codex"}]
+    out = agg.classify_remaining(criteria, wbs, [])
+    assert out["non_pass_gates"][0]["class"] == "deferred_review"
+    assert out["reevaluate_candidates"] == []
+    assert out["deferred_reviews"] == ["TEST-DEFERRED"]
+
+
 def test_real_repo_operational_blockers_prevent_false_reevaluation():
     """PUBLIC-11 stays blocked by T944 after T999 risk-acceptance closure."""
     report = agg.build_report("2026-07-25")
@@ -97,3 +112,8 @@ def test_real_repo_operational_blockers_prevent_false_reevaluation():
 def test_overdue_detection_is_a_list():
     report = agg.build_report("2026-07-09")
     assert isinstance(report["wbs_stats"]["overdue_incomplete"], list)
+
+
+def test_default_reporting_date_is_current_jst_date():
+    value = agg.jst_today()
+    assert date.fromisoformat(value) == datetime.now(ZoneInfo("Asia/Tokyo")).date()

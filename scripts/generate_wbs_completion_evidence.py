@@ -19,8 +19,10 @@ from __future__ import annotations
 
 import argparse
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable
+from zoneinfo import ZoneInfo
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -45,6 +47,13 @@ EVIDENCE_INDEX = {
 }
 NON_PASS_STATES = {"BLOCKED", "HUMAN_GATE", "WARNING"}
 HUMAN_KEYWORDS = ("人間", "寛太梅澤")
+DEFERRED_REVIEW_MARKER = "【再評価待ち:"
+JST = ZoneInfo("Asia/Tokyo")
+
+
+def jst_today() -> str:
+    """Return the operational reporting date in the project's JST timezone."""
+    return datetime.now(JST).date().isoformat()
 
 
 def read_tsv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
@@ -140,6 +149,7 @@ def classify_remaining(criteria: list[dict[str, str]], wbs: list[dict[str, str]]
     issues = issues if issues is not None else load_issues()
     remaining = []
     reevaluate = []
+    deferred_reviews = []
     for c in criteria:
         state = (c.get("current_state") or "").strip().upper()
         if state not in NON_PASS_STATES:
@@ -158,6 +168,13 @@ def classify_remaining(criteria: list[dict[str, str]], wbs: list[dict[str, str]]
         if not open_tasks and state != "HUMAN_GATE":
             if blockers:
                 gate_class = "blocked_by_open_issue"
+            elif DEFERRED_REVIEW_MARKER in (c.get("notes") or ""):
+                # A formally deferred paid-launch gate is intentionally not
+                # eligible for an immediate PASS flip merely because its old
+                # WBS rows were closed as deferred. Keep it fail-closed until
+                # the named review creates and completes replacement work.
+                gate_class = "deferred_review"
+                deferred_reviews.append(c.get("criterion_id"))
             else:
                 gate_class = "reevaluate_candidate"
                 reevaluate.append(c.get("criterion_id"))
@@ -170,7 +187,8 @@ def classify_remaining(criteria: list[dict[str, str]], wbs: list[dict[str, str]]
         })
     return {"non_pass_gates": remaining,
             "count": len(remaining),
-            "reevaluate_candidates": reevaluate}
+            "reevaluate_candidates": reevaluate,
+            "deferred_reviews": deferred_reviews}
 
 
 def build_hypotheses(wbs, criteria, stats, remaining) -> list[dict[str, Any]]:
@@ -230,12 +248,13 @@ def build_hypotheses(wbs, criteria, stats, remaining) -> list[dict[str, Any]]:
         # tasks complete AND nothing outstanding against it).
         unaccounted = [g["gate"] for g in remaining["non_pass_gates"]
                        if not g["open_tasks"] and g["state"] != "HUMAN_GATE"
-                       and g["class"] not in {"reevaluate_candidate", "blocked_by_open_issue"}]
+                       and g["class"] not in {"reevaluate_candidate", "blocked_by_open_issue", "deferred_review"}]
         blocked = {g["gate"]: g["open_issues"] for g in remaining["non_pass_gates"]
                    if g["class"] == "blocked_by_open_issue"}
         return not unaccounted, (
             f"説明不能な非PASSゲート={unaccounted or 'なし'} / "
             f"再評価候補(関連全完了かつ未解決課題なし)={remaining['reevaluate_candidates'] or 'なし'} / "
+            f"指定日まで延期再評価={remaining['deferred_reviews'] or 'なし'} / "
             f"未解決課題でPASS再判定不可={blocked or 'なし'}")
 
     record("H8", "各非PASSゲートが残タスク/HUMAN_GATE/未解決課題/再評価候補として説明できる", h8)
@@ -243,7 +262,7 @@ def build_hypotheses(wbs, criteria, stats, remaining) -> list[dict[str, Any]]:
     def h9():
         classified = {g["class"] for g in remaining["non_pass_gates"]}
         return classified.issubset(
-            {"human_or_mixed", "lane", "reevaluate_candidate", "blocked_by_open_issue"}), \
+            {"human_or_mixed", "lane", "reevaluate_candidate", "blocked_by_open_issue", "deferred_review"}), \
             f"残作業の分類={sorted(classified)}"
 
     record("H9", "残作業が人間依存/レーン/再評価候補に分類できる", h9)
@@ -303,7 +322,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     for k, v in report["evidence_index"].items():
         lines.append(f"| {k} | {v['artifact']} | {'OK' if v['exists'] else 'MISSING'} |")
     reeval = report["remaining_for_ga"].get("reevaluate_candidates") or []
+    deferred = report["remaining_for_ga"].get("deferred_reviews") or []
     lines += ["", f"## 再評価候補ゲート（関連WBS全完了かつ未解決課題なし・PASS再判定推奨）: {', '.join(reeval) or 'なし'}",
+              "", f"## 延期再評価ゲート（指定レビューまでPASS化しない）: {', '.join(deferred) or 'なし'}",
               "",
               "> 関連WBSが全完了でも、そのWBSを参照する未解決(open)課題が残るゲートは "
               "`blocked_by_open_issue` として再判定対象から除外する（実欠陥を抱えたままGAゲートを"
@@ -323,7 +344,7 @@ def render_markdown(report: dict[str, Any]) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="WBS completion evidence aggregator (T849_1)")
-    parser.add_argument("--today", default="2026-07-09")
+    parser.add_argument("--today", default=jst_today())
     parser.add_argument("--json-out", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--md-out", type=Path, default=DEFAULT_MD)
     parser.add_argument("--fail-on-attention", action="store_true")

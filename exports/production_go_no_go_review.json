@@ -1,6 +1,6 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-08-30T13:39:39Z",
+  "generated_at": "2026-08-30T19:04:30Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
@@ -214,11 +214,11 @@
       "decision_authority": "CEO / 法務",
       "related_wbs": "T798;T1003",
       "related_issue": "R36;R48;R51",
-      "last_checked": "2026-08-30",
-      "notes": "T798/T869で文書構造と実装整合は検証済みだが、【要法務確認】箇所の最終承認・承認者・承認日・版番号が未記録。T1003でCEO/法務の明示承認を取得するまでHUMAN_GATEとし、有償公開をfail-closedで禁止する。",
+      "last_checked": "2026-08-31",
+      "notes": "【再評価待ち: 2026-09-24有償公開月次レビュー】社内GA必須論点20項目とR36外部弁護士レビューは確定済みだが、有償公開版の【要法務確認】処置、最終承認者、承認日、版番号、適用日は未確定。2026-08-24の有償公開保留判定によりT1003は延期CLOSEしただけで法務最終承認完了を意味しない。有償公開再開時に新規WBSで再評価し、完了までHUMAN_GATEとfail-closedを維持する。",
       "wbs_statuses": {
         "T798": "完了",
-        "T1003": "未着手"
+        "T1003": "完了"
       },
       "missing_evidence": []
     },
@@ -292,12 +292,12 @@
       "decision_authority": "CEO",
       "related_wbs": "T804;T862;T1002",
       "related_issue": "R51",
-      "last_checked": "2026-08-30",
-      "notes": "T804の仮案とT862の保留判断は完了したが、CEO最終価格、無料枠、課金単位、税込/税別、有償化開始可否の承認記録がない。T1002で明示承認と文書反映が完了するまでWARNINGを維持し、Stripe liveを有効化しない。",
+      "last_checked": "2026-08-31",
+      "notes": "【再評価待ち: 2026-09-24有償公開月次レビュー】T804の仮料金は社内無償運用の当面の正だが、CEO最終価格、無料枠、課金単位、税込/税別、有償化開始日、適格請求書方針は未承認。2026-08-24の有償公開保留判定によりT1002は延期CLOSEしただけで公開価格承認を意味しない。有償公開再開時に新規人間ゲートWBSで再評価し、完了までWARNINGを維持してStripe liveを有効化しない。",
       "wbs_statuses": {
         "T804": "完了",
         "T862": "完了",
-        "T1002": "未着手"
+        "T1002": "完了"
       },
       "missing_evidence": []
     },
@@ -313,13 +313,13 @@
       "decision_authority": "開発責任者",
       "related_wbs": "T776;T791;T807;T813;T829",
       "related_issue": "R91;R106",
-      "last_checked": "2026-08-30",
-      "notes": "設計・sandbox基盤は完了済み。実課金はCEO価格承認T1002後に限定し、T791 Billing Meters/Webhook live、T807 Customer Portal live、T813税・インボイス確認の3件が未完了であるためBLOCKEDを維持する。",
+      "last_checked": "2026-08-31",
+      "notes": "【再評価待ち: 2026-09-24有償公開月次レビュー】設計・オフライン回帰・fail-closed基盤は整備済みだが、実Stripe Sandbox Meter/Event/Webhook/invoice preview、Customer Portal E2E、経理確認、Stripe Tax/liveは未実施。2026-08-24の有償公開保留判定によりT791/T807/T813は延期CLOSEしただけで実検証完了を意味しない。有償公開再開時に新規WBSで再評価し、実証完了までBLOCKEDとStripe live無効を維持する。",
       "wbs_statuses": {
         "T776": "完了",
-        "T791": "未着手",
-        "T807": "未着手",
-        "T813": "未着手",
+        "T791": "完了",
+        "T807": "完了",
+        "T813": "完了",
         "T829": "完了"
       },
       "missing_evidence": []
@@ -357,8 +357,8 @@
       "decision_authority": "CEO / 開発責任者",
       "related_wbs": "T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7;T821;T944;T999",
       "related_issue": "R75;R77;R78;R80;R81;R82;R83;#255;#306",
-      "last_checked": "2026-08-30",
-      "notes": "PoC・抽出・マッチング・レビューUIは完了済み。実運用はT944のGMO削除元特定、パスワード回転、全クライアント再認証、24時間保持確認と、T999のSupabase DB Secret回転・15/15 transactional UATが未完了。Production Operations Monitorのsales-email-syncは空INBOX/接続/DB失敗を成功扱いせずfail-closedのまま維持し、両タスク完了までBLOCKEDとする。",
+      "last_checked": "2026-08-31",
+      "notes": "PoC・抽出・マッチング・レビューUIは完了済み。T999はユーザーの残存リスク受容により一旦CLOSEしたが、DB password回転、SUPABASE_DB_URL更新、15/15 transactional live UATは未実施でありgreen証跡とは扱わない。T944のGMO削除元特定、パスワード回転、全クライアント再認証、24時間保持確認も未完了のためBLOCKEDを維持する。Production Operations Monitorのsales-email-syncは空INBOX/接続/DB失敗を成功扱いせずfail-closedのまま維持する。",
       "wbs_statuses": {
         "T817": "完了",
         "T817_1": "完了",
@@ -370,7 +370,7 @@
         "T817_7": "完了",
         "T821": "完了",
         "T944": "実行中",
-        "T999": "実行中"
+        "T999": "完了"
       },
       "missing_evidence": []
     },
@@ -450,14 +450,14 @@
       "decision_authority": "開発責任者 / CEO",
       "related_wbs": "T853;T854;T858;T849;T999",
       "related_issue": "R101;R110;R151;#306",
-      "last_checked": "2026-08-30",
-      "notes": "2026-08-30監査は課題194行・QA176行、QAブロッカー0、開発必須課題ブロッカー1。残件はR151/T999（Supabase認証情報露出インシデント）のみで、Secret回転と安全な15/15再UAT完了までWARNINGを維持する。",
+      "last_checked": "2026-08-31",
+      "notes": "R151/T999は2026-08-31のユーザー判断により、DB password回転・SUPABASE_DB_URL更新・15/15 live UATを未実施のまま残存リスク受容としてCLOSEし、課題管理上の開発必須openは0になった。ただし、これは技術的解消やPUBLIC-11のgreen判定を意味せず、T849の総合判定とdecision_authorityによるPUBLIC-15再判定が未完了のためWARNINGを維持する。再利用・再発・production UAT必須化時は再OPENする。",
       "wbs_statuses": {
         "T853": "完了",
         "T854": "完了",
         "T858": "完了",
         "T849": "実行中",
-        "T999": "実行中"
+        "T999": "完了"
       },
       "missing_evidence": []
     },
