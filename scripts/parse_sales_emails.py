@@ -18,6 +18,28 @@ sys.path.insert(0, str(PROJECT_ROOT / "src"))
 from supabase_client import get_supabase_client, is_supabase_configured  # noqa: E402
 from sales_email_parser import SalesEmailParser, get_gemini_model_name  # noqa: E402
 
+
+SQLITE_WRITE_COLUMNS = {
+    "sales_email_messages": frozenset({"mailbox_source_id", "message_id_hash", "dedupe_key", "sender_hash", "sender_domain", "normalized_subject", "received_at", "body_hash", "body_excerpt", "source_path", "source_type", "raw_storage_policy", "ingest_status", "duplicate_of_id", "metadata"}),
+    "project_requirements": frozenset({"message_id", "title", "client_or_partner", "summary", "required_skills", "nice_to_have_skills", "skill_categories", "rate_min", "rate_max", "rate_unit", "location", "remote_type", "start_date_text", "duration_text", "commercial_flow", "restrictions", "evidence_excerpt", "review_status", "metadata"}),
+    "talent_profiles_from_email": frozenset({"message_id", "anonymized_talent_key", "summary", "skills", "skill_categories", "experience_years", "desired_rate_min", "desired_rate_max", "desired_location", "remote_preference", "availability_text", "evidence_excerpt", "review_status", "metadata"}),
+    "requirement_skill_tags": frozenset({"project_requirement_id", "talent_profile_id", "skill_name", "skill_category", "importance", "confidence", "evidence_excerpt", "metadata"}),
+    "sales_email_entities": frozenset({"message_id", "entity_type", "label", "normalized_label", "confidence", "evidence_excerpt", "metadata"}),
+    "email_parse_runs": frozenset({"mailbox_source_id", "status", "input_count", "unique_count", "duplicate_count", "parsed_entity_count", "model_name", "fallback_used", "error_summary", "metadata", "started_at", "completed_at"}),
+}
+
+
+def _validated_sqlite_keys(table: str, payload: Dict[str, Any]) -> tuple[str, ...]:
+    allowed = SQLITE_WRITE_COLUMNS.get(table)
+    if allowed is None:
+        raise ValueError(f"Unsupported SQLite write table: {table}")
+    keys = tuple(payload)
+    unexpected = sorted(set(keys) - allowed)
+    if not keys or unexpected:
+        raise ValueError(f"Invalid SQLite columns for {table}: {unexpected or 'empty payload'}")
+    return keys
+
+
 def get_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
@@ -51,7 +73,7 @@ class DBAdapter:
                 cursor = self.sqlite_conn.cursor()
                 placeholders = ", ".join("?" for _ in statuses)
                 cursor.execute(
-                    f"SELECT * FROM sales_email_messages WHERE ingest_status IN ({placeholders})",
+                    f"SELECT * FROM sales_email_messages WHERE ingest_status IN ({placeholders})",  # nosec B608 -- only parameter placeholder count is dynamic.
                     statuses
                 )
                 return [dict(row) for row in cursor.fetchall()]
@@ -97,10 +119,10 @@ class DBAdapter:
                     if key in db_payload and not isinstance(db_payload[key], str):
                         db_payload[key] = json.dumps(db_payload[key], ensure_ascii=False)
 
-                keys = db_payload.keys()
+                keys = _validated_sqlite_keys("project_requirements", db_payload)
                 placeholders = ", ".join("?" for _ in keys)
                 columns = ", ".join(keys)
-                query = f"INSERT INTO project_requirements ({columns}) VALUES ({placeholders})"
+                query = f"INSERT INTO project_requirements ({columns}) VALUES ({placeholders})"  # nosec B608 -- columns are allowlisted.
                 cursor.execute(query, list(db_payload.values()))
                 self.sqlite_conn.commit()
                 return cursor.lastrowid
@@ -125,10 +147,10 @@ class DBAdapter:
                     if key in db_payload and not isinstance(db_payload[key], str):
                         db_payload[key] = json.dumps(db_payload[key], ensure_ascii=False)
 
-                keys = db_payload.keys()
+                keys = _validated_sqlite_keys("talent_profiles_from_email", db_payload)
                 placeholders = ", ".join("?" for _ in keys)
                 columns = ", ".join(keys)
-                query = f"INSERT INTO talent_profiles_from_email ({columns}) VALUES ({placeholders})"
+                query = f"INSERT INTO talent_profiles_from_email ({columns}) VALUES ({placeholders})"  # nosec B608 -- columns are allowlisted.
                 cursor.execute(query, list(db_payload.values()))
                 self.sqlite_conn.commit()
                 return cursor.lastrowid
@@ -150,10 +172,10 @@ class DBAdapter:
                 if "metadata" in db_payload and not isinstance(db_payload["metadata"], str):
                     db_payload["metadata"] = json.dumps(db_payload["metadata"], ensure_ascii=False)
 
-                keys = db_payload.keys()
+                keys = _validated_sqlite_keys("requirement_skill_tags", db_payload)
                 placeholders = ", ".join("?" for _ in keys)
                 columns = ", ".join(keys)
-                query = f"INSERT INTO requirement_skill_tags ({columns}) VALUES ({placeholders})"
+                query = f"INSERT INTO requirement_skill_tags ({columns}) VALUES ({placeholders})"  # nosec B608 -- columns are allowlisted.
                 cursor.execute(query, list(db_payload.values()))
                 self.sqlite_conn.commit()
             except Exception as e:
@@ -173,10 +195,10 @@ class DBAdapter:
                 if "metadata" in db_payload and not isinstance(db_payload["metadata"], str):
                     db_payload["metadata"] = json.dumps(db_payload["metadata"], ensure_ascii=False)
 
-                keys = db_payload.keys()
+                keys = _validated_sqlite_keys("sales_email_entities", db_payload)
                 placeholders = ", ".join("?" for _ in keys)
                 columns = ", ".join(keys)
-                query = f"INSERT INTO sales_email_entities ({columns}) VALUES ({placeholders})"
+                query = f"INSERT INTO sales_email_entities ({columns}) VALUES ({placeholders})"  # nosec B608 -- columns are allowlisted.
                 cursor.execute(query, list(db_payload.values()))
                 self.sqlite_conn.commit()
             except Exception as e:
@@ -198,10 +220,10 @@ class DBAdapter:
                 if "metadata" in db_payload and not isinstance(db_payload["metadata"], str):
                     db_payload["metadata"] = json.dumps(db_payload["metadata"], ensure_ascii=False)
 
-                keys = db_payload.keys()
+                keys = _validated_sqlite_keys("email_parse_runs", db_payload)
                 placeholders = ", ".join("?" for _ in keys)
                 columns = ", ".join(keys)
-                query = f"INSERT INTO email_parse_runs ({columns}) VALUES ({placeholders})"
+                query = f"INSERT INTO email_parse_runs ({columns}) VALUES ({placeholders})"  # nosec B608 -- columns are allowlisted.
                 cursor.execute(query, list(db_payload.values()))
                 self.sqlite_conn.commit()
                 return cursor.lastrowid
@@ -223,8 +245,9 @@ class DBAdapter:
                 if "metadata" in db_payload and not isinstance(db_payload["metadata"], str):
                     db_payload["metadata"] = json.dumps(db_payload["metadata"], ensure_ascii=False)
 
-                sets = ", ".join(f"{key} = ?" for key in db_payload.keys())
-                query = f"UPDATE email_parse_runs SET {sets} WHERE id = ?"
+                update_keys = _validated_sqlite_keys("email_parse_runs", db_payload)
+                sets = ", ".join(f"{key} = ?" for key in update_keys)
+                query = f"UPDATE email_parse_runs SET {sets} WHERE id = ?"  # nosec B608 -- columns are allowlisted.
                 params = list(db_payload.values()) + [run_id]
                 cursor.execute(query, params)
                 self.sqlite_conn.commit()
