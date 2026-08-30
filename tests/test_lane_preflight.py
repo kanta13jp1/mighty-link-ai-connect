@@ -15,6 +15,7 @@ out to pytest (which would recurse).
 """
 
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -181,6 +182,37 @@ def test_pytest_parser_ignores_failure_words_when_process_passed():
 
 def test_pytest_parser_fails_closed_without_a_summary():
     assert pre._parse_pytest_failures("process terminated", 1) == (0, 1)
+
+
+def test_junit_parser_reads_exact_tests_failures_and_errors(tmp_path):
+    report = tmp_path / "pytest.xml"
+    report.write_text(
+        '<testsuites tests="517" failures="2" errors="1" skipped="3">'
+        '<testsuite name="pytest" tests="517" failures="2" errors="1" />'
+        '</testsuites>',
+        encoding="utf-8",
+    )
+    assert pre._parse_junit_counts(report) == (517, 2, 1)
+
+
+def test_junit_parser_supports_single_testsuite_root(tmp_path):
+    report = tmp_path / "pytest.xml"
+    report.write_text(
+        '<testsuite name="pytest" tests="503" failures="0" errors="0" />',
+        encoding="utf-8",
+    )
+    assert pre._parse_junit_counts(report) == (503, 0, 0)
+
+
+def test_junit_parser_rejects_malformed_diagnostics(tmp_path):
+    report = tmp_path / "pytest.xml"
+    report.write_text("<testsuites>", encoding="utf-8")
+    try:
+        pre._parse_junit_counts(report)
+    except ET.ParseError:
+        pass
+    else:
+        raise AssertionError("malformed JUnit must fail closed")
 
 
 def test_h7_flags_guard_without_ci_path():
