@@ -252,9 +252,9 @@ def test_manual_workflow_uses_repository_secret_and_publishes_evidence():
     assert "workflow_dispatch:" in workflow
     assert "secrets.SUPABASE_DB_URL" in workflow
     assert "verify_supabase_uat_writes.py --execute" in workflow
-    assert "actions/checkout@v6" in workflow
-    assert "actions/setup-python@v6" in workflow
-    assert "actions/upload-artifact@v6" in workflow
+    assert "actions/checkout@v7" in workflow
+    assert "actions/setup-python@v7" in workflow
+    assert "actions/upload-artifact@v7" in workflow
     assert "pull_request:" not in workflow
 
 

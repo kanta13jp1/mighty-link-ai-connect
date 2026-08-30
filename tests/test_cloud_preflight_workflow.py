@@ -32,8 +32,8 @@ def test_workflow_is_read_only_and_has_no_secret_context():
 def test_workflow_runs_the_exact_full_gate_on_github_hosted_python():
     text = _workflow()
     assert "runs-on: ubuntu-latest" in text
-    assert "uses: actions/checkout@v6" in text
-    assert "uses: actions/setup-python@v6" in text
+    assert "uses: actions/checkout@v7" in text
+    assert "uses: actions/setup-python@v7" in text
     assert 'python-version: "3.12"' in text
     assert "cache: pip" in text
     assert "playwright install chromium" in text
@@ -43,7 +43,7 @@ def test_workflow_runs_the_exact_full_gate_on_github_hosted_python():
 def test_diagnostics_are_uploaded_for_success_and_failure_with_short_retention():
     text = _workflow()
     assert "if: always()" in text
-    assert "uses: actions/upload-artifact@v6" in text
+    assert "uses: actions/upload-artifact@v7" in text
     assert "name: cloud-preflight-${{ github.sha }}" in text
     assert "exports/lane_preflight_report.json" in text
     assert "exports/lane_preflight_report.md" in text

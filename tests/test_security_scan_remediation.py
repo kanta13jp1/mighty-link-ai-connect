@@ -47,7 +47,7 @@ def test_security_workflow_always_preserves_scan_evidence():
     assert "if: always()" in workflow
     assert "reports/bandit_weekly.txt" in workflow
     assert "reports/pip_audit_weekly.json" in workflow
-    assert "actions/upload-artifact@v6" in workflow
+    assert "actions/upload-artifact@v7" in workflow
 
 def test_sql_identifier_allowlists_reject_untrusted_columns_and_views():
     with pytest.raises(ValueError):

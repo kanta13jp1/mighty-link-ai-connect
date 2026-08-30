@@ -466,6 +466,7 @@ gantt
 | **T998** | 8. 本番運用・品質管理 | セキュリティ | Weekly Security ScanのStarlette脆弱性・Bandit検出修復とクラウド証跡常時保存 | Codex | VSCode + Codex + GitHub Actions | FastAPI/Starlette/python-multipartを修正版へ更新しpip-audit既知脆弱性5件を解消。外向きURLをHTTPS/固定ホスト/loopbackへ制限し、SQL識別子allowlist、defusedxml、診断専用TLS fallbackの限定nosecでBandit Medium 29件を解消。Security Artifactを常時14日保存し、Actions 33308264395でBandit High/Medium 0・pip-audit 0、33308260188/33308264393でfull preflight、CI/関連運用ワークフロー全件PASS。sales-email-sync fail-closedは変更・緩和なし。 | 完了 |
 | **T999** | 8. 本番運用・品質管理 | セキュリティ | Supabase UAT接続Secret露出インシデント封じ込め・認証情報回転・安全な再検証 | Codex + 人間 | GitHub Actions + Supabase Dashboard | 2026-08-30のrollback-only本番UATで、percent-encodeされていない予約文字を含む接続URIが誤解析され、認証情報断片がActions失敗ログへ露出した可能性を検知。該当run 33309776182とArtifact 9731612926を即時削除し双方404を確認。接続先/ユーザー/ポート/パス/percent-encodingを接続前に厳格検証し、driver例外本文を完全抑止する回帰修正を隔離branchで実施中。残工程はSupabase Database SettingsでDB passwordを回転し、GitHub Actions SUPABASE_DB_URLをpercent-encode済みSupavisor URIへ更新後、15/15 INSERT/readback/ROLLBACK・persisted 0のgreen run確認。sales-email-sync fail-closedは変更しない。 | 実行中 |
 
+| **T1000** | 8. 本番運用・品質管理 | 依存管理 | GitHub Actions・Supabase CLI・Python依存の現行安定版ベースライン更新 | Codex | GitHub Actions + Dependabot + Cloud Full Preflight | Dependabot PR #74/#75/#76/#77/#98/#127/#128/#185/#217/#236を現行mainへ集約。GitHub公式Actionsをv7、supabase/setup-cliをv3へ更新して廃止済みgithub-token入力を撤去し、Python主要依存5件の最低版を現行修正版へ引き上げる。関連契約テストとCloud Full Preflightを通過したexact SHAのみmain/masterへ昇格し、sales-email-syncのfail-closed挙動は変更しない。 | 完了 |
 ---
 
 ## 🤖 Sheets Live & Google Workspace API による自律同期シナリオ
