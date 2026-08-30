@@ -24,6 +24,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from network_security import require_https_or_loopback_url
+
 
 TASK_ID = "T755"
 DEFAULT_REPORT_PATH = Path("exports") / "infra_monitoring_dashboard.json"
@@ -491,11 +493,12 @@ def parse_prometheus_metrics(text: str) -> dict[str, Any]:
 
 
 def fetch_prometheus_metrics(url: str, bearer_token: str | None, timeout_seconds: int) -> str:
+    safe_url = require_https_or_loopback_url(url)
     headers = {"User-Agent": "Mighty-Link-Infra-Dashboard/1.0"}
     if bearer_token:
         headers["Authorization"] = f"Bearer {bearer_token}"
-    request = urllib.request.Request(url, headers=headers, method="GET")
-    with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
+    request = urllib.request.Request(safe_url, headers=headers, method="GET")
+    with urllib.request.urlopen(request, timeout=timeout_seconds) as response:  # nosec B310 -- HTTPS or loopback-only HTTP is enforced.
         return response.read().decode("utf-8", errors="replace")
 
 
