@@ -9,11 +9,13 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
+from generate_sla_measurement_report import fetch_view  # noqa: E402
 from network_security import (  # noqa: E402
     require_https_or_loopback_url,
     require_https_url,
     require_loopback_http_url,
 )
+from parse_sales_emails import _validated_sqlite_keys  # noqa: E402
 
 
 def test_network_destinations_reject_insecure_remote_and_embedded_credentials():
@@ -46,3 +48,17 @@ def test_security_workflow_always_preserves_scan_evidence():
     assert "reports/bandit_weekly.txt" in workflow
     assert "reports/pip_audit_weekly.json" in workflow
     assert "actions/upload-artifact@v6" in workflow
+
+def test_sql_identifier_allowlists_reject_untrusted_columns_and_views():
+    with pytest.raises(ValueError):
+        _validated_sqlite_keys(
+            "sales_email_messages",
+            {"dedupe_key); DROP TABLE sales_email_messages; --": "bad"},
+        )
+
+    class CursorMustNotExecute:
+        def execute(self, *_args, **_kwargs):
+            pytest.fail("SQL must not execute for an unsupported view")
+
+    with pytest.raises(ValueError):
+        fetch_view(CursorMustNotExecute(), "kpi_monthly_availability; DROP VIEW x")
