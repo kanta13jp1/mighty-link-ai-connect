@@ -38,7 +38,9 @@ VIEWS = [
 
 
 def fetch_view(cursor, view: str, limit: int = 30) -> list[dict]:
-    cursor.execute(f"SELECT * FROM public.{view} LIMIT %s", (limit,))
+    if view not in VIEWS:
+        raise ValueError(f"Unsupported SLA view: {view}")
+    cursor.execute(f"SELECT * FROM public.{view} LIMIT %s", (limit,))  # nosec B608 -- view is restricted to VIEWS.
     columns = [d[0] for d in cursor.description]
     rows = []
     for record in cursor.fetchall():
