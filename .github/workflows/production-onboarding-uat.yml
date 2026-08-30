@@ -1,0 +1,40 @@
+name: Production Onboarding UAT
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-onboarding-uat
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify authenticated onboarding flow
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Run production onboarding UAT
+        env:
+          BASIC_AUTH_USERNAME: ${{ secrets.BASIC_AUTH_USERNAME }}
+          BASIC_AUTH_PASSWORD: ${{ secrets.BASIC_AUTH_PASSWORD }}
+        run: python scripts/verify_production_onboarding.py --url https://mightylink-app.com/
+
+      - name: Upload UAT report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: production-onboarding-uat-report
+          path: exports/production_onboarding_uat_report.json
+          if-no-files-found: error
+          retention-days: 30
