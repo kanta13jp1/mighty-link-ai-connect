@@ -1,7 +1,7 @@
 # リリース判定ゲート整合性監査 (T908)
 
 - ゲート総数: **21** / 内訳: BLOCKED=3, HUMAN_GATE=1, PASS=15, WARNING=2
-- 陳腐化ゲート(非PASSだが関連WBS全完了): **0件**
+- 陳腐化ゲート(非PASSだが関連WBS全完了): **3件** ['PUBLIC-04', 'PUBLIC-08', 'PUBLIC-09']
 - 総合判定: ✅ PASS (ドリフト0)
 
 > 本ガードは検知と可視化のみを行い、ゲートを自動的に PASS へ変更しない。
@@ -16,8 +16,16 @@
 | H3 | 状態値が許容集合(PASS/WARNING/BLOCKED/HUMAN_GATE) | ✅ | 不正状態=なし |
 | H4 | related_wbsが実在WBSに解決(切れ参照0) | ✅ | 切れ参照=なし |
 | H5 | PASSゲートに未完了の関連WBSが無い(逆ドリフト0) | ✅ | 逆ドリフト=なし |
-| H6 | 陳腐化ゲート(非PASSだが関連WBS全完了)が再評価待ちとして注記済み | ✅ | 陳腐化=なし / 未注記=なし |
+| H6 | 陳腐化ゲート(非PASSだが関連WBS全完了)が再評価待ちとして注記済み | ✅ | 陳腐化=['PUBLIC-04', 'PUBLIC-08', 'PUBLIC-09'] / 未注記=なし |
 | H7 | 全ゲートにowner・decision_authorityが記載 | ✅ | 欠落=なし |
 | H8 | 非PASSゲートにnotesが記載 | ✅ | notes欠落=なし |
 | H9 | last_checkedがYYYY-MM-DD形式 | ✅ | 不正日付=なし |
 | H10 | ゲート台帳とWBS実態が整合(ドリフト0) | ✅ | 先行ドリフト=なし |
+
+## 再評価が必要なゲート
+
+| ゲート | 状態 | 関連WBS(全完了) | decision_authority |
+| :-- | :-- | :-- | :-- |
+| PUBLIC-04 | HUMAN_GATE | T798;T1003 | CEO / 法務 |
+| PUBLIC-08 | WARNING | T804;T862;T1002 | CEO |
+| PUBLIC-09 | BLOCKED | T776;T791;T807;T813;T829 | 開発責任者 |
