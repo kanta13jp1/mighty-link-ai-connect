@@ -32,6 +32,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable
 
+from network_security import require_https_url
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_JSON = PROJECT_ROOT / "exports" / "ga_acceptance_e2e_report.json"
@@ -199,8 +201,9 @@ def check_external_evidence(timeout: int, skip_network: bool) -> dict[str, Any]:
     # protected endpoints (401). Read-only list endpoints are public by design.
     def _status(url: str) -> Any:
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "GA-Acceptance-E2E/1.0"})
-            with urllib.request.urlopen(req, timeout=timeout):
+            safe_url = require_https_url(url, allowed_hosts={"mighty-link-ai-connect-13d22.web.app"})
+            req = urllib.request.Request(safe_url, headers={"User-Agent": "GA-Acceptance-E2E/1.0"})
+            with urllib.request.urlopen(req, timeout=timeout):  # nosec B310 -- exact production HTTPS host is enforced.
                 return 200
         except urllib.error.HTTPError as exc:
             return exc.code
@@ -211,8 +214,9 @@ def check_external_evidence(timeout: int, skip_network: bool) -> dict[str, Any]:
     result["prod_protected_status"] = _status(PROD_PROTECTED_URL)
     # Public demo markers.
     try:
-        req = urllib.request.Request(PUBLIC_DEMO_URL, headers={"User-Agent": "GA-Acceptance-E2E/1.0"})
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
+        public_demo_url = require_https_url(PUBLIC_DEMO_URL, allowed_hosts={"kanta13jp1.github.io"})
+        req = urllib.request.Request(public_demo_url, headers={"User-Agent": "GA-Acceptance-E2E/1.0"})
+        with urllib.request.urlopen(req, timeout=timeout) as resp:  # nosec B310 -- exact public-demo HTTPS host is enforced.
             body = resp.read().decode("utf-8", errors="replace")
         result["public_demo_markers_present"] = all(m in body for m in PUBLIC_DEMO_MARKERS)
         result["public_demo_status"] = 200
