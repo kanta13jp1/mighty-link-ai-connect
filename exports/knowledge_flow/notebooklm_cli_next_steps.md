@@ -1,15 +1,15 @@
 # NotebookLM CLI Next Steps
 
-Generated: 2026-08-24T13:29:33+09:00
+Generated: 2026-08-31T00:10:20+09:00
 
 ## Current Status
 
 - Google Drive sync: done
 - Workspace account: `k-umezawa@ml-mightylink.com`
-- Drive docs discovered: `165`
-- Drive docs uploaded: `2`
-- Drive docs skipped unchanged: `163`
-- NotebookLM CLI status: `auth_required`
+- Drive docs discovered: `169`
+- Drive docs uploaded: `135`
+- Drive docs skipped unchanged: `34`
+- NotebookLM CLI status: `skipped`
 
 ## Google Docs Synced From docs/
 
@@ -115,6 +115,7 @@ Generated: 2026-08-24T13:29:33+09:00
 - `docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE4.md`: https://docs.google.com/document/d/1kyUbPFqmqUIYopBrMD5LsbW6EgCI07oK65apDugWCmw/edit?usp=drivesdk
 - `docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE5.md`: https://docs.google.com/document/d/1ui7jP2ORjhWMqisV1UXopk2vQzgJyimR5XkiJpJBMLo/edit?usp=drivesdk
 - `docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE6.md`: https://docs.google.com/document/d/1cwt3nQUDZmy5xa__wDCVjZ3I7eihkkX9-eTPH0zwKEg/edit?usp=drivesdk
+- `docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE7.md`: https://docs.google.com/document/d/1hy4p41UKXrDDHrPZcNB66iTXq60YIVfaVEYR0lWnfv4/edit?usp=drivesdk
 - `docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md`: https://docs.google.com/document/d/1T4KOHtWeKJRm1HGYCHOm3ey2Pqhmpb_4WHk92lBqvSU/edit?usp=drivesdk
 - `docs/PRODUCTION_DOMAIN_SETUP_GUIDE.md`: https://docs.google.com/document/d/1Xj57ffoCwtqaVm68rnfiNSMEW0yuVc_nuzw8TjQmpAs/edit?usp=drivesdk
 - `docs/PRODUCTION_GO_NO_GO_CHECKLIST.md`: https://docs.google.com/document/d/1sahYuhH1nbiAhsKcuJDnn6vwlAXREbOGPzJ-MoQVGD4/edit?usp=drivesdk
@@ -139,6 +140,7 @@ Generated: 2026-08-24T13:29:33+09:00
 - `docs/SECURITY_AUDIT_RUNBOOK.md`: https://docs.google.com/document/d/1qld9AwkywSTLtPVT5g1HyD98FVJhKrnXoGiviN2tgyQ/edit?usp=drivesdk
 - `docs/SECURITY_INCIDENT_RESPONSE_RUNBOOK.md`: https://docs.google.com/document/d/1nRm0nJNFW50EwC1J77_aGvbnsH0q0b4hkGvPid6Z88A/edit?usp=drivesdk
 - `docs/SECURITY_LOG_INTEGRITY_GUARD.md`: https://docs.google.com/document/d/1rRz_wZoAOu-0ZQUXlGGaXY8xYWT9t5Skgwv6J-o6Czw/edit?usp=drivesdk
+- `docs/SECURITY_SCAN_REMEDIATION_2026-08-30.md`: https://docs.google.com/document/d/1meIVedD3L3JeSfZzIOpav4jKmeg2aful9NrxvqReZ_k/edit?usp=drivesdk
 - `docs/SEQUENCE_DIAGRAMS.md`: https://docs.google.com/document/d/1h7CFApE7fncMQT6W8gbSkuieOpf-x0IA15Hd0HEAiGY/edit?usp=drivesdk
 - `docs/SERVICE_EOL_DECOMMISSIONING_PLAN.md`: https://docs.google.com/document/d/1-4ot_oDWMbHSl6oiPtH6rA6iFk8RrpkinzYVb4_VWdk/edit?usp=drivesdk
 - `docs/SESSION_LOG.md`: https://docs.google.com/document/d/1JTYXzbIMk3htT-7-QdT7jeXlLfMD-A9rJ9k1dy-MbVw/edit?usp=drivesdk
@@ -148,6 +150,7 @@ Generated: 2026-08-24T13:29:33+09:00
 - `docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md`: https://docs.google.com/document/d/1cZdaWmWxszmTRIcva3T3-GRkMpXa9qjT7MR-TIL7yHk/edit?usp=drivesdk
 - `docs/STRIPE_BILLING_INTEGRATION_DESIGN.md`: https://docs.google.com/document/d/1f1QPs3EtANfAiFIJaQw0TpInTznVI7cNr4fLHydw9W0/edit?usp=drivesdk
 - `docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md`: https://docs.google.com/document/d/19Lr08_Uww54iQerNJMSWSf81SY7TSGoQbRSPjvXdXIM/edit?usp=drivesdk
+- `docs/STRIPE_TAX_AND_INVOICE_COMPLIANCE_RUNBOOK.md`: https://docs.google.com/document/d/1MACzqbvOy9AuZHGVRLqi18lhN63YsoxoQOnSHyu7wcA/edit?usp=drivesdk
 - `docs/SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md`: https://docs.google.com/document/d/1A5XEmjgTdNaMf7fUNJmCTruhaE1wXlLNMwFJQcL8EpU/edit?usp=drivesdk
 - `docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md`: https://docs.google.com/document/d/11N-1PlKMV4nr2I1SBeMQISbbPZOAOVmhkqMKCf8Pg74/edit?usp=drivesdk
 - `docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md`: https://docs.google.com/document/d/135y0TSQWMvp-nBsUrIRUzDlRLWzlvRFF82D-56IQkHg/edit?usp=drivesdk
@@ -155,6 +158,7 @@ Generated: 2026-08-24T13:29:33+09:00
 - `docs/SUPABASE_INFRA_AUDIT_2026-07-04.md`: https://docs.google.com/document/d/1POwHTmzCnLfzKoppcb4PCJiAvT_K2Rt7z-uLbWS2uXY/edit?usp=drivesdk
 - `docs/SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md`: https://docs.google.com/document/d/1h_uuS5vDsOdH11h0ZelB8yzOoUMwbP7o3k2T3Qp7qJI/edit?usp=drivesdk
 - `docs/SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK.md`: https://docs.google.com/document/d/1Dd5nercLOqw_GlWXEmbBXW62u8Q-YgRoulbPIgEtZtM/edit?usp=drivesdk
+- `docs/SUPABASE_UAT_CREDENTIAL_INCIDENT_2026-08-30.md`: https://docs.google.com/document/d/1bJUILehHXR1HiubszttwRFcjb9okfdjEyHyNbwjfMgM/edit?usp=drivesdk
 - `docs/SUPPORT_CONTACT_AND_ESCALATION_RUNBOOK.md`: https://docs.google.com/document/d/1aiVwihpYd92tWZQb1K19OyM2FHND6TWwq9_y43eAlqQ/edit?usp=drivesdk
 - `docs/T862_PAID_LAUNCH_LEGAL_SIGNOFF_APPROVAL.md`: https://docs.google.com/document/d/1ptF_2DCfbD8bGYodM6AugGAHhbYLBqLC-NZ9OMbL2Ok/edit?usp=drivesdk
 - `docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md`: https://docs.google.com/document/d/1BMpsn974Ai8K3BY7GAC-XQBgY1zZlslE98ZgA9JB1ik/edit?usp=drivesdk
@@ -193,7 +197,7 @@ During browser login, select `k-umezawa@ml-mightylink.com`.
 ## Last CLI Error
 
 ```text
-Authentication expired or invalid. Run 'notebooklm login' to re-authenticate.
+
 ```
 
 ## Agent Retrieval Command

@@ -1,6 +1,6 @@
 {
-  "generated_at_jst": "2026-08-24T13:29:33+09:00",
-  "status": "auth_required",
-  "error": "Authentication expired or invalid. Run 'notebooklm login' to re-authenticate.",
+  "generated_at_jst": "2026-08-31T00:10:20+09:00",
+  "status": "skipped",
+  "error": "",
   "next_steps": "exports/knowledge_flow/notebooklm_cli_next_steps.md"
 }
