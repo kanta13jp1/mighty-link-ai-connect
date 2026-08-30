@@ -1,6 +1,6 @@
 # 課題管理表・QA表 開発ブロッカー監査
 
-- 生成日時: 2026-08-30T14:28:21Z
+- 生成日時: 2026-08-30T14:47:46Z
 - 判定: `blocked`
 - 課題行数: 194
 - QA行数: 176
@@ -12,8 +12,8 @@
 - accepted_non_blocker: 2
 - closed: 1
 - open: 1
-- resolved: 172
-- transferred: 18
+- resolved: 171
+- transferred: 19
 
 ## QAステータス
 
