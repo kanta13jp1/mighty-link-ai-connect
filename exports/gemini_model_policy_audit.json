@@ -1,7 +1,7 @@
 {
   "audit": "gemini_model_policy",
   "status": "ok",
-  "checked_at": "2026-08-24",
+  "checked_at": "2026-08-31",
   "policy": {
     "policy_id": "GEMINI_MODEL_POLICY_2026_07_01",
     "checked_at": "2026-07-07",
@@ -140,9 +140,9 @@
     },
     {
       "path": "data/WBS.tsv",
-      "line": 194,
+      "line": 387,
       "model": "gemini-2.",
-      "context": "3.1 Pro 系）移行テストと本番切り替え手順書 Codex + Claude VSCode + Codex 公式Docs(models最終更新2026-06-30)を再確認し、gemini-2.0系がShut downであることを確認。本番既定はstable最上位のgemini-3.5-flashを維持。移行評価ハーネスscripts/evaluate_",
+      "context": "Flash / 3.1 Pro 系）移行テストと本番切り替え手順書 Codex + Claude Codex 公式Docs(models最終更新2026-06-30)を再確認し、gemini-2.0系がShut downであることを確認。本番既定はstable最上位のgemini-3.5-flashを維持。移行評価ハーネスscripts/evaluate_",
       "severity": "ok",
       "reason": "current_truth_reference_allowed"
     },

@@ -120,14 +120,14 @@ sequenceDiagram
 
 ## パターン 3: 開発フロー (3-tool AI 体制 + WBS / Sheets / Calendar 同期)
 
-> Claude Code (architect/docs/UI) / VSCode + Codex (実装/sync scripts) / Antigravity + Gemini (frontend polish/demo video) の 3-tool 並走。WBS / 課題管理表 / QA表 の 3 タブを Google Sheets に同期、Calendar に WBS イベントを反映 (完了は自動削除)。
+> Claude Code (architect/docs/UI) / Codex (実装/sync scripts) / Antigravity + Gemini (frontend polish/demo video) の 3-tool 並走。WBS / 課題管理表 / QA表 の 3 タブを Google Sheets に同期、Calendar に WBS イベントを反映 (完了は自動削除)。
 
 ```mermaid
 sequenceDiagram
     autonumber
     participant Dev as 開発者<br/>(寛太)
     participant Claude as Claude Code<br/>(architect/docs)
-    participant Codex as VSCode + Codex<br/>(実装/PR)
+    participant Codex as Codex<br/>(実装/PR)
     participant Antig as Antigravity + Gemini<br/>(polish/demo)
     participant Repo as GitHub Repo<br/>(mighty-link-ai-connect)
     participant Sheets as Google Sheets<br/>(WBS + Issues + QA)

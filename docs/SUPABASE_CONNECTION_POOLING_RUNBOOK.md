@@ -1,7 +1,7 @@
 # Supabase 接続プール運用 Runbook (T759)
 
 作成日: 2026-06-14  
-オーナー: VSCode + Codex レーン  
+オーナー: Codex レーン  
 対象: Firebase Cloud Functions / Cloud Run 経由の FastAPI (`src/app.py`) から Supabase PostgreSQL への接続
 
 ---

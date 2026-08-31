@@ -1,7 +1,7 @@
 # Supabase Postgres 14 EOL 対応 Runbook
 
 更新日: 2026-06-21  
-担当レーン: VSCode + Codex  
+担当レーン: Codex  
 関連WBS: T828 / T811  
 関連Issue: #119 / #80 / R53
 

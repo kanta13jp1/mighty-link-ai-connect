@@ -2,7 +2,7 @@
 
 作成日: 2026-06-17  
 対象タスク: T803  
-担当レーン: VSCode + Codex / Antigravity + Gemini  
+担当レーン: Codex / Antigravity + Gemini  
 関連: [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) / [ANTIGRAVITY_CLI_EVALUATION_REPORT.md](ANTIGRAVITY_CLI_EVALUATION_REPORT.md) / [WBS.md](WBS.md)
 
 ---

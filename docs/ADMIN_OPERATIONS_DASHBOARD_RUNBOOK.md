@@ -3,7 +3,7 @@
 - 対象WBS: T842
 - 関連課題: R98
 - 作成日: 2026-06-27
-- レーン: Antigravity + Gemini / VSCode + Codex / VSCode + Claude Code
+- レーン: Antigravity + Gemini / Codex / Claude Code
 - 技術前提: `index.html`, FastAPI on Firebase Functions, Supabase / SQLite fallback
 
 ## 概要

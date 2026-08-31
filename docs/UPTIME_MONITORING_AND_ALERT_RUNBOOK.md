@@ -1,7 +1,7 @@
 # 本番死活監視・Slackアラート Runbook (T743)
 
 作成日: 2026-06-14
-担当レーン: VSCode + Codex
+担当レーン: Codex
 対象: GitHub Pages / Firebase Hosting / mightylink-app.com
 
 ## 目的

@@ -1,6 +1,6 @@
 # NotebookLM Presentation Brief for 2026-06-02 CEO Meeting
 
-Generated: 2026-08-24 12:09:13 UTC+09:00
+Generated: 2026-08-31 15:22:11 UTC+09:00
 
 ## How to use this in NotebookLM
 
@@ -66,7 +66,7 @@ and which development knowledge-flow tools should become official.
 - T660: Notion PPTX証跡更新 / Notion MCPでPPTX生成・Drive共有・残課題を証跡ページへ記録 / 完了
 - T662: Slack MCP/CLI到達性証跡 / Slack CLIと送信MCPの利用可否を確認し、投稿案と残課題を整理 / 完了
 - T663: 6/2資料最終パックレビュー / PPTX、NotebookLM資料、WBS、Calendar、Issue、Notion証跡を通しで確認 / 完了
-- T664: 三ツール開発フロー整備 / Antigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの役割と毎セッション運用ルールを共有手順へ固定 / 完了
+- T664: 三ツール開発フロー整備 / Antigravity + Gemini / Codex / Claude Codeの役割と毎セッション運用ルールを共有手順へ固定 / 完了
 - T691: インフラ / NotebookLM同期スクリプトへのGemini explicit context caching導入検証 / 完了
 - T695: 連携 / Antigravity hooks機能によるsyncスクリプト自動起動の可否検証 / 完了
 - T699: コーポレート連携 / MightyLINKコーポレートサイトのデモミラーページ追加とメインUI統合 / 完了

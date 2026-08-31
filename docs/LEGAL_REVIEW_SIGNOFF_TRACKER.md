@@ -1,6 +1,6 @@
 # 法務確認サインオフ台帳（T798 本文確定ワークリスト）
 
-作成日: 2026-07-19 / 担当レーン: VSCode + Claude Code（T798_1）
+作成日: 2026-07-19 / 担当レーン: Claude Code（T798_1）
 正本データ: [`data/legal_review_signoff.tsv`](../data/legal_review_signoff.tsv)
 関連WBS: T798（法務確認・本文確定） / T787（初版起草） / T869（整合性監査） / T900（CIガード） / T862（有償化判断）
 関連課題/QA: R36（外部弁護士レビュー） / R48 / R111 / QA-135

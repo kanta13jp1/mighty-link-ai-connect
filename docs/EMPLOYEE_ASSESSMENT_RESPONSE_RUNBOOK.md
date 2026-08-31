@@ -3,7 +3,7 @@
 - 対象WBS: T840
 - 関連課題: R32, R36, R96, R98
 - 作成日: 2026-06-24
-- レーン: Antigravity + Gemini / VSCode + Codex / VSCode + Claude Code
+- レーン: Antigravity + Gemini / Codex / Claude Code
 - 技術前提: フロントエンド `index.html`、バックエンド FastAPI on Firebase Functions、DB Supabase
 
 ## 結論

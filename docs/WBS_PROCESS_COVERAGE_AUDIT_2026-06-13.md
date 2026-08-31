@@ -1,6 +1,6 @@
 # WBS 工程網羅性監査（第2回）・前倒しリスケ（第3回） — 2026-06-13
 
-作成: VSCode + Claude Code レーン（T809）
+作成: Claude Code レーン（T809）
 前回監査: T785（2026-06-11、重複ID・誤完了フラグ解消）/ 前回リスケ: T787 セッション（2026-06-12、最終完了 7/28→7/16）
 関連: [WBS.md](WBS.md) / [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) / [SECURITY_AUDIT_REPORT_2026-Q2.md](SECURITY_AUDIT_REPORT_2026-Q2.md)
 

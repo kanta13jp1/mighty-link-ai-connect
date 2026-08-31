@@ -1,7 +1,7 @@
 # Firebase / Supabase クォータ・エラー監視アラート Runbook (T761_1)
 
 作成日: 2026-06-15  
-担当レーン: VSCode + Codex  
+担当レーン: Codex  
 対象: Firebase Hosting / Cloud Functions / Google Cloud Monitoring / Cloud Billing / Supabase Metrics API / Supabase Dashboard
 
 ## 目的

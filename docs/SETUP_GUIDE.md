@@ -78,11 +78,11 @@ OAuth クライアント JSON は `client_secret.json` にリネームして、�
 
 ## 4. 開発ツール切り替え方針
 
-通常開発は Antigravity + Gemini で進めます。Antigravity 側で Gemini の baseline quota 制限に達した場合は、作業を止めずに VSCode + Codex へ切り替えて開発を継続します。
+通常開発は Antigravity + Gemini で進めます。Antigravity 側で Gemini の baseline quota 制限に達した場合は、作業を止めずに Codex へ切り替えて開発を継続します。
 
 切り替え時の運用ルール:
 
-- 実装、ドキュメント整備、ローカル検証、Git 操作は VSCode + Codex で継続する。
+- 実装、ドキュメント整備、ローカル検証、Git 操作は Codex で継続する。
 - Gemini API の quota を消費しないよう、必要に応じて `AI_FORCE_MOCK=1` で FastAPI を起動する。
 - Google Workspace 連携は既存の `authorized_user.json` を使い、`k-umezawa@ml-mightylink.com` の OAuth 認証を継続利用する。
 - quota 回復後に Gemini live 実行へ戻す場合は、`AI_FORCE_MOCK` を解除してサーバーを再起動する。
@@ -279,7 +279,7 @@ Invoke-RestMethod "http://127.0.0.1:8000/api/audit/recent?limit=10"
 
 ### Gemini の quota 制限が出ている
 
-Antigravity 側で Gemini の baseline quota 制限に達した場合は、VSCode + Codex で開発を継続します。Gemini API を消費しない `AI_FORCE_MOCK=1` で起動します。
+Antigravity 側で Gemini の baseline quota 制限に達した場合は、Codex で開発を継続します。Gemini API を消費しない `AI_FORCE_MOCK=1` で起動します。
 
 ```powershell
 $env:AI_FORCE_MOCK = "1"

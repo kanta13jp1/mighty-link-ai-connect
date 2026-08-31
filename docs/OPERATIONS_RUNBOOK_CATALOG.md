@@ -1,6 +1,6 @@
 # 運用Runbookカタログ（索引） / Operations Runbook Catalog
 
-作成日: 2026-07-19 / 担当レーン: VSCode + Claude Code（T902）
+作成日: 2026-07-19 / 担当レーン: Claude Code（T902）
 正本: 本ファイルが運用Runbookの唯一の索引。`scripts/audit_runbook_catalog.py`（T902）が`docs/*RUNBOOK*.md` の実ファイル集合と本カタログの掲載集合を毎回照合し、**孤児（未掲載）・切れリンク（実体なし）をゼロに保つ**。
 関連WBS: 全運用Runbook / T810（インシデント）/ T812（ロールバック）/ T850（引継ぎ）/ T849（GA完了判定）
 

@@ -88,8 +88,8 @@ created_at: 2026-08-05
 | レーン | 主な Obsidian 活用役割 | 同期・スクリプト連携 |
 | :--- | :--- | :--- |
 | **Antigravity + Gemini** | UI/UX画面遷移の Canvas 設計、日本語UI/UXプロンプトの比較実験 | `40_Canvas/`, `20_Prompts/` の作成・検証 |
-| **VSCode + Codex** | Obsidian Vault への WBS・ADR 自動書き出しスクリプトの保守 | `scripts/generate_knowledge_flow_demo.py` |
-| **VSCode + Claude Code** | ドラフトノートのレビュー、公式 `docs/` への昇格、リンク整合性の監査 | `scripts/audit_docs_reference_integrity.py` |
+| **Codex** | Obsidian Vault への WBS・ADR 自動書き出しスクリプトの保守 | `scripts/generate_knowledge_flow_demo.py` |
+| **Claude Code** | ドラフトノートのレビュー、公式 `docs/` への昇格、リンク整合性の監査 | `scripts/audit_docs_reference_integrity.py` |
 
 ---
 

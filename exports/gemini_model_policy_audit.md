@@ -1,7 +1,7 @@
 # Gemini Model Policy Audit
 
 - Status: `ok`
-- Checked at: 2026-08-24
+- Checked at: 2026-08-31
 - Production default: `gemini-3.5-flash`
 - App default: `gemini-3.5-flash`
 - Blockers: 0
@@ -32,7 +32,7 @@ No blockers.
 | --- | ---: | --- | --- | --- |
 | docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md | 36 | `gemini-3.5-flash` | ok | current_truth_reference_allowed |
 | docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md | 77 | `gemini-3.5-flash` | ok | current_truth_reference_allowed |
-| data/WBS.tsv | 194 | `gemini-2.` | ok | current_truth_reference_allowed |
+| data/WBS.tsv | 387 | `gemini-2.` | ok | current_truth_reference_allowed |
 | data/qa_tracker.tsv | 111 | `gemini-3.5-flash` | ok | current_truth_reference_allowed |
 | data/qa_tracker.tsv | 119 | `gemini-3.5-flash` | ok | current_truth_reference_allowed |
 | data/qa_tracker.tsv | 119 | `gemini-3.1-pro` | ok | current_truth_reference_allowed |
