@@ -1,6 +1,6 @@
 {
   "task_id": "T817_5",
-  "generated_at": "2026-09-02T10:10:31Z",
+  "generated_at": "2026-09-02T10:17:59Z",
   "model_name": "deterministic-sales-email-matcher-v1",
   "direction": "project_to_talent",
   "filters": {

@@ -21,6 +21,7 @@ from sales_email_ingest import (
     dedupe_key,
     load_sales_emails,
     normalize_subject,
+    redact_sensitive_text,
     safe_excerpt,
     sender_domain,
     sha256_hex,
@@ -499,18 +500,20 @@ def write_markdown_report(report: dict[str, object], path: Path) -> None:
         rate = f"{rate_min}-{rate_max}万円/月" if rate_min and rate_max else ""
         remote = project.get("remote_type") or talent.get("remote_preference") or ""
         evidence = project.get("evidence_excerpt") or talent.get("evidence_excerpt") or ""
+        evidence_clean = redact_sensitive_text(str(evidence))
+        subject_clean = redact_sensitive_text(str(item.get("normalized_subject", "")))
         lines.append(
             "| {index} | `{source}` | {kind} | {subject} | {required} | {nice} | {talent_skills} | {rate} | {remote} | {evidence} |\n".format(
                 index=index,
                 source=str(item.get("source_path", "")).replace("|", "\\|"),
                 kind=str(item.get("email_kind", "")).replace("|", "\\|"),
-                subject=str(item.get("normalized_subject", "")).replace("|", "\\|"),
+                subject=subject_clean.replace("|", "\\|"),
                 required=required.replace("|", "\\|"),
                 nice=nice.replace("|", "\\|"),
                 talent_skills=talent_skills.replace("|", "\\|"),
                 rate=rate,
                 remote=str(remote).replace("|", "\\|"),
-                evidence=str(evidence).replace("|", "\\|"),
+                evidence=evidence_clean.replace("|", "\\|"),
             )
         )
     path.write_text("".join(lines), encoding="utf-8", newline="\n")

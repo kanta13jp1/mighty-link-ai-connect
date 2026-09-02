@@ -1631,7 +1631,7 @@ USAGE_ANALYTICS_PSEUDONYM_SALT = os.environ.get(
     "USAGE_ANALYTICS_PSEUDONYM_SALT",
     "mighty-link-usage-analytics-local-salt-v1",
 )
-SENSITIVE_EMAIL_RE = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
+SENSITIVE_EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", re.IGNORECASE)
 SENSITIVE_PHONE_RE = re.compile(r"(?<!\d)(?:\+?\d[\d\s().-]{7,}\d)(?!\d)")
 SENSITIVE_SECRET_RE = re.compile(
     r"(Bearer\s+[A-Za-z0-9._=-]+|(?:api[_-]?key|token|secret|password)\s*[:=]\s*[A-Za-z0-9._=-]+)",

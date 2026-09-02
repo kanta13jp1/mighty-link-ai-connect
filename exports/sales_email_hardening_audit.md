@@ -2,7 +2,7 @@
 
 - レポートID: `SALES_EMAIL_HARDENING_T817_7_1`
 - 実施日: 2026-07-08
-- 判定: **attention** (9/10 仮説PASS)
+- 判定: **ok** (10/10 仮説PASS)
 - スコープ: PoCデータ/スキーマ/コード/証跡のオフラインhardening監査。バックアップはfull-DB pg_dumpが9テーブルを包含（恒久CI化はT870、暫定22テーブルローカルバックアップはT871確認済み）。実メール接続後の実運用確認（実データの最小化スポット確認・実流量調整・アカウント権限実査）はT836受領後のT817_7本体工程。
 
 ## 10仮説検証（hardening 6観点）
@@ -18,7 +18,7 @@
 | H7 | 営業メールAPI全3ルートがBasic認証necessary（verify_credentials）である | PASS | 認証必須 3/3 |
 | H8 | 保持/削除runbookが9テーブル全ての保持期間と削除手順をカバーする | PASS | runbook記載 5/5グループ 保持期間記載=True |
 | H9 | 負荷ガード: parse CLIは既定でバッチ上限を持ち、無制限のAPI呼び出しをしない | PASS | 既定cap=50(=50期待) --max-messages指定=10 |
-| H10 | レビュー監査証跡(exports)が存在し、証跡ファイルに生メール/電話が含まれない | FAIL | 監査証跡欠落=なし 生PII検出=['exports/sales_email_extraction_review.md:m-takahashi@da-edu.com'] |
+| H10 | レビュー監査証跡(exports)が存在し、証跡ファイルに生メール/電話が含まれない | PASS | 監査証跡欠落=なし 生PII検出=なし |
 
 ## 残作業（T817_7本体・T836実接続後）
 
