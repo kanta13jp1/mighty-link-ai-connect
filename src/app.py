@@ -6927,11 +6927,26 @@ async def get_sales_email_analytics():
         imap_count = 0
         pop3_count = 0
         tb_count = 0
+        import email.utils
+        def _normalize_date_str(raw_val: str) -> str:
+            if not raw_val:
+                return "2026-06-18"
+            raw_val = raw_val.strip()
+            if len(raw_val) >= 10 and raw_val[0:4].isdigit() and raw_val[4] == "-" and raw_val[7] == "-":
+                return raw_val[:10]
+            try:
+                dt_obj = email.utils.parsedate_to_datetime(raw_val)
+                if dt_obj:
+                    return dt_obj.strftime("%Y-%m-%d")
+            except Exception:
+                pass
+            return raw_val[:10]
+
         today_new_count = 0
-        
+
         for item in extractions:
             dt_str = item.get("received_at") or report_data.get("generated_at") or "2026-06-18"
-            dt = dt_str[:10]
+            dt = _normalize_date_str(dt_str)
             daily_counts[dt] = daily_counts.get(dt, 0) + 1
             if dt == today_utc:
                 today_new_count += 1
