@@ -15,6 +15,8 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
+from network_security import require_https_url
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DOMAIN = "mightylink-app.com"
@@ -29,10 +31,10 @@ def utc_timestamp() -> str:
 
 
 def fetch_rdap(domain: str, timeout_seconds: int) -> tuple[dict[str, Any] | None, str | None]:
-    url = f"https://rdap.org/domain/{domain}"
+    url = require_https_url(f"https://rdap.org/domain/{domain}", allowed_hosts={"rdap.org"})
     request = urllib.request.Request(url, headers={"User-Agent": "Mighty-Link-DNS-Diagnostic/1.0"})
     try:
-        with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
+        with urllib.request.urlopen(request, timeout=timeout_seconds) as response:  # nosec B310 -- exact RDAP HTTPS host is enforced.
             body = response.read().decode("utf-8")
         return json.loads(body), None
     except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:

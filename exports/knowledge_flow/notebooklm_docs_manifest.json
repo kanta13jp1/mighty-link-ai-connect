@@ -1,13 +1,13 @@
 {
-  "generated_at_jst": "2026-08-22T22:43:00+09:00",
+  "generated_at_jst": "2026-08-31T03:41:18+09:00",
   "account": "k-umezawa@ml-mightylink.com",
   "drive_sync": {
     "force_upload": false,
-    "docs_discovered": 165,
+    "docs_discovered": 169,
     "uploaded": 2,
-    "skipped": 163,
+    "skipped": 167,
     "action_counts": {
-      "skipped_unchanged": 163,
+      "skipped_unchanged": 167,
       "uploaded_updated": 2
     }
   },
@@ -26,12 +26,12 @@
         }
       ],
       "createdTime": "2026-06-21T16:03:49.383Z",
-      "modifiedTime": "2026-06-21T16:03:49.408Z",
-      "source_digest": "4da3c234e45b98349d45ec1702ff37ca6b4882da3ffc23a54e30cb909c10a2fe",
+      "modifiedTime": "2026-08-30T14:59:58.025Z",
+      "source_digest": "009c2920c497ed75aece79100ecf978e949d26beab2f054b3a08d52d5a355db0",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-22T00:56:19+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:42+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_account_ownership_migration_runbook_md": {
       "source": "docs/ACCOUNT_OWNERSHIP_MIGRATION_RUNBOOK.md",
@@ -47,12 +47,12 @@
         }
       ],
       "createdTime": "2026-06-19T14:45:22.010Z",
-      "modifiedTime": "2026-06-21T07:39:29.895Z",
-      "source_digest": "cecee5a3885032cc3bb595bfd0610460ffa85e1848f7089ecf07c8d49e398710",
+      "modifiedTime": "2026-08-30T15:00:03.974Z",
+      "source_digest": "0087b4e5322cc0e894aa19ed0c569bed4da0f17dc55013c1873779254a15a322",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:42+09:00",
-      "source_mtime_jst": "2026-06-19T14:37:18+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_accounting_and_tax_operations_runbook_md": {
       "source": "docs/ACCOUNTING_AND_TAX_OPERATIONS_RUNBOOK.md",
@@ -68,12 +68,12 @@
         }
       ],
       "createdTime": "2026-07-25T07:12:03.123Z",
-      "modifiedTime": "2026-07-25T07:12:03.150Z",
-      "source_digest": "c99dee44134284dcfaea32df9119ed978473e34dc59654a8b2825b53890fa92d",
+      "modifiedTime": "2026-08-30T15:00:09.469Z",
+      "source_digest": "50c2015e833d86a1b304132f4f602305a2eeab2195f6050af5d1e49d34d9caa5",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-24T12:11:19+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:42+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_admin_operations_dashboard_runbook_md": {
       "source": "docs/ADMIN_OPERATIONS_DASHBOARD_RUNBOOK.md",
@@ -89,12 +89,12 @@
         }
       ],
       "createdTime": "2026-06-27T02:04:16.891Z",
-      "modifiedTime": "2026-07-30T18:25:27.008Z",
-      "source_digest": "01684b977acef45f912fba7b12207034c3d8baeae80fd2d2c3ba0be054b12db8",
+      "modifiedTime": "2026-08-30T15:00:14.522Z",
+      "source_digest": "e40376822b722c3590bca54f081349013d48e231ab3c558a7abe06c03929b9a7",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-30T22:17:54+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:42+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_ai_cost_monitoring_and_quota_design_md": {
       "source": "docs/AI_COST_MONITORING_AND_QUOTA_DESIGN.md",
@@ -113,9 +113,9 @@
       "modifiedTime": "2026-07-13T13:32:03.617Z",
       "source_digest": "46b053de11d20a066dc1b72ad8dc2785768a4194ec59c3a173f2aab786e01c5c",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-12T23:57:07+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:42+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_ai_development_tool_subscription_policy_md": {
       "source": "docs/AI_DEVELOPMENT_TOOL_SUBSCRIPTION_POLICY.md",
@@ -131,12 +131,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:06:51.769Z",
-      "modifiedTime": "2026-08-19T14:06:51.789Z",
-      "source_digest": "da5e5411acd099304ef4e4af4c0e47976b012441db756626471d2a06df3a3564",
+      "modifiedTime": "2026-08-30T15:00:19.153Z",
+      "source_digest": "46ae6f74d69c5ccf08159a764f737b3fbfb1fd3abcdd6fefdc7fbf77e003f744",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-15T17:47:14+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:42+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_ai_saas_service_freeze_runbook_md": {
       "source": "docs/AI_SAAS_SERVICE_FREEZE_RUNBOOK.md",
@@ -152,12 +152,12 @@
         }
       ],
       "createdTime": "2026-06-27T05:33:03.296Z",
-      "modifiedTime": "2026-07-01T11:37:39.737Z",
-      "source_digest": "f8de16d391fb95d66e6221aa2b3f64d4fabaebdd432a96b282a8dc783adddfc1",
+      "modifiedTime": "2026-08-30T15:00:23.543Z",
+      "source_digest": "3cbdecc77a67f5052cd14fa7f85ebb10a5838af75ce8a45a0de1d6046d85dc4b",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T19:45:51+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:42+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_antigravity_cli_evaluation_report_md": {
       "source": "docs/ANTIGRAVITY_CLI_EVALUATION_REPORT.md",
@@ -177,8 +177,8 @@
       "source_digest": "ffa1de30c94fb834498946bd42209a7a1d9342aa9bf722a7a977c42ee23c3cb6",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:42+09:00",
-      "source_mtime_jst": "2026-06-02T19:31:16+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00"
     },
     "docs_antigravity_guide_md": {
       "source": "docs/ANTIGRAVITY_GUIDE.md",
@@ -198,8 +198,8 @@
       "source_digest": "5bd8b531239032d615a726d0ce593767c963a1c14ef3b9009ec6d19951f532ee",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:42+09:00",
-      "source_mtime_jst": "2026-06-02T19:31:16+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00"
     },
     "docs_antigravity_hooks_sync_poc_md": {
       "source": "docs/ANTIGRAVITY_HOOKS_SYNC_POC.md",
@@ -215,10 +215,12 @@
         }
       ],
       "createdTime": "2026-06-03T06:53:08.412Z",
-      "modifiedTime": "2026-08-22T13:42:44.308Z",
-      "source_digest": "be098c1c41f7cdd6f28790038ebc8fc5229bd0fe93017dab363729e5140875b7",
-      "sync_action": "uploaded_updated",
-      "source_mtime_jst": "2026-08-22T22:35:35+09:00"
+      "modifiedTime": "2026-08-30T15:00:27.611Z",
+      "source_digest": "74c815310a9a190dbbbd1d9ba0f4f041908989701dcb0d1e96b9d68f47c386d4",
+      "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
+      "sync_reason": "source_digest_match",
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_antigravity_managed_agents_cost_policy_md": {
       "source": "docs/ANTIGRAVITY_MANAGED_AGENTS_COST_POLICY.md",
@@ -238,8 +240,8 @@
       "source_digest": "63c1aa237bbff4f8c5a15d563569b9d60790c44f0735d7ddadae3cb806bee829",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-02T19:31:16+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00"
     },
     "docs_api_rate_limit_and_ddos_runbook_md": {
       "source": "docs/API_RATE_LIMIT_AND_DDOS_RUNBOOK.md",
@@ -255,12 +257,12 @@
         }
       ],
       "createdTime": "2026-06-13T19:45:43.414Z",
-      "modifiedTime": "2026-06-21T07:39:56.438Z",
-      "source_digest": "7d54a8bf6fcba9700fe825eff86472592fc561de5c2f4e33f15405a8dd918db3",
+      "modifiedTime": "2026-08-30T15:00:31.547Z",
+      "source_digest": "a038a219ca7f4ff5b75184c085e6438f45e35b9c496fc3a983e99817c1c3aac2",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-14T05:08:09+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_aptitude_motivation_demo_privacy_design_md": {
       "source": "docs/APTITUDE_MOTIVATION_DEMO_PRIVACY_DESIGN.md",
@@ -276,12 +278,12 @@
         }
       ],
       "createdTime": "2026-07-08T11:13:13.107Z",
-      "modifiedTime": "2026-07-13T15:31:40.997Z",
-      "source_digest": "5a637b09ed369a5c0d9efdf98ae8d2f96c24e18a0752c87a9eeb0f6b607e388f",
+      "modifiedTime": "2026-08-30T15:00:35.360Z",
+      "source_digest": "787c3c4be060cd95a01bf1ba4acac18da81a1b6c12757b42af1846dec7b6d17a",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-14T00:23:38+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_architecture_decision_records_md": {
       "source": "docs/ARCHITECTURE_DECISION_RECORDS.md",
@@ -297,12 +299,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:34:56.748Z",
-      "modifiedTime": "2026-08-19T14:07:01.811Z",
-      "source_digest": "84b1af742aadeaad3de7b35a3364e72788f2e212b0d84a8e90e74c9ac9aa7dd7",
+      "modifiedTime": "2026-08-30T15:00:41.082Z",
+      "source_digest": "4758eeac9529bb7cef8b1240a46ebbbaddf8bf2a2228d0a512a0b14a59144ef0",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-18T02:37:41+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_attendance_workflow_runbook_md": {
       "source": "docs/ATTENDANCE_WORKFLOW_RUNBOOK.md",
@@ -318,12 +320,12 @@
         }
       ],
       "createdTime": "2026-06-24T01:43:21.240Z",
-      "modifiedTime": "2026-06-24T01:43:21.275Z",
-      "source_digest": "a2e0bd1541dd60080f8eadd364022b021a9ae616cfeab1cc34bb22afd35b023e",
+      "modifiedTime": "2026-08-30T15:00:46.331Z",
+      "source_digest": "e08260b2f33cdff5452080a5675c48e697ec00cf4db2fac242e514db0dd70777",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-24T10:34:23+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_audit_log_masking_and_encryption_md": {
       "source": "docs/AUDIT_LOG_MASKING_AND_ENCRYPTION.md",
@@ -339,12 +341,12 @@
         }
       ],
       "createdTime": "2026-06-10T13:35:42.295Z",
-      "modifiedTime": "2026-06-21T07:40:00.801Z",
-      "source_digest": "e622a2fc9a4a0af737fd15b6619f44cbbc81c23e85c221978448badb28f1a1ef",
+      "modifiedTime": "2026-08-30T15:00:50.817Z",
+      "source_digest": "5173fa1c2a139d32f7958586601a4d87dae6e1e8adaf3565048bfb27375b5751",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-10T22:26:34+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_backend_ai_pipeline_md": {
       "source": "docs/BACKEND_AI_PIPELINE.md",
@@ -360,12 +362,12 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:08.445Z",
-      "modifiedTime": "2026-06-27T10:35:34.273Z",
-      "source_digest": "625ed1d81b997b9cb9ffd707231815be743a082eb0458e2964eb042e7310678c",
+      "modifiedTime": "2026-08-30T15:00:55.397Z",
+      "source_digest": "b87da590669643f2011cd52cdf8793c441e7d5b4abcd96ba7cfd47ba086b26df",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-27T18:05:35+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_billing_and_refund_policy_md": {
       "source": "docs/BILLING_AND_REFUND_POLICY.md",
@@ -381,12 +383,12 @@
         }
       ],
       "createdTime": "2026-06-12T12:26:11.723Z",
-      "modifiedTime": "2026-07-25T07:12:08.502Z",
-      "source_digest": "dd07dfe6afa7b097676fb06244de00c45dbb93da502e999892077276f7e6a71e",
+      "modifiedTime": "2026-08-30T15:00:59.843Z",
+      "source_digest": "09088fdc4ef9b8f15d064affee3a72c0d80b84bb12c3cfbeac158efa7889fb4d",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-24T20:31:39+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_ceo_presentation_backup_guide_md": {
       "source": "docs/CEO_PRESENTATION_BACKUP_GUIDE.md",
@@ -406,8 +408,8 @@
       "source_digest": "6c20c1d26e57a2e80f8fcdafc79772f20b2a396559c2ad9d8e61e136c0787e28",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-02T19:31:16+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00"
     },
     "docs_ceo_presentation_final_review_checklist_md": {
       "source": "docs/CEO_PRESENTATION_FINAL_REVIEW_CHECKLIST.md",
@@ -426,9 +428,9 @@
       "modifiedTime": "2026-08-19T14:07:06.043Z",
       "source_digest": "04db9560ff30e78c3db701de9f7d472e12277f9bc5aab1bb393465159f2b7172",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T00:32:14+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_codex_continuation_notes_md": {
       "source": "docs/CODEX_CONTINUATION_NOTES.md",
@@ -444,12 +446,12 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:17.070Z",
-      "modifiedTime": "2026-07-23T14:35:11.242Z",
-      "source_digest": "899b3b5522ec8e4d5ba653a4f8dd0caa59b2ebaf36e4091f5bf4ac8f55608c1d",
+      "modifiedTime": "2026-08-30T15:01:04.300Z",
+      "source_digest": "362e5a5fefb439c19a83f0b3259606dd3fb98beb017e7f3965a63acd5dd81fa0",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-19T23:43:18+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_cold_storage_log_archive_runbook_md": {
       "source": "docs/COLD_STORAGE_LOG_ARCHIVE_RUNBOOK.md",
@@ -465,12 +467,12 @@
         }
       ],
       "createdTime": "2026-07-01T11:37:49.685Z",
-      "modifiedTime": "2026-07-01T11:37:49.707Z",
-      "source_digest": "1210e56f70e0e6c8d50b8db3573c912f5bdb2f5ddcce6c063af92a6b89b10533",
+      "modifiedTime": "2026-08-30T15:01:08.595Z",
+      "source_digest": "ba80011be921e979bcec1ae41a6680f587bdf6bf61333450bf552c42d17c29f1",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T12:01:49+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_cost_quota_alerts_guard_md": {
       "source": "docs/COST_QUOTA_ALERTS_GUARD.md",
@@ -486,12 +488,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:07:09.407Z",
-      "modifiedTime": "2026-08-19T14:07:09.428Z",
-      "source_digest": "7383037a9619c6f7d603040ccb421068b02d650ecd7f8449bcdc54807e056114",
+      "modifiedTime": "2026-08-30T15:01:12.647Z",
+      "source_digest": "f267de6595dc100a24fa17fe77f8b687c506b3503bd85bce4703f69a62dc4895",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-15T17:32:05+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_cost_report_2026_06_md": {
       "source": "docs/COST_REPORT_2026-06.md",
@@ -507,12 +509,12 @@
         }
       ],
       "createdTime": "2026-06-02T15:27:49.024Z",
-      "modifiedTime": "2026-06-21T07:41:04.214Z",
-      "source_digest": "242b3b3fdfec080492c1b590938ac932c56847f3272f1aba5fcee370f955398e",
+      "modifiedTime": "2026-08-30T15:01:16.287Z",
+      "source_digest": "4908e68370875fcf34676c6a2fe32df647ebf0bbf32b95be568ccf00d5d68012",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-10T22:32:23+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_custom_domain_uptime_incident_2026_06_27_md": {
       "source": "docs/CUSTOM_DOMAIN_UPTIME_INCIDENT_2026-06-27.md",
@@ -528,12 +530,12 @@
         }
       ],
       "createdTime": "2026-06-27T12:02:16.417Z",
-      "modifiedTime": "2026-07-04T04:32:31.951Z",
-      "source_digest": "572e14d849dcece9136b5f9dce72c2044340e0cdc871fb81d337c85893c6418d",
+      "modifiedTime": "2026-08-30T15:01:20.147Z",
+      "source_digest": "7f43bb76dbbbe11267654aa3f846210ccff6440b4365178c92ab2702c76acb31",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-04T13:28:28+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_data_retention_deletion_anonymization_runbook_md": {
       "source": "docs/DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md",
@@ -549,12 +551,12 @@
         }
       ],
       "createdTime": "2026-06-27T03:22:14.548Z",
-      "modifiedTime": "2026-06-27T13:17:10.289Z",
-      "source_digest": "64e1cd866fd68d5bf311a5d4afc3452def3b9f399ef56b7ad0c2d4df5e3a11e2",
+      "modifiedTime": "2026-08-30T15:01:24.440Z",
+      "source_digest": "4dc77bc54a42d0eed35fd6c459159624cd7bbca9c916ccb2d2a91bd26365456e",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-27T21:58:26+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_database_md": {
       "source": "docs/database.md",
@@ -570,12 +572,12 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:20.169Z",
-      "modifiedTime": "2026-07-13T13:32:31.035Z",
-      "source_digest": "fd6a078c44d49ef34c317a9cc44fafc1c763674f7b334602905ce0130c51f4ac",
+      "modifiedTime": "2026-08-30T15:01:29.706Z",
+      "source_digest": "34eeebe9ee0d05e415faef628828e6d94b305dd6fef0e716cf4e0ec5068d7a8c",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-09T11:03:45+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_db_migration_management_runbook_md": {
       "source": "docs/DB_MIGRATION_MANAGEMENT_RUNBOOK.md",
@@ -591,12 +593,12 @@
         }
       ],
       "createdTime": "2026-06-13T21:03:38.375Z",
-      "modifiedTime": "2026-07-08T06:26:58.506Z",
-      "source_digest": "2fc4e62d53a950c55cbd31e860671abb896b13f6000513a84ea31765671cc6ca",
+      "modifiedTime": "2026-08-30T15:01:34.435Z",
+      "source_digest": "f3f8820b8cd7f07b657912c4bafe736f6cce33cbc2cea98f597a7cba81862cb5",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-08T12:04:22+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_db_read_load_balancing_design_md": {
       "source": "docs/DB_READ_LOAD_BALANCING_DESIGN.md",
@@ -612,12 +614,12 @@
         }
       ],
       "createdTime": "2026-07-08T06:27:02.250Z",
-      "modifiedTime": "2026-07-08T06:27:02.319Z",
-      "source_digest": "3663a951abbe31a14563b1f67f8dc0a5219ced502e1a78447d5b8108933efffd",
+      "modifiedTime": "2026-08-30T15:01:39.061Z",
+      "source_digest": "54c0f5e54aef2fa22cc2868ecca6eca138daf4ef813b42a9cc3c564310f3e0ce",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-08T13:15:46+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_demo_security_and_auth_design_md": {
       "source": "docs/DEMO_SECURITY_AND_AUTH_DESIGN.md",
@@ -633,12 +635,12 @@
         }
       ],
       "createdTime": "2026-06-03T05:02:20.581Z",
-      "modifiedTime": "2026-08-19T14:07:14.316Z",
-      "source_digest": "dcb93dfd1f68cdbbe6c20f6e4fb4756fa510d6b7c296239de3b11b9ce967ecf9",
+      "modifiedTime": "2026-08-30T15:01:43.046Z",
+      "source_digest": "266a3687b244b2e6f15f1a829e4dc5444e9c5645207b94ac4e18dca0b611252c",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T21:50:16+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_development_knowledge_flow_md": {
       "source": "docs/DEVELOPMENT_KNOWLEDGE_FLOW.md",
@@ -654,12 +656,12 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:23.586Z",
-      "modifiedTime": "2026-07-13T14:49:26.868Z",
-      "source_digest": "bedfcca8a806af352a0bb086f8d26ffc318b64fec0582c1f0712b4101e815103",
+      "modifiedTime": "2026-08-30T15:01:46.935Z",
+      "source_digest": "881f6c30fc7160a1da941217227e3f5d07923c1ba40b9ae3f964221417d7f4e8",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-13T22:43:42+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_devops_sre_operation_spec_md": {
       "source": "docs/DEVOPS_SRE_OPERATION_SPEC.md",
@@ -675,12 +677,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:35:20.342Z",
-      "modifiedTime": "2026-08-19T14:07:18.785Z",
-      "source_digest": "cebc63526d1792dcaf60bf3df2397d1b2714235cb3350d948e5ac30738796120",
+      "modifiedTime": "2026-08-30T15:01:51.708Z",
+      "source_digest": "5cce5d306046b57261d335e6c81192575b9f3cedb8b85dab4b3b19a3ec8dd541",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-10T17:28:15+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_disaster_recovery_and_escalation_runbook_md": {
       "source": "docs/DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md",
@@ -696,12 +698,12 @@
         }
       ],
       "createdTime": "2026-06-10T13:16:14.738Z",
-      "modifiedTime": "2026-07-01T11:37:54.991Z",
-      "source_digest": "89a5e5d3a02d870c1a3854c393fcb5e983e66f7913a5ba8981a5dd09a94418c5",
+      "modifiedTime": "2026-08-30T15:01:55.672Z",
+      "source_digest": "eee74c4891de42aef253d00c3e531ec9cb8090f28041c5d7240acdc43cebb239",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T18:53:55+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_docs_reference_integrity_guard_md": {
       "source": "docs/DOCS_REFERENCE_INTEGRITY_GUARD.md",
@@ -717,12 +719,12 @@
         }
       ],
       "createdTime": "2026-07-13T13:32:40.724Z",
-      "modifiedTime": "2026-07-13T13:32:40.744Z",
-      "source_digest": "39cbe67676bce89864b07c7037b543400c57ae790700d92b20635829fe1ce4f6",
+      "modifiedTime": "2026-08-30T15:02:00.128Z",
+      "source_digest": "c1ddd08bf1d8d2bf6c6e5eb71960910e60f39ee7d4e2823d7bca113076e0f8ba",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-12T23:59:51+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_employee_assessment_response_runbook_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_RESPONSE_RUNBOOK.md",
@@ -738,12 +740,12 @@
         }
       ],
       "createdTime": "2026-06-24T00:18:41.818Z",
-      "modifiedTime": "2026-06-24T00:18:41.840Z",
-      "source_digest": "a41d4eb061b346d323240f73a8890ed927690203f99e5af9114ce9f202dfbf6f",
+      "modifiedTime": "2026-08-30T15:02:04.102Z",
+      "source_digest": "7c6a18cc759c19e2cac81bb3e3780955935557f325fec202c9841339aecc1ce2",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-24T09:13:09+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_employee_assessment_shortlist_poc_plan_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_SHORTLIST_POC_PLAN.md",
@@ -759,12 +761,12 @@
         }
       ],
       "createdTime": "2026-06-23T05:44:34.826Z",
-      "modifiedTime": "2026-06-23T05:44:34.853Z",
-      "source_digest": "a88c9fae370bf167ea12d29790f2258c4d9aa15b0a1de428611e8e7680be227a",
+      "modifiedTime": "2026-08-30T15:02:07.786Z",
+      "source_digest": "8fae81f318ade6f3bcf6a3bf9cead5531bb3646a773125db672f6363515fc2ae",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-22T01:12:29+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_employee_assessment_tool_research_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md",
@@ -780,12 +782,12 @@
         }
       ],
       "createdTime": "2026-06-21T14:48:02.272Z",
-      "modifiedTime": "2026-06-23T05:44:38.960Z",
-      "source_digest": "6dbed056ff20ae84164af5f2e77400b73c0e53f9d1a2aaed78bd2cc109e93804",
+      "modifiedTime": "2026-08-30T15:02:12.104Z",
+      "source_digest": "c34a5338993dcfc4780139fa255ee4ad60ad1e8286e29e75a55195fb464b6634",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-22T01:12:29+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_employee_assessment_vendor_rfi_dpa_checklist_md": {
       "source": "docs/EMPLOYEE_ASSESSMENT_VENDOR_RFI_DPA_CHECKLIST.md",
@@ -801,12 +803,12 @@
         }
       ],
       "createdTime": "2026-07-18T12:28:56.718Z",
-      "modifiedTime": "2026-07-23T14:35:25.665Z",
-      "source_digest": "86a392027ebdf401d56bc71c7509ddc0da4dc87cb3a3119481d9e6a9bbd170a2",
+      "modifiedTime": "2026-08-30T15:02:16.111Z",
+      "source_digest": "880fa700407adc057e0988e9bab6a49ba483faa5359ae412734fea58ff3788c3",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-23T19:26:17+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_external_pentest_runbook_md": {
       "source": "docs/EXTERNAL_PENTEST_RUNBOOK.md",
@@ -822,12 +824,12 @@
         }
       ],
       "createdTime": "2026-06-21T10:48:03.256Z",
-      "modifiedTime": "2026-06-27T10:35:44.565Z",
-      "source_digest": "b0df1b82c0b3ed59e734e5527976f8cf0aa9c1b24925ac21003ddee3f4c3eb3f",
+      "modifiedTime": "2026-08-30T15:02:20.487Z",
+      "source_digest": "d6c95840c6c6ffec601a3b39104f0e8fb751018784ee8ee95e27ca09c41799dc",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-27T19:28:05+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_figma_slide_integration_guide_md": {
       "source": "docs/FIGMA_SLIDE_INTEGRATION_GUIDE.md",
@@ -846,9 +848,9 @@
       "modifiedTime": "2026-08-19T14:07:22.385Z",
       "source_digest": "8ed047868d8411d0f8f92d10f8687a3c3f2ee97e0535dd2d6357be5ef81f5db8",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T00:32:14+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_firebase_auth_supabase_rls_security_design_md": {
       "source": "docs/FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md",
@@ -864,12 +866,12 @@
         }
       ],
       "createdTime": "2026-06-06T05:10:30.765Z",
-      "modifiedTime": "2026-07-23T14:35:31.219Z",
-      "source_digest": "3a9a74d6662795c0dbe67e152b2ae8720749595045ef63a934af06f425dae156",
+      "modifiedTime": "2026-08-30T15:02:25.342Z",
+      "source_digest": "c892ef6eda4e4d785cb430f208e9b49474dd01715b3df881f24333f6b10eec3c",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-23T16:56:57+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_firebase_ci_cd_wif_migration_report_md": {
       "source": "docs/FIREBASE_CI_CD_WIF_MIGRATION_REPORT.md",
@@ -888,9 +890,9 @@
       "modifiedTime": "2026-07-13T13:32:47.567Z",
       "source_digest": "9fe89b6a98222d89d6041ab4347ceb0fe9fd8ea3cba9f9a643bf4b6c7adc91b9",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-12T23:57:07+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_firebase_supabase_quota_error_alert_runbook_md": {
       "source": "docs/FIREBASE_SUPABASE_QUOTA_ERROR_ALERT_RUNBOOK.md",
@@ -906,12 +908,12 @@
         }
       ],
       "createdTime": "2026-06-14T19:16:30.086Z",
-      "modifiedTime": "2026-06-21T07:41:35.442Z",
-      "source_digest": "c17959c0d6093b0dc6c9bd7dd1adf32e470baba842f1bfadc04d12b9621776e3",
+      "modifiedTime": "2026-08-30T15:02:29.931Z",
+      "source_digest": "c8d22cc8449c170a8d1fe047ebb9f40f6de8ed695543a53307af577d726b1b10",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-15T04:04:29+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_firebase_supabase_system_architecture_md": {
       "source": "docs/FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md",
@@ -927,12 +929,12 @@
         }
       ],
       "createdTime": "2026-06-06T02:47:52.808Z",
-      "modifiedTime": "2026-06-21T07:41:39.764Z",
-      "source_digest": "00e9939042610911076e358dbb9e33877b986ff81aca78dc6e24199e70f09178",
+      "modifiedTime": "2026-08-30T15:02:34.362Z",
+      "source_digest": "728ff76f688915cc1b47f8c3a2e8e29ef9d173787c10845eda168d20fd4e76ae",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-15T02:18:58+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_gemini_cli_migration_audit_2026_06_17_md": {
       "source": "docs/GEMINI_CLI_MIGRATION_AUDIT_2026-06-17.md",
@@ -948,12 +950,12 @@
         }
       ],
       "createdTime": "2026-06-16T16:49:53.095Z",
-      "modifiedTime": "2026-06-21T07:41:44.083Z",
-      "source_digest": "9316f0b4951820952f1d878ef02a34ec4e7cf1f9e41ba117e0987087ff82be34",
+      "modifiedTime": "2026-08-30T15:02:38.632Z",
+      "source_digest": "768a7a1b2e8bd358268186e49cc66a089d22e4e2b0e8a5114b82a683e8172a07",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-17T01:56:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_gemini_model_version_migration_runbook_md": {
       "source": "docs/GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md",
@@ -969,12 +971,12 @@
         }
       ],
       "createdTime": "2026-07-01T11:37:58.563Z",
-      "modifiedTime": "2026-07-08T06:27:07.576Z",
-      "source_digest": "c5257046430daef3f2b5f962399c944cb019e366d56a31c35c9a7d86f3e7053b",
+      "modifiedTime": "2026-08-30T15:02:42.931Z",
+      "source_digest": "1cf4a2e00e12e8dcc6fa9684fb235ff7e61c177445e2dc3f2089e84d02d92408",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-07T23:29:12+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_github_wbs_sync_runbook_md": {
       "source": "docs/GITHUB_WBS_SYNC_RUNBOOK.md",
@@ -993,9 +995,9 @@
       "modifiedTime": "2026-07-13T14:49:35.385Z",
       "source_digest": "da709a22dab928d92082abb348ac77f3a7394556925aab51d4933f592b81b436",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-13T22:38:42+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_go_no_go_decision_pack_2026_07_07_md": {
       "source": "docs/GO_NO_GO_DECISION_PACK_2026-07-07.md",
@@ -1014,9 +1016,9 @@
       "modifiedTime": "2026-08-19T14:07:27.089Z",
       "source_digest": "76aa5a14a73e89d8e40398d5fa8d9aa73675565337f91368fb62b2905ca33d87",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-15T18:16:12+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_go_no_go_gate_triage_2026_07_04_md": {
       "source": "docs/GO_NO_GO_GATE_TRIAGE_2026-07-04.md",
@@ -1032,12 +1034,12 @@
         }
       ],
       "createdTime": "2026-07-04T02:48:47.663Z",
-      "modifiedTime": "2026-07-04T04:32:35.306Z",
-      "source_digest": "d953d6c4baa6ee8d3644dc12ce65fb9281c7e67abeb161ef092ae4dbc5d10201",
+      "modifiedTime": "2026-08-30T15:02:46.766Z",
+      "source_digest": "5207d1757541da655c5f98b7cd7eec847137999256cf4b8294b1922937611623",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-04T13:28:41+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_google_workspace_migration_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_MIGRATION_RUNBOOK.md",
@@ -1053,12 +1055,12 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:26.826Z",
-      "modifiedTime": "2026-06-21T07:41:48.088Z",
-      "source_digest": "1ad5b75309b4031b81e3937b46fd49843c841062aa596e85962292ea6941d098",
+      "modifiedTime": "2026-08-30T15:02:50.985Z",
+      "source_digest": "b4f749be57b5dda9860962de881e9a7dea57220a7ddb4fbb6c7b0e43504ac813",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-19T14:38:08+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_google_workspace_oauth_reauth_runbook_md": {
       "source": "docs/GOOGLE_WORKSPACE_OAUTH_REAUTH_RUNBOOK.md",
@@ -1074,12 +1076,12 @@
         }
       ],
       "createdTime": "2026-06-20T17:10:07.780Z",
-      "modifiedTime": "2026-06-21T07:41:54.580Z",
-      "source_digest": "bb03d7947c9bb2fb7d2cf89a604cd588e5e2a75deaea61a3a315773b28b26564",
+      "modifiedTime": "2026-08-30T15:02:55.487Z",
+      "source_digest": "9f0d2168a09d924c875cca82509a21497435f0f8792d9fc3d00b63a5d6faef38",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-21T00:53:28+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_growth_strategy_roadmap_md": {
       "source": "docs/GROWTH_STRATEGY_ROADMAP.md",
@@ -1098,9 +1100,9 @@
       "modifiedTime": "2026-08-19T14:07:31.859Z",
       "source_digest": "2a0f07b86940b5add2f95166183b1a6b84c5f714fdd07a6f06ff949d3606a10d",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T14:30:28+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_handover_documentation_package_md": {
       "source": "docs/HANDOVER_DOCUMENTATION_PACKAGE.md",
@@ -1119,9 +1121,9 @@
       "modifiedTime": "2026-08-19T14:07:36.331Z",
       "source_digest": "831db8b736dfc725df6c96abc89851fa9381c0952fa92d99f6f730ec3704e09a",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-15T18:16:15+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_hosting_and_database_selection_md": {
       "source": "docs/HOSTING_AND_DATABASE_SELECTION.md",
@@ -1141,8 +1143,8 @@
       "source_digest": "8d92e64fc14138204b61866ce3c3d3efdddcbe368a2b44f9c580699c1cc15ffe",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-13T10:56:54+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00"
     },
     "docs_hypothesis_audit_2026_07_04_md": {
       "source": "docs/HYPOTHESIS_AUDIT_2026-07-04.md",
@@ -1158,12 +1160,12 @@
         }
       ],
       "createdTime": "2026-07-04T07:57:01.839Z",
-      "modifiedTime": "2026-07-17T00:02:26.868Z",
-      "source_digest": "f0ea3a424ce563021d5bb99ec8c42eaaf00988d91a793fa8268ad41bbdb44095",
+      "modifiedTime": "2026-08-30T15:02:59.738Z",
+      "source_digest": "b5657125e0015d825dfda34b9a73190ee119800afd4a4b3bee0d783feaae536a",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-15T08:52:26+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_incident_postmortem_runbook_md": {
       "source": "docs/INCIDENT_POSTMORTEM_RUNBOOK.md",
@@ -1179,12 +1181,12 @@
         }
       ],
       "createdTime": "2026-06-13T15:50:49.498Z",
-      "modifiedTime": "2026-08-19T14:07:41.594Z",
-      "source_digest": "47d93f703ade11fd1f25c46bc18b6e888f561a8493473a2c0edf0485073b350b",
+      "modifiedTime": "2026-08-30T15:03:03.764Z",
+      "source_digest": "ec691204fb2573bbcadbfc5bacdfe0c19da86006ce74fd009af337a368de96f2",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-18T02:36:01+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_infra_hearing_sign_off_pack_2026_08_07_md": {
       "source": "docs/INFRA_HEARING_SIGN_OFF_PACK_2026-08-07.md",
@@ -1200,12 +1202,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:07:45.154Z",
-      "modifiedTime": "2026-08-19T14:07:45.182Z",
-      "source_digest": "4329b2198561e774ec3a1445d6a4187e4781247d5d20f44835f958215a34cd2b",
+      "modifiedTime": "2026-08-30T15:03:07.926Z",
+      "source_digest": "d1cbe009b6e90a0c62d26bbbab96d9f68bd9b7fffc34e9e831333d684c4f0440",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T21:24:15+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_infra_telemetry_dashboard_runbook_md": {
       "source": "docs/INFRA_TELEMETRY_DASHBOARD_RUNBOOK.md",
@@ -1221,12 +1223,12 @@
         }
       ],
       "createdTime": "2026-06-13T21:52:54.366Z",
-      "modifiedTime": "2026-06-21T07:42:13.471Z",
-      "source_digest": "07fc96bf1987c191271c2316df8c643ddc2e693c98712fe4faaaf170affb51e0",
+      "modifiedTime": "2026-08-30T15:03:12.158Z",
+      "source_digest": "ced31bc64b0d749ca3e2a573474ffec2ec77d38f878e1b7668e0229ac8dec4d4",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-14T06:45:26+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_internal_launch_and_billing_scope_2026_07_03_md": {
       "source": "docs/INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md",
@@ -1245,9 +1247,9 @@
       "modifiedTime": "2026-07-17T00:02:31.691Z",
       "source_digest": "7641a5c1e85cf50e4072b06fcb1b474ea086cb8f6f9b1fcd64db8bedf1726f6a",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-15T08:52:30+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_issue_qa_blocker_audit_2026_06_27_md": {
       "source": "docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md",
@@ -1263,12 +1265,12 @@
         }
       ],
       "createdTime": "2026-06-27T11:47:49.127Z",
-      "modifiedTime": "2026-07-01T14:35:52.134Z",
-      "source_digest": "54dc8fce292c99a832afdee2f9fdc88474760ca23c5f3f232b7c7ab81a783eab",
+      "modifiedTime": "2026-08-30T15:03:16.199Z",
+      "source_digest": "3f893793b211f1af0a35a32e5c63917d5d3d5f86f31601b94c0078224fc9f562",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T23:31:01+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_japanese_ui_ux_style_guide_md": {
       "source": "docs/JAPANESE_UI_UX_STYLE_GUIDE.md",
@@ -1284,12 +1286,12 @@
         }
       ],
       "createdTime": "2026-07-25T07:12:31.373Z",
-      "modifiedTime": "2026-07-25T07:12:31.393Z",
-      "source_digest": "4c14a869aeb93d4c09586962cd5becb583eca0d2f308efac13eb7c69372c03b3",
+      "modifiedTime": "2026-08-30T15:03:20.595Z",
+      "source_digest": "b84d0e8cb57c186ae845fdeed01e16be8a1cc2038e6114fc2a393bb5fc7cdd4a",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-24T15:34:59+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_lane_preflight_guard_md": {
       "source": "docs/LANE_PREFLIGHT_GUARD.md",
@@ -1305,12 +1307,12 @@
         }
       ],
       "createdTime": "2026-07-17T00:02:35.108Z",
-      "modifiedTime": "2026-07-17T00:02:35.128Z",
-      "source_digest": "d47612d2565455c023be8a55f0edfff1d88b5708ed029adfe9a789770813866e",
+      "modifiedTime": "2026-08-30T15:03:24.567Z",
+      "source_digest": "6e7faaf67bac0e75ab5ab0779d1a1cfebafc062aec5411a3bdedda559531e94b",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-17T08:38:35+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_attorney_review_results_r36_md": {
       "source": "docs/LEGAL_ATTORNEY_REVIEW_RESULTS_R36.md",
@@ -1326,12 +1328,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:07:49.884Z",
-      "modifiedTime": "2026-08-19T14:07:49.904Z",
-      "source_digest": "793c912e725daa10955f3234d2fc8e6443db329e09ae376e90cb86152493c3f1",
+      "modifiedTime": "2026-08-30T15:03:28.597Z",
+      "source_digest": "4505e96b91084b75d04685b06c957a3633522720398680cb4ff1c74fd798aaa9",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-15T19:01:38+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_consent_ui_and_api_runbook_md": {
       "source": "docs/LEGAL_CONSENT_UI_AND_API_RUNBOOK.md",
@@ -1347,12 +1349,12 @@
         }
       ],
       "createdTime": "2026-06-27T10:35:48.506Z",
-      "modifiedTime": "2026-06-27T10:35:48.540Z",
-      "source_digest": "576df64cbb2f186e8d0a7cc13e9afc6e02246d59ad424c9d15e4e6c6b951fe08",
+      "modifiedTime": "2026-08-30T15:03:32.734Z",
+      "source_digest": "04b81264b8670c66608b75f02e92f1a489de1314d10854b1e72e416632615c1e",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-27T18:04:22+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_docs_consistency_audit_2026_07_04_md": {
       "source": "docs/LEGAL_DOCS_CONSISTENCY_AUDIT_2026-07-04.md",
@@ -1368,12 +1370,12 @@
         }
       ],
       "createdTime": "2026-07-04T13:35:07.077Z",
-      "modifiedTime": "2026-07-23T14:35:43.320Z",
-      "source_digest": "c3ff60215fb6ec0edd681626898b936b7f76cc11ecf667a57a62d9c0bf3626a9",
+      "modifiedTime": "2026-08-30T15:03:37.141Z",
+      "source_digest": "3d22189df70d3c467a7ef17b8ff44c07265fcc4aed59eb37322a056dd15cd234",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-18T22:02:08+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_review_external_attorney_package_md": {
       "source": "docs/LEGAL_REVIEW_EXTERNAL_ATTORNEY_PACKAGE.md",
@@ -1389,12 +1391,12 @@
         }
       ],
       "createdTime": "2026-07-25T07:12:35.632Z",
-      "modifiedTime": "2026-07-25T07:12:35.659Z",
-      "source_digest": "6f562a5a675497000a654cea891cb6c26f50df258b48af7d453aa54c74b6e70c",
+      "modifiedTime": "2026-08-30T15:03:41.502Z",
+      "source_digest": "822a992d9e03ce1c25b4414e30f8dda032c64b5ee726fda6f5546da09caedc18",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-24T20:31:29+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_review_resolution_draft_md": {
       "source": "docs/LEGAL_REVIEW_RESOLUTION_DRAFT.md",
@@ -1410,12 +1412,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:35:46.949Z",
-      "modifiedTime": "2026-07-23T14:35:46.970Z",
-      "source_digest": "9825d8412890b0d8a3ecb8c1d0efbb0e362e3b6d7d703bc99bb22c89d0f2993f",
+      "modifiedTime": "2026-08-30T15:03:45.744Z",
+      "source_digest": "1068d46813db02c4508c361f431dd4e9e56952070d608f31f96f4c177b94b54e",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-20T17:04:32+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_legal_review_signoff_tracker_md": {
       "source": "docs/LEGAL_REVIEW_SIGNOFF_TRACKER.md",
@@ -1431,12 +1433,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:35:51.355Z",
-      "modifiedTime": "2026-07-23T14:35:51.380Z",
-      "source_digest": "3c3e35af8ade94f799184afee43c99c6cad7d8488a075571f1bf64da475d8e30",
+      "modifiedTime": "2026-08-30T15:03:50.085Z",
+      "source_digest": "a59e4746ea5c9eaa102c77d2b887cd959ece6185803a685f192fb9cf4e57aa62",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-19T12:12:34+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_load_test_100_users_report_2026_07_01_md": {
       "source": "docs/LOAD_TEST_100_USERS_REPORT_2026-07-01.md",
@@ -1455,9 +1457,9 @@
       "modifiedTime": "2026-07-01T14:35:56.908Z",
       "source_digest": "fc5e952d41d111ab23d832e6cf29448e8bfd049d74023feb0eedf95440d2c64b",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T23:28:28+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_local_dev_emulator_stack_runbook_md": {
       "source": "docs/LOCAL_DEV_EMULATOR_STACK_RUNBOOK.md",
@@ -1473,12 +1475,12 @@
         }
       ],
       "createdTime": "2026-06-14T17:29:08.370Z",
-      "modifiedTime": "2026-06-21T07:42:22.143Z",
-      "source_digest": "c3ae1413c0ab7e18e0aadfb9bee352d5a2af7006305bebc1ac2b8005d76458b1",
+      "modifiedTime": "2026-08-30T15:03:54.021Z",
+      "source_digest": "75fd123afe1bb212d1433eaa64960f56ae312ab3b40a587435245599ecf3c801",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-15T02:18:45+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_log_rotation_and_retention_runbook_md": {
       "source": "docs/LOG_ROTATION_AND_RETENTION_RUNBOOK.md",
@@ -1494,12 +1496,12 @@
         }
       ],
       "createdTime": "2026-06-13T16:38:52.319Z",
-      "modifiedTime": "2026-07-01T11:38:03.946Z",
-      "source_digest": "7abc63889323c6582e82d650aa0239f4c684c5bfea04e5fed9b63c70ddf6c178",
+      "modifiedTime": "2026-08-30T15:03:57.613Z",
+      "source_digest": "3069c19f64cfdba94a189e29bcd6e6cd1a7e614f9d96ddf658def2a44b9e3c78",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T12:02:04+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_master_knowledge_graph_md": {
       "source": "docs/MASTER_KNOWLEDGE_GRAPH.md",
@@ -1515,12 +1517,12 @@
         }
       ],
       "createdTime": "2026-08-08T09:46:40.758Z",
-      "modifiedTime": "2026-08-19T14:07:55.157Z",
-      "source_digest": "2b2e24a1dbe8da73ca063b3059beb7a55ae365ebde1cb57e4ea2856f65708d41",
+      "modifiedTime": "2026-08-30T17:16:26.738Z",
+      "source_digest": "e107b82e91572c94a0257608d49611397577bc07b3bd02bb8ff5b36750e4396e",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-22T22:40:00+09:00",
+      "source_mtime_jst": "2026-08-31T03:40:19+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_mikiwame_ai_integration_poc_design_md": {
       "source": "docs/MIKIWAME_AI_INTEGRATION_POC_DESIGN.md",
@@ -1536,12 +1538,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:07:59.143Z",
-      "modifiedTime": "2026-08-19T14:07:59.166Z",
-      "source_digest": "17435a8e781ca6f3fb7a94eefb347a33272c10bc7a577e024291b99874a3870e",
+      "modifiedTime": "2026-08-30T15:04:06.595Z",
+      "source_digest": "fcc37087341f99e19c291bdc91aab829ccec9e579b76c5219a2f7b73eeb3cf00",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-15T17:49:47+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_monthly_progress_report_and_kpi_dashboard_md": {
       "source": "docs/MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md",
@@ -1557,12 +1559,12 @@
         }
       ],
       "createdTime": "2026-06-10T13:46:22.333Z",
-      "modifiedTime": "2026-06-21T10:12:47.846Z",
-      "source_digest": "902d459271fcc2205b4fa7ccf663c81f21e0355b7ed4b90b13282eb82b146a94",
+      "modifiedTime": "2026-08-30T15:04:11.123Z",
+      "source_digest": "7eeaff0758c547b493763c5667d4979ff2b106bbfdff7b6b174ab100ddd3b9a1",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-21T19:03:22+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_monthly_quality_report_delivery_runbook_md": {
       "source": "docs/MONTHLY_QUALITY_REPORT_DELIVERY_RUNBOOK.md",
@@ -1578,12 +1580,12 @@
         }
       ],
       "createdTime": "2026-06-21T10:12:51.405Z",
-      "modifiedTime": "2026-06-27T13:17:14.780Z",
-      "source_digest": "2b48b4165bbebd30fa102c3147e0614b0a8a49a4e58b8a14153e16e4a2c5e7b7",
+      "modifiedTime": "2026-08-30T15:04:15.226Z",
+      "source_digest": "be91fc2f10daf20cc14756d42d93d8d8f0c3c71d6bd124d753c153bd44cd8b36",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-27T21:58:49+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_monthly_report_2026_06_md": {
       "source": "docs/MONTHLY_REPORT_2026-06.md",
@@ -1602,9 +1604,9 @@
       "modifiedTime": "2026-08-19T14:08:04.638Z",
       "source_digest": "4acc926abbf87270def376e7936ef57d29fea163bb596185198747e074ed7a86",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T00:12:29+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_multi_ai_workflow_md": {
       "source": "docs/MULTI_AI_WORKFLOW.md",
@@ -1623,9 +1625,9 @@
       "modifiedTime": "2026-07-23T14:35:58.528Z",
       "source_digest": "683a2e69717d984437bf71a18cbc6589c431bbff7fdc4b8289209abd41a1ec56",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-19T11:34:34+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_notebooklm_sync_timeout_runbook_md": {
       "source": "docs/NOTEBOOKLM_SYNC_TIMEOUT_RUNBOOK.md",
@@ -1641,12 +1643,12 @@
         }
       ],
       "createdTime": "2026-06-20T21:13:10.284Z",
-      "modifiedTime": "2026-06-21T08:57:14.562Z",
-      "source_digest": "c868e32457bf92656b84f40b85c064e5f0653251ffdad953d224d92f49bd1fe7",
+      "modifiedTime": "2026-08-30T15:04:20.120Z",
+      "source_digest": "3a615a6d3e276b5a01eae7a15e82fe1c7bd32a8bc57df3f663f7b2d541891edf",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-21T17:51:41+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_obsidian_development_workflow_md": {
       "source": "docs/OBSIDIAN_DEVELOPMENT_WORKFLOW.md",
@@ -1662,12 +1664,12 @@
         }
       ],
       "createdTime": "2026-08-08T09:46:44.901Z",
-      "modifiedTime": "2026-08-08T09:46:44.923Z",
-      "source_digest": "1bd2ddd1b1ec68dd9bc27caa022ecd16e99f7424a482f95089564ca0abab0357",
+      "modifiedTime": "2026-08-30T15:04:25.149Z",
+      "source_digest": "a5a73142caaa5935e5b8ab0b5fde08e0d08909db579bda133a3e3f1c70208d62",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-05T23:49:49+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_operations_cadence_calendar_md": {
       "source": "docs/OPERATIONS_CADENCE_CALENDAR.md",
@@ -1683,12 +1685,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:36:07.419Z",
-      "modifiedTime": "2026-07-25T07:12:40.649Z",
-      "source_digest": "f99629b20ef91b5c84f7a9244106cf0a906ed6e4226deb868374cfcf611e4d72",
+      "modifiedTime": "2026-08-30T15:04:29.167Z",
+      "source_digest": "72c173cd6db8d4c8e7d0da9bfd3d990cb954ff3875af3d2c002a79926edf8b89",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-25T15:42:53+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_operations_handover_rehearsal_runbook_md": {
       "source": "docs/OPERATIONS_HANDOVER_REHEARSAL_RUNBOOK.md",
@@ -1704,12 +1706,12 @@
         }
       ],
       "createdTime": "2026-07-13T13:33:22.281Z",
-      "modifiedTime": "2026-07-13T13:33:22.304Z",
-      "source_digest": "770617057c108ded61030a3890863af7e956a0583c9b6bfcb3cfcfda44bc2144",
+      "modifiedTime": "2026-08-30T15:04:33.396Z",
+      "source_digest": "71063fbf537bfb9d52ddf11ea13941dff45757e214c5054ac60871a9e043d64e",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-08T22:41:15+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:10+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_operations_runbook_catalog_md": {
       "source": "docs/OPERATIONS_RUNBOOK_CATALOG.md",
@@ -1725,12 +1727,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:36:13.266Z",
-      "modifiedTime": "2026-08-19T14:08:09.196Z",
-      "source_digest": "2d4531bb3cd43997399606d503e9592243236da4397f1f9a950e969ea539d154",
+      "modifiedTime": "2026-08-30T15:04:37.400Z",
+      "source_digest": "cbda4f8622edba8927ea929ee322330e92119a02febf0e49fc00f0d438aa60cc",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-15T17:49:10+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_paid_launch_go_no_go_decision_pack_2026_07_24_md": {
       "source": "docs/PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-07-24.md",
@@ -1746,12 +1748,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:36:19.926Z",
-      "modifiedTime": "2026-07-23T14:36:19.958Z",
-      "source_digest": "51a5a80af135c2ccad825fbda558ff0ed4326c2269a3f2f0e13ab2c5e73c9081",
+      "modifiedTime": "2026-08-30T15:04:41.575Z",
+      "source_digest": "a0fbdc722381b481d78fc2fb8d14903d893a22df46e57bf9955e4483f990a8f3",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-23T19:26:20+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:40:56+09:00"
     },
     "docs_paid_launch_go_no_go_decision_pack_2026_08_24_md": {
       "source": "docs/PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-08-24.md",
@@ -1767,12 +1769,10 @@
         }
       ],
       "createdTime": "2026-08-19T14:08:12.892Z",
-      "modifiedTime": "2026-08-19T14:08:12.914Z",
-      "source_digest": "38fe926258e2a7c8e57e4816e7eaa518322e50dc528968f88d3ac05db709e949",
-      "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T20:47:41+09:00",
-      "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "modifiedTime": "2026-08-30T18:40:58.813Z",
+      "source_digest": "f2190c37ab0c4094ea10749fc59a3f608de1dbd06c95bca82d709225f375b02a",
+      "sync_action": "uploaded_updated",
+      "source_mtime_jst": "2026-08-31T03:35:52+09:00"
     },
     "docs_performance_diagnostic_and_index_optimization_runbook_md": {
       "source": "docs/PERFORMANCE_DIAGNOSTIC_AND_INDEX_OPTIMIZATION_RUNBOOK.md",
@@ -1788,12 +1788,12 @@
         }
       ],
       "createdTime": "2026-06-13T17:32:20.883Z",
-      "modifiedTime": "2026-06-21T07:42:53.579Z",
-      "source_digest": "9aa29e2cb2018aa3a76a0536f65f7b3807d8fd34cdb41978df322a3e2643e458",
+      "modifiedTime": "2026-08-30T15:04:51.385Z",
+      "source_digest": "01fdbeb87c9f6d477e1713ca2c9a42978146b3061966113f41b6f3a4be480683",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-15T03:25:09+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_personal_info_disclosure_procedures_md": {
       "source": "docs/PERSONAL_INFO_DISCLOSURE_PROCEDURES.md",
@@ -1809,12 +1809,12 @@
         }
       ],
       "createdTime": "2026-06-10T13:46:28.736Z",
-      "modifiedTime": "2026-06-21T07:42:59.375Z",
-      "source_digest": "17cee19e87f346f0ec77e637aae42a53bfab2b5a14798c600be95ffed02db838",
+      "modifiedTime": "2026-08-30T15:04:55.611Z",
+      "source_digest": "d439a6276c436242070eef9cbb11490582f3a1e8e4151e7e5818ba9c0d09e002",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-10T22:41:22+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_pilot_closed_operation_design_md": {
       "source": "docs/PILOT_CLOSED_OPERATION_DESIGN.md",
@@ -1833,9 +1833,9 @@
       "modifiedTime": "2026-07-13T13:33:31.725Z",
       "source_digest": "89ed33efa4baa338d579d267a0aa84884bba2a98268469359f83a085cf8ec7b2",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-12T23:57:07+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_pilot_consent_template_md": {
       "source": "docs/PILOT_CONSENT_TEMPLATE.md",
@@ -1855,8 +1855,8 @@
       "source_digest": "bdb4628e1e6de861834eaeb1a2302708bfe6bbd36216aaa5e64563ce5c9756a7",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-02T20:21:08+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00"
     },
     "docs_pilot_participants_selection_md": {
       "source": "docs/PILOT_PARTICIPANTS_SELECTION.md",
@@ -1875,9 +1875,9 @@
       "modifiedTime": "2026-07-13T13:33:38.686Z",
       "source_digest": "300d52e624b83fb9df560d4865cb81dae0e2e6acbfa4af06a0e9e3e82aab40f8",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-12T23:57:07+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_pilot_report_2026_06_16_md": {
       "source": "docs/PILOT_REPORT_2026-06-16.md",
@@ -1897,8 +1897,8 @@
       "source_digest": "f89a7e67c8568d3271aef920d5b073d6a941e988bfa6964eb5782a534faba6f4",
       "sync_action": "skipped_unchanged",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-06T10:58:29+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00"
     },
     "docs_post_launch_retrospective_2026_07_18_md": {
       "source": "docs/POST_LAUNCH_RETROSPECTIVE_2026-07-18.md",
@@ -1917,9 +1917,9 @@
       "modifiedTime": "2026-08-19T14:08:17.912Z",
       "source_digest": "b5cd848d18ad4defa44d963bb4582b7096700057f505b35557448f942e5258a8",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T00:12:34+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_postmortem_2026_06_11_r44_production_api_502_md": {
       "source": "docs/POSTMORTEM_2026-06-11_R44_PRODUCTION_API_502.md",
@@ -1938,9 +1938,9 @@
       "modifiedTime": "2026-08-19T14:08:22.740Z",
       "source_digest": "5deb815fd6bffa6f99dff0c7fb46c60593d1a7e6d9e7e5b4308a06c75429420c",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T00:12:21+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_postmortem_2026_07_04_r114_missing_prod_tables_md": {
       "source": "docs/POSTMORTEM_2026-07-04_R114_MISSING_PROD_TABLES.md",
@@ -1959,9 +1959,9 @@
       "modifiedTime": "2026-08-19T14:08:27.469Z",
       "source_digest": "ab7a72481421ab442ebacb32b48eecb6a9cb6a92a5300dcb093a92d49d1bc14e",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T00:13:05+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_pricing_plan_provisional_2026_07_03_md": {
       "source": "docs/PRICING_PLAN_PROVISIONAL_2026-07-03.md",
@@ -1977,12 +1977,12 @@
         }
       ],
       "createdTime": "2026-07-02T17:11:36.635Z",
-      "modifiedTime": "2026-07-02T17:34:21.851Z",
-      "source_digest": "f4825d927b2528d982d232855d3c46c29a91de989473d2153fd5aee849a55194",
+      "modifiedTime": "2026-08-30T15:04:59.664Z",
+      "source_digest": "2d116af494218ed3c488f36d2a853e2e96c73b75c709275017c66710cdc54961",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-03T02:27:42+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_pricing_plan_specification_md": {
       "source": "docs/PRICING_PLAN_SPECIFICATION.md",
@@ -1998,12 +1998,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:36:25.377Z",
-      "modifiedTime": "2026-07-25T07:12:48.829Z",
-      "source_digest": "31550bb81e6539df942ef6811211aea107779c4a4e48cd2deb0835a162e14844",
+      "modifiedTime": "2026-08-30T15:05:03.649Z",
+      "source_digest": "b6b7bba1285c236f1331e475bc8bc50e15777c25248a7f8529b38e5c991ed361",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-24T12:18:15+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_privacy_policy_md": {
       "source": "docs/PRIVACY_POLICY.md",
@@ -2019,12 +2019,12 @@
         }
       ],
       "createdTime": "2026-06-11T19:10:11.376Z",
-      "modifiedTime": "2026-07-25T07:12:52.977Z",
-      "source_digest": "89deb71c5c04797a54c7077f83571d980b10836bde84191b596a202fab09685f",
+      "modifiedTime": "2026-08-30T15:05:08.002Z",
+      "source_digest": "0a32879bf5e71fdaa4861e90b6a85b1814a622f409b7ccfbdb6101e24f63d294",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-24T01:23:55+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN.md",
@@ -2043,9 +2043,9 @@
       "modifiedTime": "2026-08-19T14:08:30.911Z",
       "source_digest": "cf2f25b0f6d185834e17355f28d97a74d252a231ed7512a3daf59e7fb2d551ae",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T00:32:14+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase2_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE2.md",
@@ -2064,9 +2064,9 @@
       "modifiedTime": "2026-08-19T14:08:34.985Z",
       "source_digest": "39c0145086ec554278b771247c465e11e585135489989e39de514a314a0da086",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T00:32:14+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase3_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE3.md",
@@ -2085,9 +2085,9 @@
       "modifiedTime": "2026-08-19T14:08:39.154Z",
       "source_digest": "7b6945400fc55cb121d17618fa0cf3ff576e55c03307de5ffa40c00491d0ecd6",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T00:32:14+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase4_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE4.md",
@@ -2103,12 +2103,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:08:43.305Z",
-      "modifiedTime": "2026-08-19T14:08:43.327Z",
-      "source_digest": "fa50e27ef7963863f2dddaf8b0e0a73b8aeb825f6dc52149f50c901564a3ca8f",
+      "modifiedTime": "2026-08-30T15:05:11.855Z",
+      "source_digest": "0c3e254796ce810d48662646958548cecb1b3d94cb738a27bacb976275c2af11",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T00:38:39+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase5_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE5.md",
@@ -2124,12 +2124,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:08:47.038Z",
-      "modifiedTime": "2026-08-19T14:08:47.060Z",
-      "source_digest": "6fc68faafda413aa0d33f61cf56153f1b4d4776f8d27dee8a8936a046ccb409d",
+      "modifiedTime": "2026-08-30T15:05:15.723Z",
+      "source_digest": "dc178dbc3b3c1912b897dc3effd72a95668d80fa15e28c393f0df915e258bbd7",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T12:57:00+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_product_enhancement_action_plan_phase6_md": {
       "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE6.md",
@@ -2145,12 +2145,33 @@
         }
       ],
       "createdTime": "2026-08-19T14:08:51.027Z",
-      "modifiedTime": "2026-08-19T14:08:51.056Z",
-      "source_digest": "e52b1a384e44770fda68d8b7a80ec6cdcb378de4da8616855d3bd671d2fa60e8",
+      "modifiedTime": "2026-08-30T15:05:19.802Z",
+      "source_digest": "8749ae7a89911b7e059fbbc625917ebeb16939f91999f9b71a1e4223cd110870",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T14:16:00+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
+    },
+    "docs_product_enhancement_action_plan_phase7_md": {
+      "source": "docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE7.md",
+      "id": "1hy4p41UKXrDDHrPZcNB66iTXq60YIVfaVEYR0lWnfv4",
+      "name": "Mighty Skill-Bridge docs/docs/PRODUCT_ENHANCEMENT_ACTION_PLAN_PHASE7.md",
+      "url": "https://docs.google.com/document/d/1hy4p41UKXrDDHrPZcNB66iTXq60YIVfaVEYR0lWnfv4/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-08-30T15:05:22.932Z",
+      "modifiedTime": "2026-08-30T15:05:22.955Z",
+      "source_digest": "4e56c6296caab4e7dd102cda2ac966d2af17d5c995b5967b98b9aacf47301c3c",
+      "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
+      "sync_reason": "source_digest_match",
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_production_acceptance_test_report_md": {
       "source": "docs/PRODUCTION_ACCEPTANCE_TEST_REPORT.md",
@@ -2166,12 +2187,12 @@
         }
       ],
       "createdTime": "2026-06-10T13:16:59.142Z",
-      "modifiedTime": "2026-06-21T07:43:29.934Z",
-      "source_digest": "b0e9e81b65b422d10c1e6bb7e70d7cae09877e368b3a4b818a23ab8873d100ae",
+      "modifiedTime": "2026-08-30T15:05:27.680Z",
+      "source_digest": "e34664c71dbfbb1a0eaf1ddf89f9b88761185f9c55bf630521c1907fb3a28f46",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-10T21:44:01+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_production_domain_setup_guide_md": {
       "source": "docs/PRODUCTION_DOMAIN_SETUP_GUIDE.md",
@@ -2187,12 +2208,12 @@
         }
       ],
       "createdTime": "2026-06-13T05:22:42.010Z",
-      "modifiedTime": "2026-06-21T07:43:34.214Z",
-      "source_digest": "ec1c5ed82d4a085b39e512860c664f28ade0814b17396cd8e828c7d65cae4adb",
+      "modifiedTime": "2026-08-30T15:05:32.085Z",
+      "source_digest": "83cb3ff440e69e858d220d63e17bc0230e1c00414118841c8a6226f434546354",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-15T02:19:22+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_production_go_no_go_checklist_md": {
       "source": "docs/PRODUCTION_GO_NO_GO_CHECKLIST.md",
@@ -2208,12 +2229,12 @@
         }
       ],
       "createdTime": "2026-06-16T23:51:48.038Z",
-      "modifiedTime": "2026-07-01T14:36:01.704Z",
-      "source_digest": "b800254aa51219268fe8b131b536d0912e777c1f02f2efcab571f201268396e8",
+      "modifiedTime": "2026-08-30T15:05:36.190Z",
+      "source_digest": "bb507d69a918778eaba03d91b5a6594ac3e7849a5b30f73b26f03cfacdcc6e00",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T23:30:51+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_production_rollback_runbook_md": {
       "source": "docs/PRODUCTION_ROLLBACK_RUNBOOK.md",
@@ -2229,12 +2250,12 @@
         }
       ],
       "createdTime": "2026-06-13T07:47:40.026Z",
-      "modifiedTime": "2026-06-21T07:43:42.135Z",
-      "source_digest": "db3cba25a9e57b298f7aa0f5f12e63a3ba5420494b9cae8d362b241ba2172568",
+      "modifiedTime": "2026-08-30T15:05:40.620Z",
+      "source_digest": "d26608fbad6355fce7e8d645090c0d9e9ae2ab68398052d593cdc8b157da55b1",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-14T14:26:33+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_production_site_review_2026_08_19_md": {
       "source": "docs/PRODUCTION_SITE_REVIEW_2026-08-19.md",
@@ -2250,12 +2271,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:08:54.731Z",
-      "modifiedTime": "2026-08-19T16:54:56.398Z",
-      "source_digest": "db374bc60e5622e948e43cd8fdafa75f77ba835c514c154d3c527ef88e585f2b",
+      "modifiedTime": "2026-08-30T15:05:44.477Z",
+      "source_digest": "4c341f65250b03bb9ce7db895d1b22a1ac96b7294a977d4d190375d55be42f73",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-20T01:50:23+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_project_glossary_md": {
       "source": "docs/PROJECT_GLOSSARY.md",
@@ -2274,9 +2295,9 @@
       "modifiedTime": "2026-08-19T14:09:00.205Z",
       "source_digest": "1c02ff3c24bd8b3333ee92919f608c0d6e3a271259973c7ba79736aee453275b",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-18T02:29:31+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_project_stall_review_2026_08_19_md": {
       "source": "docs/PROJECT_STALL_REVIEW_2026-08-19.md",
@@ -2292,12 +2313,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:09:03.894Z",
-      "modifiedTime": "2026-08-19T14:09:03.911Z",
-      "source_digest": "9a2a90b6463e1cb6e5e8a008d8b0dc590f4fc545ae08cfdb6115101d63cfa6b2",
+      "modifiedTime": "2026-08-30T15:05:48.380Z",
+      "source_digest": "292febf9a436f3374f9ff454bbd8f3d1fbac0b735c9d4e2d2fb9161b71a62de8",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T21:13:04+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_project_structure_md": {
       "source": "docs/PROJECT_STRUCTURE.md",
@@ -2313,12 +2334,12 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:33.155Z",
-      "modifiedTime": "2026-07-13T14:50:06.660Z",
-      "source_digest": "d58c607ea89b20200067c74aacc4ad9b282ad436160be19f8839d3596c6287f6",
+      "modifiedTime": "2026-08-30T15:05:53.082Z",
+      "source_digest": "8c79f4bb6fff7f6b4e130ecef7b26fee591bb33e01d6fa8612acd93d045a6557",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-13T22:43:42+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_quality_guard_catalog_md": {
       "source": "docs/QUALITY_GUARD_CATALOG.md",
@@ -2334,12 +2355,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:36:33.826Z",
-      "modifiedTime": "2026-08-19T14:09:09.427Z",
-      "source_digest": "30b8e5ada794703e238fecc0066fca40692644f10a2d34bce5e39d928e36f2d1",
+      "modifiedTime": "2026-08-30T15:05:56.967Z",
+      "source_digest": "eec364ac1e0f17a88b8d06cd4e2dc433de4a47650c0d9c47cf10f8dbc64d524d",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T20:46:21+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_release_versioning_runbook_md": {
       "source": "docs/RELEASE_VERSIONING_RUNBOOK.md",
@@ -2355,12 +2376,12 @@
         }
       ],
       "createdTime": "2026-06-19T14:49:31.882Z",
-      "modifiedTime": "2026-06-21T07:43:50.722Z",
-      "source_digest": "b0cb526ca5a38aeccf37354c93f9c6275a87c05e5fa17b680b8618baa6959910",
+      "modifiedTime": "2026-08-30T15:06:01.196Z",
+      "source_digest": "05d504913113ea96a94c0eca4418dc30a53697f5169d4729471094c42c18fe0a",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-19T23:36:15+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_requirements_md": {
       "source": "docs/requirements.md",
@@ -2376,12 +2397,12 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:35.726Z",
-      "modifiedTime": "2026-06-21T07:43:56.225Z",
-      "source_digest": "f158cd0723abf7f2c3e64067a1c12620f8e1c8504cfcaa8948ac536f5e8101eb",
+      "modifiedTime": "2026-08-30T15:06:05.155Z",
+      "source_digest": "60fa991741e16deea28cd94e9cdded714610b02c665649380b691cbc0d061f4c",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:12+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-20T14:34:26+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_ai_matching_requirements_md": {
       "source": "docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md",
@@ -2397,12 +2418,12 @@
         }
       ],
       "createdTime": "2026-06-17T05:45:11.689Z",
-      "modifiedTime": "2026-07-25T11:18:40.761Z",
-      "source_digest": "0cfc7939dd7cf639afe83b40b5c766681dc8714e27cd8b2445ccc0f51289466f",
+      "modifiedTime": "2026-08-30T15:06:09.620Z",
+      "source_digest": "79e1e74f8fb01489c78d776ba489af5d344169b44a9babc595e1a4821e5abc4d",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-25T20:01:44+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_auto_ingest_connection_checklist_md": {
       "source": "docs/SALES_EMAIL_AUTO_INGEST_CONNECTION_CHECKLIST.md",
@@ -2418,12 +2439,12 @@
         }
       ],
       "createdTime": "2026-06-20T17:11:56.390Z",
-      "modifiedTime": "2026-08-19T14:09:14.421Z",
-      "source_digest": "e6b169c4b14a449c5e43f1715a0d5b9effb285dbab9fbc538e8d804ec12af8f4",
+      "modifiedTime": "2026-08-30T15:06:13.200Z",
+      "source_digest": "96b55123140581a9a77bb916508dd233cfed397111d70adfedd14ec76d32a890",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-10T18:00:47+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_database_schema_runbook_md": {
       "source": "docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md",
@@ -2439,12 +2460,12 @@
         }
       ],
       "createdTime": "2026-06-18T15:02:20.781Z",
-      "modifiedTime": "2026-06-21T07:44:09.293Z",
-      "source_digest": "141033bf90dedab24cf974506cba8c79675daf66602b09275955ddeb1cb01791",
+      "modifiedTime": "2026-08-30T15:06:17.305Z",
+      "source_digest": "ebd9a6be916cb64a55ee2cffed68c2906ba23320d99c38b4d67d8def3673ee3c",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-20T14:34:26+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_extraction_pipeline_runbook_md": {
       "source": "docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md",
@@ -2460,12 +2481,12 @@
         }
       ],
       "createdTime": "2026-06-18T19:01:27.243Z",
-      "modifiedTime": "2026-06-21T07:44:13.825Z",
-      "source_digest": "8aa99ea505d30c9d3adbfa137fb39af8e43c901a341063175e44ed37d51fb1e1",
+      "modifiedTime": "2026-08-30T15:06:21.374Z",
+      "source_digest": "87dde6993d7c5327b0e691141aadf0ac46f63c7cb5b720c5053dce66deb5a678",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-20T14:34:26+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_human_review_runbook_md": {
       "source": "docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md",
@@ -2481,12 +2502,12 @@
         }
       ],
       "createdTime": "2026-06-19T05:03:31.589Z",
-      "modifiedTime": "2026-06-21T07:44:17.756Z",
-      "source_digest": "5133d6e02fb6a88c7d1fb5f77c23473b898c73efdcee3de85b801e43cc6fe94d",
+      "modifiedTime": "2026-08-30T15:06:25.328Z",
+      "source_digest": "89f4d0226e2d98e06b35a4405d93be07990b50c6f1dc9b5e5932ed64acc7a15d",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-20T14:31:49+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_ingestion_poc_runbook_md": {
       "source": "docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md",
@@ -2502,12 +2523,12 @@
         }
       ],
       "createdTime": "2026-06-17T09:19:57.018Z",
-      "modifiedTime": "2026-07-25T09:18:05.116Z",
-      "source_digest": "2dde8b4bc92bb7d5279586dc325e688c1a786d79bb37e100fbd9a9bd7b2eb0b2",
+      "modifiedTime": "2026-08-30T15:06:30.254Z",
+      "source_digest": "2447be7cdc2c704e47c90558cac242000cd70f054b76fcb1f701231a1751be16",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-25T18:00:36+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_email_matching_api_ui_runbook_md": {
       "source": "docs/SALES_EMAIL_MATCHING_API_UI_RUNBOOK.md",
@@ -2523,12 +2544,12 @@
         }
       ],
       "createdTime": "2026-06-18T19:56:28.088Z",
-      "modifiedTime": "2026-07-25T11:18:45.713Z",
-      "source_digest": "2d3f4d50180dc15c77ece827bb7ddb36948fed79624b4c0b8e7425ddeda7a144",
+      "modifiedTime": "2026-08-30T15:06:35.226Z",
+      "source_digest": "44522ea84f8d128a5838c4459dd3090819f0e999e2c51ebd41cb43dee85e8679",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-25T20:01:44+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sales_proposal_effectiveness_summary_md": {
       "source": "docs/SALES_PROPOSAL_EFFECTIVENESS_SUMMARY.md",
@@ -2544,12 +2565,12 @@
         }
       ],
       "createdTime": "2026-07-25T07:13:08.998Z",
-      "modifiedTime": "2026-08-19T14:09:18.973Z",
-      "source_digest": "8b990c3d57f6915c271df65627c536669a821053ea823227357cc26a9ab7f965",
+      "modifiedTime": "2026-08-30T15:06:39.735Z",
+      "source_digest": "5d7ee9e3f156a5c15d472ba5c744f4adfffb0c8237f4ef9fe386d7acd47098ec",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T20:57:09+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_secret_rotation_runbook_md": {
       "source": "docs/SECRET_ROTATION_RUNBOOK.md",
@@ -2565,12 +2586,12 @@
         }
       ],
       "createdTime": "2026-06-13T19:15:48.258Z",
-      "modifiedTime": "2026-06-21T07:44:30.171Z",
-      "source_digest": "98af543099d25d46086d8bcbae94b7811fbb6b1c80acab771f910c44448d48e2",
+      "modifiedTime": "2026-08-30T15:06:45.986Z",
+      "source_digest": "f0117ff697db10e38caec4e3b41b6975f5a4c24f19e1997d83130c22de14562c",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00",
-      "source_mtime_jst": "2026-06-14T04:04:53+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_security_audit_report_2026_q2_md": {
       "source": "docs/SECURITY_AUDIT_REPORT_2026-Q2.md",
@@ -2589,9 +2610,9 @@
       "modifiedTime": "2026-08-19T14:09:23.352Z",
       "source_digest": "c0191ea80e7c58ec81e7a216b809a7bda584862ead4afedbbeaf6bc12a0aa402",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T00:13:21+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_security_audit_runbook_md": {
       "source": "docs/SECURITY_AUDIT_RUNBOOK.md",
@@ -2607,12 +2628,12 @@
         }
       ],
       "createdTime": "2026-06-10T13:37:52.367Z",
-      "modifiedTime": "2026-08-08T09:46:59.079Z",
-      "source_digest": "6da253c3b5d1f90f3c4c5c9cc1c0164addcadc989d3b7b94db028c5079c08834",
+      "modifiedTime": "2026-08-30T15:06:55.623Z",
+      "source_digest": "b6812301d5fb92a2e1e241842f9e19effd70fb63ab1d0aaa1b303f5a4bf19d51",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-05T23:30:17+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_security_incident_response_runbook_md": {
       "source": "docs/SECURITY_INCIDENT_RESPONSE_RUNBOOK.md",
@@ -2628,12 +2649,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:09:26.815Z",
-      "modifiedTime": "2026-08-19T14:09:26.845Z",
-      "source_digest": "d25b4cb22f29ff31db6f4069dc5ed8c7e13d08f742aaa9e78b31741578ef0262",
+      "modifiedTime": "2026-08-30T15:07:01.311Z",
+      "source_digest": "1aee39b58f717d44b18b0a2d7ce93100015ae5c16081570bf3f8a0d446a49235",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-15T17:45:01+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_security_log_integrity_guard_md": {
       "source": "docs/SECURITY_LOG_INTEGRITY_GUARD.md",
@@ -2649,12 +2670,33 @@
         }
       ],
       "createdTime": "2026-08-19T14:09:31.134Z",
-      "modifiedTime": "2026-08-19T14:09:31.159Z",
-      "source_digest": "3f344a2c4010d98bea913adfa3da4dc835c49635069e4c5a2de6f0ca46a0103f",
+      "modifiedTime": "2026-08-30T15:07:05.920Z",
+      "source_digest": "9b7182201285950c70ac89da14e1fd8473d99b07e5d0948c4a22edea2fef9e14",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-15T17:28:15+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
+    },
+    "docs_security_scan_remediation_2026_08_30_md": {
+      "source": "docs/SECURITY_SCAN_REMEDIATION_2026-08-30.md",
+      "id": "1meIVedD3L3JeSfZzIOpav4jKmeg2aful9NrxvqReZ_k",
+      "name": "Mighty Skill-Bridge docs/docs/SECURITY_SCAN_REMEDIATION_2026-08-30.md",
+      "url": "https://docs.google.com/document/d/1meIVedD3L3JeSfZzIOpav4jKmeg2aful9NrxvqReZ_k/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-08-30T15:07:09.327Z",
+      "modifiedTime": "2026-08-30T15:07:09.357Z",
+      "source_digest": "95ede923e2dbbc3b0b3c4dc82c364736f9330020b311efd45fc9c58ece28ec3b",
+      "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
+      "sync_reason": "source_digest_match",
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sequence_diagrams_md": {
       "source": "docs/SEQUENCE_DIAGRAMS.md",
@@ -2673,9 +2715,9 @@
       "modifiedTime": "2026-07-13T13:33:45.773Z",
       "source_digest": "5f0cdbd2ba63bd8385422a51f2599578f4ab9de763e578988bb764b9d201ff34",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-12T23:57:07+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_service_eol_decommissioning_plan_md": {
       "source": "docs/SERVICE_EOL_DECOMMISSIONING_PLAN.md",
@@ -2691,12 +2733,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:36:42.003Z",
-      "modifiedTime": "2026-07-23T14:36:42.024Z",
-      "source_digest": "24222b11e67237b485761436de247542a21ced9baba7b51a1335ece3e7c96606",
+      "modifiedTime": "2026-08-30T15:07:15.254Z",
+      "source_digest": "36404d3f9583fd881c6616b558586dd3b2c13bf7e9506ab831bc4de673dc337c",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-20T02:06:10+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:47+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_session_log_md": {
       "source": "docs/SESSION_LOG.md",
@@ -2715,9 +2757,9 @@
       "modifiedTime": "2026-08-19T14:09:35.407Z",
       "source_digest": "21111ef6003af334c6ce2f9ab4c4f2aeec50fc661ecb3471bd3eef6ae21ff9f7",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T17:53:17+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_setup_guide_md": {
       "source": "docs/SETUP_GUIDE.md",
@@ -2736,9 +2778,9 @@
       "modifiedTime": "2026-08-19T14:09:40.558Z",
       "source_digest": "5588c3e5a80e03bb82ee83f292d3a7f0eddf3c926bd7c69d48c1145e6d1f6a05",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T00:32:14+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sheets_trackers_schema_md": {
       "source": "docs/SHEETS_TRACKERS_SCHEMA.md",
@@ -2757,9 +2799,9 @@
       "modifiedTime": "2026-08-19T14:09:45.202Z",
       "source_digest": "1cf9cab51b7f4bde9ce9be217838a8f335af20c97a4c64da26dca08152544475",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-16T00:32:14+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_sla_kpi_definition_and_measurement_md": {
       "source": "docs/SLA_KPI_DEFINITION_AND_MEASUREMENT.md",
@@ -2775,12 +2817,12 @@
         }
       ],
       "createdTime": "2026-06-10T13:38:06.744Z",
-      "modifiedTime": "2026-07-05T08:50:13.218Z",
-      "source_digest": "57da96ce235c0a29e3a01c3fbe3d8f4b01d24fdf75b9cf66a4c4539634dab10d",
+      "modifiedTime": "2026-08-30T15:07:20.285Z",
+      "source_digest": "28b06950f7bd805bc6c4f93c4b9a861e918233cb29f75a3c28e528755bbf6b26",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-05T17:37:04+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_staging_environment_operation_runbook_md": {
       "source": "docs/STAGING_ENVIRONMENT_OPERATION_RUNBOOK.md",
@@ -2796,12 +2838,12 @@
         }
       ],
       "createdTime": "2026-06-10T17:05:18.055Z",
-      "modifiedTime": "2026-06-21T07:45:00.745Z",
-      "source_digest": "f22443371836a7f8fe37473fca23ac9c64bf5df2cc234e9d413f3eefa4a3dcfb",
+      "modifiedTime": "2026-08-30T15:07:24.257Z",
+      "source_digest": "ebea3ec55a3d2b85133a7f022d75387086113443b9de8466fb45dc9988cf05e7",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00",
-      "source_mtime_jst": "2026-06-13T16:28:13+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_stripe_billing_integration_design_md": {
       "source": "docs/STRIPE_BILLING_INTEGRATION_DESIGN.md",
@@ -2817,12 +2859,12 @@
         }
       ],
       "createdTime": "2026-07-01T11:38:12.643Z",
-      "modifiedTime": "2026-07-01T11:38:12.674Z",
-      "source_digest": "d86c5ba7659aafe818e70717e5d6be1253ba64675aea319389aa4cc9df62ad09",
+      "modifiedTime": "2026-08-30T15:07:28.795Z",
+      "source_digest": "35bc814ba2a9c3e4c98adbe273e099d4d5d0f86bce71ab0d99efedbbbb46c187",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T09:18:57+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
     },
     "docs_stripe_customer_portal_runbook_md": {
       "source": "docs/STRIPE_CUSTOMER_PORTAL_RUNBOOK.md",
@@ -2838,12 +2880,33 @@
         }
       ],
       "createdTime": "2026-06-21T08:50:43.526Z",
-      "modifiedTime": "2026-07-01T11:38:17.634Z",
-      "source_digest": "b014763ea979218d78e0b1059097beb7f50f4b7fff2fed3f1a01e344b64e8b4e",
+      "modifiedTime": "2026-08-30T15:07:33.128Z",
+      "source_digest": "a3504bbda0af05462e361166ec20c18d89d30cc7548425000caaa7e5f30ed818",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T09:18:33+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:02+09:00"
+    },
+    "docs_stripe_tax_and_invoice_compliance_runbook_md": {
+      "source": "docs/STRIPE_TAX_AND_INVOICE_COMPLIANCE_RUNBOOK.md",
+      "id": "1MACzqbvOy9AuZHGVRLqi18lhN63YsoxoQOnSHyu7wcA",
+      "name": "Mighty Skill-Bridge docs/docs/STRIPE_TAX_AND_INVOICE_COMPLIANCE_RUNBOOK.md",
+      "url": "https://docs.google.com/document/d/1MACzqbvOy9AuZHGVRLqi18lhN63YsoxoQOnSHyu7wcA/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-08-30T15:07:36.874Z",
+      "modifiedTime": "2026-08-30T15:07:36.894Z",
+      "source_digest": "b2dafca7038adde0f381e76a5b5f31b640929b8b9f37ca7a97b3d196cdec1f66",
+      "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
+      "sync_reason": "source_digest_match",
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_backup_ci_recovery_runbook_md": {
       "source": "docs/SUPABASE_BACKUP_CI_RECOVERY_RUNBOOK.md",
@@ -2859,12 +2922,12 @@
         }
       ],
       "createdTime": "2026-07-23T14:36:46.391Z",
-      "modifiedTime": "2026-07-25T07:13:13.768Z",
-      "source_digest": "79b622f896a9f9f4459ca4e7371c890ed07121fc88d98c1be39e2da8e798e955",
+      "modifiedTime": "2026-08-30T15:07:42.369Z",
+      "source_digest": "e56fcac851276460faddec3118ca7091d12b8322979113ba4cdded59916d8045",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-25T15:53:49+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_backup_restore_runbook_md": {
       "source": "docs/SUPABASE_BACKUP_RESTORE_RUNBOOK.md",
@@ -2880,12 +2943,12 @@
         }
       ],
       "createdTime": "2026-06-13T13:11:13.508Z",
-      "modifiedTime": "2026-07-01T11:38:23.150Z",
-      "source_digest": "881e9a0ff06b382105474dc514ba3ce8afd4a15e6e410534720535625236b061",
+      "modifiedTime": "2026-08-30T15:07:46.553Z",
+      "source_digest": "3522a30f8cfff4c0554242ababb5246c185e76d1f5a1485766b1286019f5c20c",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-01T19:01:02+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_connection_pooling_runbook_md": {
       "source": "docs/SUPABASE_CONNECTION_POOLING_RUNBOOK.md",
@@ -2901,12 +2964,12 @@
         }
       ],
       "createdTime": "2026-06-14T05:22:46.720Z",
-      "modifiedTime": "2026-06-21T07:45:09.412Z",
-      "source_digest": "3166d9a98dd67d54206835a36a81519d03664b2bf57a15d6821f895bc6fee3fb",
+      "modifiedTime": "2026-08-30T15:07:51.438Z",
+      "source_digest": "9b9757267b56ed5d5c82157658683b8b4a842898a0640c2d1b5b8abdcc77c9d4",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00",
-      "source_mtime_jst": "2026-06-14T14:10:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_database_physical_and_index_design_md": {
       "source": "docs/SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md",
@@ -2922,12 +2985,12 @@
         }
       ],
       "createdTime": "2026-06-06T05:39:27.159Z",
-      "modifiedTime": "2026-07-13T13:33:51.143Z",
-      "source_digest": "52c5b435603013d8ca78b41c97b4a51854ad604a60b3939d6dd23b841f108f77",
+      "modifiedTime": "2026-08-30T15:07:57.060Z",
+      "source_digest": "8be5f00eceb015d29db3830ac2f7532de54b3b8c2e5f7594488e6a6b4df9856c",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-09T11:41:00+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_infra_audit_2026_07_04_md": {
       "source": "docs/SUPABASE_INFRA_AUDIT_2026-07-04.md",
@@ -2943,12 +3006,12 @@
         }
       ],
       "createdTime": "2026-07-04T14:25:48.819Z",
-      "modifiedTime": "2026-07-04T14:25:48.837Z",
-      "source_digest": "f2d107911f5867ac58a655205a716602c866f0e0e9dd89e401b13152242512dc",
+      "modifiedTime": "2026-08-30T15:08:02.050Z",
+      "source_digest": "7c26bab923c77df5027f8388392590e685bd8e450475875e017530951ee18f6e",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-04T23:19:51+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_postgres_upgrade_runbook_md": {
       "source": "docs/SUPABASE_POSTGRES_UPGRADE_RUNBOOK.md",
@@ -2964,12 +3027,12 @@
         }
       ],
       "createdTime": "2026-06-21T07:45:17.308Z",
-      "modifiedTime": "2026-06-21T07:45:17.340Z",
-      "source_digest": "4e3b39757cb49cde790950a70ae454812e64fa2f932ca1c3167b77dec05f3717",
+      "modifiedTime": "2026-08-30T15:08:06.552Z",
+      "source_digest": "e3610b95212c37e524d94271b91f2c692a2fa26432929b48ff5d77c2f131f676",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00",
-      "source_mtime_jst": "2026-06-21T16:34:07+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_supabase_query_performance_dashboard_runbook_md": {
       "source": "docs/SUPABASE_QUERY_PERFORMANCE_DASHBOARD_RUNBOOK.md",
@@ -2985,12 +3048,33 @@
         }
       ],
       "createdTime": "2026-06-14T18:44:05.192Z",
-      "modifiedTime": "2026-06-21T07:45:24.463Z",
-      "source_digest": "f76783158b1993495f75c23fccb1aa172b7a24d0155482c25ad2778d422db19f",
+      "modifiedTime": "2026-08-30T15:08:10.847Z",
+      "source_digest": "e42bd7563c3cc136f6697156b9ea56595350dba982abb3905185bf6eb066df2d",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00",
-      "source_mtime_jst": "2026-06-15T03:24:49+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
+    },
+    "docs_supabase_uat_credential_incident_2026_08_30_md": {
+      "source": "docs/SUPABASE_UAT_CREDENTIAL_INCIDENT_2026-08-30.md",
+      "id": "1bJUILehHXR1HiubszttwRFcjb9okfdjEyHyNbwjfMgM",
+      "name": "Mighty Skill-Bridge docs/docs/SUPABASE_UAT_CREDENTIAL_INCIDENT_2026-08-30.md",
+      "url": "https://docs.google.com/document/d/1bJUILehHXR1HiubszttwRFcjb9okfdjEyHyNbwjfMgM/edit?usp=drivesdk",
+      "mimeType": "application/vnd.google-apps.document",
+      "ownedByMe": true,
+      "owners": [
+        {
+          "displayName": "寛太梅澤",
+          "emailAddress": "k-umezawa@ml-mightylink.com"
+        }
+      ],
+      "createdTime": "2026-08-30T15:08:15.045Z",
+      "modifiedTime": "2026-08-30T17:16:31.362Z",
+      "source_digest": "045b27271aa98a6e5165b169840fe24037de7cbca9ea9b6c167786c3d2a06e4f",
+      "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T02:10:48+09:00",
+      "sync_reason": "source_digest_match",
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_support_contact_and_escalation_runbook_md": {
       "source": "docs/SUPPORT_CONTACT_AND_ESCALATION_RUNBOOK.md",
@@ -3006,12 +3090,12 @@
         }
       ],
       "createdTime": "2026-06-15T20:48:40.767Z",
-      "modifiedTime": "2026-06-21T07:45:28.364Z",
-      "source_digest": "f01151a26ccaf59c021c940c8a71893804a2ffafff602a77aba8105d42e517cd",
+      "modifiedTime": "2026-08-30T15:08:20.532Z",
+      "source_digest": "9a11ca15af407e1bdec7e1222f6be09cb9f019e4100edb36ec986ea2e332cd7c",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00",
-      "source_mtime_jst": "2026-06-16T05:35:05+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_t862_paid_launch_legal_signoff_approval_md": {
       "source": "docs/T862_PAID_LAUNCH_LEGAL_SIGNOFF_APPROVAL.md",
@@ -3027,12 +3111,12 @@
         }
       ],
       "createdTime": "2026-08-19T14:09:48.747Z",
-      "modifiedTime": "2026-08-19T14:09:48.770Z",
-      "source_digest": "e0a2ad34e5771cedc7167096a96b5e507eda575b1147709c8bb0f1ac934f8bb7",
+      "modifiedTime": "2026-08-30T15:08:25.285Z",
+      "source_digest": "c60fe7d871b21fb4d24a5cd09ec2fc79cd186c13a15defd70e24c700a82ac5e5",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-15T19:01:48+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_terms_and_privacy_annual_review_process_md": {
       "source": "docs/TERMS_AND_PRIVACY_ANNUAL_REVIEW_PROCESS.md",
@@ -3048,12 +3132,12 @@
         }
       ],
       "createdTime": "2026-06-10T13:47:11.192Z",
-      "modifiedTime": "2026-06-21T07:45:32.676Z",
-      "source_digest": "6f992403246732973dfaf8f9b7285f72944b770d45db05117f40b35bb73d335c",
+      "modifiedTime": "2026-08-30T15:08:30.157Z",
+      "source_digest": "3e55a65a6a0feb4a6fc7185425755f6acdb7b08e73a9fd0c2811f7435fad7ffe",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00",
-      "source_mtime_jst": "2026-06-10T22:42:56+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_terms_of_service_md": {
       "source": "docs/TERMS_OF_SERVICE.md",
@@ -3069,12 +3153,12 @@
         }
       ],
       "createdTime": "2026-06-11T19:10:49.110Z",
-      "modifiedTime": "2026-07-25T07:13:18.297Z",
-      "source_digest": "ae51af4f13e127307e0b4834cb04263d3365ad12d16cd3e9c0328fc0474c4b4f",
+      "modifiedTime": "2026-08-30T15:08:35.449Z",
+      "source_digest": "d8139de49b9a05a67c0599e3884e8990cf89e2433d605be353442f62166a34fd",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-24T01:23:45+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_tokushoho_notation_md": {
       "source": "docs/TOKUSHOHO_NOTATION.md",
@@ -3090,12 +3174,12 @@
         }
       ],
       "createdTime": "2026-06-12T12:28:31.053Z",
-      "modifiedTime": "2026-07-23T14:36:57.821Z",
-      "source_digest": "a2a4141d78d836dc59991a1c9e66eb44976eb1f164a96f7db58d6e36f53ef1ec",
+      "modifiedTime": "2026-08-30T15:08:42.972Z",
+      "source_digest": "8c341ca08efb62e54ee188e5ee0c836a92998c5b16851f18aacb5399e2ad3195",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-20T17:02:56+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_tracker_integrity_guard_md": {
       "source": "docs/TRACKER_INTEGRITY_GUARD.md",
@@ -3111,12 +3195,12 @@
         }
       ],
       "createdTime": "2026-07-13T13:33:56.824Z",
-      "modifiedTime": "2026-07-13T13:33:56.852Z",
-      "source_digest": "455542f2ae9938e004e247f22bfc65b8290209b147886aab4ad95a541d01b349",
+      "modifiedTime": "2026-08-30T15:08:49.481Z",
+      "source_digest": "4a604564a78daafaab96b51c88b3c2cc1f239bba4504815416577055ae852e76",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-12T23:24:52+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_uat_api_coverage_guard_md": {
       "source": "docs/UAT_API_COVERAGE_GUARD.md",
@@ -3132,12 +3216,12 @@
         }
       ],
       "createdTime": "2026-07-13T13:34:01.567Z",
-      "modifiedTime": "2026-07-13T13:34:01.607Z",
-      "source_digest": "ccaa2a6189d2e98a5facffcd32ceddeaf49191e9b9a823255239809c6565124a",
+      "modifiedTime": "2026-08-30T15:08:54.478Z",
+      "source_digest": "7cb10ea5e9301ab3a44559683d173ab3d3e8aa31f546828d9cc88255d82b366f",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-13T21:15:39+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_uat_test_specification_md": {
       "source": "docs/UAT_TEST_SPECIFICATION.md",
@@ -3153,12 +3237,12 @@
         }
       ],
       "createdTime": "2026-07-13T13:34:05.692Z",
-      "modifiedTime": "2026-08-19T14:09:54.345Z",
-      "source_digest": "20ccfc737929b63a7eedef7ef2d0cb8327808e69cf86c0a44ef6b78c36665b6a",
+      "modifiedTime": "2026-08-30T15:09:00.728Z",
+      "source_digest": "ee22d9a8d9c9ae4625f974b71647a4f786ce115092daf705b21fd7e02ddaa962",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-19T20:52:30+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_uptime_monitoring_and_alert_runbook_md": {
       "source": "docs/UPTIME_MONITORING_AND_ALERT_RUNBOOK.md",
@@ -3174,12 +3258,12 @@
         }
       ],
       "createdTime": "2026-06-13T18:27:28.900Z",
-      "modifiedTime": "2026-08-19T14:09:59.145Z",
-      "source_digest": "68a157608f6d98903e4a38772c76f2c26a790484549e2a644c06cbc5349daffb",
+      "modifiedTime": "2026-08-30T15:09:06.490Z",
+      "source_digest": "9b0383622d5fa710d2886ee8f584f482909e6768586473d2813eb566f96a54b8",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-08-10T17:28:15+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_usage_analytics_kpi_runbook_md": {
       "source": "docs/USAGE_ANALYTICS_KPI_RUNBOOK.md",
@@ -3195,12 +3279,12 @@
         }
       ],
       "createdTime": "2026-06-27T13:17:26.330Z",
-      "modifiedTime": "2026-06-27T13:17:26.364Z",
-      "source_digest": "1b6dbd97b135771a549aa824de31b1ba6f1e8eee29530d2022ac53a1589851ae",
+      "modifiedTime": "2026-08-30T15:09:11.537Z",
+      "source_digest": "aa3e6135b8b61d5070f4ba34b2fe293fed94713a85bedffe4f8a5fcc60c0a60f",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-27T22:05:51+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_user_data_deletion_flow_md": {
       "source": "docs/USER_DATA_DELETION_FLOW.md",
@@ -3216,12 +3300,12 @@
         }
       ],
       "createdTime": "2026-06-10T13:17:25.739Z",
-      "modifiedTime": "2026-06-27T03:22:29.664Z",
-      "source_digest": "1705510043e4d696f9f36a3cbd7cc279d80421d5ca955911ec993c9c9ef44407",
+      "modifiedTime": "2026-08-30T15:09:16.641Z",
+      "source_digest": "b54ffd4de794bbe2d8172f918d3579ed0e4350d3355ca7c522cc048ae5a7e67f",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-27T12:15:33+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_user_data_self_export_runbook_md": {
       "source": "docs/USER_DATA_SELF_EXPORT_RUNBOOK.md",
@@ -3237,12 +3321,12 @@
         }
       ],
       "createdTime": "2026-06-19T16:18:23.333Z",
-      "modifiedTime": "2026-06-21T07:45:53.342Z",
-      "source_digest": "6de7169475c8ed1558baa5e416bd18664cea87f562eff0ef8d864999573271ba",
+      "modifiedTime": "2026-08-30T15:09:21.894Z",
+      "source_digest": "6e1f0aa28cca23889fb4394492a9d647f8c88934137f13567d56ce7bbf704f76",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00",
-      "source_mtime_jst": "2026-06-20T00:51:41+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_user_feedback_collection_runbook_md": {
       "source": "docs/USER_FEEDBACK_COLLECTION_RUNBOOK.md",
@@ -3258,12 +3342,12 @@
         }
       ],
       "createdTime": "2026-06-15T20:04:24.912Z",
-      "modifiedTime": "2026-06-27T13:17:31.169Z",
-      "source_digest": "58b3508d4a9923d8b78d6e974cb1f6cbad4a603b9fc6250a9f48efc401721b33",
+      "modifiedTime": "2026-08-30T15:09:27.516Z",
+      "source_digest": "ec9bd998d4ff507b6c267c03aa4837ee3163e79d2cb88e3a46296e3f580cd40a",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-27T21:58:57+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_user_guide_and_faq_md": {
       "source": "docs/USER_GUIDE_AND_FAQ.md",
@@ -3279,12 +3363,12 @@
         }
       ],
       "createdTime": "2026-06-10T12:31:52.213Z",
-      "modifiedTime": "2026-07-25T07:13:22.551Z",
-      "source_digest": "27776029c94c0d5c9d235dab5bc46ea40834abcf71cf58e41d20cb674bb4ced2",
+      "modifiedTime": "2026-08-30T15:09:31.842Z",
+      "source_digest": "12b1dcf4bcb6b2c9661aa6e2142aae5d07a41b6c62f7ba85da85ed1365f1ba13",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-24T12:06:45+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:48+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:03+09:00"
     },
     "docs_wbs_md": {
       "source": "docs/WBS.md",
@@ -3300,10 +3384,10 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:41.640Z",
-      "modifiedTime": "2026-08-22T13:42:49.130Z",
-      "source_digest": "286ee8607d0ab2941f4690e1a638460f598f49020f53f085301046d42579273a",
+      "modifiedTime": "2026-08-30T18:41:04.353Z",
+      "source_digest": "22585444f5cfe814e6f1b60a5aa04b1839498e96a4f2a25b9fff76dc5b7cc265",
       "sync_action": "uploaded_updated",
-      "source_mtime_jst": "2026-08-22T22:39:05+09:00"
+      "source_mtime_jst": "2026-08-31T03:35:52+09:00"
     },
     "docs_wbs_lifecycle_coverage_guard_md": {
       "source": "docs/WBS_LIFECYCLE_COVERAGE_GUARD.md",
@@ -3319,12 +3403,12 @@
         }
       ],
       "createdTime": "2026-07-13T13:34:18.835Z",
-      "modifiedTime": "2026-07-13T13:34:18.858Z",
-      "source_digest": "908f63f9a42e36c22cde1ed60bae7037ce50a1d4088386d4ffb125d389a0613f",
+      "modifiedTime": "2026-08-30T15:09:43.644Z",
+      "source_digest": "c25cad466cc6ebdc17208535e941e7a8cdfdaa9058bab6a8d7444d9188cf86fd",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-12T13:30:54+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:53+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_process_coverage_audit_2026_06_13_md": {
       "source": "docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-13.md",
@@ -3340,12 +3424,12 @@
         }
       ],
       "createdTime": "2026-06-12T17:27:22.007Z",
-      "modifiedTime": "2026-06-23T15:32:55.361Z",
-      "source_digest": "776a5a3cb885249cafcf96eb5530b861fcb6ebed62a9f76a0a01c84201a1576c",
+      "modifiedTime": "2026-08-30T15:09:48.107Z",
+      "source_digest": "199fcb63b79a4ac5e2a10e7b576f3144a4e7ba63332143405801eae0fce44277",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-23T22:55:57+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:53+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_process_coverage_audit_2026_06_25_md": {
       "source": "docs/WBS_PROCESS_COVERAGE_AUDIT_2026-06-25.md",
@@ -3361,12 +3445,12 @@
         }
       ],
       "createdTime": "2026-06-25T11:48:44.443Z",
-      "modifiedTime": "2026-06-25T11:48:44.467Z",
-      "source_digest": "cd0be3d4e219c697007deab882a0305052c15d154c17f59b910bec5ac7af3b1a",
+      "modifiedTime": "2026-08-30T15:09:53.152Z",
+      "source_digest": "e85886d9fba47fc9804ca3d5317d8455eb37cd4494d5c0955aebed91be96b368",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-25T20:42:24+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:53+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_review_2026_06_26_md": {
       "source": "docs/WBS_REVIEW_2026-06-26.md",
@@ -3382,12 +3466,12 @@
         }
       ],
       "createdTime": "2026-06-26T10:15:49.176Z",
-      "modifiedTime": "2026-06-26T10:34:48.045Z",
-      "source_digest": "6408bb7dfc52c1ec3e1f86593af7c6e6abff01e73b092f3b5053edcf6a3436a3",
+      "modifiedTime": "2026-08-30T15:09:57.828Z",
+      "source_digest": "e24abb3d7b6e7a4ea0cc1dc91f805e5a690fe1db46cfab067aa2ba7ffb75b48e",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-26T19:29:34+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:53+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_review_2026_06_26_session2_md": {
       "source": "docs/WBS_REVIEW_2026-06-26_SESSION2.md",
@@ -3403,12 +3487,12 @@
         }
       ],
       "createdTime": "2026-06-26T10:52:10.491Z",
-      "modifiedTime": "2026-06-27T11:48:03.219Z",
-      "source_digest": "05ece83f6bdfd5c1014bd09b143efdf99a3bb6f97a2677f09a3d04bfe0a1df0b",
+      "modifiedTime": "2026-08-30T15:10:02.049Z",
+      "source_digest": "79be3717a57695f24d7d00368f27b7947ac40b41c924b389e8e5d21795e2336e",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-06-27T20:40:21+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:53+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_review_2026_07_13_md": {
       "source": "docs/WBS_REVIEW_2026-07-13.md",
@@ -3427,9 +3511,9 @@
       "modifiedTime": "2026-07-13T14:50:32.133Z",
       "source_digest": "2d0d18de040a9b4ea75bed545fd14b4a46becea178e28b6ae6fa0b0bb010f327",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-13T22:38:42+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:53+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_wbs_sync_guide_md": {
       "source": "docs/WBS_SYNC_GUIDE.md",
@@ -3445,12 +3529,12 @@
         }
       ],
       "createdTime": "2026-05-21T15:44:44.871Z",
-      "modifiedTime": "2026-07-13T14:50:37.205Z",
-      "source_digest": "a2f2d8b99060d49b923831e38e89edfb2c65d583cb0a2082bc3f2eac8ac0de54",
+      "modifiedTime": "2026-08-30T15:10:06.781Z",
+      "source_digest": "75b6689798138a32caadb772ac7d1839a1b667ab6af91f0f155868297e9a8b18",
       "sync_action": "skipped_unchanged",
-      "source_mtime_jst": "2026-07-13T22:43:27+09:00",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:53+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     },
     "docs_weekly_cost_dashboard_runbook_md": {
       "source": "docs/WEEKLY_COST_DASHBOARD_RUNBOOK.md",
@@ -3466,12 +3550,12 @@
         }
       ],
       "createdTime": "2026-06-13T23:53:34.523Z",
-      "modifiedTime": "2026-06-21T07:46:19.293Z",
-      "source_digest": "87417759c36089b0f0afb9d7fe93a682c14a7ecb9b815be8eda8133b5aa7d931",
+      "modifiedTime": "2026-08-30T15:10:11.638Z",
+      "source_digest": "cca17e1308fccdb69c7da5e7626e54f7acb778afc9010390ec438e9d3a7725a6",
       "sync_action": "skipped_unchanged",
+      "source_mtime_jst": "2026-08-31T01:59:11+09:00",
       "sync_reason": "source_digest_match",
-      "skipped_at_jst": "2026-08-22T22:42:53+09:00",
-      "source_mtime_jst": "2026-06-14T08:38:13+09:00"
+      "skipped_at_jst": "2026-08-31T03:41:09+09:00"
     }
   },
   "notebooklm": {
@@ -3481,7 +3565,13 @@
     "error": "Authentication expired or invalid. Run 'notebooklm login' to re-authenticate."
   },
   "gemini_context_cache": {
-    "status": "failed",
-    "error": "429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'TotalCachedContentStorageTokensPerModelFreeTier limit exceeded for model gemini-3.5-flash: limit=0, requested=459006', 'status': 'RESOURCE_EXHAUSTED'}}"
+    "status": "ready",
+    "cache_name": "cachedContents/hgcuvfdmfs736v168euoscq6rka59lxcas74feun",
+    "display_name": "Mighty Skill-Bridge Development Knowledge 2026-06-02",
+    "model": "models/gemini-3.5-flash",
+    "ttl_seconds": 3600,
+    "created_time": "2026-08-30T18:41:17.118539+00:00",
+    "expire_time": "2026-08-30T19:41:15.746005+00:00",
+    "total_tokens_poc": "active"
   }
 }

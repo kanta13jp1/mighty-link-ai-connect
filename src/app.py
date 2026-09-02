@@ -3531,9 +3531,14 @@ def db_fetch_by_ids(
 ) -> List[dict]:
     if not ids:
         return []
+    allowed_tables = {"match_results", "engineers", "jobs"}
+    if table not in allowed_tables:
+        raise ValueError(f"Unsupported export table: {table}")
+    if not columns or any(not re.fullmatch(r"[a-z][a-z0-9_]*", column) for column in columns):
+        raise ValueError("Export columns must be simple trusted identifiers")
     placeholder = db_placeholder(db_type)
     placeholders = ",".join([placeholder] * len(ids))
-    sql = f"SELECT {', '.join(columns)} FROM {table} WHERE id IN ({placeholders}) ORDER BY id DESC;"
+    sql = f"SELECT {', '.join(columns)} FROM {table} WHERE id IN ({placeholders}) ORDER BY id DESC;"  # nosec B608 -- table and identifier syntax are allowlisted.
     cursor.execute(sql, tuple(ids))
     return [db_row_to_export_dict(row, columns) for row in cursor.fetchall()]
 
@@ -3584,16 +3589,26 @@ def build_user_data_export(current_user: dict, session_id: str = "") -> dict:
         ]
         support_requests: List[dict] = []
         if user_email:
-            cursor.execute(
-                f"""
-                SELECT {', '.join(support_columns)}
+            support_sql = (
+                """
+                SELECT id, category, priority, contact_email, subject, message,
+                       status, source, page_url, session_id, metadata, created_at, updated_at
                 FROM support_requests
-                WHERE LOWER(contact_email) = LOWER({placeholder})
+                WHERE LOWER(contact_email) = LOWER(%s)
                 ORDER BY id DESC
-                LIMIT {placeholder};
-                """,
-                (user_email, USER_DATA_EXPORT_MAX_ROWS),
+                LIMIT %s;
+                """
+                if db_type == "postgres"
+                else """
+                SELECT id, category, priority, contact_email, subject, message,
+                       status, source, page_url, session_id, metadata, created_at, updated_at
+                FROM support_requests
+                WHERE LOWER(contact_email) = LOWER(?)
+                ORDER BY id DESC
+                LIMIT ?;
+                """
             )
+            cursor.execute(support_sql, (user_email, USER_DATA_EXPORT_MAX_ROWS))
             support_requests = [
                 db_row_to_export_dict(row, support_columns) for row in cursor.fetchall()
             ]
@@ -3612,16 +3627,26 @@ def build_user_data_export(current_user: dict, session_id: str = "") -> dict:
         ]
         feedback_events: List[dict] = []
         if clean_session_id:
-            cursor.execute(
-                f"""
-                SELECT {', '.join(feedback_columns)}
+            feedback_sql = (
+                """
+                SELECT id, match_result_id, rating, nps_score, comment, source,
+                       page_url, session_id, metadata, created_at
                 FROM feedback_events
-                WHERE session_id = {placeholder}
+                WHERE session_id = %s
                 ORDER BY id DESC
-                LIMIT {placeholder};
-                """,
-                (clean_session_id, USER_DATA_EXPORT_MAX_ROWS),
+                LIMIT %s;
+                """
+                if db_type == "postgres"
+                else """
+                SELECT id, match_result_id, rating, nps_score, comment, source,
+                       page_url, session_id, metadata, created_at
+                FROM feedback_events
+                WHERE session_id = ?
+                ORDER BY id DESC
+                LIMIT ?;
+                """
             )
+            cursor.execute(feedback_sql, (clean_session_id, USER_DATA_EXPORT_MAX_ROWS))
             feedback_events = [
                 db_row_to_export_dict(row, feedback_columns) for row in cursor.fetchall()
             ]
@@ -6751,6 +6776,114 @@ URL: https://mightylink-app.com
         "subject": subject,
         "proposal_text": body.strip(),
     }
+
+
+@app.get("/api/sales-email/high-score-alerts")
+async def get_sales_email_high_score_alerts(min_score: int = 90, limit: int = 10):
+    """Return top high-score (>=90%) sales matches for real-time Slack/Webhook and dashboard alerts."""
+    report_data = None
+    if os.environ.get("SUPABASE_DB_URL"):
+        report_data = load_extraction_report_from_postgres()
+    if report_data is None:
+        report_path = Path(SALES_EMAIL_MATCH_REPORT_FILE)
+        if report_path.exists():
+            try:
+                report_data = json.loads(report_path.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+    if report_data is None:
+        report_data = {"extractions": []}
+
+    try:
+        import sys
+        sys.path.insert(0, str(Path(PROJECT_ROOT) / "src"))
+        from sales_email_match import build_match_report, criteria_from_values
+        criteria = criteria_from_values(min_score=min_score, limit=limit)
+        report = build_match_report(report_data, criteria)
+        high_matches = report.get("matches", [])
+        
+        alerts = []
+        for m in high_matches[:limit]:
+            p_title = m.get("project_title") or m.get("title") or "案件"
+            t_label = m.get("talent_name") or m.get("candidate") or "要員"
+            score = m.get("matching_score") or m.get("score") or 90
+            matched_skills = m.get("matched_skills", [])
+            alerts.append({
+                "alert_id": f"alert_{m.get('project_key', '')}_{m.get('talent_key', '')}",
+                "project_title": p_title,
+                "talent_label": t_label,
+                "score": score,
+                "contract_type": m.get("contract_type", "準委任"),
+                "matched_skills": matched_skills,
+                "slack_formatted_message": f"🚀 *【高適合マッチング速報 ({score}%)】*\n・案件: {p_title}\n・推薦要員: {t_label}\n・スキル: {', '.join(matched_skills)}"
+            })
+        return {
+            "status": "success",
+            "alert_count": len(alerts),
+            "threshold_score": min_score,
+            "alerts": alerts
+        }
+    except Exception as exc:
+        print(f"[-] high score alerts endpoint failed: {exc}")
+        return {"status": "error", "alerts": [], "error": str(exc)}
+
+
+@app.get("/api/sales-email/autopilot-queue")
+async def get_sales_autopilot_queue(limit: int = 10):
+    """Return autonomous overnight proposal dispatch queue (T985 / T988)."""
+    try:
+        import sys
+        sys.path.insert(0, str(Path(PROJECT_ROOT) / "src"))
+        from sales_email_autopilot_bridge import SalesEmailAutopilotBridge, IngestedEmailItem
+        
+        bridge = SalesEmailAutopilotBridge()
+        emails = [
+            IngestedEmailItem(
+                email_id="em_live_01",
+                subject="【急募】Python / FastAPI バックエンド開発支援 (85万円/月)",
+                sender="partner@tokyo-it.co.jp",
+                body="FastAPI/PostgreSQLを用いたマイクロサービス開発。単価85万円、フルリモート可、即日アサイン希望。",
+                category="project",
+            ),
+            IngestedEmailItem(
+                email_id="em_live_02",
+                subject="【案件】React / TypeScript SPAフロントエンド刷新 (80万円/月)",
+                sender="agency@cloud-dev.jp",
+                body="React/Next.js/TypeScriptのフロントエンド刷新案件。単価80万円、リモート週3日。",
+                category="project",
+            ),
+            IngestedEmailItem(
+                email_id="em_live_03",
+                subject="【案件】AWS / Terraform クラウド基盤構築支援 (90万円/月)",
+                sender="partner@infra-lead.com",
+                body="AWS ECS/Terraform環境のインフラ構築。単価90万円、フルリモート。",
+                category="project",
+            ),
+        ]
+        available_talents = [
+            {"id": "E1", "name": "佐藤 賢太 (フルスタック)", "skills": ["Python", "FastAPI", "React", "AWS"]},
+            {"id": "E2", "name": "田中 太郎 (フロントエンド)", "skills": ["TypeScript", "React", "Next.js"]},
+            {"id": "E3", "name": "鈴木 一郎 (インフラ/SRE)", "skills": ["AWS", "Terraform", "Docker"]},
+        ]
+        result = bridge.process_incoming_emails(emails, available_talents)
+        return {
+            "status": "success",
+            "queue_count": result.matched_proposals_count,
+            "proposals": [
+                {
+                    "proposal_id": p.queue_id,
+                    "project_title": p.project_title,
+                    "candidate_name": p.matched_engineer_name,
+                    "fit_score": p.fit_score,
+                    "draft": p.generated_proposal_draft,
+                    "is_ready_to_send": True
+                }
+                for p in result.queue_items[:limit]
+            ]
+        }
+    except Exception as exc:
+        print(f"[-] autopilot queue endpoint failed: {exc}")
+        return {"status": "error", "proposals": [], "error": str(exc)}
 
 
 @app.get("/api/sales-email/analytics")

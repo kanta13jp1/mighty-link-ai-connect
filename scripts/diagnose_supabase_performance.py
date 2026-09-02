@@ -16,6 +16,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit, urlunsplit
 
+from network_security import require_https_or_loopback_url
+
 
 TASK_ID = "T750"
 DEFAULT_REPORT_PATH = Path("exports") / "supabase_performance_report.json"
@@ -259,10 +261,11 @@ def run_psql(command: tuple[str, ...], timeout_seconds: int) -> subprocess.Compl
 
 
 def measure_api_url(url: str, timeout_seconds: int) -> ApiProbeResult:
+    safe_url = require_https_or_loopback_url(url)
     started = time.perf_counter()
     try:
-        request = urllib.request.Request(url, method="GET")
-        with urllib.request.urlopen(request, timeout=timeout_seconds) as response:
+        request = urllib.request.Request(safe_url, method="GET")
+        with urllib.request.urlopen(request, timeout=timeout_seconds) as response:  # nosec B310 -- HTTPS or loopback-only HTTP is enforced.
             elapsed_ms = round((time.perf_counter() - started) * 1000, 2)
             return ApiProbeResult(
                 url=url,

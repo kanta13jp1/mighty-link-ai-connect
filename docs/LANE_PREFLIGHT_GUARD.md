@@ -1,6 +1,6 @@
 # 🚦 レーン・プリフライトガード (T894)
 
-> 3レーン（Antigravity / Codex / Claude Code）のいずれかが **commit / push する前に必ず通す1コマンド**を定義し、**全整合ガードと全自動テストがgreenであること**を、**人間が手順どおり実行して OK/NG を判断できる**ように定義したガード仕様書。
+> 3レーン（Antigravity / Codex / Claude Code）のローカル作業を軽量に保ちつつ、GitHub-hosted Actions で **全整合ガード・全自動テスト・Playwright Chromium がgreen** であることを exact SHA 単位で強制するガード仕様書。
 >
 > 既存の `scripts/audit_*.py` 群（16件）は「各ドメインの整合」を個別に守る。本ガードはその**上位**で、「**レーンがredの作業ツリーを出荷できない**」ことを守る。
 
@@ -22,9 +22,11 @@
 
 ## 2. 目的
 
-- レーンが **red の作業ツリーをコミットしない**ことを保証する（shift-left）。
+- ローカルは高速ガードと変更範囲の静的/targeted test に限定し、重い全テストとブラウザテストは GitHub-hosted Actions を主実行場所にする。
+- レーンが **red の作業ツリーをコミットしない**ことを高速ガードで保証し、red / 未検証の候補 SHA を `main` / `master` に昇格しない。
 - 新規ガード追加時に**分類の判断を強制**し、ガードの無言スキップを防ぐ。
 - 各ガードが**CI 実行経路（pytest から到達可能）を持つ**ことを保証する。ガードは「書いたが CI で走っていない」と無価値になるため。
+- 成否にかかわらず JSON / Markdown / JUnit XML / pytest log を短期 artifact として残し、ローカル再実行なしで失敗件数と詳細を診断できるようにする。
 
 ## 2.1 分類方針（T892 の REQUIRED / EXEMPT と同じ考え方）
 
@@ -40,17 +42,19 @@
 ## 3. 実行方法
 
 ```powershell
-# 高速モード（16ガードのみ・数秒）: コミット直前の既定
+# 高速モード（整合ガードのみ・数秒）: ローカルのコミット直前
 python scripts/run_lane_preflight.py
 
-# 完全モード（16ガード + 全自動テスト・約2-3分）: push / セッションクローズアウト前
+# 完全モード: GitHub Actions「Cloud Full Preflight」の正規実行コマンド
 python scripts/run_lane_preflight.py --full
 
 # 本ガード自体の自己検証
 python -m pytest tests/test_lane_preflight.py -q
 ```
 
-結果は `exports/lane_preflight_report.{json,md}` に出力し、10仮説すべて PASS で終了コード 0、1つでも FAIL で 1 を返す。
+結果は `exports/lane_preflight_report.{json,md}` に出力し、完全モードではさらに `exports/lane_preflight_pytest.xml` と `exports/lane_preflight_pytest.log` を永続化する。10仮説すべて PASS で終了コード 0、1つでも FAIL で 1 を返す。JUnit XMLを件数の正本としてpytestのバージョンやsummary文言に依存しない。
+
+ローカル `--full` は GitHub Actions が利用不能な場合、またはユーザーが明示的に要求した場合だけのfallbackとする。通常は `codex/preflight-*` または `codex/preflight/<task>` の隔離候補ブランチへcommit/pushし、`.github/workflows/cloud-preflight.yml` の同一 SHA 実行を待つ。workflowはrepository secretsを受け取らず、permissionsは`contents: read`だけである。
 
 Windowsでは親ランナーと子ガードの入出力をUTF-8へ固定する。日本語と判定記号を含む出力がCP932で例外終了し、ガード本体のPASSをFAILと誤認しないこともプリフライト自身の回帰テストで固定する。
 
@@ -69,11 +73,11 @@ Windowsでは親ランナーと子ガードの入出力をUTF-8へ固定する�
 | H9 | 手順ドリフト0 | `AGENTS.md` の closeout に本プリフライトコマンドが記載されている |
 | H10 | 全体整合 | H1〜H9 がすべて PASS（プリフライトドリフト0） |
 
-> **H5 / H6 の注記**: 高速モード（`--full` なし）ではテストを実行しないため、H5/H6 は `skipped=true` として **PASS 扱い**とし、`詳細`列に「高速モード（未実行）」と明示する。push 前は必ず `--full` を使うこと。
+> **H5 / H6 の注記**: 高速モード（`--full` なし）ではテストを実行しないため、H5/H6 は `skipped=true` として **PASS 扱い**とし、`詳細`列に「高速モード（未実行）」と明示する。push後、候補SHAのCloud Full Preflight成功が昇格条件になる。
 
 ## 5. 判定
 
-- **OK**: `python scripts/run_lane_preflight.py --full` が「総合判定: ✅ PASS」を表示し、終了コード 0 を返す。
+- **OK**: 候補ブランチの exact SHA に対する Cloud Full Preflight が「総合判定: ✅ PASS」を表示し、終了コード 0 で完了し、artifactに証跡がある。
 - **NG**: いずれかの仮説が ❌。詳細列に、未登録ガード・stale 登録・FAIL したガード名・pytest の failed 件数・import されていないガード・証跡欠落・AGENTS.md の記載欠落が具体的に列挙される。
 
 ## 6. NG 時の対応
@@ -81,7 +85,7 @@ Windowsでは親ランナーと子ガードの入出力をUTF-8へ固定する�
 1. **H2 未分類**（新規ガード追加時に最頻）: 追加した `scripts/audit_*.py` を `run_lane_preflight.py` の `GUARD_REGISTRY`（目的を1行添える）か `EXEMPT_GUARDS`（対象外の理由を明記）へ分類する。
 2. **H3 stale**: 削除・改名したガードを分類辞書から除く。
 3. **H4 ガード FAIL**: 該当ガードを単体実行し、そのガード仕様書の「NG 時の対応」に従う。**プリフライトを迂回してコミットしない**。
-4. **H5 テスト失敗**: `python -m pytest tests/ -q` で失敗テストを特定して修正する。他レーンの未コミット変更が原因の場合は、**破損を勝手に捨てず**バックアップを取ってから当該レーンへ差し戻す（R123 の対応を踏襲）。
+4. **H5 テスト失敗**: Cloud artifactのJUnit XMLとpytest logで失敗テストを特定して修正する。ローカルで全suiteを再実行する必要はない。他レーンの未コミット変更が原因の場合は、**破損を勝手に捨てず**バックアップを取ってから当該レーンへ差し戻す（R123 の対応を踏襲）。
 5. **H7 import なし**: そのガードの `evaluate()` を検証する `tests/test_*.py` を追加する（テストファースト）。
 6. **H9 手順ドリフト**: `AGENTS.md` の closeout に本コマンドを戻す。
 
@@ -89,10 +93,11 @@ Windowsでは親ランナーと子ガードの入出力をUTF-8へ固定する�
 
 | タイミング | コマンド | 目的 |
 | :-- | :-- | :-- |
-| コミット直前 | `python scripts/run_lane_preflight.py` | 数秒。整合ドリフトの混入を防ぐ |
-| push / セッションクローズアウト前 | `python scripts/run_lane_preflight.py --full` | 全テスト込み。main CI の red を防ぐ |
+| ローカル・コミット直前 | `python scripts/run_lane_preflight.py` + 変更範囲のtargeted test/static check | 数秒。整合ドリフトの混入を防ぐ |
+| 候補ブランチpush後 | GitHub Actions: `python scripts/run_lane_preflight.py --full` | GitHub-hostedで全suite/ブラウザを検証しartifact化 |
+| `main` / `master` 昇格前 | Actions成功SHAと候補SHAの完全一致を確認 | 未検証・red・cancelled・別SHAの昇格を禁止 |
 
-`AGENTS.md` の「Required Session Closeout」の**先頭**に `--full` を配置する。以降の生成・同期スクリプト（Sheets / Calendar / GitHub）は、**プリフライトが PASS した作業ツリーに対してのみ**実行する。
+`main` / `master` への昇格は、Cloud Full Preflightが成功した**そのSHAだけ**をnon-forceかつfast-forwardで行う。remote refが想定から動いた場合は停止し、新しい候補SHAとして再検証する。redのmain/masterを作らない。sales-email-syncのfail-closedテストや既存ガードは緩和・除外しない。
 
 ## 8. 補足・範囲外
 

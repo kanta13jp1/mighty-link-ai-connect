@@ -1,7 +1,7 @@
 # 6/2 社長打ち合わせ 論点・選択肢・確認質問リスト (T605)
 
 作成日: 2026-05-22
-オーナー: VSCode + Claude Code レーン (本ファイルの維持) / 当日進行は人間 + Codex 共同
+オーナー: Claude Code レーン (本ファイルの維持) / 当日進行は人間 + Codex 共同
 対応 WBS: **T605** 選択肢整理 (5/26-5/28 予定 → 5/22 前倒し完遂)
 関連: [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md) / [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) / [CEO_PRESENTATION_QA_PACK_2026-06-02.md](CEO_PRESENTATION_QA_PACK_2026-06-02.md) (T607) / [MULTI_AI_WORKFLOW.md](../../MULTI_AI_WORKFLOW.md)
 

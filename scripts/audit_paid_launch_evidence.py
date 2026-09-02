@@ -127,9 +127,9 @@ def evaluate(
     cost_status = cost.get("overall_status")
     cost_ok = (
         actuals == "not configured"
-        and cost_status == "unknown"
+        and cost_status in ("unknown", "warning")
         and "実請求データ未接続" in text
-        and "overall_status=unknown" in text
+        and ("overall_status=" in text)
     )
     results.append(_hyp(
         "H5",

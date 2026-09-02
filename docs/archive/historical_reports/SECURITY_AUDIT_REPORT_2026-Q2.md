@@ -4,7 +4,7 @@
 [四半期セキュリティ監査ランブック](../../SECURITY_AUDIT_RUNBOOK.md) の 4 軸チェックリストに準拠して実施しました。
 
 - **実施日**: 2026-06-12
-- **実施者**: Claude Code（VSCode + Claude Code レーン） + 梅澤 寛太
+- **実施者**: Claude Code（Claude Code レーン） + 梅澤 寛太
 - **対象**: `src/` `scripts/` `main.py`（Python 10,304 行）、`requirements.txt` 依存 88 パッケージ、`supabase/migrations/`、Git 追跡ファイル全件
 
 ---

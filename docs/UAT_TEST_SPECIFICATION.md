@@ -762,7 +762,7 @@
 - **総合判定（T845 サインオフ）**: ☐ GO　☐ 条件付きGO　☐ NO-GO
 - **実施日**: ______　**実施責任者**: ______
 - NG は `data/issues_tracker.tsv` へ起票し、関連WBS・重要度・是正期限を記録する。
-- 本番実書き込み確認（適性/勤怠/アナリティクス/フィードバック/サポート/営業メール系）は Supabase 側で運用者が併せて確認する（T845 本体の人間工程）。
+- 本番実書き込み確認（適性/勤怠/アナリティクス/フィードバック/サポート/営業メール系）は `Supabase Production UAT Write Verification` で実行し、15/15 INSERT/readback、ROLLBACK、persisted 0を確認する。接続URIはSupabase公式形式・percent-encode済み・SSL必須とし、driver例外本文をconsole/Artifactへ保存しない（T845/T921/T999、手順: `docs/SUPABASE_UAT_CREDENTIAL_INCIDENT_2026-08-30.md`）。
 
 ---
 *T882 (2026-07-09) で新規作成。完全性・整合性は `scripts/audit_uat_test_spec.py`（10仮説）と `tests/test_uat_test_spec.py` が継続検証する。*

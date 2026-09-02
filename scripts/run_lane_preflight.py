@@ -29,6 +29,7 @@ import os
 import re
 import subprocess
 import sys
+from defusedxml import ElementTree as ET
 from pathlib import Path
 from typing import Any
 
@@ -40,6 +41,8 @@ EXPORTS_DIR = PROJECT_ROOT / "exports"
 AGENTS_MD = PROJECT_ROOT / "AGENTS.md"
 DEFAULT_JSON = EXPORTS_DIR / "lane_preflight_report.json"
 DEFAULT_MD = EXPORTS_DIR / "lane_preflight_report.md"
+DEFAULT_JUNIT = EXPORTS_DIR / "lane_preflight_pytest.xml"
+DEFAULT_PYTEST_LOG = EXPORTS_DIR / "lane_preflight_pytest.log"
 
 PREFLIGHT_COMMAND = "run_lane_preflight.py"
 
@@ -213,22 +216,39 @@ def _parse_pytest_failures(output: str, exit_code: int) -> tuple[int, int]:
     return failed, errors
 
 
-def run_pytest() -> dict[str, Any]:
-    """Run the full suite and collect a pytest-version-independent count."""
-    collect_proc = subprocess.run(
-        [sys.executable, "-m", "pytest", "tests/", "--collect-only", "-q", "-s"],
-        cwd=str(PROJECT_ROOT),
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        env=utf8_subprocess_env(),
+def _parse_junit_counts(path: Path) -> tuple[int, int, int]:
+    """Return exact tests/failures/errors from pytest's JUnit XML."""
+    root = ET.parse(path).getroot()
+    suites = [root] if root.tag == "testsuite" else list(root.findall("./testsuite"))
+    if root.tag == "testsuites" and root.get("tests") is not None:
+        return (
+            int(root.get("tests", "0")),
+            int(root.get("failures", "0")),
+            int(root.get("errors", "0")),
+        )
+    return (
+        sum(int(suite.get("tests", "0")) for suite in suites),
+        sum(int(suite.get("failures", "0")) for suite in suites),
+        sum(int(suite.get("errors", "0")) for suite in suites),
     )
-    collect_out = collect_proc.stdout + collect_proc.stderr
-    collected = _count_collected_tests(collect_out)
 
+
+def run_pytest() -> dict[str, Any]:
+    """Run the suite once and persist exact JUnit plus console diagnostics."""
+    EXPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    DEFAULT_JUNIT.unlink(missing_ok=True)
     proc = subprocess.run(
-        [sys.executable, "-m", "pytest", "tests/", "-q", "-s"],
+        [
+            sys.executable,
+            "-m",
+            "pytest",
+            "tests/",
+            "-q",
+            "-s",
+            f"--junitxml={DEFAULT_JUNIT}",
+            "-o",
+            "junit_family=xunit2",
+        ],
         cwd=str(PROJECT_ROOT),
         capture_output=True,
         text=True,
@@ -237,8 +257,12 @@ def run_pytest() -> dict[str, Any]:
         env=utf8_subprocess_env(),
     )
     out = proc.stdout + proc.stderr
-    failed, errors = _parse_pytest_failures(out, proc.returncode)
-    if collect_proc.returncode != 0 and collected == 0:
+    DEFAULT_PYTEST_LOG.write_text(out, encoding="utf-8", errors="replace")
+    try:
+        collected, failed, errors = _parse_junit_counts(DEFAULT_JUNIT)
+    except (OSError, ET.ParseError, ValueError):
+        collected = 0
+        failed, errors = _parse_pytest_failures(out, proc.returncode)
         errors = max(errors, 1)
     return {
         "skipped": False,
@@ -246,6 +270,8 @@ def run_pytest() -> dict[str, Any]:
         "errors": errors,
         "collected": collected,
         "exit_code": proc.returncode,
+        "junit": str(DEFAULT_JUNIT.relative_to(PROJECT_ROOT)),
+        "log": str(DEFAULT_PYTEST_LOG.relative_to(PROJECT_ROOT)),
     }
 
 

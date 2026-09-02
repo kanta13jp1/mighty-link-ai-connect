@@ -10,7 +10,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 import audit_supabase_uat_writes
-from verify_supabase_uat_writes import LIVE_UAT_TABLES, verify_uat_db_writes
+from verify_supabase_uat_writes import (
+    LIVE_UAT_TABLES,
+    _validate_database_url,
+    verify_uat_db_writes,
+)
 
 
 EXPECTED_TABLES = {
@@ -30,6 +34,10 @@ EXPECTED_TABLES = {
     "feedback_events",
     "support_requests",
 }
+VALID_DB_URL = (
+    "postgresql://postgres.abcdefghijklmnopqrst:super-secret@"
+    "aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
+)
 
 
 class FakeCursor:
@@ -111,7 +119,7 @@ def test_live_probe_inserts_every_table_then_rolls_back_and_checks_cleanup():
     connection = FakeConnection(cursor)
 
     result = verify_uat_db_writes(
-        db_url="postgresql://user:secret@db.example.test:5432/postgres",
+        db_url=VALID_DB_URL,
         execute=True,
         connection_factory=lambda _url: connection,
         run_id="t921-test-run",
@@ -138,7 +146,7 @@ def test_live_probe_fails_when_cleanup_finds_persisted_records():
     connection = FakeConnection(FakeCursor(cleanup_count=1))
 
     result = verify_uat_db_writes(
-        db_url="postgresql://user:secret@db.example.test:5432/postgres",
+        db_url=VALID_DB_URL,
         execute=True,
         connection_factory=lambda _url: connection,
         run_id="t921-cleanup-failure",
@@ -152,7 +160,7 @@ def test_live_probe_fails_when_cleanup_finds_persisted_records():
 
 
 def test_database_errors_are_redacted_and_never_downgraded_to_warning():
-    secret_url = "postgresql://user:super-secret@db.example.test:5432/postgres"
+    secret_url = VALID_DB_URL
 
     def fail_connection(_url):
         raise RuntimeError(f"could not connect to {secret_url}")
@@ -171,6 +179,71 @@ def test_database_errors_are_redacted_and_never_downgraded_to_warning():
     assert "super-secret" not in rendered
 
 
+def test_percent_encoded_reserved_password_is_accepted():
+    _validate_database_url(
+        "postgresql://postgres.abcdefghijklmnopqrst:p%40ss%23word@"
+        "aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
+    )
+
+
+def test_raw_reserved_password_fragment_fails_before_connection_without_leaking():
+    malformed_url = (
+        "postgresql://postgres.abcdefghijklmnopqrst:synthetic#credential-fragment@"
+        "aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
+    )
+    connection_attempted = False
+
+    def must_not_connect(_url):
+        nonlocal connection_attempted
+        connection_attempted = True
+        raise AssertionError("connection factory must not be called")
+
+    result = verify_uat_db_writes(
+        db_url=malformed_url,
+        execute=True,
+        connection_factory=must_not_connect,
+    )
+    rendered = repr(result)
+
+    assert result["status"] == "FAIL"
+    assert result["failure_code"] == "invalid_database_url"
+    assert connection_attempted is False
+    assert "credential-fragment" not in rendered
+    assert malformed_url not in rendered
+
+
+def test_non_supabase_database_host_is_rejected():
+    result = verify_uat_db_writes(
+        db_url="postgresql://postgres.synthetic:secret@db.example.test:5432/postgres",
+        execute=True,
+        connection_factory=lambda _url: (_ for _ in ()).throw(
+            AssertionError("connection factory must not be called")
+        ),
+    )
+
+    assert result["status"] == "FAIL"
+    assert result["failure_code"] == "invalid_database_url"
+
+
+def test_driver_credential_fragment_is_fully_suppressed():
+    fragment = "synthetic-credential-fragment"
+
+    def fail_connection(_url):
+        raise RuntimeError(f'could not translate host name "{fragment}"')
+
+    result = verify_uat_db_writes(
+        db_url=VALID_DB_URL,
+        execute=True,
+        connection_factory=fail_connection,
+    )
+
+    assert result["status"] == "FAIL"
+    assert result["failure_code"] == "database_verification_failed"
+    assert fragment not in repr(result)
+    assert "intentionally suppressed" in result["summary"]
+
+
+
 def test_manual_workflow_uses_repository_secret_and_publishes_evidence():
     workflow = (PROJECT_ROOT / ".github" / "workflows" / "supabase-uat-write.yml").read_text(
         encoding="utf-8"
@@ -179,9 +252,9 @@ def test_manual_workflow_uses_repository_secret_and_publishes_evidence():
     assert "workflow_dispatch:" in workflow
     assert "secrets.SUPABASE_DB_URL" in workflow
     assert "verify_supabase_uat_writes.py --execute" in workflow
-    assert "actions/checkout@v6" in workflow
-    assert "actions/setup-python@v6" in workflow
-    assert "actions/upload-artifact@v6" in workflow
+    assert "actions/checkout@v7" in workflow
+    assert "actions/setup-python@v7" in workflow
+    assert "actions/upload-artifact@v7" in workflow
     assert "pull_request:" not in workflow
 
 

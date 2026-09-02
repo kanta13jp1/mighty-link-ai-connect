@@ -211,6 +211,6 @@ def test_workflow_always_uploads_uptime_report():
     ).read_text(encoding="utf-8")
 
     assert "if: always()" in workflow
-    assert "uses: actions/upload-artifact@v6" in workflow
+    assert "uses: actions/upload-artifact@v7" in workflow
     assert "path: exports/uptime_monitor_report.json" in workflow
     assert "if-no-files-found: error" in workflow

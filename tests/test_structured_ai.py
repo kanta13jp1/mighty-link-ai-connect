@@ -123,3 +123,17 @@ def test_api_extract_structured_validation_failures(client):
     res2 = client.post("/api/ai/extract/structured", json={"text": "Valid text prompt", "target_type": "unknown"})
     assert res2.status_code == 400
     assert "must be project, talent, or fit" in res2.json()["detail"]
+
+
+def test_parse_mikiwame_csv_text():
+    csv_sample = """id,ストレス耐性,協調性,統率力,適応力,論理的思考
+ENG-01,80,85,65,90,75
+ENG-02,70,60,80,65,85
+"""
+    results = structured_ai.parse_mikiwame_csv_text(csv_sample)
+    assert len(results) == 2
+    assert results[0].pseudonym_id == "ENG-01"
+    assert results[0].stress_tolerance == 80.0
+    assert results[0].culture_fit_score > 0.0
+    assert "協調性スコア" in results[0].interview_advice
+

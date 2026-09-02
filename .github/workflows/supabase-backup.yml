@@ -27,10 +27,10 @@ jobs:
       SUPABASE_BACKUP_RETENTION: "7"
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -51,9 +51,7 @@ jobs:
           fi
 
       - name: Set up Supabase CLI
-        uses: supabase/setup-cli@v2
-        with:
-          github-token: ${{ github.token }}
+        uses: supabase/setup-cli@v3
 
       - name: Authenticate to Google Cloud via WIF
         uses: google-github-actions/auth@v3

@@ -1,6 +1,6 @@
 {
   "task_id": "T988",
-  "generated_at": "2026-08-31T06:22:21.187416Z",
+  "generated_at": "2026-09-02T09:02:53.974700Z",
   "passed": true,
   "hypotheses": [
     {
@@ -31,7 +31,7 @@
       "id": "H5",
       "title": "実コスト未接続を黒字・固定費ゼロの実績へ読み替えない",
       "passed": true,
-      "detail": "actuals=not configured, overall_status=unknown"
+      "detail": "actuals=not configured, overall_status=warning"
     },
     {
       "id": "H6",

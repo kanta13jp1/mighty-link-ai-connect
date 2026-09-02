@@ -10,6 +10,8 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
+from network_security import require_loopback_http_url
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ENDPOINT = "http://localhost:9099/push"
 
@@ -29,14 +31,15 @@ def send_svg_file(svg_path: Path, name: str = "MightyLink_Live_Wireframe") -> bo
 
 
 def send_payload(payload: dict) -> bool:
+    endpoint = require_loopback_http_url(DEFAULT_ENDPOINT)
     req = urllib.request.Request(
-        DEFAULT_ENDPOINT,
+        endpoint,
         data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json"},
         method="POST"
     )
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, timeout=10) as resp:  # nosec B310 -- endpoint is restricted to loopback HTTP.
             data = json.loads(resp.read().decode())
             print(f"[SUCCESS] Command sent to Figma: {data}")
             return True

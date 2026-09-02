@@ -1,16 +1,16 @@
 {
   "task_id": "T746",
-  "generated_at": "2026-07-25T06:55:18Z",
+  "generated_at": "2026-08-30T19:04:30Z",
   "criteria_source": "data/release_go_no_go_criteria.tsv",
   "wbs_source": "data/WBS.tsv",
   "overall_recommendation": "NO_GO",
   "summary": {
     "total": 21,
     "counts": {
-      "PASS": 13,
+      "PASS": 15,
       "HUMAN_GATE": 1,
-      "BLOCKED": 4,
-      "WARNING": 3
+      "WARNING": 2,
+      "BLOCKED": 3
     },
     "evidence_warnings": 0
   },
@@ -27,10 +27,10 @@
       "recommendation": "NO_GO",
       "worst_state": "BLOCKED",
       "counts": {
-        "PASS": 8,
+        "PASS": 10,
         "HUMAN_GATE": 1,
-        "BLOCKED": 4,
-        "WARNING": 3
+        "WARNING": 2,
+        "BLOCKED": 3
       },
       "total": 16
     }
@@ -212,12 +212,13 @@
       "current_state": "HUMAN_GATE",
       "owner": "人間 + Claude",
       "decision_authority": "CEO / 法務",
-      "related_wbs": "T798",
+      "related_wbs": "T798;T1003",
       "related_issue": "R36;R48;R51",
-      "last_checked": "2026-07-07",
-      "notes": "T833(7/7)判定: T869でdocs×実装の整合は検証済み。社内GAは社内利用フェーズ必須論点に限定して7/8定例までに人間確認。完全確定(【要法務確認】30箇所)は有償化前必須としてR111で管理 【再評価待ち: 2026-07-24時点で関連WBS T798 が完了。法務確認の確定要否の再判定が必要。T908ガードが検知】",
+      "last_checked": "2026-08-31",
+      "notes": "【再評価待ち: 2026-09-24有償公開月次レビュー】社内GA必須論点20項目とR36外部弁護士レビューは確定済みだが、有償公開版の【要法務確認】処置、最終承認者、承認日、版番号、適用日は未確定。2026-08-24の有償公開保留判定によりT1003は延期CLOSEしただけで法務最終承認完了を意味しない。有償公開再開時に新規WBSで再評価し、完了までHUMAN_GATEとfail-closedを維持する。",
       "wbs_statuses": {
-        "T798": "完了"
+        "T798": "完了",
+        "T1003": "完了"
       },
       "missing_evidence": []
     },
@@ -245,17 +246,18 @@
       "scope": "public_paid_launch",
       "category": "フロントエンド",
       "criterion": "ユーザーオンボーディング/アカウント登録/アクティベーションフローが実装済み",
-      "evidence_source": "docs/USER_GUIDE_AND_FAQ.md; index.html; src/app.py",
+      "evidence_source": "docs/USER_GUIDE_AND_FAQ.md; index.html; src/app.py; .github/workflows/production-onboarding-uat.yml; scripts/verify_production_onboarding.py; tests/test_production_onboarding_uat.py; https://github.com/kanta13jp1/mighty-link-ai-connect/actions/runs/33313661468",
       "required_state": "PASS",
-      "current_state": "BLOCKED",
-      "owner": "Claude Code",
+      "current_state": "PASS",
+      "owner": "Codex + Claude Code",
       "decision_authority": "開発責任者",
-      "related_wbs": "T752",
+      "related_wbs": "T752;T1001",
       "related_issue": "",
-      "last_checked": "2026-07-20",
-      "notes": "T833(7/7)判定: T752未実装(コード内参照コメントのみ)。社内GAは管理者発行アカウントで代替し非ブロッカー、T752は7/8-7/9(Antigravity)。有償公開前には必須 2026-07-19(T752完了・Claude Code): 担当をAntigravityからClaude Codeへ変更し、オンボーディング/アクティベーションフローを実装(GET /api/onboarding/state・POST /api/onboarding/progress・POST /api/onboarding/activate、ウィザードUI、docs/USER_GUIDE_AND_FAQ.md §2.1.1、tests/test_onboarding_flow.py 16件、Playwright実機検証)。current_stateの変更は決定権者(開発責任者)の判断事項のため据え置き。関連WBS全完了かつ未解決課題なしのため、T849_2ハーネスがPASS再判定候補として提示する 【再評価待ち: 2026-07-20時点で関連WBS T752 が完了(オンボーディング/アクティベーションフロー実装)。current_stateはBLOCKEDのまま据え置きのため、開発責任者による再判定が必要。確認事項=本番UIでの登録→アクティベーション疎通と docs/USER_GUIDE_AND_FAQ.md の手順一致。T908ガードが検知】",
+      "last_checked": "2026-08-30",
+      "notes": "T752の実装・単体/Playwright証跡に加え、2026-08-30のProduction Onboarding UAT run 33313661468で本番mightylink-app.comを認証付き実査してPASS。未認証state=401、認証済みstate/progress/activate=200、古い同意版=400、サーバー正本の必須step、session token発行、raw identifier非返却を検証。秘密値を含まないレポートをArtifact 9732762218へ保存し、開発責任者権限でPASSへ再判定した。",
       "wbs_statuses": {
-        "T752": "完了"
+        "T752": "完了",
+        "T1001": "完了"
       },
       "missing_evidence": []
     },
@@ -288,13 +290,14 @@
       "current_state": "WARNING",
       "owner": "人間",
       "decision_authority": "CEO",
-      "related_wbs": "T804;T862",
+      "related_wbs": "T804;T862;T1002",
       "related_issue": "R51",
-      "last_checked": "2026-07-25",
-      "notes": "T833(7/7)判定: T863仕分けどおり条件付きPASSを承認(T804仮承認7/3)。有償化時はT862でCEO最終価格を再確認。2026-07-09: 有償化判断T862をrelated_wbsへ明示リンク（条件付きPASSの解除条件） 【再評価待ち: 2026-07-25時点で関連WBS T804;T862 が全完了(7/24初回月次レビューで保留判定確定)。CEOによる再判定が必要。T908ガードが検知】",
+      "last_checked": "2026-08-31",
+      "notes": "【再評価待ち: 2026-09-24有償公開月次レビュー】T804の仮料金は社内無償運用の当面の正だが、CEO最終価格、無料枠、課金単位、税込/税別、有償化開始日、適格請求書方針は未承認。2026-08-24の有償公開保留判定によりT1002は延期CLOSEしただけで公開価格承認を意味しない。有償公開再開時に新規人間ゲートWBSで再評価し、完了までWARNINGを維持してStripe liveを有効化しない。",
       "wbs_statuses": {
         "T804": "完了",
-        "T862": "完了"
+        "T862": "完了",
+        "T1002": "完了"
       },
       "missing_evidence": []
     },
@@ -308,14 +311,15 @@
       "current_state": "BLOCKED",
       "owner": "Codex",
       "decision_authority": "開発責任者",
-      "related_wbs": "T776;T791;T807;T829",
+      "related_wbs": "T776;T791;T807;T813;T829",
       "related_issue": "R91;R106",
-      "last_checked": "2026-07-07",
-      "notes": "T833(7/7)判定: sandbox実装(T791)含め全面T862移管を承認(社内GAは実課金なし・QA-97)。T791/T807/T813はT862判断後に日程再設定",
+      "last_checked": "2026-08-31",
+      "notes": "【再評価待ち: 2026-09-24有償公開月次レビュー】設計・オフライン回帰・fail-closed基盤は整備済みだが、実Stripe Sandbox Meter/Event/Webhook/invoice preview、Customer Portal E2E、経理確認、Stripe Tax/liveは未実施。2026-08-24の有償公開保留判定によりT791/T807/T813は延期CLOSEしただけで実検証完了を意味しない。有償公開再開時に新規WBSで再評価し、実証完了までBLOCKEDとStripe live無効を維持する。",
       "wbs_statuses": {
         "T776": "完了",
-        "T791": "未着手",
-        "T807": "未着手",
+        "T791": "完了",
+        "T807": "完了",
+        "T813": "完了",
         "T829": "完了"
       },
       "missing_evidence": []
@@ -346,15 +350,15 @@
       "scope": "public_paid_launch",
       "category": "コア機能",
       "criterion": "6/17打ち合わせで最優先化された営業メールAIマッチングMVPが検証済み",
-      "evidence_source": "docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md; docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md; docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md; docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md; docs/SALES_EMAIL_MATCHING_API_UI_RUNBOOK.md; docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md; exports/sales_email_match_review.md; exports/sales_email_review_log.md; docs/meetings/2026-06-17_CEO_Meeting_Minutes.md",
+      "evidence_source": "docs/SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md; docs/SALES_EMAIL_INGESTION_POC_RUNBOOK.md; docs/SALES_EMAIL_DATABASE_SCHEMA_RUNBOOK.md; docs/SALES_EMAIL_EXTRACTION_PIPELINE_RUNBOOK.md; docs/SALES_EMAIL_MATCHING_API_UI_RUNBOOK.md; docs/SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md; exports/sales_email_match_review.md; exports/sales_email_review_log.md; docs/meetings/2026-06-17_CEO_Meeting_Minutes.md; .github/workflows/uptime-monitor.yml",
       "required_state": "PASS",
       "current_state": "BLOCKED",
       "owner": "Codex + Antigravity",
       "decision_authority": "CEO / 開発責任者",
-      "related_wbs": "T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7;T821",
-      "related_issue": "R75;R77;R78;R80;R81;R82;R83",
-      "last_checked": "2026-07-20",
-      "notes": "T833(7/7)判定: 案A仮決定(検証済みPoCデータで7/8 GA)。T817_7 hardeningは7/8-7/9、実接続はT836受領後に追加検証(R113) 【再評価待ち: 2026-07-20時点で関連WBS 9件(T817〜T817_7/T821)が全完了。last_checked=2026-07-07から13日間未再確認のため、CEO/開発責任者による再判定が必要。確認事項=実メール接続(T836)後の追加検証要否と、R113の案A(検証済みPoCデータでGA)の維持可否。T908ガードが検知】",
+      "related_wbs": "T817;T817_1;T817_2;T817_3;T817_4;T817_5;T817_6;T817_7;T821;T944;T999",
+      "related_issue": "R75;R77;R78;R80;R81;R82;R83;#255;#306",
+      "last_checked": "2026-08-31",
+      "notes": "PoC・抽出・マッチング・レビューUIは完了済み。T999はユーザーの残存リスク受容により一旦CLOSEしたが、DB password回転、SUPABASE_DB_URL更新、15/15 transactional live UATは未実施でありgreen証跡とは扱わない。T944のGMO削除元特定、パスワード回転、全クライアント再認証、24時間保持確認も未完了のためBLOCKEDを維持する。Production Operations Monitorのsales-email-syncは空INBOX/接続/DB失敗を成功扱いせずfail-closedのまま維持する。",
       "wbs_statuses": {
         "T817": "完了",
         "T817_1": "完了",
@@ -364,7 +368,9 @@
         "T817_5": "完了",
         "T817_6": "完了",
         "T817_7": "完了",
-        "T821": "完了"
+        "T821": "完了",
+        "T944": "実行中",
+        "T999": "完了"
       },
       "missing_evidence": []
     },
@@ -397,17 +403,18 @@
       "current_state": "BLOCKED",
       "owner": "Codex + Claude Code + 人間",
       "decision_authority": "CEO / 法務 / 開発責任者",
-      "related_wbs": "T844;T845;T846;T847;T848;T849;T850_1",
+      "related_wbs": "T844;T845;T846;T847;T848;T849;T850;T850_1",
       "related_issue": "R99;#131;#132;#133;#134;#135;#136;#137",
-      "last_checked": "2026-07-07",
-      "notes": "T833(7/7)判定: T845/T850未実施。社内GAのGo条件(1)として7/8 15:00定例までにUAT green(本番DB実書き込み確認含む)が必須",
+      "last_checked": "2026-08-30",
+      "notes": "自動E2E・文書・保持削除・SaaS棚卸しは整備済み。T845人間UATサインオフ、T850 backup owner設定とS1-S6実地リハーサル、T849全件完了判定が未完了であるためBLOCKEDを維持する。T850_1のrunbook/監査ハーネス完了だけで会社運用引継ぎ完了とは扱わない。",
       "wbs_statuses": {
         "T844": "完了",
-        "T845": "未着手",
+        "T845": "実行中",
         "T846": "完了",
         "T847": "完了",
         "T848": "完了",
-        "T849": "未着手",
+        "T849": "実行中",
+        "T850": "実行中",
         "T850_1": "完了"
       },
       "missing_evidence": []
@@ -417,15 +424,15 @@
       "scope": "public_paid_launch",
       "category": "リリース",
       "criterion": "Firebase/GitHub Actionsの本番デプロイ認証経路が正規化され、アプリ変更時のmain deployがgreenである",
-      "evidence_source": ".github/workflows/deploy.yml; GitHub Actions CI/CD Pipeline; Firebase Hosting/Functions; docs/WBS_REVIEW_2026-06-26.md",
+      "evidence_source": ".github/workflows/deploy.yml; GitHub Actions CI/CD Pipeline; Firebase Hosting/Functions; docs/WBS_REVIEW_2026-06-26.md; https://github.com/kanta13jp1/mighty-link-ai-connect/actions/runs/33312123993",
       "required_state": "PASS",
-      "current_state": "WARNING",
+      "current_state": "PASS",
       "owner": "Codex + 寛太梅澤",
       "decision_authority": "開発責任者 / 会社管理者",
       "related_wbs": "T852",
       "related_issue": "R100;#139",
-      "last_checked": "2026-07-20",
-      "notes": "T833(7/7)判定: main/master deploy workflowは7/5 successを確認(deploy green要件は充足)。WIF/ADC正規化・FIREBASE_TOKEN廃止(T852)は7/8実施 【再評価待ち: 2026-07-20時点で関連WBS T852(WIF/ADC正規化・FIREBASE_TOKEN廃止)が完了。last_checked=2026-07-07から13日間未再確認のため、開発責任者/会社管理者による再判定が必要。確認事項=直近のmain deploy実行がgreenであること。T908ガードが検知】",
+      "last_checked": "2026-08-30",
+      "notes": "T852でWIF/ADC正規化とFIREBASE_TOKEN廃止を完了。2026-08-30のmain CI/CD run 33312123993（SHA cbc794eb）でAuthenticate to Google Cloud via WIF、Firebase Functions/Hostingの実Deploy、全自動テストがsuccess。後続のmain/masterは非force fast-forwardで同一SHA 53da7dbdへ同期し、workflowのみの変更ではdeploy skip契約が正常作動。開発責任者/会社管理者の再確認条件を満たしたためPASSへ再判定した。",
       "wbs_statuses": {
         "T852": "完了"
       },
@@ -436,20 +443,21 @@
       "scope": "public_paid_launch",
       "category": "品質管理",
       "criterion": "課題管理表・QA表の開発必須open/未回答が0である",
-      "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Issue #141; GitHub Issue #150; GitHub Project #1",
+      "evidence_source": "data/issues_tracker.tsv; data/qa_tracker.tsv; scripts/audit_issue_qa_blockers.py; exports/issue_qa_blocker_audit.md; exports/issue_qa_blocker_audit.json; docs/ISSUE_QA_BLOCKER_AUDIT_2026-06-27.md; GitHub Project #1",
       "required_state": "PASS",
       "current_state": "WARNING",
       "owner": "Codex + Claude Code + 人間",
       "decision_authority": "開発責任者 / CEO",
-      "related_wbs": "T853;T854;T858;T849",
-      "related_issue": "R101;R110;#141;#150",
-      "last_checked": "2026-07-07",
-      "notes": "T833(7/7)判定: blocker監査open4件はすべて判定・運用系(R111/R112/R113/R116)でコード/QA起因は0。R112は本判定でresolved、残3件は7/8定例とT870で解消予定",
+      "related_wbs": "T853;T854;T858;T849;T999",
+      "related_issue": "R101;R110;R151;#306",
+      "last_checked": "2026-08-31",
+      "notes": "R151/T999は2026-08-31のユーザー判断により、DB password回転・SUPABASE_DB_URL更新・15/15 live UATを未実施のまま残存リスク受容としてCLOSEし、課題管理上の開発必須openは0になった。ただし、これは技術的解消やPUBLIC-11のgreen判定を意味せず、T849の総合判定とdecision_authorityによるPUBLIC-15再判定が未完了のためWARNINGを維持する。再利用・再発・production UAT必須化時は再OPENする。",
       "wbs_statuses": {
         "T853": "完了",
         "T854": "完了",
         "T858": "完了",
-        "T849": "未着手"
+        "T849": "実行中",
+        "T999": "完了"
       },
       "missing_evidence": []
     },

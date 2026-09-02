@@ -30,18 +30,25 @@
 
 Run these before finishing a session that changes project behavior or docs.
 
-**Step 1 — preflight (required first).** No lane may commit or push a red working tree. This runs all registered integrity guards plus the full test suite and fails on the first drift:
+**Step 1 — local candidate gate (required first).** No lane may commit or push a red working tree. Work only on an isolated `codex/preflight-*` (or `codex/preflight/<task>`) candidate branch. Run the fast integrity guards plus targeted static/tests for the changed scope before each candidate commit:
 
 ```powershell
-python scripts/run_lane_preflight.py --full
+python scripts/run_lane_preflight.py
 ```
 
-Use the fast form (`python scripts/run_lane_preflight.py`, guards only, seconds) immediately before each commit. Spec and NG handling: `docs/LANE_PREFLIGHT_GUARD.md`. If it fails because of another lane's uncommitted work, back the work up and hand it back to that lane — do not discard it and do not bypass the preflight.
+Do not run browser-heavy or full-suite validation locally by default. `python scripts/run_lane_preflight.py --full` is a fallback only when GitHub Actions is unavailable or a user explicitly requests it. Spec and NG handling: `docs/LANE_PREFLIGHT_GUARD.md`. If the fast gate fails because of another lane's uncommitted work, back the work up and hand it back to that lane — do not discard it and do not bypass the preflight.
 
-**Step 2 — generate and sync** (only against a tree the preflight passed):
+**Step 2 — generate, commit, and cloud full preflight.** Generate required repository outputs, commit intentionally to the isolated candidate branch, push that branch, and require the **Cloud Full Preflight** GitHub Actions run to succeed for the exact candidate SHA. The workflow runs all registered guards, the complete pytest suite, and Playwright Chromium tests on a GitHub-hosted runner. Its always-uploaded short-retention artifact contains the JSON/Markdown reports, JUnit XML counts/failures, and pytest log. Never promote a candidate to `main` or `master` when that exact SHA is untested, pending, cancelled, or red. Never disable a failing test; diagnose from the cloud artifact. The sales-email-sync fail-closed checks remain part of the full suite.
+
+Run repository generation before the candidate commit:
 
 ```powershell
 python scripts/generate_knowledge_flow_demo.py
+```
+
+**Step 3 — sync and exact-SHA promotion** (only after the cloud run is green for that exact SHA):
+
+```powershell
 python scripts/sync_wbs_to_github.py TXXX --dry-run
 python scripts/sync_wbs_to_github.py TXXX --report exports/github_wbs_sync_report.json
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
@@ -58,7 +65,9 @@ python scripts/generate_ceo_presentation_deck.py
 python scripts/upload_notebooklm_docs_to_drive.py
 ```
 
-**Step 3 — deploy & live production verification (required for task completion).**
+After required external sync is complete, promote only the exact green candidate SHA by non-force, fast-forward updates. If remote refs moved or promotion is not fast-forward safe, stop and rebuild/revalidate a candidate; never substitute a different SHA.
+
+**Step 4 — deploy & live production verification (required for task completion).**
 No task or session is considered complete until it is confirmed working on the live production environment (`https://mightylink-app.com/`).
 1. Commit intentionally and push `main` (which triggers GitHub Actions CI/CD to deploy to Firebase Hosting / Cloud Run).
 2. Wait for the GitHub Actions deployment workflow to succeed.
