@@ -63,6 +63,17 @@ def insert_sales_email_message(db: DBAdapter, payload: dict) -> int:
             return 0
 
 
+def determine_source_type(source_path: str, default: str = "imap") -> str:
+    sp = (source_path or "").lower()
+    if sp.startswith("imap://") or "imap" in sp:
+        return "imap"
+    elif sp.startswith("pop3://") or "pop3" in sp:
+        return "pop3"
+    elif "thunderbird" in sp or "mbox" in sp or "local" in sp or "eml" in sp or "data/" in sp or "mail" in sp:
+        return "thunderbird_local"
+    return default
+
+
 def sync_raw_email_list(db: DBAdapter, raw_emails: List[Any]) -> int:
     new_count = 0
     for email in raw_emails:
@@ -85,6 +96,8 @@ def sync_raw_email_list(db: DBAdapter, raw_emails: List[Any]) -> int:
         if not original_received_at:
             original_received_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
+        src_type = determine_source_type(email.source_path, getattr(email, "source_type", "imap"))
+
         payload = {
             "message_id_hash": sha256_hex(email.message_id or f"mail-{key}"),
             "dedupe_key": key,
@@ -95,7 +108,7 @@ def sync_raw_email_list(db: DBAdapter, raw_emails: List[Any]) -> int:
             "body_hash": sha256_hex(body),
             "body_excerpt": body_exc,
             "source_path": email.source_path,
-            "source_type": "api",
+            "source_type": src_type,
             "raw_storage_policy": "hash_and_redacted_excerpt_only",
             "ingest_status": "new",
             "metadata": json.dumps({"sender_raw": email.sender}, ensure_ascii=False)
@@ -236,7 +249,7 @@ def rebuild_extraction_review_json(db: DBAdapter) -> None:
 
         extractions.append({
             "source_path": msg["source_path"],
-            "source_type": msg["source_type"],
+            "source_type": msg.get("source_type") or determine_source_type(msg["source_path"]),
             "dedupe_key": msg["dedupe_key"],
             "sender_domain": msg["sender_domain"],
             "normalized_subject": msg["normalized_subject"],
@@ -248,12 +261,23 @@ def rebuild_extraction_review_json(db: DBAdapter) -> None:
             "talent_profile": tal_data
         })
         
+    today_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    source_breakdown = {
+        "total_count": len(messages),
+        "server_direct_count": sum(1 for m in messages if (m.get("source_type") or determine_source_type(m.get("source_path", ""))) in ("imap", "pop3")),
+        "imap_count": sum(1 for m in messages if (m.get("source_type") or determine_source_type(m.get("source_path", ""))) == "imap"),
+        "pop3_count": sum(1 for m in messages if (m.get("source_type") or determine_source_type(m.get("source_path", ""))) == "pop3"),
+        "thunderbird_local_count": sum(1 for m in messages if (m.get("source_type") or determine_source_type(m.get("source_path", ""))) == "thunderbird_local"),
+        "today_new_count": sum(1 for m in messages if str(m.get("received_at", ""))[:10] == today_utc),
+    }
+
     report = {
         "task_id": "T817_4",
         "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "model_name": "deterministic-sales-email-extractor-v1",
         "fallback_used": True,
         "input_count": len(messages),
+        "source_breakdown": source_breakdown,
         "project_requirement_count": project_count,
         "talent_profile_count": talent_count,
         "skill_tag_count": skill_tag_count,
@@ -270,6 +294,48 @@ def rebuild_extraction_review_json(db: DBAdapter) -> None:
     write_json_report(report, PROJECT_ROOT / "exports" / "sales_email_extraction_review.json")
     write_markdown_report(report, PROJECT_ROOT / "exports" / "sales_email_extraction_review.md")
     print("[+] exports/sales_email_extraction_review.json rebuilt successfully.")
+
+
+def backfill_source_types(db: DBAdapter, dry_run: bool = False) -> Dict[str, int]:
+    """Backfill source_type for existing records based on source_path with dry-run support."""
+    stats = {"imap": 0, "pop3": 0, "thunderbird_local": 0, "total": 0, "updated": 0}
+    
+    if db.use_supabase:
+        try:
+            res = db.sb_client.table("sales_email_messages").select("id, source_path, source_type").execute()
+            rows = res.data if res else []
+            for row in rows:
+                stats["total"] += 1
+                sp = row.get("source_path", "")
+                st = determine_source_type(sp, "thunderbird_local")
+                stats[st] = stats.get(st, 0) + 1
+                if row.get("source_type") != st:
+                    stats["updated"] += 1
+                    if not dry_run:
+                        db.sb_client.table("sales_email_messages").update({"source_type": st}).eq("id", row["id"]).execute()
+        except Exception as e:
+            print(f"[-] Supabase backfill error: {e}")
+    else:
+        try:
+            cursor = db.sqlite_conn.cursor()
+            cursor.execute("SELECT id, source_path, source_type FROM sales_email_messages")
+            rows = cursor.fetchall()
+            for row in rows:
+                stats["total"] += 1
+                sp = row[1] or ""
+                st = determine_source_type(sp, "thunderbird_local")
+                stats[st] = stats.get(st, 0) + 1
+                if row[2] != st:
+                    stats["updated"] += 1
+                    if not dry_run:
+                        cursor.execute("UPDATE sales_email_messages SET source_type = ? WHERE id = ?", (st, row[0]))
+            if not dry_run:
+                db.sqlite_conn.commit()
+        except Exception as e:
+            print(f"[-] SQLite backfill error: {e}")
+            
+    print(f"[*] Backfill ({'DRY RUN' if dry_run else 'APPLIED'}): Total={stats['total']}, IMAP={stats['imap']}, POP3={stats['pop3']}, Thunderbird={stats['thunderbird_local']}, Updated={stats['updated']}")
+    return stats
 
 
 def rebuild_match_review_json() -> None:
@@ -354,7 +420,30 @@ if __name__ == "__main__":
         default=False,
         help="Fail when all configured IMAP folders are empty",
     )
+    parser.add_argument(
+        "--backfill-source-types",
+        action="store_true",
+        default=False,
+        help="Backfill source_type for existing records based on source_path",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        default=False,
+        help="Perform dry-run without committing database changes",
+    )
     args = parser.parse_args()
+
+    if args.backfill_source_types:
+        sqlite_path = PROJECT_ROOT / "data" / "mighty.db"
+        db = DBAdapter(sqlite_path)
+        stats = backfill_source_types(db, dry_run=args.dry_run)
+        if not args.dry_run:
+            rebuild_extraction_review_json(db)
+            rebuild_match_review_json()
+        db.close()
+        print(f"[+] Backfill complete: {stats}")
+        sys.exit(0)
 
     res = sync_sales_emails_pipeline(
         max_messages=args.max_messages,

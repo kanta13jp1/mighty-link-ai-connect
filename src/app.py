@@ -6904,6 +6904,13 @@ async def get_sales_email_analytics():
     if report_data is None:
         return {
             "status": "success",
+            "total_count": 0,
+            "server_direct_count": 0,
+            "local_restored_count": 0,
+            "today_new_count": 0,
+            "project_count": 0,
+            "talent_count": 0,
+            "source_breakdown": {"imap": 0, "pop3": 0, "thunderbird_local": 0, "today_new": 0},
             "daily_counts": {},
             "domain_counts": {},
             "skill_counts": {}
@@ -6911,18 +6918,35 @@ async def get_sales_email_analytics():
     
     try:
         extractions = report_data.get("extractions", [])
+        today_utc = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
         
         daily_counts = {}
         domain_counts = {}
         skill_counts = {}
         
+        imap_count = 0
+        pop3_count = 0
+        tb_count = 0
+        today_new_count = 0
+        
         for item in extractions:
             dt_str = item.get("received_at") or report_data.get("generated_at") or "2026-06-18"
             dt = dt_str[:10]
             daily_counts[dt] = daily_counts.get(dt, 0) + 1
+            if dt == today_utc:
+                today_new_count += 1
             
             dom = item.get("sender_domain", "unknown")
             domain_counts[dom] = domain_counts.get(dom, 0) + 1
+            
+            st = item.get("source_type") or ""
+            sp = (item.get("source_path") or "").lower()
+            if st == "imap" or sp.startswith("imap://") or "imap" in sp:
+                imap_count += 1
+            elif st == "pop3" or sp.startswith("pop3://") or "pop3" in sp:
+                pop3_count += 1
+            else:
+                tb_count += 1
             
             req = item.get("project_requirement")
             if req and isinstance(req, dict):
@@ -6936,8 +6960,24 @@ async def get_sales_email_analytics():
                 for sk in skills:
                     skill_counts[sk] = skill_counts.get(sk, 0) + 1
                     
+        total_count = len(extractions) if extractions else report_data.get("input_count", 0)
+        server_direct_count = imap_count + pop3_count
+        local_restored_count = tb_count
+        
         return {
             "status": "success",
+            "total_count": total_count,
+            "server_direct_count": server_direct_count,
+            "local_restored_count": local_restored_count,
+            "today_new_count": today_new_count,
+            "project_count": report_data.get("project_requirement_count", 0),
+            "talent_count": report_data.get("talent_profile_count", 0),
+            "source_breakdown": {
+                "imap": imap_count,
+                "pop3": pop3_count,
+                "thunderbird_local": tb_count,
+                "today_new": today_new_count
+            },
             "daily_counts": daily_counts,
             "domain_counts": domain_counts,
             "skill_counts": skill_counts

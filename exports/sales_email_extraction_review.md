@@ -1,7 +1,7 @@
 # Sales Email Extraction Review
 
 - Task: T817_4
-- Generated at: 2026-09-02T09:35:12.041844Z
+- Generated at: 2026-09-02T10:10:27.433729Z
 - Model: deterministic-sales-email-extractor-v1
 - Fallback used: True
 - Input messages: 3143
