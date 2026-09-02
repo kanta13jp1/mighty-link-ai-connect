@@ -1,7 +1,7 @@
 # 社内GA Go/No-Go 判定パック（T833・2026-07-07）
 
 作成日: 2026-07-04
-担当レーン: VSCode + Claude Code
+担当レーン: Claude Code
 用途: 2026-07-07 の T833（Go/No-Go 再判定）当日の判定材料一式。判定結果は本docsの末尾に記入し、`data/release_go_no_go_criteria.tsv` と R112 を更新する。
 関連WBS: T867（本パック） / T833 / T849 / T863
 関連docs: [GO_NO_GO_GATE_TRIAGE_2026-07-04.md](GO_NO_GO_GATE_TRIAGE_2026-07-04.md) / [INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md](INTERNAL_LAUNCH_AND_BILLING_SCOPE_2026-07-03.md) / [CEO_MEETING_AGENDA_2026-07-08.md](meetings/CEO_MEETING_AGENDA_2026-07-08.md)

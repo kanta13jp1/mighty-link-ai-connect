@@ -61,7 +61,7 @@ mighty-link-ai-connect/
 - `exports/verification/` は公開デモやローカルUIの視覚確認スクリーンショットを保存する。社長説明に使えるものだけをGit管理し、個人情報や認証画面は含めない。
 - `exports/knowledge_flow/mighty_skill_bridge_ceo_presentation_2026-06-02.pptx` はNotebookLM CLIの草案を社長説明用PPTXにした成果物として管理する。再生成は `scripts/generate_ceo_presentation_deck.py` で行う。
 - GitHub Issues は実装タスクの粒度、WBS は日程・報告粒度として使い分ける。完了・更新したWBSだけを `scripts/sync_wbs_to_github.py` でIssueとProject #1へ対象限定同期する。
-- `AGENTS.md` はAntigravity + Gemini / VSCode + Codex / VSCode + Claude Codeの共通セッションゲートを定義する。`CLAUDE.md` はAnthropic公式推奨に従い `@AGENTS.md` を import する。
+- `AGENTS.md` はAntigravity + Gemini / Codex / Claude Codeの共通セッションゲートを定義する。`CLAUDE.md` はAnthropic公式推奨に従い `@AGENTS.md` を import する。
 - 毎セッションの公式Docs確認は、Anthropic、OpenAI、Google、Microsoft、Meta、Amazon、Apple、Kimi/Moonshot、MiMo、DeepSeek、Grok/xAI、Seedance/ByteDance Seed、Obsidian、Unity を対象にする。URL正本は `AGENTS.md` に集約し、未確認の未来モデル名や古いベストプラクティスはdocsへ残さない。
 - `.claude/settings.local.json` と `CLAUDE.local.md` はローカル専用設定として `.gitignore` 対象にし、共有すべき指示は `AGENTS.md` / `CLAUDE.md` / `docs/` へ昇格する。
 - Google Sheets同期は `sync_wbs_to_sheets.py` 1本でWBS・Summary・Timeline・課題・QA・テスト・セキュリティ・デプロイ・パイロット・リリース判定の10タブを更新する。

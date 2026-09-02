@@ -1,7 +1,7 @@
 # 6/2 社長打ち合わせ 想定 QA パック (T607)
 
 作成日: 2026-05-22
-オーナー: VSCode + Claude Code レーン
+オーナー: Claude Code レーン
 対応 WBS: **T607** 想定QA (5/29-5/30 予定 → 5/22 前倒し完遂)
 関連: [CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md) (T605) / [CEO_PRESENTATION_DECISION_PACK_2026-06-02.md](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) (T611) / [CEO_PRESENTATION_PREP_2026-06-02.md](CEO_PRESENTATION_PREP_2026-06-02.md)
 
@@ -105,8 +105,8 @@
 **回答方針**: 「**開発体制では既に 3-tool 並走中**」と説明 ([MULTI_AI_WORKFLOW.md](../../MULTI_AI_WORKFLOW.md)):
 
 - Antigravity + Gemini (主開発)
-- VSCode + Codex / GPT-5.5 (実装 PR / sync スクリプト)
-- VSCode + Claude Code (architect / docs / 調停)
+- Codex / GPT-5.5 (実装 PR / sync スクリプト)
+- Claude Code (architect / docs / 調停)
 
 サービス本体で使う AI と開発で使う AI は別問題と区別。**サービス本体は現時点で Gemini 単一**だが、A/B/C の選択肢を D-4 で提示。
 

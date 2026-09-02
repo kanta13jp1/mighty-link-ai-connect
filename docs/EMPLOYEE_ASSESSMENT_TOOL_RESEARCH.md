@@ -3,7 +3,7 @@
 - 対象WBS: T832
 - 関連課題: R31, R32, R36
 - 作成日: 2026-06-21
-- レーン: VSCode + Codex / VSCode + Claude Code
+- レーン: Codex / Claude Code
 - 技術前提: バックエンド Firebase、DB Supabase、レジストラ お名前.com
 
 ## 結論

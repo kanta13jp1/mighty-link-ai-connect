@@ -2,7 +2,7 @@
 
 - 対象WBS: T773
 - 完了日: 2026-07-01
-- 担当レーン: VSCode + Codex
+- 担当レーン: Codex
 - 対象: Firebase / Google Cloud Logging 由来の運用証跡、リポジトリ内の監査JSONL、ローテーション済みログ、公開前Go/No-Go・監視・品質証跡
 - 非対象: OAuth token、service account JSON、API key、DB URL、Stripe secret、実メール本文、勤怠CSV原本、WordPress/FTP認証情報、個人データ実値
 

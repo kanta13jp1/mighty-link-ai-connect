@@ -383,7 +383,7 @@ python scripts/upload_notebooklm_docs_to_drive.py
 
 | ドキュメント | 内容 |
 | --- | --- |
-| [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) | Antigravity + Gemini / VSCode + Codex / VSCode + Claude Code の運用 |
+| [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) | Antigravity + Gemini / Codex / Claude Code の運用 |
 | [SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md](SALES_EMAIL_AI_MATCHING_REQUIREMENTS.md) | 営業メールAIマッチング要件 |
 | [SALES_EMAIL_MATCHING_API_UI_RUNBOOK.md](SALES_EMAIL_MATCHING_API_UI_RUNBOOK.md) | マッチングAPI/UI |
 | [SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md](SALES_EMAIL_HUMAN_REVIEW_RUNBOOK.md) | 人間レビュー保存 |

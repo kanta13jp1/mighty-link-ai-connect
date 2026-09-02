@@ -1,14 +1,14 @@
 # Multi-AI 開発ワークフロー
 
 更新日: 2026-07-13
-担当レーン: VSCode + Codex  
+担当レーン: Codex  
 関連: [WBS.md](WBS.md) / [WBS_SYNC_GUIDE.md](WBS_SYNC_GUIDE.md) / [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) / [CODEX_CONTINUATION_NOTES.md](CODEX_CONTINUATION_NOTES.md)
 
 ---
 
 ## 目的
 
-Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Claude Code の三つを役割分担して使う。各セッションで同じ品質ゲートを通し、WBS、課題管理表、QA表、Google Sheets、Google Calendar、GitHub Issues、GitHub Project の状態がずれないようにする。
+Mighty-Link AI Connect は、Antigravity + Gemini、Codex、Claude Code の三つを役割分担して使う。各セッションで同じ品質ゲートを通し、WBS、課題管理表、QA表、Google Sheets、Google Calendar、GitHub Issues、GitHub Project の状態がずれないようにする。
 
 この文書は毎回の開発開始から closeout までの標準手順を定義する。古いモデル名、未確認の未来機能、解決済みの暫定ブロッカー、古い同期件数は現行ガイドとして残さない。
 
@@ -19,8 +19,8 @@ Mighty-Link AI Connect は、Antigravity + Gemini、VSCode + Codex、VSCode + Cl
 | レーン | 主担当 | 使う場面 |
 | --- | --- | --- |
 | Antigravity + Gemini | UI、マルチモーダル、ブラウザ確認 | フロントエンド polish、画像・動画・音声を含むデモ、視覚確認、Gemini API の現行モデルを使う検証 |
-| VSCode + Codex | 実装、同期、自動化、GitHub | FastAPI、Firebase/Supabase、Google Workspace API、CI、GitHub CLI、WBS/Sheets/Calendar同期、public demo guard |
-| VSCode + Claude Code | ドキュメント、レビュー、triage | 仕様・議事録・Runbook、WBS網羅性監査、PRレビュー、課題/QAの整理、古いdocsの削除判断 |
+| Codex | 実装、同期、自動化、GitHub | FastAPI、Firebase/Supabase、Google Workspace API、CI、GitHub CLI、WBS/Sheets/Calendar同期、public demo guard |
+| Claude Code | ドキュメント、レビュー、triage | 仕様・議事録・Runbook、WBS網羅性監査、PRレビュー、課題/QAの整理、古いdocsの削除判断 |
 
 競合しそうなときは、WBSの該当タスクと `data/WBS.tsv` を正本にする。ドキュメントだけで状況を確定せず、最後に同期スクリプトと GitHub の状態で確認する。
 

@@ -1,7 +1,7 @@
 # 6/2 社長プレゼン Canva / Figma リデザイン手順 + 8 枚コピペカード
 
 作成日: 2026-05-23
-オーナー: VSCode + Claude Code レーン (docs / コピペカード生成) / 実 Canva / Figma 操作は人間 + Antigravity レーン
+オーナー: Claude Code レーン (docs / コピペカード生成) / 実 Canva / Figma 操作は人間 + Antigravity レーン
 対応 WBS: **T658-extend** (NotebookLM PPTX → Canva/Figma リデザイン)
 関連: [PREP](CEO_PRESENTATION_PREP_2026-06-02.md) / [DECISION_PACK](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) / [DISCUSSION_POINTS](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md) (T605) / [QA_PACK](CEO_PRESENTATION_QA_PACK_2026-06-02.md) (T607) / [OPS_DISCUSSION](CEO_PRESENTATION_OPS_DISCUSSION_2026-06-02.md) (T606) / [PRESHARE_MEMO](CEO_PRESENTATION_PRESHARE_MEMO_2026-06-02.md) (T614) / [POST_DECISION_ROADMAP](CEO_PRESENTATION_POST_DECISION_ROADMAP_2026-06-02.md) (T615)
 

@@ -1,6 +1,6 @@
 # サービス終了（EOL）・廃止計画
 
-作成日: 2026-07-20 / 担当レーン: VSCode + Claude Code（T906）
+作成日: 2026-07-20 / 担当レーン: Claude Code（T906）
 関連WBS: T906（本計画） / T781（セルフエクスポート機能） / T849（GAクローズ） / T862（有償化判断の撤退条件） / T798（法務確認）
 関連docs: [利用規約](TERMS_OF_SERVICE.md) / [課金・返金ポリシー](BILLING_AND_REFUND_POLICY.md) / [データ保持・削除・匿名化 Runbook](DATA_RETENTION_DELETION_ANONYMIZATION_RUNBOOK.md) / [セルフエクスポート Runbook](USER_DATA_SELF_EXPORT_RUNBOOK.md) / [サービス凍結 Runbook](AI_SAAS_SERVICE_FREEZE_RUNBOOK.md) / [運用Runbookカタログ](OPERATIONS_RUNBOOK_CATALOG.md)
 

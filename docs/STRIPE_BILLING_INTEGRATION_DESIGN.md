@@ -2,7 +2,7 @@
 
 更新日: 2026-07-01
 対象WBS: T776（完了） / T791（Billing Meters・Webhook実装） / T807（Customer Portal live検証） / T813（税・請求書）
-担当レーン: VSCode + Codex
+担当レーン: Codex
 
 ## ステータス
 

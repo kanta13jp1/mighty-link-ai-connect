@@ -80,6 +80,6 @@ No task or session is considered complete until it is confirmed working on the l
 ## Tool Lanes
 
 - Antigravity + Gemini: frontend polish, multimodal demos, browser-agent checks, and post-quota visual refinement.
-- VSCode + Codex: backend, sync scripts, GitHub CLI, Google Workspace automation, CI/CD, and WBS source edits.
-- VSCode + Claude Code: documentation, review, triage, checklist maintenance, and third-party review of Codex/Antigravity changes.
+- Codex: backend, sync scripts, GitHub CLI, Google Workspace automation, CI/CD, and WBS source edits.
+- Claude Code: documentation, review, triage, checklist maintenance, and third-party review of Codex/Antigravity changes.
 

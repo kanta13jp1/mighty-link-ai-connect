@@ -1,7 +1,7 @@
 # Canva / Figma MCP セットアップ + 自動化フロー (HANDOFF-14 自動化版)
 
 作成日: 2026-05-23
-オーナー: VSCode + Claude Code レーン (docs / セットアップ手順) / 実 MCP 接続は人間 (寛太) + Antigravity / Codex / Claude Code が並走実行
+オーナー: Claude Code レーン (docs / セットアップ手順) / 実 MCP 接続は人間 (寛太) + Antigravity / Codex / Claude Code が並走実行
 対応 WBS: **T658-mcp-extend** (Canva/Figma MCP による自動化)
 関連: [CANVA_FIGMA_GUIDE](CEO_PRESENTATION_CANVA_FIGMA_GUIDE_2026-06-02.md) (T658-extend、手動手順) / [MULTI_AI_WORKFLOW](../../MULTI_AI_WORKFLOW.md) / [PREP](CEO_PRESENTATION_PREP_2026-06-02.md)
 

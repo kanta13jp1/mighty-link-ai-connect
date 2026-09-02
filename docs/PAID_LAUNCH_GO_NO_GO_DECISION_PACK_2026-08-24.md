@@ -1,7 +1,7 @@
 # 有償公開・課金live有効化 Go/No-Go 意思決定パッケージ（2026-08-24 第2回月次レビュー）
 
 作成日: 2026-08-15
-作成レーン: 企画戦略担当 (Antigravity) + VSCode Claude Code
+作成レーン: 企画戦略担当 (Antigravity) + Claude Code
 判定日: 2026-08-24（第2回月次レビュー）
 判定対象: 有償公開・課金 live 有効化の実施（＝Stripe を test/sandbox から live へ切り替え、一般有償受付を開始するか）
 関連WBS: `T862`（実施判断） / `T791` / `T807` / `T813` / `T793` / `T900`

@@ -2,7 +2,7 @@
 
 作成日: 2026-06-14  
 最終更新: 2026-07-01
-担当レーン: VSCode + Codex  
+担当レーン: Codex  
 対象: Firebase Hosting / Google Cloud Logging / リポジトリ内 JSONL・`.log` 監査ログ
 
 ## 目的

@@ -1,7 +1,7 @@
 # 仮説駆動型プロジェクト健全性監査 2026-07-04（10仮説の全数検証）
 
 作成日: 2026-07-04
-担当レーン: VSCode + Claude Code
+担当レーン: Claude Code
 関連WBS: T868（本監査） / T811 / T831 / T834 / T837 / T852
 関連課題/QA: R111 / R112 / R113 / QA-94
 関連docs: [GO_NO_GO_DECISION_PACK_2026-07-07.md](GO_NO_GO_DECISION_PACK_2026-07-07.md) / `WBS_REVIEW_2026-07-13`

@@ -1,7 +1,7 @@
 # ポストモーテム: 本番Supabaseテーブル欠損による適性アンケート保存障害（R114）
 
 作成日: 2026-07-04
-担当レーン: VSCode + Claude Code
+担当レーン: Claude Code
 関連WBS: T865（復旧、完了） / T866（再発防止、Codex） / T845（UAT反映）
 関連課題: R114（resolved） / Issue #157 / #158
 関連docs: [INCIDENT_POSTMORTEM_RUNBOOK.md](../../INCIDENT_POSTMORTEM_RUNBOOK.md) / [DB_MIGRATION_MANAGEMENT_RUNBOOK.md](../../DB_MIGRATION_MANAGEMENT_RUNBOOK.md)

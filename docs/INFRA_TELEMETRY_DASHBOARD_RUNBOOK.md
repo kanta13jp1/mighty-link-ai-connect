@@ -1,7 +1,7 @@
 # インフラ・テレメトリ監視ダッシュボード Runbook (T755)
 
 作成日: 2026-06-14
-担当レーン: VSCode + Codex
+担当レーン: Codex
 対象: Firebase Hosting / Cloud Run Functions / Supabase / GitHub Actions / ローカルCI成果物
 
 ## 目的

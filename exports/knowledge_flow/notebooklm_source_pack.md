@@ -1,6 +1,6 @@
 # Mighty Skill-Bridge NotebookLM Source Pack
 
-Generated: 2026-08-31 03:40:18 UTC+09:00
+Generated: 2026-09-02 18:22:21 UTC+09:00
 
 ## Purpose
 
@@ -546,11 +546,11 @@ OAuth クライアント JSON は `client_secret.json` にリネームして、�
 
 ## 4. 開発ツール切り替え方針
 
-通常開発は Antigravity + Gemini で進めます。Antigravity 側で Gemini の baseline quota 制限に達した場合は、作業を止めずに VSCode + Codex へ切り替えて開発を継続します。
+通常開発は Antigravity + Gemini で進めます。Antigravity 側で Gemini の baseline quota 制限に達した場合は、作業を止めずに Codex へ切り替えて開発を継続します。
 
 切り替え時の運用ルール:
 
-- 実装、ドキュメント整備、ローカル検証、Git 操作は VSCode + Codex で継続する。
+- 実装、ドキュメント整備、ローカル検証、Git 操作は Codex で継続する。
 - Gemini API の quota を消費しないよう、必要に応じて `AI_FORCE_MOCK=1` で FastAPI を起動する。
 - Google Workspace 連携は既存の `authorized_user.json` を使い、`k-umezawa@ml-mightylink.com` の OAuth 認証を継続利用する。
 - quota 回復後に Gemini live 実行へ戻す場合は、`AI_FORCE_MOCK` を解除してサーバーを再起動する。
@@ -624,4 +624,6 @@ python scripts/share_resources.py
 
 6/2 までは、これらを正式サービス機能として固定せず、導入優先順位と情報管理ルールを社長に確認する判断材料として扱います。秘密情報を含まない範囲では、Google Drive、Notion、GitHub Issues への実体連携証跡を残します。
 
-実際に見せるための成
+実際に見せるための成果物生成:
+
+```powershe

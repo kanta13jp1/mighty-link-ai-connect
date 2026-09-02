@@ -2,7 +2,7 @@
 
 作成日: 2026-06-13  
 最終更新: 2026-07-01
-担当レーン: VSCode + Codex  
+担当レーン: Codex  
 対象: Mighty Skill-Bridge / Mighty-Link AI Connect 本番 Supabase PostgreSQL
 
 ## 目的

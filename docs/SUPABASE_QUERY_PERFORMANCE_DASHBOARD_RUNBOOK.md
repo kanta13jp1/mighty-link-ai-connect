@@ -1,7 +1,7 @@
 # Supabase クエリ性能ダッシュボード運用 Runbook (T761)
 
 作成日: 2026-06-15  
-担当レーン: VSCode + Codex  
+担当レーン: Codex  
 対象: Supabase PostgreSQL / Firebase Functions / 本番 API
 
 ## 目的
