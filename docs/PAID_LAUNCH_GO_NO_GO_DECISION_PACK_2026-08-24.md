@@ -27,7 +27,7 @@
 
 | # | 材料 | 確認できた事実 | 未完了・制約 | 根拠 |
 | --- | --- | --- | --- |
-| 1 | 営業メール取込 | 最新成果物は `input_count=702`、案件378件、人材297件、タグ531件 | `model_name=deterministic-sales-email-extractor-v1`、`fallback_used=true`。1日1,000件のスループット試験ではない | `exports/sales_email_extraction_review.json` / `T910` |
+| 1 | 営業メール取込 | 最新成果物は `input_count=3143`、案件2324件、人材731件、タグ2639件 | `model_name=deterministic-sales-email-extractor-v1`、`fallback_used=true`。1日1,000件のスループット試験ではない | `exports/sales_email_extraction_review.json` / `T910` |
 | 2 | マッチング精度・時間削減 | 取込・構造化・画面表示の機能は実装済み | ラベル付き正解データによるprecision/recallと、作業時間のbefore/after計測がなく、精度80%・97%削減は未検証 | [営業効果サマリー](SALES_PROPOSAL_EFFECTIVENESS_SUMMARY.md) |
 | 3 | コスト・収支 | 予算上限と監視ロジックは整備済み | `weekly_cost_dashboard.json` は `actuals=not configured`、`overall_status=unknown`。実請求データ未接続のため固定費0・黒字化を実績とは判定できない | `exports/weekly_cost_dashboard.json` |
 | 4 | SLA・稼働 | 2026-08-04の単発監視は7/7対象が期待HTTP statusを返した | 月次KPIのavailability/P95/5xxはnullで、月間SLA実績は未計測。99.9%は目標値であり達成実績ではない | `exports/uptime_monitor_report.json` / `exports/monthly_quality_kpi_2026-06.json` |

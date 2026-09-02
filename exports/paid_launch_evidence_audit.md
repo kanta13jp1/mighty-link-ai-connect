@@ -1,12 +1,12 @@
 # 8/24有償化Go/No-Go 証拠整合監査 (T988)
 
 - 総合判定: **PASS**
-- 生成日時: `2026-09-02T09:27:09.422697Z`
+- 生成日時: `2026-09-02T09:50:33.758016Z`
 
 | 仮説 | 検証内容 | 判定 | 根拠 |
 | --- | --- | --- | --- |
 | H1 | 8/24経営判断パッケージが存在 | PASS | PAID_LAUNCH_GO_NO_GO_DECISION_PACK_2026-08-24.md |
-| H2 | 営業メール証拠の件数・モデル・fallback・精度限界を明記 | PASS | input_count=702, model=deterministic-sales-email-extractor-v1, fallback=True |
+| H2 | 営業メール証拠の件数・モデル・fallback・精度限界を明記 | PASS | input_count=3143, model=deterministic-sales-email-extractor-v1, fallback=True |
 | H3 | 未立証の精度・削減率・法務完了を実績として断定しない | PASS | unsupported_claims=なし |
 | H4 | SLA目標と月間実績を分離し、未計測を明示 | PASS | availability=None, p95=None |
 | H5 | 実コスト未接続を黒字・固定費ゼロの実績へ読み替えない | PASS | actuals=not configured, overall_status=warning |

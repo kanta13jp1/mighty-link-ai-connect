@@ -1,9 +1,9 @@
 {
   "report_id": "SALES_EMAIL_HARDENING_T817_7_1",
   "checked_at": "2026-07-08",
-  "status": "ok",
+  "status": "attention",
   "hypotheses_total": 10,
-  "hypotheses_passed": 10,
+  "hypotheses_passed": 9,
   "hypotheses": [
     {
       "id": "H1",
@@ -62,8 +62,8 @@
     {
       "id": "H10",
       "hypothesis": "レビュー監査証跡(exports)が存在し、証跡ファイルに生メール/電話が含まれない",
-      "passed": true,
-      "detail": "監査証跡欠落=なし 生PII検出=なし"
+      "passed": false,
+      "detail": "監査証跡欠落=なし 生PII検出=['exports/sales_email_extraction_review.md:m-takahashi@da-edu.com']"
     }
   ],
   "scope_note": "PoCデータ/スキーマ/コード/証跡のオフラインhardening監査。バックアップはfull-DB pg_dumpが9テーブルを包含（恒久CI化はT870、暫定22テーブルローカルバックアップはT871確認済み）。実メール接続後の実運用確認（実データの最小化スポット確認・実流量調整・アカウント権限実査）はT836受領後のT817_7本体工程。"

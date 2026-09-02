@@ -1,6 +1,6 @@
 {
   "task_id": "T988",
-  "generated_at": "2026-09-02T09:27:09.422697Z",
+  "generated_at": "2026-09-02T09:50:33.758016Z",
   "passed": true,
   "hypotheses": [
     {
@@ -13,7 +13,7 @@
       "id": "H2",
       "title": "営業メール証拠の件数・モデル・fallback・精度限界を明記",
       "passed": true,
-      "detail": "input_count=702, model=deterministic-sales-email-extractor-v1, fallback=True"
+      "detail": "input_count=3143, model=deterministic-sales-email-extractor-v1, fallback=True"
     },
     {
       "id": "H3",
