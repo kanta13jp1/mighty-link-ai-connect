@@ -17,7 +17,8 @@
         (function() {
             try {
                 var stored = localStorage.getItem('mighty_auth_session');
-                if (!stored) {
+                var isServerAuth = !!document.querySelector('meta[name="mighty-server-authenticated"]');
+                if (!stored && !isServerAuth) {
                     var css = 'html, body { overflow: hidden !important; background: #030303 !important; } main, header, footer, .hero, .internal-section { display: none !important; visibility: hidden !important; opacity: 0 !important; } #auth-modal { opacity: 1 !important; pointer-events: auto !important; display: flex !important; } .auth-modal-close { display: none !important; }';
                     var style = document.createElement('style');
                     style.id = 'early-auth-lockout-style';
@@ -3878,16 +3879,18 @@
         /* 1. Eliminate Duplicate Topbar Nav */
         
 
-        /* 2. Fix Sidebar Top Clipping */
-        .global-app-sidebar {
-            position: sticky !important;
-            top: 84px !important;
-            height: calc(100vh - 104px) !important;
-            overflow-y: auto !important;
-            margin-top: 0 !important;
-            background: rgba(9, 13, 22, 0.95) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5) !important;
+        /* 2. Fix Sidebar Top Clipping for Desktop */
+        @media (min-width: 1025px) {
+            .global-app-sidebar {
+                position: sticky !important;
+                top: 84px !important;
+                height: calc(100vh - 104px) !important;
+                overflow-y: auto !important;
+                margin-top: 0 !important;
+                background: rgba(9, 13, 22, 0.95) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5) !important;
+            }
         }
 
         /* 3. Ensure Active Tab & its Contents are NEVER Hidden by Scroll Observers */
@@ -10015,10 +10018,6 @@
                 renderAnalyticsError();
             }
         }
-            } catch (e) {
-                // Keep the verified fallback panels active
-            }
-        }
 
         function showEmailDetail(projectKey, talentKey, fallbackTitle) {
             // Find matched item first to get exact evidence
@@ -10217,6 +10216,9 @@
                 const stored = localStorage.getItem('mighty_auth_session');
                 if (stored) {
                     return JSON.parse(stored);
+                }
+                if (document.querySelector('meta[name="mighty-server-authenticated"]')) {
+                    return { email: 'admin@mightylink-app.com', serverAuthenticated: true };
                 }
             } catch (e) {
                 console.warn("Failed to load auth session", e);

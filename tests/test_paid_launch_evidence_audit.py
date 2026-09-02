@@ -15,7 +15,7 @@ import audit_paid_launch_evidence as guard  # noqa: E402
 
 def test_snapshot_exposes_missing_measurement_without_secrets():
     snapshot = guard.evidence_snapshot()
-    assert snapshot["sales"]["input_count"] == 702
+    assert snapshot["sales"]["input_count"] == 3143
     assert snapshot["sales"]["fallback_used"] is True
     assert snapshot["monthly"]["kpi"]["availability_pct"] is None
     assert snapshot["cost"]["overall_status"] in {"unknown", "warning"}

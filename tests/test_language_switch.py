@@ -44,9 +44,9 @@ def test_language_switch_flow(fastapi_server):
         
         # Verify DOM update
         page.wait_for_function(
-            "document.querySelector('#primary-navigation a[href=\"#survey-section\"]').textContent.includes('Survey')"
+            "() => document.querySelector('#primary-navigation a[href=\"#survey-section\"]').textContent.includes('Survey')"
         )
-        lang_attr = page.evaluate("document.documentElement.lang")
+        lang_attr = page.evaluate("() => document.documentElement.lang")
         assert lang_attr == "en"
         
         # Check placeholder update
@@ -57,17 +57,17 @@ def test_language_switch_flow(fastapi_server):
         zh_btn = page.locator(".language-switch a[data-lang='zh']")
         zh_btn.click(force=True, no_wait_after=True)
         page.wait_for_function(
-            "document.documentElement.lang === 'zh'"
+            "() => document.documentElement.lang === 'zh'"
         )
-        assert page.evaluate("document.documentElement.lang") == "zh"
+        assert page.evaluate("() => document.documentElement.lang") == "zh"
         
         # 4. Click "KO" (ko)
         ko_btn = page.locator(".language-switch a[data-lang='ko']")
         ko_btn.click(force=True, no_wait_after=True)
         page.wait_for_function(
-            "document.documentElement.lang === 'ko'"
+            "() => document.documentElement.lang === 'ko'"
         )
-        assert page.evaluate("document.documentElement.lang") == "ko"
+        assert page.evaluate("() => document.documentElement.lang") == "ko"
         
         # Verify Korean localized DOM elements
         ko_nav_text = page.locator("#primary-navigation a[href='#survey-section']").text_content()

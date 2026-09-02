@@ -100,7 +100,7 @@ def test_light_theme_uses_readable_content_and_navigation_surfaces(fastapi_serve
         page = context.new_page()
         page.route("**/*.mp4", lambda route: route.abort())
         page.goto(fastapi_server, wait_until="domcontentloaded")
-        page.wait_for_function("document.documentElement.dataset.theme === 'light'")
+        page.wait_for_function("() => document.documentElement.dataset.theme === 'light'")
 
         colors = page.evaluate(
             """() => {
