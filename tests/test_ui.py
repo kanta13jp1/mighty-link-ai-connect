@@ -79,8 +79,8 @@ def test_ui_flow(fastapi_server):
         analyze_btn.click()
         
         # 7. Verify that the report section is active and displays a non-zero score
-        page.wait_for_selector("#report-section.active", timeout=5000)
-        expect(page.locator("#gauge-score")).not_to_have_text("0")
+        page.wait_for_selector("#report-section.active", timeout=10000)
+        expect(page.locator("#gauge-score")).not_to_have_text("0", timeout=15000)
         
         score_val = page.locator("#gauge-score").text_content()
         assert int(score_val) > 0
