@@ -59,6 +59,33 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
             "Workspace navigation landmark name must follow the selected language.",
         ),
         (
+            "localized_mobile_bottom_navigation",
+            'class="mobile-bottom-nav" aria-label="モバイル主要ナビゲーション" '
+            'data-i18n-aria-label="mobile_navigation_label">' in html
+            and all(
+                f'data-i18n="{key}"' in html
+                for key in [
+                    "mobile_nav_home",
+                    "mobile_nav_survey",
+                    "mobile_nav_attendance",
+                    "mobile_nav_matching",
+                    "mobile_nav_more",
+                ]
+            )
+            and 'aria-label="その他のメニューを開く" '
+            'data-i18n-aria-label="mobile_nav_more_menu_label">' in html
+            and all(
+                f'mobile_navigation_label: "{label}"' in html
+                for label in [
+                    "モバイル主要ナビゲーション",
+                    "Mobile primary navigation",
+                    "移动端主导航",
+                    "모바일 주요 탐색",
+                ]
+            ),
+            "Mobile bottom navigation labels must follow the selected language.",
+        ),
+        (
             "localized_theme_toggle",
             'id="theme-toggle" aria-label="ライトテーマに切り替え"' in html
             and 'id="theme-toggle-label">ライト</span>' in html

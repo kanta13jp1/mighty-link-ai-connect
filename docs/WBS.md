@@ -482,6 +482,7 @@ gantt
 | **T1013** | 8. 本番運用・品質管理 | アクセシビリティ | 言語切替グループの多言語アクセシブル名同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番で言語切替グループのaria-labelがLanguageに固定され、日本語・中国語・韓国語へ切り替えてもページ言語と不一致になる不具合をIssue #339として記録。4言語のlanguage_switch_label辞書、data-i18n-aria-label契約、選択言語とlocalStorage復元に連動する更新処理を追加し、各言語ボタンの排他的aria-pressedも回帰固定する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 | **T1014** | 8. 本番運用・品質管理 | アクセシビリティ | 主要ナビゲーションの多言語アクセシブル名同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番で主要ナビゲーションのaria-labelがPrimary navigationに固定され、日本語・中国語・韓国語へ切り替えてもページ言語と不一致になる不具合をIssue #340として記録。4言語のprimary_navigation_label辞書とdata-i18n-aria-label契約を追加し、選択言語・localStorage復元へ同期する。ナビゲーションを再生成する保守スクリプトも同じ契約へ更新する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 | **T1015** | 8. 本番運用・品質管理 | アクセシビリティ | グローバルサイドバーの多言語アクセシブル名同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番で常時表示されるglobal-sidebarのaria-labelがGlobal Workspace Navigationに固定され、日本語・中国語・韓国語へ切り替えてもページ言語と不一致になる不具合をIssue #341として記録。4言語のworkspace_navigation_label辞書とdata-i18n-aria-label契約を追加し、選択言語・localStorage復元へ同期する。サイドバーを再生成する保守スクリプトも同じ契約へ更新する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
+| **T1016** | 8. 本番運用・品質管理 | アクセシビリティ | モバイル下部ナビゲーションの4言語表示・アクセシブル名同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番モバイルで下部ナビのランドマーク名、5つの表示ラベル、その他メニューボタン名が日本語固定となり、英語・中国語・韓国語へ切り替えても不一致になる不具合をIssue #342として記録。モバイル専用の短い4言語辞書とdata-i18n/data-i18n-aria-label契約を追加し、選択言語・localStorage復元へ同期する。aria-current遷移と390px表示内の文字収まりも回帰固定する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 
 ---
 

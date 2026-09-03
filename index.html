@@ -6189,6 +6189,13 @@
                 language_switch_label: "言語を選択",
                 primary_navigation_label: "メインナビゲーション",
                 workspace_navigation_label: "ワークスペースナビゲーション",
+                mobile_navigation_label: "モバイル主要ナビゲーション",
+                mobile_nav_home: "ホーム",
+                mobile_nav_survey: "アンケート",
+                mobile_nav_attendance: "勤怠",
+                mobile_nav_matching: "マッチング",
+                mobile_nav_more: "その他",
+                mobile_nav_more_menu_label: "その他のメニューを開く",
                 theme_light: "ライト",
                 theme_dark: "ダーク",
                 theme_toggle_to_light: "ライトテーマに切り替え",
@@ -6326,6 +6333,13 @@
                 language_switch_label: "Select language",
                 primary_navigation_label: "Primary navigation",
                 workspace_navigation_label: "Workspace navigation",
+                mobile_navigation_label: "Mobile primary navigation",
+                mobile_nav_home: "Home",
+                mobile_nav_survey: "Survey",
+                mobile_nav_attendance: "Attendance",
+                mobile_nav_matching: "Matching",
+                mobile_nav_more: "More",
+                mobile_nav_more_menu_label: "Open more navigation options",
                 theme_light: "Light",
                 theme_dark: "Dark",
                 theme_toggle_to_light: "Switch to light theme",
@@ -6463,6 +6477,13 @@
                 language_switch_label: "选择语言",
                 primary_navigation_label: "主导航",
                 workspace_navigation_label: "工作区导航",
+                mobile_navigation_label: "移动端主导航",
+                mobile_nav_home: "首页",
+                mobile_nav_survey: "问卷",
+                mobile_nav_attendance: "考勤",
+                mobile_nav_matching: "匹配",
+                mobile_nav_more: "更多",
+                mobile_nav_more_menu_label: "打开更多导航选项",
                 theme_light: "浅色",
                 theme_dark: "深色",
                 theme_toggle_to_light: "切换为浅色主题",
@@ -6600,6 +6621,13 @@
                 language_switch_label: "언어 선택",
                 primary_navigation_label: "주요 탐색",
                 workspace_navigation_label: "워크스페이스 탐색",
+                mobile_navigation_label: "모바일 주요 탐색",
+                mobile_nav_home: "홈",
+                mobile_nav_survey: "설문",
+                mobile_nav_attendance: "근태",
+                mobile_nav_matching: "매칭",
+                mobile_nav_more: "더보기",
+                mobile_nav_more_menu_label: "추가 탐색 옵션 열기",
                 theme_light: "라이트",
                 theme_dark: "다크",
                 theme_toggle_to_light: "라이트 테마로 전환",
@@ -11009,26 +11037,26 @@ URL: https://mightylink-app.com
     </script>
 
     <!-- モバイル専用ボトムナビゲーションバー -->
-    <nav class="mobile-bottom-nav" aria-label="モバイル主要ナビゲーション">
+    <nav class="mobile-bottom-nav" aria-label="モバイル主要ナビゲーション" data-i18n-aria-label="mobile_navigation_label">
         <a href="#top" class="mobile-nav-item active" data-nav="top" onclick="setActiveMobileNav(this)">
             <span class="mobile-nav-icon">🏠</span>
-            <span class="mobile-nav-label">ホーム</span>
+            <span class="mobile-nav-label" data-i18n="mobile_nav_home">ホーム</span>
         </a>
         <a href="#survey-section" class="mobile-nav-item" data-nav="survey-section" onclick="setActiveMobileNav(this)">
             <span class="mobile-nav-icon">📝</span>
-            <span class="mobile-nav-label">アンケート</span>
+            <span class="mobile-nav-label" data-i18n="mobile_nav_survey">アンケート</span>
         </a>
         <a href="#attendance-section" class="mobile-nav-item" data-nav="attendance-section" onclick="setActiveMobileNav(this)">
             <span class="mobile-nav-icon">⏱️</span>
-            <span class="mobile-nav-label">勤怠</span>
+            <span class="mobile-nav-label" data-i18n="mobile_nav_attendance">勤怠</span>
         </a>
         <a href="#matching-section" class="mobile-nav-item" data-nav="matching-section" onclick="setActiveMobileNav(this)">
             <span class="mobile-nav-icon">🤝</span>
-            <span class="mobile-nav-label">マッチング</span>
+            <span class="mobile-nav-label" data-i18n="mobile_nav_matching">マッチング</span>
         </a>
-        <button type="button" class="mobile-nav-item mobile-nav-btn" onclick="openMobileBottomSheet()" aria-label="メニュー展開">
+        <button type="button" class="mobile-nav-item mobile-nav-btn" onclick="openMobileBottomSheet()" aria-label="その他のメニューを開く" data-i18n-aria-label="mobile_nav_more_menu_label">
             <span class="mobile-nav-icon">☰</span>
-            <span class="mobile-nav-label">その他</span>
+            <span class="mobile-nav-label" data-i18n="mobile_nav_more">その他</span>
         </button>
     </nav>
     <!-- Build Timestamp: 2026-08-16T02:08:00Z (Enterprise Admin Sidebar Live Deploy) -->
