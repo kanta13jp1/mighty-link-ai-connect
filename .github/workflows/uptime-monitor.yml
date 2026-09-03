@@ -11,6 +11,7 @@ env:
 
 permissions:
   contents: read
+  pages: read
 
 concurrency:
   group: production-operations-monitor
@@ -65,6 +66,11 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+
+      - name: Verify GitHub Pages remains decommissioned
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/verify_github_pages_decommission.py --repository "${{ github.repository }}"
 
       - name: Check public uptime targets
         env:

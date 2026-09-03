@@ -1,7 +1,7 @@
 # DevOps / SRE 運用仕様書 & アーキテクチャ決定（T896, T870, T778, コスト, ログ, パフォーマンス, GA判定, BCP）
 
 作成日: 2026-07-23  
-最終更新日: 2026-07-24 (大障害BCP・フェイルオーバー規定追加)  
+最終更新日: 2026-09-03 (GitHub Pages完全廃止・監視更新)
 担当責任者: **DevOps / SRE スペシャリスト（鈴木 一郎）**  
 対象領域: クラウドインフラ（Firebase/GCP/Supabase）、GitHub Actions CI/CD、DBバックアップ、SLA/DR、コスト管理、セキュリティ鍵運用、DBパフォーマンス、GA判定、BCP
 
@@ -20,7 +20,7 @@
 - **コミット検出ロジック**: `fetch-depth: 0` を設定し、複数コミット一括 push 時の取りこぼしを完全に防ぐ。
 - **デプロイ対象**:
   - **Firebase Hosting**: 本番アプリ基盤 (`mightylink-app.com`)
-  - **GitHub Pages**: 社長報告・受入テスト用公開デモ (`https://kanta13jp1.github.io/mighty-link-ai-connect/`)
+  - **GitHub Pages**: T924でsiteを削除済み。配信・バックアップ用途には使用しない
 
 ### 2.2 本番リリース制御 & ロールバック戦略
 1. **リリース前提条件**: `main` ブランチへのマージ前に、フルプリフライト・ガード (`python scripts/run_lane_preflight.py --full`) の全件 PASS を必須条件とする。
@@ -51,7 +51,7 @@
 - **診断評価精度ヘルプフル率**: **70 % 以上**
 
 ### 4.2 モニタリング & アラーティング
-- **リアルタイムヘルスチェック**: `.github/workflows/uptime-monitor.yml`（Production Operations Monitor）により15分周期でエンドポイント稼働を監視。同workflowの別jobで営業メールも読み取り専用取得する。障害検知時は Slack チャンネル (`SLACK_WEBHOOK_URL`) へ即時アラート送信。
+- **リアルタイムヘルスチェック**: `.github/workflows/uptime-monitor.yml`（Production Operations Monitor）により15分周期でエンドポイント稼働とGitHub Pages無効化状態を監視。同workflowの別jobで営業メールも読み取り専用取得する。障害検知時は Slack チャンネル (`SLACK_WEBHOOK_URL`) へ即時アラート送信。
 - **SLA レポート集計**: Supabase ビュー (`uptime_checks` ＋ 6 ビュー) および `scripts/generate_sla_measurement_report.py` を活用し、週次・月次で SLA 指標を自動測定して PM（梅澤）および開発チームへ共有する。
 
 ---
@@ -107,5 +107,5 @@
 ## 9. 大障害 BCP (事業継続計画) & フェイルオーバー方針
 
 ### 9.1 大障害時の切り替え体制
-1. **フロントエンド障害時**: Firebase Hosting 障害時は、DNS 保持切り替えにより独立稼働する GitHub Pages 環境（`https://kanta13jp1.github.io/mighty-link-ai-connect/`）上の静的メンテナンス・状況告知ページへルーティングを変更。
+1. **フロントエンド障害時**: Firebase Hosting障害時は直前の正常releaseへロールバックする。旧GitHub Pagesは認証保護を迂回するためフェイルオーバー先に使用せず、状況告知は承認済みの社内連絡経路で行う。
 2. **データベース大規模障害時**: Supabase メインリージョン障害時は、GCS Private Bucket に保存された最新日次バックアップ（RPO 24h）から代替 Postgres インスタンスへリカバリ（RTO 2時間以内）を実施し、API 接続先 (`SUPABASE_DB_URL`) を切り替える。

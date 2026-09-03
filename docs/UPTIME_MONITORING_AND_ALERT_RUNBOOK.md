@@ -2,7 +2,7 @@
 
 作成日: 2026-06-14
 担当レーン: Codex
-対象: GitHub Pages / Firebase Hosting / mightylink-app.com
+対象: Firebase Hosting / mightylink-app.com / GitHub Pages無効化状態
 
 ## 目的
 
@@ -15,6 +15,7 @@
 - Firebase Hosting custom domain: カスタムドメインはDNS検証後にSSL証明書が自動プロビジョニングされる。
 - Firebase Functions environment configuration: secrets は環境変数やSecret Managerで扱い、コードやreportへ保存しない。
 - GitHub Actions secrets: workflow では secrets コンテキストを使い、ログや成果物へ値を出さない。
+- GitHub Pages REST API: `DELETE /repos/{owner}/{repo}/pages`はsite削除、認証済み`GET`の404は削除状態として扱う。
 - Slack developer docs: Incoming webhook は通知専用のsecretとして扱い、失敗時の要約だけを送る。
 - OpenAI Codex / Anthropic Claude Code: agent作業はWBS・Issue・検証ログへ接続し、外部toolの権限と証跡を明示する。
 
@@ -26,6 +27,9 @@
 | `scripts/check_uptime_targets.py` | TSVを読み、各URLをGETしてJSON reportを生成する |
 | `.github/workflows/uptime-monitor.yml` | 15分間隔または手動で死活監視と読み取り専用の営業メール同期を実行する |
 | `exports/uptime_monitor_report.json` | 直近実行結果。失敗・warning・レイテンシを記録する |
+| `scripts/verify_github_pages_decommission.py` | GitHub REST APIでリポジトリ到達性を先に確認し、Pages siteが404であることをfail-closed検証する |
+
+GitHub Pages公開URLはT924で廃止済みのため、HTTP 200の死活監視対象には含めない。代わりにProduction Operations Monitorが認証済みGitHub APIでPages siteの削除状態を確認し、再有効化またはAPI確認不能を失敗として扱う。
 
 ## 手動実行
 
@@ -53,8 +57,8 @@ python scripts/check_uptime_targets.py --notify-on-failure
 ## 障害時の初動
 
 1. GitHub Actions の `Production Operations Monitor` run と `exports/uptime_monitor_report.json` を確認する。
-2. 失敗URLが GitHub Pages か Firebase Hosting か custom domain かを切り分ける。
-3. Firebase Hosting のrelease履歴、GitHub Pagesの公開状態、DNS A/TXT、SSL証明書SANを確認する。
+2. 失敗対象が Firebase Hosting、custom domain、GitHub Pages無効化ガードのどれかを切り分ける。
+3. Firebase Hosting のrelease履歴、GitHub Pages repository setting、DNS A/TXT、SSL証明書SANを確認する。
 4. P1/P2相当なら [DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md](DISASTER_RECOVERY_AND_ESCALATION_RUNBOOK.md) に従って連絡する。
 5. 復旧後24時間以内に [INCIDENT_POSTMORTEM_RUNBOOK.md](INCIDENT_POSTMORTEM_RUNBOOK.md) に従ってポストモーテムを残す。
 

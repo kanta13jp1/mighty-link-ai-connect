@@ -13,7 +13,7 @@ Mighty Skill-Bridge は、エンジニアと案件のフィット分析を起点
 
 | 区分 | 現在の扱い |
 | --- | --- |
-| 管理下デモ | CEO共有済みの GitHub Pages URL で継続利用可 |
+| 社内本番 | Basic認証で保護された `mightylink-app.com` を利用 |
 | 一般公開・有償ローンチ | Go/No-Go上は引き続き No-Go |
 | 主な未完了ゲート | 法務本文確定、正式アカウント同意履歴、課金live検証、営業メール実接続hardening、全機能E2E/UAT、Firebase CI/CD本番デプロイ認証、会社運用引継ぎ |
 | データ方針 | secret、実メール本文、CSV原本、直接識別子、契約金額実値をGitHub/Sheets/docs/NotebookLMへ記録しない |
@@ -22,11 +22,10 @@ Mighty Skill-Bridge は、エンジニアと案件のフィット分析を起点
 
 | 環境 | URL |
 | --- | --- |
-| CEO共有デモ | `https://kanta13jp1.github.io/mighty-link-ai-connect/` |
-| 本番想定URL | `https://mightylink-app.com/` |
+| 社内本番 | `https://mightylink-app.com/` |
 | ローカル開発 | `http://localhost:8000` |
 
-GitHub Pages は静的デモです。フォームや管理APIはFirebase/FastAPI環境で有効になり、GitHub Pagesでは静的表示またはfallback表示になります。
+旧GitHub Pages siteはT924で削除済みです。フォームと管理APIを含む確認はFirebase Hosting / FastAPI経由の`mightylink-app.com`で行います。
 
 ### 1.1 社内役割別研修ハンドブック
 
@@ -286,7 +285,7 @@ SLA目安:
 ### 4.1 システム構成
 
 ```text
-Browser SPA / GitHub Pages controlled demo
+Browser SPA / Firebase Hosting
   |
   +-- Firebase Hosting / Functions (FastAPI)
         |
@@ -302,8 +301,7 @@ Browser SPA / GitHub Pages controlled demo
 | 項目 | 場所 |
 | --- | --- |
 | GitHub Actions | `https://github.com/kanta13jp1/mighty-link-ai-connect/actions` |
-| 公開デモ | `https://kanta13jp1.github.io/mighty-link-ai-connect/` |
-| 本番想定URL | `https://mightylink-app.com/` |
+| 社内本番 | `https://mightylink-app.com/` |
 | WBS正本 | `data/WBS.tsv` |
 | 課題管理表正本 | `data/issues_tracker.tsv` |
 | QA表正本 | `data/qa_tracker.tsv` |
@@ -313,7 +311,7 @@ Browser SPA / GitHub Pages controlled demo
 
 ```powershell
 gh run list --limit 5 --repo kanta13jp1/mighty-link-ai-connect
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 python scripts/verify_google_workspace_account.py
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
@@ -357,7 +355,7 @@ python scripts/verify_google_workspace_account.py
 ```powershell
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 docs変更時:

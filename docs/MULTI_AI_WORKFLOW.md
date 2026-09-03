@@ -113,7 +113,7 @@ python scripts/sync_wbs_to_github.py TXXX --dry-run
 python scripts/sync_wbs_to_github.py TXXX --report exports/github_wbs_sync_report.json
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 NotebookLM向けdocsを変更した場合は、追加で次を実行する。

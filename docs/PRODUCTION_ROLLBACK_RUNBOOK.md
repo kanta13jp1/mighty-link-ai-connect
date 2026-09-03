@@ -26,8 +26,7 @@
 - Firebase Hosting rewrite 先の Cloud Run service `api` in `us-central1`
 - Firebase Functions runtime `python312`
 - Supabase production project の schema migration / RLS / data
-- CEO 共有 URL `https://kanta13jp1.github.io/mighty-link-ai-connect/`
-- カスタムドメイン / 販売 URL `https://mightylink-app.com/`（T740_3 完了済み）
+- カスタムドメイン / 社内本番 URL `https://mightylink-app.com/`（T740_3 完了済み）
 
 対象外:
 
@@ -72,7 +71,7 @@
 4. rollback後に確認する。
    ```powershell
    python -m pytest
-   python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+   python scripts/verify_public_demo.py --url https://mightylink-app.com/
    Invoke-WebRequest -Uri "https://mightylink-app.com/" -TimeoutSec 15 -UseBasicParsing
    ```
    T740_3 完了後は `mightylink-app.com` も strict HTTPS 成功を本番判定条件に含める。
@@ -132,7 +131,7 @@ gcloud run services update-traffic $env:CLOUD_RUN_SERVICE --to-revisions <KNOWN_
 
 ```powershell
 gcloud run services describe api --region us-central1 --project mighty-link-ai-connect-13d22 --format "value(status.traffic)"
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 ### 6.2 Functionsを既知の安定commitから再デプロイする
@@ -208,7 +207,7 @@ T746 の Go 判定では次を全て満たす。
 - Firebase Hosting known-good release / version ID を控えている。
 - Cloud Run `api` の直前revisionを控えている。
 - Supabase backup/PITR 時刻と migration list を控えている。
-- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` が成功。
+- `python scripts/verify_public_demo.py --url https://mightylink-app.com/` が成功。
 - `https://mightylink-app.com/` のHTTPS確認も成功。
 - WBS / Sheets / Calendar / GitHub Issue / Project の同期担当が決まっている。
 

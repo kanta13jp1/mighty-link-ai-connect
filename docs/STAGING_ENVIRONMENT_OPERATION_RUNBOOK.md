@@ -70,7 +70,7 @@ python scripts/verify_staging_environment_config.py --json --output reports/stag
 
 ```powershell
 python -m pytest
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 2. preview channel名を固定する。

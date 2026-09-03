@@ -24,6 +24,16 @@ def test_sales_email_sync_workflow_is_scheduled_and_fail_closed():
     assert "DELE" not in workflow
 
 
+def test_operations_monitor_guards_github_pages_decommission():
+    workflow = (PROJECT_ROOT / ".github" / "workflows" / "uptime-monitor.yml").read_text(
+        encoding="utf-8"
+    )
+
+    assert "pages: read" in workflow
+    assert "scripts/verify_github_pages_decommission.py" in workflow
+    assert "GITHUB_TOKEN: ${{ github.token }}" in workflow
+
+
 def test_functions_deploy_removes_stale_imap_keys_before_overlay():
     workflow = (PROJECT_ROOT / ".github" / "workflows" / "deploy.yml").read_text(
         encoding="utf-8"

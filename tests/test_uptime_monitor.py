@@ -195,6 +195,7 @@ def test_production_targets_cover_auth_gate_and_health():
     assert expected_by_url["https://mightylink-app.com/"] == 401
     assert expected_by_url["https://mightylink-app.com/api/health"] == 200
     assert expected_by_url["https://mighty-link-ai-connect-13d22.web.app/"] == 401
+    assert not any("github.io/mighty-link-ai-connect" in target.url for target in targets)
 
 
 def test_protected_production_apis_expect_unauthorized():

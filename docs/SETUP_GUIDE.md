@@ -212,7 +212,7 @@ GET  /api/knowledge-flow/status
 当日前後の必須確認:
 
 ```powershell
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 python scripts/verify_google_workspace_account.py
 python scripts/generate_knowledge_flow_demo.py
 gh issue list --state all --label ceo-demo
@@ -240,16 +240,17 @@ Start-Process -WindowStyle Hidden -FilePath python -ArgumentList "src/app.py" -W
 
 ブラウザで `http://localhost:8000` を開き、画面の接続状態が `Live Connected` になることを確認します。
 
-## 10. 公開デモURLのデグレ防止
+## 10. 本番UIのデグレ防止
 
-社長共有済みの公開URL `https://kanta13jp1.github.io/mighty-link-ai-connect/` は GitHub Pages の本番デモ面として扱います。
+本番URL `https://mightylink-app.com/` はFirebase Hosting / Cloud Run経由の認証保護された正本です。旧GitHub Pages siteはT924で削除済みであり、配信先やフェイルオーバー先として使用しません。
 
 重要ルール:
 
 - ルート直下の `index.html` は削除・移動しない。
-- FastAPI 用の `src/index.html` を変更する場合でも、公開URL用の `index.html` への影響を必ず確認する。
+- FastAPI 用の `src/index.html` を変更する場合でも、互換ソースの `index.html` への影響を必ず確認する。
 - push 前に `scripts/verify_public_demo.py` を実行し、README fallback や UI マーカー欠落がないことを確認する。
-- `main` / `master` への push 時は GitHub Actions `Public Demo Guard` が root `index.html` を検証する。
+- `main` / `master` への push 時は GitHub Actions `Production UI Guard` がroot `index.html`を検証する。
+- `Production Operations Monitor` はGitHub Pages siteが削除状態のままであることをGitHub REST APIで検証する。
 
 ローカル検証:
 
@@ -260,7 +261,7 @@ python scripts/verify_public_demo.py
 公開URL反映後の検証:
 
 ```powershell
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 ## 11. AI 監査ログの確認
@@ -482,7 +483,7 @@ After generation, unset `SEEDANCE_API_ENABLED` and restart FastAPI. BytePlus Mod
 The project root now includes a branded `favicon.ico`. It is used by both:
 
 ```text
-https://kanta13jp1.github.io/mighty-link-ai-connect/favicon.ico
+https://mightylink-app.com/favicon.ico
 http://127.0.0.1:8000/favicon.ico
 ```
 

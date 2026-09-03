@@ -84,7 +84,7 @@ graph TD
    - Google Cloud Logging でエラーログ抽出
    - Supabase ダッシュボード → Logs でクエリエラー確認
 5. 復旧後の確認
-   - python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+   - python scripts/verify_public_demo.py --url https://mightylink-app.com/
    - 診断 API エンドポイントの疎通確認（/api/v1/health）
 6. ポストモーテム作成（24時間以内）
    - docs/POSTMORTEM_YYYY-MM-DD.md を新規作成

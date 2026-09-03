@@ -72,7 +72,7 @@ python -m pytest -q
 python scripts/verify_google_workspace_account.py
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 docs変更がある場合はNotebookLM/Drive同期も行う。

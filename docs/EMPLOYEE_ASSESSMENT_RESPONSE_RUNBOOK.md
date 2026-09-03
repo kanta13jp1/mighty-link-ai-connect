@@ -77,7 +77,7 @@ Basic Auth必須。件数、平均値、部署カテゴリ別件数、redacted�
 ## 検証
 
 - `tests/test_api.py::test_employee_assessment_response_submission_summary_and_redaction`
-- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/`
+- `python scripts/verify_public_demo.py --url https://mightylink-app.com/`
 
 ## 公式ドキュメント確認メモ
 

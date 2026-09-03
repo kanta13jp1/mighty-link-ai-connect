@@ -83,7 +83,7 @@ staging / production それぞれで実施する。
 python scripts/check_supabase_postgres_version.py --execute
 python scripts/manage_db_migrations.py validate --engine supabase
 python -m pytest tests/test_sales_email_schema_migrations.py tests/test_supabase_postgres_version_check.py
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 必要に応じて以下も確認する。

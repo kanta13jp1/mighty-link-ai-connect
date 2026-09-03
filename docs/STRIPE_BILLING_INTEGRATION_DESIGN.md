@@ -135,7 +135,7 @@ T791を完了にできる条件:
 4. Supabase RLS/REVOKEが適用され、raw payloadやsecretが保存されないことをpytestで確認している。
 5. 領収書・請求書はStripe hostedの参照に限定し、T813未完了の税要件を勝手に確定しない。
 6. Sheets同期はマスク済み集計だけで、raw payloadや実IDを含まない。
-7. `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/` がPASSする。
+7. `python scripts/verify_public_demo.py --url https://mightylink-app.com/` がPASSする。
 
 ## T807受け入れ条件
 

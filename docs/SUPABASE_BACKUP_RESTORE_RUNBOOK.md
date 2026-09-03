@@ -99,7 +99,7 @@ python scripts/restore_supabase_database.py backups/supabase/20260613T180000Z --
 
 ```powershell
 python -m pytest tests/test_rls_policies.py
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 ## T771 リストア訓練

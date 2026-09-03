@@ -50,7 +50,7 @@ Basic Auth必須。KPI、部署別診断件数、勤怠ステータス、営業�
 
 - `tests/test_api.py::test_admin_operations_dashboard_requires_auth_aggregates_and_exports_csv`
 - `python -m pytest -q`
-- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/`
+- `python scripts/verify_public_demo.py --url https://mightylink-app.com/`
 
 ## 公式ドキュメント確認メモ
 

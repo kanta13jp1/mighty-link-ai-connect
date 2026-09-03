@@ -38,7 +38,7 @@ REPORTS_DIR = PROJECT_ROOT / "reports"
 
 SHEETS_URL = "https://docs.google.com/spreadsheets/d/1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8"
 REPO_URL = "https://github.com/kanta13jp1/mighty-link-ai-connect"
-DEMO_URL = "https://kanta13jp1.github.io/mighty-link-ai-connect/"
+DEMO_URL = "https://mightylink-app.com/"
 
 
 def read_tsv(path: Path) -> list[dict[str, str]]:
@@ -249,7 +249,7 @@ def render(month: str, today: date) -> str:
     add("")
     add(f"- [WBS スプレッドシート]({SHEETS_URL})")
     add(f"- [GitHub リポジトリ]({REPO_URL})")
-    add(f"- [公開デモ URL]({DEMO_URL})")
+    add(f"- [本番 URL]({DEMO_URL})")
     add("- [SLA/KPI 定義](SLA_KPI_DEFINITION_AND_MEASUREMENT.md) / [レポート仕様 (T767)](MONTHLY_PROGRESS_REPORT_AND_KPI_DASHBOARD.md)")
     add("")
     return "\n".join(lines)
