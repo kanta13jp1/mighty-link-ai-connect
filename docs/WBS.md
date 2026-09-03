@@ -474,6 +474,7 @@ gantt
 | **T1006** | 8. 本番運用・品質管理 | 性能・信頼性 | 営業メールマッチングAPIのlimit連動ペイロード縮小 | Codex | Codex + Pytest + GitHub Actions + Firebase | 本番GET /api/sales-email/matches?limit=1がmatch 1件に対して案件・人材カタログ全量を同梱し1,362,338 bytesを返す不具合をIssue #331として記録。build_match_reportでlimit適用後のmatchから参照されるprojects/talentsだけを応答へ含め、project_count/talent_countはlimit前の総数として維持する。回帰テストで関連キーだけの返却と100KB未満を固定し、本番相当データのローカル計測は5,373 bytes。メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 | **T1004** | 8. 本番運用・品質管理 | アクセシビリティ | 本番SPAのページ主題H1・見出し構造回帰修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番全体レビューでページ主題を表すh1が0件であることをIssue #332として記録。トップバーの既存ブランド名を一意なh1.brand-titleへ変更し、外観・フッターブランド・8画面切替を維持。index.htmlとsrc/index.htmlの一意なH1、ブランド名、CSSクラスを回帰テストで固定し、認証後本番でもMighty Skill-Bridge見出しを検証する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 | **T1007** | 8. 本番運用・品質管理 | アクセシビリティ | モバイルメニューのARIA制御対象と実ドロワーの参照整合修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番モバイル監査でmobile-menu-btnにaria-controlsが重複し、Chromiumが非表示primary-navigationを制御対象として解釈する一方、実際の開閉対象はglobal-sidebarである不具合をIssue #333として記録。誤った属性を除去し、global-sidebarへの一意な参照、参照先IDの存在、クリック後aria-expanded=trueとドロワー表示を静的/Playwright回帰テストで固定する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
+| **T1008** | 8. 本番運用・品質管理 | アクセシビリティ | 非表示モーダルのキーボードフォーカス隔離修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番監査でaria-hidden=trueの認証モーダルに6要素、ショートカットヘルプに2要素が順次フォーカス対象として残る不具合をIssue #334として記録。両HTMLで初期状態をinertとし、開閉時にaria-hiddenとinertを同期する。静的HTMLParserとPlaywrightで初期状態、開状態、閉状態、フォーカス復帰を回帰固定する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 
 ---
 

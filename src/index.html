@@ -4251,7 +4251,7 @@
     </header>
 
     <!-- Modal: Authentication & Access Control (ログイン / 会員登録) -->
-    <div class="auth-modal-overlay" id="auth-modal" aria-hidden="true">
+    <div class="auth-modal-overlay" id="auth-modal" aria-hidden="true" inert>
         <div class="auth-modal-card" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
             <button class="auth-modal-close" onclick="closeAuthModal()" aria-label="閉じる">×</button>
             <div class="auth-modal-header">
@@ -5692,7 +5692,7 @@
         </section>
 
         <!-- キーボードショートカットヘルプモーダル -->
-        <div id="shortcut-help-modal" class="auth-modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="shortcut-modal-title">
+        <div id="shortcut-help-modal" class="auth-modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="shortcut-modal-title" inert>
             <div class="auth-modal-card" style="max-width: 500px;">
                 <button type="button" class="auth-modal-close" onclick="closeShortcutHelpModal()" aria-label="閉じる">×</button>
                 <div class="auth-modal-header">
@@ -10281,6 +10281,7 @@
             const session = currentUserSession || getAuthSession();
 
             if (modal) {
+                modal.inert = false;
                 modal.classList.add('active');
                 modal.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden'; // Lock background scroll
@@ -10312,6 +10313,7 @@
             if (modal) {
                 modal.classList.remove('active');
                 modal.setAttribute('aria-hidden', 'true');
+                modal.inert = true;
                 document.body.style.overflow = ''; // Unlock scroll
             }
             const errorEl = document.getElementById('auth-error-msg');
@@ -10580,6 +10582,7 @@
         function openShortcutHelpModal() {
             const modal = document.getElementById('shortcut-help-modal');
             if (modal) {
+                modal.inert = false;
                 modal.classList.add('active');
                 modal.setAttribute('aria-hidden', 'false');
                 setupFocusTrap(modal);
@@ -10591,6 +10594,7 @@
             if (modal) {
                 modal.classList.remove('active');
                 modal.setAttribute('aria-hidden', 'true');
+                modal.inert = true;
                 releaseFocusTrap();
             }
         }
