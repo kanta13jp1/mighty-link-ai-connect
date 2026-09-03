@@ -8,7 +8,7 @@ INDEX_PATH = Path("index.html")
 content = INDEX_PATH.read_text(encoding="utf-8")
 
 # 1. Clean up sidebar links: data-i18n only on the label span
-clean_sidebar_nav = """            <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
+clean_sidebar_nav = """            <nav class="nav-links" id="primary-navigation" aria-label="メインナビゲーション" data-i18n-aria-label="primary_navigation_label">
                 <!-- 1. Home / Fit Simulator -->
                 <a href="#top" class="sidebar-nav-item" data-tab-id="home-view">
                     <span style="font-size: 15px;">🏠</span>
@@ -66,7 +66,7 @@ clean_sidebar_nav = """            <nav class="nav-links" id="primary-navigation
                 </a>
             </nav>"""
 
-pattern = r'<nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">[\s\S]*?</nav>'
+pattern = r'<nav class="nav-links" id="primary-navigation"[^>]*>[\s\S]*?</nav>'
 content = re.sub(pattern, clean_sidebar_nav, content)
 
 # 2. Clean switchLanguage function

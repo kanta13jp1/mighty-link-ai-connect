@@ -7,7 +7,7 @@ INDEX_PATH = Path("index.html")
 content = INDEX_PATH.read_text(encoding="utf-8")
 
 # 1. Restore #primary-navigation in topbar without style="display:none;"
-topbar_nav_restored = """        <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
+topbar_nav_restored = """        <nav class="nav-links" id="primary-navigation" aria-label="メインナビゲーション" data-i18n-aria-label="primary_navigation_label">
             <a href="#top" class="active" data-i18n="nav_home">ホーム</a>
             <a href="#onboarding-section" data-i18n="nav_onboarding">初期セットアップ</a>
             <a href="#training-modal" onclick="openTrainingModal(event)" data-i18n="nav_training">研修ガイド</a>

@@ -9,7 +9,7 @@ content = INDEX_PATH.read_text(encoding="utf-8")
 # Replace sidebar nav tag with exact string required by check_accessibility_static.py
 content = content.replace(
     '<nav class="sidebar-nav-list" id="primary-navigation" aria-label="Primary navigation">',
-    '<nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">'
+    '<nav class="nav-links" id="primary-navigation" aria-label="メインナビゲーション" data-i18n-aria-label="primary_navigation_label">'
 )
 
 INDEX_PATH.write_text(content, encoding="utf-8")

@@ -33,8 +33,14 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
         ),
         (
             "primary_navigation_target",
-            '<nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">' in html,
-            "Primary navigation needs a stable aria label and id for mobile controls.",
+            '<nav class="nav-links" id="primary-navigation" '
+            'aria-label="メインナビゲーション" '
+            'data-i18n-aria-label="primary_navigation_label">' in html
+            and all(
+                f'primary_navigation_label: "{label}"' in html
+                for label in ["メインナビゲーション", "Primary navigation", "主导航", "주요 탐색"]
+            ),
+            "Primary navigation needs a localized aria label and stable id.",
         ),
         (
             "localized_theme_toggle",

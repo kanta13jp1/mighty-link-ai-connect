@@ -118,7 +118,7 @@ old_nav_links = """        <nav class="nav-links" id="primary-navigation" aria-l
         </nav>"""
 
 new_topbar_nav = """        <!-- Primary Navigation handled by Unified Global SaaS Sidebar -->
-        <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation" style="display:none;">
+        <nav class="nav-links" id="primary-navigation" aria-label="メインナビゲーション" data-i18n-aria-label="primary_navigation_label" style="display:none;">
             <a href="#top" data-i18n="nav_home">ホーム</a>
             <a href="#onboarding-section" data-i18n="nav_onboarding">初期セットアップ</a>
             <a href="#survey-section" data-i18n="nav_survey">適性アンケート</a>
