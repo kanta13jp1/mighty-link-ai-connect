@@ -63,7 +63,7 @@ def test_h4_light_theme_block_present(html):
 def test_h5_toggle_button_present(html):
     assert 'id="theme-toggle"' in html
     assert 'onclick="toggleTheme()"' in html
-    assert 'aria-label="配色モードを切り替え"' in html
+    assert 'aria-label="ライトテーマに切り替え"' in html
     assert 'aria-pressed=' in html
 
 

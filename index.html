@@ -4247,7 +4247,7 @@
                         <button class="auth-logout-btn" onclick="handleLogout()" title="ログアウト" data-i18n="auth_logout_btn" data-i18n-title="auth_logout_title">🔒 ログアウト</button>
                     </div>
                 </div>
-                <button class="theme-toggle" type="button" id="theme-toggle" aria-label="配色モードを切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label" data-i18n="theme_light">ライト</span></button>
+                <button class="theme-toggle" type="button" id="theme-toggle" aria-label="ライトテーマに切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label">ライト</span></button>
                 <button class="mobile-menu" type="button" aria-label="ナビゲーションメニューを開く" onclick="toggleSidebarDrawer()" id="mobile-menu-btn" aria-controls="global-sidebar" aria-expanded="false">☰</button>
             </div>
         </div>
@@ -6079,8 +6079,15 @@
             }
             const btn = document.getElementById("theme-toggle");
             const label = document.getElementById("theme-toggle-label");
-            if (btn) btn.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
-            if (label) label.textContent = theme === "light" ? "ダーク" : "ライト";
+            const documentLanguage = document.documentElement.lang.split("-")[0];
+            const language = ["ja", "en", "zh", "ko"].includes(documentLanguage) ? documentLanguage : "ja";
+            const targetTheme = theme === "light" ? "dark" : "light";
+            const translations = i18nDict[language] || i18nDict.ja;
+            if (btn) {
+                btn.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+                btn.setAttribute("aria-label", translations[`theme_toggle_to_${targetTheme}`]);
+            }
+            if (label) label.textContent = translations[`theme_${targetTheme}`];
         }
 
         function toggleTheme() {
@@ -6089,13 +6096,6 @@
             try { localStorage.setItem("msb-theme", next); } catch (e) {}
             applyTheme(next);
         }
-
-        (function initTheme() {
-            let saved = null;
-            try { saved = localStorage.getItem("msb-theme"); } catch (e) {}
-            // Default is dark: only switch to light when explicitly saved.
-            applyTheme(saved === "light" ? "light" : "dark");
-        })();
 
         const i18nDict = {
             ja: {
@@ -6188,6 +6188,8 @@
                 auth_logout_title: "ログアウト",
                 theme_light: "ライト",
                 theme_dark: "ダーク",
+                theme_toggle_to_light: "ライトテーマに切り替え",
+                theme_toggle_to_dark: "ダークテーマに切り替え",
                 step_1_badge: "Step 1",
                 step_2_5_badge: "Step 2.5",
                 load_sample_btn: "サンプルを読み込む",
@@ -6320,6 +6322,8 @@
                 auth_logout_title: "Logout",
                 theme_light: "Light",
                 theme_dark: "Dark",
+                theme_toggle_to_light: "Switch to light theme",
+                theme_toggle_to_dark: "Switch to dark theme",
                 step_1_badge: "Step 1",
                 step_2_5_badge: "Step 2.5",
                 load_sample_btn: "Load Sample",
@@ -6452,6 +6456,8 @@
                 auth_logout_title: "退出登录",
                 theme_light: "浅色",
                 theme_dark: "深色",
+                theme_toggle_to_light: "切换为浅色主题",
+                theme_toggle_to_dark: "切换为深色主题",
                 step_1_badge: "步骤 1",
                 step_2_5_badge: "步骤 2.5",
                 load_sample_btn: "加载示例",
@@ -6584,6 +6590,8 @@
                 auth_logout_title: "로그아웃",
                 theme_light: "라이트",
                 theme_dark: "다크",
+                theme_toggle_to_light: "라이트 테마로 전환",
+                theme_toggle_to_dark: "다크 테마로 전환",
                 step_1_badge: "1단계",
                 step_2_5_badge: "2.5단계",
                 load_sample_btn: "샘플 로드",
@@ -6628,6 +6636,13 @@
             }
         };
 
+        (function initTheme() {
+            let saved = null;
+            try { saved = localStorage.getItem("msb-theme"); } catch (e) {}
+            // Default is dark: only switch to light when explicitly saved.
+            applyTheme(saved === "light" ? "light" : "dark");
+        })();
+
         function switchLanguage(el) {
             const lang = typeof el === "string" ? el : el.getAttribute("data-lang");
             if (!lang) return;
@@ -6663,6 +6678,8 @@
             });
             const mobileMenu = document.getElementById('mobile-menu-btn');
             updateMobileMenuAccessibility(mobileMenu?.getAttribute('aria-expanded') === 'true');
+            const currentTheme = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+            applyTheme(currentTheme);
         }
 
         function setVideoSource(url) {

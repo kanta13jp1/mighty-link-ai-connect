@@ -478,6 +478,7 @@ gantt
 | **T1009** | 8. 本番運用・品質管理 | アクセシビリティ | モバイルメニューの多言語アクセシブル名と開閉状態同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 日本語本番ページでmobile-menu-btnのaria-labelが英語のFocus navigationに固定され、aria-expandedが変化しても読み上げ名が変わらない不具合をIssue #335として記録。日本語・英語・中国語・韓国語の開閉ラベルをi18n辞書へ追加し、初期表示・ドロワー開閉・言語切替でaria-labelとaria-expandedを同期する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 | **T1010** | 8. 本番運用・品質管理 | アクセシビリティ | 言語切替のネイティブボタン化と選択状態通知修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番の4言語切替がhref=javascript:void(0)のリンクとして実装され、Spaceキーで操作できず選択状態も支援技術へ通知されない不具合をIssue #336として記録。ネイティブbuttonとaria-pressedへ置換し、Space/Enter操作、4言語の排他的選択状態、localStorage永続化を回帰固定する。旧リンクUIを再生成し得る保守・診断スクリプトも同じ契約へ更新する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 | **T1011** | 8. 本番運用・品質管理 | アクセシビリティ | 多言語スキップリンクの文言同期とmainフォーカス移動修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番でキーボード利用者が最初に到達するスキップリンクが全言語で英語固定となり、言語切替の対象外である不具合をIssue #337として記録。4言語のskip_to_main辞書とdata-i18nを追加し、選択言語・localStorage復元に文言を同期する。Enter実行後にmain#topへフォーカスを移し、既存の迂回導線を実効化する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
+| **T1012** | 8. 本番運用・品質管理 | アクセシビリティ | 配色テーマ切替の多言語アクセシブル名と状態同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番で配色テーマ切替の表示ラベルは4言語へ変わる一方、aria-labelが日本語固定で支援技術の読み上げ名と不一致になる不具合をIssue #338として記録。ライト・ダーク各状態の遷移先ラベルとアクセシブル名を4言語辞書へ追加し、テーマ変更・言語変更・localStorage復元でaria-pressed、表示ラベル、aria-labelを一括同期する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 
 ---
 

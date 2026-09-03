@@ -37,6 +37,19 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
             "Primary navigation needs a stable aria label and id for mobile controls.",
         ),
         (
+            "localized_theme_toggle",
+            'id="theme-toggle" aria-label="ライトテーマに切り替え"' in html
+            and 'id="theme-toggle-label">ライト</span>' in html
+            and all(
+                key in html
+                for key in [
+                    "theme_toggle_to_light",
+                    "theme_toggle_to_dark",
+                ]
+            ),
+            "Theme toggle name must follow the selected language and target theme.",
+        ),
+        (
             "touch_target_css",
             ".nav-links a,\n        .language-switch button" in html
             and "min-height: 32px;" in html
