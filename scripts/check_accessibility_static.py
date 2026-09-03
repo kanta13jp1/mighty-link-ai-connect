@@ -26,6 +26,21 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_brand_home_links",
+            html.count('data-i18n-aria-label="brand_home_label"') == 2
+            and 'aria-label="Mighty Skill-Bridge footer home"' not in html
+            and all(
+                f'brand_home_label: "{label}"' in html
+                for label in [
+                    "Mighty Skill-Bridge ホーム",
+                    "Mighty Skill-Bridge home",
+                    "Mighty Skill-Bridge 首页",
+                    "Mighty Skill-Bridge 홈",
+                ]
+            ),
+            "Header and footer brand home links must follow the selected language.",
+        ),
+        (
             "skip_link",
             '<a class="skip-link" href="#top" data-i18n="skip_to_main">' in html
             and '<main id="top" tabindex="-1">' in html,
