@@ -43,6 +43,22 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
             "Primary navigation needs a localized aria label and stable id.",
         ),
         (
+            "localized_workspace_navigation",
+            '<aside class="global-app-sidebar" id="global-sidebar" '
+            'aria-label="ワークスペースナビゲーション" '
+            'data-i18n-aria-label="workspace_navigation_label">' in html
+            and all(
+                f'workspace_navigation_label: "{label}"' in html
+                for label in [
+                    "ワークスペースナビゲーション",
+                    "Workspace navigation",
+                    "工作区导航",
+                    "워크스페이스 탐색",
+                ]
+            ),
+            "Workspace navigation landmark name must follow the selected language.",
+        ),
+        (
             "localized_theme_toggle",
             'id="theme-toggle" aria-label="ライトテーマに切り替え"' in html
             and 'id="theme-toggle-label">ライト</span>' in html

@@ -12,7 +12,7 @@ global_sidebar_html = """
         <!-- ======================================================== -->
         <!-- UNIFIED GLOBAL SAAS SIDEBAR (Figma Untitled UI Parity)   -->
         <!-- ======================================================== -->
-        <aside class="global-app-sidebar" aria-label="Global Workspace Navigation">
+        <aside class="global-app-sidebar" id="global-sidebar" aria-label="ワークスペースナビゲーション" data-i18n-aria-label="workspace_navigation_label">
             <div class="sidebar-brand">
                 <div style="width: 36px; height: 36px; border-radius: 10px; background: #162a15; border: 1.2px solid #baff66; display: flex; align-items: center; justify-content: center; font-size: 16px;">🛡️</div>
                 <div>
