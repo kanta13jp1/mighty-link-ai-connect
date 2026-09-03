@@ -4,7 +4,7 @@
 
 - WBS total: 430
 - Done: 419
-- In progress: 7
+- In progress: 8
 - Completion: 97%
 
 ## Key Notes
