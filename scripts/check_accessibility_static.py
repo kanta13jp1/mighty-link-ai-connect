@@ -26,6 +26,17 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_mobile_bottom_sheet_close_button",
+            'class="auth-modal-close" onclick="closeMobileBottomSheet()" '
+            'style="position:static;" aria-label="閉じる" '
+            'data-i18n-aria-label="shortcut_modal_close"' in html
+            and all(
+                f'shortcut_modal_close: "{label}"' in html
+                for label in ["閉じる", "Close", "关闭", "닫기"]
+            ),
+            "Mobile bottom sheet close name must follow the selected language.",
+        ),
+        (
             "localized_shortcut_modal_close_button",
             'class="auth-modal-close" onclick="closeShortcutHelpModal()" '
             'aria-label="閉じる" data-i18n-aria-label="shortcut_modal_close"' in html
