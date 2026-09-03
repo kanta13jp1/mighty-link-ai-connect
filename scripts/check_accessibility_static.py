@@ -27,8 +27,9 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     checks: list[tuple[str, bool, str]] = [
         (
             "skip_link",
-            '<a class="skip-link" href="#top">' in html and '<main id="top" tabindex="-1">' in html,
-            "Skip link must move keyboard users to the main content landmark.",
+            '<a class="skip-link" href="#top" data-i18n="skip_to_main">' in html
+            and '<main id="top" tabindex="-1">' in html,
+            "Localized skip link must move keyboard users to the main content landmark.",
         ),
         (
             "primary_navigation_target",
