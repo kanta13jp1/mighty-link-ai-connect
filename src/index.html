@@ -4244,7 +4244,7 @@
                     </div>
                 </div>
                 <button class="theme-toggle" type="button" id="theme-toggle" aria-label="配色モードを切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label" data-i18n="theme_light">ライト</span></button>
-                <button class="mobile-menu" type="button" aria-label="Focus navigation" onclick="toggleSidebarDrawer()" id="mobile-menu-btn" aria-controls="global-sidebar" aria-expanded="false">☰</button>
+                <button class="mobile-menu" type="button" aria-label="ナビゲーションメニューを開く" onclick="toggleSidebarDrawer()" id="mobile-menu-btn" aria-controls="global-sidebar" aria-expanded="false">☰</button>
             </div>
         </div>
         
@@ -5894,10 +5894,19 @@
         const tabScrollMemory = {};
         let currentActiveTabId = 'home-view';
 
+        function updateMobileMenuAccessibility(isOpen) {
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!btn) return;
+            const language = document.documentElement.lang || 'ja';
+            const labels = i18nDict[language] || i18nDict.ja;
+            const labelKey = isOpen ? 'mobile_menu_close_label' : 'mobile_menu_open_label';
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            btn.setAttribute('aria-label', labels[labelKey]);
+        }
+
         function toggleSidebarDrawer() {
             const sidebar = document.getElementById('global-sidebar');
             const backdrop = document.getElementById('sidebar-backdrop');
-            const btn = document.getElementById('mobile-menu-btn');
             if (!sidebar) return;
 
             const isOpen = sidebar.classList.contains('drawer-open');
@@ -5906,7 +5915,7 @@
             } else {
                 sidebar.classList.add('drawer-open');
                 if (backdrop) backdrop.classList.add('active');
-                if (btn) btn.setAttribute('aria-expanded', 'true');
+                updateMobileMenuAccessibility(true);
                 document.body.style.overflow = 'hidden';
             }
         }
@@ -5914,10 +5923,9 @@
         function closeSidebarDrawer() {
             const sidebar = document.getElementById('global-sidebar');
             const backdrop = document.getElementById('sidebar-backdrop');
-            const btn = document.getElementById('mobile-menu-btn');
             if (sidebar) sidebar.classList.remove('drawer-open');
             if (backdrop) backdrop.classList.remove('active');
-            if (btn) btn.setAttribute('aria-expanded', 'false');
+            updateMobileMenuAccessibility(false);
             document.body.style.overflow = '';
         }
 
@@ -6101,6 +6109,8 @@
                 nav_attendance: "勤怠管理",
                 nav_matching: "営業メールマッチング",
                 nav_admin: "管理者ダッシュボード",
+                mobile_menu_open_label: "ナビゲーションメニューを開く",
+                mobile_menu_close_label: "ナビゲーションメニューを閉じる",
                 hero_title: "エンジニア＆案件 AIフィットシミュレーター",
                 hero_subtitle: "AIが最適マッチングと自己診断・勤怠解析をワンストップ支援",
                 hero_badge: "次世代SESAIプラットフォーム",
@@ -6230,6 +6240,8 @@
                 nav_attendance: "Attendance",
                 nav_matching: "Email Matching",
                 nav_admin: "Admin Dashboard",
+                mobile_menu_open_label: "Open navigation menu",
+                mobile_menu_close_label: "Close navigation menu",
                 hero_title: "Engineer & Job AI Fit Simulator",
                 hero_subtitle: "One-stop AI platform for optimal matching, self-diagnosis, and attendance analytics",
                 hero_badge: "Next-Gen SES AI Platform",
@@ -6359,6 +6371,8 @@
                 nav_attendance: "考勤管理",
                 nav_matching: "邮件匹配",
                 nav_admin: "管理员后台",
+                mobile_menu_open_label: "打开导航菜单",
+                mobile_menu_close_label: "关闭导航菜单",
                 hero_title: "工程师与职位 AI 匹配模拟器",
                 hero_subtitle: "提供一站式 AI 最优匹配、自我诊断与考勤智能分析",
                 hero_badge: "次世代 SES AI 平台",
@@ -6488,6 +6502,8 @@
                 nav_attendance: "근태관리",
                 nav_matching: "영업메일 매칭",
                 nav_admin: "관리자 대시보드",
+                mobile_menu_open_label: "내비게이션 메뉴 열기",
+                mobile_menu_close_label: "내비게이션 메뉴 닫기",
                 hero_title: "엔지니어 & 프로젝트 AI 피트 시뮬레이터",
                 hero_subtitle: "최적의 매칭과 자가진단, 근태 분석을 원스톱으로 지원하는 AI 플랫폼",
                 hero_badge: "차세대 SES AI 플랫폼",
@@ -6657,6 +6673,8 @@
                     node.setAttribute("placeholder", i18nDict[lang][key]);
                 }
             });
+            const mobileMenu = document.getElementById('mobile-menu-btn');
+            updateMobileMenuAccessibility(mobileMenu?.getAttribute('aria-expanded') === 'true');
         }
 
         function setVideoSource(url) {
