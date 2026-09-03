@@ -1,10 +1,10 @@
 # 営業メールAIマッチング検索API/UI Runbook
 
 - 作成日: 2026-06-19
-- 関連WBS: T817, T817_5, T817_6, T920, T923
-- 関連Issue: #110
-- 関連課題: R75, R82, R83
-- ステータス: T817_5 完了。T817_6で人間レビュー、評価ログ、`email_match_feedback` 保存も完了。T920で必須スキル、単価範囲、フリーワード、適合度、T923で案件メール受信日の期間絞り込みを追加。本番hardeningはT817_7で実装する。
+- 関連WBS: T817, T817_5, T817_6, T920, T923, T1006
+- 関連Issue: #110, #331
+- 関連課題: R75, R82, R83, R152
+- ステータス: T817_5 完了。T817_6で人間レビュー、評価ログ、`email_match_feedback` 保存も完了。T920で必須スキル、単価範囲、フリーワード、適合度、T923で案件メール受信日の期間絞り込みを追加。T1006で`limit`適用後の候補に関係する案件・人材要約だけを返すよう応答サイズを縮小。本番hardeningはT817_7で実装する。
 
 ---
 
@@ -56,9 +56,12 @@ GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_rate=60
 
 返却内容:
 
-- `projects`: 案件要件の安全な要約
-- `talents`: 匿名化済み候補者の安全な要約
+- `project_count` / `talent_count`: フィルター適用後、`limit`適用前の取得元カタログ総数
+- `projects`: 返却する`matches`から参照される案件要件だけを含む安全な要約
+- `talents`: 返却する`matches`から参照される匿名候補者だけを含む安全な要約
 - `matches`: 候補ペア、score、score_breakdown、matched_skills、missing_skills、matched_conditions、mismatch_reasons、match_reason
+
+`limit`は`matches`だけでなく、応答へ同梱する`projects` / `talents`の参照範囲にも連動する。総数表示の互換性は`project_count` / `talent_count`で維持し、返却候補と無関係なカタログ全量は送信しない。T1006の本番相当データによるローカル計測では、`limit=1`のJSON応答を1,362,338 bytes相当から5,373 bytesへ縮小した。
 
 ## UI
 
@@ -115,6 +118,7 @@ python -m pytest tests/test_sales_email_ingest.py tests/test_sales_email_extract
 - JSTへの日付正規化、期間端の包含、不正期間の400拒否が正しい。
 - 単価不明案件は単価指定時に除外され、0件の結果がデモ行へ戻らない。
 - API応答とCLI出力に個人メール、電話番号、secret-like値が出ない。
+- `limit=1`で`matches`が最大1件となり、`projects` / `talents`がその候補から参照されるレコードだけを含み、JSON応答が100KB未満になる。
 - UIが営業メール候補を優先し、APIが使えない場合は既存デモへfallbackする。
 
 ## 次工程
