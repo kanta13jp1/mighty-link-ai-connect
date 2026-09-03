@@ -37,10 +37,10 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
         ),
         (
             "touch_target_css",
-            ".nav-links a,\n        .language-switch a" in html
+            ".nav-links a,\n        .language-switch button" in html
             and "min-height: 32px;" in html
             and "min-width: 32px;" in html,
-            "Navigation and language links must keep WCAG 2.2 AA touch target sizing.",
+            "Navigation links and language buttons must keep WCAG 2.2 AA touch target sizing.",
         ),
         (
             "keyboard_focus_css",

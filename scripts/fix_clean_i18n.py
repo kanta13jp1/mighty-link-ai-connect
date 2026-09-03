@@ -75,27 +75,11 @@ clean_switch_lang_js = """
             const lang = typeof el === "string" ? el : el.getAttribute("data-lang");
             if (!lang) return;
 
-            if (typeof el !== "string") {
-                const switcher = el.closest(".language-switch");
-                if (switcher) {
-                    switcher.querySelectorAll("a").forEach(a => {
-                        a.classList.remove("active");
-                        a.removeAttribute("aria-current");
-                    });
-                    el.classList.add("active");
-                    el.setAttribute("aria-current", "true");
-                }
-            } else {
-                document.querySelectorAll(".language-switch a").forEach(a => {
-                    if (a.getAttribute("data-lang") === lang) {
-                        a.classList.add("active");
-                        a.setAttribute("aria-current", "true");
-                    } else {
-                        a.classList.remove("active");
-                        a.removeAttribute("aria-current");
-                    }
-                });
-            }
+            document.querySelectorAll(".language-switch button").forEach(button => {
+                const selected = button.getAttribute("data-lang") === lang;
+                button.classList.toggle("active", selected);
+                button.setAttribute("aria-pressed", String(selected));
+            });
 
             document.documentElement.lang = lang === "ja" ? "ja" : lang;
             try { localStorage.setItem("msb_language_preference", lang); } catch (e) {}

@@ -38,8 +38,8 @@ def test_language_switch_flow(fastapi_server):
         assert "アンケート" in nav_text or "Survey" in nav_text
         
         # 2. Click "EN" language switch
-        page.wait_for_selector(".language-switch a[data-lang='en']")
-        en_btn = page.locator(".language-switch a[data-lang='en']")
+        page.wait_for_selector(".language-switch button[data-lang='en']")
+        en_btn = page.locator(".language-switch button[data-lang='en']")
         en_btn.click(force=True, no_wait_after=True)
         
         # Verify DOM update
@@ -54,7 +54,7 @@ def test_language_switch_flow(fastapi_server):
         assert "profile" in res_placeholder.lower() or "skills" in res_placeholder.lower()
         
         # 3. Click "中文" (zh)
-        zh_btn = page.locator(".language-switch a[data-lang='zh']")
+        zh_btn = page.locator(".language-switch button[data-lang='zh']")
         zh_btn.click(force=True, no_wait_after=True)
         page.wait_for_function(
             "() => document.documentElement.lang === 'zh'"
@@ -62,7 +62,7 @@ def test_language_switch_flow(fastapi_server):
         assert page.evaluate("() => document.documentElement.lang") == "zh"
         
         # 4. Click "KO" (ko)
-        ko_btn = page.locator(".language-switch a[data-lang='ko']")
+        ko_btn = page.locator(".language-switch button[data-lang='ko']")
         ko_btn.click(force=True, no_wait_after=True)
         page.wait_for_function(
             "() => document.documentElement.lang === 'ko'"
@@ -80,7 +80,7 @@ def test_language_switch_flow(fastapi_server):
         assert "엔지니어" in ko_placeholder
         
         # 5. Switch back to "EN" and verify localStorage persistence
-        page.locator(".language-switch a[data-lang='en']").click(no_wait_after=True)
+        page.locator(".language-switch button[data-lang='en']").click(no_wait_after=True)
         page.wait_for_function("document.documentElement.lang === 'en'")
         
         page.reload(wait_until="domcontentloaded")

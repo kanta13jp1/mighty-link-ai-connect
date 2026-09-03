@@ -339,7 +339,7 @@
         }
 
         .nav-links a,
-        .language-switch a {
+        .language-switch button {
             position: relative;
             display: inline-flex;
             align-items: center;
@@ -399,7 +399,11 @@
             flex-shrink: 0;
         }
 
-        .language-switch a {
+        .language-switch button {
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            font-family: inherit;
             color: var(--muted);
             font-size: 12px;
             font-weight: 700;
@@ -407,11 +411,11 @@
             padding: 1px 3px;
         }
 
-        .language-switch a:hover {
+        .language-switch button:hover {
             color: #ffffff;
         }
 
-        .language-switch a.active {
+        .language-switch button.active {
             color: var(--blue) !important;
             text-shadow: 0 0 10px var(--blue);
             font-weight: 900;
@@ -4221,14 +4225,14 @@
                 </span>
             </a>
             <div class="topbar-tools">
-                <div class="language-switch" aria-label="Language">
-                    <a href="javascript:void(0)" data-lang="en" onclick="switchLanguage('en'); return false;">EN</a>
+                <div class="language-switch" role="group" aria-label="Language">
+                    <button type="button" data-lang="en" aria-pressed="false" onclick="switchLanguage(this)">EN</button>
                     <span>/</span>
-                    <a href="javascript:void(0)" data-lang="zh" onclick="switchLanguage('zh'); return false;">中文</a>
+                    <button type="button" data-lang="zh" aria-pressed="false" onclick="switchLanguage(this)">中文</button>
                     <span>/</span>
-                    <a href="javascript:void(0)" data-lang="ko" onclick="switchLanguage('ko'); return false;">KO</a>
+                    <button type="button" data-lang="ko" aria-pressed="false" onclick="switchLanguage(this)">KO</button>
                     <span>/</span>
-                    <a href="javascript:void(0)" class="active" data-lang="ja" onclick="switchLanguage('ja'); return false;">JP</a>
+                    <button type="button" class="active" data-lang="ja" aria-pressed="true" onclick="switchLanguage(this)">JP</button>
                 </div>
                 <div class="status-strip" aria-live="polite">
                     <span class="status-dot"></span>
@@ -6034,14 +6038,6 @@
             if (savedLang) {
                 switchLanguage(savedLang);
             }
-            document.querySelectorAll('.language-switch a').forEach(a => {
-                a.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const lang = a.getAttribute('data-lang');
-                    if (lang) switchLanguage(lang);
-                });
-            });
             const initialHash = window.location.hash || '#top';
             switchAppTab(initialHash, false);
 
@@ -6628,27 +6624,11 @@
             const lang = typeof el === "string" ? el : el.getAttribute("data-lang");
             if (!lang) return;
 
-            if (typeof el !== "string") {
-                const switcher = el.closest(".language-switch");
-                if (switcher) {
-                    switcher.querySelectorAll("a").forEach(a => {
-                        a.classList.remove("active");
-                        a.removeAttribute("aria-current");
-                    });
-                    el.classList.add("active");
-                    el.setAttribute("aria-current", "true");
-                }
-            } else {
-                document.querySelectorAll(".language-switch a").forEach(a => {
-                    if (a.getAttribute("data-lang") === lang) {
-                        a.classList.add("active");
-                        a.setAttribute("aria-current", "true");
-                    } else {
-                        a.classList.remove("active");
-                        a.removeAttribute("aria-current");
-                    }
-                });
-            }
+            document.querySelectorAll(".language-switch button").forEach(button => {
+                const selected = button.getAttribute("data-lang") === lang;
+                button.classList.toggle("active", selected);
+                button.setAttribute("aria-pressed", String(selected));
+            });
 
             document.documentElement.lang = lang === "ja" ? "ja" : lang;
             try { localStorage.setItem("msb_language_preference", lang); } catch (e) {}

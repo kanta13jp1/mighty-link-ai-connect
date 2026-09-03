@@ -4,39 +4,25 @@
 from pathlib import Path
 import re
 
-INDEX_PATH = Path("index.html")
-content = INDEX_PATH.read_text(encoding="utf-8")
+INDEX_PATHS = (Path("index.html"), Path("src/index.html"))
 
-# 1. Update language switch HTML markup with direct javascript calls
-old_lang_switch_patterns = [
-    r'<div class="language-switch"[^>]*>[\s\S]*?</div>',
-]
-
-new_lang_switch = """                <div class="language-switch" aria-label="Language">
-                    <a href="javascript:void(0)" data-lang="en" onclick="switchLanguage('en'); return false;">EN</a>
+# Update language switch HTML markup with native button controls.
+new_lang_switch = """                <div class="language-switch" role="group" aria-label="Language">
+                    <button type="button" data-lang="en" aria-pressed="false" onclick="switchLanguage(this)">EN</button>
                     <span>/</span>
-                    <a href="javascript:void(0)" data-lang="zh" onclick="switchLanguage('zh'); return false;">中文</a>
+                    <button type="button" data-lang="zh" aria-pressed="false" onclick="switchLanguage(this)">中文</button>
                     <span>/</span>
-                    <a href="javascript:void(0)" data-lang="ko" onclick="switchLanguage('ko'); return false;">KO</a>
+                    <button type="button" data-lang="ko" aria-pressed="false" onclick="switchLanguage(this)">KO</button>
                     <span>/</span>
-                    <a href="javascript:void(0)" class="active" data-lang="ja" onclick="switchLanguage('ja'); return false;">JP</a>
+                    <button type="button" class="active" data-lang="ja" aria-pressed="true" onclick="switchLanguage(this)">JP</button>
                 </div>"""
 
-content = re.sub(r'<div class="language-switch" aria-label="Language">[\s\S]*?</div>', new_lang_switch.strip(), content)
-
-# 2. Also ensure switchLanguage attaches click event listeners via JavaScript
-content = content.replace(
-    'window.addEventListener(\'DOMContentLoaded\', () => {',
-    """window.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.language-switch a').forEach(a => {
-                a.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const lang = a.getAttribute('data-lang');
-                    if (lang) switchLanguage(lang);
-                });
-            });"""
-)
-
-INDEX_PATH.write_text(content, encoding="utf-8")
+for index_path in INDEX_PATHS:
+    content = index_path.read_text(encoding="utf-8")
+    content = re.sub(
+        r'<div class="language-switch"[^>]*>[\s\S]*?</div>',
+        new_lang_switch.strip(),
+        content,
+    )
+    index_path.write_text(content, encoding="utf-8")
 print("[SUCCESS] Language switcher made completely robust!")
