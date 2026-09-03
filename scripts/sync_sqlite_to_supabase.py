@@ -2,14 +2,40 @@
 
 from __future__ import annotations
 
-import os
 import json
+import os
 import sqlite3
+import sys
+
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from pathlib import Path
 
+from verify_supabase_uat_writes import _validate_database_url
+
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+
+class SupabaseSyncError(RuntimeError):
+    """A safe-to-log Supabase sync failure without third-party error text."""
+
+
+def _connect_postgres_secure(db_url: str):
+    try:
+        _validate_database_url(db_url)
+    except ValueError:
+        raise SupabaseSyncError(
+            "invalid_database_url: replace SUPABASE_DB_URL with a canonical, "
+            "percent-encoded Supabase connection URL."
+        ) from None
+
+    try:
+        return psycopg2.connect(db_url)
+    except Exception:
+        raise SupabaseSyncError(
+            "database_connection_failed: PostgreSQL error details were intentionally suppressed."
+        ) from None
+
 
 def load_env_file():
     env_path = PROJECT_ROOT / ".env"
@@ -38,7 +64,7 @@ def sync_tables():
     sq_cur = sq_conn.cursor()
 
     print("[*] Connecting to Supabase PostgreSQL database...")
-    pg_conn = psycopg2.connect(db_url)
+    pg_conn = _connect_postgres_secure(db_url)
     pg_cur = pg_conn.cursor(cursor_factory=RealDictCursor)
 
     # 1. Sync sales_email_messages
@@ -213,5 +239,21 @@ def sync_tables():
     sq_conn.close()
     print("[+] Supabase PostgreSQL sync complete.")
 
+
+def main() -> int:
+    try:
+        sync_tables()
+    except SupabaseSyncError as error:
+        print(f"[-] {error}", file=sys.stderr)
+        return 1
+    except Exception:
+        print(
+            "[-] database_sync_failed: error details were intentionally suppressed.",
+            file=sys.stderr,
+        )
+        return 1
+    return 0
+
+
 if __name__ == "__main__":
-    sync_tables()
+    raise SystemExit(main())

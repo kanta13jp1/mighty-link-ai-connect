@@ -1,11 +1,12 @@
 {
-  "status": "pass",
-  "generated_at": "2026-09-02T10:53:14Z",
+  "status": "blocked",
+  "generated_at": "2026-09-03T00:36:33Z",
   "issue_total": 194,
   "qa_total": 176,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
-    "closed": 2,
+    "closed": 1,
+    "open": 1,
     "resolved": 171,
     "transferred": 19
   },
@@ -13,8 +14,17 @@
     "回答済": 137,
     "想定済": 39
   },
-  "issue_blocker_count": 0,
+  "issue_blocker_count": 1,
   "qa_blocker_count": 0,
-  "issue_blockers": [],
+  "issue_blockers": [
+    {
+      "id": "R151",
+      "severity": "HIGH",
+      "category": "security",
+      "title": "Supabase接続失敗ログへのDB認証情報断片露出がsales-email-syncで再発",
+      "related_wbs": "T999;T1004;T845;T921",
+      "related_issue": "#306"
+    }
+  ],
   "qa_blockers": []
 }

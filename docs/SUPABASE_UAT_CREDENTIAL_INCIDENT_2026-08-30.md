@@ -2,13 +2,15 @@
 
 ## Status
 
-- Incident: **CLOSED / RISK ACCEPTED** (`T999`, `R151`, `SEC-011`)
+- Incident: **OPEN / RECURRENCE CONFIRMED** (`T999`, `R151`, `SEC-011`, Issue `#306`)
 - Affected evidence: GitHub Actions run `33309776182` and Artifact `9731612926`
 - Containment: both were deleted and independently confirmed as HTTP 404
 - Data writes: the UAT connection failed before the rollback-only probe opened a database connection; no probe row was written
 - Secret handling: no password, connection URL, or leaked fragment is recorded in this document
-- Close decision: on 2026-08-31, the user explicitly decided that database-password rotation and `SUPABASE_DB_URL` replacement are not required at this time and accepted the residual risk
-- Validation limit: PostgreSQL 17 and the 15/15 INSERT/readback/ROLLBACK check with `persisted_probe_records=0` have not been proven by a live green run; this closure is not a claim of technical remediation
+- Reopened: on 2026-09-03, Production Operations Monitor run `33694964498` reused the malformed secret in `sales-email-sync`; the database publish failed and a credential-derived fragment appeared in the driver error
+- Code containment: `T1004` adds the same pre-connect URL validation and exception-text suppression to `scripts/sync_sqlite_to_supabase.py`
+- Human action pending: rotate the database password, replace every copy of `SUPABASE_DB_URL`, decide disposal of the affected run after evidence preservation, and complete the rollback-only live verification
+- Validation limit: PostgreSQL 17 and the 15/15 INSERT/readback/ROLLBACK check with `persisted_probe_records=0` have not been proven by a live green run; code containment is not a claim of credential remediation
 
 ## Cause
 
@@ -16,7 +18,7 @@ The GitHub Actions `SUPABASE_DB_URL` contained a reserved password character tha
 
 ## Risk-acceptance boundary and reopen conditions
 
-The incident is closed for tracking purposes under explicit user risk acceptance. The database password was not rotated, `SUPABASE_DB_URL` was not replaced, and the live 15/15 rollback-only UAT was not completed.
+The earlier risk-accepted closure ended when the malformed secret was reused on 2026-09-03. The database password has not been rotated, `SUPABASE_DB_URL` has not been replaced, and the live 15/15 rollback-only UAT has not been completed, so the incident remains open.
 
 Reopen `T999`, `R151`, and `SEC-011` before any of the following:
 
@@ -34,6 +36,7 @@ At reopen, reset the database password, copy the current Dashboard-provided Supa
 - Suppress all third-party exception text in console and Artifact output; emit only an allowlisted failure code.
 - Keep synthetic writes in one transaction and never call `commit()`.
 - Do not weaken `sales-email-sync` fail-closed behavior.
+- Apply the same URL validator before every sales-email Supabase publish and suppress exception values at the CLI boundary (`T1004`).
 
 ## Official references
 
