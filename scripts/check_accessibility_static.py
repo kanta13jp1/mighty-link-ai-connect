@@ -50,6 +50,17 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
             "Theme toggle name must follow the selected language and target theme.",
         ),
         (
+            "localized_language_switch_group",
+            '<div class="language-switch" role="group" aria-label="言語を選択" '
+            'data-i18n-aria-label="language_switch_label">' in html
+            and all(
+                f'language_switch_label: "{label}"' in html
+                for label in ["言語を選択", "Select language", "选择语言", "언어 선택"]
+            )
+            and 'document.querySelectorAll("[data-i18n-aria-label]")' in html,
+            "Language switch group name must follow the selected language.",
+        ),
+        (
             "touch_target_css",
             ".nav-links a,\n        .language-switch button" in html
             and "min-height: 32px;" in html

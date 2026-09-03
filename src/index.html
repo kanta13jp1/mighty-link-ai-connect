@@ -4225,7 +4225,7 @@
                 </span>
             </a>
             <div class="topbar-tools">
-                <div class="language-switch" role="group" aria-label="Language">
+                <div class="language-switch" role="group" aria-label="言語を選択" data-i18n-aria-label="language_switch_label">
                     <button type="button" data-lang="en" aria-pressed="false" onclick="switchLanguage(this)">EN</button>
                     <span>/</span>
                     <button type="button" data-lang="zh" aria-pressed="false" onclick="switchLanguage(this)">中文</button>
@@ -6186,6 +6186,7 @@
                 admin_card_matching: "営業メールAIマッチング",
                 hero_subtitle_short: "エンジニア＆案件 AIフィットシミュレーター",
                 auth_logout_title: "ログアウト",
+                language_switch_label: "言語を選択",
                 theme_light: "ライト",
                 theme_dark: "ダーク",
                 theme_toggle_to_light: "ライトテーマに切り替え",
@@ -6320,6 +6321,7 @@
                 admin_card_matching: "Email AI Matching",
                 hero_subtitle_short: "Engineer & Job AI Fit Simulator",
                 auth_logout_title: "Logout",
+                language_switch_label: "Select language",
                 theme_light: "Light",
                 theme_dark: "Dark",
                 theme_toggle_to_light: "Switch to light theme",
@@ -6454,6 +6456,7 @@
                 admin_card_matching: "邮件匹配运行数",
                 hero_subtitle_short: "工程师与职位 AI 匹配模拟器",
                 auth_logout_title: "退出登录",
+                language_switch_label: "选择语言",
                 theme_light: "浅色",
                 theme_dark: "深色",
                 theme_toggle_to_light: "切换为浅色主题",
@@ -6588,6 +6591,7 @@
                 admin_card_matching: "영업 메일 매칭 건수",
                 hero_subtitle_short: "엔지니어 & 프로젝트 AI 피트 시뮬레이터",
                 auth_logout_title: "로그아웃",
+                language_switch_label: "언어 선택",
                 theme_light: "라이트",
                 theme_dark: "다크",
                 theme_toggle_to_light: "라이트 테마로 전환",
@@ -6660,6 +6664,13 @@
                 const key = node.getAttribute("data-i18n");
                 if (i18nDict[lang] && i18nDict[lang][key]) {
                     node.textContent = i18nDict[lang][key];
+                }
+            });
+
+            document.querySelectorAll("[data-i18n-aria-label]").forEach(node => {
+                const key = node.getAttribute("data-i18n-aria-label");
+                if (i18nDict[lang] && i18nDict[lang][key]) {
+                    node.setAttribute("aria-label", i18nDict[lang][key]);
                 }
             });
 
