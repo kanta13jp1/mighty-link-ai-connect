@@ -4,12 +4,67 @@ from __future__ import annotations
 
 import os
 import json
+import re
 import sqlite3
+import sys
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from pathlib import Path
+from typing import Any, Callable
+from urllib.parse import parse_qsl, unquote, urlsplit
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+ConnectionFactory = Callable[[str], Any]
+
+_SAFE_FAILURE_MESSAGE = (
+    "[-] Supabase PostgreSQL sync failed. Database error details are "
+    "intentionally suppressed."
+)
+_SUPABASE_POOLER_HOST_RE = re.compile(
+    r"^[a-z0-9-]+\.pooler\.supabase\.com$", re.IGNORECASE
+)
+_CANONICAL_PASSWORD_RE = re.compile(r"(?:[A-Za-z0-9._~-]|%[0-9A-Fa-f]{2})+")
+
+
+def _invalid_database_url() -> ValueError:
+    return ValueError(
+        "SUPABASE_DB_URL is invalid. Rotate the database password and copy a "
+        "fresh Supavisor connection string with percent-encoded credentials."
+    )
+
+
+def validate_database_url(db_url: str) -> None:
+    """Validate a canonical Supavisor URL without exposing credential parts."""
+    try:
+        parsed = urlsplit(db_url)
+        port = parsed.port
+        query = parse_qsl(parsed.query, keep_blank_values=True, strict_parsing=True)
+    except (TypeError, ValueError) as error:
+        raise _invalid_database_url() from error
+
+    if parsed.scheme.lower() not in {"postgres", "postgresql"}:
+        raise _invalid_database_url()
+    if parsed.fragment or parsed.path != "/postgres" or port not in {5432, 6543}:
+        raise _invalid_database_url()
+
+    raw_password = parsed.password
+    if (
+        not parsed.username
+        or raw_password is None
+        or not unquote(raw_password)
+        or _CANONICAL_PASSWORD_RE.fullmatch(raw_password) is None
+    ):
+        raise _invalid_database_url()
+
+    username = unquote(parsed.username)
+    host = (parsed.hostname or "").lower()
+    if _SUPABASE_POOLER_HOST_RE.fullmatch(host) is None:
+        raise _invalid_database_url()
+    if re.fullmatch(r"postgres\.[a-z0-9]+", username) is None:
+        raise _invalid_database_url()
+    if query != [("sslmode", "require")]:
+        raise _invalid_database_url()
 
 def load_env_file():
     env_path = PROJECT_ROOT / ".env"
@@ -18,19 +73,30 @@ def load_env_file():
             line = line.strip()
             if line and not line.startswith("#") and "=" in line:
                 k, v = line.split("=", 1)
-                os.environ[k.strip()] = v.strip().strip("\"'")
+                # Explicit process/job environment variables are authoritative.
+                # The monitor materializes mailbox settings into .env; allowing
+                # that file to replace SUPABASE_DB_URL can select a stale secret.
+                os.environ.setdefault(k.strip(), v.strip().strip("\"'"))
 
-def sync_tables():
+def sync_tables(
+    *,
+    db_url: str | None = None,
+    connection_factory: ConnectionFactory | None = None,
+    sqlite_path: Path | None = None,
+) -> None:
     load_env_file()
-    db_url = os.environ.get("SUPABASE_DB_URL")
+    db_url = (db_url or os.environ.get("SUPABASE_DB_URL") or "").strip()
     if not db_url:
-        print("[-] SUPABASE_DB_URL is not configured in environment.")
-        return
+        raise _invalid_database_url()
 
-    sqlite_path = PROJECT_ROOT / "data" / "mighty.db"
+    # Validate before touching either database. Driver errors may echo parsed
+    # credential fragments that GitHub's exact-value secret mask cannot hide.
+    validate_database_url(db_url)
+    connection_factory = connection_factory or psycopg2.connect
+
+    sqlite_path = sqlite_path or PROJECT_ROOT / "data" / "mighty.db"
     if not sqlite_path.exists():
-        print(f"[-] Local SQLite database not found at {sqlite_path}")
-        return
+        raise RuntimeError("Local SQLite database is unavailable.")
 
     print("[*] Connecting to local SQLite database...")
     sq_conn = sqlite3.connect(sqlite_path)
@@ -38,7 +104,7 @@ def sync_tables():
     sq_cur = sq_conn.cursor()
 
     print("[*] Connecting to Supabase PostgreSQL database...")
-    pg_conn = psycopg2.connect(db_url)
+    pg_conn = connection_factory(db_url)
     pg_cur = pg_conn.cursor(cursor_factory=RealDictCursor)
 
     # 1. Sync sales_email_messages
@@ -100,8 +166,8 @@ def sync_tables():
         pg_cur.execute("SELECT setval(pg_get_serial_sequence('sales_email_messages', 'id'), COALESCE((SELECT max(id) FROM sales_email_messages), 1));")
         pg_cur.execute("SELECT setval(pg_get_serial_sequence('project_requirements', 'id'), COALESCE((SELECT max(id) FROM project_requirements), 1));")
         pg_cur.execute("SELECT setval(pg_get_serial_sequence('talent_profiles_from_email', 'id'), COALESCE((SELECT max(id) FROM talent_profiles_from_email), 1));")
-    except Exception as seq_err:
-        print(f"[-] Sequence reset warning: {seq_err}")
+    except Exception as error:
+        raise RuntimeError("Supabase sequence reset failed.") from error
     sq_cur.execute("SELECT * FROM project_requirements;")
     sq_projects = [dict(r) for r in sq_cur.fetchall()]
     pg_cur.execute("SELECT message_id FROM project_requirements;")
@@ -213,5 +279,17 @@ def sync_tables():
     sq_conn.close()
     print("[+] Supabase PostgreSQL sync complete.")
 
+
+def main() -> int:
+    try:
+        sync_tables()
+    except Exception:
+        # Never print database/driver exception text. Parsers and drivers can
+        # transform a secret and thereby bypass GitHub's full-value masking.
+        print(_SAFE_FAILURE_MESSAGE, file=sys.stderr)
+        return 1
+    return 0
+
+
 if __name__ == "__main__":
-    sync_tables()
+    raise SystemExit(main())

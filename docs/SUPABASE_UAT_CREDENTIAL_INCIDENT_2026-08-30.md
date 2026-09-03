@@ -2,13 +2,23 @@
 
 ## Status
 
-- Incident: **CLOSED / RISK ACCEPTED** (`T999`, `R151`, `SEC-011`)
+- Incident: **REOPENED / CONTAINED / REMEDIATION IN PROGRESS** (`T999`, `T1005`, `R151`, `SEC-011`)
 - Affected evidence: GitHub Actions run `33309776182` and Artifact `9731612926`
 - Containment: both were deleted and independently confirmed as HTTP 404
 - Data writes: the UAT connection failed before the rollback-only probe opened a database connection; no probe row was written
 - Secret handling: no password, connection URL, or leaked fragment is recorded in this document
 - Close decision: on 2026-08-31, the user explicitly decided that database-password rotation and `SUPABASE_DB_URL` replacement are not required at this time and accepted the residual risk
 - Validation limit: PostgreSQL 17 and the 15/15 INSERT/readback/ROLLBACK check with `persisted_probe_records=0` have not been proven by a live green run; this closure is not a claim of technical remediation
+
+## 2026-09-03 recurrence and containment
+
+- Production Operations Monitor run `33694964498` failed at `sales-email-sync / Publish parsed records to Supabase` on default-branch SHA `280fff5a97c99dde89ad35d990ef828629428801`.
+- The database driver emitted a credential-derived fragment after parsing an invalid URL. No secret value or fragment is retained in this document.
+- The default-branch `sync_sqlite_to_supabase.py` had neither the UAT verifier's pre-connect URL validation nor its exception suppression.
+- The workflow materialized `SALES_EMAIL_IMAP_ENV` into `.env`, and `load_env_file()` unconditionally overwrote the dedicated job-level `SUPABASE_DB_URL`. This allowed an older composite setting to take precedence over the intended repository secret.
+- The run's nonsecret identity, SHA, job, failing step, timestamps, conclusion, and single uptime-report artifact name were preserved in Issue `#306`. The run was then deleted because its log contained credential-derived material; the GitHub Actions API returned `404` afterward.
+- `T1005` adds canonical Supavisor URL validation before connecting, preserves explicit environment-variable precedence, suppresses all driver exception text behind one allowlisted message, exits nonzero on every failure, and adds focused regression tests. `sales-email-sync` remains fail-closed.
+- Password rotation, repository secret replacement, Functions runtime redeployment, green monitor rerun, and live production verification remain required before `T999`, `R151`, and `SEC-011` can close.
 
 ## Cause
 
