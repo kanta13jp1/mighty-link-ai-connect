@@ -236,8 +236,11 @@
             line-height: 1.1;
         }
 
-        .brand-text strong {
+        .brand-text strong,
+        .brand-text .brand-title {
+            margin: 0;
             font-size: 16px;
+            font-weight: 700;
             white-space: nowrap;
             background: linear-gradient(135deg, #ffffff 0%, #8bdcff 60%, #baff66 100%);
             -webkit-background-clip: text;
@@ -246,7 +249,8 @@
             transition: filter 0.3s ease;
         }
 
-        .brand:hover .brand-text strong {
+        .brand:hover .brand-text strong,
+        .brand:hover .brand-text .brand-title {
             filter: drop-shadow(0 0 8px rgba(139, 220, 255, 0.4));
         }
 
@@ -1793,7 +1797,8 @@
         }
 
         @media (max-width: 520px) {
-            .brand-text strong {
+            .brand-text strong,
+            .brand-text .brand-title {
                 font-size: 15px;
             }
 
@@ -4211,7 +4216,7 @@
             <a class="brand" href="#top" aria-label="Mighty Skill-Bridge home">
                 <span class="brand-mark">M</span>
                 <span class="brand-text">
-                    <strong>Mighty Skill-Bridge</strong>
+                    <h1 class="brand-title">Mighty Skill-Bridge</h1>
                     <span data-i18n="hero_subtitle_short">エンジニア＆案件 AIフィットシミュレーター</span>
                 </span>
             </a>
