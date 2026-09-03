@@ -4257,7 +4257,7 @@
     <!-- Modal: Authentication & Access Control (ログイン / 会員登録) -->
     <div class="auth-modal-overlay" id="auth-modal" aria-hidden="true" inert>
         <div class="auth-modal-card" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
-            <button class="auth-modal-close" onclick="closeAuthModal()" aria-label="閉じる">×</button>
+            <button class="auth-modal-close" onclick="closeAuthModal()" aria-label="認証ダイアログを閉じる" data-i18n-aria-label="auth_modal_close_label">×</button>
             <div class="auth-modal-header">
                 <h3 id="auth-modal-title" data-i18n="auth_modal_title">アカウント認証</h3>
                 <p style="font-size: 0.8rem; color: var(--muted);" id="auth-modal-subtitle" data-i18n="admin_login_required">セキュリティ保護機能にアクセスするにはログインしてください</p>
@@ -6159,6 +6159,7 @@
                 admin_status_active: "システム正常稼働中",
                 auth_login_btn: "🔑 ログイン",
                 auth_logout_btn: "🔒 ログアウト",
+                auth_modal_close_label: "認証ダイアログを閉じる",
                 auth_modal_title: "ダッシュボード ログイン",
                 auth_email_label: "メールアドレス",
                 auth_pass_label: "パスワード",
@@ -6304,6 +6305,7 @@
                 admin_status_active: "System Operating Normally",
                 auth_login_btn: "🔑 Login",
                 auth_logout_btn: "🔒 Logout",
+                auth_modal_close_label: "Close authentication dialog",
                 auth_modal_title: "Dashboard Login",
                 auth_email_label: "Email Address",
                 auth_pass_label: "Password",
@@ -6449,6 +6451,7 @@
                 admin_status_active: "系统正常运行中",
                 auth_login_btn: "🔑 登录",
                 auth_logout_btn: "🔒 退出登录",
+                auth_modal_close_label: "关闭身份验证对话框",
                 auth_modal_title: "控制台登录",
                 auth_email_label: "电子邮箱",
                 auth_pass_label: "密码",
@@ -6594,6 +6597,7 @@
                 admin_status_active: "시스템 정상 작동 중",
                 auth_login_btn: "🔑 로그인",
                 auth_logout_btn: "🔒 로그아웃",
+                auth_modal_close_label: "인증 대화상자 닫기",
                 auth_modal_title: "대시보드 로그인",
                 auth_email_label: "이메일 주소",
                 auth_pass_label: "비밀번호",

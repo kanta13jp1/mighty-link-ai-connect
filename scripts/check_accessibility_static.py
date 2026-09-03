@@ -26,6 +26,22 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_auth_modal_close_button",
+            'class="auth-modal-close" onclick="closeAuthModal()" '
+            'aria-label="認証ダイアログを閉じる" '
+            'data-i18n-aria-label="auth_modal_close_label"' in html
+            and all(
+                f'auth_modal_close_label: "{label}"' in html
+                for label in [
+                    "認証ダイアログを閉じる",
+                    "Close authentication dialog",
+                    "关闭身份验证对话框",
+                    "인증 대화상자 닫기",
+                ]
+            ),
+            "Authentication modal close name must follow the selected language.",
+        ),
+        (
             "localized_brand_home_links",
             html.count('data-i18n-aria-label="brand_home_label"') == 2
             and 'aria-label="Mighty Skill-Bridge footer home"' not in html
