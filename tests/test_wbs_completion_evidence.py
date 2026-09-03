@@ -97,7 +97,7 @@ def test_deferred_review_is_not_recommended_for_immediate_pass():
 
 
 def test_real_repo_operational_blockers_prevent_false_reevaluation():
-    """PUBLIC-11 stays blocked by T944 and the reopened T999 incident."""
+    """PUBLIC-11 stays blocked by T944 after T999 is technically resolved."""
     report = agg.build_report("2026-07-25")
     cands = report["remaining_for_ga"]["reevaluate_candidates"]
     assert "PUBLIC-11" not in cands
@@ -105,7 +105,7 @@ def test_real_repo_operational_blockers_prevent_false_reevaluation():
     by_gate = {g["gate"]: g for g in report["remaining_for_ga"]["non_pass_gates"]}
     open_tasks = set(by_gate["PUBLIC-11"]["open_tasks"])
     assert "T944" in open_tasks
-    assert "T999" in open_tasks
+    assert "T999" not in open_tasks
     assert "PUBLIC-14" not in by_gate
 
 
