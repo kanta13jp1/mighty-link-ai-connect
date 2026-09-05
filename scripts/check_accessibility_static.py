@@ -71,6 +71,27 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
             "Matching filter score label must follow the selected language.",
         ),
         (
+            "localized_matching_filter_score_options",
+            all(
+                f'<option value="{value}" data-i18n="{key}">' in html
+                for value, key in [
+                    ("0", "matching_filter_score_option_all"),
+                    ("80", "matching_filter_score_option_80"),
+                    ("90", "matching_filter_score_option_90"),
+                ]
+            )
+            and all(
+                f'{key}: "{label}"' in html
+                for key, labels in {
+                    "matching_filter_score_option_all": ["すべて", "All", "全部", "전체"],
+                    "matching_filter_score_option_80": ["80%以上", "80% or higher", "80%及以上", "80% 이상"],
+                    "matching_filter_score_option_90": ["90%以上", "90% or higher", "90%及以上", "90% 이상"],
+                }.items()
+                for label in labels
+            ),
+            "Matching filter score options must follow the selected language without changing their values.",
+        ),
+        (
             "localized_matching_filter_rate_labels",
             '<label for="matching-filter-rate-min" '
             'data-i18n="matching_filter_rate_min_label">単価下限</label>' in html
