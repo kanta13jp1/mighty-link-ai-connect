@@ -26,6 +26,24 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_matching_filter_keyword_copy",
+            '<label for="matching-filter-keyword" '
+            'data-i18n="matching_filter_keyword_label">フリーワード</label>' in html
+            and 'id="matching-filter-keyword" placeholder="案件名・要員・送信元など" '
+            'data-i18n-placeholder="matching_filter_keyword_placeholder"' in html
+            and all(
+                f'matching_filter_keyword_label: "{label}"' in html
+                and f'matching_filter_keyword_placeholder: "{placeholder}"' in html
+                for label, placeholder in [
+                    ("フリーワード", "案件名・要員・送信元など"),
+                    ("Keyword", "Project, talent, sender, etc."),
+                    ("关键词", "项目、人才、发件人等"),
+                    ("키워드", "프로젝트, 인재, 발신자 등"),
+                ]
+            ),
+            "Matching filter keyword label and placeholder must follow the selected language.",
+        ),
+        (
             "localized_matching_filter_date_caption",
             '<label for="matching-filter-received-from" '
             'data-i18n="matching_filter_received_date_label">受信日</label>' in html
