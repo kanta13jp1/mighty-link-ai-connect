@@ -487,6 +487,7 @@ gantt
 | **T1018** | 8. 本番運用・品質管理 | アクセシビリティ | 認証モーダル閉じるボタンの多言語アクセシブル名同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番で認証モーダルの閉じるボタンのaria-labelが日本語固定となり、英語・中国語・韓国語へ切り替えてもページ言語と不一致になる不具合をIssue #344として記録。認証ダイアログ専用のauth_modal_close_labelとdata-i18n-aria-label契約を追加し、選択言語、モーダル開閉、localStorage復元へ同期する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 | **T1019** | 8. 本番運用・品質管理 | アクセシビリティ | ショートカットヘルプ閉じるボタンの多言語アクセシブル名同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番でショートカットヘルプ右上の閉じるボタンのaria-labelが日本語固定となり、英語・中国語・韓国語へ切り替えてもページ言語と不一致になる不具合をIssue #345として記録。既存のshortcut_modal_close辞書をdata-i18n-aria-labelでアイコンボタンにも適用し、選択言語、モーダル開閉、localStorage復元へ同期する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 | **T1020** | 8. 本番運用・品質管理 | アクセシビリティ | モバイル追加メニュー閉じるボタンの多言語アクセシブル名同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番モバイルで下部ナビのその他から開く追加メニュー右上の閉じるボタンが日本語固定となり、英語・中国語・韓国語へ切り替えてもページ言語と不一致になる不具合をIssue #346として記録。既存のshortcut_modal_close辞書をdata-i18n-aria-labelで対象アイコンにも適用し、選択言語、シート開閉、localStorage復元へ同期する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
+| **T1021** | 8. 本番運用・品質管理 | アクセシビリティ | モバイル追加メニューダイアログ名の多言語同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番モバイルで下部ナビのその他から開くrole=dialogのaria-labelが日本語固定となり、英語・中国語・韓国語へ切り替えてもページ言語と不一致になる不具合をIssue #347として記録。4言語のmobile_more_menu_dialog_label辞書とdata-i18n-aria-label契約を追加し、選択言語、シート開閉、localStorage復元へ同期する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 
 ---
 

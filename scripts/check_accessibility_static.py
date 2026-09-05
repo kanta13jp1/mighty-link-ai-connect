@@ -26,6 +26,16 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_mobile_bottom_sheet_dialog_name",
+            'role="dialog" aria-modal="true" aria-label="モバイル追加メニュー" '
+            'data-i18n-aria-label="mobile_more_menu_dialog_label"' in html
+            and all(
+                f'mobile_more_menu_dialog_label: "{label}"' in html
+                for label in ["モバイル追加メニュー", "More menu", "更多菜单", "추가 메뉴"]
+            ),
+            "Mobile bottom sheet dialog name must follow the selected language.",
+        ),
+        (
             "localized_mobile_bottom_sheet_close_button",
             'class="auth-modal-close" onclick="closeMobileBottomSheet()" '
             'style="position:static;" aria-label="閉じる" '
