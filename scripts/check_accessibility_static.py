@@ -36,6 +36,31 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
             "Matching filter contract label must follow the selected language.",
         ),
         (
+            "localized_matching_filter_contract_options",
+            all(
+                f'<option value="{value}" data-i18n="{key}">' in html
+                for value, key in [
+                    ("", "matching_filter_contract_option_all"),
+                    ("準委任", "matching_filter_contract_option_quasi_mandate"),
+                    ("派遣", "matching_filter_contract_option_temporary_staffing"),
+                    ("請負", "matching_filter_contract_option_contract_work"),
+                    ("正社員/契約社員", "matching_filter_contract_option_employee"),
+                ]
+            )
+            and all(
+                f'{key}: "{label}"' in html
+                for key, labels in {
+                    "matching_filter_contract_option_all": ["すべて", "All", "全部", "전체"],
+                    "matching_filter_contract_option_quasi_mandate": ["準委任", "Quasi-mandate", "准委托", "준위임"],
+                    "matching_filter_contract_option_temporary_staffing": ["派遣", "Temporary staffing", "派遣", "파견"],
+                    "matching_filter_contract_option_contract_work": ["請負", "Contract work", "承包", "도급"],
+                    "matching_filter_contract_option_employee": ["正社員/契約社員", "Permanent/contract employee", "正式员工/合同员工", "정규직/계약직"],
+                }.items()
+                for label in labels
+            ),
+            "Matching filter contract options must follow the selected language without changing their values.",
+        ),
+        (
             "localized_matching_filter_score_label",
             '<label for="matching-filter-score" '
             'data-i18n="matching_filter_score_label">適合度</label>' in html
