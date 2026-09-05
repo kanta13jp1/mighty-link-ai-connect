@@ -26,6 +26,16 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_matching_filter_date_caption",
+            '<label for="matching-filter-received-from" '
+            'data-i18n="matching_filter_received_date_label">受信日</label>' in html
+            and all(
+                f'matching_filter_received_date_label: "{caption}"' in html
+                for caption in ["受信日", "Received date", "接收日期", "수신일"]
+            ),
+            "Matching filter date caption must follow the selected language.",
+        ),
+        (
             "localized_matching_filter_date_input_names",
             'id="matching-filter-received-from" aria-label="受信日（開始）" '
             'data-i18n-aria-label="matching_filter_received_from_label"' in html
