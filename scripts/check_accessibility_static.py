@@ -26,6 +26,24 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_matching_filter_rate_labels",
+            '<label for="matching-filter-rate-min" '
+            'data-i18n="matching_filter_rate_min_label">単価下限</label>' in html
+            and '<label for="matching-filter-rate-max" '
+            'data-i18n="matching_filter_rate_max_label">単価上限</label>' in html
+            and all(
+                f'matching_filter_rate_min_label: "{min_label}"' in html
+                and f'matching_filter_rate_max_label: "{max_label}"' in html
+                for min_label, max_label in [
+                    ("単価下限", "単価上限"),
+                    ("Minimum rate", "Maximum rate"),
+                    ("最低单价", "最高单价"),
+                    ("최소 단가", "최대 단가"),
+                ]
+            ),
+            "Matching filter rate labels must follow the selected language.",
+        ),
+        (
             "localized_matching_filter_skill_label",
             '<label for="matching-filter-skill" '
             'data-i18n="matching_filter_skill_label">必須スキル</label>' in html
