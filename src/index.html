@@ -6193,6 +6193,11 @@
                 workspace_navigation_label: "ワークスペースナビゲーション",
                 mobile_navigation_label: "モバイル主要ナビゲーション",
                 mobile_more_menu_dialog_label: "モバイル追加メニュー",
+                mobile_sheet_title: "メニュー & ツール",
+                mobile_sheet_setup: "初期設定",
+                mobile_sheet_self_assessment: "自己診断",
+                mobile_sheet_admin: "管理者",
+                mobile_sheet_support: "サポート",
                 mobile_nav_home: "ホーム",
                 mobile_nav_survey: "アンケート",
                 mobile_nav_attendance: "勤怠",
@@ -6340,6 +6345,11 @@
                 workspace_navigation_label: "Workspace navigation",
                 mobile_navigation_label: "Mobile primary navigation",
                 mobile_more_menu_dialog_label: "More menu",
+                mobile_sheet_title: "Menu & Tools",
+                mobile_sheet_setup: "Setup",
+                mobile_sheet_self_assessment: "Self-assessment",
+                mobile_sheet_admin: "Admin",
+                mobile_sheet_support: "Support",
                 mobile_nav_home: "Home",
                 mobile_nav_survey: "Survey",
                 mobile_nav_attendance: "Attendance",
@@ -6487,6 +6497,11 @@
                 workspace_navigation_label: "工作区导航",
                 mobile_navigation_label: "移动端主导航",
                 mobile_more_menu_dialog_label: "更多菜单",
+                mobile_sheet_title: "菜单与工具",
+                mobile_sheet_setup: "初始设置",
+                mobile_sheet_self_assessment: "自我诊断",
+                mobile_sheet_admin: "管理",
+                mobile_sheet_support: "支持",
                 mobile_nav_home: "首页",
                 mobile_nav_survey: "问卷",
                 mobile_nav_attendance: "考勤",
@@ -6634,6 +6649,11 @@
                 workspace_navigation_label: "워크스페이스 탐색",
                 mobile_navigation_label: "모바일 주요 탐색",
                 mobile_more_menu_dialog_label: "추가 메뉴",
+                mobile_sheet_title: "메뉴 & 도구",
+                mobile_sheet_setup: "초기 설정",
+                mobile_sheet_self_assessment: "자가 진단",
+                mobile_sheet_admin: "관리자",
+                mobile_sheet_support: "지원",
                 mobile_nav_home: "홈",
                 mobile_nav_survey: "설문",
                 mobile_nav_attendance: "근태",
@@ -10861,14 +10881,14 @@
         <div class="mobile-bottom-sheet" role="dialog" aria-modal="true" aria-label="モバイル追加メニュー" data-i18n-aria-label="mobile_more_menu_dialog_label">
             <div class="mobile-sheet-handle"></div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-                <strong style="font-size:16px; color:var(--text);">メニュー & ツール</strong>
+                <strong style="font-size:16px; color:var(--text);"><span data-i18n="mobile_sheet_title">メニュー & ツール</span></strong>
                 <button type="button" class="auth-modal-close" onclick="closeMobileBottomSheet()" style="position:static;" aria-label="閉じる" data-i18n-aria-label="shortcut_modal_close">×</button>
             </div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px;">
-                <a href="#onboarding-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">⚙️ 初期設定</a>
-                <a href="#aptitude-demo-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">📊 自己診断</a>
-                <a href="#admin-dashboard-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">🛡️ 管理者</a>
-                <a href="#support" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">💬 サポート</a>
+                <a href="#onboarding-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);"><span aria-hidden="true">⚙️</span> <span data-i18n="mobile_sheet_setup">初期設定</span></a>
+                <a href="#aptitude-demo-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);"><span aria-hidden="true">📊</span> <span data-i18n="mobile_sheet_self_assessment">自己診断</span></a>
+                <a href="#admin-dashboard-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);"><span aria-hidden="true">🛡️</span> <span data-i18n="mobile_sheet_admin">管理者</span></a>
+                <a href="#support" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);"><span aria-hidden="true">💬</span> <span data-i18n="mobile_sheet_support">サポート</span></a>
             </div>
         </div>
     </div>

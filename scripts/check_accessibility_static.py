@@ -26,6 +26,31 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_mobile_bottom_sheet_content",
+            all(
+                html.count(f'data-i18n="{key}"') == 1
+                for key in [
+                    "mobile_sheet_title",
+                    "mobile_sheet_setup",
+                    "mobile_sheet_self_assessment",
+                    "mobile_sheet_admin",
+                    "mobile_sheet_support",
+                ]
+            )
+            and all(
+                f'{key}: "{label}"' in html
+                for key, labels in {
+                    "mobile_sheet_title": ["メニュー & ツール", "Menu & Tools", "菜单与工具", "메뉴 & 도구"],
+                    "mobile_sheet_setup": ["初期設定", "Setup", "初始设置", "초기 설정"],
+                    "mobile_sheet_self_assessment": ["自己診断", "Self-assessment", "自我诊断", "자가 진단"],
+                    "mobile_sheet_admin": ["管理者", "Admin", "管理", "관리자"],
+                    "mobile_sheet_support": ["サポート", "Support", "支持", "지원"],
+                }.items()
+                for label in labels
+            ),
+            "Mobile bottom sheet content must follow the selected language.",
+        ),
+        (
             "localized_mobile_bottom_sheet_dialog_name",
             'role="dialog" aria-modal="true" aria-label="モバイル追加メニュー" '
             'data-i18n-aria-label="mobile_more_menu_dialog_label"' in html
