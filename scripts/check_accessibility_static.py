@@ -26,6 +26,22 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_matching_filter_search_landmark",
+            'class="matching-filter-toolbar" role="search" '
+            'aria-label="営業メールAIマッチングの絞り込み" '
+            'data-i18n-aria-label="matching_filter_search_label"' in html
+            and all(
+                f'matching_filter_search_label: "{label}"' in html
+                for label in [
+                    "営業メールAIマッチングの絞り込み",
+                    "Sales email AI matching filters",
+                    "销售邮件 AI 匹配筛选",
+                    "영업 메일 AI 매칭 필터",
+                ]
+            ),
+            "Matching filter search landmark name must follow the selected language.",
+        ),
+        (
             "localized_matching_filter_reset",
             'data-i18n-aria-label="matching_filter_reset_label"' in html
             and 'data-i18n-title="matching_filter_reset_label"' in html
