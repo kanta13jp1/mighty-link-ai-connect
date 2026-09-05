@@ -26,6 +26,24 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_matching_filter_date_input_names",
+            'id="matching-filter-received-from" aria-label="受信日（開始）" '
+            'data-i18n-aria-label="matching_filter_received_from_label"' in html
+            and 'id="matching-filter-received-to" aria-label="受信日（終了）" '
+            'data-i18n-aria-label="matching_filter_received_to_label"' in html
+            and all(
+                f'matching_filter_received_from_label: "{start_label}"' in html
+                and f'matching_filter_received_to_label: "{end_label}"' in html
+                for start_label, end_label in [
+                    ("受信日（開始）", "受信日（終了）"),
+                    ("Received date (start)", "Received date (end)"),
+                    ("接收日期（开始）", "接收日期（结束）"),
+                    ("수신일(시작)", "수신일(종료)"),
+                ]
+            ),
+            "Matching filter date input names must follow the selected language.",
+        ),
+        (
             "localized_matching_filter_search_landmark",
             'class="matching-filter-toolbar" role="search" '
             'aria-label="営業メールAIマッチングの絞り込み" '

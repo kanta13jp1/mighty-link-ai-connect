@@ -491,6 +491,7 @@ gantt
 | **T1022** | 8. 本番運用・品質管理 | 多言語UI | モバイル追加メニュー本文の4言語表示同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番モバイルで下部ナビのその他から開く追加メニューの見出しと初期設定・自己診断・管理者・サポートの4リンクが日本語固定となり、英語・中国語・韓国語へ切り替えても表示言語と不一致になる不具合をIssue #348として記録。5つの短い4言語辞書とdata-i18n契約を追加し、アイコン・遷移先・シート開閉を維持したまま選択言語とlocalStorage復元へ同期する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 | **T1023** | 8. 本番運用・品質管理 | アクセシビリティ | 営業メール絞り込みリセットの4言語アクセシブル名・ツールチップ同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番の営業メールマッチング画面で言語を英語・中国語・韓国語へ切り替えても、絞り込みリセットボタンのaria-labelとtitleが日本語固定となる不具合をIssue #349として記録。4言語のmatching_filter_reset_label辞書、data-i18n-aria-label/data-i18n-title契約とtitle属性の汎用更新処理を追加し、リセット操作・選択言語・localStorage復元をPlaywrightと静的ガードで回帰固定する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 | **T1024** | 8. 本番運用・品質管理 | アクセシビリティ | 営業メール絞り込み検索ランドマーク名の4言語同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番の営業メールマッチング画面で言語を英語・中国語・韓国語へ切り替えても、role=searchの絞り込みツールバー名が日本語固定となる不具合をIssue #350として記録。4言語のmatching_filter_search_label辞書とdata-i18n-aria-label契約を追加し、role、フィルター入力、リセット操作、選択言語、localStorage復元をPlaywrightと静的ガードで回帰固定する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
+| **T1025** | 8. 本番運用・品質管理 | アクセシビリティ | 営業メール受信日フィルター開始・終了名の4言語同期修復 | Codex | Codex + Pytest + Playwright + Firebase | 本番の営業メールマッチング画面で言語を英語・中国語・韓国語へ切り替えても、受信日フィルターの開始日・終了日入力のaria-labelが日本語固定となる不具合をIssue #351として記録。4言語のmatching_filter_received_from_label / matching_filter_received_to_label辞書とdata-i18n-aria-label契約を追加し、type=date、再取得ハンドラー、入力値、選択言語、localStorage復元をPlaywrightと静的ガードで回帰固定する。営業メール取得・移動・既読・削除処理は変更しない。 | 完了 |
 
 ---
 
