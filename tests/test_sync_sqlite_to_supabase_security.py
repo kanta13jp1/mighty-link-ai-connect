@@ -44,7 +44,11 @@ def test_percent_encoded_supavisor_url_is_accepted():
         ),
     ],
 )
-def test_invalid_url_is_rejected_before_connection(malformed_url: str):
+def test_invalid_url_is_rejected_before_connection(malformed_url: str, monkeypatch):
+    # sync_tables() calls load_env_file(), which os.environ.setdefault()s the
+    # repo .env. Left unstubbed that writes REAL secrets into the pytest process
+    # and leaks into every later test, so stub it out here.
+    monkeypatch.setattr(sync_sqlite_to_supabase, "load_env_file", lambda: None)
     connection_attempted = False
 
     def fail_if_called(_url: str):

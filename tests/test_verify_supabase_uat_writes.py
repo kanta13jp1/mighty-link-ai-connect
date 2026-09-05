@@ -105,7 +105,13 @@ def test_offline_guard_validates_schema_without_claiming_live_writes():
     assert all(info["verified"] for info in result["table_status"].values())
 
 
-def test_execute_mode_fails_closed_without_database_secret():
+def test_execute_mode_fails_closed_without_database_secret(monkeypatch):
+    # The precondition must be guaranteed, not inherited from the ambient
+    # environment: verify_uat_db_writes() reads os.getenv("SUPABASE_DB_URL"),
+    # and any earlier test that loads the repo .env leaves a real secret there.
+    # Without this the fail-closed guarantee for LIVE production writes is
+    # silently unverified on any machine that has a .env.
+    monkeypatch.delenv("SUPABASE_DB_URL", raising=False)
     result = verify_uat_db_writes(execute=True)
 
     assert result["status"] == "FAIL"
