@@ -1,12 +1,12 @@
 {
   "status": "pass",
-  "generated_at": "2026-09-05T14:32:26Z",
-  "issue_total": 221,
+  "generated_at": "2026-09-05T15:09:53Z",
+  "issue_total": 222,
   "qa_total": 176,
   "issue_status_counts": {
     "accepted_non_blocker": 2,
     "closed": 1,
-    "resolved": 199,
+    "resolved": 200,
     "transferred": 19
   },
   "qa_status_counts": {

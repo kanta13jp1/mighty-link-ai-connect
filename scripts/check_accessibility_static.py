@@ -26,6 +26,16 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_matching_filter_contract_label",
+            '<label for="matching-filter-contract" '
+            'data-i18n="matching_filter_contract_label">契約形態</label>' in html
+            and all(
+                f'matching_filter_contract_label: "{label}"' in html
+                for label in ["契約形態", "Contract type", "合同类型", "계약 형태"]
+            ),
+            "Matching filter contract label must follow the selected language.",
+        ),
+        (
             "localized_matching_filter_score_label",
             '<label for="matching-filter-score" '
             'data-i18n="matching_filter_score_label">適合度</label>' in html
