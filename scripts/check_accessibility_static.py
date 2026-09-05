@@ -26,6 +26,16 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_matching_filter_skill_label",
+            '<label for="matching-filter-skill" '
+            'data-i18n="matching_filter_skill_label">必須スキル</label>' in html
+            and all(
+                f'matching_filter_skill_label: "{label}"' in html
+                for label in ["必須スキル", "Required skill", "必备技能", "필수 기술"]
+            ),
+            "Matching filter skill label must follow the selected language.",
+        ),
+        (
             "localized_matching_filter_keyword_copy",
             '<label for="matching-filter-keyword" '
             'data-i18n="matching_filter_keyword_label">フリーワード</label>' in html
