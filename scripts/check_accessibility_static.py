@@ -26,6 +26,22 @@ def check_index_html(path: Path = INDEX_HTML) -> dict[str, object]:
     html = path.read_text(encoding="utf-8")
     checks: list[tuple[str, bool, str]] = [
         (
+            "localized_matching_filter_reset",
+            'data-i18n-aria-label="matching_filter_reset_label"' in html
+            and 'data-i18n-title="matching_filter_reset_label"' in html
+            and 'document.querySelectorAll("[data-i18n-title]")' in html
+            and all(
+                f'matching_filter_reset_label: "{label}"' in html
+                for label in [
+                    "絞り込み条件をリセット",
+                    "Reset filters",
+                    "重置筛选条件",
+                    "필터 조건 초기화",
+                ]
+            ),
+            "Matching filter reset name and tooltip must follow the selected language.",
+        ),
+        (
             "localized_mobile_bottom_sheet_content",
             all(
                 html.count(f'data-i18n="{key}"') == 1

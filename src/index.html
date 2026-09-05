@@ -5311,7 +5311,7 @@
 
                         <div class="matching-filter-actions">
                             <span id="matching-filter-count" role="status" aria-live="polite">全件表示中</span>
-                            <button class="matching-filter-reset" type="button" onclick="resetMatchingFilters()" aria-label="絞り込み条件をリセット" title="絞り込み条件をリセット">↺</button>
+                            <button class="matching-filter-reset" type="button" onclick="resetMatchingFilters()" aria-label="絞り込み条件をリセット" data-i18n-aria-label="matching_filter_reset_label" title="絞り込み条件をリセット" data-i18n-title="matching_filter_reset_label">↺</button>
                         </div>
                     </div>
 
@@ -6185,6 +6185,7 @@
                 admin_card_survey: "適性診断回答数",
                 admin_card_attendance: "勤怠打刻解析数",
                 admin_card_matching: "営業メールAIマッチング",
+                matching_filter_reset_label: "絞り込み条件をリセット",
                 hero_subtitle_short: "エンジニア＆案件 AIフィットシミュレーター",
                 auth_logout_title: "ログアウト",
                 language_switch_label: "言語を選択",
@@ -6337,6 +6338,7 @@
                 admin_card_survey: "Assessment Responses",
                 admin_card_attendance: "Attendance Analyses",
                 admin_card_matching: "Email AI Matching",
+                matching_filter_reset_label: "Reset filters",
                 hero_subtitle_short: "Engineer & Job AI Fit Simulator",
                 auth_logout_title: "Logout",
                 language_switch_label: "Select language",
@@ -6489,6 +6491,7 @@
                 admin_card_survey: "胜任力诊断答卷数",
                 admin_card_attendance: "考勤打卡分析数",
                 admin_card_matching: "邮件匹配运行数",
+                matching_filter_reset_label: "重置筛选条件",
                 hero_subtitle_short: "工程师与职位 AI 匹配模拟器",
                 auth_logout_title: "退出登录",
                 language_switch_label: "选择语言",
@@ -6641,6 +6644,7 @@
                 admin_card_survey: "적성 진단 응답 수",
                 admin_card_attendance: "근태 분석 건수",
                 admin_card_matching: "영업 메일 매칭 건수",
+                matching_filter_reset_label: "필터 조건 초기화",
                 hero_subtitle_short: "엔지니어 & 프로젝트 AI 피트 시뮬레이터",
                 auth_logout_title: "로그아웃",
                 language_switch_label: "언어 선택",
@@ -6739,6 +6743,13 @@
                 const key = node.getAttribute("data-i18n-aria-label");
                 if (i18nDict[lang] && i18nDict[lang][key]) {
                     node.setAttribute("aria-label", i18nDict[lang][key]);
+                }
+            });
+
+            document.querySelectorAll("[data-i18n-title]").forEach(node => {
+                const key = node.getAttribute("data-i18n-title");
+                if (i18nDict[lang] && i18nDict[lang][key]) {
+                    node.setAttribute("title", i18nDict[lang][key]);
                 }
             });
 
