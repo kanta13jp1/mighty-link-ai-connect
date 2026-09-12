@@ -31,6 +31,12 @@
 
 GitHub Pages公開URLはT924で廃止済みのため、HTTP 200の死活監視対象には含めない。代わりにProduction Operations Monitorが認証済みGitHub APIでPages siteの削除状態を確認し、再有効化またはAPI確認不能を失敗として扱う。
 
+### 認証付きAPI通信の境界（T1038）
+
+Pages廃止確認ガードの接続先は `https://api.github.com` のみに限定する。`--api-url` / `GITHUB_API_URL` で別ホスト・HTTP・独自スキームを指定しても、トークンを送信する前に拒否する。repositoryは `OWNER/REPO` 形式の安全なパス要素に限定し、query・fragment・パストラバーサルを許可しない。
+
+標準ライブラリの検証付きHTTPS接続を使うため、監視jobへの追加パッケージ導入は不要。リダイレクトは追従せず、通信失敗・不正JSON・想定外HTTPはfail-closedとし、URL・トークン・応答本文をエラーへ転記しない。GitHub Enterprise対応が必要な場合は別途、信頼する接続先と認証境界をレビューする。
+
 ## 手動実行
 
 ```powershell
