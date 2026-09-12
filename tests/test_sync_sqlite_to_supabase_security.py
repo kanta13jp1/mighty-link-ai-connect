@@ -2,6 +2,8 @@ from pathlib import Path
 import sys
 
 import pytest
+import sqlite3
+from unittest.mock import MagicMock
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
@@ -13,6 +15,25 @@ VALID_DB_URL = (
     "postgresql://postgres.abcdefghijklmnopqrst:p%40ss%23word@"
     "aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
 )
+
+
+def test_publish_constraint_failure_aborts_instead_of_success(tmp_path, monkeypatch):
+    path = tmp_path / 'mail.db'
+    with sqlite3.connect(path) as conn:
+        conn.execute('CREATE TABLE sales_email_messages(id, dedupe_key, message_id_hash, sender_hash, sender_domain, normalized_subject, received_at, body_hash, body_excerpt, source_path, source_type, raw_storage_policy, ingest_status, metadata)')
+        conn.execute("INSERT INTO sales_email_messages VALUES(1,'key','hash','sender','example.test','Test',NULL,'body','Excerpt','imap://test','imap','hash_and_redacted_excerpt_only','new','{}')")
+    pg = MagicMock()
+    cursor = pg.cursor.return_value
+    cursor.fetchall.return_value = []
+    def execute(sql, *args):
+        if 'INSERT INTO sales_email_messages' in sql:
+            raise RuntimeError('constraint violation')
+    cursor.execute.side_effect = execute
+    monkeypatch.setattr(sync_sqlite_to_supabase, 'load_env_file', lambda: None)
+    with pytest.raises(RuntimeError, match='transaction rolled back'):
+        sync_sqlite_to_supabase.sync_tables(db_url=VALID_DB_URL, connection_factory=lambda _: pg, sqlite_path=path)
+    pg.rollback.assert_called_once()
+    pg.commit.assert_not_called()
 
 
 def test_percent_encoded_supavisor_url_is_accepted():

@@ -1,7 +1,7 @@
 # Gemini Model Policy Audit
 
 - Status: `ok`
-- Checked at: 2026-09-06
+- Checked at: 2026-09-12
 - Production default: `gemini-3.5-flash`
 - App default: `gemini-3.5-flash`
 - Blockers: 0

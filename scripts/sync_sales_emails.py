@@ -26,28 +26,29 @@ def check_duplicate_key(db: DBAdapter, key: str) -> bool:
     if db.use_supabase:
         try:
             res = db.sb_client.table("sales_email_messages").select("id").eq("dedupe_key", key).execute()
-            return len(res.data) > 0 if res else False
+            if res is None or not isinstance(res.data, list):
+                raise RuntimeError("Sales email duplicate lookup returned no result")
+            return len(res.data) > 0
         except Exception as e:
-            print(f"[-] Supabase duplicate check error: {e}")
-            return False
+            raise RuntimeError("Sales email duplicate lookup failed") from e
     else:
         try:
             cursor = db.sqlite_conn.cursor()
             cursor.execute("SELECT id FROM sales_email_messages WHERE dedupe_key = ?", (key,))
             return cursor.fetchone() is not None
         except Exception as e:
-            print(f"[-] SQLite duplicate check error: {e}")
-            return False
+            raise RuntimeError("Sales email duplicate lookup failed") from e
 
 
 def insert_sales_email_message(db: DBAdapter, payload: dict) -> int:
     if db.use_supabase:
         try:
             res = db.sb_client.table("sales_email_messages").insert(payload).execute()
-            return res.data[0]["id"] if res and res.data else 0
+            if not res or not res.data or not res.data[0].get("id"):
+                raise RuntimeError("Sales email insert returned no record")
+            return res.data[0]["id"]
         except Exception as e:
-            print(f"[-] Supabase insert_message error: {e}")
-            return 0
+            raise RuntimeError("Sales email persistence failed") from e
     else:
         try:
             cursor = db.sqlite_conn.cursor()
@@ -59,8 +60,8 @@ def insert_sales_email_message(db: DBAdapter, payload: dict) -> int:
             db.sqlite_conn.commit()
             return cursor.lastrowid
         except Exception as e:
-            print(f"[-] SQLite insert_message error: {e}")
-            return 0
+            db.sqlite_conn.rollback()
+            raise RuntimeError("Sales email persistence failed") from e
 
 
 def determine_source_type(source_path: str, default: str = "imap") -> str:

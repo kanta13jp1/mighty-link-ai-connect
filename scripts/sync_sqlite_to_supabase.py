@@ -153,11 +153,7 @@ def sync_tables(
             inserted_msg_count += 1
         except Exception as dup_err:
             pg_conn.rollback()
-            pg_cur.execute("SELECT id FROM sales_email_messages WHERE dedupe_key = %s;", (key,))
-            existing_row = pg_cur.fetchone()
-            if existing_row:
-                msg_id_map[sq_id] = existing_row["id"]
-                pg_existing[key] = existing_row["id"]
+            raise RuntimeError("Sales email publish failed; transaction rolled back.") from dup_err
 
     print(f"[+] Inserted {inserted_msg_count} new sales_email_messages into Supabase PostgreSQL.")
 
