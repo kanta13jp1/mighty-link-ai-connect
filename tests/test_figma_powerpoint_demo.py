@@ -38,6 +38,17 @@ def test_guide_places_figma_mcp_in_the_five_minute_main_slot() -> None:
     assert "Antigravity IDE、CLI、SDKは30分本編では操作しません" in readme
 
 
+def test_guide_separates_pptx_source_from_pending_figma_closeout() -> None:
+    text = GUIDE.read_text(encoding="utf-8")
+
+    assert "既存Figma Slides作業ファイル（36枚反映は未完了）" in text
+    assert "36枚の編集可能PPTX原本" in text
+    assert "PPTX原本が36枚であることを、Figma上の36枚反映" in text
+    assert "無断で削除・移動・上書きしません" in text
+    assert "community/file/1383222828783650715/conference-talk" in text
+    assert "- 36枚Figma Slides:" not in text
+
+
 def test_antigravity2_powerpoint_has_all_sourced_slides() -> None:
     assert PPTX.is_file()
 

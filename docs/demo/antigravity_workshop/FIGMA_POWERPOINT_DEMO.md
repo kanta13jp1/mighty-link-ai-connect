@@ -72,11 +72,18 @@ StarterプランのMCP利用上限に達した場合も再認証や連続再試�
 - Figma MCP guide: https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server
 - Figma Slides PPTX export: https://help.figma.com/hc/en-us/articles/24848334599447-Export-from-Figma-Slides
 
-## リハーサル済み参考資料
+## 参考資料とT977の未完了条件
 
 - Team project: https://www.figma.com/files/team/1404381379512110171/project/264549730
-- 36枚Figma Slides: https://www.figma.com/slides/t1LgWfEHQKTAkCxsxUFkgD
-- 編集可能PPTX: `exports/mighty_skill_bridge_antigravity_user_guide_2026_figma_redesign.pptx`
+- 既存Figma Slides作業ファイル（36枚反映は未完了）: https://www.figma.com/slides/t1LgWfEHQKTAkCxsxUFkgD
+- 36枚の編集可能PPTX原本: `exports/mighty_skill_bridge_antigravity_user_guide_2026_figma_redesign.pptx`
 - 再生成script: `scripts/generate_antigravity_user_guide_figma_redesign.mjs`
+- 公式Communityテンプレート「Conference Talk」（作者リンク `@figma`、Figma Slides向け、2026-09-12確認）: https://www.figma.com/ja-jp/community/file/1383222828783650715/conference-talk
 
-これらは5分セグメントが停止条件に達した場合の説明用予備です。本番では既存36枚を変更せず、`PROMPT_12_FIGMA_POWERPOINT.txt`で新規3枚だけを作成します。
+2026-09-12の読み取り確認では、既存Figmaファイルは1行・8枚です。先頭スライド `5:2` には本来の表紙要素に加え、proposal modal、full wireframe、admin dashboardなど別用途のFRAME 7件が混在しています。PPTX原本が36枚であることを、Figma上の36枚反映やネイティブ書き出しの完了証拠として扱いません。混在フレームは他作業の成果物として保全し、無断で削除・移動・上書きしません。
+
+T977は、指定Team projectに公式Communityテンプレートの複製を置き、原本の内容を保全した36枚のネイティブSlidesと、編集可能なPPTXの標準書き出しを検証するまで未完了です。原本は変更せず、新規のクリーンな作業ファイルを使います。既存の対象チームアカウントでのブラウザログインが必要で、権限・書き込みの拒否時は停止します。
+
+[Figma公式PPTX取り込み手順](https://help.figma.com/hc/en-us/articles/30601628883607-Import-PowerPoint-files-to-Figma-Slides)では、取り込み後にフォントがInterへ置き換わり、動画・表・ダイアグラム・アニメーションは取り込まれません。36枚の日本語テキスト、画像5件、ノート36件、出典、編集可能性、文字切れ・混入なしを原本と照合し、単に取り込みに成功しただけではCLOSEしません。
+
+5分セグメントの停止時は、事前に動作確認した予備PPTXで説明します。本番では既存の参考ファイルと36枚のPPTX原本を変更せず、`PROMPT_12_FIGMA_POWERPOINT.txt`で新規3枚だけを作成します。
