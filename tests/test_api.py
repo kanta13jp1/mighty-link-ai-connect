@@ -1,6 +1,5 @@
 import os
 import sys
-import shutil
 import pytest
 
 # Ensure src directory is in path
@@ -15,33 +14,27 @@ LEGAL_CONSENT = {
     "legal_consent_version": app.LEGAL_CONSENT_VERSION,
 }
 
-# Configure app to use isolated testing directory
-app.DATA_DIR = os.path.join(PROJECT_ROOT, "data_test")
-app.AUDIT_DIR = os.path.join(app.DATA_DIR, "audit")
-app.EXTERNAL_API_USAGE_LOG_FILE = os.path.join(app.DATA_DIR, "external_api_usage.jsonl")
-
-# Ensure AI live mode does not run during tests by setting mocks
-app.AI_FORCE_MOCK = True
-app.GEMINI_READY = False
-
 @pytest.fixture(autouse=True)
-def setup_test_db():
-    # Configure app to use isolated testing directory
-    app.DATA_DIR = os.path.join(PROJECT_ROOT, "data_test")
-    app.DB_PATH = os.path.join(app.DATA_DIR, "mighty_skill_bridge.db")
-    app.AUDIT_DIR = os.path.join(app.DATA_DIR, "audit")
-    app.EXTERNAL_API_USAGE_LOG_FILE = os.path.join(app.DATA_DIR, "external_api_usage.jsonl")
-    app.AI_FORCE_MOCK = True
-    app.GEMINI_READY = False
-
-    # Setup clean testing directory
-    os.makedirs(app.DATA_DIR, exist_ok=True)
-    os.makedirs(app.AUDIT_DIR, exist_ok=True)
-    
-    # Initialize test database
+def setup_test_db(tmp_path, monkeypatch):
+    data_dir = tmp_path / "data"
+    audit_dir = data_dir / "audit"
+    # Force local SQLite; K_SERVICE would otherwise select a shared /tmp DB.
+    monkeypatch.delenv("K_SERVICE", raising=False)
+    monkeypatch.setattr(app, "IS_MANAGED_RUNTIME", False)
+    # Some sales-email routes read this directly instead of consulting the flag.
+    monkeypatch.delenv("SUPABASE_DB_URL", raising=False)
+    monkeypatch.setattr(app, "DATABASE_URL", "")
+    monkeypatch.setattr(app, "USE_SUPABASE", False)
+    monkeypatch.setattr(app, "SUPABASE_SDK_ACTIVE", False)
+    monkeypatch.setattr(app, "DATA_DIR", str(data_dir))
+    monkeypatch.setattr(app, "DB_PATH", str(data_dir / "mighty.db"), raising=False)
+    monkeypatch.setattr(app, "AUDIT_DIR", str(audit_dir))
+    monkeypatch.setattr(app, "AUDIT_LOG_FILE", str(audit_dir / "ai_audit.jsonl"))
+    monkeypatch.setattr(app, "EXTERNAL_API_USAGE_LOG_FILE", str(data_dir / "external_api_usage.jsonl"))
+    monkeypatch.setattr(app, "AI_FORCE_MOCK", True)
+    monkeypatch.setattr(app, "GEMINI_READY", False)
+    audit_dir.mkdir(parents=True, exist_ok=True)
     app.init_db()
-    
-    yield
 
 @pytest.fixture
 def client():
@@ -555,6 +548,93 @@ def test_attendance_punch_timesheet_parse_approval_and_summary(client):
     assert summary["privacy_controls"]["raw_file_stored"] is False
     assert "emp-004-attendance" not in str(summary)
     assert "timesheet-yamada.csv" not in str(summary)
+
+
+def test_attendance_legacy_xls_imports_real_binary_workbook(client):
+    """Import a self-authored BIFF2 workbook through xlrd and the real HTTP route."""
+    import struct
+
+    import xlrd
+
+    def record(code, payload=b""):
+        return struct.pack("<HH", code, len(payload)) + payload
+
+    rows = [
+        ["Synthetic legacy timesheet", "", "", "", "", ""],
+        ["date", "work_hours", "overtime_hours", "midnight_hours", "holiday_work", "anomaly"],
+        ["2026-09-01", 8, 1.5, 0, 0, "none"],
+        ["2026-09-02", 7.5, 0.5, 1, 1, "missing"],
+        ["total", 15.5, 2, 1, 1, ""],
+    ]
+    records = [
+        record(0x0009, struct.pack("<HH", 2, 0x0010)),  # BIFF2 worksheet BOF.
+        record(0x0042, struct.pack("<H", 1252)),  # Windows-1252 CODEPAGE.
+        record(0x0000, struct.pack("<HHHH", 0, len(rows), 0, 6)),  # DIMENSIONS.
+    ]
+    for row_index, values in enumerate(rows):
+        for column_index, value in enumerate(values):
+            if isinstance(value, str):
+                if not value:
+                    continue
+                encoded = value.encode("cp1252")
+                payload = struct.pack("<HH3sB", row_index, column_index, b"\0\0\0", len(encoded))
+                records.append(record(0x0004, payload + encoded))  # LABEL.
+            else:
+                payload = struct.pack("<HH3sd", row_index, column_index, b"\0\0\0", value)
+                records.append(record(0x0003, payload))  # NUMBER.
+    records.append(record(0x000A))  # EOF.
+    workbook_bytes = b"".join(records)
+
+    workbook = xlrd.open_workbook(file_contents=workbook_bytes)
+    try:
+        assert workbook.biff_version == 20
+        sheet = workbook.sheet_by_index(0)
+        assert (sheet.nrows, sheet.ncols) == (5, 6)
+        assert sheet.row_values(1) == rows[1]
+        assert sheet.row_values(2) == rows[2]
+        assert sheet.row_values(3) == rows[3]
+        assert sheet.row_values(4) == rows[4]
+    finally:
+        workbook.release_resources()
+
+    parsed = app.parse_attendance_xls_bytes(workbook_bytes)
+    assert parsed["parsed_rows"] == 2
+    assert parsed["work_minutes"] == 930
+    assert parsed["overtime_minutes"] == 120
+    assert parsed["midnight_minutes"] == 60
+    assert parsed["holiday_work_days"] == 1
+    assert parsed["anomaly_count"] == 1
+
+    employee_identifier = "test-employee-legacy-xls-329"
+    filename = "synthetic-legacy-timesheet-329.xls"
+    response = client.post(
+        "/api/attendance/timesheet/parse",
+        data={
+            "employee_identifier": employee_identifier,
+            "consented": "true",
+            "consent_version": app.ATTENDANCE_CONSENT_VERSION,
+        },
+        files={"file": (filename, workbook_bytes, "application/vnd.ms-excel")},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["status"] == "success"
+    assert payload["import_id"] > 0
+    assert payload["approval_status"] == "pending_approval"
+    assert payload["summary"] == {
+        "work_hours": 15.5,
+        "overtime_hours": 2.0,
+        "midnight_hours": 1.0,
+        "holiday_work_days": 1,
+        "anomaly_count": 1,
+    }
+    assert payload["privacy_controls"] == {
+        "raw_identifier_stored": False,
+        "raw_file_stored": False,
+        "original_filename_stored": False,
+    }
+    assert employee_identifier not in response.text
+    assert filename not in response.text
 
 
 def test_admin_operations_dashboard_requires_auth_aggregates_and_exports_csv(client):
