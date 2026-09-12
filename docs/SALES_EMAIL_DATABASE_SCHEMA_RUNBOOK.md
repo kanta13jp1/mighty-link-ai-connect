@@ -77,7 +77,22 @@ python scripts/manage_db_migrations.py apply --engine sqlite --sqlite-path data/
 6. 本番で `supabase db push` を実行する。
 7. RLS/RESTアクセス、API smoke test、公開デモguard、WBS/Sheets/Calendar/GitHub同期を実施する。
 
-## rollback方針
+## 取得元制約の更新（T1035 / Issue #361）
+
+`20260912000000_sales_email_source_types.sql` は、`sales_mailbox_sources` と
+`sales_email_messages` の取得元に `imap`、`pop3`、`thunderbird_local` を追加する。
+従来の取得元を維持し、既存レコードの取得元を書き換えない。
+
+- SQLite: `manage_db_migrations.py` 経由で適用する。`-- sqlite-rebuild` 宣言により、外部キーを一時停止してテーブルを単一トランザクションで再構築し、ID・関連行・管理対象インデックス・採番位置を保持する。コミット前に `foreign_key_check` を行い、異常時はDDLとデータをロールバックして外部キー設定を復元する。
+- PostgreSQL / Supabase: バックアップを確認後、同名のCHECK制約だけをトランザクション内で差し替える。行データ・RLS・権限は変更しない。既存環境では履歴を確認し、初期化用migrationを未確認のまま再実行しない。
+- 移行前にSQLiteの独自追加列・インデックス・トリガーがないことを確認する。このmigrationはリポジトリ管理下の既存スキーマを対象とする。
+- 保存失敗・重複確認失敗は同期失敗として扱う。Supabase転送時も失敗を無視せずロールバックする。`status=success` や取り込み0件だけで復旧判定せず、本番の登録件数とActionsログを照合する。
+- メールサーバーの削除・移動・既読化は行わない。取得元に `pop3` を許可することはPOP受信の有効化を意味しない。
+
+対象回帰テスト: `test_sales_email_source_migration.py`、
+`test_sales_email_persistence_failure.py`、`test_sync_sqlite_to_supabase_security.py`。
+
+## rollback方針（初期スキーマ）
 
 `db/migrations/rollback/20260618000000_sales_email_matching_schema_rollback.sql` は、開発・staging検証と緊急時の参照用である。本番で実行する場合は、次の条件を満たす。
 

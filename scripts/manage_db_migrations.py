@@ -275,10 +275,22 @@ def connect_postgres(database_url: str) -> Any:
 def execute_migration(conn: Any, engine: str, migration: Migration) -> None:
     sql = migration.path.read_text(encoding="utf-8")
     statements = split_sql_statements(sql)
+    rebuild = engine == "sqlite" and sql.startswith("-- sqlite-rebuild\n")
+    foreign_keys = None
+    if engine == "sqlite":
+        if conn.in_transaction:
+            raise MigrationError("SQLite migrations require an idle connection")
+        if rebuild:
+            foreign_keys = conn.execute("PRAGMA foreign_keys").fetchone()[0]
+            conn.execute("PRAGMA foreign_keys = OFF")
     cursor = conn.cursor()
     try:
+        if engine == "sqlite":
+            cursor.execute("BEGIN IMMEDIATE")
         for statement in statements:
             cursor.execute(statement)
+        if rebuild and cursor.execute("PRAGMA foreign_key_check").fetchone():
+            raise MigrationError("SQLite rebuild failed foreign key validation")
         cursor.execute(
             "INSERT INTO schema_migrations(version, name, checksum, applied_at_utc) VALUES (%s, %s, %s, %s)"
             if engine == "postgres"
@@ -291,6 +303,8 @@ def execute_migration(conn: Any, engine: str, migration: Migration) -> None:
         raise
     finally:
         cursor.close()
+        if foreign_keys is not None:
+            conn.execute("PRAGMA foreign_keys = ON" if foreign_keys else "PRAGMA foreign_keys = OFF")
 
 
 def build_plan(migrations: Iterable[Migration], applied: dict[str, str] | None = None) -> list[dict[str, Any]]:
