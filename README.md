@@ -11,10 +11,10 @@ python src/app.py
 
 ブラウザで `http://localhost:8000` を開きます。
 
-公開デモURLを変更前後に確認する場合:
+本番URLを変更前後に確認する場合:
 
 ```powershell
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 NotebookLM / Slack / Notion / Obsidian の社長説明用デモ成果物を生成する場合:

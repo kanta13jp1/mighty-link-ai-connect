@@ -1,3 +1,4 @@
+import copy
 import json
 import sys
 from datetime import datetime, timezone
@@ -41,6 +42,23 @@ def sample_extraction_report_with_received_dates() -> dict:
             item["received_at"] = "Fri, 24 Jul 2026 23:30:00 +0000"
         elif item.get("talent_profile"):
             item["received_at"] = "2026-07-23T09:15:00+09:00"
+    return report
+
+
+def sample_extraction_report_with_multiple_records() -> dict:
+    report = sample_extraction_report()
+    project_item = next(item for item in report["extractions"] if item.get("project_requirement"))
+    talent_item = next(item for item in report["extractions"] if item.get("talent_profile"))
+    extractions = []
+    for index in range(3):
+        project = copy.deepcopy(project_item)
+        project["project_requirement"]["title"] = f"Project {index + 1}"
+        project["source_path"] = f"imap://INBOX/project-{index + 1}"
+        talent = copy.deepcopy(talent_item)
+        talent["talent_profile"]["anonymized_talent_key"] = f"talent-{index + 1}"
+        talent["source_path"] = f"imap://INBOX/talent-{index + 1}"
+        extractions.extend([project, talent])
+    report["extractions"] = extractions
     return report
 
 
@@ -214,6 +232,32 @@ def test_sales_email_match_api_uses_sanitized_report(tmp_path):
     serialized = json.dumps(data, ensure_ascii=False)
     assert "candidate@example.com" not in serialized
     assert "090-1234-5678" not in serialized
+
+
+def test_sales_email_match_api_limits_related_catalogs_with_matches(tmp_path):
+    extraction_path = tmp_path / "extraction.json"
+    extract.write_json_report(sample_extraction_report_with_multiple_records(), extraction_path)
+
+    old_path = app.SALES_EMAIL_MATCH_REPORT_FILE
+    app.SALES_EMAIL_MATCH_REPORT_FILE = str(extraction_path)
+    try:
+        client = TestClient(app.app)
+        response = client.get("/api/sales-email/matches?limit=1")
+    finally:
+        app.SALES_EMAIL_MATCH_REPORT_FILE = old_path
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["project_count"] == 3
+    assert data["talent_count"] == 3
+    assert data["match_count"] == 1
+    assert {project["project_key"] for project in data["projects"]} == {
+        data["matches"][0]["project_key"]
+    }
+    assert {talent["talent_key"] for talent in data["talents"]} == {
+        data["matches"][0]["talent_key"]
+    }
+    assert len(response.content) < 100_000
 
 
 def test_sales_email_match_api_supports_keyword_and_rate_filters(tmp_path):

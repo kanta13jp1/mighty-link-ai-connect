@@ -3,7 +3,7 @@
 - 対象WBS: T841
 - 関連課題: R98
 - 作成日: 2026-06-24
-- レーン: Antigravity + Gemini / VSCode + Codex / VSCode + Claude Code
+- レーン: Antigravity + Gemini / Codex / Claude Code
 - 技術前提: フロントエンド `index.html`、バックエンド FastAPI on Firebase Functions、DB Supabase
 
 ## 結論
@@ -113,7 +113,7 @@ Basic Auth必須。打刻件数、勤務表取込件数、承認状態別件数�
 ## 検証
 
 - `tests/test_api.py::test_attendance_punch_timesheet_parse_approval_and_summary`
-- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/`
+- `python scripts/verify_public_demo.py --url https://mightylink-app.com/`
 
 ## 公式ドキュメント確認メモ
 

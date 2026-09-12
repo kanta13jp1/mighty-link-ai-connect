@@ -14,7 +14,7 @@ content = re.sub(topbar_nav_pattern, '', content)
 # 2. Make sidebar-nav-list the authoritative, visible #primary-navigation
 content = content.replace(
     '<nav class="sidebar-nav-list">',
-    '<nav class="sidebar-nav-list" id="primary-navigation" aria-label="Primary navigation">'
+    '<nav class="sidebar-nav-list" id="primary-navigation" aria-label="メインナビゲーション" data-i18n-aria-label="primary_navigation_label">'
 )
 
 # 3. Remove .topbar .nav-links { display: none !important; } rule from CSS (clean CSS)

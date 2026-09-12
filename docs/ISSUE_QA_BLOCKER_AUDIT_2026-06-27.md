@@ -1,7 +1,7 @@
 # 課題管理表・QA表 開発ブロッカー棚卸し（T854）
 
 - 実施日: 2026-06-27
-- 担当レーン: VSCode + Codex / VSCode + Claude Code
+- 担当レーン: Codex / Claude Code
 - 関連WBS: T853, T854, T849
 - 関連Issue: #141
 - 関連リスク/QA: R101, QA-78, PUBLIC-15

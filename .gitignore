@@ -52,3 +52,4 @@ node_modules/
 exports/mighty_skill_bridge_figma_powerpoint_demo_2026/
 exports/mighty_skill_bridge_figma_powerpoint_demo_2026.pptx.inspect.ndjson
 .worktree*
+.codex-worktrees/

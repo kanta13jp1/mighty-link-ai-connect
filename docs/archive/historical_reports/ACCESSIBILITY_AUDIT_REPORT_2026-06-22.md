@@ -4,7 +4,7 @@
 - 対象画面: 公開デモ `index.html`
 - 基準: WCAG 2.2 AA を主対象
 - 実行日: 2026-06-22
-- レーン: Antigravity + Gemini / VSCode + Codex
+- レーン: Antigravity + Gemini / Codex
 
 ## 結論
 

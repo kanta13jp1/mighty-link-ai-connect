@@ -104,7 +104,7 @@ T807で追加実施:
 
 ```powershell
 pytest -q tests/test_stripe_customer_portal.py tests/test_api.py
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 Stripe test modeでは、Portal session作成、解約、プラン変更、支払方法更新、Webhook event、課金規約文言の整合を確認する。

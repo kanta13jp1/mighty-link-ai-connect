@@ -1,7 +1,7 @@
 # サードパーティAPIキー・Secretローテーション Runbook (T751)
 
 作成日: 2026-06-14
-担当レーン: VSCode + Codex
+担当レーン: Codex
 対象: Gemini / OpenAI / Anthropic / Firebase / Supabase / Slack / Notion / Stripe / その他外部連携
 
 ## 目的

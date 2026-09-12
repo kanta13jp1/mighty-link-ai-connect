@@ -1,7 +1,7 @@
 # Google Sheets 追加タブ スキーマ: 課題管理表 / QA表 / リリース判定
 
 作成日: 2026-05-22
-オーナー: VSCode + Claude Code レーン (スキーマ維持) / 実装は Codex レーン
+オーナー: Claude Code レーン (スキーマ維持) / 実装は Codex レーン
 関連: [WBS_SYNC_GUIDE.md](WBS_SYNC_GUIDE.md) / [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md)
 
 ---

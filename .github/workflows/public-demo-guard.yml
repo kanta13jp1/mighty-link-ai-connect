@@ -1,4 +1,4 @@
-name: Public Demo Guard
+name: Production UI Guard
 
 on:
   push:
@@ -28,5 +28,5 @@ jobs:
       - name: Install guard dependencies
         run: python -m pip install "requests>=2.32.0"
 
-      - name: Verify root GitHub Pages demo
+      - name: Verify production UI source markers
         run: python scripts/verify_public_demo.py

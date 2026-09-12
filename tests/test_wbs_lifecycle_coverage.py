@@ -22,7 +22,7 @@ import audit_wbs_lifecycle_coverage as audit  # noqa: E402
 # Synthetic well-formed baseline + per-hypothesis defect injection
 # --------------------------------------------------------------------------- #
 def _row(tid, name, status="完了", start="2026-07-01", end="2026-07-02",
-         phase="8. 本番運用・品質管理", sub="", engine="VSCode + Claude Code",
+         phase="8. 本番運用・品質管理", sub="", engine="Claude Code",
          owner="Claude Code", action=""):
     return {
         "タスクID": tid, "大フェーズ": phase, "小フェーズ": sub, "タスク名": name,
@@ -137,7 +137,7 @@ def test_load_rows_parses_header_and_dicts(tmp_path):
     f = tmp_path / "wbs.tsv"
     f.write_text("\t".join(audit.EXPECTED_HEADER) + "\r\n"
                  + "\t".join(["T1", "1. 企画・設計", "", "企画", "Claude Code",
-                              "VSCode + Claude Code", "", "完了", "2026-07-01", "2026-07-02"]) + "\r\n",
+                              "Claude Code", "", "完了", "2026-07-01", "2026-07-02"]) + "\r\n",
                  encoding="utf-8")
     header, rows = audit.load_rows(f)
     assert header == audit.EXPECTED_HEADER

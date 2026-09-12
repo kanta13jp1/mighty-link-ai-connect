@@ -1,6 +1,6 @@
 # 品質ガードカタログ（索引） / Quality Guard Catalog
 
-作成日: 2026-07-19 / 担当レーン: VSCode + Claude Code（T903）
+作成日: 2026-07-19 / 担当レーン: Claude Code（T903）
 正本: 実行対象の機械側正本は `scripts/run_lane_preflight.py` の `GUARD_REGISTRY` / `EXEMPT_GUARDS`。本カタログはその人間可読な索引で、`scripts/audit_guard_catalog.py`（T903）が両者を毎回照合し、**未記載（登録済みだが未文書化）・幽霊（記載のみで未登録）をゼロに保つ**。
 関連WBS: T894（プリフライト）/ 各ガードの関連WBS（各項参照）
 

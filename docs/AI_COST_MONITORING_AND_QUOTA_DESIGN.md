@@ -11,8 +11,8 @@
 ## 1. 背景と設計方針
 本プロジェクトでは、開発効率の最大化と役割の専門化を目的に、以下の3つのAI開発環境を並走させています。
 1. **Antigravity + Gemini レーン**: 主にUI/UXのポリッシュ、フロントエンドの実装、およびマルチモーダル処理を担当（Gemini API 依存）。
-2. **VSCode + Codex レーン**: 主にFastAPIバックエンド、データ同期スクリプト、GitHub/Google Workspace APIの自動化、およびCI環境整備を担当。
-3. **VSCode + Claude Code レーン**: 主に設計ドキュメント整備、WBS状態管理、チェックリスト構築、およびバグトリアージを担当。
+2. **Codex レーン**: 主にFastAPIバックエンド、データ同期スクリプト、GitHub/Google Workspace APIの自動化、およびCI環境整備を担当。
+3. **Claude Code レーン**: 主に設計ドキュメント整備、WBS状態管理、チェックリスト構築、およびバグトリアージを担当。
 
 これら3つのAI環境が並走するにあたり、API使用量やトークン消費量が急増して予期せぬ「ジャケ買いコスト超過（Bill Shock）」や「API制限（Quota 枯渇）による開発の中断」が発生するのを防ぐため、本設計書において監視手法・通知閾値・クォータ枯渇時の優先開発レーン移行（Traffic Lane Shift）ポリシーを確立します。
 
@@ -27,13 +27,13 @@
   * Google AI Studio の Usage ダッシュボードの定期モニタリング。
   * `scripts/monitor_managed_agents_cost.py`（API呼び出しごとの使用トークン数履歴保存PoC）。
 
-### 2.2 VSCode + Claude Code (Anthropic API)
+### 2.2 Claude Code (Anthropic API)
 * **監視対象**: Anthropic Console における利用額（USD）およびモデル別のトークン消費量。
 * **監視手段**:
   * Anthropic Developer Console の「Spend Alerts」（日次および月次の利用額アラート設定）。
   * アラート閾値：警告リミット $10/月、ハード遮断リミット $20/月。
 
-### 2.3 VSCode + Codex
+### 2.3 Codex
 * **監視対象**: 主に内部ツール（FastAPI）やローカルDB/CIリソース。
 * **監視手段**:
   * ローカルの確定的なモック処理が有効になっているか (`AI_FORCE_MOCK=1`) の定期テスト。
@@ -56,8 +56,8 @@
 | 開発レーン | プロバイダー | 使用モデル/API | 消費トークン数/コール数 | 当月費用 (USD) | 備考 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Antigravity + Gemini** | Google AI | Gemini 1.5/2.0 Flash / Pro | XX,XXX tokens | $X.XX | 主作業環境 |
-| **VSCode + Codex** | OpenAI / Local | gpt-4o-mini | XX,XXX tokens | $X.XX | バックエンド / 同期 |
-| **VSCode + Claude Code** | Anthropic | claude-3-7-sonnet | XX,XXX tokens | $X.XX | 設計 / トリアージ |
+| **Codex** | OpenAI / Local | gpt-4o-mini | XX,XXX tokens | $X.XX | バックエンド / 同期 |
+| **Claude Code** | Anthropic | claude-3-7-sonnet | XX,XXX tokens | $X.XX | 設計 / トリアージ |
 
 ## 3. クォータ警告・遮断イベント発生状況
 * [日付 / イベント内容 / 対処した内容]
@@ -87,14 +87,14 @@ graph TD
     A[開発開始] --> B{Gemini API Quota残量確認}
     B -- 十分にある --> C[通常レーン: Antigravity + Gemini]
     C --> D[UIポリッシュ・マルチモーダル機能開発]
-    B -- Quota枯渇 / 制限警告 --> E[代替レーン: VSCode + Codex & Claude Code]
+    B -- Quota枯渇 / 制限警告 --> E[代替レーン: Codex & Claude Code]
     E --> F[サーバー側: AI_FORCE_MOCK=1 を適用]
     F --> G[バックエンドAPI、テスト、ドキュメント、CI/CD整備を優先]
     G --> H[Gemini Quota回復後に通常レーンへ切り戻し]
 ```
 
 ### 4.1 制限発生時の切替手順（Failover Flow）
-1. **検知と記録**: `Antigravity` が API 制限エラー（429 Too Many Requests 等）を返した際、または `monitor_managed_agents_cost.py` が月次ソフトリミット到達を検知した際、速やかに開発環境を `VSCode + Codex` レーンに切り替えます。
+1. **検知と記録**: `Antigravity` が API 制限エラー（429 Too Many Requests 等）を返した際、または `monitor_managed_agents_cost.py` が月次ソフトリミット到達を検知した際、速やかに開発環境を `Codex` レーンに切り替えます。
 2. **モック適用**: バックエンド起動時に環境変数 `AI_FORCE_MOCK=1` を設定し、実APIへのコールを完全に遮断。ローカルの確定的なフォールバックパイプラインによるシミュレーター動作で単体テストおよびUI検証を継続します。
 3. **作業の集中**: 制限中はUIデザインの新規生成を停止し、ドキュメントの整理、WBSの更新、自動テスト（Playwright）の整備、およびCI設定の調整にリソースを集中させます。
 4. **切り戻し (Handoff)**: クォータ制限の更新（毎月/毎日特定のタイミング）を確認後、`AI_FORCE_MOCK` を未設定に戻し、再度 Antigravity でのビジュアル開発を再開します。

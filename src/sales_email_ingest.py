@@ -27,7 +27,7 @@ DEFAULT_JSON_REPORT = Path("exports") / "sales_email_ingest_review.json"
 DEFAULT_MARKDOWN_REPORT = Path("exports") / "sales_email_ingest_review.md"
 SUBJECT_PREFIX_RE = re.compile(r"^\s*(?:re|fw|fwd|返信|転送)\s*[:：]\s*", re.IGNORECASE)
 WHITESPACE_RE = re.compile(r"\s+")
-EMAIL_RE = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
+EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}", re.IGNORECASE)
 PHONE_RE = re.compile(
     r"(?<!\d)(?:\+81[-\s]?)?0\d{1,4}[-\s]?\d{1,4}[-\s]?\d{3,4}(?!\d)"
 )

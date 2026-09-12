@@ -36,7 +36,7 @@ def _good():
     release = [["PUB-900", "internal", "cat", "基準", "evidence", "PASS", "PASS",
                 "owner", "auth", "T900", "-", "2026-07-12", "notes"]]
     wbs = [["T900", "8. 本番運用・品質管理", "品質管理", "タスク", "Claude Code",
-            "VSCode + Claude Code", "QA-900/R900記録の詳細", "完了", "2026-07-12", "2026-07-12"]]
+            "Claude Code", "QA-900/R900記録の詳細", "完了", "2026-07-12", "2026-07-12"]]
     return {"issues": issues, "qa": qa, "tests": tests, "release": release, "wbs": wbs}
 
 

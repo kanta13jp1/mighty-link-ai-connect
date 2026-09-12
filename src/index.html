@@ -17,7 +17,8 @@
         (function() {
             try {
                 var stored = localStorage.getItem('mighty_auth_session');
-                if (!stored) {
+                var isServerAuth = !!document.querySelector('meta[name="mighty-server-authenticated"]');
+                if (!stored && !isServerAuth) {
                     var css = 'html, body { overflow: hidden !important; background: #030303 !important; } main, header, footer, .hero, .internal-section { display: none !important; visibility: hidden !important; opacity: 0 !important; } #auth-modal { opacity: 1 !important; pointer-events: auto !important; display: flex !important; } .auth-modal-close { display: none !important; }';
                     var style = document.createElement('style');
                     style.id = 'early-auth-lockout-style';
@@ -235,8 +236,11 @@
             line-height: 1.1;
         }
 
-        .brand-text strong {
+        .brand-text strong,
+        .brand-text .brand-title {
+            margin: 0;
             font-size: 16px;
+            font-weight: 700;
             white-space: nowrap;
             background: linear-gradient(135deg, #ffffff 0%, #8bdcff 60%, #baff66 100%);
             -webkit-background-clip: text;
@@ -245,7 +249,8 @@
             transition: filter 0.3s ease;
         }
 
-        .brand:hover .brand-text strong {
+        .brand:hover .brand-text strong,
+        .brand:hover .brand-text .brand-title {
             filter: drop-shadow(0 0 8px rgba(139, 220, 255, 0.4));
         }
 
@@ -334,7 +339,7 @@
         }
 
         .nav-links a,
-        .language-switch a {
+        .language-switch button {
             position: relative;
             display: inline-flex;
             align-items: center;
@@ -394,7 +399,11 @@
             flex-shrink: 0;
         }
 
-        .language-switch a {
+        .language-switch button {
+            border: 0;
+            background: transparent;
+            cursor: pointer;
+            font-family: inherit;
             color: var(--muted);
             font-size: 12px;
             font-weight: 700;
@@ -402,11 +411,11 @@
             padding: 1px 3px;
         }
 
-        .language-switch a:hover {
+        .language-switch button:hover {
             color: #ffffff;
         }
 
-        .language-switch a.active {
+        .language-switch button.active {
             color: var(--blue) !important;
             text-shadow: 0 0 10px var(--blue);
             font-weight: 900;
@@ -1792,7 +1801,8 @@
         }
 
         @media (max-width: 520px) {
-            .brand-text strong {
+            .brand-text strong,
+            .brand-text .brand-title {
                 font-size: 15px;
             }
 
@@ -3878,16 +3888,18 @@
         /* 1. Eliminate Duplicate Topbar Nav */
         
 
-        /* 2. Fix Sidebar Top Clipping */
-        .global-app-sidebar {
-            position: sticky !important;
-            top: 84px !important;
-            height: calc(100vh - 104px) !important;
-            overflow-y: auto !important;
-            margin-top: 0 !important;
-            background: rgba(9, 13, 22, 0.95) !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5) !important;
+        /* 2. Fix Sidebar Top Clipping for Desktop */
+        @media (min-width: 1025px) {
+            .global-app-sidebar {
+                position: sticky !important;
+                top: 84px !important;
+                height: calc(100vh - 104px) !important;
+                overflow-y: auto !important;
+                margin-top: 0 !important;
+                background: rgba(9, 13, 22, 0.95) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5) !important;
+            }
         }
 
         /* 3. Ensure Active Tab & its Contents are NEVER Hidden by Scroll Observers */
@@ -4202,25 +4214,25 @@
     </style>
 </head>
 <body>
-    <a class="skip-link" href="#top">Skip to main content</a>
+    <a class="skip-link" href="#top" data-i18n="skip_to_main">メインコンテンツへ移動</a>
     <header class="topbar">
         <div class="topbar-header">
-            <a class="brand" href="#top" aria-label="Mighty Skill-Bridge home">
+            <a class="brand" href="#top" aria-label="Mighty Skill-Bridge ホーム" data-i18n-aria-label="brand_home_label">
                 <span class="brand-mark">M</span>
                 <span class="brand-text">
-                    <strong>Mighty Skill-Bridge</strong>
+                    <h1 class="brand-title">Mighty Skill-Bridge</h1>
                     <span data-i18n="hero_subtitle_short">エンジニア＆案件 AIフィットシミュレーター</span>
                 </span>
             </a>
             <div class="topbar-tools">
-                <div class="language-switch" aria-label="Language">
-                    <a href="javascript:void(0)" data-lang="en" onclick="switchLanguage('en'); return false;">EN</a>
+                <div class="language-switch" role="group" aria-label="言語を選択" data-i18n-aria-label="language_switch_label">
+                    <button type="button" data-lang="en" aria-pressed="false" onclick="switchLanguage(this)">EN</button>
                     <span>/</span>
-                    <a href="javascript:void(0)" data-lang="zh" onclick="switchLanguage('zh'); return false;">中文</a>
+                    <button type="button" data-lang="zh" aria-pressed="false" onclick="switchLanguage(this)">中文</button>
                     <span>/</span>
-                    <a href="javascript:void(0)" data-lang="ko" onclick="switchLanguage('ko'); return false;">KO</a>
+                    <button type="button" data-lang="ko" aria-pressed="false" onclick="switchLanguage(this)">KO</button>
                     <span>/</span>
-                    <a href="javascript:void(0)" class="active" data-lang="ja" onclick="switchLanguage('ja'); return false;">JP</a>
+                    <button type="button" class="active" data-lang="ja" aria-pressed="true" onclick="switchLanguage(this)">JP</button>
                 </div>
                 <div class="status-strip" aria-live="polite">
                     <span class="status-dot"></span>
@@ -4235,17 +4247,17 @@
                         <button class="auth-logout-btn" onclick="handleLogout()" title="ログアウト" data-i18n="auth_logout_btn" data-i18n-title="auth_logout_title">🔒 ログアウト</button>
                     </div>
                 </div>
-                <button class="theme-toggle" type="button" id="theme-toggle" aria-label="配色モードを切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label" data-i18n="theme_light">ライト</span></button>
-                <button class="mobile-menu" type="button" aria-label="Focus navigation" aria-controls="primary-navigation" onclick="toggleSidebarDrawer()" id="mobile-menu-btn" aria-controls="global-sidebar" aria-expanded="false">☰</button>
+                <button class="theme-toggle" type="button" id="theme-toggle" aria-label="ライトテーマに切り替え" aria-pressed="false" onclick="toggleTheme()"><span aria-hidden="true">🌗</span><span id="theme-toggle-label">ライト</span></button>
+                <button class="mobile-menu" type="button" aria-label="ナビゲーションメニューを開く" onclick="toggleSidebarDrawer()" id="mobile-menu-btn" aria-controls="global-sidebar" aria-expanded="false">☰</button>
             </div>
         </div>
         
     </header>
 
     <!-- Modal: Authentication & Access Control (ログイン / 会員登録) -->
-    <div class="auth-modal-overlay" id="auth-modal" aria-hidden="true">
+    <div class="auth-modal-overlay" id="auth-modal" aria-hidden="true" inert>
         <div class="auth-modal-card" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
-            <button class="auth-modal-close" onclick="closeAuthModal()" aria-label="閉じる">×</button>
+            <button class="auth-modal-close" onclick="closeAuthModal()" aria-label="認証ダイアログを閉じる" data-i18n-aria-label="auth_modal_close_label">×</button>
             <div class="auth-modal-header">
                 <h3 id="auth-modal-title" data-i18n="auth_modal_title">アカウント認証</h3>
                 <p style="font-size: 0.8rem; color: var(--muted);" id="auth-modal-subtitle" data-i18n="admin_login_required">セキュリティ保護機能にアクセスするにはログインしてください</p>
@@ -4276,7 +4288,7 @@
         <!-- UNIFIED GLOBAL SAAS SIDEBAR (Figma Untitled UI Parity)   -->
         <!-- ======================================================== -->
         <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="closeSidebarDrawer()"></div>
-        <aside class="global-app-sidebar" id="global-sidebar" aria-label="Global Workspace Navigation">
+        <aside class="global-app-sidebar" id="global-sidebar" aria-label="ワークスペースナビゲーション" data-i18n-aria-label="workspace_navigation_label">
             <div class="sidebar-brand">
                 <div style="width: 36px; height: 36px; border-radius: 10px; background: #162a15; border: 1.2px solid #baff66; display: flex; align-items: center; justify-content: center; font-size: 16px;">🛡️</div>
                 <div>
@@ -4287,7 +4299,7 @@
 
             <div style="font-size: 10px; font-weight: 800; color: var(--muted); letter-spacing: 1px; margin-bottom: 10px; padding-left: 8px;">WORKSPACE APPS</div>
 
-                        <nav class="nav-links" id="primary-navigation" aria-label="Primary navigation">
+                        <nav class="nav-links" id="primary-navigation" aria-label="メインナビゲーション" data-i18n-aria-label="primary_navigation_label">
                 <!-- 1. Home / Fit Simulator -->
                 <a href="#top" class="sidebar-nav-item" data-tab-id="home-view">
                     <span style="font-size: 15px;">🏠</span>
@@ -5222,14 +5234,14 @@
                         <button type="button" class="btn" style="padding: 6px 14px; font-size: 11px; font-weight: bold; background: rgba(186, 255, 102, 0.15); border: 1px solid rgba(186, 255, 102, 0.4); color: var(--green); border-radius: 6px; cursor: pointer;" onclick="filterHighScoreMatches()">🔥 適合度90%以上のみ表示</button>
                     </div>
 
-                    <div class="matching-filter-toolbar" role="search" aria-label="営業メールAIマッチングの絞り込み">
+                    <div class="matching-filter-toolbar" role="search" aria-label="営業メールAIマッチングの絞り込み" data-i18n-aria-label="matching_filter_search_label">
                         <div class="matching-filter-field">
-                            <label for="matching-filter-keyword">フリーワード</label>
-                            <input class="matching-filter-control" type="search" id="matching-filter-keyword" placeholder="案件名・要員・送信元など" autocomplete="off" oninput="applyMatchingFilters()">
+                            <label for="matching-filter-keyword" data-i18n="matching_filter_keyword_label">フリーワード</label>
+                            <input class="matching-filter-control" type="search" id="matching-filter-keyword" placeholder="案件名・要員・送信元など" data-i18n-placeholder="matching_filter_keyword_placeholder" autocomplete="off" oninput="applyMatchingFilters()">
                         </div>
 
                         <div class="matching-filter-field">
-                            <label for="matching-filter-skill">必須スキル</label>
+                            <label for="matching-filter-skill" data-i18n="matching_filter_skill_label">必須スキル</label>
                             <select class="matching-filter-control" id="matching-filter-skill" onchange="applyMatchingFilters()">
                                 <option value="">すべて</option>
                                 <option value="Java">Java</option>
@@ -5245,7 +5257,7 @@
                         </div>
 
                         <div class="matching-filter-field">
-                            <label for="matching-filter-rate-min">単価下限</label>
+                            <label for="matching-filter-rate-min" data-i18n="matching_filter_rate_min_label">単価下限</label>
                             <select class="matching-filter-control" id="matching-filter-rate-min" onchange="applyMatchingFilters()">
                                 <option value="0">指定なし</option>
                                 <option value="50">50万円〜</option>
@@ -5257,7 +5269,7 @@
                         </div>
 
                         <div class="matching-filter-field">
-                            <label for="matching-filter-rate-max">単価上限</label>
+                            <label for="matching-filter-rate-max" data-i18n="matching_filter_rate_max_label">単価上限</label>
                             <select class="matching-filter-control" id="matching-filter-rate-max" onchange="applyMatchingFilters()">
                                 <option value="999">指定なし</option>
                                 <option value="70">〜70万円</option>
@@ -5269,37 +5281,37 @@
                         </div>
 
                         <div class="matching-filter-field">
-                            <label for="matching-filter-score">適合度</label>
+                            <label for="matching-filter-score" data-i18n="matching_filter_score_label">適合度</label>
                             <select class="matching-filter-control" id="matching-filter-score" onchange="applyMatchingFilters()">
-                                <option value="0">すべて</option>
-                                <option value="80">80%以上</option>
-                                <option value="90">90%以上</option>
+                                <option value="0" data-i18n="matching_filter_score_option_all">すべて</option>
+                                <option value="80" data-i18n="matching_filter_score_option_80">80%以上</option>
+                                <option value="90" data-i18n="matching_filter_score_option_90">90%以上</option>
                             </select>
                         </div>
 
                         <div class="matching-filter-field">
-                            <label for="matching-filter-contract">契約形態</label>
+                            <label for="matching-filter-contract" data-i18n="matching_filter_contract_label">契約形態</label>
                             <select class="matching-filter-control" id="matching-filter-contract" onchange="applyMatchingFilters()">
-                                <option value="">すべて</option>
-                                <option value="準委任">準委任</option>
-                                <option value="派遣">派遣</option>
-                                <option value="請負">請負</option>
-                                <option value="正社員/契約社員">正社員/契約社員</option>
+                                <option value="" data-i18n="matching_filter_contract_option_all">すべて</option>
+                                <option value="準委任" data-i18n="matching_filter_contract_option_quasi_mandate">準委任</option>
+                                <option value="派遣" data-i18n="matching_filter_contract_option_temporary_staffing">派遣</option>
+                                <option value="請負" data-i18n="matching_filter_contract_option_contract_work">請負</option>
+                                <option value="正社員/契約社員" data-i18n="matching_filter_contract_option_employee">正社員/契約社員</option>
                             </select>
                         </div>
 
                         <div class="matching-filter-field matching-filter-date-field">
-                            <label for="matching-filter-received-from">受信日</label>
+                            <label for="matching-filter-received-from" data-i18n="matching_filter_received_date_label">受信日</label>
                             <div class="matching-date-range">
-                                <input class="matching-filter-control" type="date" id="matching-filter-received-from" aria-label="受信日（開始）" onchange="refreshSalesEmailMatchesForDateRange()">
+                                <input class="matching-filter-control" type="date" id="matching-filter-received-from" aria-label="受信日（開始）" data-i18n-aria-label="matching_filter_received_from_label" onchange="refreshSalesEmailMatchesForDateRange()">
                                 <span class="matching-date-separator" aria-hidden="true">〜</span>
-                                <input class="matching-filter-control" type="date" id="matching-filter-received-to" aria-label="受信日（終了）" onchange="refreshSalesEmailMatchesForDateRange()">
+                                <input class="matching-filter-control" type="date" id="matching-filter-received-to" aria-label="受信日（終了）" data-i18n-aria-label="matching_filter_received_to_label" onchange="refreshSalesEmailMatchesForDateRange()">
                             </div>
                         </div>
 
                         <div class="matching-filter-actions">
                             <span id="matching-filter-count" role="status" aria-live="polite">全件表示中</span>
-                            <button class="matching-filter-reset" type="button" onclick="resetMatchingFilters()" aria-label="絞り込み条件をリセット" title="絞り込み条件をリセット">↺</button>
+                            <button class="matching-filter-reset" type="button" onclick="resetMatchingFilters()" aria-label="絞り込み条件をリセット" data-i18n-aria-label="matching_filter_reset_label" title="絞り込み条件をリセット" data-i18n-title="matching_filter_reset_label">↺</button>
                         </div>
                     </div>
 
@@ -5326,30 +5338,30 @@
                 <!-- 営業メール多角分析パネル (T877) -->
                 <div class="panel" style="margin-top: 24px; min-height: auto;">
                     <span class="step-kicker" style="color: var(--blue); background: rgba(139, 220, 255, 0.05); margin-bottom: 12px; display: inline-block;">ANALYTICS</span>
-                    <h3 style="font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 8px;">営業メール解析統計・トレンド (691件全件解析)</h3>
-                    <span class="control-label" style="margin-bottom: 20px; display: block;">お名前.com/GMOサーバーから取り込んだ691件の営業メールのリアルタイムAI統計分析</span>
+                    <h3 style="font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 8px;">営業メール解析統計・トレンド</h3>
+                    <span class="control-label" style="margin-bottom: 20px; display: block;">メールサーバー直接取得および復旧データのリアルタイムAI統計分析</span>
                     
-                    <!-- 4連 ヒーローメトリクスカード -->
+                    <!-- 4連 ヒーローメトリクスカード (動的レンダリング) -->
                     <div class="analytics-hero-grid">
                         <div class="analytics-hero-card">
-                            <span class="analytics-hero-label">📩 総取り込みメール件数</span>
-                            <div class="analytics-hero-val" id="analytics-hero-total">691 <small>件</small></div>
-                            <span class="analytics-hero-sub">✓ 安全同期完了 (IMAP 読取専用)</span>
+                            <span class="analytics-hero-label">📊 総解析データ</span>
+                            <div class="analytics-hero-val" id="analytics-hero-total"><span style="font-size:16px;color:var(--muted)">取得中...</span></div>
+                            <span class="analytics-hero-sub">全件構造化・重複照合済</span>
                         </div>
                         <div class="analytics-hero-card">
-                            <span class="analytics-hero-label">🎯 AI抽出案件数</span>
-                            <div class="analytics-hero-val" id="analytics-hero-extracted">691 <small>件</small></div>
-                            <span class="analytics-hero-sub" style="color:var(--blue)">構造化率 100%</span>
+                            <span class="analytics-hero-label">📩 メールサーバー直接取得履歴</span>
+                            <div class="analytics-hero-val" id="analytics-hero-server"><span style="font-size:16px;color:var(--muted)">取得中...</span></div>
+                            <span class="analytics-hero-sub" style="color:var(--blue)">IMAP / POP3 直接取得</span>
                         </div>
                         <div class="analytics-hero-card">
-                            <span class="analytics-hero-label">💰 平均推定単価</span>
-                            <div class="analytics-hero-val" id="analytics-hero-rate">78.5 <small>万円/月</small></div>
-                            <span class="analytics-hero-sub" style="color:var(--yellow)">最高 140万円</span>
+                            <span class="analytics-hero-label">📂 Thunderbird復旧データ</span>
+                            <div class="analytics-hero-val" id="analytics-hero-restored"><span style="font-size:16px;color:var(--muted)">取得中...</span></div>
+                            <span class="analytics-hero-sub" style="color:var(--yellow)">ローカルアーカイブ復元</span>
                         </div>
                         <div class="analytics-hero-card">
-                            <span class="analytics-hero-label">🏢 主要パートナー企業数</span>
-                            <div class="analytics-hero-val" id="analytics-hero-domains">12 <small>社</small></div>
-                            <span class="analytics-hero-sub" style="color:var(--green)">お名前.com / GMO等</span>
+                            <span class="analytics-hero-label">⚡ 本日の新着</span>
+                            <div class="analytics-hero-val" id="analytics-hero-today"><span style="font-size:16px;color:var(--muted)">取得中...</span></div>
+                            <span class="analytics-hero-sub" style="color:var(--green)">当日IMAP取得分</span>
                         </div>
                     </div>
 
@@ -5684,9 +5696,9 @@
         </section>
 
         <!-- キーボードショートカットヘルプモーダル -->
-        <div id="shortcut-help-modal" class="auth-modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="shortcut-modal-title">
+        <div id="shortcut-help-modal" class="auth-modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="shortcut-modal-title" inert>
             <div class="auth-modal-card" style="max-width: 500px;">
-                <button type="button" class="auth-modal-close" onclick="closeShortcutHelpModal()" aria-label="閉じる">×</button>
+                <button type="button" class="auth-modal-close" onclick="closeShortcutHelpModal()" aria-label="閉じる" data-i18n-aria-label="shortcut_modal_close">×</button>
                 <div class="auth-modal-header">
                     <h2 id="shortcut-modal-title" data-i18n="shortcut_modal_title">⌨️ キーボードショートカットガイド</h2>
                     <p class="control-label" data-i18n="shortcut_modal_subtitle">Altキー（Optionキー）と数字による最速操作ナビゲーション</p>
@@ -5738,7 +5750,7 @@
         <footer class="site-footer" aria-label="Site footer">
             <div class="footer-inner">
                 <div class="footer-brand">
-                    <a class="brand" href="#top" aria-label="Mighty Skill-Bridge footer home">
+                    <a class="brand" href="#top" aria-label="Mighty Skill-Bridge ホーム" data-i18n-aria-label="brand_home_label">
                         <span class="brand-mark">M</span>
                         <span class="brand-text">
                             <strong>Mighty Skill-Bridge</strong>
@@ -5886,10 +5898,19 @@
         const tabScrollMemory = {};
         let currentActiveTabId = 'home-view';
 
+        function updateMobileMenuAccessibility(isOpen) {
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!btn) return;
+            const language = document.documentElement.lang || 'ja';
+            const labels = i18nDict[language] || i18nDict.ja;
+            const labelKey = isOpen ? 'mobile_menu_close_label' : 'mobile_menu_open_label';
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            btn.setAttribute('aria-label', labels[labelKey]);
+        }
+
         function toggleSidebarDrawer() {
             const sidebar = document.getElementById('global-sidebar');
             const backdrop = document.getElementById('sidebar-backdrop');
-            const btn = document.getElementById('mobile-menu-btn');
             if (!sidebar) return;
 
             const isOpen = sidebar.classList.contains('drawer-open');
@@ -5898,7 +5919,7 @@
             } else {
                 sidebar.classList.add('drawer-open');
                 if (backdrop) backdrop.classList.add('active');
-                if (btn) btn.setAttribute('aria-expanded', 'true');
+                updateMobileMenuAccessibility(true);
                 document.body.style.overflow = 'hidden';
             }
         }
@@ -5906,10 +5927,9 @@
         function closeSidebarDrawer() {
             const sidebar = document.getElementById('global-sidebar');
             const backdrop = document.getElementById('sidebar-backdrop');
-            const btn = document.getElementById('mobile-menu-btn');
             if (sidebar) sidebar.classList.remove('drawer-open');
             if (backdrop) backdrop.classList.remove('active');
-            if (btn) btn.setAttribute('aria-expanded', 'false');
+            updateMobileMenuAccessibility(false);
             document.body.style.overflow = '';
         }
 
@@ -6018,14 +6038,6 @@
             if (savedLang) {
                 switchLanguage(savedLang);
             }
-            document.querySelectorAll('.language-switch a').forEach(a => {
-                a.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const lang = a.getAttribute('data-lang');
-                    if (lang) switchLanguage(lang);
-                });
-            });
             const initialHash = window.location.hash || '#top';
             switchAppTab(initialHash, false);
 
@@ -6037,6 +6049,10 @@
                     if (href && href !== '#') {
                         e.preventDefault();
                         switchAppTab(href, true);
+                        if (targetLink.classList.contains('skip-link')) {
+                            const mainTarget = document.querySelector(href);
+                            if (mainTarget) mainTarget.focus({preventScroll: true});
+                        }
                     }
                 }
             });
@@ -6063,8 +6079,15 @@
             }
             const btn = document.getElementById("theme-toggle");
             const label = document.getElementById("theme-toggle-label");
-            if (btn) btn.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
-            if (label) label.textContent = theme === "light" ? "ダーク" : "ライト";
+            const documentLanguage = document.documentElement.lang.split("-")[0];
+            const language = ["ja", "en", "zh", "ko"].includes(documentLanguage) ? documentLanguage : "ja";
+            const targetTheme = theme === "light" ? "dark" : "light";
+            const translations = i18nDict[language] || i18nDict.ja;
+            if (btn) {
+                btn.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+                btn.setAttribute("aria-label", translations[`theme_toggle_to_${targetTheme}`]);
+            }
+            if (label) label.textContent = translations[`theme_${targetTheme}`];
         }
 
         function toggleTheme() {
@@ -6074,15 +6097,9 @@
             applyTheme(next);
         }
 
-        (function initTheme() {
-            let saved = null;
-            try { saved = localStorage.getItem("msb-theme"); } catch (e) {}
-            // Default is dark: only switch to light when explicitly saved.
-            applyTheme(saved === "light" ? "light" : "dark");
-        })();
-
         const i18nDict = {
             ja: {
+                skip_to_main: "メインコンテンツへ移動",
                 nav_home: "ホーム",
                 nav_onboarding: "初期セットアップ",
                 nav_training: "研修ガイド",
@@ -6093,6 +6110,8 @@
                 nav_attendance: "勤怠管理",
                 nav_matching: "営業メールマッチング",
                 nav_admin: "管理者ダッシュボード",
+                mobile_menu_open_label: "ナビゲーションメニューを開く",
+                mobile_menu_close_label: "ナビゲーションメニューを閉じる",
                 hero_title: "エンジニア＆案件 AIフィットシミュレーター",
                 hero_subtitle: "AIが最適マッチングと自己診断・勤怠解析をワンストップ支援",
                 hero_badge: "次世代SESAIプラットフォーム",
@@ -6140,6 +6159,7 @@
                 admin_status_active: "システム正常稼働中",
                 auth_login_btn: "🔑 ログイン",
                 auth_logout_btn: "🔒 ログアウト",
+                auth_modal_close_label: "認証ダイアログを閉じる",
                 auth_modal_title: "ダッシュボード ログイン",
                 auth_email_label: "メールアドレス",
                 auth_pass_label: "パスワード",
@@ -6165,10 +6185,49 @@
                 admin_card_survey: "適性診断回答数",
                 admin_card_attendance: "勤怠打刻解析数",
                 admin_card_matching: "営業メールAIマッチング",
+                matching_filter_search_label: "営業メールAIマッチングの絞り込み",
+                matching_filter_keyword_label: "フリーワード",
+                matching_filter_keyword_placeholder: "案件名・要員・送信元など",
+                matching_filter_skill_label: "必須スキル",
+                matching_filter_rate_min_label: "単価下限",
+                matching_filter_rate_max_label: "単価上限",
+                matching_filter_score_label: "適合度",
+                matching_filter_score_option_all: "すべて",
+                matching_filter_score_option_80: "80%以上",
+                matching_filter_score_option_90: "90%以上",
+                matching_filter_contract_label: "契約形態",
+                matching_filter_contract_option_all: "すべて",
+                matching_filter_contract_option_quasi_mandate: "準委任",
+                matching_filter_contract_option_temporary_staffing: "派遣",
+                matching_filter_contract_option_contract_work: "請負",
+                matching_filter_contract_option_employee: "正社員/契約社員",
+                matching_filter_received_date_label: "受信日",
+                matching_filter_received_from_label: "受信日（開始）",
+                matching_filter_received_to_label: "受信日（終了）",
+                matching_filter_reset_label: "絞り込み条件をリセット",
                 hero_subtitle_short: "エンジニア＆案件 AIフィットシミュレーター",
                 auth_logout_title: "ログアウト",
+                language_switch_label: "言語を選択",
+                brand_home_label: "Mighty Skill-Bridge ホーム",
+                primary_navigation_label: "メインナビゲーション",
+                workspace_navigation_label: "ワークスペースナビゲーション",
+                mobile_navigation_label: "モバイル主要ナビゲーション",
+                mobile_more_menu_dialog_label: "モバイル追加メニュー",
+                mobile_sheet_title: "メニュー & ツール",
+                mobile_sheet_setup: "初期設定",
+                mobile_sheet_self_assessment: "自己診断",
+                mobile_sheet_admin: "管理者",
+                mobile_sheet_support: "サポート",
+                mobile_nav_home: "ホーム",
+                mobile_nav_survey: "アンケート",
+                mobile_nav_attendance: "勤怠",
+                mobile_nav_matching: "マッチング",
+                mobile_nav_more: "その他",
+                mobile_nav_more_menu_label: "その他のメニューを開く",
                 theme_light: "ライト",
                 theme_dark: "ダーク",
+                theme_toggle_to_light: "ライトテーマに切り替え",
+                theme_toggle_to_dark: "ダークテーマに切り替え",
                 step_1_badge: "Step 1",
                 step_2_5_badge: "Step 2.5",
                 load_sample_btn: "サンプルを読み込む",
@@ -6212,6 +6271,7 @@
                 offline_toast_msg: "ネットワーク接続が切断されました。ローカルキャッシュモードで動作しています。"
             },
             en: {
+                skip_to_main: "Skip to main content",
                 nav_home: "Home",
                 nav_onboarding: "Setup",
                 nav_training: "Training Guide",
@@ -6222,6 +6282,8 @@
                 nav_attendance: "Attendance",
                 nav_matching: "Email Matching",
                 nav_admin: "Admin Dashboard",
+                mobile_menu_open_label: "Open navigation menu",
+                mobile_menu_close_label: "Close navigation menu",
                 hero_title: "Engineer & Job AI Fit Simulator",
                 hero_subtitle: "One-stop AI platform for optimal matching, self-diagnosis, and attendance analytics",
                 hero_badge: "Next-Gen SES AI Platform",
@@ -6269,6 +6331,7 @@
                 admin_status_active: "System Operating Normally",
                 auth_login_btn: "🔑 Login",
                 auth_logout_btn: "🔒 Logout",
+                auth_modal_close_label: "Close authentication dialog",
                 auth_modal_title: "Dashboard Login",
                 auth_email_label: "Email Address",
                 auth_pass_label: "Password",
@@ -6294,10 +6357,49 @@
                 admin_card_survey: "Assessment Responses",
                 admin_card_attendance: "Attendance Analyses",
                 admin_card_matching: "Email AI Matching",
+                matching_filter_search_label: "Sales email AI matching filters",
+                matching_filter_keyword_label: "Keyword",
+                matching_filter_keyword_placeholder: "Project, talent, sender, etc.",
+                matching_filter_skill_label: "Required skill",
+                matching_filter_rate_min_label: "Minimum rate",
+                matching_filter_rate_max_label: "Maximum rate",
+                matching_filter_score_label: "Match score",
+                matching_filter_score_option_all: "All",
+                matching_filter_score_option_80: "80% or higher",
+                matching_filter_score_option_90: "90% or higher",
+                matching_filter_contract_label: "Contract type",
+                matching_filter_contract_option_all: "All",
+                matching_filter_contract_option_quasi_mandate: "Quasi-mandate",
+                matching_filter_contract_option_temporary_staffing: "Temporary staffing",
+                matching_filter_contract_option_contract_work: "Contract work",
+                matching_filter_contract_option_employee: "Permanent/contract employee",
+                matching_filter_received_date_label: "Received date",
+                matching_filter_received_from_label: "Received date (start)",
+                matching_filter_received_to_label: "Received date (end)",
+                matching_filter_reset_label: "Reset filters",
                 hero_subtitle_short: "Engineer & Job AI Fit Simulator",
                 auth_logout_title: "Logout",
+                language_switch_label: "Select language",
+                brand_home_label: "Mighty Skill-Bridge home",
+                primary_navigation_label: "Primary navigation",
+                workspace_navigation_label: "Workspace navigation",
+                mobile_navigation_label: "Mobile primary navigation",
+                mobile_more_menu_dialog_label: "More menu",
+                mobile_sheet_title: "Menu & Tools",
+                mobile_sheet_setup: "Setup",
+                mobile_sheet_self_assessment: "Self-assessment",
+                mobile_sheet_admin: "Admin",
+                mobile_sheet_support: "Support",
+                mobile_nav_home: "Home",
+                mobile_nav_survey: "Survey",
+                mobile_nav_attendance: "Attendance",
+                mobile_nav_matching: "Matching",
+                mobile_nav_more: "More",
+                mobile_nav_more_menu_label: "Open more navigation options",
                 theme_light: "Light",
                 theme_dark: "Dark",
+                theme_toggle_to_light: "Switch to light theme",
+                theme_toggle_to_dark: "Switch to dark theme",
                 step_1_badge: "Step 1",
                 step_2_5_badge: "Step 2.5",
                 load_sample_btn: "Load Sample",
@@ -6341,6 +6443,7 @@
                 offline_toast_msg: "Network connection lost. Running in local cache mode."
             },
             zh: {
+                skip_to_main: "跳至主要内容",
                 nav_home: "首页",
                 nav_onboarding: "初始设置",
                 nav_training: "培训指南",
@@ -6351,6 +6454,8 @@
                 nav_attendance: "考勤管理",
                 nav_matching: "邮件匹配",
                 nav_admin: "管理员后台",
+                mobile_menu_open_label: "打开导航菜单",
+                mobile_menu_close_label: "关闭导航菜单",
                 hero_title: "工程师与职位 AI 匹配模拟器",
                 hero_subtitle: "提供一站式 AI 最优匹配、自我诊断与考勤智能分析",
                 hero_badge: "次世代 SES AI 平台",
@@ -6398,6 +6503,7 @@
                 admin_status_active: "系统正常运行中",
                 auth_login_btn: "🔑 登录",
                 auth_logout_btn: "🔒 退出登录",
+                auth_modal_close_label: "关闭身份验证对话框",
                 auth_modal_title: "控制台登录",
                 auth_email_label: "电子邮箱",
                 auth_pass_label: "密码",
@@ -6423,10 +6529,49 @@
                 admin_card_survey: "胜任力诊断答卷数",
                 admin_card_attendance: "考勤打卡分析数",
                 admin_card_matching: "邮件匹配运行数",
+                matching_filter_search_label: "销售邮件 AI 匹配筛选",
+                matching_filter_keyword_label: "关键词",
+                matching_filter_keyword_placeholder: "项目、人才、发件人等",
+                matching_filter_skill_label: "必备技能",
+                matching_filter_rate_min_label: "最低单价",
+                matching_filter_rate_max_label: "最高单价",
+                matching_filter_score_label: "匹配度",
+                matching_filter_score_option_all: "全部",
+                matching_filter_score_option_80: "80%及以上",
+                matching_filter_score_option_90: "90%及以上",
+                matching_filter_contract_label: "合同类型",
+                matching_filter_contract_option_all: "全部",
+                matching_filter_contract_option_quasi_mandate: "准委托",
+                matching_filter_contract_option_temporary_staffing: "派遣",
+                matching_filter_contract_option_contract_work: "承包",
+                matching_filter_contract_option_employee: "正式员工/合同员工",
+                matching_filter_received_date_label: "接收日期",
+                matching_filter_received_from_label: "接收日期（开始）",
+                matching_filter_received_to_label: "接收日期（结束）",
+                matching_filter_reset_label: "重置筛选条件",
                 hero_subtitle_short: "工程师与职位 AI 匹配模拟器",
                 auth_logout_title: "退出登录",
+                language_switch_label: "选择语言",
+                brand_home_label: "Mighty Skill-Bridge 首页",
+                primary_navigation_label: "主导航",
+                workspace_navigation_label: "工作区导航",
+                mobile_navigation_label: "移动端主导航",
+                mobile_more_menu_dialog_label: "更多菜单",
+                mobile_sheet_title: "菜单与工具",
+                mobile_sheet_setup: "初始设置",
+                mobile_sheet_self_assessment: "自我诊断",
+                mobile_sheet_admin: "管理",
+                mobile_sheet_support: "支持",
+                mobile_nav_home: "首页",
+                mobile_nav_survey: "问卷",
+                mobile_nav_attendance: "考勤",
+                mobile_nav_matching: "匹配",
+                mobile_nav_more: "更多",
+                mobile_nav_more_menu_label: "打开更多导航选项",
                 theme_light: "浅色",
                 theme_dark: "深色",
+                theme_toggle_to_light: "切换为浅色主题",
+                theme_toggle_to_dark: "切换为深色主题",
                 step_1_badge: "步骤 1",
                 step_2_5_badge: "步骤 2.5",
                 load_sample_btn: "加载示例",
@@ -6470,6 +6615,7 @@
                 offline_toast_msg: "网络连接已断开，正在使用本地缓存模式。"
             },
             ko: {
+                skip_to_main: "주요 콘텐츠로 건너뛰기",
                 nav_home: "홈",
                 nav_onboarding: "초기 설정",
                 nav_training: "연수 가이드",
@@ -6480,6 +6626,8 @@
                 nav_attendance: "근태관리",
                 nav_matching: "영업메일 매칭",
                 nav_admin: "관리자 대시보드",
+                mobile_menu_open_label: "내비게이션 메뉴 열기",
+                mobile_menu_close_label: "내비게이션 메뉴 닫기",
                 hero_title: "엔지니어 & 프로젝트 AI 피트 시뮬레이터",
                 hero_subtitle: "최적의 매칭과 자가진단, 근태 분석을 원스톱으로 지원하는 AI 플랫폼",
                 hero_badge: "차세대 SES AI 플랫폼",
@@ -6527,6 +6675,7 @@
                 admin_status_active: "시스템 정상 작동 중",
                 auth_login_btn: "🔑 로그인",
                 auth_logout_btn: "🔒 로그아웃",
+                auth_modal_close_label: "인증 대화상자 닫기",
                 auth_modal_title: "대시보드 로그인",
                 auth_email_label: "이메일 주소",
                 auth_pass_label: "비밀번호",
@@ -6552,10 +6701,49 @@
                 admin_card_survey: "적성 진단 응답 수",
                 admin_card_attendance: "근태 분석 건수",
                 admin_card_matching: "영업 메일 매칭 건수",
+                matching_filter_search_label: "영업 메일 AI 매칭 필터",
+                matching_filter_keyword_label: "키워드",
+                matching_filter_keyword_placeholder: "프로젝트, 인재, 발신자 등",
+                matching_filter_skill_label: "필수 기술",
+                matching_filter_rate_min_label: "최소 단가",
+                matching_filter_rate_max_label: "최대 단가",
+                matching_filter_score_label: "적합도",
+                matching_filter_score_option_all: "전체",
+                matching_filter_score_option_80: "80% 이상",
+                matching_filter_score_option_90: "90% 이상",
+                matching_filter_contract_label: "계약 형태",
+                matching_filter_contract_option_all: "전체",
+                matching_filter_contract_option_quasi_mandate: "준위임",
+                matching_filter_contract_option_temporary_staffing: "파견",
+                matching_filter_contract_option_contract_work: "도급",
+                matching_filter_contract_option_employee: "정규직/계약직",
+                matching_filter_received_date_label: "수신일",
+                matching_filter_received_from_label: "수신일(시작)",
+                matching_filter_received_to_label: "수신일(종료)",
+                matching_filter_reset_label: "필터 조건 초기화",
                 hero_subtitle_short: "엔지니어 & 프로젝트 AI 피트 시뮬레이터",
                 auth_logout_title: "로그아웃",
+                language_switch_label: "언어 선택",
+                brand_home_label: "Mighty Skill-Bridge 홈",
+                primary_navigation_label: "주요 탐색",
+                workspace_navigation_label: "워크스페이스 탐색",
+                mobile_navigation_label: "모바일 주요 탐색",
+                mobile_more_menu_dialog_label: "추가 메뉴",
+                mobile_sheet_title: "메뉴 & 도구",
+                mobile_sheet_setup: "초기 설정",
+                mobile_sheet_self_assessment: "자가 진단",
+                mobile_sheet_admin: "관리자",
+                mobile_sheet_support: "지원",
+                mobile_nav_home: "홈",
+                mobile_nav_survey: "설문",
+                mobile_nav_attendance: "근태",
+                mobile_nav_matching: "매칭",
+                mobile_nav_more: "더보기",
+                mobile_nav_more_menu_label: "추가 탐색 옵션 열기",
                 theme_light: "라이트",
                 theme_dark: "다크",
+                theme_toggle_to_light: "라이트 테마로 전환",
+                theme_toggle_to_dark: "다크 테마로 전환",
                 step_1_badge: "1단계",
                 step_2_5_badge: "2.5단계",
                 load_sample_btn: "샘플 로드",
@@ -6600,31 +6788,22 @@
             }
         };
 
+        (function initTheme() {
+            let saved = null;
+            try { saved = localStorage.getItem("msb-theme"); } catch (e) {}
+            // Default is dark: only switch to light when explicitly saved.
+            applyTheme(saved === "light" ? "light" : "dark");
+        })();
+
         function switchLanguage(el) {
             const lang = typeof el === "string" ? el : el.getAttribute("data-lang");
             if (!lang) return;
 
-            if (typeof el !== "string") {
-                const switcher = el.closest(".language-switch");
-                if (switcher) {
-                    switcher.querySelectorAll("a").forEach(a => {
-                        a.classList.remove("active");
-                        a.removeAttribute("aria-current");
-                    });
-                    el.classList.add("active");
-                    el.setAttribute("aria-current", "true");
-                }
-            } else {
-                document.querySelectorAll(".language-switch a").forEach(a => {
-                    if (a.getAttribute("data-lang") === lang) {
-                        a.classList.add("active");
-                        a.setAttribute("aria-current", "true");
-                    } else {
-                        a.classList.remove("active");
-                        a.removeAttribute("aria-current");
-                    }
-                });
-            }
+            document.querySelectorAll(".language-switch button").forEach(button => {
+                const selected = button.getAttribute("data-lang") === lang;
+                button.classList.toggle("active", selected);
+                button.setAttribute("aria-pressed", String(selected));
+            });
 
             document.documentElement.lang = lang === "ja" ? "ja" : lang;
             try { localStorage.setItem("msb_language_preference", lang); } catch (e) {}
@@ -6633,6 +6812,20 @@
                 const key = node.getAttribute("data-i18n");
                 if (i18nDict[lang] && i18nDict[lang][key]) {
                     node.textContent = i18nDict[lang][key];
+                }
+            });
+
+            document.querySelectorAll("[data-i18n-aria-label]").forEach(node => {
+                const key = node.getAttribute("data-i18n-aria-label");
+                if (i18nDict[lang] && i18nDict[lang][key]) {
+                    node.setAttribute("aria-label", i18nDict[lang][key]);
+                }
+            });
+
+            document.querySelectorAll("[data-i18n-title]").forEach(node => {
+                const key = node.getAttribute("data-i18n-title");
+                if (i18nDict[lang] && i18nDict[lang][key]) {
+                    node.setAttribute("title", i18nDict[lang][key]);
                 }
             });
 
@@ -6649,6 +6842,10 @@
                     node.setAttribute("placeholder", i18nDict[lang][key]);
                 }
             });
+            const mobileMenu = document.getElementById('mobile-menu-btn');
+            updateMobileMenuAccessibility(mobileMenu?.getAttribute('aria-expanded') === 'true');
+            const currentTheme = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+            applyTheme(currentTheme);
         }
 
         function setVideoSource(url) {
@@ -9898,89 +10095,121 @@
             }
         };
 
+                function renderAnalyticsPanels(data) {
+            if (!data) return;
+            const totalEl = document.getElementById("analytics-hero-total");
+            if (totalEl) totalEl.innerHTML = (typeof data.total_count === "number") ? `${data.total_count.toLocaleString()} <small>件</small>` : "取得中...";
+            
+            const serverEl = document.getElementById("analytics-hero-server");
+            if (serverEl) serverEl.innerHTML = (typeof data.server_direct_count === "number") ? `${data.server_direct_count.toLocaleString()} <small>件</small>` : "取得中...";
+            
+            const restoredEl = document.getElementById("analytics-hero-restored");
+            if (restoredEl) restoredEl.innerHTML = (typeof data.local_restored_count === "number") ? `${data.local_restored_count.toLocaleString()} <small>件</small>` : "取得中...";
+            
+            const todayEl = document.getElementById("analytics-hero-today");
+            if (todayEl) todayEl.innerHTML = (typeof data.today_new_count === "number") ? `${data.today_new_count.toLocaleString()} <small>件</small>` : "0 <small>件</small>";
+
+            const dailyDiv = document.getElementById("analytics-daily-list");
+            if (dailyDiv) {
+                const entries = Object.entries(data.daily_counts || {}).sort((a, b) => b[0].localeCompare(a[0]));
+                if (entries.length === 0) {
+                    dailyDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">データがありません</span>`;
+                } else {
+                    const maxCount = Math.max(...entries.map(e => e[1]), 1);
+                    dailyDiv.innerHTML = entries.map(([date, count]) => `
+                        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 13px;">
+                            <span style="font-weight: 500; font-family: monospace;">${escapeHtml(date)}</span>
+                            <div style="display: flex; align-items: center; gap: 8px; flex: 1; margin-left: 16px; justify-content: flex-end;">
+                                <div style="height: 6px; background: linear-gradient(90deg, #8bdcff, #4fd1a5); border-radius: 3px; width: ${Math.min(100, (count / maxCount) * 100)}%; max-width: 120px; box-shadow: 0 0 8px rgba(139,220,255,0.4);"></div>
+                                <span style="font-weight: 600; color: var(--text); min-width: 36px; text-align: right;">${count} 件</span>
+                            </div>
+                        </div>
+                    `).join("");
+                }
+            }
+            
+            const domainDiv = document.getElementById("analytics-domain-list");
+            if (domainDiv) {
+                const entries = Object.entries(data.domain_counts || {}).sort((a, b) => b[1] - a[1]);
+                const totalDomainEntries = entries.reduce((sum, e) => sum + e[1], 0) || 1;
+                if (entries.length === 0) {
+                    domainDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">データがありません</span>`;
+                } else {
+                    domainDiv.innerHTML = entries.map(([domain, count]) => {
+                        const pct = Math.round((count / totalDomainEntries) * 100);
+                        return `
+                            <div style="display: flex; flex-direction: column; gap: 4px; font-size: 13px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-weight: 500; font-family: monospace; color: var(--text);">${escapeHtml(domain)}</span>
+                                    <span style="font-weight: bold; color: var(--blue);">${count} 通 <small style="color:var(--muted);font-weight:normal">(${pct}%)</small></span>
+                                </div>
+                                <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden;">
+                                    <div style="height: 100%; width: ${pct}%; background: linear-gradient(90deg, #8bdcff, #4fd1a5); border-radius: 999px;"></div>
+                                </div>
+                            </div>
+                        `;
+                    }).join("");
+                }
+            }
+            
+            const skillDiv = document.getElementById("analytics-skill-list");
+            if (skillDiv) {
+                const entries = Object.entries(data.skill_counts || {}).sort((a, b) => b[1] - a[1]);
+                const maxSkillCount = Math.max(...entries.map(e => e[1]), 1);
+                if (entries.length === 0) {
+                    skillDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">データがありません</span>`;
+                } else {
+                    skillDiv.innerHTML = entries.map(([skill, count]) => {
+                        const pct = Math.round((count / maxSkillCount) * 100);
+                        return `
+                            <div style="display: flex; flex-direction: column; gap: 4px; font-size: 13px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span class="fit-badge fit-med" style="font-size: 11px; padding: 2px 8px; border-radius: 4px;">${escapeHtml(skill)}</span>
+                                    <span style="font-weight: bold; color: var(--green);">${count} 回</span>
+                                </div>
+                                <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden;">
+                                    <div style="height: 100%; width: ${pct}%; background: linear-gradient(90deg, #4fd1a5, #e6c15a); border-radius: 999px;"></div>
+                                </div>
+                            </div>
+                        `;
+                    }).join("");
+                }
+            }
+        }
+
+        function renderAnalyticsError() {
+            const totalEl = document.getElementById("analytics-hero-total");
+            if (totalEl) totalEl.innerHTML = `<span style="font-size:14px;color:var(--muted)">取得失敗</span>`;
+            const serverEl = document.getElementById("analytics-hero-server");
+            if (serverEl) serverEl.innerHTML = `<span style="font-size:14px;color:var(--muted)">取得失敗</span>`;
+            const restoredEl = document.getElementById("analytics-hero-restored");
+            if (restoredEl) restoredEl.innerHTML = `<span style="font-size:14px;color:var(--muted)">取得失敗</span>`;
+            const todayEl = document.getElementById("analytics-hero-today");
+            if (todayEl) todayEl.innerHTML = `<span style="font-size:14px;color:var(--muted)">取得失敗</span>`;
+
+            const dailyDiv = document.getElementById("analytics-daily-list");
+            if (dailyDiv) dailyDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">統計データの取得に失敗しました</span>`;
+            const domainDiv = document.getElementById("analytics-domain-list");
+            if (domainDiv) domainDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">統計データの取得に失敗しました</span>`;
+            const skillDiv = document.getElementById("analytics-skill-list");
+            if (skillDiv) skillDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">統計データの取得に失敗しました</span>`;
+        }
+
         async function loadSalesEmailAnalytics() {
             try {
                 const res = await fetch("/api/sales-email/analytics");
-                if (!res.ok) return;
+                if (!res.ok) {
+                    renderAnalyticsError();
+                    return;
+                }
                 const data = await res.json();
-                if (data.status !== "success") return;
-                
-                // Update Hero Metrics if provided
-                const totalEl = document.getElementById("analytics-hero-total");
-                if (totalEl && data.total_count) totalEl.innerHTML = `${data.total_count} <small>件</small>`;
-                const extEl = document.getElementById("analytics-hero-extracted");
-                if (extEl && data.total_count) extEl.innerHTML = `${data.total_count} <small>件</small>`;
-                const domEl = document.getElementById("analytics-hero-domains");
-                if (domEl && data.domain_counts) domEl.innerHTML = `${Object.keys(data.domain_counts).length} <small>社</small>`;
-
-                const dailyDiv = document.getElementById("analytics-daily-list");
-                if (dailyDiv) {
-                    const entries = Object.entries(data.daily_counts || {});
-                    if (entries.length === 0) {
-                        dailyDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">データがありません</span>`;
-                    } else {
-                        const maxCount = Math.max(...entries.map(e => e[1]), 1);
-                        dailyDiv.innerHTML = entries.map(([date, count]) => `
-                            <div style="display: flex; align-items: center; justify-content: space-between; font-size: 13px;">
-                                <span style="font-weight: 500; font-family: monospace;">${escapeHtml(date)}</span>
-                                <div style="display: flex; align-items: center; gap: 8px; flex: 1; margin-left: 16px; justify-content: flex-end;">
-                                    <div style="height: 6px; background: linear-gradient(90deg, #8bdcff, #4fd1a5); border-radius: 3px; width: ${Math.min(100, (count / maxCount) * 100)}%; max-width: 120px; box-shadow: 0 0 8px rgba(139,220,255,0.4);"></div>
-                                    <span style="font-weight: 600; color: var(--text); min-width: 36px; text-align: right;">${count} 件</span>
-                                </div>
-                            </div>
-                        `).join("");
-                    }
-                }
-                
-                const domainDiv = document.getElementById("analytics-domain-list");
-                if (domainDiv) {
-                    const entries = Object.entries(data.domain_counts || {}).sort((a, b) => b[1] - a[1]);
-                    const totalDomainEntries = entries.reduce((sum, e) => sum + e[1], 0) || 1;
-                    if (entries.length === 0) {
-                        domainDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">データがありません</span>`;
-                    } else {
-                        domainDiv.innerHTML = entries.map(([domain, count]) => {
-                            const pct = Math.round((count / totalDomainEntries) * 100);
-                            return `
-                                <div style="display: flex; flex-direction: column; gap: 4px; font-size: 13px;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span style="font-weight: 500; font-family: monospace; color: var(--text);">${escapeHtml(domain)}</span>
-                                        <span style="font-weight: bold; color: var(--blue);">${count} 通 <small style="color:var(--muted);font-weight:normal">(${pct}%)</small></span>
-                                    </div>
-                                    <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden;">
-                                        <div style="height: 100%; width: ${pct}%; background: linear-gradient(90deg, #8bdcff, #4fd1a5); border-radius: 999px;"></div>
-                                    </div>
-                                </div>
-                            `;
-                        }).join("");
-                    }
-                }
-                
-                const skillDiv = document.getElementById("analytics-skill-list");
-                if (skillDiv) {
-                    const entries = Object.entries(data.skill_counts || {}).sort((a, b) => b[1] - a[1]);
-                    const maxSkillCount = Math.max(...entries.map(e => e[1]), 1);
-                    if (entries.length === 0) {
-                        skillDiv.innerHTML = `<span style="color:var(--muted);font-size:12px;">データがありません</span>`;
-                    } else {
-                        skillDiv.innerHTML = entries.map(([skill, count]) => {
-                            const pct = Math.round((count / maxSkillCount) * 100);
-                            return `
-                                <div style="display: flex; flex-direction: column; gap: 4px; font-size: 13px;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <span class="fit-badge fit-med" style="font-size: 11px; padding: 2px 8px; border-radius: 4px;">${escapeHtml(skill)}</span>
-                                        <span style="font-weight: bold; color: var(--green);">${count} 回</span>
-                                    </div>
-                                    <div style="height: 4px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden;">
-                                        <div style="height: 100%; width: ${pct}%; background: linear-gradient(90deg, #4fd1a5, #e6c15a); border-radius: 999px;"></div>
-                                    </div>
-                                </div>
-                            `;
-                        }).join("");
-                    }
+                if (data && data.status === "success") {
+                    renderAnalyticsPanels(data);
+                } else {
+                    renderAnalyticsError();
                 }
             } catch (e) {
-                console.warn("Could not load sales email analytics:", e);
+                renderAnalyticsError();
             }
         }
 
@@ -10182,6 +10411,9 @@
                 if (stored) {
                     return JSON.parse(stored);
                 }
+                if (document.querySelector('meta[name="mighty-server-authenticated"]')) {
+                    return { email: 'admin@mightylink-app.com', serverAuthenticated: true };
+                }
             } catch (e) {
                 console.warn("Failed to load auth session", e);
             }
@@ -10238,6 +10470,7 @@
             const session = currentUserSession || getAuthSession();
 
             if (modal) {
+                modal.inert = false;
                 modal.classList.add('active');
                 modal.setAttribute('aria-hidden', 'false');
                 document.body.style.overflow = 'hidden'; // Lock background scroll
@@ -10269,6 +10502,7 @@
             if (modal) {
                 modal.classList.remove('active');
                 modal.setAttribute('aria-hidden', 'true');
+                modal.inert = true;
                 document.body.style.overflow = ''; // Unlock scroll
             }
             const errorEl = document.getElementById('auth-error-msg');
@@ -10537,6 +10771,7 @@
         function openShortcutHelpModal() {
             const modal = document.getElementById('shortcut-help-modal');
             if (modal) {
+                modal.inert = false;
                 modal.classList.add('active');
                 modal.setAttribute('aria-hidden', 'false');
                 setupFocusTrap(modal);
@@ -10548,6 +10783,7 @@
             if (modal) {
                 modal.classList.remove('active');
                 modal.setAttribute('aria-hidden', 'true');
+                modal.inert = true;
                 releaseFocusTrap();
             }
         }
@@ -10729,17 +10965,17 @@
 
     <!-- モバイル専用ボトムシートドロワー -->
     <div id="mobile-bottom-sheet" class="mobile-bottom-sheet-overlay" onclick="if(event.target===this) closeMobileBottomSheet()" aria-hidden="true">
-        <div class="mobile-bottom-sheet" role="dialog" aria-modal="true" aria-label="モバイル追加メニュー">
+        <div class="mobile-bottom-sheet" role="dialog" aria-modal="true" aria-label="モバイル追加メニュー" data-i18n-aria-label="mobile_more_menu_dialog_label">
             <div class="mobile-sheet-handle"></div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-                <strong style="font-size:16px; color:var(--text);">メニュー & ツール</strong>
-                <button type="button" class="auth-modal-close" onclick="closeMobileBottomSheet()" style="position:static;" aria-label="閉じる">×</button>
+                <strong style="font-size:16px; color:var(--text);"><span data-i18n="mobile_sheet_title">メニュー & ツール</span></strong>
+                <button type="button" class="auth-modal-close" onclick="closeMobileBottomSheet()" style="position:static;" aria-label="閉じる" data-i18n-aria-label="shortcut_modal_close">×</button>
             </div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:13px;">
-                <a href="#onboarding-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">⚙️ 初期設定</a>
-                <a href="#aptitude-demo-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">📊 自己診断</a>
-                <a href="#admin-dashboard-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">🛡️ 管理者</a>
-                <a href="#support" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);">💬 サポート</a>
+                <a href="#onboarding-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);"><span aria-hidden="true">⚙️</span> <span data-i18n="mobile_sheet_setup">初期設定</span></a>
+                <a href="#aptitude-demo-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);"><span aria-hidden="true">📊</span> <span data-i18n="mobile_sheet_self_assessment">自己診断</span></a>
+                <a href="#admin-dashboard-section" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);"><span aria-hidden="true">🛡️</span> <span data-i18n="mobile_sheet_admin">管理者</span></a>
+                <a href="#support" onclick="closeMobileBottomSheet()" style="display:flex; align-items:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:8px; border:1px solid var(--line);"><span aria-hidden="true">💬</span> <span data-i18n="mobile_sheet_support">サポート</span></a>
             </div>
         </div>
     </div>
@@ -10920,26 +11156,26 @@ URL: https://mightylink-app.com
     </script>
 
     <!-- モバイル専用ボトムナビゲーションバー -->
-    <nav class="mobile-bottom-nav" aria-label="モバイル主要ナビゲーション">
+    <nav class="mobile-bottom-nav" aria-label="モバイル主要ナビゲーション" data-i18n-aria-label="mobile_navigation_label">
         <a href="#top" class="mobile-nav-item active" data-nav="top" onclick="setActiveMobileNav(this)">
             <span class="mobile-nav-icon">🏠</span>
-            <span class="mobile-nav-label">ホーム</span>
+            <span class="mobile-nav-label" data-i18n="mobile_nav_home">ホーム</span>
         </a>
         <a href="#survey-section" class="mobile-nav-item" data-nav="survey-section" onclick="setActiveMobileNav(this)">
             <span class="mobile-nav-icon">📝</span>
-            <span class="mobile-nav-label">アンケート</span>
+            <span class="mobile-nav-label" data-i18n="mobile_nav_survey">アンケート</span>
         </a>
         <a href="#attendance-section" class="mobile-nav-item" data-nav="attendance-section" onclick="setActiveMobileNav(this)">
             <span class="mobile-nav-icon">⏱️</span>
-            <span class="mobile-nav-label">勤怠</span>
+            <span class="mobile-nav-label" data-i18n="mobile_nav_attendance">勤怠</span>
         </a>
         <a href="#matching-section" class="mobile-nav-item" data-nav="matching-section" onclick="setActiveMobileNav(this)">
             <span class="mobile-nav-icon">🤝</span>
-            <span class="mobile-nav-label">マッチング</span>
+            <span class="mobile-nav-label" data-i18n="mobile_nav_matching">マッチング</span>
         </a>
-        <button type="button" class="mobile-nav-item mobile-nav-btn" onclick="openMobileBottomSheet()" aria-label="メニュー展開">
+        <button type="button" class="mobile-nav-item mobile-nav-btn" onclick="openMobileBottomSheet()" aria-label="その他のメニューを開く" data-i18n-aria-label="mobile_nav_more_menu_label">
             <span class="mobile-nav-icon">☰</span>
-            <span class="mobile-nav-label">その他</span>
+            <span class="mobile-nav-label" data-i18n="mobile_nav_more">その他</span>
         </button>
     </nav>
     <!-- Build Timestamp: 2026-08-16T02:08:00Z (Enterprise Admin Sidebar Live Deploy) -->

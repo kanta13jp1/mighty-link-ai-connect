@@ -3,7 +3,7 @@
 - 対象WBS: T838
 - 関連課題: R31, R32, R36, R96
 - 作成日: 2026-06-22
-- レーン: VSCode + Codex / VSCode + Claude Code
+- レーン: Codex / Claude Code
 - 技術前提: バックエンド Firebase、DB Supabase、レジストラ お名前.com
 - 前提正本: [EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md](EMPLOYEE_ASSESSMENT_TOOL_RESEARCH.md)
 

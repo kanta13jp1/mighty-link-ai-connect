@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-Guard the public GitHub Pages demo from accidental README fallback or UI removal.
+Guard the production UI source from accidental README fallback or UI removal.
 
-The CEO-facing URL is served from the repository root, so root index.html must
-remain present even though FastAPI also serves src/index.html locally.
+The compatibility entry point remains at the repository root while FastAPI
+serves src/index.html in production. Both are protected by repository tests.
 """
 
 import argparse
@@ -46,7 +46,7 @@ def fail(message: str) -> None:
 def verify_html(content: str, label: str) -> None:
     missing = [marker for marker in REQUIRED_MARKERS if marker not in content]
     if missing:
-        fail(f"{label} is missing public demo marker(s): {', '.join(missing)}")
+        fail(f"{label} is missing production UI marker(s): {', '.join(missing)}")
 
     fallback_hits = [marker for marker in README_FALLBACK_MARKERS if marker in content]
     if fallback_hits:
@@ -89,19 +89,19 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Verify public demo UI safety markers.")
     parser.add_argument(
         "--url",
-        help="Optional public URL to verify after GitHub Pages deployment.",
+        help="Optional production URL to verify after Firebase deployment.",
     )
     args = parser.parse_args()
 
     if not ROOT_INDEX.exists():
-        fail("root index.html is missing. GitHub Pages will fall back to README.")
+        fail("root index.html is missing; the production UI source mirror is incomplete.")
 
     verify_html(ROOT_INDEX.read_text(encoding="utf-8"), "root index.html")
 
     if args.url:
         verify_html(fetch_url(args.url), args.url)
 
-    print("[+] Public demo guard passed.")
+    print("[+] Production UI guard passed.")
 
 
 if __name__ == "__main__":

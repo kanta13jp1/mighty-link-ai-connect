@@ -101,7 +101,7 @@ T818は以下を満たした時点で完了とする。
 python scripts/verify_google_workspace_account.py
 python scripts/sync_wbs_to_sheets.py 1L99HCBHr4IsVUWqnUuG6OgoUmxEQUdfaYQim1n6etB8
 python scripts/sync_wbs_to_calendar.py
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 必要に応じて、`https://mightylink-app.com/` のTLS疎通、Firebase Hosting release、Supabase接続、GitHub Actionsの直近成功Runも確認する。

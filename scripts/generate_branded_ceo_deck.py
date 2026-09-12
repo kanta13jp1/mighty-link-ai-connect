@@ -223,7 +223,7 @@ SLIDES = [
             "動画生成の非同期 polling + 外部 API 課金ガード (/admin ダッシュボード)",
             "AI 制限時 deterministic fallback + Public Demo Guard + Favicon / Chrome DevTools 対応完了",
         ],
-        "evidence": "https://kanta13jp1.github.io/mighty-link-ai-connect/",
+        "evidence": "https://mightylink-app.com/",
         "image_path": str(PROJECT_ROOT / "exports" / "knowledge_flow" / "screenshots" / "public_demo_hero_1920x1080.png"),
         "question": "最初の対象業務 (採用 / 営業 / SES 案件配属) のどれを最優先にしますか?",
         "accent": "neon_green",

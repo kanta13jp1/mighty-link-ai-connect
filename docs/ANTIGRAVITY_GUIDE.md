@@ -49,15 +49,15 @@ Antigravity 2.0 は、お使いのアカウントに付与されている潤沢�
 | **将来導入候補** | **Google公式Docsで公開済みの上位モデル** | 「来月導入」など未確認の未来前提は書かない。公開後にFlash系と並走比較し、品質/速度/コストで採用判断する。 |
 
 > [!TIP]
-> Google AI Pro / Ultra アカウントに紐づくクォータは強力ですが、baseline quota に達する場合があります。枯渇時は本ガイドのフェイルオーバー規約に従い、VSCode + Codex / Claude Code レーンへ切り替えて開発を止めません。
+> Google AI Pro / Ultra アカウントに紐づくクォータは強力ですが、baseline quota に達する場合があります。枯渇時は本ガイドのフェイルオーバー規約に従い、Codex / Claude Code レーンへ切り替えて開発を止めません。
 
 > [!IMPORTANT]
 > **Gemini quota 制限時の継続方針**
-> Antigravity 側で Gemini の baseline quota 制限に達した場合は、開発を中断せず、VSCode + Codex に作業環境を切り替えます。Codex 側で実装、ドキュメント更新、ローカル検証、Git 操作を継続し、FastAPI は `AI_FORCE_MOCK=1` で起動して Gemini API の追加消費を避けます。詳細は `docs/CODEX_CONTINUATION_NOTES.md` を参照してください。
+> Antigravity 側で Gemini の baseline quota 制限に達した場合は、開発を中断せず、Codex に作業環境を切り替えます。Codex 側で実装、ドキュメント更新、ローカル検証、Git 操作を継続し、FastAPI は `AI_FORCE_MOCK=1` で起動して Gemini API の追加消費を避けます。詳細は `docs/CODEX_CONTINUATION_NOTES.md` を参照してください。
 
 > [!NOTE]
 > **3-tool 体制への拡張 (2026-05-22 〜)**
-> 上記の Antigravity + Gemini / VSCode + Codex の 2-tool 体制に、第 3 レーンとして **VSCode + Claude Code** が加わりました。Claude Code は docs 整備、WBS 状態調停、PR review、checklist 作成、リスク登録など「Gemini quota を消費しない architect/triage 業務」を担当します。3 ツールの役割分担、ブランチ/コミット/PR の handoff 規約、6/2 CEO プレゼンに向けた day-by-day オーナーシップ表は [docs/MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) を参照してください。
+> 上記の Antigravity + Gemini / Codex の 2-tool 体制に、第 3 レーンとして **Claude Code** が加わりました。Claude Code は docs 整備、WBS 状態調停、PR review、checklist 作成、リスク登録など「Gemini quota を消費しない architect/triage 業務」を担当します。3 ツールの役割分担、ブランチ/コミット/PR の handoff 規約、6/2 CEO プレゼンに向けた day-by-day オーナーシップ表は [docs/MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) を参照してください。
 
 ### 1.3 サンドボックス環境とセキュリティ（Code Mender）の設定
 

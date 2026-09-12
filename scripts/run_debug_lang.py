@@ -44,7 +44,7 @@ try:
         if nav.count() > 0:
             print("Nav Initial Text:", nav.text_content())
         
-        en_btn = page.locator(".language-switch a[data-lang='en']")
+        en_btn = page.locator(".language-switch button[data-lang='en']")
         print("EN btn count:", en_btn.count())
         if en_btn.count() > 0:
             en_btn.click(no_wait_after=True)

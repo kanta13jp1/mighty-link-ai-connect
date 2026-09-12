@@ -32,8 +32,8 @@ def write_wbs(path: Path) -> None:
             ]
         )
         + "\n"
-        + "T746\t7. 決定後実行\tリリース\tGo/No-Go\tCodex\tVSCode + Codex\treview\t完了\t2026-06-16\t2026-06-17\n"
-        + "T770\t9. 長期保守・拡張\t品質管理\t負荷テスト\tCodex\tVSCode + Codex\ttest\t未着手\t2026-06-27\t2026-06-29\n",
+        + "T746\t7. 決定後実行\tリリース\tGo/No-Go\tCodex\tCodex\treview\t完了\t2026-06-16\t2026-06-17\n"
+        + "T770\t9. 長期保守・拡張\t品質管理\t負荷テスト\tCodex\tCodex\ttest\t未着手\t2026-06-27\t2026-06-29\n",
     )
 
 

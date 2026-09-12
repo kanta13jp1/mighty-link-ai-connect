@@ -1,7 +1,7 @@
 # 6/2 社長打ち合わせ 運用・体制・リスク・費用感 論点 (T606)
 
 作成日: 2026-05-22
-オーナー: VSCode + Claude Code レーン
+オーナー: Claude Code レーン
 対応 WBS: **T606** 運用・体制論点 (5/28-5/29 予定 → 5/22 前倒し完遂)
 関連: [DISCUSSION_POINTS](CEO_PRESENTATION_DISCUSSION_POINTS_2026-06-02.md) (T605) / [QA_PACK](CEO_PRESENTATION_QA_PACK_2026-06-02.md) (T607) / [DECISION_PACK](CEO_PRESENTATION_DECISION_PACK_2026-06-02.md) (T611) / [MULTI_AI_WORKFLOW](../../MULTI_AI_WORKFLOW.md)
 
@@ -23,8 +23,8 @@
 | --- | --- | --- | --- |
 | Orchestrator (寛太) | 人間 1 名 | 15-20h | 3-tool 並走の見張り、PR レビュー、社長コミュニケーション |
 | Antigravity + Gemini レーン | AI | (主作業環境、quota 制約あり) | UI / マルチモーダル / 長文推論 |
-| VSCode + Codex レーン | AI | (24h 稼働可、Gemini quota 独立) | 実装 PR / SQL / CI / sync スクリプト / gh CLI |
-| VSCode + Claude Code レーン | AI | (Gemini quota 独立) | docs / triage / WBS 調停 / 本書執筆 |
+| Codex レーン | AI | (24h 稼働可、Gemini quota 独立) | 実装 PR / SQL / CI / sync スクリプト / gh CLI |
+| Claude Code レーン | AI | (Gemini quota 独立) | docs / triage / WBS 調停 / 本書執筆 |
 
 詳細は [MULTI_AI_WORKFLOW.md 3-Tool 構成](../../MULTI_AI_WORKFLOW.md#3-tool-構成)。
 

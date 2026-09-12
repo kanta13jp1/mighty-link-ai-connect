@@ -1,7 +1,7 @@
 # Firebase / Supabase ステージング環境運用 Runbook (T788)
 
 作成日: 2026-06-11  
-オーナー: VSCode + Codex レーン  
+オーナー: Codex レーン  
 関連: [FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md](FIREBASE_SUPABASE_SYSTEM_ARCHITECTURE.md) / [FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md](FIREBASE_AUTH_SUPABASE_RLS_SECURITY_DESIGN.md) / [SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md](SUPABASE_DATABASE_PHYSICAL_AND_INDEX_DESIGN.md) / [SETUP_GUIDE.md](SETUP_GUIDE.md)
 
 ---
@@ -70,7 +70,7 @@ python scripts/verify_staging_environment_config.py --json --output reports/stag
 
 ```powershell
 python -m pytest
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 2. preview channel名を固定する。
@@ -135,5 +135,5 @@ Supabaseは次の優先順位で staging を確保する。
 ## ツールレーン
 
 - Antigravity + Gemini: preview URLの視覚確認、UI polish、browser-agentチェック。
-- VSCode + Codex: staging設定検証、Firebase/Supabase CLI、CI、WBS/Sheets/Calendar/GitHub同期。
-- VSCode + Claude Code: Runbookレビュー、RLS/secret分離レビュー、法務・運用チェックリスト整備。
+- Codex: staging設定検証、Firebase/Supabase CLI、CI、WBS/Sheets/Calendar/GitHub同期。
+- Claude Code: Runbookレビュー、RLS/secret分離レビュー、法務・運用チェックリスト整備。

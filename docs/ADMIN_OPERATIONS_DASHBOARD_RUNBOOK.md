@@ -3,7 +3,7 @@
 - 対象WBS: T842
 - 関連課題: R98
 - 作成日: 2026-06-27
-- レーン: Antigravity + Gemini / VSCode + Codex / VSCode + Claude Code
+- レーン: Antigravity + Gemini / Codex / Claude Code
 - 技術前提: `index.html`, FastAPI on Firebase Functions, Supabase / SQLite fallback
 
 ## 概要
@@ -50,7 +50,7 @@ Basic Auth必須。KPI、部署別診断件数、勤怠ステータス、営業�
 
 - `tests/test_api.py::test_admin_operations_dashboard_requires_auth_aggregates_and_exports_csv`
 - `python -m pytest -q`
-- `python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/`
+- `python scripts/verify_public_demo.py --url https://mightylink-app.com/`
 
 ## 公式ドキュメント確認メモ
 

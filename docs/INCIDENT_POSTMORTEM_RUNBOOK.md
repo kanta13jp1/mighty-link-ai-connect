@@ -1,7 +1,7 @@
 # 障害インシデント対応記録・ポストモーテム運用 Runbook (T810)
 
 作成日: 2026-06-13  
-担当レーン: VSCode + Claude Code / VSCode + Codex  
+担当レーン: Claude Code / Codex  
 対象: Mighty Skill-Bridge / Mighty-Link AI Connect 本番運用
 
 ## 1. 目的
