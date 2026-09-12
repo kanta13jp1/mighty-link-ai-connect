@@ -78,11 +78,11 @@ OAuth クライアント JSON は `client_secret.json` にリネームして、�
 
 ## 4. 開発ツール切り替え方針
 
-通常開発は Antigravity + Gemini で進めます。Antigravity 側で Gemini の baseline quota 制限に達した場合は、作業を止めずに VSCode + Codex へ切り替えて開発を継続します。
+通常開発は Antigravity + Gemini で進めます。Antigravity 側で Gemini の baseline quota 制限に達した場合は、作業を止めずに Codex へ切り替えて開発を継続します。
 
 切り替え時の運用ルール:
 
-- 実装、ドキュメント整備、ローカル検証、Git 操作は VSCode + Codex で継続する。
+- 実装、ドキュメント整備、ローカル検証、Git 操作は Codex で継続する。
 - Gemini API の quota を消費しないよう、必要に応じて `AI_FORCE_MOCK=1` で FastAPI を起動する。
 - Google Workspace 連携は既存の `authorized_user.json` を使い、`k-umezawa@ml-mightylink.com` の OAuth 認証を継続利用する。
 - quota 回復後に Gemini live 実行へ戻す場合は、`AI_FORCE_MOCK` を解除してサーバーを再起動する。
@@ -212,7 +212,7 @@ GET  /api/knowledge-flow/status
 当日前後の必須確認:
 
 ```powershell
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 python scripts/verify_google_workspace_account.py
 python scripts/generate_knowledge_flow_demo.py
 gh issue list --state all --label ceo-demo
@@ -240,16 +240,17 @@ Start-Process -WindowStyle Hidden -FilePath python -ArgumentList "src/app.py" -W
 
 ブラウザで `http://localhost:8000` を開き、画面の接続状態が `Live Connected` になることを確認します。
 
-## 10. 公開デモURLのデグレ防止
+## 10. 本番UIのデグレ防止
 
-社長共有済みの公開URL `https://kanta13jp1.github.io/mighty-link-ai-connect/` は GitHub Pages の本番デモ面として扱います。
+本番URL `https://mightylink-app.com/` はFirebase Hosting / Cloud Run経由の認証保護された正本です。旧GitHub Pages siteはT924で削除済みであり、配信先やフェイルオーバー先として使用しません。
 
 重要ルール:
 
 - ルート直下の `index.html` は削除・移動しない。
-- FastAPI 用の `src/index.html` を変更する場合でも、公開URL用の `index.html` への影響を必ず確認する。
+- FastAPI 用の `src/index.html` を変更する場合でも、互換ソースの `index.html` への影響を必ず確認する。
 - push 前に `scripts/verify_public_demo.py` を実行し、README fallback や UI マーカー欠落がないことを確認する。
-- `main` / `master` への push 時は GitHub Actions `Public Demo Guard` が root `index.html` を検証する。
+- `main` / `master` への push 時は GitHub Actions `Production UI Guard` がroot `index.html`を検証する。
+- `Production Operations Monitor` はGitHub Pages siteが削除状態のままであることをGitHub REST APIで検証する。
 
 ローカル検証:
 
@@ -260,7 +261,7 @@ python scripts/verify_public_demo.py
 公開URL反映後の検証:
 
 ```powershell
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 ## 11. AI 監査ログの確認
@@ -279,7 +280,7 @@ Invoke-RestMethod "http://127.0.0.1:8000/api/audit/recent?limit=10"
 
 ### Gemini の quota 制限が出ている
 
-Antigravity 側で Gemini の baseline quota 制限に達した場合は、VSCode + Codex で開発を継続します。Gemini API を消費しない `AI_FORCE_MOCK=1` で起動します。
+Antigravity 側で Gemini の baseline quota 制限に達した場合は、Codex で開発を継続します。Gemini API を消費しない `AI_FORCE_MOCK=1` で起動します。
 
 ```powershell
 $env:AI_FORCE_MOCK = "1"
@@ -482,7 +483,7 @@ After generation, unset `SEEDANCE_API_ENABLED` and restart FastAPI. BytePlus Mod
 The project root now includes a branded `favicon.ico`. It is used by both:
 
 ```text
-https://kanta13jp1.github.io/mighty-link-ai-connect/favicon.ico
+https://mightylink-app.com/favicon.ico
 http://127.0.0.1:8000/favicon.ico
 ```
 

@@ -1,6 +1,6 @@
 # 定期運用サイクル一覧（運用カレンダー）
 
-作成日: 2026-07-20 / 担当レーン: VSCode + Claude Code（T907）
+作成日: 2026-07-20 / 担当レーン: Claude Code（T907）
 正本: 本ファイルが「GA後に継続実施すべき定期運用」の唯一の一覧。`scripts/audit_operations_cadence.py`（T907）が毎回、必須義務の網羅・Runbookリンクの実在・定期実施Runbookの登録漏れを照合する。
 関連: [運用Runbookカタログ](OPERATIONS_RUNBOOK_CATALOG.md)（何を開くかの索引）/ 本書（いつ誰がやるかの暦）
 

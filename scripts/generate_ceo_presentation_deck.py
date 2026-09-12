@@ -388,7 +388,7 @@ def build_slides(prs: Presentation, context: dict[str, Any]) -> None:
         1.15,
         size=13.5,
     )
-    add_evidence_panel(slide, ["Public URL: https://kanta13jp1.github.io/mighty-link-ai-connect/", "Guard script: scripts/verify_public_demo.py", "Quota-safe flow: docs/CODEX_CONTINUATION_NOTES.md"])
+    add_evidence_panel(slide, ["Production URL: https://mightylink-app.com/", "Guard script: scripts/verify_public_demo.py", "Quota-safe flow: docs/CODEX_CONTINUATION_NOTES.md"])
 
     # 3: Google Workspace Integration Architecture
     slide = prs.slides.add_slide(blank)

@@ -1,7 +1,7 @@
 # 週次課金・コスト配分ダッシュボード Runbook (T757)
 
 作成日: 2026-06-14
-担当レーン: VSCode + Codex
+担当レーン: Codex
 対象: Google Cloud / Firebase / Supabase / Stripe / GitHub Actions / Slack通知 / 外部AI API利用台帳
 
 ## 目的

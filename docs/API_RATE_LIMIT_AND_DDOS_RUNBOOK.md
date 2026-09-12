@@ -37,7 +37,7 @@ Mighty Skill-Bridge の公開デモおよび将来の本番 API で、過剰リ�
 
 ```powershell
 python -m pytest tests/test_api.py
-python scripts/verify_public_demo.py --url https://kanta13jp1.github.io/mighty-link-ai-connect/
+python scripts/verify_public_demo.py --url https://mightylink-app.com/
 ```
 
 手動確認:

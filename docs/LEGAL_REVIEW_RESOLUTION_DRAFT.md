@@ -1,6 +1,6 @@
 # 法務確認ドラフト回答集（T798 社内GA必須16件・決裁用）
 
-作成日: 2026-07-19 / 起草レーン: VSCode + Claude Code（T798_2）
+作成日: 2026-07-19 / 起草レーン: Claude Code（T798_2）
 正本台帳: [`data/legal_review_signoff.tsv`](../data/legal_review_signoff.tsv) / 運用: [LEGAL_REVIEW_SIGNOFF_TRACKER.md](LEGAL_REVIEW_SIGNOFF_TRACKER.md)
 対象本文: [TERMS_OF_SERVICE.md](TERMS_OF_SERVICE.md) / [PRIVACY_POLICY.md](PRIVACY_POLICY.md)
 関連WBS: T798（本体） / T798_1（台帳整備） / T787（初版起草） / T869（整合性監査） / T862（有償化ゲート）

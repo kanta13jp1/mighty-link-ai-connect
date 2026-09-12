@@ -5,7 +5,7 @@ flow (社内診断・勤怠・営業メールAI・課金・同意・管理者・
 automatable core of that verification is owned here by Claude Code: it drives the
 real FastAPI application in-process (FastAPI TestClient over an isolated SQLite DB,
 AI in quota-safe mock mode) and exercises each GA flow as a hypothesis, then adds
-external evidence (production URL auth wall, public demo markers).
+external evidence (production URL auth wall and authenticated UI markers).
 
 Production Supabase transactional write/readback/rollback verification is owned
 by T921 and covers 15 tables. This harness consumes that task boundary but does
@@ -41,8 +41,8 @@ DEFAULT_MD = PROJECT_ROOT / "exports" / "ga_acceptance_e2e_report.md"
 PROD_BASE_URL = "https://mighty-link-ai-connect-13d22.web.app"
 PROD_HEALTH_URL = f"{PROD_BASE_URL}/api/health"
 PROD_PROTECTED_URL = f"{PROD_BASE_URL}/api/matches"  # requires auth -> must be 401
-PUBLIC_DEMO_URL = "https://kanta13jp1.github.io/mighty-link-ai-connect/"
-PUBLIC_DEMO_MARKERS = ["Mighty", "AI"]
+PRODUCTION_UI_URL = "https://mightylink-app.com/"
+PRODUCTION_UI_MARKERS = ["Mighty", "AI"]
 
 
 def current_local_date() -> str:
@@ -212,17 +212,35 @@ def check_external_evidence(timeout: int, skip_network: bool) -> dict[str, Any]:
 
     result["prod_health_status"] = _status(PROD_HEALTH_URL)
     result["prod_protected_status"] = _status(PROD_PROTECTED_URL)
-    # Public demo markers.
+    # Authenticated production UI markers.
     try:
-        public_demo_url = require_https_url(PUBLIC_DEMO_URL, allowed_hosts={"kanta13jp1.github.io"})
-        req = urllib.request.Request(public_demo_url, headers={"User-Agent": "GA-Acceptance-E2E/1.0"})
-        with urllib.request.urlopen(req, timeout=timeout) as resp:  # nosec B310 -- exact public-demo HTTPS host is enforced.
+        production_ui_url = require_https_url(
+            PRODUCTION_UI_URL,
+            allowed_hosts={"mightylink-app.com"},
+        )
+        username = os.environ.get("BASIC_AUTH_USERNAME")
+        password = os.environ.get("BASIC_AUTH_PASSWORD")
+        if not username or not password:
+            raise RuntimeError("production Basic Auth credentials are required")
+        credentials = f"{username}:{password}".encode("utf-8")
+        import base64
+
+        req = urllib.request.Request(
+            production_ui_url,
+            headers={
+                "Authorization": f"Basic {base64.b64encode(credentials).decode('ascii')}",
+                "User-Agent": "GA-Acceptance-E2E/1.0",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=timeout) as resp:  # nosec B310 -- exact production HTTPS host is enforced.
             body = resp.read().decode("utf-8", errors="replace")
-        result["public_demo_markers_present"] = all(m in body for m in PUBLIC_DEMO_MARKERS)
-        result["public_demo_status"] = 200
+        result["production_ui_markers_present"] = all(
+            marker in body for marker in PRODUCTION_UI_MARKERS
+        )
+        result["production_ui_status"] = 200
     except Exception as exc:
-        result["public_demo_markers_present"] = False
-        result["public_demo_status"] = f"error:{type(exc).__name__}"
+        result["production_ui_markers_present"] = False
+        result["production_ui_status"] = f"error:{type(exc).__name__}"
     return result
 
 
@@ -243,13 +261,13 @@ def build_report(checked_at: str, timeout: int, skip_network: bool) -> dict[str,
     if external.get("executed"):
         live_ok = external.get("prod_health_status") == 200
         wall_ok = external.get("prod_protected_status") == 401
-        demo_ok = external.get("public_demo_markers_present")
-        h10_pass = bool(live_ok and wall_ok and demo_ok)
-        h10_detail = f"本番health={external.get('prod_health_status')}(200期待) 保護API={external.get('prod_protected_status')}(401期待) 公開デモmarkers={demo_ok}"
+        ui_ok = external.get("production_ui_markers_present")
+        h10_pass = bool(live_ok and wall_ok and ui_ok)
+        h10_detail = f"本番health={external.get('prod_health_status')}(200期待) 保護API={external.get('prod_protected_status')}(401期待) 認証後UI markers={ui_ok}"
     else:
         h10_pass = True  # network intentionally skipped; recorded, not failed
         h10_detail = f"ネットワーク検証スキップ（{external.get('reason')}）: closeoutのverify_public_demoで別途確認"
-    hypotheses.append({"id": "H10", "hypothesis": "本番appが稼働(health 200)し保護APIが認証壁(401)を返し、公開デモUIマーカーが存在する（外部証跡）", "passed": h10_pass, "detail": h10_detail})
+    hypotheses.append({"id": "H10", "hypothesis": "本番appが稼働(health 200)し保護APIが認証壁(401)を返し、認証後UIマーカーが存在する（外部証跡）", "passed": h10_pass, "detail": h10_detail})
 
     passed = sum(1 for h in hypotheses if h["passed"])
     status = "ok" if passed == len(hypotheses) else "attention"
@@ -301,7 +319,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="GA acceptance E2E harness (T845_1)")
     parser.add_argument("--checked-at", default=current_local_date())
     parser.add_argument("--timeout", type=int, default=15)
-    parser.add_argument("--skip-network", action="store_true", help="skip prod URL / public demo network checks")
+    parser.add_argument("--skip-network", action="store_true", help="skip production URL network checks")
     parser.add_argument("--json-out", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--md-out", type=Path, default=DEFAULT_MD)
     parser.add_argument("--fail-on-attention", action="store_true")

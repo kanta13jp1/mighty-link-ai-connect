@@ -64,9 +64,9 @@ def determine_engine(assignee):
     """Determines execution engine based on assignee."""
     assignee_lower = assignee.lower()
     if "codex" in assignee_lower:
-        return "VSCode + Codex"
+        return "Codex"
     elif "claude" in assignee_lower:
-        return "VSCode + Claude Code"
+        return "Claude Code"
     elif "antigravity" in assignee_lower:
         return "Antigravity 2.0"
     return "Gemini API 現行モデル"

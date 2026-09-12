@@ -1,7 +1,7 @@
 # 本番リリース Go/No-Go 判定チェックリスト (T746)
 
 作成日: 2026-06-17
-オーナー: VSCode + Codex レーン
+オーナー: Codex レーン
 関連: [WBS.md](WBS.md) / [PRODUCTION_ROLLBACK_RUNBOOK.md](PRODUCTION_ROLLBACK_RUNBOOK.md) / [PRODUCTION_DOMAIN_SETUP_GUIDE.md](PRODUCTION_DOMAIN_SETUP_GUIDE.md)
 
 ---

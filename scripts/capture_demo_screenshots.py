@@ -46,7 +46,7 @@ def main():
     parser = argparse.ArgumentParser(description="Capture screenshots of Mighty Skill-Bridge screens.")
     parser.add_argument(
         "--url",
-        default="https://kanta13jp1.github.io/mighty-link-ai-connect/",
+        default="https://mightylink-app.com/",
         help="App landing page URL to screenshot."
     )
     parser.add_argument(

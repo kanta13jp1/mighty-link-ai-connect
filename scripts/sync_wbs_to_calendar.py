@@ -245,7 +245,7 @@ SCHEDULE_EVENTS = [
     },
     {
         "summary": "【Mighty Skill-Bridge】三ツール開発フロー整備",
-        "description": "Antigravity + Gemini、VSCode + Codex、VSCode + Claude Codeを併用する開発ゲート、公式Docs確認、Sheets課題管理表・QA表同期、commit/push/main/master反映の手順を固定します。",
+        "description": "Antigravity + Gemini、Codex、Claude Codeを併用する開発ゲート、公式Docs確認、Sheets課題管理表・QA表同期、commit/push/main/master反映の手順を固定します。",
         "start_time": "2026-05-22T18:00:00",
         "end_time": "2026-05-22T18:30:00",
         "time_zone": "Asia/Tokyo",

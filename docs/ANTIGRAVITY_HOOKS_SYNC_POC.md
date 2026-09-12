@@ -9,7 +9,7 @@
 ---
 
 ## 1. 背景と目的
-Mighty Skill-Bridge の開発は、Antigravity + Gemini、VSCode + Codex、VSCode + Claude Code の3つのAIツールが役割分担（レーン）を行いながら並行して進められています。
+Mighty Skill-Bridge の開発は、Antigravity + Gemini、Codex、Claude Code の3つのAIツールが役割分担（レーン）を行いながら並行して進められています。
 各AIレーンがどのような作業・指示・変更・アクションを行ったかを自動追跡し、セッションログとして `docs/sessions/` および Obsidian Vault に確実に記録することは、ナレッジの属人化とセッションドリフトを防止する上で極めて重要です。
 
 本設計では、Google Antigravity 公式仕様（`.agents/hooks.json`）に準拠した **Lifecycle Hooks** を定義し、セッション終了時（`Stop` イベント）に自律的にセッション履歴とサニタイズされた証跡を記録する構成を策定・実装します。

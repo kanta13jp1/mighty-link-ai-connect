@@ -20,8 +20,8 @@ def write_budgets(path: Path) -> None:
         "\n".join(
             [
                 "cost_center\towner_lane\tcategory\tmonthly_budget_usd\twarning_ratio\tcritical_ratio\tsource\tnotes",
-                "firebase_google_cloud\tVSCode + Codex\tInfra\t10.00\t0.80\t1.00\tCloud Billing\tFirebase/GCP budget",
-                "supabase_db\tVSCode + Codex\tDB\t25.00\t0.80\t1.00\tSupabase dashboard\tSupabase budget",
+                "firebase_google_cloud\tCodex\tInfra\t10.00\t0.80\t1.00\tCloud Billing\tFirebase/GCP budget",
+                "supabase_db\tCodex\tDB\t25.00\t0.80\t1.00\tSupabase dashboard\tSupabase budget",
             ]
         )
         + "\n",

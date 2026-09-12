@@ -1,6 +1,6 @@
 # 本番ドメイン設定ガイド（社長説明用）— mightylink-app.com
 
-作成: 2026-06-13 / VSCode + Claude Code レーン（WBS T740 系）
+作成: 2026-06-13 / Claude Code レーン（WBS T740 系）
 対象読者: 経営層（技術知識不要）＋ 開発担当の運用記録
 関連: [WBS.md](WBS.md) / [HOSTING_AND_DATABASE_SELECTION.md](HOSTING_AND_DATABASE_SELECTION.md) / 課題 R54
 

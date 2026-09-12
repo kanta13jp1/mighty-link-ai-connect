@@ -1,7 +1,7 @@
 # WBS 工程網羅性監査（第3回）・サイト開発完了定義追加
 
 作成日: 2026-06-25
-担当レーン: VSCode + Codex
+担当レーン: Codex
 関連: [WBS.md](WBS.md) / [PRODUCTION_GO_NO_GO_CHECKLIST.md](PRODUCTION_GO_NO_GO_CHECKLIST.md) / [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md)
 
 ---

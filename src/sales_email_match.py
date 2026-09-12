@@ -625,6 +625,11 @@ def build_match_report(report: dict[str, Any], criteria: SearchCriteria | None =
             key=lambda item: (str(item["talent_label"]), -int(item["score"]), str(item["project_title"])),
         )
 
+    referenced_project_keys = {str(item["project_key"]) for item in limited_matches}
+    referenced_talent_keys = {str(item["talent_key"]) for item in limited_matches}
+    response_projects = [project for project in projects if project.project_key in referenced_project_keys]
+    response_talents = [talent for talent in talents if talent.talent_key in referenced_talent_keys]
+
     return {
         "task_id": "T817_5",
         "generated_at": utc_timestamp(),
@@ -639,8 +644,8 @@ def build_match_report(report: dict[str, Any], criteria: SearchCriteria | None =
         "project_count": len(projects),
         "talent_count": len(talents),
         "match_count": len(limited_matches),
-        "projects": [asdict(project) for project in projects],
-        "talents": [asdict(talent) for talent in talents],
+        "projects": [asdict(project) for project in response_projects],
+        "talents": [asdict(talent) for talent in response_talents],
         "matches": limited_matches,
     }
 

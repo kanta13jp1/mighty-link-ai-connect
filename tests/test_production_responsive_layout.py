@@ -100,7 +100,7 @@ def test_light_theme_uses_readable_content_and_navigation_surfaces(fastapi_serve
         page = context.new_page()
         page.route("**/*.mp4", lambda route: route.abort())
         page.goto(fastapi_server, wait_until="domcontentloaded")
-        page.wait_for_function("document.documentElement.dataset.theme === 'light'")
+        page.wait_for_function("() => document.documentElement.dataset.theme === 'light'")
 
         colors = page.evaluate(
             """() => {
@@ -183,6 +183,7 @@ def test_authenticated_mobile_layout_and_drawer_are_usable(fastapi_server):
 
         page.locator("#mobile-menu-btn").click()
         page.wait_for_timeout(350)
+        assert page.locator("#mobile-menu-btn").get_attribute("aria-controls") == "global-sidebar"
         assert page.locator("#mobile-menu-btn").get_attribute("aria-expanded") == "true"
         assert page.locator("#sidebar-backdrop").evaluate("el => el.classList.contains('active')") is True
         assert abs(page.locator("#global-sidebar").bounding_box()["x"]) < 1

@@ -19,7 +19,7 @@
 | 区分 | GA時点の扱い | 対象 |
 | --- | --- | --- |
 | 本番ランタイム採用 | 採用。ただし残ゲート完了まで有償一般公開はしない | Firebase Hosting/Functions/GCP、Supabase、Google Workspace、GitHub、Stripe、Gemini API |
-| 開発・運用レーン採用 | 採用。成果物と意思決定はWBS/docs/GitHub/Sheetsへ残す | Antigravity + Gemini、VSCode + Codex、VSCode + Claude Code、NotebookLM、Obsidian |
+| 開発・運用レーン採用 | 採用。成果物と意思決定はWBS/docs/GitHub/Sheetsへ残す | Antigravity + Gemini、Codex、Claude Code、NotebookLM、Obsidian |
 | 条件付き採用 | 設計・資料・通知の補助として採用。secret未設定時はskip/dry-run | Slack、Notion、Figma、Canva |
 | レジストラ採用 | ドメイン管理として採用。API自動化はGA時点では非採用 | お名前.com |
 | 非採用・保留 | GAランタイムへ組み込まない。将来採用時は別WBSで再審査 | Anthropic API、OpenAI API、Microsoft Azure AI Foundry、Meta Llama、Amazon Bedrock、Apple ML、xAI/Grok、Kimi、MiMo、DeepSeek、BytePlus/Seedance、Reddit、InsForge、FireCrawl、Discord、Unity |
@@ -35,8 +35,8 @@
 | Stripe | 条件付き採用 | Customer Portal session API、T776課金統合設計は完了。Billing/Webhook実装はT791、Customer Portal liveはT807で残確認 | `STRIPE_SECRET_KEY`、webhook secretはSecretsのみ | 会社Stripeアカウント・会社請求へ移管 | live課金はT807/T791/法務ゲート完了までNo-Go |
 | Gemini API | 採用 | 現行コードの本番既定は `gemini-3.5-flash`。モデル方針は `data/gemini_model_policy.json`、移行手順は `docs/GEMINI_MODEL_VERSION_MIGRATION_RUNBOOK.md` を正本とする | `GEMINI_API_KEY` は環境変数/GitHub Secretsのみ | T823/T850で会社契約/請求へ移管 | key未設定時はdeterministic fallback。モデル変更はT769/T780の監査・評価ゲートを通す |
 | Antigravity + Gemini | 採用 | フロントエンドpolish、ブラウザエージェント確認、視覚デモ | IDE/CLI認証情報はローカル/会社管理のみ | T850で運用引継ぎ | 実装正本はGitとWBSに残す |
-| VSCode + Codex | 採用 | バックエンド、同期、GitHub CLI、Google Workspace自動化、CI/guard | Codex設定とtokenはローカル/管理対象。実値非記録 | T850で運用引継ぎ | AGENTS.mdとCodex manualに従う |
-| VSCode + Claude Code | 採用 | docs、review、triage、checklist、第三者レビュー | Claude Code設定はローカル/管理対象。実値非記録 | T850で運用引継ぎ | docs正本とWBS更新を必須にする |
+| Codex | 採用 | バックエンド、同期、GitHub CLI、Google Workspace自動化、CI/guard | Codex設定とtokenはローカル/管理対象。実値非記録 | T850で運用引継ぎ | AGENTS.mdとCodex manualに従う |
+| Claude Code | 採用 | docs、review、triage、checklist、第三者レビュー | Claude Code設定はローカル/管理対象。実値非記録 | T850で運用引継ぎ | docs正本とWBS更新を必須にする |
 
 ## 条件付き・非採用サービス
 

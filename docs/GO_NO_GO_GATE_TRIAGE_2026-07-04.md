@@ -1,7 +1,7 @@
 # public_paid_launch ゲート仕分けドラフト 2026-07-04（R112対応）
 
 作成日: 2026-07-04
-担当レーン: VSCode + Claude Code
+担当レーン: Claude Code
 ステータス: **ドラフト（T833 2026-07-07 で関係者承認後に data/release_go_no_go_criteria.tsv へ反映）**
 関連WBS: T863（本ドラフト） / T833 / T862 / T791
 関連課題/QA: R112 / QA-92 / QA-93

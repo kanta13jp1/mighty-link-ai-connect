@@ -1,9 +1,9 @@
 # Codex 継続作業メモ
 
-最終更新: 2026-07-19 / 管理レーン: VSCode + Codex（現行化は Claude Code / T905）
+最終更新: 2026-07-19 / 管理レーン: Codex（現行化は Claude Code / T905）
 
 本メモは **Antigravity + Gemini の quota を消費せずに開発を継続する** ための運用手順書です。
-3レーン体制（Antigravity + Gemini / VSCode + Codex / VSCode + Claude Code）の役割分担は
+3レーン体制（Antigravity + Gemini / Codex / Claude Code）の役割分担は
 [MULTI_AI_WORKFLOW.md](MULTI_AI_WORKFLOW.md) と `AGENTS.md` が正本です。
 
 > [!NOTE]
@@ -20,14 +20,14 @@
 ## 運用方針
 
 - Antigravity + Gemini の quota が残っている通常時は、Antigravity を主作業環境として使う。
-- Antigravity 側で Gemini quota 制限に達したら、VSCode + Codex に切り替えて開発を継続する。
+- Antigravity 側で Gemini quota 制限に達したら、Codex に切り替えて開発を継続する。
 - コード実装・ドキュメント整備・ローカル検証・Git 操作は Codex で継続できる。
 - FastAPI アプリは Gemini API が使えない場合でも mock fallback（決定論的フォールバック）で動作する。
 - Google Sheets / Calendar / Drive 連携は `authorized_user.json` を使い、Workspace アカウント
   `k-umezawa@ml-mightylink.com` で実行する（`python scripts/verify_google_workspace_account.py` で検証）。
 - Gemini API の quota を消費したくない場合は `AI_FORCE_MOCK=1` を付けてサーバーを起動する。
 
-## VSCode + Codex への切り替え手順
+## Codex への切り替え手順
 
 1. VSCode で本プロジェクト `mighty-link-ai-connect` を開く。
 2. Codex に作業を引き継ぎ、実装・検証・ドキュメント更新を進める。

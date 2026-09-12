@@ -2,7 +2,7 @@
 
 - 対象WBS: T847
 - 完了日: 2026-06-27
-- レーン: VSCode + Codex / VSCode + Claude Code
+- レーン: Codex / Claude Code
 - 技術前提: Firebase Hosting / Firebase Functions, Supabase PostgreSQL, FastAPI, Google Workspace Sheets
 - 関連: T742, T748, T756, T781, T800, T817, T840, T841, T842, T846, PUBLIC-13
 
