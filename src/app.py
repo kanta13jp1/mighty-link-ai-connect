@@ -6889,6 +6889,8 @@ async def get_sales_autopilot_queue(limit: int = 10):
 @app.get("/api/sales-email/analytics")
 async def get_sales_email_analytics():
     """Return aggregated stats from extraction report for public dashboard analytics."""
+    from sales_email_match import JST, normalize_received_timestamp
+
     report_data = None
     if os.environ.get("SUPABASE_DB_URL"):
         report_data = load_extraction_report_from_postgres()
@@ -6904,6 +6906,7 @@ async def get_sales_email_analytics():
     if report_data is None:
         return {
             "status": "success",
+            "analytics_timezone": str(JST),
             "total_count": 0,
             "server_direct_count": 0,
             "local_restored_count": 0,
@@ -6918,7 +6921,7 @@ async def get_sales_email_analytics():
     
     try:
         extractions = report_data.get("extractions", [])
-        today_utc = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
+        today_jst = datetime.datetime.now(JST).date().isoformat()
         
         daily_counts = {}
         domain_counts = {}
@@ -6927,20 +6930,13 @@ async def get_sales_email_analytics():
         imap_count = 0
         pop3_count = 0
         tb_count = 0
-        import email.utils
         def _normalize_date_str(raw_val: str) -> str:
             if not raw_val:
                 return "2026-06-18"
             raw_val = raw_val.strip()
-            if len(raw_val) >= 10 and raw_val[0:4].isdigit() and raw_val[4] == "-" and raw_val[7] == "-":
-                return raw_val[:10]
-            try:
-                dt_obj = email.utils.parsedate_to_datetime(raw_val)
-                if dt_obj:
-                    return dt_obj.strftime("%Y-%m-%d")
-            except Exception:
-                pass
-            return raw_val[:10]
+            # Match the calendar date used by the received-date filters.
+            _, received_date = normalize_received_timestamp(raw_val)
+            return received_date or raw_val[:10]
 
         today_new_count = 0
 
@@ -6948,7 +6944,7 @@ async def get_sales_email_analytics():
             dt_str = item.get("received_at") or report_data.get("generated_at") or "2026-06-18"
             dt = _normalize_date_str(dt_str)
             daily_counts[dt] = daily_counts.get(dt, 0) + 1
-            if dt == today_utc:
+            if dt == today_jst:
                 today_new_count += 1
             
             dom = item.get("sender_domain", "unknown")
@@ -6981,6 +6977,7 @@ async def get_sales_email_analytics():
         
         return {
             "status": "success",
+            "analytics_timezone": str(JST),
             "total_count": total_count,
             "server_direct_count": server_direct_count,
             "local_restored_count": local_restored_count,

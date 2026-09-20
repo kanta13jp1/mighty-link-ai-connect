@@ -63,6 +63,14 @@ GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_rate=60
 
 `limit`は`matches`だけでなく、応答へ同梱する`projects` / `talents`の参照範囲にも連動する。総数表示の互換性は`project_count` / `talent_count`で維持し、返却候補と無関係なカタログ全量は送信しない。T1006の本番相当データによるローカル計測では、`limit=1`のJSON応答を1,362,338 bytes相当から5,373 bytesへ縮小した。
 
+## 日別統計の時間帯（T1042 / Issue #373）
+
+`GET /api/sales-email/analytics` の `daily_counts` と `today_new_count` は、受信日フィルターと同じ `Asia/Tokyo`（JST）で集計する。ISO/RFC日時を `sales_email_match.normalize_received_timestamp()` で変換してから日付を取り出し、本日の境界もJST午前0時とする。日付のみ・時間帯なしの値は既存の受信日フィルターと同様にJSTとして扱う。
+
+応答の `analytics_timezone` は、データがない場合も `Asia/Tokyo` を返す。総解析件数と取得元内訳、保存済みの受信日時は変更しない。欠損日付の既存fallbackや取得元分類は本修正の対象外。
+
+回帰検証: `python -m pytest tests/test_sales_email_analytics_dates.py tests/test_real_sales_emails_ingestion.py -q`。本番検証では、保存済み日時を読み取り専用でJST集計した結果とAPIの日別件数を照合し、画面の統計カード・日別一覧を確認する。
+
 ## UI
 
 案件候補比較ボードは、`/api/sales-email/matches` が成功した場合に営業メール由来の案件と匿名候補者を優先表示する。APIが使えない場合は既存のデモ候補にfallbackする。
