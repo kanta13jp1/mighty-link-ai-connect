@@ -66,3 +66,16 @@ def test_empty_analytics_declare_same_timezone(monkeypatch, tmp_path):
     assert result["total_count"] == 0
     assert result["daily_counts"] == {}
     assert result["analytics_timezone"] == "Asia/Tokyo"
+
+
+@pytest.mark.parametrize("received, expected", [
+    ("9999-12-31T23:59:59Z", "9999-12-31"),
+    ("not-a-date", "not-a-date"),
+    ("", "2026-06-18"),
+])
+def test_date_fallback_does_not_abort_analytics(monkeypatch, received, expected):
+    now = datetime.datetime(2026, 9, 20, tzinfo=datetime.timezone.utc)
+    result = analytics_at(monkeypatch, now, [received])
+    assert result["status"] == "success"
+    assert result["daily_counts"] == {expected: 1}
+    assert result["total_count"] == 1

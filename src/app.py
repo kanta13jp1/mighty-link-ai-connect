@@ -6935,7 +6935,10 @@ async def get_sales_email_analytics():
                 return "2026-06-18"
             raw_val = raw_val.strip()
             # Match the calendar date used by the received-date filters.
-            _, received_date = normalize_received_timestamp(raw_val)
+            try:
+                _, received_date = normalize_received_timestamp(raw_val)
+            except (ValueError, OverflowError):
+                received_date = ""
             return received_date or raw_val[:10]
 
         today_new_count = 0
