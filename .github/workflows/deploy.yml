@@ -18,6 +18,10 @@ jobs:
   test:
     name: Run Automated Tests
     runs-on: ubuntu-latest
+    # Superseded PR tests may stop; push/manual runs remain independent.
+    concurrency:
+      group: ci-tests-${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.run_id }}
+      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v7
