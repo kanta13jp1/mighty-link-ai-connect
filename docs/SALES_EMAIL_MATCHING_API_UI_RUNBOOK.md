@@ -71,6 +71,8 @@ GET /api/sales-email/matches?direction=project_to_talent&skills=Java&min_rate=60
 
 回帰検証: `python -m pytest tests/test_sales_email_analytics_dates.py tests/test_real_sales_emails_ingestion.py -q`。本番検証では、保存済み日時を読み取り専用でJST集計した結果とAPIの日別件数を照合し、画面の統計カード・日別一覧を確認する。
 
+Firebaseは`src.app`として起動するため、共通日時処理のimportは相対importを優先し、ローカルの`app`起動にもfallbackで対応する。独立プロセスの初回analyticsリクエストを回帰テストし、pytestの`src/`パス追加や別APIの先行アクセスに依存しないことを確認する。
+
 ## UI
 
 案件候補比較ボードは、`/api/sales-email/matches` が成功した場合に営業メール由来の案件と匿名候補者を優先表示する。APIが使えない場合は既存のデモ候補にfallbackする。

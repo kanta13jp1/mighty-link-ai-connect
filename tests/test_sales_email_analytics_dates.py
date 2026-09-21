@@ -2,6 +2,10 @@
 
 import asyncio
 import datetime
+import os
+from pathlib import Path
+import subprocess
+import sys
 from types import SimpleNamespace
 
 import pytest
@@ -79,3 +83,48 @@ def test_date_fallback_does_not_abort_analytics(monkeypatch, received, expected)
     assert result["status"] == "success"
     assert result["daily_counts"] == {expected: 1}
     assert result["total_count"] == 1
+
+
+@pytest.mark.parametrize("has_data", [False, True])
+def test_analytics_first_request_with_production_package_import(has_data):
+    # A fresh process excludes conftest's src/ path and other routes' path edits.
+    env = {key: os.environ[key] for key in (
+        "PATH", "SYSTEMROOT", "WINDIR", "TEMP", "TMP", "USERPROFILE",
+        "APPDATA", "LOCALAPPDATA",
+    ) if key in os.environ}
+    env.update(
+        K_SERVICE="analytics-package-test", USE_SUPABASE="0", AI_FORCE_MOCK="1",
+        BASIC_AUTH_USERNAME="test-admin", BASIC_AUTH_PASSWORD="test-password",
+        PYTHONUTF8="1", PYTHONDONTWRITEBYTECODE="1",
+    )
+    probe = """
+import importlib.util
+import os
+import sys
+from fastapi.testclient import TestClient
+from src import app
+
+assert importlib.util.find_spec('sales_email_match') is None
+os.environ['SUPABASE_DB_URL'] = 'test-only-no-network'
+has_data = sys.argv[1] == 'True'
+app.load_extraction_report_from_postgres = lambda: {
+    'extractions': [{'received_at': '2026-09-19T15:00:00Z', 'source_type': 'imap'}]
+} if has_data else None
+app.SALES_EMAIL_MATCH_REPORT_FILE = os.devnull
+client = TestClient(app.app)
+try:
+    response = client.get('/api/sales-email/analytics', auth=('test-admin', 'test-password'))
+    assert response.status_code == 200, response.text
+    data = response.json()
+    assert data['analytics_timezone'] == 'Asia/Tokyo'
+    assert data['daily_counts'] == ({'2026-09-20': 1} if has_data else {})
+finally:
+    client.close()
+"""
+    result = subprocess.run(
+        [sys.executable, "-B", "-c", probe, str(has_data)],
+        cwd=Path(__file__).resolve().parents[1], env=env,
+        capture_output=True, text=True, encoding="utf-8", timeout=60,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr

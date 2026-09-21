@@ -6889,7 +6889,10 @@ async def get_sales_autopilot_queue(limit: int = 10):
 @app.get("/api/sales-email/analytics")
 async def get_sales_email_analytics():
     """Return aggregated stats from extraction report for public dashboard analytics."""
-    from sales_email_match import JST, normalize_received_timestamp
+    try:
+        from .sales_email_match import JST, normalize_received_timestamp
+    except ImportError:
+        from sales_email_match import JST, normalize_received_timestamp
 
     report_data = None
     if os.environ.get("SUPABASE_DB_URL"):
