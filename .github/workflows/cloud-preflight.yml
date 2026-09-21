@@ -6,10 +6,8 @@ on:
       - "codex/preflight/**"
       - "codex/preflight-*"
       - "codex/cloud-first-preflight-t997"
-  pull_request:
-    branches:
-      - main
-      - master
+  # PR validation is invoked once by CI/CD Pipeline via workflow_call.
+  workflow_call:
   workflow_dispatch:
 
 env:
@@ -19,8 +17,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: cloud-full-preflight-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: cloud-full-preflight-${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   full-preflight:
@@ -45,6 +43,12 @@ jobs:
 
       - name: Install Playwright Chromium
         run: playwright install chromium
+
+      - name: Verify source compilation and public demo contract
+        run: |
+          python -m py_compile src/app.py
+          python scripts/verify_public_demo.py
+          python -c "from pathlib import Path; required = ['data/test_results.tsv', 'data/security_log.tsv']; missing = [p for p in required if not Path(p).is_file()]; assert not missing, f'Missing verification logs: {missing}'"
 
       - name: Run cloud full preflight
         run: python scripts/run_lane_preflight.py --full

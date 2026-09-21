@@ -106,3 +106,12 @@ Windowsでは親ランナーと子ガードの入出力をUTF-8へ固定する�
 - **証跡（H8）はガードのソースが宣言する出力先を読む**。ファイル名から推測しない。整備時に推測実装で検証したところ、`audit_issue_qa_blockers.py` が実際には `issue_qa_blocker_audit.md`（単数形）を出力していたため**誤検知**した。宣言を読む方式へ改めて解消済み。
 - **Claude Code hook による強制**（`PreToolUse` で `git commit` をブロック）は公式推奨だが、3レーン共通の仕組みではない（Antigravity / Codex には効かない）ため、本ガードは**まず1コマンド化**を正本とし、hook 化は任意採用とする。導入する場合は `.claude/settings.json` の `PreToolUse` / matcher `Bash` / `if: "Bash(git commit *)"` で本スクリプトを呼び、終了コード 2 でブロックする。
 - 関連: [UAT_API_COVERAGE_GUARD.md](UAT_API_COVERAGE_GUARD.md) / [DOCS_REFERENCE_INTEGRITY_GUARD.md](DOCS_REFERENCE_INTEGRITY_GUARD.md) / [TRACKER_INTEGRITY_GUARD.md](TRACKER_INTEGRITY_GUARD.md) / [WBS_LIFECYCLE_COVERAGE_GUARD.md](WBS_LIFECYCLE_COVERAGE_GUARD.md)
+
+
+## PR全検証の共通化（T1044）
+
+`deploy.yml` の `test` は `cloud-preflight.yml` を `workflow_call` で呼ぶ。PRイベントの直接起動はCI/CD側だけにし、同じPR merge refへの全pytest重複をなくす。候補ブランチpushと手動実行のCloud Full Preflightは維持するため、候補headとPR merge refはそれぞれ検証される。
+
+共通gateは全ガード・全pytest・Chromiumに加え、src/app.pyのコンパイル、公開デモの静的検査、テスト/セキュリティログの存在を検査する。成功時だけ `needs: test` の本番jobへ進む。検証結果は既存のJSON/Markdown/JUnit/pytest log Artifactを正本とし、runner内だけのTSVへのPASS追記は行わない。security-scan workflowは別に維持する。
+
+PRの旧runは取消可能だが、push/manualはrun_idごとのグループとし相互に取消・待機置換しない。Firebase配信jobの排他制御は変更しない。PRチェックの表示名は `Run Automated Tests / Full preflight for exact candidate SHA` となるため、導入時に外部の必須チェック設定と照合する。

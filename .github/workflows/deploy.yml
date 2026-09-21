@@ -17,40 +17,10 @@ env:
 jobs:
   test:
     name: Run Automated Tests
-    runs-on: ubuntu-latest
-    # Superseded PR tests may stop; push/manual runs remain independent.
-    concurrency:
-      group: ci-tests-${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.run_id }}
-      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v7
-
-      - name: Set up Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: "3.12"
-          cache: "pip"
-
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install httpx pytest fastapi playwright
-
-      - name: Install Playwright Browsers
-        run: |
-          # GitHub-hosted ubuntu images already include Chromium runtime libraries.
-          # Avoid apt mirror outages blocking an otherwise deployable release.
-          playwright install chromium
-
-      - name: Syntax and Compile Check
-        run: |
-          python -m py_compile src/app.py
-
-      - name: Execute Automated Test Suite & Log Audits
-        run: |
-          python scripts/run_phase4_tests.py
+    # One full suite, with its guards and diagnostics, gates every deploy.
+    uses: ./.github/workflows/cloud-preflight.yml
+    permissions:
+      contents: read
 
   deploy:
     name: Deploy to Firebase
