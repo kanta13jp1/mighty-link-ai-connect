@@ -86,7 +86,7 @@ def test_received_date_filter_refreshes_api_and_preserves_empty_results():
     for path, text in html_sources():
         for fragment in required_fragments:
             assert fragment in text, f"{path} is missing received-date behavior: {fragment}"
-        assert 'colspan="7"' in text
+        assert 'colspan="8"' in text
         assert "<th>契約形態</th>" in text
 
 
