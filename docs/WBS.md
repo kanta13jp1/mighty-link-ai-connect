@@ -512,6 +512,7 @@ gantt
 | **T1043** | 8. 本番運用・品質管理 | CI効率化 | 更新済みPRの旧テスト実行取消 | Codex | Codex + GitHub Actions | 同じPRの古いtestジョブだけを取消。push/manualはrun_idで分離し、本番deployの排他制御を維持。候補検証・レビュー・反映は未完了。 | 実行中 |
 | **T1044** | 8. 本番運用・品質管理 | CI効率化 | PR全pytest二重実行の共通gateへの統合 | Codex | Codex + GitHub Actions | CI/CDから再利用workflowを呼び、PR全pytestを1回へ統合。全ガード・compile・公開demo・log検査・Artifactを維持。候補SHA検証とPR merge ref検証は別途維持。検証・レビュー・反映は未完了。 | 実行中 |
 | **T1045** | 8. 本番運用・品質管理 | 多言語UI | 営業メールマッチング結果のオフセット取得・ページネーション・もっと見る4言語UI対応 | Codex | Codex + Pytest + Playwright + Firebase | 営業メールマッチングにおいて大量件数表示時の描画負荷を低減し体感を改善するため、/api/sales-email/matches に limit/offset ページネーションと has_more を追加。UIに「もっと見る (+50件)」ボタンと読み込みステータス、4言語辞書（matching_load_more_btn等）とdata-i18n契約を追加し、言語切り替え中も同期するようPlaywrightと静的ガードで回帰固定する。 | 完了 |
+| **T1046** | 8. 本番運用・品質管理 | 多言語UI | 営業メールマッチング進捗テーブルへの単価列追加と4言語UI対応 | Codex | Codex + Pytest + Playwright + Firebase | 本番の営業メールマッチング進捗テーブルにおいて、案件予算・希望単価を直接一覧確認できるよう単価列を適合エンジニア列の隣に追加。4言語（JP/EN/ZH/KO）のmatching_th_rate辞書とdata-i18n契約、formatMatchingRateCellによる案件単価・希望単価の動的レンダリング、colspan=8への更新をPlaywrightと静的ガードで回帰固定する。 | 完了 |
 
 ---
 

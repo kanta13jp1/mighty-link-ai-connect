@@ -5316,12 +5316,13 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table class="comparison-table" style="min-width: 780px;">
+                        <table class="comparison-table" style="min-width: 860px;">
                             <thead>
                                 <tr>
                                     <th>案件タイトル</th>
                                     <th>受信日</th>
                                     <th>適合エンジニア</th>
+                                    <th data-i18n="matching_th_rate">単価</th>
                                     <th>契約形態</th>
                                     <th>マッチングスコア</th>
                                     <th>ステータス</th>
@@ -6227,6 +6228,7 @@
                 matching_filter_contract_option_contract_work: "請負",
                 matching_filter_contract_option_employee: "正社員/契約社員",
                 matching_load_more_btn: "もっと見る (+50件)",
+                matching_th_rate: "単価",
                 matching_load_more_loading: "読み込み中…",
                 matching_load_more_loaded_status: "{loaded}件 / 全{total}件 読み込み済み",
                 matching_load_more_all_loaded: "✓ 全{total}件の読み込み完了",
@@ -6403,6 +6405,7 @@
                 matching_filter_contract_option_contract_work: "Contract work",
                 matching_filter_contract_option_employee: "Permanent/contract employee",
                 matching_load_more_btn: "Load more (+50)",
+                matching_th_rate: "Rate",
                 matching_load_more_loading: "Loading…",
                 matching_load_more_loaded_status: "{loaded} / {total} loaded",
                 matching_load_more_all_loaded: "✓ All {total} items loaded",
@@ -6579,6 +6582,7 @@
                 matching_filter_contract_option_contract_work: "承包",
                 matching_filter_contract_option_employee: "正式员工/合同员工",
                 matching_load_more_btn: "加载更多 (+50条)",
+                matching_th_rate: "单价",
                 matching_load_more_loading: "加载中…",
                 matching_load_more_loaded_status: "{loaded}条 / 共{total}条 已加载",
                 matching_load_more_all_loaded: "✓ 共{total}条全部加载完成",
@@ -6755,6 +6759,7 @@
                 matching_filter_contract_option_contract_work: "도급",
                 matching_filter_contract_option_employee: "정규직/계약직",
                 matching_load_more_btn: "더 보기 (+50건)",
+                matching_th_rate: "단가",
                 matching_load_more_loading: "로딩 중…",
                 matching_load_more_loaded_status: "{loaded}건 / 총 {total}건 로드됨",
                 matching_load_more_all_loaded: "✓ 총 {total}건 로드 완료",
@@ -7739,6 +7744,8 @@
                 project_required_skills: project.required_skills || [],
                 project_rate_min: Number.isFinite(project.rate_min) ? project.rate_min : null,
                 project_rate_max: Number.isFinite(project.rate_max) ? project.rate_max : null,
+                talent_rate_min: Number.isFinite(talent.desired_rate_min) ? talent.desired_rate_min : null,
+                talent_rate_max: Number.isFinite(talent.desired_rate_max) ? talent.desired_rate_max : null,
                 project_received_at: match.project_received_at || project.received_at || "",
                 project_received_date: match.project_received_date || project.received_date || "",
                 talent_received_at: match.talent_received_at || talent.received_at || "",
@@ -8293,10 +8300,10 @@
         ];
 
         let matchingData = [
-            { id: 1, title: "【Python/React】AIエージェントシステム開発", candidate: "佐藤 賢太", score: 95, approved: false },
-            { id: 2, title: "【Go/FastAPI】APIゲートウェイ構築案件", candidate: "田中 太郎", score: 88, approved: false },
-            { id: 3, title: "【TypeScript】フロントエンド開発支援", candidate: "山田 花子", score: 92, approved: false },
-            { id: 4, title: "【AWS/DevOps】インフラ自動化案件", candidate: "佐藤 賢太", score: 85, approved: false }
+            { id: 1, title: "【Python/React】AIエージェントシステム開発", candidate: "佐藤 賢太", score: 95, approved: false, project_rate_min: 80, project_rate_max: 95 },
+            { id: 2, title: "【Go/FastAPI】APIゲートウェイ構築案件", candidate: "田中 太郎", score: 88, approved: false, project_rate_min: 75, project_rate_max: 85 },
+            { id: 3, title: "【TypeScript】フロントエンド開発支援", candidate: "山田 花子", score: 92, approved: false, project_rate_min: 70, project_rate_max: 80 },
+            { id: 4, title: "【AWS/DevOps】インフラ自動化案件", candidate: "佐藤 賢太", score: 85, approved: false, project_rate_min: 80, project_rate_max: 90 }
         ];
 
         let currentRatings = {
@@ -9501,12 +9508,57 @@
             }
         }
 
+                function formatMatchingRateCell(m) {
+            const currentLang = document.documentElement.lang || 'ja';
+            const isEn = currentLang === 'en';
+            const pMin = Number.isFinite(m.project_rate_min) ? m.project_rate_min : null;
+            const pMax = Number.isFinite(m.project_rate_max) ? m.project_rate_max : null;
+            let projectRateText = "";
+
+            const unit = isEn ? "0k JPY" : "万円";
+            const consultText = isEn ? "Negotiable" : "相談";
+            const desirePrefix = isEn ? "Desired: " : "希望: ";
+
+            if (pMin !== null && pMax !== null) {
+                projectRateText = pMin === pMax ? `${pMin}${unit}` : `${pMin}〜${pMax}${unit}`;
+            } else if (pMin !== null) {
+                projectRateText = `${pMin}${unit}〜`;
+            } else if (pMax !== null) {
+                projectRateText = `〜${pMax}${unit}`;
+            } else if (m.rate) {
+                projectRateText = String(m.rate);
+            } else {
+                projectRateText = consultText;
+            }
+
+            const tMin = Number.isFinite(m.talent_rate_min) ? m.talent_rate_min : null;
+            const tMax = Number.isFinite(m.talent_rate_max) ? m.talent_rate_max : null;
+            let talentRateSub = "";
+            if (tMin !== null && tMax !== null) {
+                talentRateSub = `<div style="font-size: 10px; color: var(--muted); margin-top: 2px;">${desirePrefix}${tMin === tMax ? tMin : tMin + '〜' + tMax}${unit}</div>`;
+            } else if (tMax !== null) {
+                talentRateSub = `<div style="font-size: 10px; color: var(--muted); margin-top: 2px;">${desirePrefix}〜${tMax}${unit}</div>`;
+            } else if (tMin !== null) {
+                talentRateSub = `<div style="font-size: 10px; color: var(--muted); margin-top: 2px;">${desirePrefix}${tMin}${unit}〜</div>`;
+            }
+
+            const isConsult = projectRateText === consultText;
+            const colorStyle = isConsult ? "color: var(--muted); font-size: 12px;" : "font-weight: 700; font-size: 13px; color: var(--text);";
+
+            return `
+                <div style="white-space: nowrap;">
+                    <div style="${colorStyle}">${escapeHtml(projectRateText)}</div>
+                    ${talentRateSub}
+                </div>
+            `;
+        }
+
         function renderPublicMatchingTable(dataList) {
             const tbody = document.getElementById("public-matching-table-body");
             if (!tbody) return;
             const list = Array.isArray(dataList) ? dataList : matchingData;
             if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--muted)">条件に一致する候補はありません</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--muted)">条件に一致する候補はありません</td></tr>`;
             } else {
                 tbody.innerHTML = list.map(m => {
                     const title = m.title || m.project_title || "";
@@ -9575,6 +9627,7 @@
                             </td>
                             <td style="white-space: nowrap;"><time datetime="${escapeHtml(m.project_received_date || "")}" style="color: var(--muted); font-size: 12px;">${escapeHtml(receivedDate)}</time></td>
                             <td>${candidateHtml}</td>
+                            <td>${formatMatchingRateCell(m)}</td>
                             <td><span class="fit-badge" style="padding: 4px 8px; font-size: 11px; background: rgba(139, 220, 255, 0.08); color: var(--blue); border: 1px solid rgba(139, 220, 255, 0.2);">${escapeHtml(contractType)}</span></td>
                             <td><span class="fit-badge ${badgeClass}" style="box-shadow: 0 0 8px rgba(186, 255, 102, 0.15);">${score}%</span></td>
                             <td><span class="fit-badge" style="padding: 4px 8px; font-size: 11px; ${statusStyle}">${statusText}</span></td>
