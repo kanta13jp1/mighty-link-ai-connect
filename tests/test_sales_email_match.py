@@ -362,3 +362,60 @@ def test_postgres_extraction_report_serializes_datetime_without_static_fallback(
     assert report is not None
     assert report["input_count"] == 1
     assert report["extractions"][0]["received_at"] == "2026-08-07T08:37:00Z"
+
+
+def test_match_report_supports_offset_and_pagination():
+    source_report = sample_extraction_report_with_multiple_records()
+    # There are 3 projects and 3 talents, creating 9 total matches
+    full_report = match.build_match_report(source_report, match.criteria_from_values(limit=10, offset=0))
+    total = full_report["total_matches"]
+    assert total == 9
+    assert full_report["match_count"] == 9
+    assert full_report["has_more"] is False
+
+    # Page 1: limit 4, offset 0
+    p1 = match.build_match_report(source_report, match.criteria_from_values(limit=4, offset=0))
+    assert p1["match_count"] == 4
+    assert p1["total_matches"] == 9
+    assert p1["offset"] == 0
+    assert p1["limit"] == 4
+    assert p1["has_more"] is True
+
+    # Page 2: limit 4, offset 4
+    p2 = match.build_match_report(source_report, match.criteria_from_values(limit=4, offset=4))
+    assert p2["match_count"] == 4
+    assert p2["total_matches"] == 9
+    assert p2["offset"] == 4
+    assert p2["limit"] == 4
+    assert p2["has_more"] is True
+
+    # Page 3: limit 4, offset 8
+    p3 = match.build_match_report(source_report, match.criteria_from_values(limit=4, offset=8))
+    assert p3["match_count"] == 1
+    assert p3["total_matches"] == 9
+    assert p3["offset"] == 8
+    assert p3["has_more"] is False
+
+    # Ensure no overlap between page 1 and page 2
+    p1_keys = {(m["project_key"], m["talent_key"]) for m in p1["matches"]}
+    p2_keys = {(m["project_key"], m["talent_key"]) for m in p2["matches"]}
+    assert len(p1_keys.intersection(p2_keys)) == 0
+
+
+def test_sales_email_matches_api_supports_offset(monkeypatch, tmp_path):
+    report_file = tmp_path / "sales_email_match_review.json"
+    source_report = sample_extraction_report_with_multiple_records()
+    report_file.write_text(json.dumps(source_report), encoding="utf-8")
+    monkeypatch.setattr(app, "SALES_EMAIL_MATCH_REPORT_FILE", str(report_file))
+
+    client = TestClient(app.app)
+    resp = client.get("/api/sales-email/matches?limit=3&offset=3")
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["status"] == "success"
+    assert data["offset"] == 3
+    assert data["limit"] == 3
+    assert data["match_count"] == 3
+    assert data["total_matches"] == 9
+    assert data["has_more"] is True
+
