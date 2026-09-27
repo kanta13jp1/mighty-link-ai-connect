@@ -38,6 +38,7 @@ class SearchCriteria:
     contract_type: str = ""
     min_score: int = 0
     limit: int = 20
+    offset: int = 0
     project_key: str = ""
     talent_key: str = ""
     min_rate: int | None = None
@@ -492,6 +493,7 @@ def criteria_from_values(
     contract_type: str = "",
     min_score: int = 0,
     limit: int = 20,
+    offset: int = 0,
     project_key: str = "",
     talent_key: str = "",
     min_rate: int | str | None = None,
@@ -520,7 +522,8 @@ def criteria_from_values(
         remote=remote.strip(),
         contract_type=contract_type.strip(),
         min_score=max(0, min(int(min_score or 0), 100)),
-        limit=max(1, min(int(limit or 20), 100)),
+        limit=max(1, min(int(limit or 20), 200)),
+        offset=max(0, int(offset or 0)),
         project_key=project_key.strip(),
         talent_key=talent_key.strip(),
         min_rate=parsed_min_rate,
@@ -618,12 +621,15 @@ def build_match_report(report: dict[str, Any], criteria: SearchCriteria | None =
                 match_rows.append(match)
 
     match_rows.sort(key=lambda item: (-int(item["score"]), str(item["project_title"]), str(item["talent_label"])))
-    limited_matches = match_rows[: criteria.limit]
     if criteria.direction == "talent_to_project":
-        limited_matches = sorted(
-            limited_matches,
+        match_rows = sorted(
+            match_rows,
             key=lambda item: (str(item["talent_label"]), -int(item["score"]), str(item["project_title"])),
         )
+
+    total_matches = len(match_rows)
+    limited_matches = match_rows[criteria.offset : criteria.offset + criteria.limit]
+    has_more = (criteria.offset + len(limited_matches)) < total_matches
 
     referenced_project_keys = {str(item["project_key"]) for item in limited_matches}
     referenced_talent_keys = {str(item["talent_key"]) for item in limited_matches}
@@ -644,6 +650,10 @@ def build_match_report(report: dict[str, Any], criteria: SearchCriteria | None =
         "project_count": len(projects),
         "talent_count": len(talents),
         "match_count": len(limited_matches),
+        "total_matches": total_matches,
+        "offset": criteria.offset,
+        "limit": criteria.limit,
+        "has_more": has_more,
         "projects": [asdict(project) for project in response_projects],
         "talents": [asdict(talent) for talent in response_talents],
         "matches": limited_matches,
@@ -708,6 +718,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--received-from", default="", help="Project email received date lower bound (YYYY-MM-DD).")
     parser.add_argument("--received-to", default="", help="Project email received date upper bound (YYYY-MM-DD).")
     parser.add_argument("--limit", type=int, default=20)
+    parser.add_argument("--offset", type=int, default=0)
     return parser
 
 
@@ -725,6 +736,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         received_from=args.received_from,
         received_to=args.received_to,
         limit=args.limit,
+        offset=args.offset,
     )
     report = build_match_report_from_file(Path(args.input_report), criteria)
     write_json_report(report, Path(args.json_report))

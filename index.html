@@ -5333,6 +5333,31 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <!-- もっと見る / ページネーション (50件ずつ追加読み込み) -->
+                    <div id="matching-pagination-container" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 12px; margin-top: 18px; padding: 16px; background: rgba(255,255,255,0.02); border: 1px dashed rgba(255,255,255,0.08); border-radius: 12px;">
+                        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center;">
+                            <span id="matching-pagination-status" style="font-size: 13px; color: var(--muted); font-weight: 500;">50件 / 全50件 読み込み済み</span>
+                            <button id="matching-load-more-btn" type="button" class="btn" style="
+                                background: linear-gradient(135deg, rgba(139, 220, 255, 0.15), rgba(79, 209, 165, 0.15));
+                                border: 1px solid rgba(139, 220, 255, 0.4);
+                                color: var(--text);
+                                font-size: 13px;
+                                font-weight: 600;
+                                padding: 8px 24px;
+                                border-radius: 8px;
+                                cursor: pointer;
+                                display: inline-flex;
+                                align-items: center;
+                                gap: 8px;
+                                transition: all 0.2s ease;
+                                box-shadow: 0 0 12px rgba(139, 220, 255, 0.1);
+                            " onmouseenter="this.style.background='linear-gradient(135deg, rgba(139, 220, 255, 0.25), rgba(79, 209, 165, 0.25))'; this.style.boxShadow='0 0 16px rgba(139, 220, 255, 0.25)';" onmouseleave="this.style.background='linear-gradient(135deg, rgba(139, 220, 255, 0.15), rgba(79, 209, 165, 0.15))'; this.style.boxShadow='0 0 12px rgba(139, 220, 255, 0.1)';" onclick="loadMoreSalesEmailMatches()">
+                                <span id="matching-load-more-spinner" style="display: none; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite;"></span>
+                                <span id="matching-load-more-text" data-i18n="matching_load_more_btn">もっと見る (+50件)</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 営業メール多角分析パネル (T877) -->
@@ -6201,6 +6226,10 @@
                 matching_filter_contract_option_temporary_staffing: "派遣",
                 matching_filter_contract_option_contract_work: "請負",
                 matching_filter_contract_option_employee: "正社員/契約社員",
+                matching_load_more_btn: "もっと見る (+50件)",
+                matching_load_more_loading: "読み込み中…",
+                matching_load_more_loaded_status: "{loaded}件 / 全{total}件 読み込み済み",
+                matching_load_more_all_loaded: "✓ 全{total}件の読み込み完了",
                 matching_filter_received_date_label: "受信日",
                 matching_filter_received_from_label: "受信日（開始）",
                 matching_filter_received_to_label: "受信日（終了）",
@@ -6373,6 +6402,10 @@
                 matching_filter_contract_option_temporary_staffing: "Temporary staffing",
                 matching_filter_contract_option_contract_work: "Contract work",
                 matching_filter_contract_option_employee: "Permanent/contract employee",
+                matching_load_more_btn: "Load more (+50)",
+                matching_load_more_loading: "Loading…",
+                matching_load_more_loaded_status: "{loaded} / {total} loaded",
+                matching_load_more_all_loaded: "✓ All {total} items loaded",
                 matching_filter_received_date_label: "Received date",
                 matching_filter_received_from_label: "Received date (start)",
                 matching_filter_received_to_label: "Received date (end)",
@@ -6545,6 +6578,10 @@
                 matching_filter_contract_option_temporary_staffing: "派遣",
                 matching_filter_contract_option_contract_work: "承包",
                 matching_filter_contract_option_employee: "正式员工/合同员工",
+                matching_load_more_btn: "加载更多 (+50条)",
+                matching_load_more_loading: "加载中…",
+                matching_load_more_loaded_status: "{loaded}条 / 共{total}条 已加载",
+                matching_load_more_all_loaded: "✓ 共{total}条全部加载完成",
                 matching_filter_received_date_label: "接收日期",
                 matching_filter_received_from_label: "接收日期（开始）",
                 matching_filter_received_to_label: "接收日期（结束）",
@@ -6717,6 +6754,10 @@
                 matching_filter_contract_option_temporary_staffing: "파견",
                 matching_filter_contract_option_contract_work: "도급",
                 matching_filter_contract_option_employee: "정규직/계약직",
+                matching_load_more_btn: "더 보기 (+50건)",
+                matching_load_more_loading: "로딩 중…",
+                matching_load_more_loaded_status: "{loaded}건 / 총 {total}건 로드됨",
+                matching_load_more_all_loaded: "✓ 총 {total}건 로드 완료",
                 matching_filter_received_date_label: "수신일",
                 matching_filter_received_from_label: "수신일(시작)",
                 matching_filter_received_to_label: "수신일(종료)",
@@ -6846,6 +6887,9 @@
             updateMobileMenuAccessibility(mobileMenu?.getAttribute('aria-expanded') === 'true');
             const currentTheme = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
             applyTheme(currentTheme);
+            if (typeof updateMatchingPaginationUI === "function") {
+                updateMatchingPaginationUI();
+            }
         }
 
         function setVideoSource(url) {
@@ -7681,12 +7725,117 @@
             }
         }
 
+        let salesEmailMatchTotal = 0;
+        let salesEmailMatchHasMore = false;
+        let salesEmailMatchLoadingMore = false;
+        let salesEmailMatchProjectsMap = new Map();
+        let salesEmailMatchTalentsMap = new Map();
+
+        function formatSalesEmailMatchRow(match, projectsByKey, talentsByKey) {
+            const project = projectsByKey.get(match.project_key) || {};
+            const talent = talentsByKey.get(match.talent_key) || {};
+            return {
+                ...match,
+                project_required_skills: project.required_skills || [],
+                project_rate_min: Number.isFinite(project.rate_min) ? project.rate_min : null,
+                project_rate_max: Number.isFinite(project.rate_max) ? project.rate_max : null,
+                project_received_at: match.project_received_at || project.received_at || "",
+                project_received_date: match.project_received_date || project.received_date || "",
+                talent_received_at: match.talent_received_at || talent.received_at || "",
+                talent_received_date: match.talent_received_date || talent.received_date || "",
+                sender_domains: [...new Set([
+                    ...(project.sender_domains || []),
+                    ...(talent.sender_domains || []),
+                ])],
+            };
+        }
+
+        function syncComparisonData(projects, talents) {
+            windowComparisonJobs = projects.map((project, index) => ({
+                id: 1000 + index,
+                title: project.title || `営業メール案件 ${index + 1}`,
+                company: "営業メールDB",
+                company_culture: "T817_4の抽出結果をもとに、根拠と不足理由を人間レビュー前提で表示します。",
+                parsed_requirements: { mandatory: project.required_skills || [] },
+                rate_min: Number.isFinite(project.rate_min) ? project.rate_min : null,
+                rate_max: Number.isFinite(project.rate_max) ? project.rate_max : null,
+                job_description: [
+                    `案件名: ${project.title || "営業メール案件"}`,
+                    `必須スキル: ${(project.required_skills || []).join(", ") || "未抽出"}`,
+                    `尚可スキル: ${(project.nice_to_have_skills || []).join(", ") || "未抽出"}`,
+                    `勤務地/リモート: ${project.location || "未抽出"} / ${project.remote_type || "unknown"}`,
+                    `根拠: ${project.evidence_excerpt || "redacted evidence only"}`
+                ].join("\n"),
+                sales_email_project_key: project.project_key
+            }));
+            comparisonStock = talents.map((talent, index) => ({
+                id: 2000 + index,
+                name: talent.display_name || `匿名候補者 ${index + 1}`,
+                skills: (talent.skills || []).join(", "),
+                evidence: talent.evidence_excerpt || "",
+                sales_email_talent_key: talent.talent_key
+            }));
+        }
+
+        function updateMatchingPaginationUI(isLoading = false) {
+            const container = document.getElementById("matching-pagination-container");
+            const btn = document.getElementById("matching-load-more-btn");
+            const spinner = document.getElementById("matching-load-more-spinner");
+            const text = document.getElementById("matching-load-more-text");
+            const status = document.getElementById("matching-pagination-status");
+            if (!container) return;
+
+            if (!salesEmailMatchSourceReady || salesEmailMatches.length === 0) {
+                container.style.display = "none";
+                return;
+            }
+            container.style.display = "flex";
+
+            const loadedCount = salesEmailMatches.length;
+            const totalCount = Math.max(loadedCount, salesEmailMatchTotal);
+
+            const currentLang = document.documentElement.lang || 'ja';
+            const dict = (typeof i18nDict !== 'undefined' && (i18nDict[currentLang] || i18nDict.ja)) || {};
+            const loadedStr = loadedCount.toLocaleString();
+            const totalStr = totalCount.toLocaleString();
+
+            if (status) {
+                const statusTemplate = dict.matching_load_more_loaded_status || "{loaded}件 / 全{total}件 読み込み済み";
+                status.textContent = statusTemplate.replace("{loaded}", loadedStr).replace("{total}", totalStr);
+            }
+
+            if (isLoading) {
+                if (btn) btn.disabled = true;
+                if (spinner) spinner.style.display = "inline-block";
+                if (text) text.textContent = dict.matching_load_more_loading || "読み込み中…";
+            } else {
+                if (spinner) spinner.style.display = "none";
+                if (salesEmailMatchHasMore) {
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.style.display = "inline-flex";
+                    }
+                    if (text) text.textContent = dict.matching_load_more_btn || "もっと見る (+50件)";
+                } else {
+                    if (btn) {
+                        btn.disabled = true;
+                        btn.style.display = "none";
+                    }
+                    if (status) {
+                        const allDoneTemplate = dict.matching_load_more_all_loaded || "✓ 全{total}件の読み込み完了";
+                        status.innerHTML = `<span style="color:var(--green);font-weight:600;">${allDoneTemplate.replace("{total}", totalStr)}</span>`;
+                    }
+                }
+            }
+        }
+
         async function initSalesEmailMatchData(options = {}) {
             const receivedFrom = String(options.receivedFrom || "").trim();
             const receivedTo = String(options.receivedTo || "").trim();
             const params = new URLSearchParams({
                 direction: "project_to_talent",
                 limit: "50",
+                offset: "0",
             });
             if (receivedFrom) params.set("received_from", receivedFrom);
             if (receivedTo) params.set("received_to", receivedTo);
@@ -7698,6 +7847,9 @@
                 if (!res.ok) {
                     salesEmailMatches = [];
                     salesEmailMatchSourceReady = false;
+                    salesEmailMatchTotal = 0;
+                    salesEmailMatchHasMore = false;
+                    updateMatchingPaginationUI();
                     applyMatchingFilters();
                     return false;
                 }
@@ -7706,67 +7858,90 @@
                 if (data.status !== "success" || !Array.isArray(data.matches)) {
                     salesEmailMatches = [];
                     salesEmailMatchSourceReady = false;
+                    salesEmailMatchTotal = 0;
+                    salesEmailMatchHasMore = false;
+                    updateMatchingPaginationUI();
                     applyMatchingFilters();
                     return false;
                 }
 
+                salesEmailMatchTotal = Number.isFinite(data.total_matches) ? data.total_matches : (data.matches.length || 0);
+                salesEmailMatchHasMore = Boolean(data.has_more);
+
                 const projects = Array.isArray(data.projects) ? data.projects : [];
                 const talents = Array.isArray(data.talents) ? data.talents : [];
-                const projectsByKey = new Map(projects.map(project => [project.project_key, project]));
-                const talentsByKey = new Map(talents.map(talent => [talent.talent_key, talent]));
+                salesEmailMatchProjectsMap = new Map(projects.map(project => [project.project_key, project]));
+                salesEmailMatchTalentsMap = new Map(talents.map(talent => [talent.talent_key, talent]));
 
                 salesEmailMatchSourceReady = true;
-                salesEmailMatches = data.matches.map(match => {
-                    const project = projectsByKey.get(match.project_key) || {};
-                    const talent = talentsByKey.get(match.talent_key) || {};
-                    return {
-                        ...match,
-                        project_required_skills: project.required_skills || [],
-                        project_rate_min: Number.isFinite(project.rate_min) ? project.rate_min : null,
-                        project_rate_max: Number.isFinite(project.rate_max) ? project.rate_max : null,
-                        project_received_at: match.project_received_at || project.received_at || "",
-                        project_received_date: match.project_received_date || project.received_date || "",
-                        talent_received_at: match.talent_received_at || talent.received_at || "",
-                        talent_received_date: match.talent_received_date || talent.received_date || "",
-                        sender_domains: [...new Set([
-                            ...(project.sender_domains || []),
-                            ...(talent.sender_domains || []),
-                        ])],
-                    };
-                });
+                salesEmailMatches = data.matches.map(match => formatSalesEmailMatchRow(match, salesEmailMatchProjectsMap, salesEmailMatchTalentsMap));
                 populateMatchingSkillFilter(projects);
-                windowComparisonJobs = projects.map((project, index) => ({
-                    id: 1000 + index,
-                    title: project.title || `営業メール案件 ${index + 1}`,
-                    company: "営業メールDB",
-                    company_culture: "T817_4の抽出結果をもとに、根拠と不足理由を人間レビュー前提で表示します。",
-                    parsed_requirements: { mandatory: project.required_skills || [] },
-                    rate_min: Number.isFinite(project.rate_min) ? project.rate_min : null,
-                    rate_max: Number.isFinite(project.rate_max) ? project.rate_max : null,
-                    job_description: [
-                        `案件名: ${project.title || "営業メール案件"}`,
-                        `必須スキル: ${(project.required_skills || []).join(", ") || "未抽出"}`,
-                        `尚可スキル: ${(project.nice_to_have_skills || []).join(", ") || "未抽出"}`,
-                        `勤務地/リモート: ${project.location || "未抽出"} / ${project.remote_type || "unknown"}`,
-                        `根拠: ${project.evidence_excerpt || "redacted evidence only"}`
-                    ].join("\n"),
-                    sales_email_project_key: project.project_key
-                }));
-                comparisonStock = talents.map((talent, index) => ({
-                    id: 2000 + index,
-                    name: talent.display_name || `匿名候補者 ${index + 1}`,
-                    skills: (talent.skills || []).join(", "),
-                    evidence: talent.evidence_excerpt || "",
-                    sales_email_talent_key: talent.talent_key
-                }));
+                syncComparisonData(projects, talents);
+                updateMatchingPaginationUI();
                 applyMatchingFilters();
                 return salesEmailMatches.length > 0 && windowComparisonJobs.length > 0 && comparisonStock.length > 0;
             } catch (e) {
                 console.warn("Could not fetch sales email matches, using existing comparison data:", e);
                 salesEmailMatches = [];
                 salesEmailMatchSourceReady = false;
+                salesEmailMatchTotal = 0;
+                salesEmailMatchHasMore = false;
+                updateMatchingPaginationUI();
                 applyMatchingFilters();
                 return false;
+            }
+        }
+
+        async function loadMoreSalesEmailMatches() {
+            if (salesEmailMatchLoadingMore || !salesEmailMatchHasMore) return;
+            salesEmailMatchLoadingMore = true;
+            updateMatchingPaginationUI(true);
+
+            const receivedFrom = document.getElementById("matching-filter-received-from")?.value || "";
+            const receivedTo = document.getElementById("matching-filter-received-to")?.value || "";
+            const offset = salesEmailMatches.length;
+            const params = new URLSearchParams({
+                direction: "project_to_talent",
+                limit: "50",
+                offset: String(offset),
+            });
+            if (receivedFrom) params.set("received_from", receivedFrom);
+            if (receivedTo) params.set("received_to", receivedTo);
+
+            try {
+                const res = await fetch(`/api/sales-email/matches?${params.toString()}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.status === "success" && Array.isArray(data.matches)) {
+                        salesEmailMatchTotal = Number.isFinite(data.total_matches) ? data.total_matches : salesEmailMatchTotal;
+                        salesEmailMatchHasMore = Boolean(data.has_more);
+
+                        const newProjects = Array.isArray(data.projects) ? data.projects : [];
+                        const newTalents = Array.isArray(data.talents) ? data.talents : [];
+                        newProjects.forEach(p => salesEmailMatchProjectsMap.set(p.project_key, p));
+                        newTalents.forEach(t => salesEmailMatchTalentsMap.set(t.talent_key, t));
+
+                        const existingKeys = new Set(salesEmailMatches.map(m => `${m.project_key}::${m.talent_key}`));
+                        data.matches.forEach(match => {
+                            const key = `${match.project_key}::${match.talent_key}`;
+                            if (!existingKeys.has(key)) {
+                                existingKeys.add(key);
+                                salesEmailMatches.push(formatSalesEmailMatchRow(match, salesEmailMatchProjectsMap, salesEmailMatchTalentsMap));
+                            }
+                        });
+
+                        const allProjects = [...salesEmailMatchProjectsMap.values()];
+                        const allTalents = [...salesEmailMatchTalentsMap.values()];
+                        populateMatchingSkillFilter(allProjects);
+                        syncComparisonData(allProjects, allTalents);
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to load more matches:", err);
+            } finally {
+                salesEmailMatchLoadingMore = false;
+                updateMatchingPaginationUI();
+                applyMatchingFilters();
             }
         }
 
@@ -9516,11 +9691,18 @@
             });
 
             if (countElem) {
-                countElem.textContent = `${filtered.length}件表示中 / 全${sourceList.length}件`;
+                const totalText = (salesEmailMatchSourceReady && salesEmailMatchTotal > 0)
+                    ? ` / 全${salesEmailMatchTotal.toLocaleString()}件`
+                    : ` / 全${sourceList.length}件`;
+                const loadedNote = (salesEmailMatchSourceReady && salesEmailMatchTotal > sourceList.length)
+                    ? `（取得済: ${sourceList.length}件）`
+                    : "";
+                countElem.textContent = `${filtered.length}件表示中${totalText}${loadedNote}`;
                 countElem.style.color = "var(--blue)";
             }
 
             renderPublicMatchingTable(filtered);
+            updateMatchingPaginationUI();
         }
 
         async function refreshSalesEmailMatchesForDateRange() {

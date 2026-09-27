@@ -511,6 +511,7 @@ gantt
 | **T1042** | 8. 本番運用・品質管理 | 営業メール統計 | 営業メール日別・本日集計のJST統一実装と回帰検証 | Codex | Codex + Pytest + GitHub Actions | Issue #373。本番の3305件について日別集計10日分のJST不一致を読み取り専用照合で確認。analyticsを受信日フィルターと共通のJST正規化へ変更しanalytics_timezoneを明示。初回本番検証でsrc.app起動時のimport失敗を検出し、既存の相対import/fallback方式へ修正。独立プロセスで本番形式の初回API呼び出し2件を追加し、日付17・既存マッチング14・実データ取込2・Firebaseブリッジ3の計36件が成功。実装と対象検証の完了を記録し、IssueのCloseは新候補exact SHA Cloud Full Preflight、Functions/Hosting実デプロイ、本番API・UI照合成功後に限定する。保存データ・メール操作・認証情報は変更しない。 | 完了 |
 | **T1043** | 8. 本番運用・品質管理 | CI効率化 | 更新済みPRの旧テスト実行取消 | Codex | Codex + GitHub Actions | 同じPRの古いtestジョブだけを取消。push/manualはrun_idで分離し、本番deployの排他制御を維持。候補検証・レビュー・反映は未完了。 | 実行中 |
 | **T1044** | 8. 本番運用・品質管理 | CI効率化 | PR全pytest二重実行の共通gateへの統合 | Codex | Codex + GitHub Actions | CI/CDから再利用workflowを呼び、PR全pytestを1回へ統合。全ガード・compile・公開demo・log検査・Artifactを維持。候補SHA検証とPR merge ref検証は別途維持。検証・レビュー・反映は未完了。 | 実行中 |
+| **T1045** | 8. 本番運用・品質管理 | 多言語UI | 営業メールマッチング結果のオフセット取得・ページネーション・もっと見る4言語UI対応 | Codex | Codex + Pytest + Playwright + Firebase | 営業メールマッチングにおいて大量件数表示時の描画負荷を低減し体感を改善するため、/api/sales-email/matches に limit/offset ページネーションと has_more を追加。UIに「もっと見る (+50件)」ボタンと読み込みステータス、4言語辞書（matching_load_more_btn等）とdata-i18n契約を追加し、言語切り替え中も同期するようPlaywrightと静的ガードで回帰固定する。 | 完了 |
 
 ---
 
