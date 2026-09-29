@@ -107,9 +107,16 @@ CORE_DOMAINS = {
 
 def load_endpoints(app_py: Path = APP_PY) -> set[str]:
     """Return the /api/ contract surface (page/static routes are out of scope)."""
-    text = app_py.read_text(encoding="utf-8", errors="replace")
-    return {p for p in re.findall(r'@app\.(?:get|post|put|delete|patch)\("([^"]+)"', text)
-            if p.startswith("/api/")}
+    texts = [app_py.read_text(encoding="utf-8", errors="replace")] if app_py.exists() else []
+    routers_dir = app_py.parent / "routers"
+    if routers_dir.exists():
+        for r_file in routers_dir.glob("*.py"):
+            texts.append(r_file.read_text(encoding="utf-8", errors="replace"))
+    endpoints = set()
+    for text in texts:
+        endpoints.update(p for p in re.findall(r'@(?:app|router)\.(?:get|post|put|delete|patch)\("([^"]+)"', text)
+                         if p.startswith("/api/"))
+    return endpoints
 
 
 def load_uat_apis(spec: Path = SPEC) -> set[str]:

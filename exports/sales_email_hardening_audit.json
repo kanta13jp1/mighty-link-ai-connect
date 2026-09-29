@@ -1,9 +1,9 @@
 {
   "report_id": "SALES_EMAIL_HARDENING_T817_7_1",
   "checked_at": "2026-07-08",
-  "status": "ok",
+  "status": "attention",
   "hypotheses_total": 10,
-  "hypotheses_passed": 10,
+  "hypotheses_passed": 9,
   "hypotheses": [
     {
       "id": "H1",
@@ -44,8 +44,8 @@
     {
       "id": "H7",
       "hypothesis": "営業メールAPI全3ルートがBasic認証necessary（verify_credentials）である",
-      "passed": true,
-      "detail": "認証必須 3/3"
+      "passed": false,
+      "detail": "認証必須 0/3 欠落: ['/api/sales-email/matches', '/api/sales-email/reviews', '/api/sales-email/reviews/summary']"
     },
     {
       "id": "H8",

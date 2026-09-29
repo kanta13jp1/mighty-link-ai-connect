@@ -2,7 +2,7 @@
 
 - レポートID: `SALES_EMAIL_HARDENING_T817_7_1`
 - 実施日: 2026-07-08
-- 判定: **ok** (10/10 仮説PASS)
+- 判定: **attention** (9/10 仮説PASS)
 - スコープ: PoCデータ/スキーマ/コード/証跡のオフラインhardening監査。バックアップはfull-DB pg_dumpが9テーブルを包含（恒久CI化はT870、暫定22テーブルローカルバックアップはT871確認済み）。実メール接続後の実運用確認（実データの最小化スポット確認・実流量調整・アカウント権限実査）はT836受領後のT817_7本体工程。
 
 ## 10仮説検証（hardening 6観点）
@@ -15,7 +15,7 @@
 | H4 | redact/excerptユーティリティがメール・電話・secret実値を除去し240字上限を守る | PASS | redact後PII残存なし=True excerpt長=240(<=240) |
 | H5 | 取込は合成メールのPII実値を保存せず、sha256ハッシュとredacted excerptのみ残す | PASS | 生メール/電話の残存なし=True sender_hash/body_hash=sha256(64hex) |
 | H6 | 抽出は要員を匿名化キーで扱い、evidenceに生連絡先を残さない | PASS | 生連絡先残存なし=True anonymized_talent_key=talent_318929b97f4d8873 |
-| H7 | 営業メールAPI全3ルートがBasic認証necessary（verify_credentials）である | PASS | 認証必須 3/3 |
+| H7 | 営業メールAPI全3ルートがBasic認証necessary（verify_credentials）である | FAIL | 認証必須 0/3 欠落: ['/api/sales-email/matches', '/api/sales-email/reviews', '/api/sales-email/reviews/summary'] |
 | H8 | 保持/削除runbookが9テーブル全ての保持期間と削除手順をカバーする | PASS | runbook記載 5/5グループ 保持期間記載=True |
 | H9 | 負荷ガード: parse CLIは既定でバッチ上限を持ち、無制限のAPI呼び出しをしない | PASS | 既定cap=50(=50期待) --max-messages指定=10 |
 | H10 | レビュー監査証跡(exports)が存在し、証跡ファイルに生メール/電話が含まれない | PASS | 監査証跡欠落=なし 生PII検出=なし |

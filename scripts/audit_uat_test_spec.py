@@ -95,8 +95,15 @@ def load_wbs_ids() -> set[str]:
 def load_api_paths() -> set[str]:
     if not APP_PY.exists():
         return set()
-    text = APP_PY.read_text(encoding="utf-8", errors="replace")
-    return set(re.findall(r"@app\.(?:get|post|put|delete|patch)\(\"([^\"]+)\"", text))
+    texts = [APP_PY.read_text(encoding="utf-8", errors="replace")]
+    routers_dir = APP_PY.parent / "routers"
+    if routers_dir.exists():
+        for r_file in routers_dir.glob("*.py"):
+            texts.append(r_file.read_text(encoding="utf-8", errors="replace"))
+    paths = set()
+    for text in texts:
+        paths.update(re.findall(r"@(?:app|router)\.(?:get|post|put|delete|patch)\(\"([^\"]+)\"", text))
+    return paths
 
 
 def _hyp(hid: str, title: str, passed: bool, detail: str) -> dict[str, Any]:
