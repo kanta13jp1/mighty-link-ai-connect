@@ -16,8 +16,11 @@ HTML_FILES = [INDEX_HTML, SRC_INDEX_HTML]
 def test_matching_table_contains_rate_th_in_both_html():
     for html_file in HTML_FILES:
         content = html_file.read_text(encoding="utf-8")
-        assert '<th data-i18n="matching_th_rate">単価</th>' in content, (
-            f"Missing <th data-i18n=\"matching_th_rate\">単価</th> in {html_file.name}"
+        assert 'data-i18n="matching_th_rate"' in content, (
+            f"Missing data-i18n=\"matching_th_rate\" in {html_file.name}"
+        )
+        assert re.search(r'<th[^>]*data-i18n="matching_th_rate"[^>]*>|<th[^>]*>[\s\S]*?data-i18n="matching_th_rate"', content), (
+            f"Missing rate th header with matching_th_rate in {html_file.name}"
         )
 
 

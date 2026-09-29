@@ -1103,6 +1103,14 @@
             color: var(--blue);
         }
 
+        .matching-sort-indicator {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--blue);
+            margin-left: 2px;
+        }
+
         .comparison-table tbody tr {
             transition: background-color 0.2s;
         }
@@ -5319,12 +5327,12 @@
                         <table class="comparison-table" style="min-width: 860px;">
                             <thead>
                                 <tr>
-                                    <th>案件タイトル</th>
-                                    <th>受信日</th>
+                                    <th class="sortable" onclick="sortMatchingTable('title')" aria-sort="none" title="クリックで案件タイトルを並べ替え" data-i18n-title="matching_sort_title_tooltip"><span data-i18n="matching_th_title">案件タイトル</span> <span class="matching-sort-indicator" id="matching-sort-title"></span></th>
+                                    <th class="sortable" onclick="sortMatchingTable('received_date')" aria-sort="none" title="クリックで受信日を並べ替え" data-i18n-title="matching_sort_date_tooltip"><span data-i18n="matching_th_received_date">受信日</span> <span class="matching-sort-indicator" id="matching-sort-received_date"></span></th>
                                     <th>適合エンジニア</th>
-                                    <th data-i18n="matching_th_rate">単価</th>
+                                    <th class="sortable" onclick="sortMatchingTable('rate')" aria-sort="none" title="クリックで単価を並べ替え" data-i18n-title="matching_sort_rate_tooltip"><span data-i18n="matching_th_rate">単価</span> <span class="matching-sort-indicator" id="matching-sort-rate"></span></th>
                                     <th>契約形態</th>
-                                    <th>マッチングスコア</th>
+                                    <th class="sortable" onclick="sortMatchingTable('score')" aria-sort="descending" title="クリックでマッチングスコアを並べ替え" data-i18n-title="matching_sort_score_tooltip"><span data-i18n="matching_th_score">マッチングスコア</span> <span class="matching-sort-indicator" id="matching-sort-score"> ▼</span></th>
                                     <th>ステータス</th>
                                     <th data-i18n="comp_th_action">アクション</th>
                                 </tr>
@@ -6228,7 +6236,14 @@
                 matching_filter_contract_option_contract_work: "請負",
                 matching_filter_contract_option_employee: "正社員/契約社員",
                 matching_load_more_btn: "もっと見る (+50件)",
+                matching_th_title: "案件タイトル",
+                matching_th_received_date: "受信日",
                 matching_th_rate: "単価",
+                matching_th_score: "マッチングスコア",
+                matching_sort_title_tooltip: "クリックで案件タイトルを並べ替え",
+                matching_sort_date_tooltip: "クリックで受信日を並べ替え",
+                matching_sort_rate_tooltip: "クリックで単価を並べ替え",
+                matching_sort_score_tooltip: "クリックでマッチングスコアを並べ替え",
                 matching_load_more_loading: "読み込み中…",
                 matching_load_more_loaded_status: "{loaded}件 / 全{total}件 読み込み済み",
                 matching_load_more_all_loaded: "✓ 全{total}件の読み込み完了",
@@ -6405,7 +6420,14 @@
                 matching_filter_contract_option_contract_work: "Contract work",
                 matching_filter_contract_option_employee: "Permanent/contract employee",
                 matching_load_more_btn: "Load more (+50)",
+                matching_th_title: "Project Title",
+                matching_th_received_date: "Received Date",
                 matching_th_rate: "Rate",
+                matching_th_score: "Match Score",
+                matching_sort_title_tooltip: "Click to sort by project title",
+                matching_sort_date_tooltip: "Click to sort by received date",
+                matching_sort_rate_tooltip: "Click to sort by rate",
+                matching_sort_score_tooltip: "Click to sort by match score",
                 matching_load_more_loading: "Loading…",
                 matching_load_more_loaded_status: "{loaded} / {total} loaded",
                 matching_load_more_all_loaded: "✓ All {total} items loaded",
@@ -6582,7 +6604,14 @@
                 matching_filter_contract_option_contract_work: "承包",
                 matching_filter_contract_option_employee: "正式员工/合同员工",
                 matching_load_more_btn: "加载更多 (+50条)",
+                matching_th_title: "项目标题",
+                matching_th_received_date: "接收日期",
                 matching_th_rate: "单价",
+                matching_th_score: "匹配度",
+                matching_sort_title_tooltip: "点击按项目标题排序",
+                matching_sort_date_tooltip: "点击按接收日期排序",
+                matching_sort_rate_tooltip: "点击按单价排序",
+                matching_sort_score_tooltip: "点击按匹配度排序",
                 matching_load_more_loading: "加载中…",
                 matching_load_more_loaded_status: "{loaded}条 / 共{total}条 已加载",
                 matching_load_more_all_loaded: "✓ 共{total}条全部加载完成",
@@ -6759,7 +6788,14 @@
                 matching_filter_contract_option_contract_work: "도급",
                 matching_filter_contract_option_employee: "정규직/계약직",
                 matching_load_more_btn: "더 보기 (+50건)",
+                matching_th_title: "프로젝트 제목",
+                matching_th_received_date: "수신일",
                 matching_th_rate: "단가",
+                matching_th_score: "매칭 스코어",
+                matching_sort_title_tooltip: "클릭하여 프로젝트 제목별 정렬",
+                matching_sort_date_tooltip: "클릭하여 수신일별 정렬",
+                matching_sort_rate_tooltip: "클릭하여 단가별 정렬",
+                matching_sort_score_tooltip: "클릭하여 매칭 스코어별 정렬",
                 matching_load_more_loading: "로딩 중…",
                 matching_load_more_loaded_status: "{loaded}건 / 총 {total}건 로드됨",
                 matching_load_more_all_loaded: "✓ 총 {total}건 로드 완료",
@@ -6894,6 +6930,9 @@
             applyTheme(currentTheme);
             if (typeof updateMatchingPaginationUI === "function") {
                 updateMatchingPaginationUI();
+            }
+            if (typeof updateMatchingSortIndicators === "function") {
+                updateMatchingSortIndicators();
             }
         }
 
@@ -9673,6 +9712,99 @@
             return true;
         }
 
+        let currentMatchingSortField = "score";
+        let currentMatchingSortOrder = "desc";
+
+        function getMatchingRateSortValue(m, order) {
+            const parseRate = (val) => {
+                if (val === null || val === undefined || val === "") return null;
+                const num = Number(val);
+                return Number.isFinite(num) ? num : null;
+            };
+            const pMax = parseRate(m.project_rate_max);
+            const pMin = parseRate(m.project_rate_min);
+            const tMax = parseRate(m.talent_desired_rate_max);
+            const tMin = parseRate(m.talent_desired_rate_min);
+            const rateVal = pMax ?? pMin ?? tMax ?? tMin;
+            if (rateVal !== null) return rateVal;
+            return order === "asc" ? 999999 : -1;
+        }
+
+        function getMatchingScoreSortValue(m) {
+            const score = Number(m.score ?? m.matching_score ?? 0);
+            return Number.isFinite(score) ? score : 0;
+        }
+
+        function getMatchingDateSortValue(m, order) {
+            const dateStr = String(m.project_received_date || "").trim();
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+            return order === "asc" ? "9999-99-99" : "0000-00-00";
+        }
+
+        function getMatchingTitleSortValue(m) {
+            return String(m.title || m.project_title || "").trim().toLowerCase();
+        }
+
+        function sortMatchingItems(list, field, order) {
+            return [...list].sort((a, b) => {
+                let diff = 0;
+                if (field === "rate") {
+                    const valA = getMatchingRateSortValue(a, order);
+                    const valB = getMatchingRateSortValue(b, order);
+                    diff = order === "asc" ? valA - valB : valB - valA;
+                } else if (field === "score") {
+                    const valA = getMatchingScoreSortValue(a);
+                    const valB = getMatchingScoreSortValue(b);
+                    diff = order === "asc" ? valA - valB : valB - valA;
+                } else if (field === "received_date" || field === "date") {
+                    const valA = getMatchingDateSortValue(a, order);
+                    const valB = getMatchingDateSortValue(b, order);
+                    diff = order === "asc" ? valA.localeCompare(valB) : valB.localeCompare(valA);
+                } else if (field === "title") {
+                    const valA = getMatchingTitleSortValue(a);
+                    const valB = getMatchingTitleSortValue(b);
+                    diff = order === "asc" ? valA.localeCompare(valB, "ja") : valB.localeCompare(valA, "ja");
+                }
+
+                if (diff !== 0) return diff;
+
+                const scoreDiff = getMatchingScoreSortValue(b) - getMatchingScoreSortValue(a);
+                if (scoreDiff !== 0) return scoreDiff;
+                const dateDiff = getMatchingDateSortValue(b, "desc").localeCompare(getMatchingDateSortValue(a, "desc"));
+                if (dateDiff !== 0) return dateDiff;
+                return getMatchingTitleSortValue(a).localeCompare(getMatchingTitleSortValue(b), "ja");
+            });
+        }
+
+        function updateMatchingSortIndicators() {
+            document.querySelectorAll(".matching-sort-indicator").forEach(el => {
+                el.textContent = "";
+            });
+            const indicator = document.getElementById(`matching-sort-${currentMatchingSortField}`);
+            if (indicator) {
+                indicator.textContent = currentMatchingSortOrder === "asc" ? " ▲" : " ▼";
+            }
+            document.querySelectorAll("#matching-section .comparison-table th.sortable").forEach(th => {
+                const onclickAttr = th.getAttribute("onclick") || "";
+                if (onclickAttr.includes(`'${currentMatchingSortField}'`) || onclickAttr.includes(`"${currentMatchingSortField}"`)) {
+                    th.setAttribute("aria-sort", currentMatchingSortOrder === "asc" ? "ascending" : "descending");
+                } else {
+                    th.setAttribute("aria-sort", "none");
+                }
+            });
+        }
+
+        function sortMatchingTable(field) {
+            if (currentMatchingSortField === field) {
+                currentMatchingSortOrder = currentMatchingSortOrder === "asc" ? "desc" : "asc";
+            } else {
+                currentMatchingSortField = field;
+                currentMatchingSortOrder = (field === "title") ? "asc" : "desc";
+            }
+            updateMatchingSortIndicators();
+            applyMatchingFilters();
+        }
+
         function applyMatchingFilters() {
             const normalizeText = value => String(value || "").toLocaleLowerCase("ja").trim();
             const keyword = normalizeText(document.getElementById("matching-filter-keyword")?.value);
@@ -9754,7 +9886,8 @@
                 countElem.style.color = "var(--blue)";
             }
 
-            renderPublicMatchingTable(filtered);
+            const sorted = sortMatchingItems(filtered, currentMatchingSortField, currentMatchingSortOrder);
+            renderPublicMatchingTable(sorted);
             updateMatchingPaginationUI();
         }
 
