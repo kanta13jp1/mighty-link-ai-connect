@@ -43,7 +43,23 @@ def test_app_includes_sales_email_router():
     except ImportError:
         from app import app
 
-    app_route_paths = [getattr(r, "path", None) for r in app.routes]
+    def _collect_paths(routes) -> set[str]:
+        paths = set()
+        for r in routes:
+            if hasattr(r, "path") and r.path:
+                paths.add(r.path)
+            if hasattr(r, "routes"):
+                paths.update(_collect_paths(r.routes))
+            if hasattr(r, "app") and hasattr(r.app, "routes"):
+                paths.update(_collect_paths(r.app.routes))
+        return paths
+
+    registered_paths = _collect_paths(app.routes)
+    try:
+        registered_paths.update(app.openapi().get("paths", {}).keys())
+    except Exception:
+        pass
+
     expected_paths = [
         "/api/sales-email/matches",
         "/api/sales-email/proposal",
@@ -55,7 +71,7 @@ def test_app_includes_sales_email_router():
         "/api/sales-email/reviews/summary",
     ]
     for path in expected_paths:
-        assert path in app_route_paths, f"Missing {path} on app after router inclusion"
+        assert path in registered_paths, f"Missing {path} on app after router inclusion"
 
 
 def test_sales_email_matches_endpoint_reachable_via_testclient():
