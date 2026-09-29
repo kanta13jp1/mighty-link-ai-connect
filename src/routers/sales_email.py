@@ -29,13 +29,85 @@ class ProposalGenerateRequest(BaseModel):
     remote_type: str = "フルリモート"
 
 
-def _get_app_context():
+class _AppContextProxy:
+    """Dynamic proxy that resolves attributes from sys.modules['app'] or sys.modules['src.app'].
+
+    Ensures seamless compatibility when test suites monkeypatch globals on `app`
+    or when running under production with `src.app`.
+    """
+
+    def __getattr__(self, name: str) -> Any:
+        import sys
+
+        app_mod = sys.modules.get("app")
+        src_mod = sys.modules.get("src.app")
+
+        has_app = app_mod is not None and hasattr(app_mod, name)
+        has_src = src_mod is not None and hasattr(src_mod, name)
+
+        if has_app and has_src:
+            val_app = getattr(app_mod, name)
+            val_src = getattr(src_mod, name)
+            if val_app != val_src:
+                return val_app
+            return val_app
+
+        if has_app:
+            return getattr(app_mod, name)
+        if has_src:
+            return getattr(src_mod, name)
+
+        try:
+            from src import app as m
+
+            return getattr(m, name)
+        except (ImportError, AttributeError):
+            pass
+
+        try:
+            import app as m
+
+            return getattr(m, name)
+        except (ImportError, AttributeError):
+            pass
+
+        raise AttributeError(f"AppContext has no attribute {name!r}")
+
+
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+
+security = HTTPBasic(auto_error=True)
+security_optional = HTTPBasic(auto_error=False)
+
+
+def verify_credentials(credentials: HTTPBasicCredentials = Depends(security)) -> str:
+    """Verify HTTP Basic credentials by delegating to app's verifier."""
+    app_ctx = _get_app_context()
+    verify_fn = getattr(app_ctx, "verify_credentials", None)
+    if callable(verify_fn):
+        return verify_fn(credentials)
+    return getattr(credentials, "username", "authorized_user")
+
+
+def verify_credentials_optional(
+    credentials: Optional[HTTPBasicCredentials] = Depends(security_optional),
+) -> Optional[str]:
+    """Verify optional HTTP Basic credentials by delegating to app's verifier."""
+    if credentials is None:
+        return None
+    app_ctx = _get_app_context()
+    verify_fn = getattr(app_ctx, "verify_credentials_optional", None)
+    if callable(verify_fn):
+        return verify_fn(credentials)
+    return getattr(credentials, "username", "authorized_user")
+
+
+_APP_CTX = _AppContextProxy()
+
+
+def _get_app_context() -> Any:
     """Retrieve symbols from app lazily to prevent circular imports."""
-    try:
-        from src import app as app_mod
-    except ImportError:
-        import app as app_mod
-    return app_mod
+    return _APP_CTX
 
 
 @router.get("/api/sales-email/matches")
@@ -54,7 +126,7 @@ async def list_sales_email_matches(
     search_query: str = "",
     received_from: str = "",
     received_to: str = "",
-    request: Request = None,
+    username: Optional[str] = Depends(verify_credentials_optional),
 ):
     """Return sanitized bidirectional candidate lists from T817_4 extraction output."""
     app_ctx = _get_app_context()
@@ -280,7 +352,7 @@ async def get_sales_autopilot_queue(limit: int = 10):
 async def get_sales_email_analytics():
     """Return aggregated stats from extraction report for public dashboard analytics."""
     try:
-        from .sales_email_match import JST, normalize_received_timestamp
+        from src.sales_email_match import JST, normalize_received_timestamp
     except ImportError:
         from sales_email_match import JST, normalize_received_timestamp
 
@@ -318,7 +390,8 @@ async def get_sales_email_analytics():
 
     try:
         extractions = report_data.get("extractions", [])
-        today_jst = datetime.datetime.now(JST).date().isoformat()
+        dt_mod = getattr(app_ctx, "datetime", datetime)
+        today_jst = dt_mod.datetime.now(JST).date().isoformat()
 
         daily_counts = {}
         domain_counts = {}
@@ -399,34 +472,13 @@ async def get_sales_email_analytics():
         return {"status": "error", "message": "Failed to calculate analytics"}
 
 
-def _verify_auth_dependency(request: Request):
-    """Authenticate request using app's verify_credentials dependency."""
-    app_ctx = _get_app_context()
-    verify_fn = getattr(app_ctx, "verify_credentials", None)
-    if verify_fn:
-        from fastapi.security import HTTPBasicCredentials
-        # Extract Authorization header
-        auth_header = request.headers.get("Authorization")
-        if not auth_header or not auth_header.startswith("Basic "):
-            raise HTTPException(status_code=401, detail="Authentication required", headers={"WWW-Authenticate": "Basic"})
-        import base64
-        try:
-            decoded = base64.b64decode(auth_header[6:]).decode("utf-8")
-            username, password = decoded.split(":", 1)
-        except Exception:
-            raise HTTPException(status_code=401, detail="Invalid authorization header", headers={"WWW-Authenticate": "Basic"})
-        return verify_fn(HTTPBasicCredentials(username=username, password=password))
-    return "authorized_user"
-
-
 @router.post("/api/sales-email/sync")
 async def sync_sales_emails(
-    request: Request,
     max_messages: int | None = Query(None, description="Maximum IMAP emails to fetch (default: 1000)"),
     retry_errors: bool = Query(False, description="Whether to include ingest_status='error' messages in parsing retry"),
+    username: str = Depends(verify_credentials),
 ):
     """Sync emails over read-only IMAP, run parsing, and rebuild review JSONs."""
-    _verify_auth_dependency(request)
     try:
         app_ctx = _get_app_context()
         import sys
@@ -443,9 +495,9 @@ async def sync_sales_emails(
 @router.post("/api/sales-email/reviews")
 async def submit_sales_email_match_review(
     request: Request,
+    username: str = Depends(verify_credentials),
 ):
     """Store a sanitized human review for a sales email match candidate."""
-    username = _verify_auth_dependency(request)
     body = await request.json()
     app_ctx = _get_app_context()
 
@@ -552,11 +604,10 @@ async def submit_sales_email_match_review(
 
 @router.get("/api/sales-email/reviews/summary")
 async def get_sales_email_match_review_summary(
-    request: Request,
     limit: int = 20,
+    username: str = Depends(verify_credentials),
 ):
     """Authenticated summary of T817_6 sales email match reviews."""
-    _verify_auth_dependency(request)
     app_ctx = _get_app_context()
     file_summary = {}
     load_sales_email_review_report = getattr(app_ctx, "load_sales_email_review_report", None)

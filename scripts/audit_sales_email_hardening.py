@@ -93,7 +93,11 @@ def build_hypotheses() -> list[dict[str, Any]]:
 
     schema_sql = SCHEMA_SQL.read_text(encoding="utf-8")
     retention_doc = RETENTION_DOC.read_text(encoding="utf-8")
-    app_src = (PROJECT_ROOT / "src" / "app.py").read_text(encoding="utf-8")
+    app_src_files = [PROJECT_ROOT / "src" / "app.py"]
+    routers_dir = PROJECT_ROOT / "src" / "routers"
+    if routers_dir.exists():
+        app_src_files.extend(routers_dir.glob("*.py"))
+    app_src = "\n".join(p.read_text(encoding="utf-8") for p in app_src_files)
 
     results: list[dict[str, Any]] = []
 

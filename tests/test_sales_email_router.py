@@ -43,7 +43,7 @@ def test_app_includes_sales_email_router():
     except ImportError:
         from app import app
 
-    app_route_paths = [r.path for r in app.routes]
+    app_route_paths = [getattr(r, "path", None) for r in app.routes]
     expected_paths = [
         "/api/sales-email/matches",
         "/api/sales-email/proposal",
